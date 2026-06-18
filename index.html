@@ -1359,6 +1359,8 @@ Step 6: Progress Monitoring
 
             text += `CRITICAL INSTRUCTION: When designing the individual lessons in the 'Lesson Content' table below, you MUST structure the learning activities for each standard lesson using the 5 stages of the Common Practice Model (CPM): 1. Connect (immediately followed by explicitly listing the Key Disciplinary Vocabulary for that lesson), 2. I Do, 3. We Do, 4. You Do, 5. Review. The ONLY exception to this rule is if a specific extended activity (like a practical lab, a major assessment, or an ongoing project) takes more time and naturally spans across multiple lessons. This exception is particularly relevant for Years 11-13.\n\n`;
 
+            text += `RESOURCE RULE: You MUST proactively include actual, live, working URLs to highly effective YouTube clips, interactive websites, or digital articles in the 'Preparation / Resources' column for the lessons. Do not use generic placeholders like "[Insert Video Here]".\n\n`;
+
             if (customTask) {
                 text += `TEACHER SPECIFIC INSTRUCTIONS: "${customTask}". You MUST strictly follow these structural, timing, pacing, or activity requests when generating the unit schedule and lesson table.\n\n`;
             }
@@ -1440,12 +1442,12 @@ Step 6: Progress Monitoring
             text += `CRITICAL INSTRUCTION 1: You MUST generate ALL of the requested outputs in your single response. Do not stop generating until every requested section is complete. Do not provide brief outlines; provide the full, comprehensive content for each section. Please separate your outputs using clear PART headings.\n\n`;
             text += `CRITICAL INSTRUCTION 2: You MUST use New Zealand English spelling (e.g., 'analyse' not 'analyze', 'colour' not 'color', 'programme' not 'program', 'behaviour' not 'behavior') and NZ terminology throughout all outputs.\n\n`;
             
-            text += `OUTPUTS REQUIRED TODAY:\n- PART 1: The CPM Lesson Plan\n`;
+            text += `OUTPUTS REQUIRED TODAY:\n- PART 1: The CPM Lesson Plan (You MUST output this lesson plan using EXACTLY the Markdown table template provided below. Do not change the columns or headings. Fill in all the bracketed [Fill] cells with high-quality, generated content specific to this lesson)\n`;
             if (needsSlides) text += `- PART 2: Slideshow Presentation (Full, complete slide-by-slide content)\n`;
             if (needsWorksheet) text += `- PART 3: Student Worksheet (Two versions required: Google Docs Export AND Printable HTML/PDF)\n`;
             if (needsContent) text += `- PART 4: Content Document\n\n`;
 
-            text += `CRITICAL INSTRUCTION 3: Wherever you suggest an image, diagram, graph, video, or article in any of your outputs, you MUST provide an actual, live, working URL link to a real web resource (e.g., a specific YouTube video URL, a real news article link, or a trusted educational website). Do not just write generic placeholders like "[Insert Video Here]" or "[Show Graph]".\n\n`;
+            text += `CRITICAL INSTRUCTION 3: You MUST proactively source and embed live, working URL links to highly effective YouTube clips, interactive educational websites, or digital articles relevant to the topic. These live links MUST be integrated explicitly throughout the Lesson Plan, the Student Worksheet, and the Slideshow. Do not just write generic placeholders like "[Insert Video Here]" or "[Show Graph]" - you must provide the actual web addresses.\n\n`;
 
             if (customTask) {
                 text += `CRITICAL INSTRUCTION 4: TEACHER SPECIFIC INSTRUCTIONS: "${customTask}". You MUST strictly follow these structural, timing, pacing, or activity requests in your lesson design.\n\n`;
@@ -1467,12 +1469,31 @@ Step 6: Progress Monitoring
                 text += `NUMERACY INTEGRATION: Make explicit numeracy practice (e.g., interpreting graphs/data, calculations) a core focus of the 'We Do' and 'You Do' phases of this lesson.\n\n`;
             }
 
-            text += `VOCABULARY RULE: Immediately after the Stage 1 (Connect) section in the lesson plan, you MUST explicitly list and concisely define the Key Disciplinary Vocabulary required for this lesson before moving into Stage 2.\n\n`;
+            text += `VOCABULARY RULE: You MUST explicitly list and concisely define the Key Disciplinary Vocabulary required for this lesson in the 'Lesson Vocabulary' row of the table.\n\n`;
 
-            text += `Here are the specific strategies I want to use for each stage:\n\nStage 1 (Connect): ${lessonState.s1}\n[Insert Key Vocabulary Section Here]\nStage 2 (I Do): ${lessonState.s2}\nStage 3 (We Do): ${lessonState.s3}\nStage 4 (You Do): ${lessonState.s4}\nStage 5 (Review): ${lessonState.s5}\n\n`;
+            text += `--- LESSON PLAN TEMPLATE (PART 1) ---\n`;
+            text += `# **Waiheke CPM Lesson Plan**\n`;
+            text += `| | | | |\n| :- | :- | :- | :- |\n`;
+            text += `| **Learning Area** | ${lessonState.dept} | **Year Level** | ${lessonState.year} |\n`;
+            text += `| **Lesson Title** | ${topic} | | |\n`;
+            text += `| **Curriculum Alignment (NZ Curriculum Draft: Knowledge & Practices)** | [Fill] | | |\n`;
+            text += `| **Learning Intention** | [Fill] | | |\n`;
+            text += `| **Success Criteria** | [Fill] | | |\n`;
+            text += `| **Lesson Vocabulary** | [Fill] | | |\n\n`;
 
+            text += `| | | | |\n| :- | :- | :- | :- |\n`;
+            text += `| **Stage** | **Teaching Strategy Focus** | **Learning Experiences**<br>*Strategies, activities, tasks & teacher Practice* | **Resources** |\n`;
+            text += `| **Stage 1: CONNECTION**<br>*(Connect & Prior Knowledge)* | **${lessonState.s1}**<br>Setting Goals / Multiple Exposure: Moving to active checking of prior understanding. | [Fill] | [Fill with links/resources] |\n`;
+            text += `| **Stage 2: I DO**<br>*(Explicit Teaching & Modelling)* | **${lessonState.s2}**<br>Explicit Instruction: Chunking material, dual coding, and using "Think-alouds" to unpack cognitive processes. | [Fill] | [Fill] |\n`;
+            text += `| **Stage 3: WE DO**<br>*(Guiding Students’ Practise)* | **${lessonState.s3}**<br>Scaffolding: Use visual/verbal prompts with a gradual fading of support. | [Fill] | [Fill] |\n`;
+            text += `| **Stage 4: YOU DO**<br>*(Independent Practise)* | **${lessonState.s4}**<br>Differentiated Learning: Moving from concrete to abstract examples; interleaving topics. | [Fill] | [Fill] |\n`;
+            text += `| **Stage 5: REFLECTION & FEEDBACK** | **${lessonState.s5}**<br>Questioning & Feedback: Using SOLO taxonomy and Bloom's. Collaborative Learning: Progression toward reciprocal learning. | [Fill] | [Fill] |\n\n`;
+
+            text += `| |\n| :- |\n| **Additional Resources (extension, ESOL, Low Literacy Activity etc)** |\n`;
             if (lessonState.extra !== 'None') {
-                text += `Additionally, please generate a specific, supplementary differentiated resource or scaffold for the 'You Do' phase tailored for: ${lessonState.extra}.\n\n`;
+                text += `| [Fill specific resources and scaffolds for: ${lessonState.extra}] |\n\n`;
+            } else {
+                text += `| [Fill if any standard additional resources apply, else leave blank] |\n\n`;
             }
 
             if (needsSlides) {
