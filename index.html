@@ -353,10 +353,15 @@
                             
                             <!-- AI Prompt Output -->
                             <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
-                                <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest mb-4">Expert Assistant Prompt</h4>
-                                <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 mb-6 flex-grow shadow-inner relative group">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Expert Assistant Prompt</h4>
+                                    <button onclick="copyText('prompt-text-instructional', this)" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY PROMPT</button>
+                                </div>
+                                <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 mb-4 flex-grow shadow-inner">
                                     <span id="prompt-text-instructional">Select a strategy to generate prompt...</span>
-                                    <button onclick="copyText('prompt-text-instructional', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY</button>
+                                </div>
+                                <div class="flex justify-end mb-6">
+                                    <button onclick="copyText('prompt-text-instructional', this)" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY PROMPT</button>
                                 </div>
                                 <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#002066] text-white rounded-xl font-bold hover:bg-blue-800 transition">
                                     Open Gemini App ↗
@@ -484,11 +489,17 @@
                     </div>
                     
                     <!-- Output -->
-                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col relative group">
-                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-6">
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
+                            <button onclick="copyText('prompt-unit-text', this)" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY PROMPT</button>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-4">
 <span id="prompt-unit-text">...</span>
                         </div>
-                        <button onclick="copyText('prompt-unit-text', this)" class="absolute top-8 right-8 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm z-10">COPY</button>
+                        <div class="flex justify-end mb-6">
+                            <button onclick="copyText('prompt-unit-text', this)" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY PROMPT</button>
+                        </div>
                         
                         <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#c5a059] text-white rounded-xl font-bold hover:bg-amber-600 transition flex items-center justify-center gap-2 shadow-md">
                             Open Gemini App ↗
@@ -689,14 +700,33 @@
                                 <button onclick="setLessonState('extra', 'Extension/Gifted (abstract application, complex texts)', this)" class="builder-btn">Extension Task</button>
                             </div>
                         </div>
+                        
+                        <!-- Relief Cover Mode -->
+                        <div class="pt-6 mt-4 border-t-2 border-dashed border-red-200">
+                            <div class="flex flex-col xl:flex-row items-center justify-between bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm gap-4">
+                                <div>
+                                    <span class="text-xs font-black text-red-800 uppercase tracking-widest block mb-1">Emergency Relief Cover</span>
+                                    <p class="text-xs text-red-600 font-medium">Bypass the CPM planner and generate a self-contained worksheet for a non-specialist relief teacher.</p>
+                                </div>
+                                <button onclick="toggleReliefMode()" id="btn-relief-mode" class="shrink-0 px-4 py-2.5 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded-lg hover:bg-red-500 hover:text-white hover:border-red-600 transition-colors shadow-sm whitespace-nowrap">
+                                    Enable Relief Mode
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Output -->
-                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col relative group">
-                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-6">
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
+                            <button onclick="copyText('prompt-lesson-text', this)" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY PROMPT</button>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4">
 <span id="prompt-lesson-text">...</span>
                         </div>
-                        <button onclick="copyText('prompt-lesson-text', this)" class="absolute top-8 right-8 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm z-10">COPY</button>
+                        <div class="flex justify-end mb-6">
+                            <button onclick="copyText('prompt-lesson-text', this)" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY PROMPT</button>
+                        </div>
                         
                         <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#002066] text-white rounded-xl font-bold hover:bg-blue-800 transition flex items-center justify-center gap-2 shadow-md">
                             Open Gemini App ↗
@@ -921,7 +951,8 @@ Step 6: Progress Monitoring
             s4: 'Tiered Tasks',
             s5: 'Exit Ticket',
             extra: 'None',
-            outputs: []
+            outputs: [],
+            relief: false
         };
 
         function syncTopics(val) {
@@ -1265,51 +1296,18 @@ Step 6: Progress Monitoring
             updateLessonBuilderPrompt();
         }
 
-        function toggleLessonOutput(type) {
-            if (!lessonState.outputs) lessonState.outputs = []; // ensure array exists
-
-            if (type === 'none') {
-                lessonState.outputs = [];
-            } else if (type === 'all') {
-                lessonState.outputs = ['slides', 'worksheet', 'content'];
+        function toggleReliefMode() {
+            lessonState.relief = !lessonState.relief;
+            const btn = document.getElementById('btn-relief-mode');
+            if (lessonState.relief) {
+                btn.classList.add('bg-red-500', 'text-white', 'border-red-600');
+                btn.classList.remove('bg-red-100', 'text-red-800', 'border-red-300');
+                btn.innerText = "Disable Relief Mode";
             } else {
-                // Toggle specific output logic
-                if (lessonState.outputs.includes(type)) {
-                    lessonState.outputs = lessonState.outputs.filter(o => o !== type);
-                } else {
-                    lessonState.outputs.push(type);
-                }
+                btn.classList.remove('bg-red-500', 'text-white', 'border-red-600');
+                btn.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
+                btn.innerText = "Enable Relief Mode";
             }
-            
-            // Sync 'all' state based on array length
-            if (lessonState.outputs.includes('slides') && lessonState.outputs.includes('worksheet') && lessonState.outputs.includes('content')) {
-                 lessonState.outputs = ['slides', 'worksheet', 'content'];
-            }
-
-            // Update UI buttons visually
-            const btnNone = document.getElementById('btn-out-none');
-            const btnSlides = document.getElementById('btn-out-slides');
-            const btnWorksheet = document.getElementById('btn-out-worksheet');
-            const btnContent = document.getElementById('btn-out-content');
-            const btnAll = document.getElementById('btn-out-all');
-
-            [btnSlides, btnWorksheet, btnContent, btnAll, btnNone].forEach(b => {
-                if(b) b.classList.remove('active');
-            });
-
-            if (lessonState.outputs.length === 0) {
-                if(btnNone) btnNone.classList.add('active');
-            } else if (lessonState.outputs.length === 3) {
-                if(btnAll) btnAll.classList.add('active');
-                if(btnSlides) btnSlides.classList.add('active');
-                if(btnWorksheet) btnWorksheet.classList.add('active');
-                if(btnContent) btnContent.classList.add('active');
-            } else {
-                if (lessonState.outputs.includes('slides') && btnSlides) btnSlides.classList.add('active');
-                if (lessonState.outputs.includes('worksheet') && btnWorksheet) btnWorksheet.classList.add('active');
-                if (lessonState.outputs.includes('content') && btnContent) btnContent.classList.add('active');
-            }
-
             updateLessonBuilderPrompt();
         }
 
@@ -1425,6 +1423,34 @@ Step 6: Progress Monitoring
             let needsSlides = lessonState.outputs.includes('slides');
             let needsWorksheet = lessonState.outputs.includes('worksheet');
             let needsContent = lessonState.outputs.includes('content');
+
+            if (lessonState.relief) {
+                let text = `@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this relief worksheet. If you cannot directly create the file, output the full worksheet using clean Markdown text so I can copy it into a Doc.\n\n`;
+                text += `"Act as an expert curriculum designer. I need an EMERGENCY RELIEF LESSON for a ${lessonState.year} ${lessonState.dept} class on the topic: ${topic}.\n\n`;
+                text += `CRITICAL INSTRUCTION: The relief teacher covering this class is a NON-SUBJECT SPECIALIST. DO NOT generate a standard 5-stage CPM lesson plan. Instead, generate a highly structured, self-contained Student Worksheet that contains enough reading and activities to keep students actively engaged for a FULL 60-MINUTE period.\n\n`;
+                text += `Because schools often need a quick printable packet for relief cover alongside the digital file, you MUST generate the full, comprehensive relief worksheet in TWO distinct formats:\n\n`;
+                text += `FORMAT 1 (The Google Doc Digital Version): Use your Google Workspace capabilities to CREATE A GOOGLE DOC file for this worksheet. Set the document font to 'Manrope' or 'Arial'.\n\n`;
+                text += `FORMAT 2 (The Printable PDF / HTML Version): Write the exact same worksheet but output it inside a SINGLE HTML code block (\`\`\`html ... \`\`\`). Include internal CSS styling it as a beautiful A4 printable document (import and use the 'Manrope' font via Google Fonts, clear borders, a Relief Teacher Cover Note header, and ample spacing for handwritten answers). The admin team will be able to save this HTML and simply 'Print to PDF'. CRITICAL: You MUST close the HTML code block with \`\`\` before moving on.\n\n`;
+                text += `The worksheet content MUST be beautifully formatted with clear headings and MUST follow this exact structure:\n`;
+                text += `1. Relief Teacher Instructions: A brief, clear note at the top explaining how to pace and manage the 60-minute lesson.\n`;
+                text += `2. Introduction Content (15-20 mins reading): A comprehensive, engaging reading passage explaining the core knowledge of ${topic}. It must be detailed enough to replace teacher instruction.\n`;
+                text += `3. Visual Integration: You MUST include visual elements within the content to aid comprehension. Include data tables, text-based flowcharts, and highly descriptive image placeholders (e.g., '[Insert diagram showing the cycle of...]') so the teacher knows exactly what picture to drop in.\n`;
+                text += `4. Key Vocabulary: 8-10 crucial disciplinary terms defined clearly for the students.\n`;
+                text += `5. Extensive 'You Do' Tasks (30-40 mins): A large volume of progressive questions and activities. Start with basic retrieval, move to paragraph writing/synthesis, and include a challenging extension task. There MUST be enough rigorous work to ensure fast-finishers do not finish early.\n\n`;
+                
+                if (lessonState.context === 'waiheke') {
+                    text += `LOCAL CONTEXT RULE: Try to weave a local Waiheke or Hauraki Gulf context into the Introduction Content if possible.\n\n`;
+                }
+                if (lessonState.maori === 'integrate') {
+                    text += `MĀTAURANGA MĀORI RULE: Try to weave relevant Mātauranga Māori or local iwi context into the Introduction Content.\n\n`;
+                }
+
+                text += `Ensure all output uses New Zealand English spelling and terminology."`;
+                
+                const box = document.getElementById('prompt-lesson-text');
+                if(box) box.innerText = text;
+                return;
+            }
 
             let text = "";
             if (needsSlides || needsWorksheet) {
