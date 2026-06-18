@@ -1,0 +1,312 @@
+<aside_patch file="WHS_CPM_Navigator.html" section="header-and-layout-fixes">
+  <div class="code_diff">
+    <div class="diff_remove">
+      <style>
+        :root {
+          --whs-accent: #e2e8f0; /* Darker background */
+          --whs-bg: #ffffff;
+          --whs-text: #002066;
+          --whs-border: #e2e8f0;
+          --whs-primary: #002066;
+          --whs-light: #d1e6f6;
+          --whs-font-main: 'Manrope', 'Arial', sans-serif;
+          --shadow-main: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+          --english-bg: #EBF5FA;
+          --english-text: #22229D;
+          --maths-bg: #F8E7EE;
+          --maths-text: #9F1559;
+          --ci-bg: #FDECE7;
+          --ci-text: #DB2026;
+          --performing-bg: #FFF7EE;
+          --performing-text: #9A6300;
+          --trade-bg: #E9E9E9;
+          --trade-text: #262626;
+          --science-bg: #E4F4E5;
+          --science-text: #007040;
+          --pe-bg: #FFEDED;
+          --pe-text: #BF0000;
+          --maori-bg: #ECFBFF;
+          --maori-text: #1A6ABE;
+          --social-bg: #F5EFFF;
+          --social-text: #7900CC;
+        }
+
+        /* Set the main container background */
+        .whs-container {
+          background-color: var(--whs-accent);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Header as dark banner */
+        .whs-header {
+          background-color: var(--whs-primary);
+          color: #ffffff; /* White text for accessibility */
+          padding: 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2px solid #ffffff;
+        }
+
+        /* Make the header title card much larger and panoramic to reduce dead space */
+        .whs-header-card {
+          background-color: var(--whs-light); /* Keep light field */
+          border-radius: 12px;
+          padding: 1rem 1.5rem; /* Reduced padding slightly to fill card */
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+          border: 1px solid var(--whs-text); /* Add WHS Dark Blue border */
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          cursor: pointer;
+          transition: background-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .whs-logo-frame {
+          /* Frame around the logo image to make it seen better */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #ffffff; /* White field for logo for high contrast */
+          border-radius: 8px;
+          padding: 0.5rem;
+          width: 100px; /* Define fixed sizes */
+          height: 100px;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .whs-logo {
+          width: auto;
+          height: 100%; /* Fill frame height */
+          display: block; /* Ensure no image spacing bugs */
+        }
+
+        .whs-title-group {
+          /* Text group remains, but title text will be larger */
+        }
+
+        .whs-h1 {
+          font-family: var(--whs-font-main);
+          font-weight: 700;
+          font-size: 2rem; /* Larger title text to fill space */
+          color: var(--whs-text);
+          margin-bottom: 0.25rem;
+        }
+
+        .whs-subtitle {
+          color: var(--whs-text);
+          opacity: 0.8;
+          font-size: 1.1rem;
+        }
+
+        .whs-error-card {
+          background-color: #ffffff;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          color: #dc2626;
+          font-weight: bold;
+        }
+
+        .whs-nav-card {
+          background-color: #ffffff;
+          border-radius: 12px;
+          padding: 0.25rem;
+          display: flex;
+          gap: 0.25rem;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .whs-nav-item {
+          background: none;
+          border: none;
+          color: var(--whs-text);
+          padding: 0.75rem 1.5rem;
+          font-family: var(--whs-font-main);
+          font-weight: 600;
+          font-size: 1rem;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background-color 0.2s, color 0.2s;
+        }
+
+        .whs-nav-item:hover {
+          background-color: var(--whs-accent);
+        }
+
+        .whs-nav-item.active {
+          background-color: var(--whs-primary);
+          color: #ffffff;
+        }
+      </style>
+    </div>
+    <div class="diff_add">
+      <style>
+        :root {
+          --whs-accent: #e2e8f0; /* Darker background */
+          --whs-bg: #ffffff;
+          --whs-text: #002066;
+          --whs-border: #e2e8f0;
+          --whs-primary: #002066;
+          --whs-light: #d1e6f6;
+          --whs-font-main: 'Manrope', 'Arial', sans-serif;
+          --shadow-main: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+          --english-bg: #EBF5FA;
+          --english-text: #22229D;
+          --maths-bg: #F8E7EE;
+          --maths-text: #9F1559;
+          --ci-bg: #FDECE7;
+          --ci-text: #DB2026;
+          --performing-bg: #FFF7EE;
+          --performing-text: #9A6300;
+          --trade-bg: #E9E9E9;
+          --trade-text: #262626;
+          --science-bg: #E4F4E5;
+          --science-text: #007040;
+          --pe-bg: #FFEDED;
+          --pe-text: #BF0000;
+          --maori-bg: #ECFBFF;
+          --maori-text: #1A6ABE;
+          --social-bg: #F5EFFF;
+          --social-text: #7900CC;
+        }
+
+        /* Set the main container background */
+        .whs-container {
+          background-color: var(--whs-accent);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        /* Header as dark banner */
+        .whs-header {
+          background-color: var(--whs-primary);
+          color: #ffffff; /* White text for accessibility */
+          padding: 2rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 2px solid #ffffff;
+        }
+
+        /* Panoramic header card containing new image */
+        .whs-header-card-panoramic {
+          border-radius: 12px;
+          cursor: pointer;
+          width: 80%; /* Wider width */
+          aspect-ratio: 21 / 9; /* Panoramic ratio */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .whs-header-card-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 12px;
+        }
+
+        .whs-error-card {
+          background-color: #ffffff;
+          padding: 0.5rem 1rem;
+          border-radius: 8px;
+          color: #dc2626;
+          font-weight: bold;
+        }
+
+        .whs-nav-card {
+          background-color: #ffffff;
+          border-radius: 12px;
+          padding: 0.25rem;
+          display: flex;
+          gap: 0.25rem;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .whs-nav-item {
+          background: none;
+          border: none;
+          color: var(--whs-text);
+          padding: 0.75rem 1.5rem;
+          font-family: var(--whs-font-main);
+          font-weight: 600;
+          font-size: 1rem;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background-color 0.2s, color 0.2s;
+        }
+
+        .whs-nav-item:hover {
+          background-color: var(--whs-accent);
+        }
+
+        .whs-nav-item.active {
+          background-color: var(--whs-primary);
+          color: #ffffff;
+        }
+        
+        /* Visually hide HTML titles but keep for accessibility */
+        .whs-sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          border: 0;
+        }
+      </style>
+    </div>
+  </div>
+</aside_patch>
+
+<aside_patch file="WHS_CPM_Navigator.html" section="layout-fixes-v2">
+  <div class="code_diff">
+    <div class="diff_remove">
+      <header class="whs-header" aria-labelledby="whs-title">
+        <div class="whs-header-card" onclick="alert('Returning to school home...')" role="link">
+          <div class="whs-logo-frame">
+            <img src="Asset 1@2x.png" alt="Waiheke High School Logo" class="whs-logo">
+          </div>
+          <div class="whs-title-group">
+            <h1 id="whs-title" class="whs-h1">WHS CPM Navigator</h1>
+            <p class="whs-subtitle">AI-Pedagogy Integration Engine</p>
+          </div>
+        </div>
+        <nav class="whs-nav-card" role="tablist">
+          <!-- All navigation buttons are restored -->
+          <button class="whs-nav-item active" role="tab" aria-selected="true" id="tab-instructional-hub">Instructional Hub</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-unit-planner">Unit Planner</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-lesson-builder">Lesson Builder</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-student-support">Student Support</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-advanced-ai">Advanced AI</button>
+        </nav>
+      </header>
+    </div>
+    <div class="diff_add">
+      <header class="whs-header" aria-labelledby="whs-title">
+        <div class="whs-header-card-panoramic" onclick="alert('Returning to school home...')" role="link">
+          <!-- Single panoramic image with text and graphics. Logo seen better, text larger. -->
+          <img src="cpm_navigator_banner.png" alt="" class="whs-header-card-image" aria-hidden="true">
+          <!-- Visually hidden accessibility layer -->
+          <div class="whs-sr-only">
+            <h1 id="whs-title" class="whs-h1">WHS CPM Navigator</h1>
+            <p class="whs-subtitle">AI-Pedagogy Integration Engine</p>
+          </div>
+        </div>
+        <nav class="whs-nav-card" role="tablist">
+          <button class="whs-nav-item active" role="tab" aria-selected="true" id="tab-instructional-hub">Instructional Hub</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-unit-planner">Unit Planner</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-lesson-builder">Lesson Builder</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-student-support">Student Support</button>
+          <button class="whs-nav-item" role="tab" aria-selected="false" id="tab-advanced-ai">Advanced AI</button>
+        </nav>
+      </header>
+    </div>
+  </div>
+</aside_patch>
