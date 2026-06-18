@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en-NZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiheke High School: CPM & Knowledge-Rich Navigator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root {
+            --whs-dark-blue: #002066;
+            --whs-gold: #c5a059;
+            --whs-light-blue: #d1e6f6;
+            --whs-accent: #f8fafc;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--whs-accent);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .whs-gradient-bg {
+            background: linear-gradient(135deg, var(--whs-dark-blue) 0%, #0033a0 100%);
+        }
+
+        .glass-card {
+            background: white;
+            border: 1px solid var(--whs-light-blue);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1rem;
+            color: #64748b;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            color: var(--whs-dark-blue);
+        }
+
+        .nav-active {
+            border-bottom-color: var(--whs-dark-blue);
+            color: var(--whs-dark-blue);
+            font-weight: 800;
+        }
+
+        .dept-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            background: white;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            transition: all 0.2s;
+        }
+        
+        .dept-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .dept-btn.active {
+            background: var(--whs-dark-blue);
+            color: white;
+            border-color: var(--whs-dark-blue);
+        }
+
+        .stage-btn {
+            padding: 1rem;
+            border-radius: 1rem;
+            background: white;
+            border: 2px solid transparent;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .stage-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--whs-light-blue);
+        }
+
+        .stage-btn.active {
+            border-color: var(--whs-dark-blue);
+            background: var(--whs-light-blue);
+        }
+
+        .builder-btn {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            background: white;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .builder-btn:hover {
+            border-color: var(--whs-dark-blue);
+            color: var(--whs-dark-blue);
+        }
+
+        .builder-btn.active {
+            background: var(--whs-dark-blue);
+            color: white;
+            border-color: var(--whs-dark-blue);
+        }
+
+        .copy-btn-success {
+            background-color: #16a34a !important;
+            color: white !important;
+            border-color: #16a34a !important;
+        }
+
+        /* Tooltip CSS */
+        .tooltip-wrapper {
+            position: relative;
+        }
+        .tooltip-wrapper::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 0.75rem;
+            background-color: #1e293b;
+            color: #f8fafc;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1.4;
+            text-align: center;
+            white-space: normal;
+            width: max-content;
+            max-width: 240px;
+            border-radius: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease-in-out;
+            z-index: 50;
+            pointer-events: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        .tooltip-wrapper::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease-in-out;
+            z-index: 50;
+            pointer-events: none;
+        }
+        .tooltip-wrapper:hover::after,
+        .tooltip-wrapper:hover::before {
+            opacity: 1;
+            visibility: visible;
+        }
+        .tooltip-wrapper:hover {
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="whs-gradient-bg rounded-3xl p-8 md:p-12 text-white mb-10 shadow-lg relative overflow-hidden flex justify-between items-center">
+            <div class="relative z-10">
+                <h1 class="text-3xl md:text-5xl font-black mb-3 tracking-tight">Waiheke High School</h1>
+                <h2 class="text-xl md:text-2xl font-light opacity-90">CPM & AI Navigator</h2>
+                <div class="mt-4 inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/30 text-xs font-bold uppercase tracking-widest text-blue-100">
+                    Knowledge & Practices Hub
+                </div>
+            </div>
+            <!-- AI Network Graphic -->
+            <svg class="absolute right-0 top-0 h-full w-64 text-white/10 transform translate-x-1/4 -translate-y-1/4 scale-150" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2zm-4-6h2v4H7zm0 6h2v2H7zm8-6h2v4h-2zm0 6h2v2h-2z" opacity="0.3"/>
+                <circle cx="12" cy="12" r="3" />
+                <path d="M12 7l-3 4h6zM7 12l4 3v-6zM17 12l-4-3v6zM12 17l3-4H9z" opacity="0.7"/>
+            </svg>
+        </header>
+
+        <nav class="flex justify-center border-b-2 border-slate-200 mb-6 gap-2 md:gap-8 overflow-x-auto">
+            <button onclick="showView('instructional')" id="nav-instructional" class="nav-btn nav-active">The Instructional Hub</button>
+            <button onclick="showView('planning')" id="nav-planning" class="nav-btn">AI Planning Suite</button>
+            <button onclick="showView('students')" id="nav-students" class="nav-btn">Student Support</button>
+            <button onclick="showView('advanced')" id="nav-advanced" class="nav-btn">Advanced AI Tools</button>
+        </nav>
+
+        <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
+            <div class="flex-grow">
+                <label for="global-topic" class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Updates all prompts)</label>
+                <input type="text" id="global-topic" oninput="updateAllPrompts()" placeholder="e.g. Newton's Laws, Creative Writing, Treaty of Waitangi..." class="w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800">
+            </div>
+        </div>
+
+        <div id="view-instructional" class="space-y-8 animate-in fade-in duration-500">
+            
+            <div class="space-y-4">
+                <!-- Department Filters -->
+                <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <button onclick="setDiscipline('STEM')" id="btn-STEM" class="dept-btn active">STEM</button>
+                    <button onclick="setDiscipline('Humanities')" id="btn-Humanities" class="dept-btn">Humanities</button>
+                    <button onclick="setDiscipline('English')" id="btn-English" class="dept-btn">English</button>
+                    <button onclick="setDiscipline('Māori')" id="btn-Māori" class="dept-btn">Māori</button>
+                    <button onclick="setDiscipline('Technology')" id="btn-Technology" class="dept-btn">Technology</button>
+                    <button onclick="setDiscipline('Arts')" id="btn-Arts" class="dept-btn">Arts</button>
+                    <button onclick="setDiscipline('PEHealth')" id="btn-PEHealth" class="dept-btn">PE & Health</button>
+                </div>
+
+                <!-- Year Level Filters -->
+                <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
+                    <button onclick="setInstructionalYear('Year 7')" id="btn-inst-Year7" class="inst-year-btn dept-btn">Year 7</button>
+                    <button onclick="setInstructionalYear('Year 8')" id="btn-inst-Year8" class="inst-year-btn dept-btn">Year 8</button>
+                    <button onclick="setInstructionalYear('Year 9')" id="btn-inst-Year9" class="inst-year-btn dept-btn">Year 9</button>
+                    <button onclick="setInstructionalYear('Year 10')" id="btn-inst-Year10" class="inst-year-btn dept-btn">Year 10</button>
+                    <button onclick="setInstructionalYear('Year 11')" id="btn-inst-Year11" class="inst-year-btn dept-btn active">Year 11</button>
+                    <button onclick="setInstructionalYear('Year 12')" id="btn-inst-Year12" class="inst-year-btn dept-btn">Year 12</button>
+                    <button onclick="setInstructionalYear('Year 13')" id="btn-inst-Year13" class="inst-year-btn dept-btn">Year 13</button>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- CPM Stages Column -->
+                <div class="lg:col-span-3 space-y-3">
+                    <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">CPM Stages</h3>
+                    <div onclick="setStage(1)" id="btn-stage-1" class="stage-btn active">
+                        <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 1</span>
+                        <span class="font-bold text-[#002066]">Connect</span>
+                    </div>
+                    <div onclick="setStage(2)" id="btn-stage-2" class="stage-btn">
+                        <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 2</span>
+                        <span class="font-bold text-[#002066]">I Do</span>
+                    </div>
+                    <div onclick="setStage(3)" id="btn-stage-3" class="stage-btn">
+                        <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 3</span>
+                        <span class="font-bold text-[#002066]">We Do</span>
+                    </div>
+                    <div onclick="setStage(4)" id="btn-stage-4" class="stage-btn">
+                        <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 4</span>
+                        <span class="font-bold text-[#002066]">You Do</span>
+                    </div>
+                    <div onclick="setStage(5)" id="btn-stage-5" class="stage-btn">
+                        <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 5</span>
+                        <span class="font-bold text-[#002066]">Review</span>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-9">
+                    <div class="glass-card p-8 h-full flex flex-col">
+                        <div class="mb-6">
+                            <h3 id="display-title" class="text-3xl font-black text-[#002066] mb-2">Stage 1: Connect</h3>
+                            <p id="display-intent" class="text-sm text-slate-600 font-medium">Activates existing schemas in long-term memory. Primes working memory for new inputs.</p>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-8 flex-grow">
+                            <!-- Strategies -->
+                            <div>
+                                <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy to Update Prompt</h4>
+                                <div id="display-strategies" class="space-y-2">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                            
+                            <!-- AI Prompt Output -->
+                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
+                                <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest mb-4">Expert Assistant Prompt</h4>
+                                <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 mb-6 flex-grow shadow-inner relative group">
+                                    <span id="prompt-text-instructional">Select a strategy to generate prompt...</span>
+                                    <button onclick="copyText('prompt-text-instructional', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY</button>
+                                </div>
+                                <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#002066] text-white rounded-xl font-bold hover:bg-blue-800 transition">
+                                    Open Gemini App ↗
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-planning" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">The AI Teacher-Architect</h2>
+                <p class="text-slate-600">Use dynamic Pick & Mix builders to construct massive, highly specific prompts for your unit and lesson designs.</p>
+            </div>
+
+            <div class="glass-card p-8 border-t-8 border-t-[#c5a059]">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Unit Sequence Builder</h3>
+                <p class="text-sm text-slate-600 mb-6">Generates a structured multi-week plan outlining Knowledge and Practices.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <!-- Dept -->
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                            <div class="flex flex-wrap gap-2" id="unit-dept-opts">
+                                <button onclick="setUnitState('dept', 'STEM', this)" class="builder-btn active">STEM</button>
+                                <button onclick="setUnitState('dept', 'Humanities', this)" class="builder-btn">Humanities</button>
+                                <button onclick="setUnitState('dept', 'English', this)" class="builder-btn">English</button>
+                                <button onclick="setUnitState('dept', 'Māori', this)" class="builder-btn">Māori</button>
+                                <button onclick="setUnitState('dept', 'Technology', this)" class="builder-btn">Technology</button>
+                                <button onclick="setUnitState('dept', 'Arts', this)" class="builder-btn">Arts</button>
+                                <button onclick="setUnitState('dept', 'PE & Health', this)" class="builder-btn">PE & Health</button>
+                            </div>
+                        </div>
+                        <!-- Year -->
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                            <div class="flex flex-wrap gap-2" id="unit-year-opts">
+                                <button onclick="setUnitState('year', 'Year 7', this)" class="builder-btn">Year 7</button>
+                                <button onclick="setUnitState('year', 'Year 8', this)" class="builder-btn">Year 8</button>
+                                <button onclick="setUnitState('year', 'Year 9', this)" class="builder-btn">Year 9</button>
+                                <button onclick="setUnitState('year', 'Year 10', this)" class="builder-btn">Year 10</button>
+                                <button onclick="setUnitState('year', 'Year 11 (NCEA Level 1)', this)" class="builder-btn active">Y11 (NCEA L1)</button>
+                                <button onclick="setUnitState('year', 'Year 12 (NCEA Level 2)', this)" class="builder-btn">Y12 (NCEA L2)</button>
+                                <button onclick="setUnitState('year', 'Year 13 (NCEA Level 3)', this)" class="builder-btn">Y13 (NCEA L3)</button>
+                            </div>
+                        </div>
+                        <!-- Duration -->
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Duration</span>
+                            <div class="flex flex-wrap gap-2" id="unit-dur-opts">
+                                <button onclick="setUnitState('dur', '4 lessons', this)" class="builder-btn">4 Lessons</button>
+                                <button onclick="setUnitState('dur', '8 lessons', this)" class="builder-btn">8 Lessons</button>
+                                <button onclick="setUnitState('dur', '12 lessons', this)" class="builder-btn active">12 Lessons</button>
+                                <button onclick="setUnitState('dur', '16 lessons', this)" class="builder-btn">16 Lessons</button>
+                                <button onclick="setUnitState('dur', '20 lessons', this)" class="builder-btn">20 Lessons</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Output -->
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col relative group">
+                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-6">
+<span id="prompt-unit-text">...</span>
+                        </div>
+                        <button onclick="copyText('prompt-unit-text', this)" class="absolute top-8 right-8 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm z-10">COPY</button>
+                        
+                        <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#c5a059] text-white rounded-xl font-bold hover:bg-amber-600 transition flex items-center justify-center gap-2 shadow-md">
+                            Open Gemini App ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 border-t-8 border-t-[#002066]">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">CPM Lesson Engine Builder</h3>
+                <p class="text-sm text-slate-600 mb-6">Build a hyper-specific prompt by picking strategies for each CPM stage. Generates slides, learning intentions, and links.</p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <!-- Stage Pickers -->
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 1: Connect</span>
+                            <div class="flex flex-wrap gap-2" id="les-s1-opts">
+                                <button onclick="setLessonState('s1', 'Retrieval Do-Now Quiz', this)" class="builder-btn active">Retrieval Quiz</button>
+                                <button onclick="setLessonState('s1', 'Concept Mapping', this)" class="builder-btn">Concept Mapping</button>
+                                <button onclick="setLessonState('s1', 'Vocabulary Flash-drills', this)" class="builder-btn">Vocab Drills</button>
+                                <button onclick="setLessonState('s1', 'Image/Diagram Prompt', this)" class="builder-btn">Image Prompt</button>
+                                <button onclick="setLessonState('s1', 'Previous Lesson Brain Dump', this)" class="builder-btn">Brain Dump</button>
+                                <button onclick="setLessonState('s1', 'Pick a Stick (Randomised Call)', this)" class="builder-btn">Pick a Stick</button>
+                                <button onclick="setLessonState('s1', 'Track With Me', this)" class="builder-btn">Track With Me</button>
+                                <button onclick="setLessonState('s1', 'Goal Setting', this)" class="builder-btn">Goal Setting</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 2: I Do</span>
+                            <div class="flex flex-wrap gap-2" id="les-s2-opts">
+                                <button onclick="setLessonState('s2', 'Think-Aloud Script', this)" class="builder-btn active">Think-Aloud</button>
+                                <button onclick="setLessonState('s2', 'Dual-Coding Diagram', this)" class="builder-btn">Dual-Coding</button>
+                                <button onclick="setLessonState('s2', 'Worked Example', this)" class="builder-btn">Worked Example</button>
+                                <button onclick="setLessonState('s2', 'Frayer Model Definition', this)" class="builder-btn">Frayer Model</button>
+                                <button onclick="setLessonState('s2', 'Common Misconception Highlight', this)" class="builder-btn">Misconceptions</button>
+                                <button onclick="setLessonState('s2', 'Live Drawing / Construction', this)" class="builder-btn">Live Drawing</button>
+                                <button onclick="setLessonState('s2', 'Deliberate Error Modelling', this)" class="builder-btn">Error Modelling</button>
+                                <button onclick="setLessonState('s2', 'Advance Organiser Frontloading', this)" class="builder-btn">Advance Organiser</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 3: We Do</span>
+                            <div class="flex flex-wrap gap-2" id="les-s3-opts">
+                                <button onclick="setLessonState('s3', 'Mini-Whiteboards', this)" class="builder-btn active">Mini-Whiteboards</button>
+                                <button onclick="setLessonState('s3', 'Think-Pair-Share', this)" class="builder-btn">Think-Pair-Share</button>
+                                <button onclick="setLessonState('s3', 'Choral Response', this)" class="builder-btn">Choral Response</button>
+                                <button onclick="setLessonState('s3', 'Guided Error Analysis', this)" class="builder-btn">Error Analysis</button>
+                                <button onclick="setLessonState('s3', 'A/B Peer Teaching', this)" class="builder-btn">Peer Teaching</button>
+                                <button onclick="setLessonState('s3', 'Backward Fading Scaffolding', this)" class="builder-btn">Backward Fading</button>
+                                <button onclick="setLessonState('s3', 'Problem Pairs', this)" class="builder-btn">Problem Pairs</button>
+                                <button onclick="setLessonState('s3', 'Reverse Engineering', this)" class="builder-btn">Reverse Engineering</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 4: You Do</span>
+                            <div class="flex flex-wrap gap-2" id="les-s4-opts">
+                                <button onclick="setLessonState('s4', 'Tiered Tasks', this)" class="builder-btn active">Tiered Tasks</button>
+                                <button onclick="setLessonState('s4', 'Independent Scaffolds', this)" class="builder-btn">Writing Scaffolds</button>
+                                <button onclick="setLessonState('s4', 'Peer Critique', this)" class="builder-btn">Peer Critique</button>
+                                <button onclick="setLessonState('s4', 'Spaced Retrieval Worksheet', this)" class="builder-btn">Retrieval Sheet</button>
+                                <button onclick="setLessonState('s4', 'Concept Synthesis Task', this)" class="builder-btn">Concept Synthesis</button>
+                                <button onclick="setLessonState('s4', 'Interleaved Practice Set', this)" class="builder-btn">Interleaved Practice</button>
+                                <button onclick="setLessonState('s4', 'Sentence Scaffolds', this)" class="builder-btn">Sentence Scaffolds</button>
+                                <button onclick="setLessonState('s4', 'Past Paper Simulation', this)" class="builder-btn">Past Paper</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 5: Review</span>
+                            <div class="flex flex-wrap gap-2" id="les-s5-opts">
+                                <button onclick="setLessonState('s5', 'Exit Ticket', this)" class="builder-btn active">Exit Ticket</button>
+                                <button onclick="setLessonState('s5', '3-2-1 Summary', this)" class="builder-btn">3-2-1 Summary</button>
+                                <button onclick="setLessonState('s5', 'SOLO Taxonomy Check', this)" class="builder-btn">SOLO Check</button>
+                                <button onclick="setLessonState('s5', 'Traffic Light Self-Assessment', this)" class="builder-btn">Traffic Light</button>
+                                <button onclick="setLessonState('s5', 'Next-Step Prediction', this)" class="builder-btn">Next-Step Prediction</button>
+                                <button onclick="setLessonState('s5', '60-Second Summary', this)" class="builder-btn">60-Sec Summary</button>
+                                <button onclick="setLessonState('s5', 'Metacognitive Journaling', this)" class="builder-btn">Metacognitive Journaling</button>
+                                <button onclick="setLessonState('s5', 'Two Stars and a Wish', this)" class="builder-btn">Two Stars/Wish</button>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-slate-200">
+                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Task / Activity Request (Optional)</span>
+                            <input type="text" id="les-custom-task" oninput="updateLessonBuilderPrompt()" placeholder="e.g. Include a practical lab experiment, Use a specific YouTube video, Base the You Do task on a local case study..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800">
+                        </div>
+
+                        <!-- Required Outputs Toggle -->
+                        <div class="pt-4 border-t border-slate-200">
+                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
+                            <div class="flex flex-wrap gap-2" id="les-output-opts">
+                                <button onclick="toggleLessonOutput('none')" id="btn-out-none" class="builder-btn active">Lesson Plan</button>
+                                <button onclick="toggleLessonOutput('slides')" id="btn-out-slides" class="builder-btn">+ Slides</button>
+                                <button onclick="toggleLessonOutput('worksheet')" id="btn-out-worksheet" class="builder-btn">+ Worksheet</button>
+                                <button onclick="toggleLessonOutput('content')" id="btn-out-content" class="builder-btn">+ Content Doc</button>
+                                <button onclick="toggleLessonOutput('all')" id="btn-out-all" class="builder-btn">All Outputs</button>
+                            </div>
+                        </div>
+
+                        <!-- Extra Differentiated Resource -->
+                        <div class="pt-4 border-t border-slate-200">
+                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Extra Differentiated Resource (You Do)</span>
+                            <div class="flex flex-wrap gap-2" id="les-extra-opts">
+                                <button onclick="setLessonState('extra', 'None', this)" class="builder-btn active">None (Standard Lesson)</button>
+                                <button onclick="setLessonState('extra', 'ESOL Learners (simplified vocab, visual reliance)', this)" class="builder-btn">ESOL Resource</button>
+                                <button onclick="setLessonState('extra', 'Low Literacy Accommodations (heavy scaffolding)', this)" class="builder-btn">Low Lit Scaffold</button>
+                                <button onclick="setLessonState('extra', 'Extension/Gifted (abstract application, complex texts)', this)" class="builder-btn">Extension Task</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output -->
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col relative group">
+                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-6">
+<span id="prompt-lesson-text">...</span>
+                        </div>
+                        <button onclick="copyText('prompt-lesson-text', this)" class="absolute top-8 right-8 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm z-10">COPY</button>
+                        
+                        <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#002066] text-white rounded-xl font-bold hover:bg-blue-800 transition flex items-center justify-center gap-2 shadow-md">
+                            Open Gemini App ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-students" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="max-w-3xl mx-auto text-center mb-8">
+                <h2 class="text-4xl font-black text-[#002066]">Alleviating Cognitive Load</h2>
+                <p class="text-slate-600">Post these exact prompts into Google Classroom. Students use them as a "Just-In-Time Scaffolder" to manage dense knowledge.</p>
+            </div>
+
+            <!-- Student Gem Highlight -->
+            <div class="glass-card p-8 mb-8 border-l-8 border-l-amber-500 bg-amber-50/50">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-amber-100 p-3 rounded-full text-2xl">🤖</div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-[#002066]">The WHS AI Tutor</h3>
+                        <p class="text-sm text-slate-600">If your teacher has set up a "Tutor Gem" for your class, use this prompt to start your personalized revision session.</p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 relative group shadow-sm">
+                    <span id="prompt-stu-tutor">"Act as my AI Tutor for Year 10 Social Studies (Economics Focus) on the topic of Global Economic Development and Inequality. My name is [Your Name]. Please start our interactive session."</span>
+                    <button onclick="copyText('prompt-stu-tutor', this)" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-700 hover:bg-amber-50 shadow-sm">COPY</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Cards -->
+                <div class="glass-card p-6 flex flex-col">
+                    <h4 class="font-bold text-lg mb-2">🧠 Retrieval Partner</h4>
+                    <p class="text-xs text-slate-600 mb-4">Spaced repetition before exams.</p>
+                    <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group flex-grow shadow-inner">
+                        <span id="prompt-stu-1">"Act as a quiz master. Ask me 5 questions about today's notes. Ask them one at a time and wait for my answer. If I get one wrong, explain it using an analogy. Ensure all output uses New Zealand English."</span>
+                        <button onclick="copyText('prompt-stu-1', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 flex flex-col">
+                    <h4 class="font-bold text-lg mb-2">📝 Practice Scaffolding</h4>
+                    <p class="text-xs text-slate-600 mb-4">Unsticking students during 'You Do'.</p>
+                    <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group flex-grow shadow-inner">
+                        <span id="prompt-stu-2">"I'm struggling to write my analysis. Give me 3 sentence starters for a student evaluating the reliability of this source. Ensure all output uses New Zealand English."</span>
+                        <button onclick="copyText('prompt-stu-2', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 flex flex-col">
+                    <h4 class="font-bold text-lg mb-2">🔍 Concept Unpacking</h4>
+                    <p class="text-xs text-slate-600 mb-4">Breaks down high-density topics.</p>
+                    <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group flex-grow shadow-inner">
+                        <span id="prompt-stu-3">"Explain the core concept we are studying first for a 10-year-old, then for a Year 13 student. Focus on the disciplinary vocabulary. Ensure all output uses New Zealand English."</span>
+                        <button onclick="copyText('prompt-stu-3', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 flex flex-col">
+                    <h4 class="font-bold text-lg mb-2">🎯 Success Criteria Check</h4>
+                    <p class="text-xs text-slate-600 mb-4">Self-assessment against NZ expectations.</p>
+                    <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group flex-grow shadow-inner">
+                        <span id="prompt-stu-4">"Compare my draft paragraph against the 'Practices' descriptors from the NZ Curriculum. Where is my evidence of disciplinary thinking weak? Ensure all output uses New Zealand English."</span>
+                        <button onclick="copyText('prompt-stu-4', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-advanced" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-[#c5a059] mb-4">Advanced AI Architecture</h2>
+                <p class="text-slate-600">Elevate your planning from generic chat to highly specialized, source-grounded instructional design.</p>
+            </div>
+
+            <!-- Advanced AI Toolset (The Tutor Gem) -->
+            <div class="whs-gradient-bg p-10 rounded-3xl text-white mb-8 shadow-lg border border-blue-900">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-amber-500 text-amber-900 p-2 rounded-lg font-black text-xl">✨</div>
+                    <h3 class="text-3xl font-bold tracking-tight">The "Tutor Gem" Generator</h3>
+                </div>
+                <p class="text-blue-100 mb-8 max-w-4xl text-sm leading-relaxed">
+                    Create a bespoke, highly-controlled AI Tutor for your specific class. Copy the system prompt below into a "Gemini Gem" (or ChatGPT Custom GPT). It forces the AI to act as a strict, patient pedagogical tutor that <strong>never gives away the answers</strong>, uses NZ spelling, and constantly checks for understanding using the Knowledge & Practices framework.
+                </p>
+                
+                <div class="bg-white/10 p-6 rounded-2xl border border-white/20 relative group">
+                    <div class="flex justify-between items-start mb-4 border-b border-white/20 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block mb-1">Copy this into the "System Instructions" of your Gem</span>
+                            <h4 class="font-bold text-xl">WHS Interactive AI Tutor Protocol</h4>
+                        </div>
+                        <button onclick="copyText('gem-tutor-prompt', this)" class="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-4 py-2 rounded-lg transition text-xs font-black tracking-wider shadow-sm backdrop-blur-sm">COPY FULL PROMPT</button>
+                    </div>
+                    
+                    <div id="gem-tutor-prompt" class="text-xs font-mono text-blue-50 leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto pr-4 custom-scrollbar">Role & Mission
+You are an enthusiastic, patient, and highly supportive AI tutor, dedicated to helping students in New Zealand achieve their academic goals. Your mission is to guide them through their learning journey with tailored support, encouragement, and interactive engagement.
+
+Student Details
+Student’s Name: [NAME]
+Year Level: Year 10 (New Zealand Curriculum - Levels 5/6 Social Sciences)
+Subject: Social Studies (Economics Focus)
+Topic: Global Economic Development and Inequality  
+Focus of the Topic: Interpreting development indicators, understanding global wealth distribution, comparing trade policies (free trade vs. protectionism), and evaluating foreign aid effectiveness.  
+
+⚠️ Missing Information Rule: If any of the Student Details (like [NAME] or [TOPIC]) are blank, read as 'N/A', or are unprovided, your very first action must be to politely ask the student to provide those details before you begin teaching.
+
+Step 1: Getting Started & Resource Introduction
+Warm Welcome: Begin by addressing [Student’s Name] directly and introducing yourself as their friendly AI tutor. Express enthusiasm for helping them master [Topic] in Year 10 Social Studies. Set a positive and encouraging tone for the session.
+Resource Introduction: Provide a concise, engaging overview of [Topic] (100-400 words), ensuring it covers the following core knowledge:
+- Define economic development as measuring both economic growth and social well-being.  
+- Introduce measurement indicators: Gross Domestic Product (GDP) per capita measures income, while the Human Development Index (HDI) measures life expectancy, education, and per capita income.  
+- Explain the Global Happiness Index (GHI) measures life satisfaction, social support, and freedom to make life choices.  
+- Describe global inequality by noting that high-income nations are highly concentrated in regions like North America, Western Europe, and Australasia, whereas low-income areas are heavily concentrated across Sub-Saharan Africa.  
+- Define trade barriers (protectionism) and contrast them with free trade.  
+- Distinguish between short-term emergency aid and long-term capacity building to avoid aid dependency.  
+
+🛑 Pacing Control: After providing the Warm Welcome and Resource Introduction, STOP. Ask the student if they are ready to begin the questions. Do not ask the first interactive question until the student explicitly confirms they are ready.
+
+Step 2: Interactive Learning, Data Analysis & Broader Knowledge Testing
+Engage [Student’s Name] with one question at a time, encouraging active participation. To support visual and statistical literacy, you must present data tables or text-based visual aids for the student to analyze.
+
+🔄 Dynamic Variation (Replayability) Rule: To ensure students can use this tutor multiple times for revision, you must never generate the exact same quiz twice. Every time a session begins, you must rotate the countries you select from the data tables, vary the specific trade barriers (tariffs, quotas, subsidies) you test, and rephrase the scenarios so the questions feel fresh and distinct from previous sessions.
+
+🧠 Broader Knowledge Rule: You must strictly avoid using the exact assessment questions. Instead, you must formulate questions using the broader concepts, case studies, and statistics from the wider Knowledge Base that are not explicitly on the assessment paper. This includes testing them on:  
+- New Zealand's ODA Allocation: E.g., Testing the fact that 63.2% of NZ's aid goes to the Pacific Region.  
+- Broader Economic Concepts: E.g., "Capital Flight," "The Leaky Bucket" metaphor, and the challenges of landlocked countries.  
+- Specific Case Studies: E.g., The Papua New Guinea UNICEF vaccination drive (multilateral aid) or the Vanuatu Post-Cyclone Pam transition from emergency to infrastructure aid.  
+
+📊 Presenting Tables of Data
+When testing data indicators, format the facts into a clear Markdown table for the student to interpret. Randomize your country selections from the provided resource lists each session.  
+- For Development Indicators: Present a table comparing different pairs of countries each session. For example, in one session compare Bhutan (GDP $3,500, High GHI 6.5) and India (GDP $2,700, Low GHI 4.0). In another session, compare El Salvador and Honduras. Ask the student to explain why income levels alone do not fully capture a population's well-being.  
+- For Development Tiers: Present a table featuring a mixed group of countries (e.g., El Salvador, DR Congo, and New Zealand in one session; Honduras, Nicaragua, and South Korea in another) to classify into Advanced, Emerging, or Low-Income developing economies based on their HDI and GDP data.  
+
+🗺️ Presenting Text-Based Visuals & Flowcharts
+When testing concepts that involve a process, impacts, or structures, generate a clear, text-based visual (like a flowchart or diagram) using arrows and boxes. Rotate the type of visual used in each session.
+- Trade Barrier Pathways: In one session, create a text flowchart showing a "Subsidy" grant dropping a local producer's retail price. In another session, diagram a "Quota" physically limiting imported shirts. Ask the student to identify how this impacts foreign producers in developing nations.  
+- Aid Structures & Governance: Vary between creating an ASCII text diagram showing the positive "Capacity Building Cycle" (Foreign Aid -> Local Training -> Self-Reliance) and the negative "Leaky Bucket" model (Foreign Aid -> Bad Governance -> Corruption/Capital Flight). Ask the student to evaluate the outcomes.  
+
+🔢 Question Tracking & Formats
+Mandatory Sequencing Rule: You MUST begin the interactive testing phase with exactly three (3) consecutive Multiple-Choice questions. After Question 3, you must mix the remaining question formats to enhance comprehension. Ensure every question starts with a tracker (e.g., "Question 1/12:"):
+- Multiple-choice (Questions 1, 2, and 3 ONLY): Use these first three questions to build confidence. Ask questions about the outdated nature of the Brandt Line due to the growth of emerging economies, basic definitions (like Official Development Assistance or ODA), or simple data interpretation from the tables.  
+- Fill-in-the-blank (Question 4 onwards): Use this to reinforce key vocabulary, such as "HDI," "Quotas," "Capital Flight," or "Foreign Direct Investment (FDI)".  
+- Short-answer responses (Question 4 onwards): Assess understanding of data trends presented in the dynamically generated tables or concepts like the "Leaky Bucket".  
+- Open-ended reasoning questions (Question 4 onwards): Ask the student to evaluate varying hypothetical scenarios or Knowledge Base case studies (e.g., one session analyzing the Vanuatu cyclone response, another analyzing New Zealand's strategic aid allocation to the Pacific).  
+
+Step 3: Handling Responses
+Handling Correct Answers: Offer positive reinforcement and affirm their understanding. Transition smoothly to the next question.
+Handling Incorrect Answers: If incorrect, gently prompt for a second attempt. If still incorrect, provide a clear, step-by-step explanation of the correct answer using the data table or visual as a reference.
+Handling "I don't know" / Skips: If the student replies "I don't know" or asks to skip, do not just give them the answer. Instead, break the current question down into a smaller, foundational question, or offer a highly relatable hint based on the visual aid provided.
+
+Step 4: Personalised Learning & Motivation
+Empower [Student’s Name] by allowing them to request clarifications on tricky concepts, additional examples to strengthen understanding, and connections to related concepts for deeper learning. If a student is struggling, offer a simplified explanation of foundational concepts.
+Maintain a positive, friendly, and encouraging tone throughout the session. Incorporate light humor to keep learning enjoyable. Relate questions to real-world scenarios relevant to [Student’s Name]’s experiences.
+
+Step 5: Progress Monitoring
+8-Question Check-in Pause: Wait until the student has completely answered Question 8 and you have provided their feedback. Before moving on to ask Question 9, pause the quiz and check in by asking: "How do you feel about your progress so far? Are there any areas you'd like to revisit? Do you want a Progress Report?". Do not ask the next question until they reply to this check-in.
+On-Demand Reports: Generate a personalised "Progress Report" upon request, summarising key concepts covered, areas of strength, and areas needing improvement.
+12-Question Mandatory Report: Immediately after the student has answered Question 12 (and received feedback), provide a mandatory progress report summarizing their performance. Use your Question Tracker to ensure this happens exactly after Question 12 is completed.</div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- NotebookLM -->
+                <div class="glass-card border-t-8 border-t-purple-600 p-8">
+                    <h3 class="text-2xl font-bold mb-4">NotebookLM <span class="text-sm font-normal text-slate-500">(Source-Grounded)</span></h3>
+                    <p class="text-sm text-slate-700 mb-6">Upload the NZ Curriculum draft PDFs into a Notebook. The AI will only use these specific documents to generate answers, eliminating US/UK hallucinations.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-purple-50 p-4 rounded-lg border border-purple-100 relative group">
+                            <span class="block text-xs font-bold text-purple-800 mb-1">Assessment Alignment</span>
+                            <span id="nl-prompt-1" class="text-sm font-mono text-slate-800">"Based on the uploaded Practice descriptors for this subject, evaluate this draft assignment. What specific Knowledge nodes are missing to achieve Merit or Excellence?"</span>
+                            <button onclick="copyText('nl-prompt-1', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-purple-800 shadow-sm">COPY</button>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg border border-purple-100 relative group">
+                            <span class="block text-xs font-bold text-purple-800 mb-1">Knowledge Scaffolding</span>
+                            <span id="nl-prompt-2" class="text-sm font-mono text-slate-800">"Extract the 10 most complex Tier 3 vocabulary words from these draft documents. Create a glossary specifically differentiated for a student with a reading age of 10."</span>
+                            <button onclick="copyText('nl-prompt-2', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-purple-800 shadow-sm">COPY</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Gems -->
+                <div class="glass-card border-t-8 border-t-teal-600 p-8">
+                    <h3 class="text-2xl font-bold mb-4">Gemini Gems <span class="text-sm font-normal text-slate-500">(Specialised Personas)</span></h3>
+                    <p class="text-sm text-slate-700 mb-6">Create dedicated AI assistants pre-programmed with specific pedagogical rules so you don't have to rewrite instructions every time.</p>
+
+                    <div class="space-y-4">
+                        <div class="bg-teal-50 p-4 rounded-lg border border-teal-100 relative group">
+                            <span class="block text-xs font-bold text-teal-800 mb-1">Feedback & Evaluation Gem</span>
+                            <span id="gem-prompt-1" class="text-sm font-mono text-slate-800">System Instruction: "You are an expert NZ marker. I will provide student work. You must evaluate it strictly against the Te Mātaiaho practices. Provide 2 'glows' (positives) and 1 specific 'grow' (next step)."</span>
+                            <button onclick="copyText('gem-prompt-1', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-teal-800 shadow-sm">COPY</button>
+                        </div>
+                        <div class="bg-teal-50 p-4 rounded-lg border border-teal-100 relative group">
+                            <span class="block text-xs font-bold text-teal-800 mb-1">Dual-Coding Design Gem</span>
+                            <span id="gem-prompt-2" class="text-sm font-mono text-slate-800">System Instruction: "You are an expert in Cognitive Load Theory. When I give you a topic, explicitly describe a simple, non-redundant diagram I should draw on the whiteboard while I deliver the verbal explanation."</span>
+                            <button onclick="copyText('gem-prompt-2', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-teal-800 shadow-sm">COPY</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
+            <p>© 2024 Waiheke High School Professional Learning Programme</p>
+            <p class="mt-1 font-semibold text-[#002066]">Knowledge & Practices Framework • Developed for Aotearoa Educators</p>
+        </footer>
+    </div>
+
+    <script>
+        // State Management
+        let currentDiscipline = 'STEM';
+        let currentStage = 1;
+        let currentInstructionalYear = 'Year 11';
+        let currentStrategy = null;
+
+        // Tooltip Descriptions Dictionary
+        const stratDesc = {
+            // Stage 1
+            "Retrieval Do-Now Quiz": "Quick assessments to gauge what students already know.",
+            "Retrieval Quiz": "Quick assessments to gauge what students already know.",
+            "5-Question Recall Quiz": "Quick assessments to gauge what students already know.",
+            "Concept Mapping": "A visible thinking routine to map connections between concepts.",
+            "Vocabulary Flash-drills": "Fast-paced drills to secure tier-three vocabulary.",
+            "Vocabulary Flashcards": "Fast-paced drills to secure tier-three vocabulary.",
+            "Vocab Drills": "Fast-paced drills to secure tier-three vocabulary.",
+            "Image/Diagram Prompt": "Using a visual stimulus to prime working memory.",
+            "Image Prompt": "Using a visual stimulus to prime working memory.",
+            "Previous Lesson Brain Dump": "Recalling everything remembered from the previous session.",
+            "Brain Dump": "Recalling everything remembered from the previous session.",
+            "Pick a Stick (Randomised Call)": "Randomised selection to ensure inclusive participation.",
+            "Pick a Stick": "Randomised selection to ensure inclusive participation.",
+            "Track With Me": "Engaging students in following along with a specific text or data.",
+            "Goal Setting": "Explicitly sharing or co-constructing learning intentions.",
+            
+            // Stage 2
+            "Think-Aloud Script": "Unpacking cognitive processes by narrating thoughts.",
+            "Think-Aloud": "Unpacking cognitive processes by narrating thoughts.",
+            "Dual-Coding Diagram": "Combining visuals and words to expand working memory.",
+            "Dual-Coding": "Combining visuals and words to expand working memory.",
+            "Worked Example": "Providing a step-by-step demonstration of a practice.",
+            "Frayer Model Definition": "Using examples and non-examples to define concepts.",
+            "Frayer Model": "Using examples and non-examples to define concepts.",
+            "Common Misconception Highlight": "Explicitly addressing typical errors before they are made.",
+            "Misconceptions": "Explicitly addressing typical errors before they are made.",
+            "Live Drawing / Construction": "Drawing in real-time so students see the process.",
+            "Live Drawing": "Drawing in real-time so students see the process.",
+            "Deliberate Error Modelling": "Demonstrating a flawed example to show how to fix it.",
+            "Error Modelling": "Demonstrating a flawed example to show how to fix it.",
+            "Advance Organiser Frontloading": "Delivering a conceptual overview at the start.",
+            "Advance Organiser": "Delivering a conceptual overview at the start.",
+            
+            // Stage 3
+            "Mini-Whiteboards": "Drafting quick answers to identify misconceptions instantly.",
+            "Think-Pair-Share": "Structured peer discussion to articulate thinking.",
+            "Choral Response": "Whole group vocalisation to build acoustic familiarity.",
+            "Guided Error Analysis": "Analysing and correcting errors as a class.",
+            "Error Analysis": "Analysing and correcting errors as a class.",
+            "A/B Peer Teaching": "Students take turns summarising a procedural step.",
+            "Peer Teaching": "Students take turns summarising a procedural step.",
+            "Backward Fading Scaffolding": "Progressively leaving more steps blank in worked examples.",
+            "Backward Fading": "Progressively leaving more steps blank in worked examples.",
+            "Problem Pairs": "Teacher models one problem, students try an identical one.",
+            "Reverse Engineering": "Giving a final solution and working backward to find steps.",
+            
+            // Stage 4
+            "Tiered Tasks": "Differentiated assignments moving from concrete to abstract.",
+            "Tiered Difficulty Problem Set": "Differentiated assignments moving from concrete to abstract.",
+            "Independent Scaffolds": "Writing frames that are slowly removed.",
+            "Writing Scaffolds": "Writing frames that are slowly removed.",
+            "Peer Critique": "Reviewing a partner's work against a specific rubric.",
+            "Spaced Retrieval Worksheet": "Independent practice that includes older topics.",
+            "Retrieval Sheet": "Independent practice that includes older topics.",
+            "Concept Synthesis Task": "Applying multiple concepts to a novel problem.",
+            "Concept Synthesis": "Applying multiple concepts to a novel problem.",
+            "Interleaved Practice Set": "Mixing different topics to improve long-term retention.",
+            "Interleaved Practice": "Mixing different topics to improve long-term retention.",
+            "Sentence Scaffolds": "Providing starters to help students use academic language.",
+            "Past Paper Simulation": "Completing a section of an exam under timed conditions.",
+            "Past Paper": "Completing a section of an exam under timed conditions.",
+            
+            // Stage 5
+            "Exit Ticket": "Small tasks linked to Success Criteria completed before leaving.",
+            "3-2-1 Summary": "Summarising 3 facts, 2 questions, and 1 takeaway.",
+            "SOLO Taxonomy Check": "Categorising the depth of understanding (SOLO taxonomy).",
+            "SOLO Taxonomy Reflection": "Categorising the depth of understanding (SOLO taxonomy).",
+            "SOLO Check": "Categorising the depth of understanding (SOLO taxonomy).",
+            "Traffic Light Self-Assessment": "A quick visual check of student confidence.",
+            "Traffic Light": "A quick visual check of student confidence.",
+            "Next-Step Prediction": "Previewing the next link in the knowledge sequence.",
+            "60-Second Summary": "Challenging a student to summarise the lesson in 60 seconds.",
+            "60-Sec Summary": "Challenging a student to summarise the lesson in 60 seconds.",
+            "Metacognitive Journaling": "Writing about a moment of struggle and overcoming it.",
+            "Two Stars and a Wish": "Identify two successes and one area for improvement.",
+            "Two Stars/Wish": "Identify two successes and one area for improvement."
+        };
+
+        function getDesc(name) {
+            if (stratDesc[name]) return stratDesc[name];
+            for (let key in stratDesc) {
+                if (name.includes(key) || key.includes(name)) return stratDesc[key];
+            }
+            return "Click to generate a specific AI prompt for this instructional strategy.";
+        }
+
+        const unitState = { dept: 'STEM', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons' };
+        const lessonState = { outputs: [], extra: 'None', s1: 'Retrieval Do-Now Quiz', s2: 'Think-Aloud Script', s3: 'Mini-Whiteboards', s4: 'Tiered Tasks', s5: 'Exit Ticket' };
+
+        // Extensive CPM Matrix Content (7 Departments x 5 Stages x 9 Strategies)
+        const generateStrategies = (stage, customStrategies) => {
+            const defaults = {
+                1: ["5-Question Recall Quiz", "Previous Lesson Brain Dump", "Vocabulary Flashcards", "Image/Diagram Prompt", "Predict the Outcome", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"],
+                2: ["Think-Aloud Problem Solving", "Dual-Coding Diagram Draw", "Step-by-Step Worked Example", "Frayer Model for Key Term", "Common Misconception Highlight", "Physical Demonstration", "Deliberate Error Modelling", "Live Drawing / Construction", "Advance Organiser Frontloading"],
+                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Error Analysis Task", "Guided Calculation/Steps", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering"],
+                4: ["Tiered Difficulty Problem Set", "Spaced Retrieval Worksheet", "Self-Checking Lab Task", "Concept Synthesis Question", "Speed Fluency Drills", "Create Your Own Question", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"],
+                5: ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Key Formula Recall", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"]
+            };
+            return customStrategies || defaults[stage];
+        };
+
+        const cpmMatrix = {
+            'STEM': {
+                1: generateStrategies(1),
+                2: generateStrategies(2),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Find the Error (Maths)", "Guided Formula Application", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering"]),
+                4: generateStrategies(4),
+                5: generateStrategies(5)
+            },
+            'Humanities': {
+                1: generateStrategies(1, ["Chronology Ordering Quiz", "Source Recall", "Vocabulary Flashcards", "Image/Map Prompt", "Predict the Outcome", "Historical Figure Match", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
+                2: generateStrategies(2, ["Think-Aloud Source Analysis", "Dual-Coding Cause/Effect", "Step-by-Step Essay Planning", "Frayer Model (Concepts)", "Highlighting Bias explicitly", "Contextual Storytelling", "Deliberate Error Modelling", "Live Source Deconstruction", "Advance Organiser Frontloading"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response (Dates/Facts)", "Error Analysis (Bias)", "Guided Paragraph Writing", "A/B Peer Teaching", "Backward Fading Scaffolding", "Source Problem Pairs", "Reverse Engineering Arguments"]),
+                4: generateStrategies(4, ["Tiered Essay Scaffolds", "Spaced Retrieval Worksheet", "Independent Source Critique", "Concept Synthesis Question", "Speed Fluency Drills", "Create an Argument", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Debate Prep Note", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"])
+            },
+            'English': {
+                1: generateStrategies(1, ["Quote Recall Quiz", "Previous Chapter Brain Dump", "Vocabulary Flashcards", "Theme Image Prompt", "Character Prediction", "Odd One Out (Devices)", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
+                2: generateStrategies(2, ["Think-Aloud Close Reading", "Dual-Coding Character Map", "Step-by-Step Paragraph Build", "Frayer Model (Theme)", "Common Misconception Highlight", "Live Text Annotation", "Deliberate Error Modelling", "Live Paragraph Construction", "Advance Organiser Frontloading"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Error Analysis (Grammar)", "Guided Thesis Drafting", "A/B Peer Teaching", "Backward Fading Scaffolding", "Textual Problem Pairs", "Reverse Engineering Essays"]),
+                4: generateStrategies(4, ["Tiered Writing Prompts", "Spaced Retrieval Worksheet", "Independent Text Analysis", "Concept Synthesis Question", "Speed Fluency Drills (Vocab)", "Create a Creative Response", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Device Identification Recap", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"])
+            },
+            'Māori': {
+                1: generateStrategies(1, ["Kupu Hou Recall Quiz", "Karakia/Waiata Recap", "Vocabulary Flashcards", "Whakataukī Prompt", "Pūrākau Prediction", "Odd One Out (Kupu)", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
+                2: generateStrategies(2, ["Think-Aloud Whakapapa Tracing", "Dual-Coding Visual Pepeha", "Step-by-Step Whaikōrero Structure", "Frayer Model (Tikanga)", "Highlighting Reo Nuance", "Pronunciation Modelling", "Deliberate Error Modelling", "Live Sentence Construction", "Advance Organiser Frontloading"]),
+                3: generateStrategies(3, ["Mini-Whiteboards (Kupu)", "Think-Pair-Share", "Choral Response (Rhythm)", "Error Analysis (Grammar)", "Guided Sentence Construction", "Tuakana-Teina Peer Teaching", "Backward Fading Scaffolding", "Translation Problem Pairs", "Reverse Engineering Kōrero"]),
+                4: generateStrategies(4, ["Tiered Translation Tasks", "Spaced Retrieval Worksheet", "Independent Pūrākau Analysis", "Concept Synthesis (Hauora)", "Speed Fluency Drills", "Create a Mihi", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Kupu Hou Recall", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"])
+            },
+            'Technology': {
+                1: generateStrategies(1, ["Safety Rule Recall Quiz", "Previous Tool Brain Dump", "Vocabulary Flashcards", "Material Identification Prompt", "Predict the Design Flaw", "Odd One Out (Processes)", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
+                2: generateStrategies(2, ["Think-Aloud Design Process", "Dual-Coding Tech Drawing", "Step-by-Step Practical Demo", "Frayer Model (Material Prop)", "Common Misconception Highlight", "Physical Prototype Display", "Deliberate Error Modelling", "Live Drawing / Construction", "Advance Organiser Frontloading"]),
+                3: generateStrategies(3, ["Mini-Whiteboards (Specs)", "Think-Pair-Share", "Choral Response", "Error Analysis (Code/Build)", "Guided Practical Steps", "A/B Peer Teaching", "Backward Fading Scaffolding", "Design Problem Pairs", "Reverse Engineering Products"]),
+                4: generateStrategies(4, ["Tiered Design Challenges", "Spaced Retrieval Worksheet", "Independent Making Task", "Concept Synthesis Question", "Speed Fluency Drills", "Troubleshoot a Problem", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Clean-up Protocol Check", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"])
+            },
+            'Arts': {
+                1: generateStrategies(1, ["Artist/Movement Recall Quiz", "Previous Technique Brain Dump", "Vocabulary Flashcards", "Artwork Analysis Prompt", "Predict the Medium", "Odd One Out (Styles)", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
+                2: generateStrategies(2, ["Think-Aloud Critique", "Dual-Coding Composition Sketch", "Step-by-Step Technique Demo", "Frayer Model (Art Term)", "Common Misconception Highlight", "Live Performance/Creation", "Deliberate Error Modelling", "Live Drawing / Construction", "Advance Organiser Frontloading"]),
+                3: generateStrategies(3, ["Guided Technique Practice", "Think-Pair-Share (Critique)", "Choral Response", "Error Analysis (Proportion)", "Guided Brushwork/Strokes", "A/B Peer Teaching", "Backward Fading Scaffolding", "Critique Problem Pairs", "Reverse Engineering Artworks"]),
+                4: generateStrategies(4, ["Tiered Creative Briefs", "Spaced Retrieval Worksheet", "Independent Portfolio Work", "Concept Synthesis Question", "Speed Fluency Drills", "Create an Interpretation", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Visual Diary Entry", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"])
+            },
+            'PEHealth': {
+                1: generateStrategies(1, ["Rules/Tactics Recall Quiz", "Previous Skill Brain Dump", "Vocabulary Flashcards", "Anatomy Identification Prompt", "Predict the Play", "Odd One Out (Biomachanics)", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
+                2: generateStrategies(2, ["Think-Aloud Tactical Decision", "Dual-Coding Court Layout", "Step-by-Step Skill Demo", "Frayer Model (Hauora)", "Common Misconception Highlight", "Physical Movement Demo", "Deliberate Error Modelling", "Live Play Construction", "Advance Organiser Frontloading"]),
+                3: generateStrategies(3, ["Guided Skill Drills", "Think-Pair-Share (Tactics)", "Choral Response", "Error Analysis (Form/Technique)", "Guided Biomechanic Steps", "A/B Peer Coaching", "Backward Fading Scaffolding", "Tactical Problem Pairs", "Reverse Engineering Plays"]),
+                4: generateStrategies(4, ["Tiered Physical Challenges", "Spaced Retrieval Worksheet", "Independent Gameplay", "Concept Synthesis Question", "Speed Fluency Drills", "Design a Play", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Traffic Light Self-Assessment", "One-Sentence Exit Ticket", "SOLO Taxonomy Reflection", "Next-Step Prediction", "Heart Rate Recovery Check", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish"])
+            }
+        };
+
+        const stageInfo = {
+            1: { title: "Stage 1: Connect", intent: "Activates existing schemas in long-term memory. Primes working memory for new inputs." },
+            2: { title: "Stage 2: I Do", intent: "Teacher assumes total responsibility for managing cognitive load, delivering precise knowledge." },
+            3: { title: "Stage 3: We Do", intent: "Collaborative guided practice. Requires continuous, real-time checking for understanding." },
+            4: { title: "Stage 4: You Do", intent: "Independent practice to foster automaticity and fluency. Ensures knowledge moves to long-term." },
+            5: { title: "Stage 5: Review", intent: "Consolidates new schemas and evaluates understanding using frameworks like SOLO taxonomy." }
+        };
+
+        // Navigation
+        function showView(viewId) {
+            const views = ['instructional', 'planning', 'students', 'advanced'];
+            views.forEach(v => {
+                document.getElementById(`view-${v}`).classList.add('hidden');
+                document.getElementById(`nav-${v}`).classList.remove('nav-active');
+            });
+            document.getElementById(`view-${viewId}`).classList.remove('hidden');
+            document.getElementById(`nav-${viewId}`).classList.add('nav-active');
+            
+            // Re-render prompts if showing planning
+            if(viewId === 'planning' || viewId === 'instructional') updateAllPrompts();
+        }
+
+        // Instructional Hub Logic
+        function setDiscipline(dept) {
+            currentDiscipline = dept;
+            document.querySelectorAll('.dept-btn:not(.inst-year-btn)').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${dept.replace(/ /g, '')}`).classList.add('active');
+            renderInstructionalHub();
+        }
+
+        function setInstructionalYear(year) {
+            currentInstructionalYear = year;
+            document.querySelectorAll('.inst-year-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-inst-${year.replace(' ', '')}`).classList.add('active');
+            if(currentStrategy) {
+                setStrategyPrompt(currentStrategy);
+            }
+        }
+
+        function setStage(stage) {
+            currentStage = stage;
+            document.querySelectorAll('.stage-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-stage-${stage}`).classList.add('active');
+            renderInstructionalHub();
+        }
+
+        function renderInstructionalHub() {
+            // Update Title & Intent
+            document.getElementById('display-title').innerText = stageInfo[currentStage].title;
+            document.getElementById('display-intent').innerText = stageInfo[currentStage].intent;
+
+            // Generate Strategies
+            const strategies = cpmMatrix[currentDiscipline][currentStage];
+            const container = document.getElementById('display-strategies');
+            
+            container.innerHTML = strategies.map(s => `
+                <button data-tooltip="${getDesc(s)}" onclick="setStrategyPrompt('${s.replace(/'/g, "\\'")}')" class="tooltip-wrapper w-full text-left bg-white border-l-4 border-[#002066] p-3 rounded-r-lg shadow-sm hover:bg-blue-50 transition text-sm text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    ${s}
+                </button>
+            `).join('');
+
+            // Reset Prompt
+            document.getElementById('prompt-text-instructional').innerText = "Select a strategy from the left to generate a specific AI prompt...";
+            currentStrategy = null;
+        }
+
+        function setStrategyPrompt(strategy) {
+            currentStrategy = strategy;
+            const topicInput = document.getElementById('global-topic');
+            const topic = (topicInput && topicInput.value.trim()) ? topicInput.value.trim() : "[Topic]";
+            
+            const nzSuffix = currentDiscipline === 'Māori' 
+                ? "" 
+                : " Ensure all output uses New Zealand English spelling and terminology.";
+
+            const promptBox = document.getElementById('prompt-text-instructional');
+            promptBox.innerText = `"Act as an expert pedagogical coach. I am teaching a lesson on ${topic} to my ${currentInstructionalYear} ${currentDiscipline} class. We are currently in Stage ${currentStage} of the Common Practice Model. I want to use the strategy: '${strategy}'. Generate the specific script, questions, or materials I need to execute this strategy effectively. Adapt the vocabulary, complexity, and tone specifically for a ${currentInstructionalYear} level. Focus on managing cognitive load.${nzSuffix}"`;
+        }
+
+        // Builder Logic
+        function setUnitState(key, val, btnElem) {
+            unitState[key] = val;
+            const parent = btnElem.parentElement;
+            parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
+            btnElem.classList.add('active');
+            updateUnitBuilderPrompt();
+        }
+
+        function setLessonState(key, val, btnElem) {
+            lessonState[key] = val;
+            const parent = btnElem.parentElement;
+            parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
+            btnElem.classList.add('active');
+            updateLessonBuilderPrompt();
+        }
+
+        function toggleLessonOutput(type) {
+            if (!lessonState.outputs) lessonState.outputs = []; // ensure array exists
+
+            if (type === 'none') {
+                lessonState.outputs = [];
+            } else if (type === 'all') {
+                lessonState.outputs = ['slides', 'worksheet', 'content'];
+            } else {
+                // Toggle specific output logic
+                if (lessonState.outputs.includes(type)) {
+                    lessonState.outputs = lessonState.outputs.filter(o => o !== type);
+                } else {
+                    lessonState.outputs.push(type);
+                }
+            }
+
+            // Update UI buttons visually
+            const btnNone = document.getElementById('btn-out-none');
+            const btnSlides = document.getElementById('btn-out-slides');
+            const btnWorksheet = document.getElementById('btn-out-worksheet');
+            const btnContent = document.getElementById('btn-out-content');
+            const btnAll = document.getElementById('btn-out-all');
+
+            [btnSlides, btnWorksheet, btnContent, btnAll].forEach(b => {
+                if(b) b.classList.remove('active');
+            });
+
+            // The Lesson Plan is always generated, so it remains highlighted.
+            // Clicking it acts as a reset to just the base plan.
+            if(btnNone) btnNone.classList.add('active');
+
+            if (type === 'all' || lessonState.outputs.length === 3) {
+                if(btnAll) btnAll.classList.add('active');
+                lessonState.outputs = ['slides', 'worksheet', 'content']; // lock internal state
+            } else {
+                if (lessonState.outputs.includes('slides') && btnSlides) btnSlides.classList.add('active');
+                if (lessonState.outputs.includes('worksheet') && btnWorksheet) btnWorksheet.classList.add('active');
+                if (lessonState.outputs.includes('content') && btnContent) btnContent.classList.add('active');
+            }
+
+            updateLessonBuilderPrompt();
+        }
+
+        function updateAllPrompts() {
+            updateUnitBuilderPrompt();
+            updateLessonBuilderPrompt();
+            if(currentStrategy) setStrategyPrompt(currentStrategy);
+        }
+
+        function updateUnitBuilderPrompt() {
+            const topicInput = document.getElementById('global-topic');
+            const topic = (topicInput && topicInput.value.trim()) ? topicInput.value.trim() : "[Topic]";
+
+            const nzSuffix = unitState.dept === 'Māori' ? "" : " Ensure all output uses New Zealand English spelling and terminology.";
+
+            const text = `"Act as an expert curriculum designer. I am planning a ${unitState.dur} unit on ${topic} for a ${unitState.year} ${unitState.dept} class based on the NZ Curriculum.\n\n1. Identify the core threshold 'Knowledge' concepts required.\n2. Sequence these concepts across the ${unitState.dur} from 'Surface' to 'Deep'.\n3. Suggest specific disciplinary 'Practices' for students to demonstrate at key milestones.${nzSuffix}"`;
+            
+            const box = document.getElementById('prompt-unit-text');
+            if(box) box.innerText = text;
+        }
+
+        function updateLessonBuilderPrompt() {
+            const topicInput = document.getElementById('global-topic');
+            const topic = (topicInput && topicInput.value.trim()) ? topicInput.value.trim() : "[Topic]";
+
+            const customTaskInput = document.getElementById('les-custom-task');
+            const customTask = (customTaskInput && customTaskInput.value.trim()) ? customTaskInput.value.trim() : "";
+
+            let text = `"Act as an expert pedagogical coach. Design a 60-minute standard mixed-ability lesson on ${topic} using the 5 stages of the Common Practice Model (CPM).\n\nEnsure the lesson plan starts with clear Learning Intention(s) and measurable Success Criteria.\n\n`;
+
+            if (!lessonState.outputs) lessonState.outputs = [];
+            let needsSlides = lessonState.outputs.includes('slides');
+            let needsWorksheet = lessonState.outputs.includes('worksheet');
+            let needsContent = lessonState.outputs.includes('content');
+
+            if (needsSlides && needsWorksheet && needsContent) {
+                text += `In addition to the lesson plan, please provide a slideshow presentation, a ready-to-print student worksheet, AND a detailed Content Document.\n\n`;
+            } else {
+                if (needsSlides) {
+                    text += `In addition to the lesson plan, please provide a slideshow presentation.\n\n`;
+                }
+                if (needsWorksheet) {
+                    text += `In addition to the lesson plan, please provide a ready-to-print student worksheet that aligns directly with the 'We Do' and 'You Do' tasks.\n\n`;
+                }
+                if (needsContent) {
+                    text += `In addition to the lesson plan, please provide a detailed Content Document outlining the core knowledge and context for this topic.\n\n`;
+                }
+            }
+
+            text += `Include suggested live links to relevant external resources (e.g., educational websites or YouTube clips).\n\n`;
+
+            if (customTask) {
+                text += `CRITICAL INSTRUCTION: Please ensure you specifically include the following task/activity/focus in the lesson design: "${customTask}".\n\n`;
+            }
+
+            text += `Here are the specific strategies I want to use for each stage:\n\nStage 1 (Connect): ${lessonState.s1}\nStage 2 (I Do): ${lessonState.s2}\nStage 3 (We Do): ${lessonState.s3}\nStage 4 (You Do): ${lessonState.s4}\nStage 5 (Review): ${lessonState.s5}\n\n`;
+
+            if (lessonState.extra !== 'None') {
+                text += `Additionally, please generate a specific, supplementary differentiated resource or scaffold for the 'You Do' phase tailored for: ${lessonState.extra}.\n\n`;
+            }
+
+            text += `Ensure all output uses New Zealand English spelling and terminology.`;
+
+            if (needsSlides) {
+                text += `\n\n--- SLIDESHOW GENERATION INSTRUCTIONS ---\n`;
+                text += `Act as an expert instructional designer. Generate a slide-by-slide lesson presentation from the provided source material, formatted for a professional layout. Adapt all pedagogical instructions, High Impact Teaching Strategies, and student-facing language to specifically suit ${unitState.year} students in New Zealand.\n`;
+                text += `Include these specific activities: ${customTask ? customTask : 'Standard CPM activities aligned with the lesson plan'}.\n\n`;
+                text += `Lesson Structure:\nStructure content around the 5 Common Practice Model (CPM) stages: CONNECTION, I DO, WE DO, YOU DO, REFLECTION & FEEDBACK.\nUse as many slides as necessary.\nCrucial Vocabulary: Ensure one of the first slides in the 'I DO' section explicitly introduces key vocabulary tailored to this year level.\n\n`;
+                text += `Design & Content Guidelines:\nTypography: 'Manrope - Normal' (fallbacks: Arial, Calibri, Georgia, Work Sans).\nConstraints: Do NOT hallucinate logos. Write strictly in New Zealand spelling (this includes the slide content and the teacher box).\nExclusions: Strictly exclude all behavioural management techniques and proximity control. Keep instructions 100% focused on cognitive and academic pedagogy.\n`;
+                text += `Visuals & Aesthetics: Make the slides highly engaging and visually appealing. Use the provided HTML template which incorporates a modern, professional colour scheme (Dark Blue #002066, Gold #c5a059, and clean Slate backgrounds). Do NOT put too much information on each slide. Chunk the text. EMBED real contextual images directly into the HTML using this tag format:\n<img src="https://loremflickr.com/800/400/{keyword},education/all" alt="{description}" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; border: 1px solid #cbd5e1; margin: 16px 0;">\nReplace '{keyword}' with a single relevant topic word (e.g., 'physics', 'history', 'auckland'). Ensure at least one slide in the 'I DO' and 'WE DO' stages contains a real image to reduce cognitive load via dual coding.\n\n`;
+                text += `Content Sourcing & Pedagogy:\nPrimary Source: Use the generated lesson plan as the core knowledge base.\nSupplemental Knowledge: If key information is missing to ensure a complete learning flow for this Year Level, you may supplement with external subject expertise.\n\n`;
+                text += `Strict Layout Requirements: Every slide MUST use the EXACT HTML structure below to ensure beautiful formatting. Do NOT output standard Markdown tables. Only use this HTML template for the slides:\n\n`;
+                text += `HTML\n`;
+                text += `<div style="font-family: 'Manrope', Arial, sans-serif; background-color: #ffffff; color: #1e293b; position: relative; width: 100%; min-height: 400px; padding: 40px; padding-bottom: 160px; border: 1px solid #e2e8f0; border-top: 8px solid #002066; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);">\n`;
+                text += `<div style="width: 100%;">\n`;
+                text += `<h2 style="color: #002066; font-size: 28px; margin-top: 0; margin-bottom: 16px; border-bottom: 2px solid #c5a059; padding-bottom: 8px; display: inline-block;">[SLIDE HEADING]</h2>\n`;
+                text += `<div style="font-size: 18px; line-height: 1.6;">\n`;
+                text += `[Insert engaging text, chunked material, prompts, or activities for students here.\n`;
+                text += `Format nicely using short paragraphs, bullet points, or <strong>bold text</strong> for emphasis. Include the <img> tag here if appropriate.]\n`;
+                text += `</div>\n`;
+                text += `</div>\n\n`;
+                text += `<div style="position: absolute; bottom: 20px; right: 20px; width: 30%; min-width: 250px; background-color: #f0f7ff; border-left: 4px solid #002066; border-radius: 8px; padding: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); color: #0f172a;">\n`;
+                text += `<strong style="color: #002066; text-transform: uppercase; font-size: 12px; letter-spacing: 1px;"><small>[CPM STAGE TITLE]</small></strong>\n`;
+                text += `<hr style="margin: 8px 0; border-top: 1px solid #cbd5e1;">\n`;
+                text += `<ul style="margin: 0; padding-left: 18px; font-size: 13px;">\n`;
+                text += `<li><small>[SHORT BULLET 1]</small></li>\n`;
+                text += `<li><small>[SHORT BULLET 2]</small></li>\n`;
+                text += `</ul>\n`;
+                text += `</div>\n`;
+                text += `</div>\n\n`;
+                text += `Teacher Instruction Box Guidelines (Bottom Right):\nFormat: Bold CPM stage title at the top. Use short, punchy pedagogical focus points enclosed in <small> tags.\nNo full sentences. Do NOT write out full tasks or scripts.\nUse a bulleted list of 2–3 "High Impact Teaching Strategies" (HITS) or pedagogical intentions.\nFocus: Provide stage-appropriate HITS focusing on pedagogical intention (e.g., Connection: <small>Surface misconceptions</small>; I Do: <small>Manage cognitive load</small>; We Do: <small>Fade scaffolding</small>; You Do: <small>Promote productive struggle</small>; Reflection: <small>Prompt metacognition</small>).`;
+            }
+
+            if (needsWorksheet) {
+                text += `\n\n--- WORKSHEET GENERATION INSTRUCTIONS ---\n`;
+                text += `Format the student worksheet using clean, professional HTML. Give it a clear header, name/date fields, and structured sections for the 'We Do' and 'You Do' tasks. \n`;
+                text += `To make the worksheet highly engaging, embed at least two real contextual images using the exact same HTML image tag format used for the slides (e.g., <img src="https://loremflickr.com/800/400/{keyword},education/all" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin: 16px 0;">). Ensure there is plenty of whitespace and clear formatting for students to write their answers.\n`;
+            }
+
+            if (needsContent) {
+                text += `\n\n--- CONTENT DOCUMENT GENERATION INSTRUCTIONS ---\n`;
+                text += `Act as a subject matter expert. Generate a comprehensive "Knowledge & Practices" Content Document covering ${topic}. \n`;
+                text += `This document should serve as the definitive source of truth for both the teacher and the students. Structure it professionally with clear headings, bullet points, and bolded key terms. \n`;
+                text += `Ensure you include:\n1. Core Concepts & Definitions (The 'Knowledge').\n2. Disciplinary Context (How experts use this knowledge - The 'Practices').\n3. Common Misconceptions and how to correct them.\n`;
+                text += `Adapt the vocabulary, complexity, and tone specifically for ${unitState.year} learners in New Zealand.\n`;
+            }
+
+            text += `"`;
+            
+            const box = document.getElementById('prompt-lesson-text');
+            if(box) box.innerText = text;
+        }
+
+        // Copy Function with Visual Feedback
+        function copyText(elementId, btnElement) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                if (btnElement) {
+                    const originalText = btnElement.innerText;
+                    btnElement.innerText = "COPIED! ✓";
+                    btnElement.classList.add("copy-btn-success");
+                    setTimeout(() => {
+                        btnElement.innerText = originalText;
+                        btnElement.classList.remove("copy-btn-success");
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Init
+        window.onload = () => {
+            renderInstructionalHub();
+            updateAllPrompts();
+            
+            // Inject tooltips into Lesson Builder options
+            ['1', '2', '3', '4', '5'].forEach(stage => {
+                const container = document.getElementById(`les-s${stage}-opts`);
+                if(container) {
+                    container.querySelectorAll('.builder-btn').forEach(btn => {
+                        const text = btn.innerText.trim();
+                        const desc = getDesc(text);
+                        btn.setAttribute('data-tooltip', desc);
+                        btn.classList.add('tooltip-wrapper');
+                    });
+                }
+            });
+        };
+    </script>
+</body>
+</html>
