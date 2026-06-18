@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waiheke High School: CPM & Knowledge-Rich Navigator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
         
         :root {
             --whs-dark-blue: #002066;
             --whs-gold: #c5a059;
             --whs-light-blue: #d1e6f6;
-            --whs-accent: #f8fafc;
+            --whs-accent: #e2e8f0;
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Manrope', sans-serif;
             background-color: var(--whs-accent);
             color: #1e293b;
             line-height: 1.6;
@@ -27,14 +28,14 @@
         }
 
         .whs-gradient-bg {
-            background: linear-gradient(135deg, var(--whs-dark-blue) 0%, #0033a0 100%);
+            background: var(--whs-dark-blue);
         }
 
         .glass-card {
             background: white;
             border: 1px solid var(--whs-light-blue);
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
         }
 
         .nav-btn {
@@ -58,7 +59,7 @@
 
         .dept-btn {
             padding: 0.5rem 1rem;
-            border-radius: 9999px;
+            border-radius: 0.25rem;
             font-size: 0.875rem;
             font-weight: 600;
             background: white;
@@ -79,17 +80,16 @@
 
         .stage-btn {
             padding: 1rem;
-            border-radius: 1rem;
+            border-radius: 0.5rem;
             background: white;
             border: 2px solid transparent;
             text-align: center;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .stage-btn:hover {
-            transform: translateY(-2px);
             border-color: var(--whs-light-blue);
         }
 
@@ -102,7 +102,7 @@
             padding: 0.5rem 0.75rem;
             font-size: 0.75rem;
             border: 1px solid #cbd5e1;
-            border-radius: 0.5rem;
+            border-radius: 0.25rem;
             background: white;
             transition: all 0.2s;
             font-weight: 600;
@@ -139,6 +139,15 @@
             color: white !important;
         }
 
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
         /* Tooltip CSS */
         .tooltip-wrapper {
             position: relative;
@@ -159,13 +168,13 @@
             white-space: normal;
             width: max-content;
             max-width: 240px;
-            border-radius: 0.5rem;
+            border-radius: 0.25rem;
             opacity: 0;
             visibility: hidden;
             transition: all 0.2s ease-in-out;
             z-index: 50;
             pointer-events: none;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .tooltip-wrapper::before {
             content: '';
@@ -195,28 +204,35 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-7xl mx-auto">
-        <header class="whs-gradient-bg rounded-3xl p-8 md:p-12 text-white mb-10 shadow-lg relative overflow-hidden flex justify-between items-center">
+        <header class="whs-gradient-bg rounded-lg p-8 md:p-12 text-white mb-10 shadow-md relative overflow-hidden flex justify-between items-center">
             <div class="relative z-10">
-                <h1 class="text-3xl md:text-5xl font-black mb-3 tracking-tight">Waiheke High School</h1>
-                <h2 class="text-xl md:text-2xl font-light opacity-90">CPM & AI Navigator</h2>
-                <div class="mt-4 inline-block bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/30 text-xs font-bold uppercase tracking-widest text-blue-100">
-                    Knowledge & Practices Hub
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
+                    <!-- School Logo (Requires 'Asset 1@2x.png' in the same folder) -->
+                    <img src="Asset 1@2x.png" alt="Waiheke High School Logo" class="h-16 md:h-24 w-auto object-contain bg-[#d1e6f6] p-3 rounded-2xl shadow-sm" onerror="this.onerror=null; this.outerHTML='<div class=\'border-2 border-white rounded-full px-4 py-1 inline-block\'><span class=\'font-extrabold text-lg tracking-widest uppercase\'>WHS</span></div>';">
+                    
+                    <div>
+                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1>
+                        <h2 class="text-xl md:text-2xl font-normal opacity-90">CPM & AI Navigator</h2>
+                        <div class="mt-3 inline-block bg-white text-[#002066] px-4 py-1.5 border border-transparent text-xs font-bold uppercase tracking-widest shadow-sm rounded">
+                            Knowledge & Practices Hub
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- AI Network Graphic -->
-            <svg class="absolute right-0 top-0 h-full w-64 text-white/10 transform translate-x-1/4 -translate-y-1/4 scale-150" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2zm-4-6h2v4H7zm0 6h2v2H7zm8-6h2v4h-2zm0 6h2v2h-2z" opacity="0.3"/>
+            <!-- Subtle AI Network Graphic -->
+            <svg class="absolute right-0 top-0 h-full w-64 text-white/5 transform translate-x-1/4 -translate-y-1/4 scale-150" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2zm-4-6h2v4H7zm0 6h2v2H7zm8-6h2v4h-2zm0 6h2v2h-2z" opacity="0.5"/>
                 <circle cx="12" cy="12" r="3" />
-                <path d="M12 7l-3 4h6zM7 12l4 3v-6zM17 12l-4-3v6zM12 17l3-4H9z" opacity="0.7"/>
+                <path d="M12 7l-3 4h6zM7 12l4 3v-6zM17 12l-4-3v6zM12 17l3-4H9z" opacity="0.8"/>
             </svg>
         </header>
 
-        <nav class="flex justify-center border-b-2 border-slate-200 mb-6 gap-2 md:gap-8 overflow-x-auto">
-            <button onclick="showView('instructional')" id="nav-instructional" class="nav-btn nav-active">The Instructional Hub</button>
+        <nav class="flex justify-center border-b-2 border-slate-300 mb-6 gap-2 md:gap-8 overflow-x-auto">
+            <button onclick="showView('instructional')" id="nav-instructional" class="nav-btn nav-active">Instructional Hub</button>
             <button onclick="showView('planning')" id="nav-planning" class="nav-btn">Unit Planner</button>
-            <button onclick="showView('lesson')" id="nav-lesson" class="nav-btn">Lesson Planner</button>
+            <button onclick="showView('lesson')" id="nav-lesson" class="nav-btn">Lesson Builder</button>
             <button onclick="showView('students')" id="nav-students" class="nav-btn">Student Support</button>
-            <button onclick="showView('advanced')" id="nav-advanced" class="nav-btn">Advanced AI Tools</button>
+            <button onclick="showView('advanced')" id="nav-advanced" class="nav-btn">Advanced AI</button>
         </nav>
 
         <div id="view-instructional" class="space-y-8 animate-in fade-in duration-500">
@@ -346,6 +362,26 @@
                                     Open Gemini App ↗
                                 </a>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 md:p-10 border-t-8 border-t-[#c5a059] mt-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="chart-container">
+                        <canvas id="cpmChart"></canvas>
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-3xl font-black text-[#002066]">The Logic of the Routine</h3>
+                        <p class="text-slate-700">
+                            The CPM acts as a <strong>Gradual Release of Responsibility (GRR)</strong> engine. In a knowledge-rich curriculum, 
+                            the teacher holds the cognitive burden in Stage 2 (Modelling) to protect the learner's limited working memory. 
+                            As students gain fluency, the burden shifts until they can execute disciplinary Practices independently.
+                        </p>
+                        <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
+                            <span class="text-xs font-bold text-[#002066] uppercase block mb-2">Cognitive Load Theory</span>
+                            <p class="text-sm text-slate-600 italic">"Consistency across classrooms ensures students don't waste working memory figuring out <em>how</em> to learn, allowing them to focus entirely on <em>what</em> they are learning."</p>
                         </div>
                     </div>
                 </div>
@@ -855,6 +891,8 @@ Step 6: Progress Monitoring
         let currentInstLit = 'none';
         let currentInstNum = 'none';
 
+        let chartInstance = null;
+
         let unitState = {
             dept: 'Science',
             year: 'Year 11 (NCEA Level 1)',
@@ -914,6 +952,11 @@ Step 6: Progress Monitoring
             if (activeView) activeView.classList.remove('hidden');
             const activeBtn = document.getElementById(`nav-${viewId}`);
             if (activeBtn) activeBtn.classList.add('nav-active');
+
+            // Force chart re-render to prevent canvas sizing bugs when hidden
+            if (viewId === 'instructional') {
+                setTimeout(initChart, 100);
+            }
         }
 
         // Tooltip Descriptions Dictionary
@@ -1191,8 +1234,10 @@ Step 6: Progress Monitoring
                 ? " NUMERACY INTEGRATION: Make explicit disciplinary numeracy (e.g., data/graph analysis, calculation) a core focus of this activity."
                 : "";
 
+            const fontRule = " BRANDING RULE: If generating any printable materials, documents, or slides, you MUST set the font to 'Manrope' (or a clean sans-serif like Arial as a fallback) to match school branding.";
+
             const promptBox = document.getElementById('prompt-text-instructional');
-            promptBox.innerText = `"Act as an expert pedagogical coach. I am teaching a lesson on ${topic} to my ${currentInstructionalYear} ${currentDiscipline} class. We are currently in Stage ${currentStage} of the Common Practice Model. I want to use the strategy: '${strategy}'. Generate the specific script, questions, or materials I need to execute this strategy effectively. Adapt the vocabulary, complexity, and tone specifically for a ${currentInstructionalYear} level. Focus on managing cognitive load.\n\nGOLD STANDARD FORMATTING: Do not provide a brief outline. You must write out the actual content, script, or questions in full so I can use them immediately in class.${frameworkRule}${nzSuffix}${waihekeContext}${maoriContext}${litContext}${numContext}"`;
+            promptBox.innerText = `"Act as an expert pedagogical coach. I am teaching a lesson on ${topic} to my ${currentInstructionalYear} ${currentDiscipline} class. We are currently in Stage ${currentStage} of the Common Practice Model. I want to use the strategy: '${strategy}'. Generate the specific script, questions, or materials I need to execute this strategy effectively. Adapt the vocabulary, complexity, and tone specifically for a ${currentInstructionalYear} level. Focus on managing cognitive load.\n\nGOLD STANDARD FORMATTING: Do not provide a brief outline. You must write out the actual content, script, or questions in full so I can use them immediately in class.${frameworkRule}${nzSuffix}${waihekeContext}${maoriContext}${litContext}${numContext}${fontRule}"`;
         }
 
         // Builder Logic
@@ -1272,6 +1317,8 @@ Step 6: Progress Monitoring
         function updateUnitBuilderPrompt() {
             const topic = getGlobalTopic();
 
+            const isJunior = ['Year 7', 'Year 8', 'Year 9', 'Year 10'].includes(unitState.year);
+
             const nzSuffix = unitState.dept === 'Māori' ? "" : " CRITICAL INSTRUCTION: You MUST use New Zealand English spelling (e.g., 'analyse', 'colour', 'programme', 'behaviour') and terminology throughout all outputs.";
 
             let curriculumUrl = "https://newzealandcurriculum.tahurangi.education.govt.nz";
@@ -1295,7 +1342,60 @@ Step 6: Progress Monitoring
                 ? "\n\nNUMERACY INTEGRATION: Identify 1 or 2 lessons where explicit disciplinary numeracy (e.g., interpreting datasets, graphs, calculations) is a primary focus."
                 : "";
 
-            const text = `"Act as an expert curriculum designer. I am planning a ${unitState.dur} unit on ${topic} for a ${unitState.year} ${unitState.dept} class based on the NZ Curriculum.\n\nCRITICAL INSTRUCTION: DO NOT use the old 'Understand-Know-Do' (UKD) framework. You must base all design strictly on the new 'Knowledge' and 'Practices' framework drafts found here: ${curriculumUrl}\n\n1. Identify the core threshold 'Knowledge' concepts required.\n2. Sequence these concepts across the ${unitState.dur} from 'Surface' to 'Deep'.\n3. Suggest specific disciplinary 'Practices' for students to demonstrate at key milestones.\n\n${nzSuffix}${waihekeContext}${maoriContext}${litContext}${numContext}"`;
+            let text = "";
+
+            // Both Junior and Senior templates require a Google Doc output for their complex tables
+            text += `@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this exact Unit Plan. If the Workspace integration times out, you MUST output the raw text in a markdown code block.\n\n`;
+
+            text += `"Act as an expert curriculum designer. I am planning a ${unitState.dur} unit on ${topic} for a ${unitState.year} ${unitState.dept} class based on the NZ Curriculum.\n\nCRITICAL INSTRUCTION: DO NOT use the old 'Understand-Know-Do' (UKD) framework. You must base all design strictly on the new 'Knowledge' and 'Practices' framework drafts found here: ${curriculumUrl}\n\n`;
+
+            text += `CRITICAL INSTRUCTION: When designing the individual lessons in the 'Lesson Content' table below, you MUST structure the learning activities for each standard lesson using the 5 stages of the Common Practice Model (CPM): 1. Connect, 2. I Do, 3. We Do, 4. You Do, 5. Review. The ONLY exception to this rule is if a specific extended activity (like a practical lab, a major assessment, or an ongoing project) takes more time and naturally spans across multiple lessons. This exception is particularly relevant for Years 11-13.\n\n`;
+
+            if (isJunior) {
+                text += `Because this is a Junior/Middle school unit, you MUST output the entire unit plan using EXACTLY the Markdown table templates provided below. Do not change the columns or headings. Fill in all the bracketed [Fill] cells with high-quality, generated content specific to this unit:\n\n`;
+                
+                text += `| |\n| :- |\n| WHS ${unitState.year} ${unitState.dept} - Topic: ${topic} |\n\n`;
+                
+                text += `| | | | | | |\n| :- | :- | :- | :- | :- | :- |\n| **Year Level** | ${unitState.year} | **Term** | [Suggest Term] | **Duration** | ${unitState.dur} |\n| **Topic/ Strand/ Concept/ Context** | ${topic} | | | | |\n| **Overview** *(description)* | [Fill] | | | | |\n| **Purpose** *(what is the point?)* | [Fill] | | | | |\n\n`;
+                
+                text += `## Knowledge and Practices\n| | |\n| :- | :- |\n| **Knowledge** *(rich contexts for exploring big ideas)* | **Practices** *(practices that bring rigour to learning)* |\n| [Fill] | [Fill] |\n| **Connections to prior learning** | **Connections to future learning** |\n| [Fill] | [Fill] |\n\n`;
+                
+                text += `## Curriculum Integration\n| | |\n| :- | :- |\n| **Literacy will be incorporated into this unit by:** | **Numeracy will be incorporated into this unit by:** |\n| [Fill] | [Fill] |\n| **Mātauranga Māori will be incorporated into this unit by:** | **Localised Curriculum will be incorporated into this unit by:** |\n| [Fill] | **Waiheke High School Cross Curricular / Waiheke community links:** [Fill] |\n\n`;
+                
+                text += `## Assessment\n| | |\n| :- | :- |\n| **How will I determine my learners prior knowledge? (before)** | **How will I determine my student’s progress in learning? (after)** |\n| [Select from: Assessment, Whole class activity, Student voice collected, Small group activity, Individual activity, Previous results or work] | [Select from: Assessment, Whole class activity, Student voice collected, Small group activity, Individual activity] |\n\n`;
+                
+                text += `## Lesson Content - Unit Folder Link\n| | | | | |\n| :- | :- | :- | :- | :- |\n| **Learning number/s**<br>*The sequence of lessons and groups of lessons.* | **Knowledge**<br>*What they will be learning* | **Practice**<br>*What they will do / How you know students have achieved success* | **Student Learning Activities**<br>*What strategies, activities and tasks do you want students to do?*<br>*Include explicit teaching where relevant* | **Preparation/ Resources**<br>*H&S, purchasing, printing*<br>*Links to clips, docs, slides* |\n| [Lesson 1] | We will be learning about [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n| [Continue generating rows for all ${unitState.dur}...] | We will be learning about [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n`;
+                
+                text += `## Evaluation\n| | |\n| :- | :- |\n| **What worked well?** | **What would you do differently next time?** |\n| *Leave blank for teacher reflection* | *Leave blank for teacher reflection* |\n\n`;
+
+            } else {
+                text += `Because this is a Senior school NCEA unit, you MUST output the entire unit plan using EXACTLY the Markdown table templates provided below. Do not change the columns or headings. Fill in all the bracketed [Fill] cells with high-quality, generated content specific to this NCEA level and standard:\n\n`;
+                
+                text += `| |\n| :- |\n| WHS ${unitState.year} ${unitState.dept} - Topic: ${topic} |\n\n`;
+                
+                text += `| | | | | | |\n| :- | :- | :- | :- | :- | :- |\n| **Year Level** | ${unitState.year} | **Term** | [Suggest Term], 2026 | **Duration** | ${unitState.dur} |\n`;
+                text += `| **[NZQA - NCEA Subject Resources](https://www2.nzqa.govt.nz/ncea/subjects/select-subject/)** | | | | | |\n`;
+                text += `| **[NZQA - NCEA New Level 1 Resources](https://ncea.education.govt.nz/review-achievement-standards)** | | | | | |\n`;
+                text += `| **Achievement Standard (Number, Title, Version)** | [Fill applicable standard] | | | | |\n`;
+                text += `| **The Standard Criteria** | [Fill] | | | | |\n`;
+                text += `| **Assessment Specifications** | [Fill] | | | | |\n\n`;
+
+                text += `| | |\n| :- | :- |\n| **[The Big Ideas](https://ncea.education.govt.nz/social-sciences/geography?view=learning#field_subject_big_ideas)** | **[The Significant Learning](https://ncea.education.govt.nz/social-sciences/geography?view=learning#field_subject_big_ideas)** |\n| [Fill] | [Fill] |\n\n`;
+
+                text += `## Curriculum Integration\n| | |\n| :- | :- |\n| **Literacy will be incorporated into this unit by:** | **Numeracy will be incorporated into this unit by:** |\n| [Fill] | [Fill] |\n| **Mātauranga Māori will be incorporated into this unit by:** | **Localised Curriculum will be incorporated into this unit by:** |\n| [Fill] | **Waiheke High School [Cross Curricular](https://seniorsecondary.tki.org.nz/Social-sciences/Accounting/Learning-programme-design/Cross-curricular-approaches) Waiheke community links:** [Fill] |\n\n`;
+
+                text += `## Ākonga Information\n| | | | | | |\n| :- | :- | :- | :- | :- | :- |\n| **Links to class plans or class contracts:**<br>**Specific ākonga who require additional support (and how)**<br>**Specific ākonga who require extension (and how)** | [Leave blank for teacher to fill] | | | | |\n\n`;
+
+                text += `## Assessment\n| | |\n| :- | :- |\n| **How will I determine my learners prior knowledge? (before)** | **NCEA Assessment opportunities** |\n| [Select from: Assessment, Whole class activity, Student voice collected, Small group activity, Individual activity, Previous results or work] | [Select from: Assessment, Whole class activity, Student voice collected, Small group activity, Individual activity] |\n\n`;
+
+                text += `## Lesson Content - Unit Folder Link\n| | | | | |\n| :- | :- | :- | :- | :- |\n| **Learning number/s**<br>*The sequence of lessons and groups of lessons.* | **Significant learning covered**<br>*What you hope to get out of it*<br>**Success Criteria/ Deliverables**<br>*How you know students have achieved success* | **Learning Experiences/ Differentiation**<br>*What strategies, activities and tasks you want students to do*<br>**AI [Differentiation](https://docs.google.com/document/d/1Tb8qmeetsVbWpjGBcMU2Kek-fmIo5TnyQNcANicRft8/edit?usp=drive_link)** | **Resources** | |\n`;
+                text += `| [Lesson 1] | **Success Criteria (differentiated):** [Fill]<br>**Key Competency:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] | |\n`;
+                text += `## Evaluation\n| | |\n| :- | :- |\n| **What worked well?** | **What would you do differently next time?** |\n| *Consider: student voice, engagement, completion of work and assessment, progress and attainment* | *Consider: student voice, engagement, completion of work and assessment, progress and attainment* |\n\n`;
+            }
+
+            const fontRule = "\n\nBRANDING RULE: When formatting the Google Doc or any final output, you MUST set the primary font to 'Manrope' (or 'Arial'/'sans-serif' as a fallback) to adhere to Waiheke High School's design ethos.";
+
+            text += `${nzSuffix}${waihekeContext}${maoriContext}${litContext}${numContext}${fontRule}"`;
             
             const box = document.getElementById('prompt-unit-text');
             if(box) box.innerText = text;
@@ -1364,7 +1464,7 @@ Step 6: Progress Monitoring
             if (needsSlides) {
                 text += `\n\n--- SLIDESHOW GENERATION INSTRUCTIONS ---\n`;
                 text += `@Google Workspace CRITICAL COMMAND: You must actively invoke the Google Slides app to CREATE A GOOGLE SLIDES PRESENTATION FILE in my Drive.\n`;
-                text += `GOLD STANDARD FORMATTING: The presentation must have 10-15 complete slides structured around the 5 CPM stages. Slides must follow 'Dual Coding' principles (minimal text on screen, heavy use of diagrams/images). Provide the EXACT, comprehensive teacher script in the speaker notes.\n`;
+                text += `GOLD STANDARD FORMATTING: The presentation must have 10-15 complete slides structured around the 5 CPM stages. Slides must follow 'Dual Coding' principles (minimal text on screen, heavy use of diagrams/images). You MUST set the font to 'Manrope' (or 'Arial') for all text. Provide the EXACT, comprehensive teacher script in the speaker notes.\n`;
                 text += `(FALLBACK: If Google Workspace restricts you from generating the presentation file directly, you MUST provide the slide content as a highly structured Markdown TABLE with 3 columns: 'Slide # & Title' | 'Visual Display Text & Image Links' | 'Comprehensive Teacher Speaker Notes'. Give me the full table for all 10-15 slides.)\n`;
             }
 
@@ -1372,8 +1472,8 @@ Step 6: Progress Monitoring
                 text += `\n\n--- WORKSHEET GENERATION INSTRUCTIONS (TWO FORMATS REQUIRED) ---\n`;
                 text += `GOLD STANDARD FORMATTING: The worksheet must NOT just be generic recall questions. It must include rigorous, discipline-specific tasks aligned to the draft 'Practices'. Use clear headings, bullet points, and explicit blank lines (e.g., "________") for student answers.\n\n`;
                 text += `Because teachers need both a digital and a printed version, you MUST generate the full, comprehensive student worksheet in TWO distinct formats:\n\n`;
-                text += `FORMAT 1 (The Google Doc Digital Version): Use your Google Workspace capabilities to CREATE A GOOGLE DOC file for this worksheet. If you cannot directly create the file, write the full worksheet using clean Markdown text so I can click the 'Export to Docs' button.\n\n`;
-                text += `FORMAT 2 (The Printable PDF / HTML Version): Write the exact same worksheet but output it inside a SINGLE HTML code block (\`\`\`html ... \`\`\`). Include internal CSS styling it as a beautiful A4 printable document (use 'sans-serif' fonts, clear borders, a Name/Date header, and ample spacing for handwritten answers). The teacher will be able to save this HTML and simply 'Print to PDF'. CRITICAL: You MUST close the HTML code block with \`\`\` before moving on to the next section.\n`;
+                text += `FORMAT 1 (The Google Doc Digital Version): Use your Google Workspace capabilities to CREATE A GOOGLE DOC file for this worksheet. Set the document font to 'Manrope' or 'Arial'. If you cannot directly create the file, write the full worksheet using clean Markdown text so I can click the 'Export to Docs' button.\n\n`;
+                text += `FORMAT 2 (The Printable PDF / HTML Version): Write the exact same worksheet but output it inside a SINGLE HTML code block (\`\`\`html ... \`\`\`). Include internal CSS styling it as a beautiful A4 printable document (import and use the 'Manrope' font via Google Fonts, with 'sans-serif' fallback, clear borders, a Name/Date header, and ample spacing for handwritten answers). The teacher will be able to save this HTML and simply 'Print to PDF'. CRITICAL: You MUST close the HTML code block with \`\`\` before moving on to the next section.\n`;
             }
 
             if (needsContent) {
@@ -1456,6 +1556,46 @@ Step 6: Progress Monitoring
             document.body.removeChild(textArea);
         }
 
+        function initChart() {
+            const canvas = document.getElementById('cpmChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['1: Connect', '2: I Do', '3: We Do', '4: You Do', '5: Review'],
+                    datasets: [
+                        {
+                            label: 'Teacher Responsibility %',
+                            data: [85, 100, 50, 10, 40],
+                            backgroundColor: '#002066', // whs-dark-blue
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Student Cognitive Load %',
+                            data: [40, 60, 95, 100, 60],
+                            backgroundColor: '#c5a059', // whs-gold
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { size: 12, family: 'Montserrat' } } },
+                        title: { display: true, text: 'Gradual Release & Cognitive Load Shift', font: { size: 16, weight: 'bold', family: 'Montserrat' } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 110, title: { display: true, text: 'Intensity %', font: { size: 12, family: 'Montserrat' } } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Montserrat' } } }
+                    }
+                }
+            });
+        }
+
         // Init
         window.onload = () => {
             // Restore topic from local storage
@@ -1468,6 +1608,7 @@ Step 6: Progress Monitoring
             renderInstructionalHub();
             updateLessonRecommendations(); // Initialize AI recommendations
             updateAllPrompts();
+            initChart(); // Draw chart on load
             
             // Inject tooltips into Lesson Builder options safely
             ['1', '2', '3', '4', '5'].forEach(stage => {
