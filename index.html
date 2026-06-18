@@ -200,25 +200,31 @@
 
         <nav class="flex justify-center border-b-2 border-slate-200 mb-6 gap-2 md:gap-8 overflow-x-auto">
             <button onclick="showView('instructional')" id="nav-instructional" class="nav-btn nav-active">The Instructional Hub</button>
-            <button onclick="showView('planning')" id="nav-planning" class="nav-btn">AI Planning Suite</button>
+            <button onclick="showView('planning')" id="nav-planning" class="nav-btn">Unit Planner</button>
+            <button onclick="showView('lesson')" id="nav-lesson" class="nav-btn">Lesson Planner</button>
             <button onclick="showView('students')" id="nav-students" class="nav-btn">Student Support</button>
             <button onclick="showView('advanced')" id="nav-advanced" class="nav-btn">Advanced AI Tools</button>
         </nav>
 
-        <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
-            <div class="flex-grow">
-                <label for="global-topic" class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Updates all prompts)</label>
-                <input type="text" id="global-topic" oninput="updateAllPrompts()" placeholder="e.g. Newton's Laws, Creative Writing, Treaty of Waitangi..." class="w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800">
-            </div>
-        </div>
-
         <div id="view-instructional" class="space-y-8 animate-in fade-in duration-500">
             
+            <div class="text-center max-w-3xl mx-auto mb-4">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">The Instructional Hub</h2>
+                <p class="text-slate-600">Select a stage and strategy to generate explicit instructional scripts and materials.</p>
+            </div>
+
+            <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
+                <div class="flex-grow">
+                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Updates all prompts)</label>
+                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Laws, Creative Writing, Treaty of Waitangi..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800">
+                </div>
+            </div>
+
             <div class="space-y-4">
                 <!-- Department Filters -->
                 <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                     <button onclick="setDiscipline('STEM')" id="btn-STEM" class="dept-btn active">STEM</button>
-                    <button onclick="setDiscipline('Humanities')" id="btn-Humanities" class="dept-btn">Humanities</button>
+                    <button onclick="setDiscipline('Social Sciences')" id="btn-SocialSciences" class="dept-btn">Social Sciences</button>
                     <button onclick="setDiscipline('English')" id="btn-English" class="dept-btn">English</button>
                     <button onclick="setDiscipline('Māori')" id="btn-Māori" class="dept-btn">Māori</button>
                     <button onclick="setDiscipline('Technology')" id="btn-Technology" class="dept-btn">Technology</button>
@@ -299,12 +305,19 @@
 
         <div id="view-planning" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-4xl font-black text-slate-900 mb-4">The AI Teacher-Architect</h2>
-                <p class="text-slate-600">Use dynamic Pick & Mix builders to construct massive, highly specific prompts for your unit and lesson designs.</p>
+                <h2 class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2>
+                <p class="text-slate-600">Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.</p>
+            </div>
+
+            <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
+                <div class="flex-grow">
+                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Updates all prompts)</label>
+                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Laws, Creative Writing, Treaty of Waitangi..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800">
+                </div>
             </div>
 
             <div class="glass-card p-8 border-t-8 border-t-[#c5a059]">
-                <h3 class="text-2xl font-bold text-slate-900 mb-2">Unit Sequence Builder</h3>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Unit Planner Configuration</h3>
                 <p class="text-sm text-slate-600 mb-6">Generates a structured multi-week plan outlining Knowledge and Practices.</p>
                 
                 <div class="grid md:grid-cols-2 gap-8">
@@ -314,7 +327,7 @@
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
                             <div class="flex flex-wrap gap-2" id="unit-dept-opts">
                                 <button onclick="setUnitState('dept', 'STEM', this)" class="builder-btn active">STEM</button>
-                                <button onclick="setUnitState('dept', 'Humanities', this)" class="builder-btn">Humanities</button>
+                                <button onclick="setUnitState('dept', 'Social Sciences', this)" class="builder-btn">Social Sciences</button>
                                 <button onclick="setUnitState('dept', 'English', this)" class="builder-btn">English</button>
                                 <button onclick="setUnitState('dept', 'Māori', this)" class="builder-btn">Māori</button>
                                 <button onclick="setUnitState('dept', 'Technology', this)" class="builder-btn">Technology</button>
@@ -361,15 +374,56 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div id="view-lesson" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Lesson Engine Builder</h2>
+                <p class="text-slate-600">Build a hyper-specific prompt by picking strategies for each CPM stage. Generates slides, learning intentions, and links.</p>
+            </div>
+
+            <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
+                <div class="flex-grow">
+                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Updates all prompts)</label>
+                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Laws, Creative Writing, Treaty of Waitangi..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800">
+                </div>
+            </div>
 
             <div class="glass-card p-8 border-t-8 border-t-[#002066]">
-                <h3 class="text-2xl font-bold text-slate-900 mb-2">CPM Lesson Engine Builder</h3>
-                <p class="text-sm text-slate-600 mb-6">Build a hyper-specific prompt by picking strategies for each CPM stage. Generates slides, learning intentions, and links.</p>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Lesson Design Configuration</h3>
+                <p class="text-sm text-slate-600 mb-6">Select your stages, output types, and requirements below.</p>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="space-y-6">
-                        <!-- Stage Pickers -->
+                        <!-- Dept -->
                         <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                            <div class="flex flex-wrap gap-2" id="les-dept-opts">
+                                <button onclick="setLessonState('dept', 'STEM', this)" class="builder-btn active">STEM</button>
+                                <button onclick="setLessonState('dept', 'Social Sciences', this)" class="builder-btn">Social Sciences</button>
+                                <button onclick="setLessonState('dept', 'English', this)" class="builder-btn">English</button>
+                                <button onclick="setLessonState('dept', 'Māori', this)" class="builder-btn">Māori</button>
+                                <button onclick="setLessonState('dept', 'Technology', this)" class="builder-btn">Technology</button>
+                                <button onclick="setLessonState('dept', 'Arts', this)" class="builder-btn">Arts</button>
+                                <button onclick="setLessonState('dept', 'PE & Health', this)" class="builder-btn">PE & Health</button>
+                            </div>
+                        </div>
+                        <!-- Year -->
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                            <div class="flex flex-wrap gap-2" id="les-year-opts">
+                                <button onclick="setLessonState('year', 'Year 7', this)" class="builder-btn">Year 7</button>
+                                <button onclick="setLessonState('year', 'Year 8', this)" class="builder-btn">Year 8</button>
+                                <button onclick="setLessonState('year', 'Year 9', this)" class="builder-btn">Year 9</button>
+                                <button onclick="setLessonState('year', 'Year 10', this)" class="builder-btn">Year 10</button>
+                                <button onclick="setLessonState('year', 'Year 11 (NCEA Level 1)', this)" class="builder-btn active">Y11 (NCEA L1)</button>
+                                <button onclick="setLessonState('year', 'Year 12 (NCEA Level 2)', this)" class="builder-btn">Y12 (NCEA L2)</button>
+                                <button onclick="setLessonState('year', 'Year 13 (NCEA Level 3)', this)" class="builder-btn">Y13 (NCEA L3)</button>
+                            </div>
+                        </div>
+
+                        <!-- Stage Pickers -->
+                        <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 1: Connect</span>
                             <div class="flex flex-wrap gap-2" id="les-s1-opts">
                                 <button onclick="setLessonState('s1', 'Retrieval Do-Now Quiz', this)" class="builder-btn active">Retrieval Quiz</button>
@@ -755,7 +809,23 @@ Step 6: Progress Monitoring
         }
 
         const unitState = { dept: 'STEM', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons' };
-        const lessonState = { outputs: [], extra: 'None', s1: 'Retrieval Do-Now Quiz', s2: 'Think-Aloud Script', s3: 'Mini-Whiteboards', s4: 'Tiered Tasks', s5: 'Exit Ticket' };
+        const lessonState = { dept: 'STEM', year: 'Year 11 (NCEA Level 1)', outputs: [], extra: 'None', s1: 'Retrieval Do-Now Quiz', s2: 'Think-Aloud Script', s3: 'Mini-Whiteboards', s4: 'Tiered Tasks', s5: 'Exit Ticket' };
+
+        // Topic Sync Logic
+        function syncTopics(val) {
+            document.querySelectorAll('.sync-topic').forEach(input => {
+                if (input.value !== val) input.value = val;
+            });
+            updateAllPrompts();
+        }
+
+        function getGlobalTopic() {
+            const inputs = document.querySelectorAll('.sync-topic');
+            if (inputs.length > 0 && inputs[0].value.trim() !== '') {
+                return inputs[0].value.trim();
+            }
+            return "[Topic]";
+        }
 
         // Extensive CPM Matrix Content (7 Departments x 5 Stages x 9 Strategies)
         const generateStrategies = (stage, customStrategies) => {
@@ -777,7 +847,7 @@ Step 6: Progress Monitoring
                 4: generateStrategies(4),
                 5: generateStrategies(5)
             },
-            'Humanities': {
+            'Social Sciences': {
                 1: generateStrategies(1, ["Chronology Ordering Quiz", "Source Recall", "Vocabulary Flashcards", "Image/Map Prompt", "Predict the Outcome", "Historical Figure Match", "Pick a Stick (Randomised Call)", "Think-Puzzle-Explore", "Syllabus Link-Up"]),
                 2: generateStrategies(2, ["Think-Aloud Source Analysis", "Dual-Coding Cause/Effect", "Step-by-Step Essay Planning", "Frayer Model (Concepts)", "Highlighting Bias explicitly", "Contextual Storytelling", "Deliberate Error Modelling", "Live Source Deconstruction", "Advance Organiser Frontloading"]),
                 3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response (Dates/Facts)", "Error Analysis (Bias)", "Guided Paragraph Writing", "A/B Peer Teaching", "Backward Fading Scaffolding", "Source Problem Pairs", "Reverse Engineering Arguments"]),
@@ -831,16 +901,20 @@ Step 6: Progress Monitoring
 
         // Navigation
         function showView(viewId) {
-            const views = ['instructional', 'planning', 'students', 'advanced'];
+            const views = ['instructional', 'planning', 'lesson', 'students', 'advanced'];
             views.forEach(v => {
-                document.getElementById(`view-${v}`).classList.add('hidden');
-                document.getElementById(`nav-${v}`).classList.remove('nav-active');
+                const viewEl = document.getElementById(`view-${v}`);
+                const navEl = document.getElementById(`nav-${v}`);
+                if (viewEl) viewEl.classList.add('hidden');
+                if (navEl) navEl.classList.remove('nav-active');
             });
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            document.getElementById(`nav-${viewId}`).classList.add('nav-active');
+            const activeView = document.getElementById(`view-${viewId}`);
+            const activeNav = document.getElementById(`nav-${viewId}`);
+            if (activeView) activeView.classList.remove('hidden');
+            if (activeNav) activeNav.classList.add('nav-active');
             
-            // Re-render prompts if showing planning
-            if(viewId === 'planning' || viewId === 'instructional') updateAllPrompts();
+            // Re-render prompts if showing planning, lesson or instructional
+            if(viewId === 'planning' || viewId === 'instructional' || viewId === 'lesson') updateAllPrompts();
         }
 
         // Instructional Hub Logic
@@ -889,8 +963,7 @@ Step 6: Progress Monitoring
 
         function setStrategyPrompt(strategy) {
             currentStrategy = strategy;
-            const topicInput = document.getElementById('global-topic');
-            const topic = (topicInput && topicInput.value.trim()) ? topicInput.value.trim() : "[Topic]";
+            const topic = getGlobalTopic();
             
             const nzSuffix = currentDiscipline === 'Māori' 
                 ? "" 
@@ -967,8 +1040,7 @@ Step 6: Progress Monitoring
         }
 
         function updateUnitBuilderPrompt() {
-            const topicInput = document.getElementById('global-topic');
-            const topic = (topicInput && topicInput.value.trim()) ? topicInput.value.trim() : "[Topic]";
+            const topic = getGlobalTopic();
 
             const nzSuffix = unitState.dept === 'Māori' ? "" : " Ensure all output uses New Zealand English spelling and terminology.";
 
@@ -979,13 +1051,12 @@ Step 6: Progress Monitoring
         }
 
         function updateLessonBuilderPrompt() {
-            const topicInput = document.getElementById('global-topic');
-            const topic = (topicInput && topicInput.value.trim()) ? topicInput.value.trim() : "[Topic]";
+            const topic = getGlobalTopic();
 
             const customTaskInput = document.getElementById('les-custom-task');
             const customTask = (customTaskInput && customTaskInput.value.trim()) ? customTaskInput.value.trim() : "";
 
-            let text = `"Act as an expert pedagogical coach. Design a 60-minute standard mixed-ability lesson on ${topic} using the 5 stages of the Common Practice Model (CPM).\n\nEnsure the lesson plan starts with clear Learning Intention(s) and measurable Success Criteria.\n\n`;
+            let text = `"Act as an expert pedagogical coach. Design a 60-minute standard mixed-ability lesson on ${topic} for a ${lessonState.year} ${lessonState.dept} class using the 5 stages of the Common Practice Model (CPM).\n\nEnsure the lesson plan starts with clear Learning Intention(s) and measurable Success Criteria.\n\n`;
 
             if (!lessonState.outputs) lessonState.outputs = [];
             let needsSlides = lessonState.outputs.includes('slides');
@@ -1022,7 +1093,7 @@ Step 6: Progress Monitoring
 
             if (needsSlides) {
                 text += `\n\n--- SLIDESHOW GENERATION INSTRUCTIONS ---\n`;
-                text += `Act as an expert instructional designer. Generate a slide-by-slide lesson presentation from the provided source material, formatted for a professional layout. Adapt all pedagogical instructions, High Impact Teaching Strategies, and student-facing language to specifically suit ${unitState.year} students in New Zealand.\n`;
+                text += `Act as an expert instructional designer. Generate a slide-by-slide lesson presentation from the provided source material, formatted for a professional layout. Adapt all pedagogical instructions, High Impact Teaching Strategies, and student-facing language to specifically suit ${lessonState.year} students in New Zealand.\n`;
                 text += `Include these specific activities: ${customTask ? customTask : 'Standard CPM activities aligned with the lesson plan'}.\n\n`;
                 text += `Lesson Structure:\nStructure content around the 5 Common Practice Model (CPM) stages: CONNECTION, I DO, WE DO, YOU DO, REFLECTION & FEEDBACK.\nUse as many slides as necessary.\nCrucial Vocabulary: Ensure one of the first slides in the 'I DO' section explicitly introduces key vocabulary tailored to this year level.\n\n`;
                 text += `Design & Content Guidelines:\nTypography: 'Manrope - Normal' (fallbacks: Arial, Calibri, Georgia, Work Sans).\nConstraints: Do NOT hallucinate logos. Write strictly in New Zealand spelling (this includes the slide content and the teacher box).\nExclusions: Strictly exclude all behavioural management techniques and proximity control. Keep instructions 100% focused on cognitive and academic pedagogy.\n`;
@@ -1061,7 +1132,7 @@ Step 6: Progress Monitoring
                 text += `Act as a subject matter expert. Generate a comprehensive "Knowledge & Practices" Content Document covering ${topic}. \n`;
                 text += `This document should serve as the definitive source of truth for both the teacher and the students. Structure it professionally with clear headings, bullet points, and bolded key terms. \n`;
                 text += `Ensure you include:\n1. Core Concepts & Definitions (The 'Knowledge').\n2. Disciplinary Context (How experts use this knowledge - The 'Practices').\n3. Common Misconceptions and how to correct them.\n`;
-                text += `Adapt the vocabulary, complexity, and tone specifically for ${unitState.year} learners in New Zealand.\n`;
+                text += `Adapt the vocabulary, complexity, and tone specifically for ${lessonState.year} learners in New Zealand.\n`;
             }
 
             text += `"`;
