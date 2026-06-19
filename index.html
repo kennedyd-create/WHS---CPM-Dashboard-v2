@@ -1310,6 +1310,46 @@ Step 6: Progress Monitoring
             updateLessonBuilderPrompt();
         }
 
+        function toggleLessonOutput(type) {
+            if (!lessonState.outputs) lessonState.outputs = [];
+
+            if (type === 'none') {
+                lessonState.outputs = [];
+            } else if (type === 'all') {
+                lessonState.outputs = ['slides', 'worksheet', 'content'];
+            } else {
+                const index = lessonState.outputs.indexOf(type);
+                if (index > -1) {
+                    lessonState.outputs.splice(index, 1);
+                } else {
+                    lessonState.outputs.push(type);
+                }
+            }
+
+            // Reset UI states
+            document.getElementById('btn-out-none').classList.remove('active');
+            document.getElementById('btn-out-slides').classList.remove('active');
+            document.getElementById('btn-out-worksheet').classList.remove('active');
+            document.getElementById('btn-out-content').classList.remove('active');
+            document.getElementById('btn-out-all').classList.remove('active');
+
+            // Apply new UI states based on selection
+            if (lessonState.outputs.length === 0) {
+                document.getElementById('btn-out-none').classList.add('active');
+            } else if (lessonState.outputs.length === 3) {
+                document.getElementById('btn-out-slides').classList.add('active');
+                document.getElementById('btn-out-worksheet').classList.add('active');
+                document.getElementById('btn-out-content').classList.add('active');
+                document.getElementById('btn-out-all').classList.add('active');
+            } else {
+                if (lessonState.outputs.includes('slides')) document.getElementById('btn-out-slides').classList.add('active');
+                if (lessonState.outputs.includes('worksheet')) document.getElementById('btn-out-worksheet').classList.add('active');
+                if (lessonState.outputs.includes('content')) document.getElementById('btn-out-content').classList.add('active');
+            }
+
+            updateLessonBuilderPrompt();
+        }
+
         function toggleReliefMode() {
             lessonState.relief = !lessonState.relief;
             const btn = document.getElementById('btn-relief-mode');
