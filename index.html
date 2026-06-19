@@ -1508,26 +1508,34 @@ Step 6: Progress Monitoring
 
             if (lessonState.notebookLM) {
                 let text = `@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this Master Source Document.\n\n`;
-                text += `"Act as an expert curriculum designer and subject matter expert. I need a comprehensive MASTER SOURCE DOCUMENT for NotebookLM covering the topic: ${topic} for a ${lessonState.year} ${lessonState.dept} class.\n\n`;
+                text += `"Act as an expert curriculum and instructional designer. I need a comprehensive MASTER SOURCE DOCUMENT for NotebookLM covering the topic: ${topic} for a ${lessonState.year} ${lessonState.dept} class.\n\n`;
                 text += `This document must serve as the 'Ground Truth' for an AI assistant. It MUST be structured into two distinct parts: META-INSTRUCTIONS and DETAILED CONTENT.\n\n`;
                 text += `PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n`;
-                text += `Write a section titled 'System Instructions' that strictly commands NotebookLM on how it must behave when interacting with me later. It MUST include the following rules:\n`;
-                text += `- Rule 1: Always structure lesson plan outputs using the 5 Common Practice Model (CPM) stages: Connect (${lessonState.s1}), I Do (${lessonState.s2}), We Do (${lessonState.s3}), You Do (${lessonState.s4}), and Review (${lessonState.s5}).\n`;
-                text += `- Rule 2: When asked to generate a slideshow presentation, always use Dual Coding principles (minimal text on screen, highly descriptive image prompts) and provide explicit teacher scripts in the speaker notes.\n`;
-                text += `- Rule 3: Always align tasks with the NZ Curriculum Draft 'Knowledge and Practices' framework.\n`;
-                text += `- Rule 4: VISUAL BRANDING & SLIDE STRUCTURE - When generating slides, you MUST explicitly put the current CPM Stage (e.g., 'Stage 2: I Do') as a clear heading on every slide. You MUST strictly instruct the use of the Waiheke High School colour palette (Dark Blue #002066, Light Blue #d1e6f6, and Gold #c5a059) for backgrounds and accents, and require the 'Manrope' or 'Arial' font.\n\n`;
+                text += `Write a section titled 'System Instructions' that strictly commands NotebookLM on how it must behave when generating lesson plans or slideshows based on this document. It MUST include the following rules:\n`;
+                text += `- Rule 1: Lesson Structure: Always structure lesson plan outputs using the 5 Common Practice Model (CPM) stages: CONNECTION, I DO, WE DO, YOU DO, REFLECTION & FEEDBACK. Keep instructions 100% focused on cognitive and academic pedagogy.\n`;
+                text += `- Rule 2: Pedagogical Exclusions: Strictly exclude all behavioural management, PB4L, "The Waiheke Way", WISE values, and techniques like proximity control.\n`;
+                text += `- Rule 3: Presentation Design & Dual Coding: When generating slideshow presentations, use Dual Coding principles. Do not put too much information on each slide. Have many real photos and/or images, keeping diagrams to one per slide if suited to the content.\n`;
+                text += `- Rule 4: Visual Branding & Typography: You MUST strictly instruct the use of the Waiheke High School colour palette: Dark Blue (#002066) for primary text/borders/headings, Light Blue (#d1e6f6) for accents/emphasis, and Light Green (#e8f5e9) strictly for the teacher box background. Require 'Manrope - Normal' font (fallbacks: Arial, Calibri, Georgia, Work Sans). Do NOT hallucinate or insert WHS logo tags.\n`;
+                text += `- Rule 5: Strict Slide Layout & HTML Constraint: Every slide generated MUST use the exact HTML structure below. Do NOT output standard Markdown tables. The absolute positioned box on the bottom right is the 'Teacher Instruction Box'.\n`;
+                text += `Teacher Box Guidelines: Use short, punchy pedagogical focus points (High Impact Teaching Strategies or HITS) enclosed in <small> tags (e.g., <small>Surface misconceptions</small>, <small>Manage cognitive load</small>). No full sentences or scripts.\n\n`;
+                text += `HTML\n`;
+                text += "```html\n";
+                text += `<div style="font-family: 'Manrope', Arial, Calibri, Georgia, 'Work Sans', sans-serif; color: #002066; position: relative; width: 100%; padding-bottom: 150px; border-bottom: 2px solid #002066; margin-bottom: 30px;"><div style="width: 100%;">\n`;
+                text += `[Insert specific text, chunked material, prompts, or activities for students here. Use standard HTML tags like <h2>, <h3>, or <strong> for formatting, ensuring they inherit the Dark Blue colour or utilize the Light Blue (#d1e6f6) for emphasis backgrounds where appropriate.]</div><div style="position: absolute; bottom: 10px; right: 10px; width: 25%; min-width: 200px; background-color: #e8f5e9; border: 1px solid #002066; padding: 10px; box-shadow: -2px -2px 5px rgba(0,0,0,0.1); color: #002066;"><strong><small>[CPM STAGE TITLE]</small></strong><hr style="margin: 5px 0; border-top: 1px solid #002066;"><ul style="margin: 0; padding-left: 15px;"><li><small>[SHORT HITS BULLET 1]</small></li><li><small>[SHORT HITS BULLET 2]</small></li></ul></div></div>\n`;
+                text += "```\n\n";
                 text += `PART 2: DETAILED SUBJECT CONTENT (The 'Knowledge and Practices')\n`;
                 text += `Generate a highly detailed, textbook-level breakdown of the Knowledge and Practices for the topic ${topic} so NotebookLM has a rich database to pull from. Include:\n`;
                 text += `- Core disciplinary 'Knowledge' (concepts, facts, and definitions) appropriate for ${lessonState.year} in New Zealand.\n`;
                 text += `- Core disciplinary 'Practices' (how experts apply this knowledge).\n`;
                 text += `- Common misconceptions and how to address them.\n`;
-                text += `- Key disciplinary vocabulary (Tier 2 and Tier 3 words).\n`;
+                text += `- Key disciplinary vocabulary (Tier 2 and Tier 3 words). Crucial note: Provide explicit instructions that one of the first slides in the 'I DO' section must explicitly introduce this vocabulary.\n`;
                 text += `- At least 3 specific examples or analogies to explain the most abstract concepts.\n\n`;
-                
+
                 if (lessonState.context === 'waiheke') text += `LOCAL CONTEXT: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n\n`;
                 if (lessonState.maori === 'integrate') text += `MĀTAURANGA MĀORI: Weave relevant Mātauranga Māori and local iwi history into the core content.\n\n`;
 
-                text += `Ensure all output uses New Zealand English spelling and terminology. CRITICAL INSTRUCTION: Conclude your output by providing a direct, clickable URL link to the generated Google Doc."`;
+                text += `Ensure all output uses New Zealand English spelling and terminology (this includes slide content and teacher boxes).\n`;
+                text += `CRITICAL INSTRUCTION: Conclude your output by providing a direct, clickable URL link to the generated Google Doc."`;
                 
                 const box = document.getElementById('prompt-lesson-text');
                 if(box) box.innerText = text;
