@@ -713,6 +713,19 @@
                                 </button>
                             </div>
                         </div>
+
+                        <!-- NotebookLM Source Generator -->
+                        <div class="pt-4 mt-4 border-t border-slate-200">
+                            <div class="flex flex-col xl:flex-row items-center justify-between bg-orange-50 p-4 rounded-xl border border-orange-200 shadow-sm gap-4">
+                                <div>
+                                    <span class="text-xs font-black text-orange-800 uppercase tracking-widest block mb-1">NotebookLM Source Generator</span>
+                                    <p class="text-xs text-orange-600 font-medium">Generate a detailed Master Source Document with built-in meta-instructions for NotebookLM to structure future slideshows and lessons.</p>
+                                </div>
+                                <button onclick="toggleNotebookLMMode()" id="btn-notebooklm-mode" class="shrink-0 px-4 py-2.5 bg-orange-100 border border-orange-300 text-orange-800 text-xs font-bold rounded-lg hover:bg-orange-500 hover:text-white hover:border-orange-600 transition-colors shadow-sm whitespace-nowrap">
+                                    Enable NotebookLM Mode
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Output -->
@@ -952,7 +965,8 @@ Step 6: Progress Monitoring
             s5: 'Exit Ticket',
             extra: 'None',
             outputs: [],
-            relief: false
+            relief: false,
+            notebookLM: false
         };
 
         function syncTopics(val) {
@@ -1299,6 +1313,12 @@ Step 6: Progress Monitoring
         function toggleReliefMode() {
             lessonState.relief = !lessonState.relief;
             const btn = document.getElementById('btn-relief-mode');
+            
+            // Turn off NotebookLM mode if Relief mode is turned on
+            if (lessonState.relief && lessonState.notebookLM) {
+                toggleNotebookLMMode();
+            }
+
             if (lessonState.relief) {
                 btn.classList.add('bg-red-500', 'text-white', 'border-red-600');
                 btn.classList.remove('bg-red-100', 'text-red-800', 'border-red-300');
@@ -1307,6 +1327,27 @@ Step 6: Progress Monitoring
                 btn.classList.remove('bg-red-500', 'text-white', 'border-red-600');
                 btn.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
                 btn.innerText = "Enable Relief Mode";
+            }
+            updateLessonBuilderPrompt();
+        }
+
+        function toggleNotebookLMMode() {
+            lessonState.notebookLM = !lessonState.notebookLM;
+            const btn = document.getElementById('btn-notebooklm-mode');
+            
+            // Turn off Relief mode if NotebookLM mode is turned on
+            if (lessonState.notebookLM && lessonState.relief) {
+                toggleReliefMode();
+            }
+
+            if (lessonState.notebookLM) {
+                btn.classList.add('bg-orange-500', 'text-white', 'border-orange-600');
+                btn.classList.remove('bg-orange-100', 'text-orange-800', 'border-orange-300');
+                btn.innerText = "Disable NotebookLM Mode";
+            } else {
+                btn.classList.remove('bg-orange-500', 'text-white', 'border-orange-600');
+                btn.classList.add('bg-orange-100', 'text-orange-800', 'border-orange-300');
+                btn.innerText = "Enable NotebookLM Mode";
             }
             updateLessonBuilderPrompt();
         }
@@ -1423,6 +1464,31 @@ Step 6: Progress Monitoring
             let needsSlides = lessonState.outputs.includes('slides');
             let needsWorksheet = lessonState.outputs.includes('worksheet');
             let needsContent = lessonState.outputs.includes('content');
+
+            if (lessonState.notebookLM) {
+                let text = `"Act as an expert curriculum designer and subject matter expert. I need a comprehensive MASTER SOURCE DOCUMENT for NotebookLM covering the topic: ${topic} for a ${lessonState.year} ${lessonState.dept} class.\n\n`;
+                text += `This document must serve as the 'Ground Truth' for an AI assistant. It MUST be structured into two distinct parts: META-INSTRUCTIONS and DETAILED CONTENT.\n\n`;
+                text += `PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n`;
+                text += `Write a section titled 'System Instructions' that strictly commands NotebookLM on how it must behave when interacting with me later. It MUST include the following rules:\n`;
+                text += `- Rule 1: Always structure lesson plan outputs using the 5 Common Practice Model (CPM) stages: Connect (${lessonState.s1}), I Do (${lessonState.s2}), We Do (${lessonState.s3}), You Do (${lessonState.s4}), and Review (${lessonState.s5}).\n`;
+                text += `- Rule 2: When asked to generate a slideshow presentation, always use Dual Coding principles (minimal text on screen, highly descriptive image prompts) and provide explicit teacher scripts in the speaker notes.\n`;
+                text += `- Rule 3: Always align tasks with the NZ Curriculum Draft 'Knowledge and Practices' framework.\n\n`;
+                text += `PART 2: DETAILED SUBJECT CONTENT (The 'Knowledge')\n`;
+                text += `Provide a highly detailed, exhaustive, textbook-level breakdown of ${topic} so NotebookLM has a massive database to pull from. Include:\n`;
+                text += `- Core concepts, facts, and definitions appropriate for ${lessonState.year} in New Zealand.\n`;
+                text += `- Common misconceptions and how to address them.\n`;
+                text += `- Key disciplinary vocabulary (Tier 2 and Tier 3 words).\n`;
+                text += `- At least 3 specific examples or analogies to explain the most abstract concepts.\n\n`;
+                
+                if (lessonState.context === 'waiheke') text += `LOCAL CONTEXT: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n\n`;
+                if (lessonState.maori === 'integrate') text += `MĀTAURANGA MĀORI: Weave relevant Mātauranga Māori and local iwi history into the core content.\n\n`;
+
+                text += `Ensure all output uses New Zealand English spelling and terminology. Output this as clean, highly structured Markdown text."`;
+                
+                const box = document.getElementById('prompt-lesson-text');
+                if(box) box.innerText = text;
+                return;
+            }
 
             if (lessonState.relief) {
                 let text = `@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this relief worksheet. If you cannot directly create the file, output the full worksheet using clean Markdown text so I can copy it into a Doc.\n\n`;
