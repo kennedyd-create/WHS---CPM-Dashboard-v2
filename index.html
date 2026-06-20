@@ -127,15 +127,15 @@
         }
 
         .recommended-highlight {
-            background-color: #fef3c7 !important; /* amber-100 */
-            border-color: #f59e0b !important; /* amber-500 */
-            color: #92400e !important; /* amber-800 */
+            background-color: #fef3c7 !important; 
+            border-color: #f59e0b !important; 
+            color: #92400e !important; 
             position: relative;
         }
         
         .recommended-highlight.active {
-            background-color: #f59e0b !important; /* amber-500 */
-            border-color: #d97706 !important; /* amber-600 */
+            background-color: #f59e0b !important; 
+            border-color: #d97706 !important; 
             color: white !important;
         }
 
@@ -199,6 +199,45 @@
         .tooltip-wrapper:hover {
             z-index: 20;
         }
+
+        /* New Stage Divider CSS */
+        .stage-divider {
+            position: relative;
+            padding-top: 1.5rem;
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .stage-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #cbd5e1, transparent);
+        }
+        .stage-header {
+            font-size: 1.125rem; 
+            font-weight: 800; 
+            color: var(--whs-dark-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.05em; 
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .stage-number-badge {
+            background-color: var(--whs-dark-blue);
+            color: white;
+            border-radius: 9999px;
+            width: 1.75rem;
+            height: 1.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -234,14 +273,12 @@
         </nav>
 
         <div id="view-instructional" class="space-y-8 animate-in fade-in duration-500">
-            
             <div class="text-center max-w-3xl mx-auto mb-4">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">The Instructional Hub</h2>
                 <p class="text-slate-600">Select a stage and strategy to generate explicit instructional scripts and materials.</p>
             </div>
 
             <div class="space-y-4">
-                <!-- Department Filters -->
                 <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                     <button onclick="setDiscipline('Science')" id="btn-Science" class="dept-btn active">Science</button>
                     <button onclick="setDiscipline('Maths')" id="btn-Maths" class="dept-btn">Maths</button>
@@ -253,7 +290,6 @@
                     <button onclick="setDiscipline('PEHealth')" id="btn-PEHealth" class="dept-btn">PE & Health</button>
                 </div>
 
-                <!-- Year Level Filters -->
                 <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
                     <button onclick="setInstructionalYear('Year 7')" id="btn-inst-Year7" class="inst-year-btn dept-btn">Year 7</button>
                     <button onclick="setInstructionalYear('Year 8')" id="btn-inst-Year8" class="inst-year-btn dept-btn">Year 8</button>
@@ -264,7 +300,6 @@
                     <button onclick="setInstructionalYear('Year 13 (NCEA Level 3)')" id="btn-inst-Year13(NCEALevel3)" class="inst-year-btn dept-btn">Year 13</button>
                 </div>
 
-                <!-- Curriculum Link Container (Instructional) -->
                 <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
             </div>
 
@@ -276,7 +311,6 @@
             </div>
 
             <div class="space-y-4">
-                <!-- Integration Filters (Instructional Hub) -->
                 <div class="flex flex-wrap justify-center gap-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                     <div>
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2 text-center">Local Context</span>
@@ -313,7 +347,6 @@
             </div>
 
             <div class="grid lg:grid-cols-12 gap-8">
-                <!-- CPM Stages Column -->
                 <div class="lg:col-span-3 space-y-3">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">CPM Stages</h3>
                     <div onclick="setStage(1)" id="btn-stage-1" class="stage-btn active">
@@ -340,21 +373,18 @@
 
                 <div class="lg:col-span-9">
                     <div class="glass-card p-8 h-full flex flex-col">
-                        <div class="mb-6">
-                            <h3 id="display-title" class="text-3xl font-black text-[#002066] mb-2">Stage 1: Connect</h3>
+                        <div class="mb-6 border-b-2 border-[#002066] pb-4">
+                            <h3 id="display-title" class="text-3xl font-black text-[#002066] mb-2 uppercase tracking-wider">Stage 1: Connect</h3>
                             <p id="display-intent" class="text-sm text-slate-600 font-medium">Activates existing schemas in long-term memory. Primes working memory for new inputs.</p>
                         </div>
 
                         <div class="grid md:grid-cols-2 gap-8 flex-grow">
-                            <!-- Strategies -->
                             <div>
                                 <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy to Update Prompt</h4>
                                 <div id="display-strategies" class="space-y-2">
-                                    <!-- Populated dynamically by JS -->
                                 </div>
                             </div>
                             
-                            <!-- AI Prompt Output -->
                             <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
                                 <div class="flex justify-between items-center mb-4">
                                     <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Expert Assistant Prompt</h4>
@@ -408,7 +438,6 @@
                 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="space-y-6">
-                        <!-- Dept -->
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
                             <div class="flex flex-wrap gap-2" id="unit-dept-opts">
@@ -422,7 +451,6 @@
                                 <button onclick="setUnitState('dept', 'PE & Health', this)" class="builder-btn">PE & Health</button>
                             </div>
                         </div>
-                        <!-- Year -->
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
                             <div class="flex flex-wrap gap-2" id="unit-year-opts">
@@ -436,16 +464,13 @@
                             </div>
                         </div>
 
-                        <!-- Curriculum Link Container (Unit) -->
                         <div id="unit-curriculum-link" class="flex justify-start"></div>
 
-                        <!-- Topic Input -->
                         <div class="bg-amber-50/30 p-5 rounded-xl border-l-4 border-l-amber-500 shadow-sm border border-slate-200">
                             <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific)</label>
                             <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                         </div>
 
-                        <!-- Duration -->
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Duration</span>
                             <div class="flex flex-wrap gap-2" id="unit-dur-opts">
@@ -456,7 +481,6 @@
                                 <button onclick="setUnitState('dur', '20 lessons', this)" class="builder-btn">20 Lessons</button>
                             </div>
                         </div>
-                        <!-- Context and Maori -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div>
                                 <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
@@ -494,7 +518,6 @@
                         </div>
                     </div>
                     
-                    <!-- Output -->
                     <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
@@ -521,9 +544,7 @@
                 <p class="text-slate-600">Build a hyper-specific prompt by picking strategies for each CPM stage. The AI Engine will suggest its <span class="bg-amber-500 text-white text-[10px] px-1 py-0.5 rounded font-bold shadow-sm">🏆 TOP PICK</span> as you type.</p>
             </div>
 
-            <!-- TOP CONFIGURATION HUB -->
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-amber-500 max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
-                <!-- Dept & Year -->
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
@@ -535,7 +556,7 @@
                             <button onclick="setLessonState('dept', 'Māori', this)" class="builder-btn">Māori</button>
                             <button onclick="setLessonState('dept', 'Technology', this)" class="builder-btn">Technology</button>
                             <button onclick="setLessonState('dept', 'Arts', this)" class="builder-btn">Arts</button>
-                            <button onclick="setLessonState('dept', 'PEHealth', this)" class="builder-btn">PE & Health</button>
+                            <button onclick="setLessonState('dept', 'PE & Health', this)" class="builder-btn">PE & Health</button>
                         </div>
                     </div>
                     <div>
@@ -552,16 +573,13 @@
                     </div>
                 </div>
 
-                <!-- Curriculum Link Container (Lesson) -->
                 <div id="les-curriculum-link" class="flex justify-start"></div>
 
-                <!-- Topic Input -->
                 <div class="bg-amber-50/40 p-5 rounded-xl border-l-4 border-l-amber-500 shadow-sm border border-slate-200">
                     <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Type to activate AI Top Picks)</label>
                     <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
 
-                <!-- Integration Toggles -->
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-200">
                     <div>
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
@@ -599,36 +617,48 @@
                 <p class="text-sm text-slate-600 mb-6">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-amber-500 text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
 
                 <div class="grid md:grid-cols-2 gap-8">
-                    <div class="space-y-6">
+                    <div class="space-y-2">
                         
-                        <!-- Dynamic Stage Pickers -->
-                        <div>
-                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Stage 1: Connect</span>
+                        <div class="stage-divider">
+                            <div class="stage-header mb-4">
+                                <span class="stage-number-badge">1</span> Connect
+                            </div>
                             <div class="flex flex-wrap gap-2" id="les-s1-opts"></div>
                         </div>
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 2: I Do</span>
+
+                        <div class="stage-divider">
+                            <div class="stage-header mb-4">
+                                <span class="stage-number-badge">2</span> I Do
+                            </div>
                             <div class="flex flex-wrap gap-2" id="les-s2-opts"></div>
                         </div>
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 3: We Do</span>
+
+                        <div class="stage-divider">
+                            <div class="stage-header mb-4">
+                                <span class="stage-number-badge">3</span> We Do
+                            </div>
                             <div class="flex flex-wrap gap-2" id="les-s3-opts"></div>
                         </div>
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 4: You Do</span>
+
+                        <div class="stage-divider">
+                            <div class="stage-header mb-4">
+                                <span class="stage-number-badge">4</span> You Do
+                            </div>
                             <div class="flex flex-wrap gap-2" id="les-s4-opts"></div>
                         </div>
-                        <div>
-                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 5: Review</span>
+
+                        <div class="stage-divider">
+                            <div class="stage-header mb-4">
+                                <span class="stage-number-badge">5</span> Review
+                            </div>
                             <div class="flex flex-wrap gap-2" id="les-s5-opts"></div>
                         </div>
                         
-                        <div class="pt-4 border-t border-slate-200">
+                        <div class="pt-8 mt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span>
                             <input type="text" id="les-custom-task" oninput="updateLessonBuilderPrompt()" placeholder="e.g. Only have stages 3 and 4 in this lesson, Stage 4 will extend over 2 lessons..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800">
                         </div>
 
-                        <!-- Required Outputs Toggle -->
                         <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
                             <div class="flex flex-wrap gap-2" id="les-output-opts">
@@ -640,7 +670,6 @@
                             </div>
                         </div>
 
-                        <!-- Extra Differentiated Resource -->
                         <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Extra Differentiated Resource (You Do)</span>
                             <div class="flex flex-wrap gap-2" id="les-extra-opts">
@@ -651,7 +680,6 @@
                             </div>
                         </div>
                         
-                        <!-- Relief Cover Mode -->
                         <div class="pt-6 mt-4 border-t-2 border-dashed border-red-200">
                             <div class="flex flex-col xl:flex-row items-center justify-between bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm gap-4">
                                 <div>
@@ -664,7 +692,6 @@
                             </div>
                         </div>
 
-                        <!-- NotebookLM Source Generator -->
                         <div class="pt-4 mt-4 border-t border-slate-200">
                             <div class="flex flex-col xl:flex-row items-center justify-between bg-orange-50 p-4 rounded-xl border border-orange-200 shadow-sm gap-4">
                                 <div>
@@ -678,7 +705,6 @@
                         </div>
                     </div>
 
-                    <!-- Output Box -->
                     <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col relative z-0">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
@@ -698,7 +724,6 @@
             </div>
         </div>
 
-        <!-- View 3: Student Support -->
         <div id="view-students" class="hidden space-y-12 animate-in fade-in duration-500">
             <div class="max-w-3xl mx-auto text-center space-y-6">
                 <h2 class="text-3xl font-bold text-emerald-900">Alleviating Cognitive Load for Students</h2>
@@ -707,8 +732,7 @@
                 </p>
             </div>
 
-            <!-- Student Gem Highlight -->
-            <div class="glass-card p-8 border-l-8 border-l-amber-500 bg-amber-50/50">
+            <div class="glass-card p-8 mb-8 border-l-8 border-l-amber-500 bg-amber-50/50">
                 <div class="flex items-center gap-4 mb-4">
                     <div class="bg-amber-100 p-3 rounded-full text-2xl">🤖</div>
                     <div>
@@ -722,54 +746,52 @@
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 mt-8">
+            <div class="grid md:grid-cols-2 gap-12">
                 <div class="space-y-6">
-                    <div class="p-6 bg-white border border-slate-200 rounded-2xl relative group">
+                    <div class="p-6 bg-white border border-slate-200 rounded-2xl">
                         <h4 class="font-bold text-slate-800 mb-2">Personalised Retrieval Partner</h4>
-                        <p class="text-sm text-slate-600 mb-3">Spaced repetition before exams.</p>
-                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner">
+                        <p class="text-sm text-slate-600 mb-4">Spaced repetition before exams.</p>
+                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group shadow-inner">
                             <span id="prompt-stu-1">"Act as a quiz master. Ask me 5 questions about today's notes. Ask them one at a time and wait for my answer. If I get one wrong, explain it using an analogy. Ensure all output uses New Zealand English."</span>
+                            <button onclick="copyText('prompt-stu-1', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
                         </div>
-                        <button onclick="copyText('prompt-stu-1', this)" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY</button>
                     </div>
-                    <div class="p-6 bg-white border border-slate-200 rounded-2xl relative group">
+                    <div class="p-6 bg-white border border-slate-200 rounded-2xl">
                         <h4 class="font-bold text-slate-800 mb-2">Analogy Generation</h4>
-                        <p class="text-sm text-slate-600 mb-3">Breaks down high-density topics.</p>
-                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner">
+                        <p class="text-sm text-slate-600 mb-4">Breaks down high-density topics.</p>
+                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group shadow-inner">
                             <span id="prompt-stu-3">"Explain the core concept we are studying first for a 10-year-old, then for a Year 13 student. Focus on the disciplinary vocabulary. Ensure all output uses New Zealand English."</span>
+                            <button onclick="copyText('prompt-stu-3', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
                         </div>
-                        <button onclick="copyText('prompt-stu-3', this)" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY</button>
                     </div>
                 </div>
                 <div class="space-y-6">
-                    <div class="p-6 bg-white border border-slate-200 rounded-2xl relative group">
+                    <div class="p-6 bg-white border border-slate-200 rounded-2xl">
                         <h4 class="font-bold text-slate-800 mb-2">Practice Scaffolding</h4>
-                        <p class="text-sm text-slate-600 mb-3">Unsticking students during 'You Do'.</p>
-                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner">
+                        <p class="text-sm text-slate-600 mb-4">Unsticking students during 'You Do'.</p>
+                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group shadow-inner">
                             <span id="prompt-stu-2">"I'm struggling to write my analysis. Give me 3 sentence starters for a student evaluating the reliability of this source. Ensure all output uses New Zealand English."</span>
+                            <button onclick="copyText('prompt-stu-2', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
                         </div>
-                        <button onclick="copyText('prompt-stu-2', this)" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY</button>
                     </div>
-                    <div class="p-6 bg-white border border-slate-200 rounded-2xl relative group">
+                    <div class="p-6 bg-white border border-slate-200 rounded-2xl">
                         <h4 class="font-bold text-slate-800 mb-2">Success Criteria Check</h4>
-                        <p class="text-sm text-slate-600 mb-3">Self-assessment against NZ expectations.</p>
-                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner">
+                        <p class="text-sm text-slate-600 mb-4">Self-assessment against NZ expectations.</p>
+                        <div class="bg-blue-50 p-4 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 relative group shadow-inner">
                             <span id="prompt-stu-4">"Compare my draft paragraph against the 'Practices' descriptors from the NZ Curriculum. Where is my evidence of disciplinary thinking weak? Ensure all output uses New Zealand English."</span>
+                            <button onclick="copyText('prompt-stu-4', this)" class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-[#002066]">COPY</button>
                         </div>
-                        <button onclick="copyText('prompt-stu-4', this)" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm">COPY</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- View 4: Advanced AI -->
         <div id="view-advanced" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-[#c5a059] mb-4">Advanced AI Architecture</h2>
                 <p class="text-slate-600">Elevate your planning from generic chat to highly specialized, source-grounded instructional design.</p>
             </div>
 
-            <!-- Advanced AI Toolset (The Tutor Gem) -->
             <div class="whs-gradient-bg p-10 rounded-3xl text-white mb-8 shadow-lg border border-blue-900">
                 <div class="flex items-center gap-4 mb-6">
                     <div class="bg-amber-500 text-amber-900 p-2 rounded-lg font-black text-xl">✨</div>
@@ -874,7 +896,6 @@ Step 6: Progress Monitoring
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
             <p>© 2024 Waiheke High School Professional Learning Programme</p>
             <p class="mt-1 font-semibold text-[#002066]">Knowledge & Practices Framework • Developed for Aotearoa Educators</p>
@@ -882,7 +903,7 @@ Step 6: Progress Monitoring
     </div>
 
     <script>
-        // --- 1. DATA STRUCTURES (HOISTED) ---
+        // Data Structures
         const tahurangiLinks = {
             'Social Sciences': {
                 'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---social-sciences-phase-3-years-7-8/5637290853.p',
@@ -903,83 +924,6 @@ Step 6: Progress Monitoring
             3: { title: "Stage 3: We Do", intent: "Shared responsibility. High-frequency CFU using mini-whiteboards or choral responses. Errors are corrected before encoding." },
             4: { title: "Stage 4: You Do", intent: "Moving from concrete to abstract. Students build automaticity. Scaffolds are gradually faded." },
             5: { title: "Stage 5: Review", intent: "Closing the loop. Signalling the transition. Consolidating learning and providing feedback." }
-        };
-
-        const generateStrategies = (stage, customStrategies) => {
-            const defaults = {
-                1: ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"],
-                2: ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher", "Disciplinary Text Decoding"],
-                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better", "Hexagonal Mapping"],
-                4: ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Extended Writing"],
-                5: ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"]
-            };
-            return customStrategies || defaults[stage];
-        };
-
-        const cpmMatrix = {
-            'Science': {
-                1: generateStrategies(1),
-                2: generateStrategies(2),
-                3: generateStrategies(3),
-                4: generateStrategies(4, ["Tiered Tasks", "Spaced Retrieval Worksheet", "Self-Checking Task", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Independent Scaffolds", "Speed Fluency Drills", "Peer Critique", "Information Transformation Task", "Hexagonal Mapping"]),
-                5: generateStrategies(5)
-            },
-            'Maths': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping", "Knowledge Dump & Compare"]),
-                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
-                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
-                4: generateStrategies(4),
-                5: generateStrategies(5)
-            },
-            'Social Sciences': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Previous Lesson Brain Dump", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
-                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher", "Disciplinary Text Decoding"]),
-                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better", "Hexagonal Mapping"]),
-                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Extended Writing"]),
-                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
-            },
-            'English': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Vocabulary Flash-drills", "Previous Lesson Brain Dump", "Syllabus Link-Up", "Pick a Stick (Randomised Call)", "Image/Diagram Prompt", "Concept Mapping", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Track With Me", "Goal Setting", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
-                2: generateStrategies(2, ["Disciplinary Text Decoding", "Think-Aloud Script", "Frayer Model Definition", "Worked Example", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Dual-Coding Diagram", "Live Drawing / Construction", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "Physical Demonstration", "The Silent Teacher"]),
-                3: generateStrategies(3, ["Think-Pair-Share", "Mini-Whiteboards", "Guided Error Analysis", "A/B Peer Teaching", "Choral Response", "Cold Call Follow-On", "Categorisation Task", "Problem Pairs", "Reverse Engineering", "Backward Fading Scaffolding", "Guided Calculation", "Jigsaw Text Decoding", "Say It Again, Better"]),
-                4: generateStrategies(4, ["Extended Writing", "Independent Scaffolds", "Sentence Scaffolds", "Peer Critique", "Tiered Tasks", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Past Paper Simulation", "Self-Checking Task", "Speed Fluency Drills", "Information Transformation Task"]),
-                5: generateStrategies(5, ["3-2-1 Summary", "Exit Ticket", "Metacognitive Journaling", "Two Stars and a Wish", "Debate Prep Note", "One-Sentence Summary", "SOLO Taxonomy Check", "Next-Step Prediction", "Traffic Light Self-Assessment", "60-Second Summary", "Key Formula Recall", "Distractor Analysis"])
-            },
-            'Māori': {
-                1: generateStrategies(1, ["Karakia / Whakataukī Recall", "Retrieval Do-Now Quiz", "Vocabulary Flash-drills", "Concept Mapping (Whakapapa)", "Image/Diagram Prompt", "Waiata/Kīwaha Practice", "Pick a Stick (Randomised Call)", "Track With Me", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
-                2: generateStrategies(2, ["Pronunciation Modelling", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Metaphor/Analogy Mapping", "Non-Examples Contrast", "The Silent Teacher"]),
-                3: generateStrategies(3, ["Choral Response", "Mini-Whiteboards", "Think-Pair-Share", "A/B Peer Teaching", "Guided Error Analysis", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better"]),
-                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
-                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
-            },
-            'Technology': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping", "Knowledge Dump & Compare"]),
-                2: generateStrategies(2, ["Physical Demonstration", "Live Drawing / Construction", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
-                3: generateStrategies(3, ["Guided Error Analysis", "Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
-                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
-                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
-            },
-            'Arts': {
-                1: generateStrategies(1, ["Visual/Audio Prompt Analysis", "Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau"]),
-                2: generateStrategies(2, ["Live Drawing / Construction", "Physical Demonstration", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
-                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
-                4: generateStrategies(4, ["Independent Studio Task", "Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Information Transformation Task", "Hexagonal Mapping"]),
-                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
-            },
-            'PEHealth': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Knowledge Dump & Compare"]),
-                2: generateStrategies(2, ["Physical Demonstration", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
-                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
-                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
-                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
-            },
-            'Default': {
-                1: ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump"],
-                2: ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight"],
-                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching"],
-                4: ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task"],
-                5: ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction"]
-            }
         };
 
         const stratDesc = {
@@ -1051,25 +995,92 @@ Step 6: Progress Monitoring
             "Independent Studio Task": "Working alone on an art/design project to internalize techniques."
         };
 
-        function getDesc(name) {
-            if (stratDesc[name]) return stratDesc[name];
-            for (let key in stratDesc) {
-                if (name.includes(key) || key.includes(name)) return stratDesc[key];
-            }
-            return "Click to generate a specific AI prompt for this instructional strategy.";
-        }
+        const generateStrategies = (stage, customStrategies) => {
+            const defaults = {
+                1: ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"],
+                2: ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"],
+                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better"],
+                4: ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"],
+                5: ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"]
+            };
+            return customStrategies || defaults[stage];
+        };
 
-        // --- 2. GLOBAL STATE ---
+        const cpmMatrix = {
+            'Science': {
+                1: generateStrategies(1),
+                2: generateStrategies(2),
+                3: generateStrategies(3),
+                4: generateStrategies(4, ["Tiered Tasks", "Spaced Retrieval Worksheet", "Self-Checking Task", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Independent Scaffolds", "Speed Fluency Drills", "Peer Critique", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5)
+            },
+            'Maths': {
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4),
+                5: generateStrategies(5)
+            },
+            'Social Sciences': {
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Previous Lesson Brain Dump", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher", "Disciplinary Text Decoding"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better", "Hexagonal Mapping"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Extended Writing"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
+            },
+            'English': {
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Vocabulary Flash-drills", "Previous Lesson Brain Dump", "Syllabus Link-Up", "Pick a Stick (Randomised Call)", "Image/Diagram Prompt", "Concept Mapping", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Track With Me", "Goal Setting", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Disciplinary Text Decoding", "Think-Aloud Script", "Frayer Model Definition", "Worked Example", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Dual-Coding Diagram", "Live Drawing / Construction", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "Physical Demonstration", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Think-Pair-Share", "Mini-Whiteboards", "Guided Error Analysis", "A/B Peer Teaching", "Choral Response", "Cold Call Follow-On", "Categorisation Task", "Problem Pairs", "Reverse Engineering", "Backward Fading Scaffolding", "Guided Calculation", "Jigsaw Text Decoding", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Extended Writing", "Independent Scaffolds", "Sentence Scaffolds", "Peer Critique", "Tiered Tasks", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Past Paper Simulation", "Self-Checking Task", "Speed Fluency Drills", "Information Transformation Task"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Exit Ticket", "Metacognitive Journaling", "Two Stars and a Wish", "Debate Prep Note", "One-Sentence Summary", "SOLO Taxonomy Check", "Next-Step Prediction", "Traffic Light Self-Assessment", "60-Second Summary", "Key Formula Recall", "Distractor Analysis"])
+            },
+            'Māori': {
+                1: generateStrategies(1, ["Karakia / Whakataukī Recall", "Retrieval Do-Now Quiz", "Vocabulary Flash-drills", "Concept Mapping (Whakapapa)", "Image/Diagram Prompt", "Waiata/Kīwaha Practice", "Pick a Stick (Randomised Call)", "Track With Me", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Pronunciation Modelling", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Metaphor/Analogy Mapping", "Non-Examples Contrast", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Choral Response", "Mini-Whiteboards", "Think-Pair-Share", "A/B Peer Teaching", "Guided Error Analysis", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
+            },
+            'Technology': {
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Physical Demonstration", "Live Drawing / Construction", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Guided Error Analysis", "Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
+            },
+            'Arts': {
+                1: generateStrategies(1, ["Visual/Audio Prompt Analysis", "Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau"]),
+                2: generateStrategies(2, ["Live Drawing / Construction", "Physical Demonstration", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Independent Studio Task", "Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
+            },
+            'PEHealth': {
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Physical Demonstration", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
+            },
+            'Default': {
+                1: ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump"],
+                2: ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight"],
+                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching"],
+                4: ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task"],
+                5: ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction"]
+            }
+        };
+
+        // State Variables
         let currentDiscipline = 'Science';
         let currentStage = 1;
         let currentInstructionalYear = 'Year 11 (NCEA Level 1)';
         let currentStrategy = null;
-        
         let currentInstContext = 'none';
         let currentInstMaori = 'none';
         let currentInstLit = 'none';
         let currentInstNum = 'none';
-
         let chartInstance = null;
         let aiTopPicks = { 1: "", 2: "", 3: "", 4: "", 5: "" };
 
@@ -1101,7 +1112,14 @@ Step 6: Progress Monitoring
             notebookLM: false
         };
 
-        // --- 3. UI HELPER FUNCTIONS ---
+        function getDesc(name) {
+            if (stratDesc[name]) return stratDesc[name];
+            for (let key in stratDesc) {
+                if (name.includes(key) || key.includes(name)) return stratDesc[key];
+            }
+            return "Click to generate a specific AI prompt for this instructional strategy.";
+        }
+
         function getCurriculumLink(dept, year) {
             const cleanYear = year.split(' ')[0] + ' ' + year.split(' ')[1]; 
             if (tahurangiLinks[dept]) {
@@ -1123,14 +1141,6 @@ Step 6: Progress Monitoring
             `;
         }
 
-        function updateLitNumVisibility(dept) {
-            // ALWAYS block - Literacy and Numeracy are always visible regardless of subject
-            ['inst-lit-container', 'inst-lit-divider', 'unit-lit-container', 'les-lit-container', 'inst-num-container', 'inst-num-divider', 'unit-num-container', 'les-num-container'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.style.display = 'block'; 
-            });
-        }
-
         function getGlobalTopic() {
             const input = document.querySelector('.sync-topic');
             return (input && input.value.trim()) ? input.value.trim() : "[Insert Specific Topic Here]";
@@ -1141,7 +1151,7 @@ Step 6: Progress Monitoring
                 if(input.value !== val) input.value = val;
             });
             localStorage.setItem('whs_topic', val);
-            forceAiPicks(); // Trigger recalculation on typing
+            forceAiPicks(); 
         }
 
         function showView(viewId) {
@@ -1162,7 +1172,6 @@ Step 6: Progress Monitoring
             }
         }
 
-        // --- 4. THE AI ENGINE (TOP PICK) ---
         function getAiPicks(dept, year, topic, context, maori, lit, num) {
             const isSenior = ["Year 11", "Year 12", "Year 13", "Level 1", "Level 2", "Level 3"].some(y => year.includes(y));
             topic = (topic || "").toLowerCase();
@@ -1186,7 +1195,7 @@ Step 6: Progress Monitoring
                 return path[stageNum]; 
             }
 
-            // A. Department Baseline
+            // Subject Baselines
             if (dept === "Maths") {
                 path[1] = getSafe(1, ["fluency", "do-now", "retrieval"]);
                 path[2] = isSenior ? getSafe(2, ["step-by-step", "worked"]) : getSafe(2, ["silent", "live"]);
@@ -1212,7 +1221,7 @@ Step 6: Progress Monitoring
                 path[4] = isSenior ? getSafe(4, ["portfolio", "studio"]) : getSafe(4, ["studio", "application"]);
             }
 
-            // B. Keyword Triggers
+            // Keyword Triggers
             if (topic.includes("write") || topic.includes("essay") || topic.includes("paragraph") || topic.includes("report")) {
                 path[4] = getSafe(4, ["writ", "essay", "report", "portfolio"]);
                 path[2] = getSafe(2, ["decoding", "model", "structure"]);
@@ -1233,7 +1242,7 @@ Step 6: Progress Monitoring
                 path[5] = getSafe(5, ["debate", "peer", "stars"]);
             }
 
-            // C. Integration Toggles (Overrides)
+            // Integration Triggers
             if (lit === 'integrate') {
                 path[1] = getSafe(1, ["vocab", "drills", "quiz"]);
                 path[2] = getSafe(2, ["decoding", "frayer", "text"]);
@@ -1261,14 +1270,14 @@ Step 6: Progress Monitoring
         function forceAiPicks() {
             const globalTopic = getGlobalTopic();
             
-            // Sync Hub AI Picks
+            // Hub Picks
             let hubPicks = getAiPicks(currentDiscipline, currentInstructionalYear, globalTopic, currentInstContext, currentInstMaori, currentInstLit, currentInstNum);
             currentStrategy = hubPicks[currentStage];
             renderInstructionalHub(hubPicks);
 
-            // Sync Lesson Builder AI Picks & state
+            // Lesson Picks
             let lesPicks = getAiPicks(lessonState.dept, lessonState.year, globalTopic, lessonState.context, lessonState.maori, lessonState.lit, lessonState.num);
-            aiTopPicks = lesPicks; // globalize for rendering
+            aiTopPicks = lesPicks;
             
             lessonState.s1 = lesPicks[1] || cpmMatrix[lessonState.dept][1][0];
             lessonState.s2 = lesPicks[2] || cpmMatrix[lessonState.dept][2][0];
@@ -1280,13 +1289,10 @@ Step 6: Progress Monitoring
             updateAllPrompts();
         }
 
-        // --- 5. RENDER LOGIC ---
-
         function setDiscipline(dept) {
             currentDiscipline = dept;
             document.querySelectorAll('#view-instructional .dept-btn:not(.inst-year-btn)').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-${dept.replace(/ /g, '')}`).classList.add('active');
-            updateLitNumVisibility(dept);
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             forceAiPicks();
         }
@@ -1303,7 +1309,7 @@ Step 6: Progress Monitoring
             currentStage = stage;
             document.querySelectorAll('.stage-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`btn-stage-${stage}`).classList.add('active');
-            forceAiPicks(); // Ensures currentStrategy updates correctly when switching
+            forceAiPicks();
         }
 
         function setInstState(key, val, btnElem) {
@@ -1314,7 +1320,7 @@ Step 6: Progress Monitoring
             const parent = btnElem.parentElement;
             parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
             btnElem.classList.add('active');
-            forceAiPicks(); // Recalculate AI based on new toggles
+            forceAiPicks(); 
         }
 
         function renderInstructionalHub(hubPicks = aiTopPicks) {
@@ -1359,7 +1365,7 @@ Step 6: Progress Monitoring
         function setStrategyPrompt(strategy) {
             currentStrategy = strategy;
             
-            // Just update UI active state without recalculating everything
+            // Visual highlight logic without full re-render
             const buttons = document.querySelectorAll('#display-strategies button');
             buttons.forEach(btn => {
                 if(btn.innerText.includes(strategy)) {
@@ -1400,20 +1406,16 @@ Step 6: Progress Monitoring
             }
         }
 
-        // Lesson Builder Logic
         function setLessonState(key, val, btnElem) {
             lessonState[key] = val;
             const parent = btnElem.parentElement;
             parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
             btnElem.classList.add('active');
             
-            if (key === 'dept') updateLitNumVisibility(val);
-            
             if (['dept', 'year', 'context', 'maori', 'lit', 'num'].includes(key)) {
                 renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
-                forceAiPicks(); // Automatically swaps strategies and highlights top picks
+                forceAiPicks(); 
             } else if (['s1', 's2', 's3', 's4', 's5'].includes(key)) {
-                // Re-render strictly to update active state, retaining the current aiTopPicks
                 renderLessonStrategies(aiTopPicks);
                 updateLessonBuilderPrompt();
             } else {
@@ -1448,7 +1450,6 @@ Step 6: Progress Monitoring
                         badges = `<span class="absolute -top-2 right-4 bg-amber-500 text-white text-[8px] px-1 py-0.5 rounded shadow-sm pointer-events-none font-bold tracking-wider z-10">🏆 TOP PICK</span>`;
                     }
 
-                    // Dynamically build innerHTML matching the original structure
                     let btnHtml = `<button data-tooltip="${getDesc(s)}" onclick="setLessonState('s${i}', '${s.replace(/'/g, "\\'")}', this)" class="${btnClass}" style="${isTopPick ? 'position: relative;' : ''}">
                         <span>${s}</span>${badges}
                     </button>`;
@@ -1528,18 +1529,15 @@ Step 6: Progress Monitoring
             updateLessonBuilderPrompt();
         }
 
-        // Unit Planner Logic
         function setUnitState(key, val, btnElem) {
             unitState[key] = val;
             const parent = btnElem.parentElement;
             parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
             btnElem.classList.add('active');
-            if (key === 'dept') updateLitNumVisibility(val);
             if (key === 'dept' || key === 'year') renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             updateUnitBuilderPrompt();
         }
 
-        // --- 6. PROMPT GENERATION ---
         function updateAllPrompts() {
             updateUnitBuilderPrompt();
             updateLessonBuilderPrompt();
@@ -1715,7 +1713,6 @@ Step 6: Progress Monitoring
             if(box) box.innerText = text;
         }
 
-        // Copy Function
         function copyText(elementId, btnElement) {
             const textToCopy = document.getElementById(elementId).innerText;
             const textArea = document.createElement("textarea");
@@ -1785,6 +1782,7 @@ Step 6: Progress Monitoring
                 document.querySelectorAll('.sync-topic').forEach(input => input.value = savedTopic);
             }
 
+            // Always show lit/num toggles
             updateLitNumVisibility(currentDiscipline); 
             
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
