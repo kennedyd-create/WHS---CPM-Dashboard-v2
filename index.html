@@ -242,13 +242,6 @@
                 <p class="text-slate-600">Select a stage and strategy to generate explicit instructional scripts and materials.</p>
             </div>
 
-            <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
-                <div class="flex-grow">
-                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific - e.g., 'Newton's Second Law F=ma' rather than just 'Physics')</label>
-                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
-                </div>
-            </div>
-
             <div class="space-y-4">
                 <!-- Department Filters -->
                 <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
@@ -273,6 +266,18 @@
                     <button onclick="setInstructionalYear('Year 13')" id="btn-inst-Year13" class="inst-year-btn dept-btn">Year 13</button>
                 </div>
 
+                <!-- Curriculum Link Container (Instructional) -->
+                <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
+            </div>
+
+            <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 my-8">
+                <div class="flex-grow">
+                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific - e.g., 'Newton's Second Law F=ma' rather than just 'Physics')</label>
+                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
+                </div>
+            </div>
+
+            <div class="space-y-4">
                 <!-- Integration Filters (Instructional Hub) -->
                 <div class="flex flex-wrap justify-center gap-6 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
                     <div>
@@ -399,13 +404,6 @@
                 <p class="text-slate-600">Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.</p>
             </div>
 
-            <div class="glass-card p-6 border-l-4 border-l-amber-500 max-w-4xl mx-auto flex items-center gap-4 mb-8">
-                <div class="flex-grow">
-                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific - e.g., 'Newton's Second Law F=ma' rather than just 'Physics')</label>
-                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
-                </div>
-            </div>
-
             <div class="glass-card p-8 border-t-8 border-t-[#c5a059]">
                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Unit Planner Configuration</h3>
                 <p class="text-sm text-slate-600 mb-6">Generates a structured multi-week plan outlining Knowledge and Practices.</p>
@@ -439,6 +437,16 @@
                                 <button onclick="setUnitState('year', 'Year 13 (NCEA Level 3)', this)" class="builder-btn">Y13 (NCEA L3)</button>
                             </div>
                         </div>
+
+                        <!-- Curriculum Link Container (Unit) -->
+                        <div id="unit-curriculum-link" class="flex justify-start"></div>
+
+                        <!-- Topic Input -->
+                        <div class="bg-amber-50/30 p-5 rounded-xl border-l-4 border-l-amber-500 shadow-sm border border-slate-200">
+                            <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific)</label>
+                            <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
+                        </div>
+
                         <!-- Duration -->
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Duration</span>
@@ -517,14 +525,8 @@
 
             <!-- TOP CONFIGURATION HUB -->
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-amber-500 max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
-                <!-- Topic Input -->
-                <div>
-                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific - e.g., 'Newton's Second Law F=ma' rather than just 'Physics')</label>
-                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
-                </div>
-                
                 <!-- Dept & Year -->
-                <div class="grid md:grid-cols-2 gap-6 pt-2">
+                <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
                         <div class="flex flex-wrap gap-2" id="les-dept-opts">
@@ -550,6 +552,15 @@
                             <button onclick="setLessonState('year', 'Year 13 (NCEA Level 3)', this)" class="builder-btn">Y13 (NCEA L3)</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- Curriculum Link Container (Lesson) -->
+                <div id="les-curriculum-link" class="flex justify-start"></div>
+
+                <!-- Topic Input -->
+                <div class="bg-amber-50/40 p-5 rounded-xl border-l-4 border-l-amber-500 shadow-sm border border-slate-200">
+                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific)</label>
+                    <input type="text" oninput="syncTopics(this.value)" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
 
                 <!-- Integration Toggles -->
@@ -606,6 +617,78 @@
                                 <button onclick="setLessonState('s1', 'Odd One Out Concept Check', this)" class="builder-btn">Odd One Out</button>
                                 <button onclick="setLessonState('s1', 'Think-Puzzle-Explore', this)" class="builder-btn">Think-Puzzle-Explore</button>
                                 <button onclick="setLessonState('s1', 'Syllabus Link-Up', this)" class="builder-btn">Syllabus Link-Up</button>
+                                <button onclick="setLessonState('s1', 'Episodic Hook / Pūrākau', this)" class="builder-btn">Episodic Hook</button>
+                                <button onclick="setLessonState('s1', 'Knowledge Dump & Compare', this)" class="builder-btn">Dump & Compare</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 2: I Do</span>
+                            <div class="flex flex-wrap gap-2" id="les-s2-opts">
+                                <button onclick="setLessonState('s2', 'Think-Aloud Script', this)" class="builder-btn active">Think-Aloud</button>
+                                <button onclick="setLessonState('s2', 'Dual-Coding Diagram', this)" class="builder-btn">Dual-Coding</button>
+                                <button onclick="setLessonState('s2', 'Worked Example', this)" class="builder-btn">Worked Example</button>
+                                <button onclick="setLessonState('s2', 'Frayer Model Definition', this)" class="builder-btn">Frayer Model</button>
+                                <button onclick="setLessonState('s2', 'Common Misconception Highlight', this)" class="builder-btn">Misconceptions</button>
+                                <button onclick="setLessonState('s2', 'Live Drawing / Construction', this)" class="builder-btn">Live Drawing</button>
+                                <button onclick="setLessonState('s2', 'Deliberate Error Modelling', this)" class="builder-btn">Error Modelling</button>
+                                <button onclick="setLessonState('s2', 'Advance Organiser Frontloading', this)" class="builder-btn">Advance Organiser</button>
+                                <button onclick="setLessonState('s2', 'Physical Demonstration', this)" class="builder-btn">Physical Demo</button>
+                                <button onclick="setLessonState('s2', 'Non-Examples Contrast', this)" class="builder-btn">Non-Examples</button>
+                                <button onclick="setLessonState('s2', 'Metaphor/Analogy Mapping', this)" class="builder-btn">Metaphor Mapping</button>
+                                <button onclick="setLessonState('s2', 'The Silent Teacher', this)" class="builder-btn">Silent Teacher</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 3: We Do</span>
+                            <div class="flex flex-wrap gap-2" id="les-s3-opts">
+                                <button onclick="setLessonState('s3', 'Mini-Whiteboards', this)" class="builder-btn active">Mini-Whiteboards</button>
+                                <button onclick="setLessonState('s3', 'Think-Pair-Share', this)" class="builder-btn">Think-Pair-Share</button>
+                                <button onclick="setLessonState('s3', 'Choral Response', this)" class="builder-btn">Choral Response</button>
+                                <button onclick="setLessonState('s3', 'Guided Error Analysis', this)" class="builder-btn">Error Analysis</button>
+                                <button onclick="setLessonState('s3', 'A/B Peer Teaching', this)" class="builder-btn">Peer Teaching</button>
+                                <button onclick="setLessonState('s3', 'Backward Fading Scaffolding', this)" class="builder-btn">Backward Fading</button>
+                                <button onclick="setLessonState('s3', 'Problem Pairs', this)" class="builder-btn">Problem Pairs</button>
+                                <button onclick="setLessonState('s3', 'Reverse Engineering', this)" class="builder-btn">Reverse Engineering</button>
+                                <button onclick="setLessonState('s3', 'Cold Call Follow-On', this)" class="builder-btn">Cold Call Follow</button>
+                                <button onclick="setLessonState('s3', 'Guided Calculation', this)" class="builder-btn">Guided Calculation</button>
+                                <button onclick="setLessonState('s3', 'Categorisation Task', this)" class="builder-btn">Categorisation</button>
+                                <button onclick="setLessonState('s3', 'Jigsaw Text Decoding', this)" class="builder-btn">Jigsaw Text</button>
+                                <button onclick="setLessonState('s3', 'Say It Again, Better', this)" class="builder-btn">Say It Better</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 4: You Do</span>
+                            <div class="flex flex-wrap gap-2" id="les-s4-opts">
+                                <button onclick="setLessonState('s4', 'Tiered Tasks', this)" class="builder-btn active">Tiered Tasks</button>
+                                <button onclick="setLessonState('s4', 'Independent Scaffolds', this)" class="builder-btn">Writing Scaffolds</button>
+                                <button onclick="setLessonState('s4', 'Peer Critique', this)" class="builder-btn">Peer Critique</button>
+                                <button onclick="setLessonState('s4', 'Spaced Retrieval Worksheet', this)" class="builder-btn">Retrieval Sheet</button>
+                                <button onclick="setLessonState('s4', 'Concept Synthesis Task', this)" class="builder-btn">Concept Synthesis</button>
+                                <button onclick="setLessonState('s4', 'Interleaved Practice Set', this)" class="builder-btn">Interleaved Practice</button>
+                                <button onclick="setLessonState('s4', 'Sentence Scaffolds', this)" class="builder-btn">Sentence Scaffolds</button>
+                                <button onclick="setLessonState('s4', 'Past Paper Simulation', this)" class="builder-btn">Past Paper</button>
+                                <button onclick="setLessonState('s4', 'Create Your Own Question', this)" class="builder-btn">Create a Question</button>
+                                <button onclick="setLessonState('s4', 'Speed Fluency Drills', this)" class="builder-btn">Fluency Drills</button>
+                                <button onclick="setLessonState('s4', 'Self-Checking Task', this)" class="builder-btn">Self-Checking Task</button>
+                                <button onclick="setLessonState('s4', 'Information Transformation Task', this)" class="builder-btn">Info Transform</button>
+                                <button onclick="setLessonState('s4', 'Hexagonal Mapping', this)" class="builder-btn">Hexagonal Map</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Stage 5: Review</span>
+                            <div class="flex flex-wrap gap-2" id="les-s5-opts">
+                                <button onclick="setLessonState('s5', 'Exit Ticket', this)" class="builder-btn active">Exit Ticket</button>
+                                <button onclick="setLessonState('s5', '3-2-1 Summary', this)" class="builder-btn">3-2-1 Summary</button>
+                                <button onclick="setLessonState('s5', 'SOLO Taxonomy Check', this)" class="builder-btn">SOLO Check</button>
+                                <button onclick="setLessonState('s5', 'Traffic Light Self-Assessment', this)" class="builder-btn">Traffic Light</button>
+                                <button onclick="setLessonState('s5', 'Next-Step Prediction', this)" class="builder-btn">Next-Step Prediction</button>
+                                <button onclick="setLessonState('s5', '60-Second Summary', this)" class="builder-btn">60-Sec Summary</button>
+                                <button onclick="setLessonState('s5', 'Metacognitive Journaling', this)" class="builder-btn">Metacognitive Journaling</button>
+                                <button onclick="setLessonState('s5', 'Two Stars and a Wish', this)" class="builder-btn">Two Stars/Wish</button>
+                                <button onclick="setLessonState('s5', 'One-Sentence Summary', this)" class="builder-btn">1-Sentence Summary</button>
+                                <button onclick="setLessonState('s5', 'Key Formula Recall', this)" class="builder-btn">Formula/Vocab Check</button>
+                                <button onclick="setLessonState('s5', 'Debate Prep Note', this)" class="builder-btn">Debate Prep Note</button>
+                                <button onclick="setLessonState('s5', 'Distractor Analysis', this)" class="builder-btn">Distractor Analysis</button>
                             </div>
                         </div>
                         <div>
@@ -941,6 +1024,43 @@ Step 6: Progress Monitoring
 
         let chartInstance = null;
 
+        // Tāhūrangi Link Dictionary - Easily paste new URLs here as MoE releases them
+        const tahurangiLinks = {
+            'Social Sciences': {
+                'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---social-sciences-phase-3-years-7-8/5637290853.p',
+                'Year 8': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---social-sciences-phase-3-years-7-8/5637290853.p',
+                'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/social-sciences-curriculum/5637165589.c'
+            },
+            'English': {
+                'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---english-phase-3-years-7-8/5637290836.p',
+                'Year 8': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---english-phase-3-years-7-8/5637290836.p',
+                'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/english-curriculum/5637165583.c'
+            },
+            'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz'
+        };
+
+        function getCurriculumLink(dept, year) {
+            // Strips "(NCEA Level 1)" out so the dictionary just matches "Year 11"
+            const cleanYear = year.split(' ')[0] + ' ' + year.split(' ')[1]; 
+            if (tahurangiLinks[dept]) {
+                if (tahurangiLinks[dept][cleanYear]) return tahurangiLinks[dept][cleanYear];
+                return tahurangiLinks[dept]['default'] || tahurangiLinks['default'];
+            }
+            return tahurangiLinks['default'];
+        }
+
+        function renderCurriculumLink(containerId, dept, year) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const link = getCurriculumLink(dept, year);
+            const displayYear = year.split(' ')[0] + ' ' + year.split(' ')[1];
+            container.innerHTML = `
+                <a href="${link}" target="_blank" class="inline-flex items-center gap-1.5 bg-yellow-100 text-[#002066] border border-[#002066] hover:bg-[#002066] hover:text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest transition-colors shadow-sm">
+                    Open Tāhūrangi Draft for ${dept} (${displayYear}) ↗
+                </a>
+            `;
+        }
+
         let unitState = {
             dept: 'Science',
             year: 'Year 11 (NCEA Level 1)',
@@ -1103,7 +1223,15 @@ Step 6: Progress Monitoring
             "Self-Checking Task": "An activity designed with built-in feedback mechanisms so students can self-correct.",
             "One-Sentence Summary": "Distilling the entire lesson's core knowledge into a single, grammatical sentence.",
             "Key Formula Recall": "A final, rapid-fire check of the most critical terms or equations from the lesson.",
-            "Debate Prep Note": "Writing a single argument based on today's knowledge to be used in a future discussion."
+            "Debate Prep Note": "Writing a single argument based on today's knowledge to be used in a future discussion.",
+            "Episodic Hook / Pūrākau": "Piggybacks new information onto episodic memory, requiring minimal working memory to process.",
+            "Knowledge Dump & Compare": "Students dump knowledge then cross-reference with a peer or text to identify schema gaps.",
+            "The Silent Teacher": "Teacher models a process in complete silence to eliminate split-attention effect.",
+            "Jigsaw Text Decoding": "Divides intrinsic load. Students become experts on a chunk of text and teach peers.",
+            "Say It Again, Better": "Guides students to rephrase casual answers using Tier 3 disciplinary vocabulary.",
+            "Information Transformation Task": "Demands deep encoding by changing knowledge from text to diagram, or vice versa.",
+            "Hexagonal Mapping": "Students physically connect conceptual tiles to move from isolated facts to relational understanding.",
+            "Distractor Analysis": "Students explain why the correct answer is right and why the distractors are designed to trick them."
         };
 
         function getDesc(name) {
@@ -1117,11 +1245,11 @@ Step 6: Progress Monitoring
         // Extensive CPM Matrix Content
         const generateStrategies = (stage, customStrategies) => {
             const defaults = {
-                1: ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up"],
-                2: ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping"],
-                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task"],
-                4: ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task"],
-                5: ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note"]
+                1: ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"],
+                2: ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"],
+                3: ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better"],
+                4: ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"],
+                5: ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"]
             };
             return customStrategies || defaults[stage];
         };
@@ -1131,57 +1259,57 @@ Step 6: Progress Monitoring
                 1: generateStrategies(1),
                 2: generateStrategies(2),
                 3: generateStrategies(3),
-                4: generateStrategies(4, ["Tiered Tasks", "Spaced Retrieval Worksheet", "Self-Checking Task", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Independent Scaffolds", "Speed Fluency Drills", "Peer Critique"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Spaced Retrieval Worksheet", "Self-Checking Task", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Independent Scaffolds", "Speed Fluency Drills", "Peer Critique", "Information Transformation Task", "Hexagonal Mapping"]),
                 5: generateStrategies(5)
             },
             'Maths': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping"]),
-                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping"]),
-                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task"]),
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
                 4: generateStrategies(4),
                 5: generateStrategies(5)
             },
             'Social Sciences': {
-                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Previous Lesson Brain Dump"]),
-                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping"]),
-                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task"]),
-                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task"]),
-                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note"])
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Previous Lesson Brain Dump", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Physical Demonstration", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
             },
             'English': {
-                1: generateStrategies(1),
-                2: generateStrategies(2),
-                3: generateStrategies(3),
-                4: generateStrategies(4),
-                5: generateStrategies(5)
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Vocabulary Flash-drills", "Previous Lesson Brain Dump", "Syllabus Link-Up", "Pick a Stick (Randomised Call)", "Image/Diagram Prompt", "Concept Mapping", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Track With Me", "Goal Setting", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Think-Aloud Script", "Frayer Model Definition", "Worked Example", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Dual-Coding Diagram", "Live Drawing / Construction", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "Physical Demonstration", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Think-Pair-Share", "Mini-Whiteboards", "Guided Error Analysis", "A/B Peer Teaching", "Choral Response", "Cold Call Follow-On", "Categorisation Task", "Problem Pairs", "Reverse Engineering", "Backward Fading Scaffolding", "Guided Calculation", "Jigsaw Text Decoding", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Independent Scaffolds", "Sentence Scaffolds", "Peer Critique", "Tiered Tasks", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Past Paper Simulation", "Self-Checking Task", "Speed Fluency Drills", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["3-2-1 Summary", "Exit Ticket", "Metacognitive Journaling", "Two Stars and a Wish", "Debate Prep Note", "One-Sentence Summary", "SOLO Taxonomy Check", "Next-Step Prediction", "Traffic Light Self-Assessment", "60-Second Summary", "Key Formula Recall", "Distractor Analysis"])
             },
             'Māori': {
-                1: generateStrategies(1),
-                2: generateStrategies(2),
-                3: generateStrategies(3),
-                4: generateStrategies(4),
-                5: generateStrategies(5)
+                1: generateStrategies(1, ["Karakia / Whakataukī Recall", "Retrieval Do-Now Quiz", "Vocabulary Flash-drills", "Concept Mapping (Whakapapa)", "Image/Diagram Prompt", "Waiata/Kīwaha Practice", "Pick a Stick (Randomised Call)", "Track With Me", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Pronunciation Modelling", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Metaphor/Analogy Mapping", "Non-Examples Contrast", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Choral Response", "Mini-Whiteboards", "Think-Pair-Share", "A/B Peer Teaching", "Guided Error Analysis", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Jigsaw Text Decoding", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
             },
             'Technology': {
-                1: generateStrategies(1),
-                2: generateStrategies(2),
-                3: generateStrategies(3),
-                4: generateStrategies(4),
-                5: generateStrategies(5)
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Previous Lesson Brain Dump", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Odd One Out Concept Check", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Think-Puzzle-Explore", "Syllabus Link-Up", "Concept Mapping", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Physical Demonstration", "Live Drawing / Construction", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Guided Error Analysis", "Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
             },
             'Arts': {
-                1: generateStrategies(1),
-                2: generateStrategies(2),
-                3: generateStrategies(3),
-                4: generateStrategies(4),
-                5: generateStrategies(5)
+                1: generateStrategies(1, ["Visual/Audio Prompt Analysis", "Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Episodic Hook / Pūrākau"]),
+                2: generateStrategies(2, ["Live Drawing / Construction", "Physical Demonstration", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Independent Studio Task", "Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
             },
             'PEHealth': {
-                1: generateStrategies(1),
-                2: generateStrategies(2),
-                3: generateStrategies(3),
-                4: generateStrategies(4),
-                5: generateStrategies(5)
+                1: generateStrategies(1, ["Retrieval Do-Now Quiz", "Concept Mapping", "Vocabulary Flash-drills", "Image/Diagram Prompt", "Previous Lesson Brain Dump", "Pick a Stick (Randomised Call)", "Track With Me", "Goal Setting", "Odd One Out Concept Check", "Think-Puzzle-Explore", "Syllabus Link-Up", "Knowledge Dump & Compare"]),
+                2: generateStrategies(2, ["Physical Demonstration", "Think-Aloud Script", "Dual-Coding Diagram", "Worked Example", "Frayer Model Definition", "Common Misconception Highlight", "Live Drawing / Construction", "Deliberate Error Modelling", "Advance Organiser Frontloading", "Non-Examples Contrast", "Metaphor/Analogy Mapping", "The Silent Teacher"]),
+                3: generateStrategies(3, ["Mini-Whiteboards", "Think-Pair-Share", "Choral Response", "Guided Error Analysis", "A/B Peer Teaching", "Backward Fading Scaffolding", "Problem Pairs", "Reverse Engineering", "Cold Call Follow-On", "Guided Calculation", "Categorisation Task", "Say It Again, Better"]),
+                4: generateStrategies(4, ["Tiered Tasks", "Independent Scaffolds", "Peer Critique", "Spaced Retrieval Worksheet", "Concept Synthesis Task", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Create Your Own Question", "Speed Fluency Drills", "Self-Checking Task", "Information Transformation Task", "Hexagonal Mapping"]),
+                5: generateStrategies(5, ["Exit Ticket", "3-2-1 Summary", "SOLO Taxonomy Check", "Traffic Light Self-Assessment", "Next-Step Prediction", "60-Second Summary", "Metacognitive Journaling", "Two Stars and a Wish", "One-Sentence Summary", "Key Formula Recall", "Debate Prep Note", "Distractor Analysis"])
             }
         };
 
@@ -1207,6 +1335,7 @@ Step 6: Progress Monitoring
             document.getElementById(`btn-${dept.replace(/ /g, '')}`).classList.add('active');
             updateLitNumVisibility(dept);
             renderInstructionalHub();
+            renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
         }
 
         function setInstructionalYear(year) {
@@ -1216,6 +1345,7 @@ Step 6: Progress Monitoring
             if(currentStrategy) {
                 setStrategyPrompt(currentStrategy);
             }
+            renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
         }
 
         function setStage(stage) {
@@ -1297,6 +1427,7 @@ Step 6: Progress Monitoring
             parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
             btnElem.classList.add('active');
             if (key === 'dept') updateLitNumVisibility(val);
+            if (key === 'dept' || key === 'year') renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             updateUnitBuilderPrompt();
         }
 
@@ -1306,6 +1437,7 @@ Step 6: Progress Monitoring
             parent.querySelectorAll('.builder-btn').forEach(b => b.classList.remove('active'));
             btnElem.classList.add('active');
             if (key === 'dept') updateLitNumVisibility(val);
+            if (key === 'dept' || key === 'year') renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
             updateLessonRecommendations();
             updateLessonBuilderPrompt();
         }
@@ -1409,10 +1541,7 @@ Step 6: Progress Monitoring
 
             const nzSuffix = unitState.dept === 'Māori' ? "" : " CRITICAL INSTRUCTION: You MUST use New Zealand English spelling (e.g., 'analyse', 'colour', 'programme', 'behaviour') and terminology throughout all outputs.";
 
-            let curriculumUrl = "https://newzealandcurriculum.tahurangi.education.govt.nz";
-            if (unitState.dept === 'Social Sciences') {
-                curriculumUrl = "https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/social-sciences-curriculum/5637165589.c";
-            }
+            let curriculumUrl = getCurriculumLink(unitState.dept, unitState.year);
 
             const waihekeContext = unitState.context === 'waiheke' 
                 ? "\n\nLOCAL CONTEXT RULE: Designate 1 or 2 lessons within this unit to explicitly feature local Waiheke contexts (e.g., Hauraki Gulf marine environment, island sustainability, local tourism impacts, Auckland history, or Ngāti Pāoa) to ground the abstract concepts."
@@ -1575,10 +1704,7 @@ Step 6: Progress Monitoring
                 text += `@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE ACTUAL FILES in my Google Drive (Docs/Slides). Do not just write text if you can create the file.\n\n`;
             }
 
-            let curriculumUrl = "https://newzealandcurriculum.tahurangi.education.govt.nz";
-            if (lessonState.dept === 'Social Sciences') {
-                curriculumUrl = "https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/social-sciences-curriculum/5637165589.c";
-            }
+            let curriculumUrl = getCurriculumLink(lessonState.dept, lessonState.year);
 
             text += `"Act as an expert pedagogical coach. Design a 60-minute standard mixed-ability lesson on ${topic} for a ${lessonState.year} ${lessonState.dept} class using the 5 stages of the Common Practice Model (CPM).\n\nCRITICAL INSTRUCTION: DO NOT reference the old 'Understand-Know-Do' framework. Ensure the lesson plan starts with clear Learning Intention(s) and measurable Success Criteria that are strictly aligned with the new 'Knowledge & Practices' NZ Curriculum drafts (${curriculumUrl}).\n\n`;
 
@@ -1786,6 +1912,12 @@ Step 6: Progress Monitoring
             renderInstructionalHub();
             updateLessonRecommendations(); // Initialize AI recommendations
             updateAllPrompts();
+            
+            // Draw links on initial load
+            renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
+            renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
+            renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
+            
             initChart(); // Draw chart on load
             
             // Inject tooltips into Lesson Builder options safely
