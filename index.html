@@ -1553,34 +1553,43 @@ Step 6: Progress Monitoring
             var juniorYears = ['Year 7', 'Year 8', 'Year 9', 'Year 10'];
             for(var i=0; i<juniorYears.length; i++) { if(unitState.year === juniorYears[i]) isJunior = true; }
 
-            var nzSuffix = unitState.dept === 'Māori' ? "" : " CRITICAL INSTRUCTION: You MUST use New Zealand English spelling (e.g., 'analyse', 'colour', 'programme', 'behaviour') and terminology throughout all outputs.";
-
             var curriculumUrl = getCurriculumLink(unitState.dept, unitState.year);
-            var waihekeContext = unitState.context === 'waiheke' ? "\n\nLOCAL CONTEXT RULE: Designate 1 or 2 lessons within this unit to explicitly feature local Waiheke contexts to ground the abstract concepts." : "";
-            var maoriContext = unitState.maori === 'integrate' ? "\n\nMĀTAURANGA MĀORI RULE: Designate 1 or 2 lessons to explicitly weave relevant Mātauranga Māori into the unit plan." : "";
-            var litContext = (unitState.lit === 'integrate') ? "\n\nLITERACY INTEGRATION: Identify 1 or 2 lessons where explicit disciplinary literacy is a primary focus." : "";
-            var numContext = (unitState.num === 'integrate') ? "\n\nNUMERACY INTEGRATION: Identify 1 or 2 lessons where explicit disciplinary numeracy is a primary focus." : "";
 
-            var text = '"Act as an expert curriculum designer. I am planning a ' + unitState.dur + ' unit on ' + topic + ' for a ' + unitState.year + ' ' + unitState.dept + ' class based on the NZ Curriculum.\n\nCRITICAL INSTRUCTION: DO NOT use the old \'Understand-Know-Do\' (UKD) framework. You must base all design strictly on the new \'Knowledge\' and \'Practices\' framework drafts found here: ' + curriculumUrl + '\n\n';
-            text += "CRITICAL INSTRUCTION: When designing the individual lessons in the 'Lesson Content' table below, you MUST structure the learning activities for each standard lesson using the 5 stages of the Common Practice Model (CPM).\n\n";
-            if (customTask) text += 'TEACHER SPECIFIC INSTRUCTIONS: "' + customTask + '".\n\n';
+            var text = '"Act as an expert curriculum designer.\n\n';
+            text += 'CONTEXT:\nI am planning a ' + unitState.dur + ' unit on "' + topic + '" for a ' + unitState.year + ' ' + unitState.dept + ' class based on the New Zealand Curriculum.\n\n';
+            
+            text += 'TASK:\nDesign a comprehensive, structured multi-week unit sequence outlining the specific Disciplinary Knowledge and Practices to be taught. Break the unit down into a detailed lesson-by-lesson sequence.\n\n';
+            
+            text += 'CONSTRAINTS & RULES:\n';
+            text += '- Curriculum Alignment: DO NOT use the old \'Understand-Know-Do\' (UKD) framework. You must base all design strictly on the new \'Knowledge\' and \'Practices\' framework drafts found here: ' + curriculumUrl + '\n';
+            text += '- Lesson Structure: When designing the individual lessons in the \'Lesson Content\' table below, you MUST structure the learning activities using the 5 stages of the Common Practice Model (CPM).\n';
+            text += '- Formatting: Provide all outputs clearly formatted using Markdown headers. No file creation commands.\n';
+            if (unitState.dept !== 'Māori') text += '- Spelling: You MUST use New Zealand English spelling and terminology throughout.\n';
+            
+            if (unitState.context === 'waiheke') text += '- Local Context: Designate 1 or 2 lessons to explicitly feature local Waiheke Island contexts to ground abstract concepts.\n';
+            if (unitState.maori === 'integrate') text += '- Mātauranga Māori: Designate 1 or 2 lessons to explicitly weave relevant Mātauranga Māori into the unit plan.\n';
+            if (unitState.lit === 'integrate') text += '- Literacy Integration: Identify lessons where explicit disciplinary literacy is a primary focus.\n';
+            if (unitState.num === 'integrate') text += '- Numeracy Integration: Identify lessons where explicit disciplinary numeracy is a primary focus.\n';
+            if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '".\n';
+
+            text += '\nOUTPUTS REQUIRED:\n';
 
             if (isJunior) {
                 text += "Because this is a Junior/Middle school unit, you MUST output the entire unit plan using EXACTLY the Markdown table templates provided below. Fill in all the bracketed [Fill] cells with high-quality content:\n\n";
                 text += "| |\n| :- |\n| WHS " + unitState.year + " " + unitState.dept + " - Topic: " + topic + " |\n\n";
                 text += "| | | | | | |\n| :- | :- | :- | :- | :- | :- |\n| **Year Level** | " + unitState.year + " | **Term** | [Suggest Term] | **Duration** | " + unitState.dur + " |\n| **Topic/ Strand/ Concept/ Context** | " + topic + " | | | | |\n| **Overview** | [Fill] | | | | |\n| **Purpose** | [Fill] | | | | |\n\n";
-                text += "## Lesson Content - Unit Folder Link\n| | | | | |\n| :- | :- | :- | :- | :- |\n| **Learning number/s** | **Knowledge** | **Practice** | **Student Learning Activities** | **Preparation/ Resources** |\n| [Lesson 1] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n| [Continue generating rows for all " + unitState.dur + "...] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n";
+                text += "## Lesson Content - Unit Sequence\n| | | | | |\n| :- | :- | :- | :- | :- |\n| **Learning number/s** | **Knowledge** | **Practice** | **Student Learning Activities (CPM)** | **Preparation/ Resources** |\n| [Lesson 1] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n| [Continue generating rows for all " + unitState.dur + "...] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n";
             } else {
                 text += "Because this is a Senior school NCEA unit, you MUST output the entire unit plan using EXACTLY the Markdown table templates provided below. Fill in all the bracketed [Fill] cells with high-quality content:\n\n";
                 text += "| |\n| :- |\n| WHS " + unitState.year + " " + unitState.dept + " - Topic: " + topic + " |\n\n";
                 text += "| | | | | | |\n| :- | :- | :- | :- | :- | :- |\n| **Year Level** | " + unitState.year + " | **Term** | [Suggest Term], 2026 | **Duration** | " + unitState.dur + " |\n";
                 text += "| **Achievement Standard** | [Fill applicable standard] | | | | |\n";
                 text += "| **The Standard Criteria** | [Fill] | | | | |\n\n";
-                text += "## Lesson Content - Unit Folder Link\n| | | | | |\n| :- | :- | :- | :- | :- |\n| **Learning number/s** | **Significant learning covered** | **Learning Experiences/ Differentiation** | **Resources** | |\n";
+                text += "## Lesson Content - Unit Sequence\n| | | | | |\n| :- | :- | :- | :- | :- |\n| **Learning number/s** | **Significant learning covered** | **Learning Experiences (CPM) / Differentiation** | **Resources** | |\n";
                 text += "| [Lesson 1] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] | |\n";
             }
 
-            text += nzSuffix + waihekeContext + maoriContext + litContext + numContext + '"';
+            text += '"';
             var box = document.getElementById('prompt-unit-text');
             if(box) box.innerText = text;
         }
@@ -1598,29 +1607,35 @@ Step 6: Progress Monitoring
                 if(lessonState.outputs[i] === 'content') needsContent = true;
             }
 
+            var curriculumUrl = getCurriculumLink(lessonState.dept, lessonState.year);
+
             if (lessonState.notebookLM) {
-                var text = '"Act as an expert curriculum and instructional designer. I need a comprehensive MASTER SOURCE DOCUMENT for NotebookLM covering the topic: ' + topic + ' for a ' + lessonState.year + ' ' + lessonState.dept + ' class.\n\n';
-                text += "This document must serve as the 'Ground Truth' for an AI assistant. It MUST be structured into two distinct parts: META-INSTRUCTIONS and DETAILED CONTENT.\n\n";
-                text += "PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n";
-                text += "Write a section titled 'System Instructions' that strictly commands NotebookLM on how it must behave when generating lesson plans or slideshows based on this document. It MUST include the following rules:\n";
-                text += "- Rule 1: Lesson Structure: Always structure lesson plan outputs using the 5 Common Practice Model (CPM) stages: CONNECTION, I DO, WE DO, YOU DO, REFLECTION & FEEDBACK.\n";
-                text += "- Rule 2: Presentation Design & Dual Coding: When generating slideshow presentations, use Dual Coding principles. Do not put too much information on each slide.\n";
-                text += "- Rule 3: Visual Branding & Typography: Require 'Manrope' font.\n";
-                text += "- Rule 4: Strict Slide Layout & HTML Constraint: Every slide generated MUST use the exact HTML structure below. The absolute positioned box on the bottom right is the 'Teacher Instruction Box'.\n\n";
-                text += "HTML\n";
+                var text = '"Act as an expert curriculum and instructional designer.\n\n';
+                text += 'CONTEXT:\nI am building an AI-powered NotebookLM assistant for a ' + lessonState.year + ' ' + lessonState.dept + ' class. The core topic is: "' + topic + '".\n\n';
+                text += 'TASK:\nGenerate a comprehensive MASTER SOURCE DOCUMENT that will serve as the \'Ground Truth\' for NotebookLM. This document must contain strict system instructions for the AI, followed by a highly detailed, textbook-level breakdown of the content to prevent hallucinations.\n\n';
+                text += 'CONSTRAINTS & RULES:\n';
+                text += '- Format: Output must be clearly formatted using Markdown headers. No file creation commands.\n';
+                text += '- Spelling: Ensure all output uses New Zealand English spelling and terminology.\n';
+                if (lessonState.context === 'waiheke') text += '- Local Context: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n';
+                if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Weave relevant Mātauranga Māori and local iwi history into the core content.\n';
+                
+                text += '\nOUTPUTS REQUIRED:\n';
+                text += 'PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n';
+                text += 'Write a section titled \'System Instructions\' strictly commanding NotebookLM on how it must behave when generating lesson plans or slideshows based on this document. It MUST include these rules:\n';
+                text += '1. Lesson Structure: Always structure lesson plan outputs using the 5 Common Practice Model (CPM) stages: CONNECTION, I DO, WE DO, YOU DO, REFLECTION & FEEDBACK.\n';
+                text += '2. Presentation Design & Dual Coding: When generating slideshow presentations, use Dual Coding principles. Do not put walls of text on slides.\n';
+                text += '3. Visual Branding & Typography: Require \'Manrope\' font.\n';
+                text += '4. Strict HTML Constraint: Every slide generated MUST use the exact HTML structure below. The absolute positioned box on the bottom right is the \'Teacher Instruction Box\'. Provide this exact HTML template block in your output:\n';
                 text += "```html\n";
                 text += '<div style="font-family: \'Manrope\', Arial, sans-serif; color: #002066; position: relative; width: 100%; padding-bottom: 150px; border-bottom: 2px solid #002066; margin-bottom: 30px;"><div style="width: 100%;">\n';
                 text += '[Insert specific text, chunked material, prompts, or activities for students here.]</div><div style="position: absolute; bottom: 10px; right: 10px; width: 25%; min-width: 200px; background-color: #e8f5e9; border: 1px solid #002066; padding: 10px; box-shadow: -2px -2px 5px rgba(0,0,0,0.1); color: #002066;"><strong><small>[CPM STAGE TITLE]</small></strong><hr style="margin: 5px 0; border-top: 1px solid #002066;"><ul style="margin: 0; padding-left: 15px;"><li><small>[SHORT HITS BULLET 1]</small></li><li><small>[SHORT HITS BULLET 2]</small></li></ul></div></div>\n';
                 text += "```\n\n";
-                text += "PART 2: DETAILED SUBJECT CONTENT (The 'Knowledge and Practices')\n";
-                text += "Generate a highly detailed, textbook-level breakdown of the Knowledge and Practices for the topic " + topic + " so NotebookLM has a rich database to pull from. Include:\n";
-                text += "- Core disciplinary 'Knowledge' (concepts, facts, and definitions) appropriate for " + lessonState.year + " in New Zealand.\n";
-                text += "- Core disciplinary 'Practices' (how experts apply this knowledge).\n";
-                text += "- Common misconceptions and how to address them.\n";
-                text += "- Key disciplinary vocabulary (Tier 2 and Tier 3 words).\n";
-                if (lessonState.context === 'waiheke') text += "LOCAL CONTEXT: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n\n";
-                if (lessonState.maori === 'integrate') text += "MĀTAURANGA MĀORI: Weave relevant Mātauranga Māori and local iwi history into the core content.\n\n";
-                text += 'Ensure all output uses New Zealand English spelling and terminology. CRITICAL INSTRUCTION: Provide all the outputs clearly formatted in this chat using Markdown headers so I can export them myself."';
+                text += 'PART 2: DETAILED SUBJECT CONTENT (The \'Knowledge and Practices\')\n';
+                text += 'Generate a highly detailed, textbook-level breakdown of the Knowledge and Practices for this topic. Include:\n';
+                text += '- Core disciplinary \'Knowledge\' (concepts, facts, and definitions) appropriate for ' + lessonState.year + ' in New Zealand.\n';
+                text += '- Core disciplinary \'Practices\' (how experts apply this knowledge).\n';
+                text += '- Common misconceptions and how to address them.\n';
+                text += '- Key disciplinary vocabulary (Tier 2 and Tier 3 words)."';
                 
                 var box = document.getElementById('prompt-lesson-text');
                 if(box) box.innerText = text;
@@ -1628,73 +1643,101 @@ Step 6: Progress Monitoring
             }
 
             if (lessonState.relief) {
-                var text = '"Act as an expert curriculum designer. I need an EMERGENCY RELIEF LESSON for a ' + lessonState.year + ' ' + lessonState.dept + ' class on the topic: ' + topic + '.\n\n';
-                text += "CRITICAL INSTRUCTION 1: The relief teacher covering this class is a NON-SUBJECT SPECIALIST. DO NOT generate a standard 5-stage CPM lesson plan. Instead, generate a highly structured, self-contained Student Worksheet that contains enough reading and activities to keep students actively engaged for a FULL 60-MINUTE period.\n\n";
-                text += "CRITICAL INSTRUCTION 2: Because schools often need a quick printable packet for relief cover, you MUST generate the full, comprehensive relief worksheet inside a SINGLE HTML code block (```html ... ```). The admin team will be able to save this HTML and simply 'Print to PDF'. CRITICAL: You MUST close the HTML code block with ``` before moving on.\n\n";
-                text += "The worksheet content MUST follow this structure:\n";
-                text += "1. Relief Teacher Instructions: A brief note explaining pacing.\n";
-                text += "2. Introduction Content (15-20 mins reading): Detailed enough to replace teacher instruction.\n";
-                text += "3. Visual Integration: Include actual diagrams within the content.\n";
-                text += "4. Key Vocabulary: 8-10 crucial terms.\n";
-                text += "5. Extensive 'You Do' Tasks (30-40 mins): Progressive questions and activities to ensure fast-finishers do not finish early.\n\n";
+                var text = '"Act as an expert curriculum designer.\n\n';
+                text += 'CONTEXT:\nI need an EMERGENCY RELIEF LESSON for a ' + lessonState.year + ' ' + lessonState.dept + ' class on the topic: "' + topic + '".\n\n';
+                text += 'TASK:\nGenerate a highly structured, self-contained Student Worksheet that contains enough reading and activities to keep students actively engaged for a FULL 60-MINUTE period.\n\n';
                 
-                if (lessonState.context === 'waiheke') text += "LOCAL CONTEXT RULE: Try to weave a local Waiheke context into the Introduction Content if possible.\n\n";
-                if (lessonState.maori === 'integrate') text += "MĀTAURANGA MĀORI RULE: Try to weave relevant Mātauranga Māori into the Introduction Content.\n\n";
-                text += 'Ensure all output uses New Zealand English spelling and terminology."';
+                text += 'CONSTRAINTS & RULES:\n';
+                text += '- Audience: The relief teacher covering this class is a NON-SUBJECT SPECIALIST. DO NOT generate a standard 5-stage CPM lesson plan. Bypass teacher instruction entirely.\n';
+                text += '- Format: Because schools need a quick printable packet for relief cover, you MUST generate the full, comprehensive relief worksheet inside a SINGLE HTML code block (```html ... ```). The admin team will be able to save this HTML and simply \'Print to PDF\'. CRITICAL: You MUST close the HTML code block with ``` before moving on.\n';
+                text += '- Spelling: Ensure all output uses New Zealand English spelling and terminology.\n';
+                if (lessonState.context === 'waiheke') text += '- Local Context: Try to weave a local Waiheke context into the reading content.\n';
+                if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Try to weave relevant Mātauranga Māori into the reading content.\n';
+                
+                text += '\nOUTPUTS REQUIRED:\n';
+                text += 'The HTML worksheet content MUST follow this structure exactly:\n';
+                text += '1. Relief Teacher Instructions: A brief note explaining pacing at the top of the document.\n';
+                text += '2. Introduction Content (15-20 mins reading): Detailed enough to replace teacher instruction entirely.\n';
+                text += '3. Visual Integration: Include actual diagrams or charts within the content layout.\n';
+                text += '4. Key Vocabulary: 8-10 crucial terms clearly defined.\n';
+                text += '5. Extensive \'You Do\' Tasks (30-40 mins): Progressive questions and activities to ensure fast-finishers do not finish early."';
                 
                 var box = document.getElementById('prompt-lesson-text');
                 if(box) box.innerText = text;
                 return;
             }
 
-            var curriculumUrl = getCurriculumLink(lessonState.dept, lessonState.year);
-
+            // Standard Lesson Builder
             var text = '"Act as an expert pedagogical coach and ' + lessonState.dept + ' teacher.\n\n';
-            
             text += 'CONTEXT:\n';
-            text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class. The topic is: "' + topic + '".\n\n';
+            text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class (mixed-ability). The topic is: "' + topic + '".\n\n';
             
             text += 'TASK:\n';
-            text += 'Design a comprehensive 60-minute mixed-ability lesson based on the 5 stages of the Common Practice Model (CPM). You must provide all content in full detail, not just brief outlines.\n\n';
-
+            text += 'Design a comprehensive 60-minute lesson based on the 5 stages of the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
+            
             text += 'CONSTRAINTS & RULES:\n';
             text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
             text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
-            text += '- Formatting: Ensure all output uses New Zealand English spelling and terminology.\n';
-            text += '- No File Creation Commands: Provide all the outputs clearly formatted in this chat so I can export them myself. Use Markdown headers to separate the parts.\n';
-
-            if (customTask) text += '- Specific Instructions: ' + customTask + '\n';
-            if (lessonState.context === 'waiheke') text += '- Local Context: Make Waiheke context a core focus of this specific lesson.\n';
-            if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Make the integration of Mātauranga Māori a core focus of this lesson.\n';
+            text += '- Local Context: Use New Zealand English spelling/terminology and integrate relevant Te Reo Māori vocabulary where appropriate.\n';
+            
+            if (lessonState.context === 'waiheke') text += '- Waiheke Context: Weave local Waiheke Island / Hauraki Gulf contexts into the lesson.\n';
+            if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Make the integration of Mātauranga Māori and local iwi history a core focus.\n';
             if (lessonState.lit === 'integrate') text += '- Literacy Integration: Make explicit disciplinary literacy practice a core focus.\n';
             if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
+            
+            if (lessonState.extra !== 'None') {
+                text += '- Differentiation: The student-facing resources must explicitly include heavily differentiated scaffolds for: ' + lessonState.extra + '.\n';
+            } else {
+                text += '- Differentiation: The student-facing resources must explicitly include scaffolds for lower-literacy learners and extensions for highly capable students.\n';
+            }
 
-            text += '\nOUTPUTS REQUIRED:\n';
+            if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests.\n';
+
+            text += '- Live Links & Resources: Where appropriate, provide real, verifiable URLs to reputable sources for maps, statistics, and further reading.\n';
+            text += '- Formatting: Provide all outputs clearly formatted using Markdown headers. No file creation commands.\n\n';
+
+            text += 'OUTPUTS REQUIRED:\n';
             text += 'PART 1: The CPM Lesson Plan\n';
             text += 'Use EXACTLY the Markdown table template below:\n';
-            text += '| **Stage** | **Teaching Strategy Focus** | **Learning Experiences** | **Resources** |\n';
+            text += '| Stage | Teaching Strategy Focus | Learning Experiences | Resources |\n';
             text += '| --- | --- | --- | --- |\n';
-            text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation of activity] | [Required materials] |\n';
+            text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation of activity] | [Required materials & URLs] |\n';
             text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual script/model] | [Required materials] |\n';
             text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific questions/tasks] | [Required materials] |\n';
-            text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | [Provide the actual scaffolds/frames] | [Required materials] |\n';
+            text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | [Provide the actual scaffolds/frames] | [Required materials & URLs] |\n';
             text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exit ticket/reflection] | [Required materials] |\n\n';
 
-            if (lessonState.extra !== 'None') {
-                text += '| **Additional Resources:** | [Fill specific resources for: ' + lessonState.extra + '] | | |\n\n';
-            }
-
             if (needsSlides) {
-                text += 'PART 2: Slideshow Presentation Outline\n';
-                text += 'Provide a slide-by-slide outline (minimum 8 slides). For each slide, include the Slide Title, Bullet Points (the content), and an Image Suggestion.\n\n';
+                var isSeniorLevel = false;
+                var seniorLevels = ["Year 11", "Year 12", "Year 13", "Level 1", "Level 2", "Level 3"];
+                for(var k=0; k<seniorLevels.length; k++) { if(lessonState.year.indexOf(seniorLevels[k]) !== -1) isSeniorLevel = true; }
+
+                text += 'PART 2: Complete Slideshow Content & Speaker Notes\n';
+                text += 'Do not just provide an outline. Provide the exact, ready-to-paste content for at least 8 slides.\n';
+                text += 'For each slide, you must provide:\n';
+                text += '- Slide Title\n';
+                
+                if (isSeniorLevel) {
+                    text += '- Slide Text (Provide the required text. While bullet points are good for readability, detailed content and extended text paragraphs are permitted and expected for complex NCEA concepts).\n';
+                } else {
+                    text += '- Slide Text (MAXIMUM 4 bullet points, highly concise—no walls of text).\n';
+                }
+                
+                text += '- Visual/Image Prompt (What specific image, map, or graph should I put on this slide? Include a suggested URL to find this visual).\n';
+                text += '- Speaker Notes (A detailed script of what I should actually say to explain the slide to the class)\n\n';
             }
+            
             if (needsWorksheet) {
-                text += 'PART 3: Student Worksheet Content\n';
-                text += 'Provide the exact text, questions, and scaffolding that will go onto the student worksheet.\n\n';
+                text += 'PART 3: Differentiated Student Worksheet Content\n';
+                text += 'Provide the exact text, questions, and instructions for a student worksheet. Include:\n';
+                text += '- A "Core" section for all students.\n';
+                text += '- A "Support" section (e.g., sentence starters, key vocabulary definitions) for lower-literacy learners.\n';
+                text += '- An "Extension" section (a higher-order thinking task) for fast finishers.\n\n';
             }
+            
             if (needsContent) {
-                text += 'PART 4: Teacher Content Document\n';
-                text += 'Provide a 1-page summary of the core facts about the topic for me to use as a reference sheet during the lesson.\n\n';
+                text += 'PART 4: Teacher Content Reference Sheet\n';
+                text += 'Provide a 1-page summary of the core facts, data, and disciplinary concepts regarding your chosen case study for me to use as a quick-reference guide during the lesson. Include 2-3 live links to high-quality articles or data dashboards for my own background reading.\n\n';
             }
 
             text += '"';
