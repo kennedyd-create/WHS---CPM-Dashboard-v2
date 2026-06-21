@@ -1561,8 +1561,7 @@ Step 6: Progress Monitoring
             var litContext = (unitState.lit === 'integrate') ? "\n\nLITERACY INTEGRATION: Identify 1 or 2 lessons where explicit disciplinary literacy is a primary focus." : "";
             var numContext = (unitState.num === 'integrate') ? "\n\nNUMERACY INTEGRATION: Identify 1 or 2 lessons where explicit disciplinary numeracy is a primary focus." : "";
 
-            var text = "@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this exact Unit Plan.\n\n";
-            text += '"Act as an expert curriculum designer. I am planning a ' + unitState.dur + ' unit on ' + topic + ' for a ' + unitState.year + ' ' + unitState.dept + ' class based on the NZ Curriculum.\n\nCRITICAL INSTRUCTION: DO NOT use the old \'Understand-Know-Do\' (UKD) framework. You must base all design strictly on the new \'Knowledge\' and \'Practices\' framework drafts found here: ' + curriculumUrl + '\n\n';
+            var text = '"Act as an expert curriculum designer. I am planning a ' + unitState.dur + ' unit on ' + topic + ' for a ' + unitState.year + ' ' + unitState.dept + ' class based on the NZ Curriculum.\n\nCRITICAL INSTRUCTION: DO NOT use the old \'Understand-Know-Do\' (UKD) framework. You must base all design strictly on the new \'Knowledge\' and \'Practices\' framework drafts found here: ' + curriculumUrl + '\n\n';
             text += "CRITICAL INSTRUCTION: When designing the individual lessons in the 'Lesson Content' table below, you MUST structure the learning activities for each standard lesson using the 5 stages of the Common Practice Model (CPM).\n\n";
             if (customTask) text += 'TEACHER SPECIFIC INSTRUCTIONS: "' + customTask + '".\n\n';
 
@@ -1600,8 +1599,7 @@ Step 6: Progress Monitoring
             }
 
             if (lessonState.notebookLM) {
-                var text = "@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this Master Source Document.\n\n";
-                text += '"Act as an expert curriculum and instructional designer. I need a comprehensive MASTER SOURCE DOCUMENT for NotebookLM covering the topic: ' + topic + ' for a ' + lessonState.year + ' ' + lessonState.dept + ' class.\n\n';
+                var text = '"Act as an expert curriculum and instructional designer. I need a comprehensive MASTER SOURCE DOCUMENT for NotebookLM covering the topic: ' + topic + ' for a ' + lessonState.year + ' ' + lessonState.dept + ' class.\n\n';
                 text += "This document must serve as the 'Ground Truth' for an AI assistant. It MUST be structured into two distinct parts: META-INSTRUCTIONS and DETAILED CONTENT.\n\n";
                 text += "PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n";
                 text += "Write a section titled 'System Instructions' that strictly commands NotebookLM on how it must behave when generating lesson plans or slideshows based on this document. It MUST include the following rules:\n";
@@ -1622,7 +1620,7 @@ Step 6: Progress Monitoring
                 text += "- Key disciplinary vocabulary (Tier 2 and Tier 3 words).\n";
                 if (lessonState.context === 'waiheke') text += "LOCAL CONTEXT: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n\n";
                 if (lessonState.maori === 'integrate') text += "MĀTAURANGA MĀORI: Weave relevant Mātauranga Māori and local iwi history into the core content.\n\n";
-                text += 'Ensure all output uses New Zealand English spelling and terminology. CRITICAL INSTRUCTION: Conclude your output by providing a direct, clickable URL link to the generated Google Doc."';
+                text += 'Ensure all output uses New Zealand English spelling and terminology. CRITICAL INSTRUCTION: Provide all the outputs clearly formatted in this chat using Markdown headers so I can export them myself."';
                 
                 var box = document.getElementById('prompt-lesson-text');
                 if(box) box.innerText = text;
@@ -1630,12 +1628,9 @@ Step 6: Progress Monitoring
             }
 
             if (lessonState.relief) {
-                var text = "@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE A GOOGLE DOC in my Google Drive containing this relief worksheet. YOU MUST output a clickable URL link to the document when finished.\n\n";
-                text += '"Act as an expert curriculum designer. I need an EMERGENCY RELIEF LESSON for a ' + lessonState.year + ' ' + lessonState.dept + ' class on the topic: ' + topic + '.\n\n';
+                var text = '"Act as an expert curriculum designer. I need an EMERGENCY RELIEF LESSON for a ' + lessonState.year + ' ' + lessonState.dept + ' class on the topic: ' + topic + '.\n\n';
                 text += "CRITICAL INSTRUCTION 1: The relief teacher covering this class is a NON-SUBJECT SPECIALIST. DO NOT generate a standard 5-stage CPM lesson plan. Instead, generate a highly structured, self-contained Student Worksheet that contains enough reading and activities to keep students actively engaged for a FULL 60-MINUTE period.\n\n";
-                text += "CRITICAL INSTRUCTION 2: Because schools often need a quick printable packet for relief cover alongside the digital file, you MUST generate the full, comprehensive relief worksheet in TWO distinct formats in this exact single response:\n\n";
-                text += "FORMAT 1 (The Google Doc Digital Version): Use your Google Workspace capabilities to CREATE A GOOGLE DOC file for this worksheet. Provide the direct URL link to this document at the end of your response.\n\n";
-                text += "FORMAT 2 (The Printable PDF / HTML Version): Write the exact same worksheet but output it inside a SINGLE HTML code block (```html ... ```). The admin team will be able to save this HTML and simply 'Print to PDF'. CRITICAL: You MUST close the HTML code block with ``` before moving on.\n\n";
+                text += "CRITICAL INSTRUCTION 2: Because schools often need a quick printable packet for relief cover, you MUST generate the full, comprehensive relief worksheet inside a SINGLE HTML code block (```html ... ```). The admin team will be able to save this HTML and simply 'Print to PDF'. CRITICAL: You MUST close the HTML code block with ``` before moving on.\n\n";
                 text += "The worksheet content MUST follow this structure:\n";
                 text += "1. Relief Teacher Instructions: A brief note explaining pacing.\n";
                 text += "2. Introduction Content (15-20 mins reading): Detailed enough to replace teacher instruction.\n";
@@ -1652,45 +1647,54 @@ Step 6: Progress Monitoring
                 return;
             }
 
-            var text = "";
-            if (needsSlides || needsWorksheet) {
-                text += "@Google Workspace\nCRITICAL COMMAND: You must actively use your Workspace extension to CREATE ACTUAL FILES in my Google Drive (Docs/Slides). Do not just write text if you can create the file.\n\n";
-            }
-
             var curriculumUrl = getCurriculumLink(lessonState.dept, lessonState.year);
 
-            text += '"Act as an expert pedagogical coach. Design a 60-minute standard mixed-ability lesson on ' + topic + ' for a ' + lessonState.year + ' ' + lessonState.dept + ' class using the 5 stages of the Common Practice Model (CPM).\n\nCRITICAL INSTRUCTION: DO NOT reference the old \'Understand-Know-Do\' framework. Ensure the lesson plan starts with clear Learning Intention(s) and measurable Success Criteria that are strictly aligned with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + ').\n\n';
-            text += "CRITICAL INSTRUCTION 1: You MUST generate ALL of the requested outputs in your single response. Do not provide brief outlines; provide the full, comprehensive content for each section.\n\n";
-            text += "OUTPUTS REQUIRED TODAY:\n- PART 1: The CPM Lesson Plan\n";
-            if (needsSlides) text += "- PART 2: Slideshow Presentation\n";
-            if (needsWorksheet) text += "- PART 3: Student Worksheet (Google Docs Export AND Printable HTML)\n";
-            if (needsContent) text += "- PART 4: Content Document\n\n";
+            var text = '"Act as an expert pedagogical coach and ' + lessonState.dept + ' teacher.\n\n';
+            
+            text += 'CONTEXT:\n';
+            text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class. The topic is: "' + topic + '".\n\n';
+            
+            text += 'TASK:\n';
+            text += 'Design a comprehensive 60-minute mixed-ability lesson based on the 5 stages of the Common Practice Model (CPM). You must provide all content in full detail, not just brief outlines.\n\n';
 
-            if (customTask) text += 'TEACHER SPECIFIC INSTRUCTIONS: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests in your lesson design.\n\n';
+            text += 'CONSTRAINTS & RULES:\n';
+            text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
+            text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
+            text += '- Formatting: Ensure all output uses New Zealand English spelling and terminology.\n';
+            text += '- No File Creation Commands: Provide all the outputs clearly formatted in this chat so I can export them myself. Use Markdown headers to separate the parts.\n';
 
-            text += "LESSON STRUCTURE SELECTED:\n";
-            text += "- Stage 1 (Connect): " + lessonState.s1 + "\n";
-            text += "- Stage 2 (I Do): " + lessonState.s2 + "\n";
-            text += "- Stage 3 (We Do): " + lessonState.s3 + "\n";
-            text += "- Stage 4 (You Do): " + lessonState.s4 + "\n";
-            text += "- Stage 5 (Review): " + lessonState.s5 + "\n\n";
+            if (customTask) text += '- Specific Instructions: ' + customTask + '\n';
+            if (lessonState.context === 'waiheke') text += '- Local Context: Make Waiheke context a core focus of this specific lesson.\n';
+            if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Make the integration of Mātauranga Māori a core focus of this lesson.\n';
+            if (lessonState.lit === 'integrate') text += '- Literacy Integration: Make explicit disciplinary literacy practice a core focus.\n';
+            if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
 
-            if (lessonState.context === 'waiheke') text += "LOCAL CONTEXT RULE: Make Waiheke context a core focus of this specific lesson.\n\n";
-            if (lessonState.maori === 'integrate') text += "MĀTAURANGA MĀORI RULE: Make the integration of Mātauranga Māori a core focus of this lesson.\n\n";
-            if (lessonState.lit === 'integrate') text += "LITERACY INTEGRATION: Make explicit disciplinary literacy practice a core focus.\n\n";
-            if (lessonState.num === 'integrate') text += "NUMERACY INTEGRATION: Make explicit numeracy practice a core focus.\n\n";
-
-            text += "--- LESSON PLAN TEMPLATE (PART 1) ---\n";
-            text += "Use EXACTLY the Markdown table template below.\n";
-            text += "| **Stage** | **Teaching Strategy Focus** | **Learning Experiences** | **Resources** |\n";
-            text += "| **Stage 1: CONNECTION** | **" + lessonState.s1 + "** | [Fill] | [Fill] |\n";
-            text += "| **Stage 2: I DO** | **" + lessonState.s2 + "** | [Fill] | [Fill] |\n";
-            text += "| **Stage 3: WE DO** | **" + lessonState.s3 + "** | [Fill] | [Fill] |\n";
-            text += "| **Stage 4: YOU DO** | **" + lessonState.s4 + "** | [Fill] | [Fill] |\n";
-            text += "| **Stage 5: REFLECTION** | **" + lessonState.s5 + "** | [Fill] | [Fill] |\n\n";
+            text += '\nOUTPUTS REQUIRED:\n';
+            text += 'PART 1: The CPM Lesson Plan\n';
+            text += 'Use EXACTLY the Markdown table template below:\n';
+            text += '| **Stage** | **Teaching Strategy Focus** | **Learning Experiences** | **Resources** |\n';
+            text += '| --- | --- | --- | --- |\n';
+            text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation of activity] | [Required materials] |\n';
+            text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual script/model] | [Required materials] |\n';
+            text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific questions/tasks] | [Required materials] |\n';
+            text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | [Provide the actual scaffolds/frames] | [Required materials] |\n';
+            text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exit ticket/reflection] | [Required materials] |\n\n';
 
             if (lessonState.extra !== 'None') {
-                text += "| **Additional Resources:** | [Fill specific resources for: " + lessonState.extra + "] |\n\n";
+                text += '| **Additional Resources:** | [Fill specific resources for: ' + lessonState.extra + '] | | |\n\n';
+            }
+
+            if (needsSlides) {
+                text += 'PART 2: Slideshow Presentation Outline\n';
+                text += 'Provide a slide-by-slide outline (minimum 8 slides). For each slide, include the Slide Title, Bullet Points (the content), and an Image Suggestion.\n\n';
+            }
+            if (needsWorksheet) {
+                text += 'PART 3: Student Worksheet Content\n';
+                text += 'Provide the exact text, questions, and scaffolding that will go onto the student worksheet.\n\n';
+            }
+            if (needsContent) {
+                text += 'PART 4: Teacher Content Document\n';
+                text += 'Provide a 1-page summary of the core facts about the topic for me to use as a reference sheet during the lesson.\n\n';
             }
 
             text += '"';
