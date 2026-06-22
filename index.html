@@ -305,24 +305,24 @@
 
             <div class="space-y-4">
                 <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                    <button class="dept-btn active" data-action="discipline" data-val="Science">Science</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Maths">Maths</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Social Sciences">Social Sciences</button>
-                    <button class="dept-btn" data-action="discipline" data-val="English">English</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Māori">Māori</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Technology">Technology</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Arts">Arts</button>
-                    <button class="dept-btn" data-action="discipline" data-val="PE & Health">PE & Health</button>
+                    <button id="btn-Science" class="dept-btn active" data-action="discipline" data-val="Science">Science</button>
+                    <button id="btn-Maths" class="dept-btn" data-action="discipline" data-val="Maths">Maths</button>
+                    <button id="btn-SocialSciences" class="dept-btn" data-action="discipline" data-val="Social Sciences">Social Sciences</button>
+                    <button id="btn-English" class="dept-btn" data-action="discipline" data-val="English">English</button>
+                    <button id="btn-Māori" class="dept-btn" data-action="discipline" data-val="Māori">Māori</button>
+                    <button id="btn-Technology" class="dept-btn" data-action="discipline" data-val="Technology">Technology</button>
+                    <button id="btn-Arts" class="dept-btn" data-action="discipline" data-val="Arts">Arts</button>
+                    <button id="btn-PEHealth" class="dept-btn" data-action="discipline" data-val="PE & Health">PE & Health</button>
                 </div>
 
                 <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
-                    <button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
+                    <button id="btn-inst-Year7" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
+                    <button id="btn-inst-Year8" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
+                    <button id="btn-inst-Year9" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
+                    <button id="btn-inst-Year10" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
+                    <button id="btn-inst-Year11(NCEALevel1)" class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
+                    <button id="btn-inst-Year12(NCEALevel2)" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
+                    <button id="btn-inst-Year13(NCEALevel3)" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
                 </div>
 
                 <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
@@ -352,16 +352,16 @@
                             <button class="builder-btn" data-action="inst-state" data-key="maori" data-val="integrate">Integrate</button>
                         </div>
                     </div>
-                    <div class="hidden md:block w-px bg-slate-200"></div>
-                    <div>
+                    <div id="inst-lit-divider" class="hidden md:block w-px bg-slate-200"></div>
+                    <div id="inst-lit-container">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2 text-center">Literacy</span>
                         <div class="flex justify-center gap-2">
                             <button class="builder-btn active" data-action="inst-state" data-key="lit" data-val="none">Standard</button>
                             <button class="builder-btn" data-action="inst-state" data-key="lit" data-val="integrate">Integrate</button>
                         </div>
                     </div>
-                    <div class="hidden md:block w-px bg-slate-200"></div>
-                    <div>
+                    <div id="inst-num-divider" class="hidden md:block w-px bg-slate-200"></div>
+                    <div id="inst-num-container">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2 text-center">Numeracy</span>
                         <div class="flex justify-center gap-2">
                             <button class="builder-btn active" data-action="inst-state" data-key="num" data-val="none">Standard</button>
@@ -374,23 +374,23 @@
             <div class="grid lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-3 space-y-3">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">CPM Stages</h3>
-                    <div class="stage-btn active" data-action="stage" data-val="1">
+                    <div id="btn-stage-1" class="stage-btn active" data-action="stage" data-val="1">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 1</span>
                         <span class="font-bold text-[#002066]">Connect</span>
                     </div>
-                    <div class="stage-btn" data-action="stage" data-val="2">
+                    <div id="btn-stage-2" class="stage-btn" data-action="stage" data-val="2">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 2</span>
                         <span class="font-bold text-[#002066]">I Do</span>
                     </div>
-                    <div class="stage-btn" data-action="stage" data-val="3">
+                    <div id="btn-stage-3" class="stage-btn" data-action="stage" data-val="3">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 3</span>
                         <span class="font-bold text-[#002066]">We Do</span>
                     </div>
-                    <div class="stage-btn" data-action="stage" data-val="4">
+                    <div id="btn-stage-4" class="stage-btn" data-action="stage" data-val="4">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 4</span>
                         <span class="font-bold text-[#002066]">You Do</span>
                     </div>
-                    <div class="stage-btn" data-action="stage" data-val="5">
+                    <div id="btn-stage-5" class="stage-btn" data-action="stage" data-val="5">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 5</span>
                         <span class="font-bold text-[#002066]">Review</span>
                     </div>
@@ -469,7 +469,7 @@
                     <div class="space-y-6">
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
-                            <div class="flex flex-wrap gap-2">
+                            <div class="flex flex-wrap gap-2" id="unit-dept-opts">
                                 <button class="builder-btn active" data-action="unit-state" data-key="dept" data-val="Science">Science</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Maths">Maths</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
@@ -482,7 +482,7 @@
                         </div>
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
-                            <div class="flex flex-wrap gap-2">
+                            <div class="flex flex-wrap gap-2" id="unit-year-opts">
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 7">Year 7</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 8">Year 8</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 9">Year 9</button>
@@ -502,7 +502,7 @@
 
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Duration</span>
-                            <div class="flex flex-wrap gap-2">
+                            <div class="flex flex-wrap gap-2" id="unit-dur-opts">
                                 <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="4 lessons">4 Lessons</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="8 lessons">8 Lessons</button>
                                 <button class="builder-btn active" data-action="unit-state" data-key="dur" data-val="12 lessons">12 Lessons</button>
@@ -513,28 +513,28 @@
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div>
                                 <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2" id="unit-context-opts">
                                     <button class="builder-btn active" data-action="unit-state" data-key="context" data-val="none">Standard</button>
                                     <button class="builder-btn" data-action="unit-state" data-key="context" data-val="waiheke">Waiheke</button>
                                 </div>
                             </div>
                             <div>
                                 <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span>
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2" id="unit-maori-opts">
                                     <button class="builder-btn active" data-action="unit-state" data-key="maori" data-val="none">Standard</button>
                                     <button class="builder-btn" data-action="unit-state" data-key="maori" data-val="integrate">Integrate</button>
                                 </div>
                             </div>
-                            <div>
+                            <div id="unit-lit-container">
                                 <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy</span>
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2" id="unit-lit-opts">
                                     <button class="builder-btn active" data-action="unit-state" data-key="lit" data-val="none">Standard</button>
                                     <button class="builder-btn" data-action="unit-state" data-key="lit" data-val="integrate">Integrate</button>
                                 </div>
                             </div>
-                            <div>
+                            <div id="unit-num-container">
                                 <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy</span>
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2" id="unit-num-opts">
                                     <button class="builder-btn active" data-action="unit-state" data-key="num" data-val="none">Standard</button>
                                     <button class="builder-btn" data-action="unit-state" data-key="num" data-val="integrate">Integrate</button>
                                 </div>
@@ -556,7 +556,7 @@
                             </div>
                         </div>
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 custom-scrollbar overflow-y-auto max-h-[600px]">
-<span id="prompt-unit-text">...</span>
+                            <span id="prompt-unit-text">...</span>
                         </div>
                         <div class="flex justify-end mb-6 gap-2">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="download" data-target="prompt-unit-text">DOWNLOAD .TXT</button>
@@ -581,7 +581,7 @@
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-2" id="les-dept-opts">
                             <button class="builder-btn active" data-action="lesson-state" data-key="dept" data-val="Science">Science</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Maths">Maths</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
@@ -594,7 +594,7 @@
                     </div>
                     <div>
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
-                        <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-wrap gap-2" id="les-year-opts">
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 7">Year 7</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 8">Year 8</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 9">Year 9</button>
@@ -616,28 +616,28 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-200">
                     <div>
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
-                        <div class="flex flex-col xl:flex-row gap-2">
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-context-opts">
                             <button class="builder-btn active text-left" data-action="lesson-state" data-key="context" data-val="none">Standard</button>
                             <button class="builder-btn text-left" data-action="lesson-state" data-key="context" data-val="waiheke">Waiheke Context</button>
                         </div>
                     </div>
                     <div>
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span>
-                        <div class="flex flex-col xl:flex-row gap-2">
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-maori-opts">
                             <button class="builder-btn active text-left" data-action="lesson-state" data-key="maori" data-val="none">Standard</button>
                             <button class="builder-btn text-left" data-action="lesson-state" data-key="maori" data-val="integrate">Integrate</button>
                         </div>
                     </div>
-                    <div>
+                    <div id="les-lit-container">
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span>
-                        <div class="flex flex-col xl:flex-row gap-2">
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-lit-opts">
                             <button class="builder-btn active text-left" data-action="lesson-state" data-key="lit" data-val="none">Standard</button>
                             <button class="builder-btn text-left" data-action="lesson-state" data-key="lit" data-val="integrate">Focus on Disciplinary Literacy</button>
                         </div>
                     </div>
-                    <div>
+                    <div id="les-num-container">
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy Integration</span>
-                        <div class="flex flex-col xl:flex-row gap-2">
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-num-opts">
                             <button class="builder-btn active text-left" data-action="lesson-state" data-key="num" data-val="none">Standard</button>
                             <button class="builder-btn text-left" data-action="lesson-state" data-key="num" data-val="integrate">Focus on Disciplinary Numeracy</button>
                         </div>
@@ -716,18 +716,18 @@
 
                         <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
-                            <div class="flex flex-wrap gap-2">
-                                <button class="builder-btn active" data-action="lesson-output" data-val="none">Lesson Plan</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="slides">+ Slides</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="all">All Outputs</button>
+                            <div class="flex flex-wrap gap-2" id="les-output-opts">
+                                <button id="btn-out-none" class="builder-btn active" data-action="lesson-output" data-val="none">Lesson Plan</button>
+                                <button id="btn-out-slides" class="builder-btn" data-action="lesson-output" data-val="slides">+ Slides</button>
+                                <button id="btn-out-worksheet" class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
+                                <button id="btn-out-content" class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
+                                <button id="btn-out-all" class="builder-btn" data-action="lesson-output" data-val="all">All Outputs</button>
                             </div>
                         </div>
 
                         <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Extra Differentiated Resource (You Do)</span>
-                            <div class="flex flex-wrap gap-2">
+                            <div class="flex flex-wrap gap-2" id="les-extra-opts">
                                 <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard Lesson)</button>
                                 <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners (simplified vocab, visual reliance)">ESOL Resource</button>
                                 <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Low Literacy Accommodations (heavy scaffolding)">Low Lit Scaffold</button>
@@ -736,7 +736,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col relative z-0">
+                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col flex-grow shadow-sm relative">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                             <div class="flex gap-2">
@@ -745,7 +745,7 @@
                             </div>
                         </div>
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar">
-<span id="prompt-lesson-text">Select options to generate prompt...</span>
+                            <span id="prompt-lesson-text">Select options to generate prompt...</span>
                         </div>
                         <div class="flex justify-end mb-6 gap-2">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="download" data-target="prompt-lesson-text">DOWNLOAD .TXT</button>
@@ -764,7 +764,6 @@
                 <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2>
                 <p class="text-slate-600">Explore the cognitive science and practical classroom examples behind each instructional move.</p>
                 
-                <!-- Expanded Official Links -->
                 <div class="flex justify-center gap-3 mt-6 flex-wrap">
                     <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/common-practice-model-news" target="_blank" class="inline-block text-xs font-bold bg-[#002066] text-white px-4 py-2 rounded-full hover:bg-blue-900 transition shadow-sm">Official MoE CPM Guidelines ↗</a>
                     <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/" target="_blank" class="inline-block text-xs font-bold bg-emerald-700 text-white px-4 py-2 rounded-full hover:bg-emerald-800 transition shadow-sm">Tāhūrangi / Te Mātaiaho ↗</a>
@@ -919,7 +918,6 @@ Step 6: Progress Monitoring
     </div>
 
     <script>
-        // Data Structures
         var tahurangiLinks = {
             'Social Sciences': {
                 'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---social-sciences-phase-3-years-7-8/5637290853.p',
@@ -942,7 +940,6 @@ Step 6: Progress Monitoring
             5: { title: "Stage 5: Review", intent: "Closing the loop. Signalling the transition. Consolidating learning and providing feedback." }
         };
 
-        // Complete 70+ Task Database
         var cpmTaskDB = {
             // STAGE 1: CONNECT
             "Retrieval Do-Now Quiz": { 
@@ -1327,6 +1324,7 @@ Step 6: Progress Monitoring
         var currentInstNum = 'none';
         var chartInstance = null;
         var aiTopPicks = { 1: "", 2: "", 3: "", 4: "", 5: "" };
+        var isAppReady = false;
 
         var unitState = {
             dept: 'Science',
@@ -1355,8 +1353,6 @@ Step 6: Progress Monitoring
             relief: false,
             notebookLM: false
         };
-
-        var isAppReady = false;
 
         function getDesc(name) {
             if (cpmTaskDB[name] && cpmTaskDB[name].desc) return cpmTaskDB[name].desc;
@@ -1396,7 +1392,6 @@ Step 6: Progress Monitoring
             for(var i=0; i<inputs.length; i++) {
                 if(inputs[i].value !== val) inputs[i].value = val;
             }
-            
             clearTimeout(topicTimeout);
             topicTimeout = setTimeout(function() {
                 localStorage.setItem('whs_topic', val);
@@ -1417,12 +1412,8 @@ Step 6: Progress Monitoring
             var activeBtn = document.getElementById('nav-' + viewId);
             if (activeBtn) activeBtn.classList.add('nav-active');
 
-            if (viewId === 'instructional') {
-                setTimeout(initChart, 100);
-            }
-            if (viewId === 'theory') {
-                loadTheoryStage(1);
-            }
+            if (viewId === 'instructional') setTimeout(initChart, 100);
+            if (viewId === 'theory') loadTheoryStage(1);
         }
 
         function getAiPicks(dept, year, topic, context, maori, lit, num) {
@@ -1434,7 +1425,6 @@ Step 6: Progress Monitoring
             topic = (topic || "").toLowerCase();
             
             var dMatrix = cpmMatrix[dept] || cpmMatrix["Default"];
-            
             var path = {
                 1: (dMatrix[1] && dMatrix[1].length > 0) ? dMatrix[1][0] : "",
                 2: (dMatrix[2] && dMatrix[2].length > 0) ? dMatrix[2][0] : "",
@@ -1519,32 +1509,6 @@ Step 6: Progress Monitoring
             return path;
         }
 
-        function forceAiPicks() {
-            var globalTopic = getGlobalTopic();
-            
-            var hubPicks = getAiPicks(currentDiscipline, currentInstructionalYear, globalTopic, currentInstContext, currentInstMaori, currentInstLit, currentInstNum);
-            
-            if (isAppReady || !currentStrategy) {
-                currentStrategy = hubPicks[currentStage];
-            }
-            renderInstructionalHub(hubPicks);
-
-            var lesPicks = getAiPicks(lessonState.dept, lessonState.year, globalTopic, lessonState.context, lessonState.maori, lessonState.lit, lessonState.num);
-            aiTopPicks = lesPicks;
-            
-            if (isAppReady) {
-                var dMat = cpmMatrix[lessonState.dept] || cpmMatrix['Default'];
-                lessonState.s1 = lesPicks[1] || dMat[1][0];
-                lessonState.s2 = lesPicks[2] || dMat[2][0];
-                lessonState.s3 = lesPicks[3] || dMat[3][0];
-                lessonState.s4 = lesPicks[4] || dMat[4][0];
-                lessonState.s5 = lesPicks[5] || dMat[5][0];
-            }
-            
-            renderLessonStrategies(lesPicks);
-            updateAllPrompts();
-        }
-
         function saveAppState() {
             if (!isAppReady) return; 
             var state = {
@@ -1568,14 +1532,12 @@ Step 6: Progress Monitoring
             if (val === undefined || val === null) return;
             var selector = '[data-action="' + action + '"]';
             if (key) selector += '[data-key="' + key + '"]';
-            
             try {
                 var btns = document.querySelectorAll(selector);
                 for(var i=0; i<btns.length; i++) {
                     btns[i].classList.remove('active');
                     btns[i].setAttribute('aria-pressed', 'false');
                 }
-                
                 var safeVal = String(val).replace(/"/g, '\\"');
                 var targetBtn = document.querySelector(selector + '[data-val="' + safeVal + '"]');
                 if(targetBtn) {
@@ -1675,18 +1637,35 @@ Step 6: Progress Monitoring
             }
         }
 
+        function forceAiPicks() {
+            var globalTopic = getGlobalTopic();
+            var hubPicks = getAiPicks(currentDiscipline, currentInstructionalYear, globalTopic, currentInstContext, currentInstMaori, currentInstLit, currentInstNum);
+            
+            if (isAppReady || !currentStrategy) currentStrategy = hubPicks[currentStage];
+            renderInstructionalHub(hubPicks);
+
+            var lesPicks = getAiPicks(lessonState.dept, lessonState.year, globalTopic, lessonState.context, lessonState.maori, lessonState.lit, lessonState.num);
+            aiTopPicks = lesPicks;
+            
+            if (isAppReady) {
+                var dMat = cpmMatrix[lessonState.dept] || cpmMatrix['Default'];
+                lessonState.s1 = lesPicks[1] || dMat[1][0];
+                lessonState.s2 = lesPicks[2] || dMat[2][0];
+                lessonState.s3 = lesPicks[3] || dMat[3][0];
+                lessonState.s4 = lesPicks[4] || dMat[4][0];
+                lessonState.s5 = lesPicks[5] || dMat[5][0];
+            }
+            
+            renderLessonStrategies(lesPicks);
+            updateAllPrompts();
+        }
+
         function setDiscipline(dept) {
             currentDiscipline = dept;
             var btns = document.querySelectorAll('#view-instructional .dept-btn:not(.inst-year-btn)');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].classList.remove('active');
-                btns[i].setAttribute('aria-pressed', 'false');
-            }
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             var btn = document.querySelector('[data-action="discipline"][data-val="' + dept + '"]');
-            if(btn) {
-                btn.classList.add('active');
-                btn.setAttribute('aria-pressed', 'true');
-            }
+            if(btn) btn.classList.add('active');
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             forceAiPicks();
         }
@@ -1694,15 +1673,9 @@ Step 6: Progress Monitoring
         function setInstructionalYear(year) {
             currentInstructionalYear = year;
             var btns = document.querySelectorAll('#view-instructional .inst-year-btn');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].classList.remove('active');
-                btns[i].setAttribute('aria-pressed', 'false');
-            }
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             var btn = document.querySelector('[data-action="inst-year"][data-val="' + year + '"]');
-            if(btn) {
-                btn.classList.add('active');
-                btn.setAttribute('aria-pressed', 'true');
-            }
+            if(btn) btn.classList.add('active');
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             forceAiPicks();
         }
@@ -1710,15 +1683,9 @@ Step 6: Progress Monitoring
         function setStage(stage) {
             currentStage = stage;
             var btns = document.querySelectorAll('.stage-btn');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].classList.remove('active');
-                btns[i].setAttribute('aria-pressed', 'false');
-            }
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             var btn = document.querySelector('[data-action="stage"][data-val="' + stage + '"]');
-            if(btn) {
-                btn.classList.add('active');
-                btn.setAttribute('aria-pressed', 'true');
-            }
+            if(btn) btn.classList.add('active');
             forceAiPicks();
         }
 
@@ -1729,12 +1696,8 @@ Step 6: Progress Monitoring
             if (key === 'num') currentInstNum = val;
             var parent = btnElem.parentElement;
             var btns = parent.querySelectorAll('.builder-btn');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].classList.remove('active');
-                btns[i].setAttribute('aria-pressed', 'false');
-            }
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             btnElem.classList.add('active');
-            btnElem.setAttribute('aria-pressed', 'true');
             forceAiPicks(); 
         }
 
@@ -1782,14 +1745,11 @@ Step 6: Progress Monitoring
 
         function setStrategyPrompt(strategy) {
             currentStrategy = strategy;
-            
             var buttons = document.querySelectorAll('#display-strategies button');
             for(var i=0; i<buttons.length; i++) {
                 var btn = buttons[i];
-                btn.setAttribute('aria-pressed', 'false');
                 if(btn.innerText.indexOf(strategy) !== -1) {
                     btn.className = "tooltip-wrapper w-full text-left bg-[#002066] border-l-4 border-[#002066] p-3 rounded-r-lg shadow-sm transition text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 relative group text-white";
-                    btn.setAttribute('aria-pressed', 'true');
                 } else if (btn.innerHTML.indexOf("TOP PICK") !== -1) {
                     btn.className = "tooltip-wrapper w-full text-left bg-[#ecfdf5] hover:bg-[#d1fae5] border-l-4 border-[#10b981] p-3 rounded-r-lg shadow-sm transition text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 relative group text-[#047857] recommended-highlight";
                 } else {
@@ -1798,7 +1758,6 @@ Step 6: Progress Monitoring
             }
 
             var topic = getGlobalTopic();
-            
             var stageOutputRequest = "";
             if (currentStage === 1) {
                 stageOutputRequest = "Provide a highly engaging hook, 3 specific prior-knowledge retrieval questions, and a brief script to introduce the lesson.";
@@ -1830,12 +1789,8 @@ Step 6: Progress Monitoring
             lessonState[key] = val;
             var parent = btnElem.parentElement;
             var btns = parent.querySelectorAll('.builder-btn');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].classList.remove('active');
-                btns[i].setAttribute('aria-pressed', 'false');
-            }
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             btnElem.classList.add('active');
-            btnElem.setAttribute('aria-pressed', 'true');
             
             var triggerKeys = ['dept', 'year', 'context', 'maori', 'lit', 'num'];
             var isTrigger = false;
@@ -1859,7 +1814,6 @@ Step 6: Progress Monitoring
             for(var i=1; i<=5; i++) {
                 var container = document.getElementById('les-s' + i + '-opts');
                 if (!container) continue;
-                
                 container.innerHTML = ''; 
                 var strats = dMatrix[i] || [];
                 
@@ -1887,7 +1841,7 @@ Step 6: Progress Monitoring
                     
                     var flashClass = isTopPick ? ' ai-flash' : '';
 
-                    html += '<button aria-pressed="' + (isSelected ? 'true' : 'false') + '" data-tooltip="' + getDesc(s).replace(/"/g, '&quot;') + '" data-action="lesson-state" data-key="s' + i + '" data-val="' + s.replace(/"/g, '&quot;') + '" class="' + btnClass + flashClass + '" style="' + (isTopPick ? 'position: relative;' : '') + '">' +
+                    html += '<button data-tooltip="' + getDesc(s).replace(/"/g, '&quot;') + '" data-action="lesson-state" data-key="s' + i + '" data-val="' + s.replace(/"/g, '&quot;') + '" class="' + btnClass + flashClass + '" style="' + (isTopPick ? 'position: relative;' : '') + '">' +
                                 '<span>' + s + '</span>' + badges +
                             '</button>';
                 }
@@ -1912,17 +1866,7 @@ Step 6: Progress Monitoring
             }
 
             var outBtns = document.querySelectorAll('[data-action="lesson-output"]');
-            for(var x=0; x<outBtns.length; x++) {
-                outBtns[x].classList.remove('active');
-                outBtns[x].setAttribute('aria-pressed', 'false');
-            }
-
-            function activateOutBtn(btn) {
-                if(btn) {
-                    btn.classList.add('active');
-                    btn.setAttribute('aria-pressed', 'true');
-                }
-            }
+            for(var x=0; x<outBtns.length; x++) outBtns[x].classList.remove('active');
 
             var btnNone = document.querySelector('[data-action="lesson-output"][data-val="none"]');
             var btnSlides = document.querySelector('[data-action="lesson-output"][data-val="slides"]');
@@ -1930,13 +1874,13 @@ Step 6: Progress Monitoring
             var btnContent = document.querySelector('[data-action="lesson-output"][data-val="content"]');
             var btnAll = document.querySelector('[data-action="lesson-output"][data-val="all"]');
 
-            activateOutBtn(btnNone);
+            if(btnNone) btnNone.classList.add('active');
             
             if (lessonState.outputs.length === 3) {
-                activateOutBtn(btnSlides);
-                activateOutBtn(btnWorksheet);
-                activateOutBtn(btnContent);
-                activateOutBtn(btnAll);
+                if(btnSlides) btnSlides.classList.add('active');
+                if(btnWorksheet) btnWorksheet.classList.add('active');
+                if(btnContent) btnContent.classList.add('active');
+                if(btnAll) btnAll.classList.add('active');
             } else {
                 var hasSlides = false, hasWorksheet = false, hasContent = false;
                 for(var j=0; j<lessonState.outputs.length; j++) {
@@ -1944,9 +1888,9 @@ Step 6: Progress Monitoring
                     if(lessonState.outputs[j] === 'worksheet') hasWorksheet = true;
                     if(lessonState.outputs[j] === 'content') hasContent = true;
                 }
-                if (hasSlides) activateOutBtn(btnSlides);
-                if (hasWorksheet) activateOutBtn(btnWorksheet);
-                if (hasContent) activateOutBtn(btnContent);
+                if (hasSlides && btnSlides) btnSlides.classList.add('active');
+                if (hasWorksheet && btnWorksheet) btnWorksheet.classList.add('active');
+                if (hasContent && btnContent) btnContent.classList.add('active');
             }
             updateLessonBuilderPrompt();
         }
@@ -1961,14 +1905,12 @@ Step 6: Progress Monitoring
                     btn.classList.add('bg-red-500', 'text-white', 'border-red-600');
                     btn.classList.remove('bg-red-100', 'text-red-800', 'border-red-300');
                     btn.innerText = "Disable Relief Mode";
-                    btn.setAttribute('aria-pressed', 'true');
                 }
             } else {
                 if(btn) {
                     btn.classList.remove('bg-red-500', 'text-white', 'border-red-600');
                     btn.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
                     btn.innerText = "Enable Relief Mode";
-                    btn.setAttribute('aria-pressed', 'false');
                 }
             }
             updateLessonBuilderPrompt();
@@ -1984,14 +1926,12 @@ Step 6: Progress Monitoring
                     btn.classList.add('bg-orange-500', 'text-white', 'border-orange-600');
                     btn.classList.remove('bg-orange-100', 'text-orange-800', 'border-orange-300');
                     btn.innerText = "Disable NotebookLM Mode";
-                    btn.setAttribute('aria-pressed', 'true');
                 }
             } else {
                 if(btn) {
                     btn.classList.remove('bg-orange-500', 'text-white', 'border-orange-600');
                     btn.classList.add('bg-orange-100', 'text-orange-800', 'border-orange-300');
                     btn.innerText = "Enable NotebookLM Mode";
-                    btn.setAttribute('aria-pressed', 'false');
                 }
             }
             updateLessonBuilderPrompt();
@@ -2001,12 +1941,8 @@ Step 6: Progress Monitoring
             unitState[key] = val;
             var parent = btnElem.parentElement;
             var btns = parent.querySelectorAll('.builder-btn');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].classList.remove('active');
-                btns[i].setAttribute('aria-pressed', 'false');
-            }
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             btnElem.classList.add('active');
-            btnElem.setAttribute('aria-pressed', 'true');
             if (key === 'dept' || key === 'year') renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             updateUnitBuilderPrompt();
         }
@@ -2143,7 +2079,6 @@ Step 6: Progress Monitoring
                 return;
             }
 
-            // Standard Lesson Builder
             var text = '"Act as an expert pedagogical coach and ' + lessonState.dept + ' teacher.\n\n';
             text += 'CONTEXT:\n';
             text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class (mixed-ability). The topic is: "' + topic + '".\n\n';
@@ -2161,6 +2096,10 @@ Step 6: Progress Monitoring
             if (lessonState.lit === 'integrate') text += '- Literacy Integration: Make explicit disciplinary literacy practice a core focus.\n';
             if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
             
+            if (lessonState.extra !== 'None') {
+                text += '- Differentiation: You MUST adapt the Lesson Plan, Slideshow, and Worksheet to explicitly include targeted materials/scaffolds for: ' + lessonState.extra + '.\n';
+            }
+
             if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests.\n';
 
             text += '- Live Links & Resources: Where appropriate, provide real, verifiable URLs to reputable sources (e.g. YouTube videos, interactives) for maps, statistics, and further reading.\n';
@@ -2175,7 +2114,13 @@ Step 6: Progress Monitoring
             text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
             text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
             text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
-            text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | [Provide the exact instructions and scaffolds for the independent task.] | [Specific URLs & materials] |\n';
+            
+            var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
+            if (lessonState.extra !== 'None') {
+                stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
+            }
+            text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
+            
             text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n\n';
 
             if (needsSlides) {
@@ -2185,7 +2130,7 @@ Step 6: Progress Monitoring
 
                 text += 'PART 2: Complete Slideshow Content & Speaker Notes\n';
                 text += 'Provide the exact, ready-to-paste content for at least 8 slides based on the ' + lessonState.year + ' level.\n';
-                text += 'Format the slides using the style of the attached file named "WHS Generic Slide Template - Basic".\n';
+                text += 'There is a file you can reference named "WHS Generic Slide Template - Basic". Refer to this file by its name verbatim.\n';
                 text += 'You MUST format EVERY slide exactly like this text block:\n\n';
                 text += 'Slide [Number]:\n';
                 text += 'Title: [Engaging Slide Title]\n';
@@ -2195,12 +2140,18 @@ Step 6: Progress Monitoring
                     text += 'Content: [Mix detailed content for explanations and concise bullet points for summaries, avoiding massive walls of text.]\n';
                 }
                 text += 'Note: [A detailed speaker script of what I should actually say, plus a description of the image, chart, or visual to include.]\n\n';
-                text += 'IMPORTANT STRUCTURE RULE: Slide 2 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson, immediately following the Stage 1 Connection slide.\n\n';
+                text += 'IMPORTANT STRUCTURE RULE: Slide 2 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson, immediately following the Stage 1 Connection slide.\n';
+                if (lessonState.extra !== 'None') {
+                    text += 'DIFFERENTIATION RULE: You must include at least one specific slide tailored to provide the requested accommodation: ' + lessonState.extra + '.\n';
+                }
+                text += '\n';
             }
             
             if (needsWorksheet) {
                 text += 'PART 3: Differentiated Student Worksheet Content\n';
-                text += 'Design a highly detailed student worksheet that executes the \'You Do\' stage (' + lessonState.s4 + '). Style it professionally to match a high-quality educational PDF layout.\n';
+                text += 'Design a highly detailed student worksheet that executes the \'You Do\' stage (' + lessonState.s4 + ').\n';
+                text += 'There is a file you can reference named "New Zealand\'s Role in World War I.pdf". Refer to this file by its name verbatim to match its level of detail and style.\n';
+                text += 'There is a file you can reference named "New Zealand\'s Journey in World War I.pdf". Refer to this file by its name verbatim to match its level of detail and style.\n';
                 text += 'Structure the worksheet with the following sections:\n';
                 text += '1. Title & Advance Organizer (e.g., a timeline, graphic, or summary box).\n';
                 text += '2. Key Vocabulary: Explicitly list and define 4 to 6 critical terms for the lesson.\n';
@@ -2209,13 +2160,13 @@ Step 6: Progress Monitoring
                 if (lessonState.extra !== 'None') {
                     text += '4. Differentiation: A specific, highly detailed section tailored EXACTLY for this accommodation: ' + lessonState.extra + '.\n\n';
                 } else {
-                    text += '4. Extension: A higher-order synthesis task for fast finishers.\n\n';
+                    text += '\n';
                 }
             }
             
             if (needsContent) {
                 text += 'PART 4: Teacher Content Reference Sheet\n';
-                text += 'Provide a 1-page summary of the core facts, data, and disciplinary concepts regarding the chosen topic for me to use as a quick-reference guide. Include 2-3 live links to high-quality articles or data dashboards for my background reading.\n\n';
+                text += 'Provide a 1-page summary of the core facts, data, and disciplinary concepts regarding the chosen topic for me to use as a quick-reference guide. Include 2-3 live links to high-quality articles, YouTube videos, or data dashboards for my background reading.\n\n';
             }
 
             text += '"';
@@ -2444,11 +2395,10 @@ Step 6: Progress Monitoring
             renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
 
+            isAppReady = true;
             forceAiPicks(); 
             initChart(); 
             showView('instructional'); 
-            
-            isAppReady = true;
         };
     </script>
 </body>
