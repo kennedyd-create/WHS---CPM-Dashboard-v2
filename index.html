@@ -928,7 +928,7 @@ Step 6: Progress Monitoring
             "Vocabulary Flash-drills": { emoji: "⚡", desc: "High-speed repetition of core tier-3 vocabulary.", load: "Builds automaticity to free up working memory later.", ex: "Context: Year 9 Languages.\nTeacher action: Holds up flashcards with Māori vocabulary. Rapid-fire pacing. Re-tests missed words immediately.\nStudent action: Choral whole-class response to build acoustic familiarity." },
             "Knowledge Dump & Compare": { emoji: "🗑️", desc: "Students dump everything they know, then cross-reference with peers.", load: "Surfaces misconceptions and highlights schema gaps.", ex: "Context: Year 11 Physical Education.\nTeacher action: Gives students 2 minutes to write everything they know about 'Energy Systems'.\nStudent action: Students write furiously, then spend 1 minute highlighting what their partner remembered that they forgot." },
             "Think-Aloud Script": { emoji: "🗣️", desc: "Unpacking cognitive processes by narrating your expert internal monologue.", load: "Manages extraneous load by making invisible expert thinking visible and sequential.", ex: "Context: Year 11 English.\nTeacher action: Reads a poem under the visualiser. Says aloud: 'When I see the word crimson here, my brain immediately links it to violence or blood, which makes me suspect the tone is shifting.'\nStudent action: Watches the annotation process and hears the metacognition." },
-            "Dual-Coding Diagram": { emoji: "✏️", desc: "Combining visual diagrams with verbal explanations.", load: "Bypasses the bottleneck of working memory by using both visual and phonological loops.", ex: "Context: Year 12 Economics.\nTeacher action: Draws a simple supply/demand graph on the whiteboard while verbally narrating the impact of a tax. Does not write dense paragraphs on the board.\nStudent action: Listens to the explanation while tracing the visual lines." },
+            "Dual-Coding Diagram": { emoji: "✏️", desc: "Combining visual diagrams with verbal explanations.", load: "Bypasses the bottleneck of working memory by using both visual loops and phonological loops.", ex: "Context: Year 12 Economics.\nTeacher action: Draws a simple supply/demand graph on the whiteboard while verbally narrating the impact of a tax. Does not write dense paragraphs on the board.\nStudent action: Listens to the explanation while tracing the visual lines." },
             "Worked Example": { emoji: "✅", desc: "Providing a flawless step-by-step demonstration of a disciplinary practice.", load: "Eliminates guessing. Novices learn faster by studying solutions rather than solving problems.", ex: "Context: Year 10 Maths.\nTeacher action: Writes the full, 4-step solution to an algebra equation on the board, explaining the logic of each step.\nStudent action: Copies the flawless model into their books for future reference." },
             "The Silent Teacher": { emoji: "🤫", desc: "Teacher performs a process in silence to prevent split-attention effect.", load: "Removes verbal overload so students focus entirely on the visual process.", ex: "Context: Year 9 Science.\nTeacher action: Assembles a bunsen burner apparatus completely in silence so students only focus on the hands.\nStudent action: Watch intently, then narrate back the steps they just witnessed." },
             "Frayer Model Definition": { emoji: "🔲", desc: "A structured graphic organizer for complex vocabulary.", load: "Forces students to analyze boundaries by creating examples and non-examples.", ex: "Context: Year 13 Social Studies.\nTeacher action: Models filling out a Frayer model for 'Democracy' (Definition, Characteristics, Examples, Non-Examples).\nStudent action: Copy the model to secure the complex concept." },
@@ -1686,9 +1686,7 @@ Step 6: Progress Monitoring
             if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
             
             if (lessonState.extra !== 'None') {
-                text += '- Differentiation: The student-facing resources must explicitly include heavily differentiated scaffolds for: ' + lessonState.extra + '.\n';
-            } else {
-                text += '- Differentiation: The student-facing resources must explicitly include scaffolds for lower-literacy learners and extensions for highly capable students.\n';
+                text += '- Differentiation Focus: The "You Do" student-facing resources must explicitly include heavily differentiated scaffolds specifically tailored for: ' + lessonState.extra + '.\n';
             }
 
             if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests.\n';
@@ -1712,27 +1710,36 @@ Step 6: Progress Monitoring
                 var seniorLevels = ["Year 11", "Year 12", "Year 13", "Level 1", "Level 2", "Level 3"];
                 for(var k=0; k<seniorLevels.length; k++) { if(lessonState.year.indexOf(seniorLevels[k]) !== -1) isSeniorLevel = true; }
 
-                text += 'PART 2: Complete Slideshow Content & Speaker Notes\n';
-                text += 'Do not just provide an outline. Provide the exact, ready-to-paste content for at least 8 slides.\n';
-                text += 'For each slide, you must provide:\n';
-                text += '- Slide Title\n';
-                
+                text += 'PART 2: Premium Slideshow Content & Speaker Notes\n';
+                text += 'You must generate a highly detailed, professional-grade slideshow presentation that matches the visual and pedagogical quality of a premium educational resource.\n';
+                text += 'Structure the slideshow to directly execute the selected CPM stages: Stage 1 (' + lessonState.s1 + '), Stage 2 (' + lessonState.s2 + '), Stage 3 (' + lessonState.s3 + '), Stage 4 (' + lessonState.s4 + '), Stage 5 (' + lessonState.s5 + ').\n\n';
+                text += 'For EVERY slide, provide the following exact structure:\n';
+                text += '--- SLIDE [Number] ---\n';
+                text += '**Slide Title:** [Engaging Title]\n';
+                text += '**Visual/Layout Instruction:** [Explicitly describe the image, primary source document, graphic organizer, or comparative table that should be placed on this slide to prevent cognitive overload. Include a suggested search term or URL].\n';
                 if (isSeniorLevel) {
-                    text += '- Slide Text (Provide the required text. While bullet points are good for readability, detailed content and extended text paragraphs are permitted and expected for complex NCEA concepts).\n';
+                    text += '**Slide Text/Content:** [Provide the exact text. Include specific historical facts, scientific data, or literary quotes. Bullet points are good, but detailed content is required for complex NCEA concepts. DO NOT just write "discuss the topic"].\n';
                 } else {
-                    text += '- Slide Text (MAXIMUM 4 bullet points, highly concise—no walls of text).\n';
+                    text += '**Slide Text/Content:** [Provide the exact text. MAXIMUM 4 bullet points, highly concise—no walls of text. Include specific facts or short primary source quotes].\n';
                 }
-                
-                text += '- Visual/Image Prompt (What specific image, map, or graph should I put on this slide? Include a suggested URL to find this visual).\n';
-                text += '- Speaker Notes (A detailed script of what I should actually say to explain the slide to the class)\n\n';
+                text += '**Interactive Element:** [Include a specific discussion prompt, "Check for Understanding" question, or analytical task for the students to complete based on the slide].\n';
+                text += '**Speaker Notes:** [A detailed, word-for-word script of what the teacher should say, including how to explicitly model the analysis of the visual/text].\n\n';
             }
             
             if (needsWorksheet) {
-                text += 'PART 3: Differentiated Student Worksheet Content\n';
-                text += 'Provide the exact text, questions, and instructions for a student worksheet. Include:\n';
-                text += '- A "Core" section for all students.\n';
-                text += '- A "Support" section (e.g., sentence starters, key vocabulary definitions) for lower-literacy learners.\n';
-                text += '- An "Extension" section (a higher-order thinking task) for fast finishers.\n\n';
+                text += 'PART 3: Structured Student Worksheet Content\n';
+                text += 'Design a comprehensive, highly-structured student worksheet. It must look like a professionally published resource, moving students from guided analysis to independent synthesis. Use Markdown tables and clear headings to format the layout.\n\n';
+                text += 'Worksheet Structure Must Include:\n';
+                text += '1. Header & Advance Organizer: Include Name, Date, Title, a clear Learning Objective, and a timeline or brief context summary bridging previous knowledge to today\'s topic.\n';
+                text += '2. Stage 2 (I Do) - Teacher Modeling Block: Based on the "' + lessonState.s2 + '" strategy. Provide the EXACT primary source excerpt, data set, or complex text to be used, placed alongside a "Modelled Analysis" box showing the teacher\'s step-by-step thought process.\n';
+                text += '3. Stage 3 (We Do) - Collaborative Task: Based on the "' + lessonState.s3 + '" strategy. Provide a specific task framework, such as a comparative analysis table with prompt questions, or a structured peer-discussion protocol.\n';
+                text += '4. Stage 4 (You Do) - Independent Synthesis: Based on the "' + lessonState.s4 + '" strategy. Provide a rigorous independent task utilizing the CER (Claim, Evidence, Reasoning) framework to structure student output.\n';
+                text += '5. Stage 5 (Review) - Metacognitive Check: Based on the "' + lessonState.s5 + '" strategy. Include a self-assessment rating scale (1-5) and a final challenge/hypothesis question.\n\n';
+                
+                if (lessonState.extra !== 'None') {
+                    text += 'PART 3b: Extra Differentiated Resource\n';
+                    text += 'You MUST explicitly provide a customized, heavily modified version of the Stage 4 "You Do" independent task specifically tailored for: ' + lessonState.extra + '.\n\n';
+                }
             }
             
             if (needsContent) {
