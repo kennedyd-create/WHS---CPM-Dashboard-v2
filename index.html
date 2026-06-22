@@ -942,34 +942,301 @@ Step 6: Progress Monitoring
             5: { title: "Stage 5: Review", intent: "Closing the loop. Signalling the transition. Consolidating learning and providing feedback." }
         };
 
+        // Complete 70+ Task Database
         var cpmTaskDB = {
-            "Retrieval Do-Now Quiz": { emoji: "🧠", desc: "Low-stakes 3-5 question quiz activating prior knowledge from the last lesson.", load: "Reduces intrinsic load by moving prerequisite knowledge into working memory.", ex: "Context: Year 10 Science.\nTeacher action: Displays 3 short questions on the board as students enter. Questions cover terms from yesterday (e.g. 'Define Osmosis').\nStudent action: Complete in silence for 3 minutes before new content begins." },
-            "Episodic Hook / Pūrākau": { emoji: "📖", desc: "Piggybacks new information onto episodic memory (stories).", load: "Requires almost zero working memory to process narrative structures.", ex: "Context: Year 9 History.\nTeacher action: Starts the lesson by telling a dramatic 2-minute story about the voyage of Kupe, setting the emotional tone before unpacking the factual dates on the timeline.\nStudent action: Actively listens, engaging schema before the formal 'I Do' phase." },
-            "Concept Mapping": { emoji: "🗺️", desc: "Visualising relationships between prior knowledge and new terms.", load: "Reduces extraneous load by spatially organising abstract connections.", ex: "Context: Year 12 Geography.\nTeacher action: Asks students to draw a map connecting 'Climate Change', 'Sea Level Rise', and 'Coastal Erosion'.\nStudent action: Students draw arrows and write linking phrases to demonstrate relational knowledge." },
-            "Vocabulary Flash-drills": { emoji: "⚡", desc: "High-speed repetition of core tier-3 vocabulary.", load: "Builds automaticity to free up working memory later.", ex: "Context: Year 9 Languages.\nTeacher action: Holds up flashcards with Māori vocabulary. Rapid-fire pacing. Re-tests missed words immediately.\nStudent action: Choral whole-class response to build acoustic familiarity." },
-            "Knowledge Dump & Compare": { emoji: "🗑️", desc: "Students dump everything they know, then cross-reference with peers.", load: "Surfaces misconceptions and highlights schema gaps.", ex: "Context: Year 11 Physical Education.\nTeacher action: Gives students 2 minutes to write everything they know about 'Energy Systems'.\nStudent action: Students write furiously, then spend 1 minute highlighting what their partner remembered that they forgot." },
-            "Think-Aloud Script": { emoji: "🗣️", desc: "Unpacking cognitive processes by narrating your expert internal monologue.", load: "Manages extraneous load by making invisible expert thinking visible and sequential.", ex: "Context: Year 11 English.\nTeacher action: Reads a poem under the visualiser. Says aloud: 'When I see the word crimson here, my brain immediately links it to violence or blood, which makes me suspect the tone is shifting.'\nStudent action: Watches the annotation process and hears the metacognition." },
-            "Dual-Coding Diagram": { emoji: "✏️", desc: "Combining visual diagrams with verbal explanations.", load: "Bypasses the bottleneck of working memory by using both visual and phonological loops.", ex: "Context: Year 12 Economics.\nTeacher action: Draws a simple supply/demand graph on the whiteboard while verbally narrating the impact of a tax. Does not write dense paragraphs on the board.\nStudent action: Listens to the explanation while tracing the visual lines." },
-            "Worked Example": { emoji: "✅", desc: "Providing a flawless step-by-step demonstration of a disciplinary practice.", load: "Eliminates guessing. Novices learn faster by studying solutions rather than solving problems.", ex: "Context: Year 10 Maths.\nTeacher action: Writes the full, 4-step solution to an algebra equation on the board, explaining the logic of each step.\nStudent action: Copies the flawless model into their books for future reference." },
-            "The Silent Teacher": { emoji: "🤫", desc: "Teacher performs a process in silence to prevent split-attention effect.", load: "Removes verbal overload so students focus entirely on the visual process.", ex: "Context: Year 9 Science.\nTeacher action: Assembles a bunsen burner apparatus completely in silence so students only focus on the hands.\nStudent action: Watch intently, then narrate back the steps they just witnessed." },
-            "Frayer Model Definition": { emoji: "🔲", desc: "A structured graphic organizer for complex vocabulary.", load: "Forces students to analyze boundaries by creating examples and non-examples.", ex: "Context: Year 13 Social Studies.\nTeacher action: Models filling out a Frayer model for 'Democracy' (Definition, Characteristics, Examples, Non-Examples).\nStudent action: Copy the model to secure the complex concept." },
-            "Mini-Whiteboards": { emoji: "📝", desc: "Students draft quick answers, allowing you to identify misconceptions instantly.", load: "Forces high participation ratio; catches encoding errors before they become permanent.", ex: "Context: Year 9 Languages.\nTeacher action: 'Translate 'The dog is big'. Hold up your boards in 3, 2, 1.' Teacher scans 30 boards instantly to see who forgot the adjective agreement.\nStudent action: Writes answer, holds it up on command." },
-            "Problem Pairs": { emoji: "👯", desc: "Teacher models one problem, students immediately try an identical one.", load: "High scaffolding prevents novice learners from guessing and practicing errors.", ex: "Context: Year 11 Physics.\nTeacher action: Solves a velocity calculation on the left side of the board (The 'I Do').\nStudent action: Immediately solves an identical velocity calculation on their whiteboard (The 'We Do'), using the left side as a direct guide." },
-            "Jigsaw Text Decoding": { emoji: "🧩", desc: "Students become experts on a chunk of text and teach peers.", load: "Divides massive intrinsic load of complex texts among multiple learners.", ex: "Context: Year 13 Biology.\nTeacher action: Divides a dense academic paper on genetics into 4 sections, assigning one section to each group member.\nStudent action: Students read their specific section, master it, and then verbally summarise it for the rest of their group." },
-            "Choral Response": { emoji: "🗣️", desc: "Whole class answers simultaneously on a cue.", load: "Lowers affective filter (fear of being wrong) while maintaining 100% participation ratio.", ex: "Context: Year 9 Maths.\nTeacher action: 'Class, what is 8 times 7? Think... (pause)... 3, 2, 1!'\nStudent action: Entire class shouts '56' at the same time." },
-            "Say It Again, Better": { emoji: "🔄", desc: "Guiding students to upgrade casual speech into academic language.", load: "Forces the translation of casual thought into disciplinary schema.", ex: "Context: Year 10 History.\nTeacher action: Student says 'They were mad about the taxes.' Teacher replies: 'True. Can you say it again using the word grievance?'\nStudent action: Student rephrases: 'They had a grievance regarding the taxation policies.'" },
-            "Tiered Tasks": { emoji: "🪜", desc: "Differentiated assignments moving progressively from concrete facts to abstract application.", load: "Matches intrinsic load to the learner's current schema level.", ex: "Context: Year 10 Social Studies.\nTeacher action: Distributes a 3-part worksheet. Part A: Definitions. Part B: Linking concepts. Part C: Synthesising an argument.\nStudent action: All students start at A. Only those with high fluency reach C." },
-            "Sentence Scaffolds": { emoji: "🏗️", desc: "Providing academic starters to help students use disciplinary language independently.", load: "Removes the extraneous load of 'how to start', letting them focus on 'what to say'.", ex: "Context: Year 11 History.\nTeacher action: Provides the writing frame: 'Although Source A argues [blank], Source B is more reliable because [blank].'\nStudent action: Completes the sentence using their own historical knowledge." },
-            "Hexagonal Mapping": { emoji: "🛑", desc: "Students physically connect conceptual tiles to build relational understanding.", load: "Forces learners to move from isolated 'knowing' to complex 'connecting'.", ex: "Context: Year 13 Biology.\nTeacher action: Gives groups 15 hexagons containing key terms. Tells them to arrange them so touching sides have a logical connection.\nStudent action: Debates with peers about why certain terms must touch, justifying their schema." },
-            "Concept Synthesis Task": { emoji: "🔬", desc: "Applying multiple isolated concepts to solve a novel problem.", load: "High intrinsic load; reserved for students who have achieved automaticity.", ex: "Context: Year 12 Chemistry.\nTeacher action: Provides a real-world scenario combining stoichiometry and gas laws.\nStudent action: Students must identify which formulas to use and combine them to find the final yield." },
-            "Information Transformation Task": { emoji: "🔄", desc: "Taking knowledge and changing its format (e.g. text to diagram).", load: "Demands deep encoding and prevents copy-pasting.", ex: "Context: Year 11 English.\nTeacher action: Provides a dense paragraph describing a character's journey.\nStudent action: Must draw a timeline map of the journey without using full sentences." },
-            "Exit Ticket": { emoji: "🚪", desc: "Short, specific tasks linked directly to the Success Criteria, completed before leaving.", load: "Forces consolidation of the day's schema before the cognitive shift of changing periods.", ex: "Context: Year 9 Science.\nTeacher action: Hands out a slip of paper 5 minutes before the bell: 'Write one sentence summarizing how osmosis differs from diffusion.'\nStudent action: Completes ticket and hands it to the teacher on the way out." },
-            "SOLO Taxonomy Check": { emoji: "📊", desc: "Categorising the depth of understanding from unistructural to relational.", load: "Provides metacognitive feedback, helping students gauge their own cognitive complexity.", ex: "Context: Year 12 Geography.\nTeacher action: Displays the SOLO levels. Asks: 'Is your essay paragraph currently unistructural (one fact) or relational (linking causes to impacts)?'\nStudent action: Self-assesses their work against the framework and highlights missing links." },
-            "Distractor Analysis": { emoji: "🕵️", desc: "Explaining why wrong answers are wrong.", load: "Deepens understanding by analyzing boundaries and misconceptions.", ex: "Context: Year 10 Economics.\nTeacher action: Gives a multiple-choice question where B is correct. Asks: 'Why did the author include option C? What mistake are they trying to catch you on?'\nStudent action: Explains the logic of the incorrect answers." },
-            "Traffic Light Self-Assessment": { emoji: "🚥", desc: "Quick visual check of student confidence.", load: "Low cognitive demand, high affective feedback.", ex: "Context: Year 9 Maths.\nTeacher action: Asks students to mark their worksheet Red, Amber, or Green based on confidence.\nStudent action: Colors the top of the page, allowing teacher to scan the room quickly." },
-            "60-Second Summary": { emoji: "⏱️", desc: "Partner task to summarise the entire lesson in 60 seconds.", load: "Forces rapid retrieval and prioritization of main ideas.", ex: "Context: Year 11 English.\nTeacher action: Sets a timer for exactly 60 seconds. 'Person A, summarize the key themes of chapter 3. Go!'\nStudent action: Speaks continuously, identifying the core knowledge under time pressure." },
-            "Writing Scaffolds": { emoji: "📝", desc: "Providing structural guides for written output.", load: "Alleviates the working memory burden of formatting.", ex: "Context: Year 10 English.\nTeacher action: Provides a PEEL (Point, Evidence, Explain, Link) graphic organizer.\nStudent action: Fills in the boxes before writing." },
-            "Past Paper Simulation": { emoji: "⏱️", desc: "Practicing under exam conditions.", load: "Extremely high intrinsic load.", ex: "Context: Year 13 Physics.\nTeacher action: Sets 45-minute timer. Distributes previously unseen exam section. Enforces strict silence.\nStudent action: Applies knowledge independently to complex problems without scaffolding." }
+            // STAGE 1: CONNECT
+            "Retrieval Do-Now Quiz": { 
+                emoji: "🧠", desc: "Low-stakes 3-5 question quiz activating prior knowledge from the last lesson.", load: "Reduces intrinsic load by moving prerequisite knowledge into working memory.", 
+                ex: "Context: Year 10 Science (Biology - Cellular Transport).\n\nTeacher action: Displays 3 specific questions on the board as students enter: 1. Define 'semi-permeable'. 2. Which way does water move in osmosis? 3. Recall the potato experiment result from yesterday.\n\nStudent action: Students complete the questions in silence in their workbooks for the first 3 minutes of class." 
+            },
+            "Concept Mapping": { 
+                emoji: "🗺️", desc: "Visualising relationships between prior knowledge and new terms.", load: "Reduces extraneous load by spatially organising abstract connections.", 
+                ex: "Context: Year 12 Geography (Tongariro Volcanic Centre).\n\nTeacher action: Writes 'Andesitic Eruption' in the center of the board. Asks students to draw a map connecting terms: 'Magma Chamber', 'Subduction Zone', and 'Lahar'.\n\nStudent action: Students draw arrows and write linking verbs on the arrows (e.g., 'results in') to demonstrate relational knowledge." 
+            },
+            "Vocabulary Flash-drills": { 
+                emoji: "⚡", desc: "High-speed repetition of core tier-3 vocabulary.", load: "Builds automaticity to free up working memory later.", 
+                ex: "Context: Year 9 Te Reo Māori (Te Tinana - The Body).\n\nTeacher action: Holds up A4 flashcards with Māori vocabulary (Māhunga, Pakihiwi, Puku). Rapid-fire 1 second per card. Re-tests missed words immediately.\n\nStudent action: Choral whole-class verbal response to build acoustic familiarity." 
+            },
+            "Image/Diagram Prompt": { 
+                emoji: "🖼️", desc: "Using a striking visual to hook attention and probe existing schema.", load: "Bypasses heavy text decoding to instantly activate visual schema.", 
+                ex: "Context: Year 11 Geography (Extreme Natural Events).\n\nTeacher action: Displays a massive, high-res photo of the 2011 Christchurch earthquake liquefaction. Asks: 'What physical process caused the soil to look like liquid here?'\n\nStudent action: Students observe and jot down their hypotheses before the formal lesson begins." 
+            },
+            "Previous Lesson Brain Dump": { 
+                emoji: "🗑️", desc: "Unstructured recall of everything remembered from the last lesson.", load: "High retrieval effort that strengthens neural pathways.", 
+                ex: "Context: Year 10 Science (Genetics).\n\nTeacher action: 'You have exactly 2 minutes. Write down everything you remember about DNA structure, alleles, and Punnett squares from yesterday. Go.'\n\nStudent action: Students write furiously without checking notes, surfacing what actually encoded into long-term memory." 
+            },
+            "Pick a Stick (Randomised Call)": { 
+                emoji: "🥢", desc: "Using a randomised system to call on students for review questions.", load: "Keeps 100% of the class cognitively engaged due to unpredictability.", 
+                ex: "Context: Year 9 English (Language Features).\n\nTeacher action: Asks 'What is the effect of the metaphor in line 3?' Pauses for 3 seconds so everyone thinks, then pulls a popsicle stick with 'Sarah' on it.\n\nStudent action: Sarah answers. The rest of the class mentally checks their own prepared answer against hers." 
+            },
+            "Track With Me": { 
+                emoji: "👀", desc: "Directing student visual attention to a specific text or diagram on entry.", load: "Eliminates split-attention effect before starting the lesson.", 
+                ex: "Context: Year 7 Maths (Fractions).\n\nTeacher action: 'Finger on the numerator of the fraction on page 12. Eyes on me when you are there.'\n\nStudent action: All students physically point to the top number, physically securing their attention." 
+            },
+            "Goal Setting": { 
+                emoji: "🎯", desc: "Students explicitly state what they aim to master based on the success criteria.", load: "Increases metacognitive awareness and motivation.", 
+                ex: "Context: Year 12 PE (Skill Acquisition).\n\nTeacher action: Displays the 3 learning outcomes for the tennis serve. 'Pick the one you struggled with most yesterday and write it at the top of your page.'\n\nStudent action: Students identify their weakness (e.g., 'Ball toss height') and set it as their focus." 
+            },
+            "Odd One Out Concept Check": { 
+                emoji: "❌", desc: "Providing a list where one item doesn't belong to test categorical limits.", load: "Forces high-level analytical comparison.", 
+                ex: "Context: Year 10 History (Causes of WWII).\n\nTeacher action: Writes on board: 'Treaty of Versailles, League of Nations, Pearl Harbor, Appeasement. Which is the odd one out?'\n\nStudent action: Students identify Pearl Harbor because it happened during the war, while the others were long-term causes." 
+            },
+            "Think-Puzzle-Explore": { 
+                emoji: "🧩", desc: "A routine that sets up inquiry by identifying what is known and unknown.", load: "Primes working memory by establishing a curiosity gap.", 
+                ex: "Context: Year 8 Social Studies (Globalisation).\n\nTeacher action: Shows a label on a t-shirt ('Made in Bangladesh'). Asks: 'What do you think you know about this? What puzzles you? How can we explore it?'\n\nStudent action: Students articulate their assumptions about sweatshops and identify questions they need answered." 
+            },
+            "Syllabus Link-Up": { 
+                emoji: "🔗", desc: "Explicitly showing students where today's lesson fits into the wider NCEA syllabus.", load: "Provides a 'map' for schema organization.", 
+                ex: "Context: Year 13 Economics (Market Failure).\n\nTeacher action: Highlights a node on the NZQA standard matrix on the wall. 'We finished Negative Externalities yesterday. Today we move to Public Goods.'\n\nStudent action: Students visually track their progression through the unit." 
+            },
+            "Episodic Hook / Pūrākau": { 
+                emoji: "📖", desc: "Piggybacks new information onto episodic memory (stories or pūrākau).", load: "Requires almost zero working memory to process narrative structures.", 
+                ex: "Context: Year 9 History (Aotearoa NZ History).\n\nTeacher action: Dims the lights and tells the dramatic story of Kupe chasing the giant wheke (octopus) across Te Moana-nui-a-Kiwa, focusing on the sensory details of navigation.\n\nStudent action: Actively listens, engaging their episodic memory before unpacking the hard facts of early migration." 
+            },
+            "Knowledge Dump & Compare": { 
+                emoji: "🗑️", desc: "Students dump everything they know, then cross-reference with peers.", load: "Surfaces misconceptions and highlights schema gaps.", 
+                ex: "Context: Year 11 PE (Biomechanics).\n\nTeacher action: 'You have 2 minutes. Write down everything about first, second, and third-class levers. Go.' After 2 mins: 'Switch pens. Spend 1 min adding what your partner remembered.'\n\nStudent action: Students cross-pollinate knowledge, adding missing components in a different color ink." 
+            },
+            "Visual/Audio Prompt Analysis": { 
+                emoji: "🎨", desc: "Using non-text media to spark analytical thinking.", load: "Engages different cognitive channels to support text-heavy subjects.", 
+                ex: "Context: Year 11 Arts (Visual Arts - Painting).\n\nTeacher action: Plays a chaotic piece of classical music and shows a Picasso cubist painting simultaneously. 'Write three adjectives that connect the sound to the image.'\n\nStudent action: Students synthesize sensory inputs to understand abstract expressionism." 
+            },
+            "Karakia / Whakataukī Recall": { 
+                emoji: "🌿", desc: "Reciting a traditional incantation or proverb to settle the room and set the kaupapa.", load: "Routine establishes psychological safety and cultural grounding.", 
+                ex: "Context: Year 9 Te Reo Māori.\n\nTeacher action: Teacher leads the class in 'Karakia mō te timatanga o te karaehe' (Opening prayer).\n\nStudent action: The class stands and recites the karakia together, transitioning mentally from the playground to the learning environment." 
+            },
+            "Concept Mapping (Whakapapa)": { 
+                emoji: "🌳", desc: "Using the framework of genealogy to map the origins of concepts.", load: "Adapts a culturally familiar structure to organize complex abstract ideas.", 
+                ex: "Context: Year 10 Te Reo Māori (Atua Māori).\n\nTeacher action: Asks students to draw the whakapapa (lineage) from Ranginui and Papatūānuku down to Tāne Mahuta and Tangaroa.\n\nStudent action: Students map the familial relationships to understand how Māori view the connection between forest and sea." 
+            },
+            "Waiata/Kīwaha Practice": { 
+                emoji: "🎶", desc: "Singing or practicing idioms to encode pronunciation and vocab.", load: "Uses rhythm and melody to bypass rote memorization struggles.", 
+                ex: "Context: Year 7 Te Reo Māori.\n\nTeacher action: Leads the class in a waiata (song) about the days of the week (Rāhina, Rātū...).\n\nStudent action: Students sing along, encoding the sequence and vowel sounds effortlessly." 
+            },
+
+            // STAGE 2: I DO
+            "Think-Aloud Script": { 
+                emoji: "🗣️", desc: "Unpacking cognitive processes by narrating your expert internal monologue.", load: "Manages extraneous load by making invisible expert thinking visible and sequential.", 
+                ex: "Context: Year 11 English (Poetry Analysis - 'Dulce et Decorum Est').\n\nTeacher action: Under the document camera. 'When I read the line \"guttering, choking, drowning\", I notice Wilfred Owen is using present participle verbs. My brain immediately pictures continuous suffering, so I will write \"ongoing agony\" in the margin.'\n\nStudent action: Watches the physical annotation process while hearing the metacognitive translation." 
+            },
+            "Dual-Coding Diagram": { 
+                emoji: "✏️", desc: "Combining visual diagrams with verbal explanations simultaneously.", load: "Bypasses the bottleneck of working memory by using both visual and phonological loops.", 
+                ex: "Context: Year 12 Economics (Market Failure - Negative Externalities).\n\nTeacher action: Draws the MSC and MPC curves step-by-step. Verbally narrates: 'Imagine a factory polluting the Waikato River...' Does NOT write the paragraph on the board, only the labels.\n\nStudent action: Listens to the real-world explanation while tracing the visual divergence of the two lines." 
+            },
+            "Worked Example": { 
+                emoji: "✅", desc: "Providing a flawless step-by-step demonstration of a disciplinary practice.", load: "Eliminates guessing. Novices learn faster by studying solutions rather than solving problems.", 
+                ex: "Context: Year 10 Maths (Trigonometry - SOH CAH TOA).\n\nTeacher action: Writes the full, 4-step algebraic solution to finding a flagpole's height on the board, explaining the logic out loud at each step without skipping any math.\n\nStudent action: Copies the flawless model exactly as formatted into their books to serve as a 'cheat sheet'." 
+            },
+            "Frayer Model Definition": { 
+                emoji: "🔲", desc: "A structured graphic organizer for complex vocabulary.", load: "Forces students to analyze boundaries by creating examples and non-examples.", 
+                ex: "Context: Year 13 Social Studies (Ideologies).\n\nTeacher action: Draws a 4-quadrant Frayer Model on the board for 'Fascism'. Fills out: Definition, Characteristics, Examples (Mussolini's Italy), and Non-Examples (Direct Democracy).\n\nStudent action: Copy the model, solidifying the complex boundaries of the political concept." 
+            },
+            "Common Misconception Highlight": { 
+                emoji: "⚠️", desc: "Explicitly teaching the wrong answer before showing the right one.", load: "Pre-empts encoding errors by setting up warning flags in the schema.", 
+                ex: "Context: Year 11 Physics (Mechanics - Newton's 3rd Law).\n\nTeacher action: 'A lot of students think that a heavy truck hitting a small car puts more force on the car. That is WRONG. The force is exactly equal. The acceleration is what is different.'\n\nStudent action: Notes down the specific 'trap' to avoid in the exam." 
+            },
+            "Live Drawing / Construction": { 
+                emoji: "📐", desc: "The teacher physically constructs a model or drawing in real-time.", load: "Paces the flow of information to match the speed of human drawing.", 
+                ex: "Context: Year 10 Technology (Design/CAD).\n\nTeacher action: Opens SketchUp on the projector. Slowly models extruding a 2D shape into 3D, stating which keyboard shortcuts they are pressing (e.g., 'I press P for push/pull...').\n\nStudent action: Watches the screen, tracking the specific tool sequence." 
+            },
+            "Deliberate Error Modelling": { 
+                emoji: "🛑", desc: "The teacher makes a planned mistake and asks the class to spot it.", load: "Requires high attention and forces students to apply the rule to catch the expert.", 
+                ex: "Context: Year 12 Maths (Calculus).\n\nTeacher action: Differentiates an equation on the board but 'forgets' to apply the chain rule. 'Okay, I'm done. Check my working.'\n\nStudent action: Students scan the board, identify the missing chain rule step, and correct the teacher." 
+            },
+            "Advance Organiser Frontloading": { 
+                emoji: "🗂️", desc: "Giving students the structural 'empty folders' before giving them the information.", load: "Provides a cognitive architecture to slot incoming facts into.", 
+                ex: "Context: Year 13 English (Shakespeare's Othello).\n\nTeacher action: Before reading Act 3, gives students a table with three columns: 'Jealousy', 'Race', 'Reputation'. 'As we read, any quote I highlight must go into one of these columns.'\n\nStudent action: Has a pre-built framework to sort the complex language into themes." 
+            },
+            "Physical Demonstration": { 
+                emoji: "🏃", desc: "Using the body or physical objects in the room to represent abstract concepts.", load: "Converts abstract logic into tangible, spatial memory.", 
+                ex: "Context: Year 9 Science (States of Matter).\n\nTeacher action: Makes 10 students stand shoulder-to-shoulder holding hands to represent a solid. 'Now, we add heat energy!' The students drop hands and bump into each other (liquid).\n\nStudent action: Physically acts out or watches the kinetic energy simulation." 
+            },
+            "Non-Examples Contrast": { 
+                emoji: "🌓", desc: "Defining a concept by explicitly showing what it is NOT.", load: "Sharpens the boundaries of a definition.", 
+                ex: "Context: Year 11 Media Studies (Film Genres).\n\nTeacher action: Explains Film Noir lighting. Then shows a brightly lit, high-key shot from a Rom-Com. 'This is a non-example. Notice the lack of shadows. Noir requires Chiaroscuro.'\n\nStudent action: Analyzes the contrast to better understand the target concept." 
+            },
+            "Metaphor/Analogy Mapping": { 
+                emoji: "🌉", desc: "Linking a complex new idea to a simple, familiar idea.", load: "Uses existing strong neural pathways to anchor weak new pathways.", 
+                ex: "Context: Year 10 Science (Cell Biology).\n\nTeacher action: 'The mitochondria is like the Huntly Power Station. The nucleus is the Beehive in Wellington where the laws are kept.'\n\nStudent action: Maps the functions of cell organelles onto real-world NZ infrastructure." 
+            },
+            "The Silent Teacher": { 
+                emoji: "🤫", desc: "Teacher performs a process in silence to prevent split-attention effect.", load: "Removes verbal overload so students focus entirely on the visual process.", 
+                ex: "Context: Year 9 Technology (Hard Materials).\n\nTeacher action: Secures timber in a clamp and uses a coping saw to cut a curve. Does this completely in silence, exaggerating hand placement.\n\nStudent action: Watch intently without the distraction of processing speech." 
+            },
+            "Disciplinary Text Decoding": { 
+                emoji: "📜", desc: "Teacher reads a complex text aloud, stopping to define Tier 3 vocabulary.", load: "Scaffolds reading comprehension for dense academic text.", 
+                ex: "Context: Year 12 History (Primary Sources).\n\nTeacher action: Reads a 1918 treaty document. Stops at the word 'reparations'. 'Class, reparations means paying for damages. Let's write that above the word.'\n\nStudent action: Annotates the text alongside the teacher." 
+            },
+            "Pronunciation Modelling": { 
+                emoji: "👄", desc: "Teacher exaggerates the mouth shapes and vowel sounds for new words.", load: "Isolates the phonological loop for accurate encoding.", 
+                ex: "Context: Year 11 Te Reo Māori (Whaikōrero).\n\nTeacher action: Points to the macron in 'Māori'. Holds the 'a' sound for 2 seconds. 'Watch my mouth. It is a long, flat sound, not \"mow-ree\".'\n\nStudent action: Observes the physical mechanics of the pronunciation." 
+            },
+
+            // STAGE 3: WE DO
+            "Mini-Whiteboards": { 
+                emoji: "📝", desc: "Students draft quick answers, allowing you to identify misconceptions instantly.", load: "Forces high participation ratio; catches encoding errors before they become permanent.", 
+                ex: "Context: Year 10 Languages (French).\n\nTeacher action: 'Translate: \"We play football\". Write it on your boards... 3, 2, 1, show me!' Instantly scans 30 boards, notices 4 students forgot the 's' on 'jouons'.\n\nStudent action: Holds up board, receives immediate corrective feedback." 
+            },
+            "Think-Pair-Share": { 
+                emoji: "👯", desc: "Think alone, discuss with partner, share with class.", load: "Lowers affective filter by letting students test answers on a peer first.", 
+                ex: "Context: Year 9 Social Studies (Human Rights).\n\nTeacher action: 'Why is the right to education important? Think for 30 seconds. Now turn to your partner and share. You have 1 minute.'\n\nStudent action: Rehearses their argument in a low-stakes pair before the teacher calls on them." 
+            },
+            "Choral Response": { 
+                emoji: "🗣️", desc: "Whole class answers simultaneously on a hand drop cue.", load: "Maintains 100% participation and builds acoustic memory.", 
+                ex: "Context: Year 9 Maths (Integers).\n\nTeacher action: 'A negative times a negative equals a...' Holds hand up, pauses for 2 seconds, drops hand.\n\nStudent action: Entire class shouts 'POSITIVE!' simultaneously." 
+            },
+            "Guided Error Analysis": { 
+                emoji: "🔍", desc: "Teacher provides an anonymous student answer containing a flaw. Class dissects it.", load: "Builds evaluative skills without the shame of personal failure.", 
+                ex: "Context: Year 11 Accounting (Financial Statements).\n\nTeacher action: Shows an Income Statement on the board where 'Drawings' is accidentally listed as an expense. 'Talk to your partner. Why won't this balance?'\n\nStudent action: Collaboratively hunt for the accounting error." 
+            },
+            "A/B Peer Teaching": { 
+                emoji: "🔄", desc: "Partner A explains step 1, Partner B explains step 2.", load: "Forces verbalization of process, which cements understanding.", 
+                ex: "Context: Year 10 Geography (Sustainability).\n\nTeacher action: 'Partner A, explain the economic impact of the dairy farm. Partner B, explain the environmental impact. Go.'\n\nStudent action: Students take turns acting as the 'expert' for their designated half of the content." 
+            },
+            "Backward Fading Scaffolding": { 
+                emoji: "🪜", desc: "Providing full solutions, then gradually removing the final steps.", load: "Gradually increases intrinsic load as automaticity builds.", 
+                ex: "Context: Year 12 Chemistry (Redox Reactions).\n\nTeacher action: Problem 1: Teacher does steps 1-4. Problem 2: Teacher does steps 1-3, class does 4. Problem 3: Teacher does 1-2, class does 3-4.\n\nStudent action: Takes on more cognitive responsibility with each subsequent practice problem." 
+            },
+            "Problem Pairs": { 
+                emoji: "⚖️", desc: "Teacher models one problem, students immediately try an identical one.", load: "High scaffolding prevents novice learners from guessing.", 
+                ex: "Context: Year 11 Physics (Kinematics).\n\nTeacher action: Solves a car acceleration calculation on the left side of the board. Writes a sprinter acceleration calculation on the right.\n\nStudent action: Uses the exact structural layout of the left-hand example to solve the right-hand problem on their boards." 
+            },
+            "Reverse Engineering": { 
+                emoji: "⚙️", desc: "Giving students an Excellence exemplar and asking them to deconstruct why it got that grade.", load: "Moves focus from 'generating content' to 'understanding criteria'.", 
+                ex: "Context: Year 11 English (Formal Writing).\n\nTeacher action: Hands out an Excellence paragraph. 'Highlight the topic sentence in yellow. Underline the director's purpose in blue.'\n\nStudent action: Maps the structural anatomy of a perfect answer before attempting their own." 
+            },
+            "Cold Call Follow-On": { 
+                emoji: "🧊", desc: "Asking one student a question, then asking another to evaluate or add to their answer.", load: "Prevents students from 'switching off' after someone else answers.", 
+                ex: "Context: Year 12 Biology (Gene Expression).\n\nTeacher action: 'James, what does mRNA do?' (James answers). 'Sarah, do you agree with James, and what does the tRNA do next?'\n\nStudent action: Must listen to peers carefully, as they may be called upon to build on their answers." 
+            },
+            "Guided Calculation": { 
+                emoji: "🧮", desc: "Teacher and class do a complex math problem together, pausing at every single line.", load: "Prevents students from rushing ahead and practicing errors.", 
+                ex: "Context: Year 13 Physics (AC Circuits).\n\nTeacher action: 'Okay, everyone write down the impedance formula. Stop. Hold up your boards. Good. Now substitute the Reactance value. Stop.'\n\nStudent action: Executes complex math one micro-step at a time in lockstep with the teacher." 
+            },
+            "Categorisation Task": { 
+                emoji: "🗃️", desc: "Sorting a messy list of items into designated groups.", load: "Forces pattern recognition and relational thinking.", 
+                ex: "Context: Year 9 Science (Taxonomy).\n\nTeacher action: Provides a list of 20 animals. 'With your partner, group these into Mammals, Reptiles, Amphibians, and Birds based on the rules we just learned.'\n\nStudent action: Debates the boundaries of the categories (e.g., 'Is a platypus a reptile?')." 
+            },
+            "Jigsaw Text Decoding": { 
+                emoji: "🧩", desc: "Students become experts on a chunk of text and teach peers.", load: "Divides massive intrinsic load of complex texts among multiple learners.", 
+                ex: "Context: Year 13 History (Russian Revolution).\n\nTeacher action: Divides a dense reading into 4 sections (Economy, Tsar, War, Bolsheviks). Assigns one to each group member.\n\nStudent action: Reads their section, highlights key facts, and verbally summarises it to their group to complete a master table." 
+            },
+            "Say It Again, Better": { 
+                emoji: "🗣️", desc: "Guiding students to upgrade casual speech into academic language.", load: "Forces the translation of casual thought into disciplinary schema.", 
+                ex: "Context: Year 10 History (Civil Rights).\n\nTeacher action: Student says, 'Rosa Parks was mad, so she sat at the front.' Teacher: 'Correct, but let's sound like historians. Say it again using \"segregation\" and \"boycott\".'\n\nStudent action: Rephrases: 'Rosa Parks protested segregation, sparking the boycott.'" 
+            },
+            "Hexagonal Mapping": { 
+                emoji: "🛑", desc: "Students physically connect conceptual tiles to build relational understanding.", load: "Forces learners to move from isolated 'knowing' to complex 'connecting'.", 
+                ex: "Context: Year 13 History (Tudor England).\n\nTeacher action: Gives groups 15 hexagons with key terms. 'Arrange them so touching sides have a historical connection.'\n\nStudent action: Debates with peers about why 'Act of Supremacy' must touch 'Henry VIII'." 
+            },
+
+            // STAGE 4: YOU DO
+            "Tiered Tasks": { 
+                emoji: "🪜", desc: "Differentiated assignments moving progressively from concrete facts to abstract application.", load: "Matches intrinsic load to the learner's current schema level.", 
+                ex: "Context: Year 10 Social Sciences (Human Rights).\n\nTeacher action: Distributes worksheet. Part A: Define rights. Part B: Compare two historical breaches. Part C: Evaluate UN enforcement power.\n\nStudent action: All start at Part A for foundational knowledge. High fluency students reach Part C." 
+            },
+            "Independent Scaffolds": { 
+                emoji: "🏗️", desc: "Providing graphic organizers or sentence starters that students use silently.", load: "Reduces extraneous load so working memory can focus on content generation.", 
+                ex: "Context: Year 11 English (Creative Writing).\n\nTeacher action: Hands out a 'Sensory Grid' (See, Hear, Smell, Touch) for students to fill out with bullet points before writing their dystopian paragraph.\n\nStudent action: Separates the task of 'generating ideas' from 'structuring sentences'." 
+            },
+            "Peer Critique": { 
+                emoji: "📝", desc: "Students evaluate a peer's work using a strict rubric.", load: "Deepens understanding of success criteria.", 
+                ex: "Context: Year 12 Arts (Photography).\n\nTeacher action: 'Swap portfolios. Use the NCEA Level 2 rubric to grade their use of Depth of Field. Give one positive and one specific next step.'\n\nStudent action: Reads the rubric deeply to apply it to a real piece of work." 
+            },
+            "Spaced Retrieval Worksheet": { 
+                emoji: "⏳", desc: "A worksheet containing mostly current topic questions, but 20% questions from weeks ago.", load: "Interrupts the forgetting curve.", 
+                ex: "Context: Year 10 Maths (Algebra).\n\nTeacher action: Hands out 10 equations to solve. Questions 1-8 are expanding brackets (today). Questions 9-10 are fractions (taught 3 weeks ago).\n\nStudent action: Practices current skill, then is forced to retrieve older schema." 
+            },
+            "Concept Synthesis Task": { 
+                emoji: "🔬", desc: "Applying multiple isolated concepts to solve a novel problem.", load: "High intrinsic load; reserved for students who have achieved automaticity.", 
+                ex: "Context: Year 12 Chemistry (Thermochemistry).\n\nTeacher action: Provides a scenario requiring students to combine Hess's Law with specific heat capacity (q=mcΔT).\n\nStudent action: Independently identifies which formulas to use, extracts data, and synthesizes them to find the enthalpy." 
+            },
+            "Interleaved Practice Set": { 
+                emoji: "🔀", desc: "Mixing different types of problems together in one task.", load: "Forces students to practice 'choosing' the right strategy, not just executing it.", 
+                ex: "Context: Year 11 Maths (Geometric Reasoning).\n\nTeacher action: Gives a worksheet where Pythagoras, SOH CAH TOA, and Sine Rule questions are randomly scrambled, not grouped by type.\n\nStudent action: Must analyze the shape of the triangle first to decide *which* rule applies before solving." 
+            },
+            "Sentence Scaffolds": { 
+                emoji: "📝", desc: "Providing academic starters to help students use disciplinary language independently.", load: "Removes the extraneous load of 'how to start'.", 
+                ex: "Context: Year 11 English (Film Study).\n\nTeacher action: Provides the frame: 'The director uses the motif of [blank] to symbolise [blank], positioning the audience to...'\n\nStudent action: Completes the sentence using their own analysis of the film." 
+            },
+            "Past Paper Simulation": { 
+                emoji: "⏱️", desc: "Practicing under exam conditions.", load: "Extremely high intrinsic load. Builds exam stamina.", 
+                ex: "Context: Year 13 Physics.\n\nTeacher action: Clears desks. Sets 45-minute timer. Distributes unseen NCEA exam section. Enforces strict silence.\n\nStudent action: Applies knowledge independently without scaffolding." 
+            },
+            "Create Your Own Question": { 
+                emoji: "❓", desc: "Students must design a test question and marking schedule.", load: "Forces perspective-taking from the examiner's point of view.", 
+                ex: "Context: Year 13 Chemistry.\n\nTeacher action: 'Write an Excellence-level question about Le Chatelier's principle, and provide the model answer.'\n\nStudent action: Synthesizes knowledge to create a plausible, challenging scenario." 
+            },
+            "Speed Fluency Drills": { 
+                emoji: "🏎️", desc: "Racing against a timer to complete basic foundational tasks.", load: "Builds absolute automaticity to free up working memory.", 
+                ex: "Context: Year 9 Maths (Numeracy).\n\nTeacher action: Sets a 3-minute timer for a 50-question times-tables grid.\n\nStudent action: Races to complete as many as possible, focusing purely on speed of recall." 
+            },
+            "Self-Checking Task": { 
+                emoji: "✅", desc: "A task where the answers form a pattern or code so students know if they are right.", load: "Provides immediate feedback without teacher intervention.", 
+                ex: "Context: Year 10 Science (Electricity).\n\nTeacher action: Provides a worksheet where calculating the correct voltage gives them a letter. The letters spell a science joke.\n\nStudent action: Completes the math. If the joke doesn't make sense, they know they made an error and re-check their work." 
+            },
+            "Information Transformation Task": { 
+                emoji: "🔄", desc: "Taking knowledge and changing its format (e.g. text to diagram).", load: "Demands deep encoding and prevents copy-pasting.", 
+                ex: "Context: Year 11 English (Novel Study - 'Of Mice and Men').\n\nTeacher action: Provides a 2-page descriptive paragraph of the bunkhouse.\n\nStudent action: Forbidden from using sentences. Must translate the text into an annotated architectural floor plan." 
+            },
+            "Extended Writing": { 
+                emoji: "✍️", desc: "Sustained, silent writing applying all scaffolding from the lesson.", load: "The ultimate test of independent schema application.", 
+                ex: "Context: Year 13 History (Historiography).\n\nTeacher action: 'You have 30 minutes of silent writing time to draft your introduction and first body paragraph comparing the Intentionalist and Structuralist views.'\n\nStudent action: Writes continuously, drawing on notes and memory." 
+            },
+            "Independent Studio Task": { 
+                emoji: "🎨", desc: "Students work on physical projects while teacher circulates for 1-on-1 feedback.", load: "Focuses on procedural and psychomotor memory.", 
+                ex: "Context: Year 12 Technology (Hard Materials).\n\nTeacher action: 'You have the rest of the period to sand and route your timber joints. I will be doing quality control checks at your benches.'\n\nStudent action: Applies physical skills independently." 
+            },
+
+            // STAGE 5: REVIEW
+            "Exit Ticket": { 
+                emoji: "🚪", desc: "Short, specific tasks linked directly to the Success Criteria, completed before leaving.", load: "Forces consolidation of the day's schema before the cognitive shift of changing periods.", 
+                ex: "Context: Year 9 Science (Astronomy).\n\nTeacher action: Hands out a small slip. 'Draw the Earth's tilt relative to the Sun during NZ summer.'\n\nStudent action: Completes diagram from memory and hands it to teacher at the door." 
+            },
+            "3-2-1 Summary": { 
+                emoji: "🔢", desc: "Students write 3 facts, 2 questions, and 1 opinion/connection.", load: "Structures reflection and highlights areas needing reteaching.", 
+                ex: "Context: Year 10 English (Poetry).\n\nTeacher action: 'On a post-it, write 3 language features we covered, 2 questions you still have, and 1 theme you liked.'\n\nStudent action: Synthesizes the lesson into a structured summary." 
+            },
+            "SOLO Taxonomy Check": { 
+                emoji: "📊", desc: "Categorising the depth of understanding from unistructural to relational.", load: "Provides metacognitive feedback, helping students gauge their own cognitive complexity.", 
+                ex: "Context: Year 12 Geography (Urban Inequalities).\n\nTeacher action: 'Look at your draft paragraph. Is it unistructural (just stating a fact) or relational (linking housing density to transport)?'\n\nStudent action: Self-assesses and adds a 'linking' sentence to upgrade their depth." 
+            },
+            "Traffic Light Self-Assessment": { 
+                emoji: "🚥", desc: "Quick visual check of student confidence.", load: "Low cognitive demand, high affective feedback.", 
+                ex: "Context: Year 9 Maths (Algebra).\n\nTeacher action: Asks students to highlight the top of their page Red, Amber, or Green based on confidence.\n\nStudent action: Colors it Amber because they understand adding x, but are stuck on multiplying x." 
+            },
+            "Next-Step Prediction": { 
+                emoji: "🔮", desc: "Asking students to predict what tomorrow's lesson will be based on today's logic.", load: "Forces them to see the wider structure of the subject.", 
+                ex: "Context: Year 9 Science (Chemical Reactions).\n\nTeacher action: 'Today we saw an acid and base neutralize to make water and salt. Tomorrow we will use a universal indicator. What do you predict the color will be?'\n\nStudent action: Applies today's logic to form a hypothesis." 
+            },
+            "60-Second Summary": { 
+                emoji: "⏱️", desc: "Partner task to summarise the entire lesson in 60 seconds.", load: "Forces rapid retrieval and prioritization of main ideas.", 
+                ex: "Context: Year 11 Science (Genetics).\n\nTeacher action: Sets timer. 'Person A, you have 60 seconds to explain homozygous vs heterozygous to Person B. Go!'\n\nStudent action: Speaks continuously, forced to rapidly retrieve core vocabulary." 
+            },
+            "Metacognitive Journaling": { 
+                emoji: "📔", desc: "Writing about *how* they learned, not just *what* they learned.", load: "Builds self-regulation and study skills.", 
+                ex: "Context: Year 13 PE (Biomechanics).\n\nTeacher action: 'Write one paragraph on which study technique helped you master the projectile motion formula today.'\n\nStudent action: Reflects on whether the visual diagram or the rote repetition was more effective." 
+            },
+            "Two Stars and a Wish": { 
+                emoji: "⭐", desc: "Identifying two things they did well, and one thing they need to improve.", load: "Balanced, positive reflection framework.", 
+                ex: "Context: Year 8 Arts (Drama).\n\nTeacher action: 'Write two stars (things your group did well in the performance) and one wish (something to fix for tomorrow).'\n\nStudent action: Critiques their own group dynamics and voice projection." 
+            },
+            "One-Sentence Summary": { 
+                emoji: "✍️", desc: "Distilling the entire lesson into a single, complex sentence.", load: "Forces extreme synthesis and vocabulary selection.", 
+                ex: "Context: Year 11 Social Sciences (Current Events).\n\nTeacher action: 'Summarise the housing crisis in exactly one sentence using the words: supply, demand, inflation, and zoning.'\n\nStudent action: Drafts and edits a dense, complex sentence combining all tier-3 terms." 
+            },
+            "Key Formula Recall": { 
+                emoji: "🧮", desc: "A final rote-memory check of a core equation before leaving.", load: "Ensures the most critical piece of data is the last thing processed.", 
+                ex: "Context: Year 12 Maths (Trigonometry).\n\nTeacher action: Stands at the door. 'You can't leave until you tell me the Sine Rule formula.'\n\nStudent action: Recites 'a over sine A equals b over sine B' to the teacher on the way out." 
+            },
+            "Debate Prep Note": { 
+                emoji: "📝", desc: "Writing down one argument to bring to tomorrow's discussion.", load: "Bridges the gap between lessons and creates accountability.", 
+                ex: "Context: Year 12 English (Speech Prep).\n\nTeacher action: 'Write down one piece of statistical evidence we covered today. You will use this to open your debate tomorrow.'\n\nStudent action: Selects the strongest piece of evidence and locks it in their book." 
+            },
+            "Distractor Analysis": { 
+                emoji: "🕵️", desc: "Explaining why wrong answers are wrong.", load: "Deepens understanding by analyzing boundaries and misconceptions.", 
+                ex: "Context: Year 11 Economics (Supply and Demand).\n\nTeacher action: Shows MC question where B is right. Asks: 'Why is Option C a trick? What mistake are they hoping you make?'\n\nStudent action: Explains that Option C relates to the Demand curve, not the Supply curve." 
+            }
         };
 
         function generateStrategies(stage, customStrategies) {
