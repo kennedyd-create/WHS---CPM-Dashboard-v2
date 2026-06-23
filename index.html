@@ -1882,7 +1882,7 @@ Step 6: Progress Monitoring
             if (lessonState.notebookLM) {
                 var text = '"Act as an expert curriculum and instructional designer.\n\n';
                 text += 'CONTEXT:\nI am building an AI-powered NotebookLM assistant for a ' + lessonState.year + ' ' + lessonState.dept + ' class. The core topic is: "' + topic + '".\n\n';
-                text += 'TASK:\nGenerate a comprehensive MASTER SOURCE DOCUMENT that will serve as the \'Ground Truth\' for NotebookLM. This document must contain strict system instructions for the AI, followed by a highly detailed, textbook-level breakdown of the content to prevent hallucinations.\n\n';
+                text += 'TASK:\nGenerate a comprehensive MASTER SOURCE DOCUMENT that will serve as the \'Ground Truth\' for NotebookLM. This document must contain strict system instructions for the AI, a highly detailed, textbook-level breakdown of the content to prevent hallucinations, and a pre-programmed slideshow plan.\n\n';
                 text += 'CONSTRAINTS & RULES:\n';
                 text += '- Format: Output must be clearly formatted using Markdown headers. No file creation commands.\n';
                 text += '- Spelling: Ensure all output uses New Zealand English spelling and terminology.\n';
@@ -1893,7 +1893,7 @@ Step 6: Progress Monitoring
                 text += 'PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n';
                 text += 'Write a section titled \'System Instructions\' strictly commanding NotebookLM on how it must behave when generating lesson plans or slideshows based on this document. It MUST include these rules:\n';
                 text += '1. Lesson Structure: Always structure lesson plan outputs using the 5 Common Practice Model (CPM) stages: CONNECTION, I DO, WE DO, YOU DO, REFLECTION & FEEDBACK.\n';
-                text += '2. Presentation Design & Dual Coding: When generating slideshow presentations, use Dual Coding principles. Do not put walls of text on slides.\n';
+                text += '2. Presentation Design & Dual Coding: When generating slideshow presentations, use Dual Coding principles. Do not put walls of text on slides. You MUST explicitly instruct the AI to include real-world images or photographs where possible to ground the concepts.\n';
                 text += '3. Visual Branding & Typography: Require \'Manrope\' font.\n';
                 text += '4. Strict HTML Constraint: Every slide generated MUST use the exact HTML structure below. The absolute positioned box on the bottom right is the \'Teacher Instruction Box\'. Provide this exact HTML template block in your output:\n';
                 text += "```html\n";
@@ -1905,7 +1905,19 @@ Step 6: Progress Monitoring
                 text += '- Core disciplinary \'Knowledge\' (concepts, facts, and definitions) appropriate for ' + lessonState.year + ' in New Zealand.\n';
                 text += '- Core disciplinary \'Practices\' (how experts apply this knowledge).\n';
                 text += '- Common misconceptions and how to address them.\n';
-                text += '- Key disciplinary vocabulary (Tier 2 and Tier 3 words)."';
+                text += '- Key disciplinary vocabulary (Tier 2 and Tier 3 words).\n\n';
+
+                text += 'PART 3: PRE-PROGRAMMED SLIDESHOW PLAN\n';
+                text += 'Provide a detailed outline for NotebookLM to use IF the teacher asks it to "create a slidedeck". It MUST explicitly instruct NotebookLM to follow this exact slide sequence based on the teacher\'s chosen CPM strategies:\n';
+                text += '- Slide 1: Title & Hook\n';
+                text += '- Slide 2: Learning Intentions and Success Criteria\n';
+                text += '- Slide 3: Key Vocabulary (Define 4 to 6 critical terms for this lesson)\n';
+                text += '- Slide 4+: Stage 1: Connect - Strategy: ' + lessonState.s1 + '\n';
+                text += '- Slide(s) 5+: Stage 2: I Do - Strategy: ' + lessonState.s2 + '\n';
+                text += '- Slide(s) X+: Stage 3: We Do - Strategy: ' + lessonState.s3 + '\n';
+                text += '- Slide(s) Y+: Stage 4: You Do - Strategy: ' + lessonState.s4 + '\n';
+                text += '- Slide(s) Z+: Stage 5: Review - Strategy: ' + lessonState.s5 + '\n\n';
+                text += 'For each stage in this slideshow plan, write a brief instruction telling NotebookLM what type of content or activity it needs to inject into those specific slides based on the detailed subject content you wrote in Part 2."';
                 
                 var box = document.getElementById('prompt-lesson-text');
                 if(box) box.innerText = text;
@@ -1925,6 +1937,9 @@ Step 6: Progress Monitoring
                 if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Try to weave relevant Mātauranga Māori into the reading content.\n';
                 
                 text += '\nOUTPUTS REQUIRED:\n';
+                text += 'PART 1: Relief Overview (For the Chat)\n';
+                text += 'Before outputting the HTML, provide a brief, formatted summary in the chat so I can easily copy and paste it into an email to the relief coordinator. Include the Topic, Duration (60 mins), and a brief 2-sentence summary of what the students will be doing independently.\n\n';
+                text += 'PART 2: The HTML Worksheet\n';
                 text += 'The HTML worksheet content MUST follow this structure exactly:\n';
                 text += '1. Relief Teacher Instructions: A brief note explaining pacing at the top of the document.\n';
                 text += '2. Introduction Content (15-20 mins reading): Detailed enough to replace teacher instruction entirely.\n';
@@ -2000,8 +2015,9 @@ Step 6: Progress Monitoring
                 } else {
                     text += 'Content: [Mix detailed content for explanations and concise bullet points for summaries, avoiding massive walls of text.]\n';
                 }
-                text += 'Note: [A detailed speaker script of what I should actually say, plus a description of the image, chart, or visual to include.]\n\n';
-                text += 'IMPORTANT STRUCTURE RULE: Slide 2 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson, immediately following the Stage 1 Connection slide.\n';
+                text += 'Note: [A detailed speaker script of what I should actually say, plus a description of a specific, REAL-WORLD image, photograph, or chart to include where possible (avoid generic clipart).]\n\n';
+                text += 'IMPORTANT STRUCTURE RULE: Slide 2 MUST explicitly state the Learning Intention(s) and Success Criteria for the lesson.\n';
+                text += 'IMPORTANT STRUCTURE RULE: Slide 3 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson, immediately following the Learning Intentions slide.\n';
                 if (lessonState.extra !== 'None') {
                     text += 'DIFFERENTIATION RULE: You must include at least one specific slide tailored to provide the requested accommodation: ' + lessonState.extra + '.\n';
                 }
@@ -2010,27 +2026,22 @@ Step 6: Progress Monitoring
             }
             
             if (needsWorksheet) {
-                text += 'PART 3: Differentiated Student Worksheet Content\n';
+                text += 'PART 3: Differentiated Student Worksheet (Dual Format: Text & HTML)\n';
                 text += 'Design a highly detailed student worksheet that executes the \'You Do\' stage (' + lessonState.s4 + ').\n';
-                text += 'There is a file you can reference named "New Zealand\'s Role in World War I.pdf". Refer to this file by its name verbatim to match its level of detail and style.\n';
-                text += 'There is a file you can reference named "New Zealand\'s Journey in World War I.pdf". Refer to this file by its name verbatim to match its level of detail and style.\n';
-                text += 'CRITICAL REMINDER: You must use these reference files ONLY as a masterclass in layout, depth, pedagogical structure, and formatting. DO NOT include any World War I content in your output! Your content MUST be strictly focused on "' + topic + '".\n\n';
-                text += '**Worksheet Layout Constraints:** You must format the worksheet so it is highly visual and organised using Markdown tables.\n';
-                text += '- Use a 2-column Markdown table for Key Vocabulary (Left: Term, Right: Blank space for the definition).\n';
-                text += '- For any questions or written responses, create "fillable" answer boxes using a single-cell Markdown table (e.g., | |\\n| :- |\\n| |).\n';
-                text += '- Use Markdown tables as placeholder boxes to indicate where images, sources, or graphs should be placed.\n\n';
+                text += 'CRITICAL FORMATTING INSTRUCTION: You MUST provide this worksheet in TWO formats:\n';
+                text += '1. Markdown Text: First, provide the entire worksheet as standard Markdown text directly in the chat so I can easily copy and paste it into a Word document.\n';
+                text += '2. HTML Code Block: Second, provide the exact same worksheet inside a SINGLE, beautifully styled HTML code block (```html ... ```). Include CSS to make it look like a professional, printable worksheet. CRITICAL: You MUST close the HTML code block with ``` before moving on.\n\n';
                 text += 'Structure the worksheet with the following sections:\n';
                 text += '1. Title & Advance Organizer (e.g., a timeline, graphic, or summary box).\n';
                 text += '2. Key Vocabulary: Explicitly list and define 4 to 6 critical terms for the lesson.\n';
                 text += '3. Core Task: Incorporate elements like primary source analysis, data interpretation, or the CER (Claim, Evidence, Reasoning) framework depending on the subject.\n';
+                text += '4. Fillable Areas: Ensure you use plenty of visual space, blank lines, or empty tables/divs so students have physical room to write their answers on the printed page.\n';
                 
                 if (lessonState.extra !== 'None') {
-                    text += '4. Differentiation: A specific, highly detailed section tailored EXACTLY for this accommodation: ' + lessonState.extra + '.\n\n';
+                    text += '5. Differentiation: A specific, highly detailed section tailored EXACTLY for this accommodation: ' + lessonState.extra + '.\n\n';
                 } else {
                     text += '\n';
                 }
-                text += 'PDF DOWNLOAD LINK INSTRUCTION (CRITICAL):\n';
-                text += 'After providing the markdown text for the worksheet, you MUST use your built-in Advanced Data Analysis (Python) environment to write a script that generates a physical, beautifully formatted PDF version of this worksheet and provide a direct, working download link. Do NOT hallucinate a fake URL.\n\n';
             }
             
             if (needsContent) {
