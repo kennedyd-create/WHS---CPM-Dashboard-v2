@@ -27,10 +27,7 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .whs-gradient-bg {
-            background: var(--whs-dark-blue);
-        }
-
+        .whs-gradient-bg { background: var(--whs-dark-blue); }
         .glass-card {
             background: white;
             border: 1px solid var(--whs-light-blue);
@@ -46,11 +43,7 @@
             transition: all 0.2s;
             white-space: nowrap;
         }
-
-        .nav-btn:hover {
-            color: var(--whs-dark-blue);
-        }
-
+        .nav-btn:hover { color: var(--whs-dark-blue); }
         .nav-active {
             border-bottom-color: var(--whs-dark-blue);
             color: var(--whs-dark-blue);
@@ -67,11 +60,7 @@
             color: #475569;
             transition: all 0.2s;
         }
-        
-        .dept-btn:hover {
-            background: #f1f5f9;
-        }
-
+        .dept-btn:hover { background: #f1f5f9; }
         .dept-btn.active {
             background: var(--whs-dark-blue);
             color: white;
@@ -88,11 +77,7 @@
             transition: all 0.2s;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-
-        .stage-btn:hover {
-            border-color: var(--whs-light-blue);
-        }
-
+        .stage-btn:hover { border-color: var(--whs-light-blue); }
         .stage-btn.active {
             border-color: var(--whs-dark-blue);
             background: var(--whs-light-blue);
@@ -108,12 +93,10 @@
             font-weight: 600;
             color: #475569;
         }
-
         .builder-btn:hover {
             border-color: var(--whs-dark-blue);
             color: var(--whs-dark-blue);
         }
-
         .builder-btn.active {
             background: var(--whs-dark-blue);
             color: white;
@@ -132,128 +115,44 @@
             color: #047857 !important; 
             position: relative;
         }
-        
         .recommended-highlight.active {
             background-color: #10b981 !important; 
             border-color: #059669 !important; 
             color: white !important;
         }
 
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-            height: 350px;
-            max-height: 400px;
-        }
-
-        /* Tooltip CSS */
-        .tooltip-wrapper {
-            position: relative;
-        }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; height: 350px; max-height: 400px; }
+        .tooltip-wrapper { position: relative; }
         .tooltip-wrapper::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 0.5rem 0.75rem;
-            background-color: #1e293b;
-            color: #f8fafc;
-            font-size: 0.75rem;
-            font-weight: 500;
-            line-height: 1.4;
-            text-align: center;
-            white-space: normal;
-            width: max-content;
-            max-width: 240px;
-            border-radius: 0.25rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease-in-out;
-            z-index: 50;
-            pointer-events: none;
+            content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+            padding: 0.5rem 0.75rem; background-color: #1e293b; color: #f8fafc; font-size: 0.75rem; font-weight: 500;
+            line-height: 1.4; text-align: center; white-space: normal; width: max-content; max-width: 240px;
+            border-radius: 0.25rem; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .tooltip-wrapper::before {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 5px;
-            border-style: solid;
-            border-color: #1e293b transparent transparent transparent;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease-in-out;
-            z-index: 50;
-            pointer-events: none;
+            content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+            border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent;
+            opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none;
         }
-        .tooltip-wrapper:hover::after,
-        .tooltip-wrapper:hover::before {
-            opacity: 1;
-            visibility: visible;
-        }
-        .tooltip-wrapper:hover {
-            z-index: 20;
-        }
+        .tooltip-wrapper:hover::after, .tooltip-wrapper:hover::before { opacity: 1; visibility: visible; }
+        .tooltip-wrapper:hover { z-index: 20; }
 
-        /* Stage Divider CSS */
-        .stage-divider {
-            position: relative;
-            padding-top: 1.5rem;
-            padding-bottom: 0.5rem;
-            margin-top: 1.5rem;
-        }
-        .stage-divider::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(to right, transparent, #cbd5e1, transparent);
-        }
-        .stage-header {
-            font-size: 1.125rem; 
-            font-weight: 800; 
-            color: var(--whs-dark-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.05em; 
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .stage-number-badge {
-            background-color: var(--whs-dark-blue);
-            color: white;
-            border-radius: 9999px;
-            width: 1.75rem;
-            height: 1.75rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-        }
+        .stage-divider { position: relative; padding-top: 1.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; }
+        .stage-divider::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, #cbd5e1, transparent); }
+        .stage-header { font-size: 1.125rem; font-weight: 800; color: var(--whs-dark-blue); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
+        .stage-number-badge { background-color: var(--whs-dark-blue); color: white; border-radius: 9999px; width: 1.75rem; height: 1.75rem; display: inline-flex; align-items: center; justify-content: center; font-size: 0.875rem; }
 
-        /* Animations */
         @keyframes ai-pulse {
             0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
             50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
-        .ai-flash {
-            animation: ai-pulse 0.5s ease-out;
-        }
-
-        /* Scrollbars */
+        .ai-flash { animation: ai-pulse 0.5s ease-out; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
         .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.4); }
-
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -263,7 +162,6 @@
             <div class="relative z-10">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
                     <img src="Asset 1@2x.png" alt="Waiheke High School Logo" class="h-16 md:h-24 w-auto object-contain bg-[#d1e6f6] p-3 rounded-2xl shadow-sm" onerror="this.onerror=null; this.outerHTML='<div class=\'border-2 border-white rounded-full px-4 py-1 inline-block\'><span class=\'font-extrabold text-lg tracking-widest uppercase\'>WHS</span></div>';">
-                    
                     <div>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1>
                         <h2 class="text-xl md:text-2xl font-normal opacity-90">CPM & AI Navigator</h2>
@@ -297,6 +195,7 @@
             </div>
         </nav>
 
+        <!-- TAB 1: INSTRUCTIONAL HUB -->
         <div id="view-instructional" class="space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-4">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">The Instructional Hub</h2>
@@ -316,15 +215,14 @@
                 </div>
 
                 <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
-                    <button id="btn-inst-Year7" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
-                    <button id="btn-inst-Year8" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
-                    <button id="btn-inst-Year9" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
-                    <button id="btn-inst-Year10" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
-                    <button id="btn-inst-Year11(NCEALevel1)" class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
-                    <button id="btn-inst-Year12(NCEALevel2)" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
-                    <button id="btn-inst-Year13(NCEALevel3)" class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
+                    <button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
                 </div>
-
                 <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
             </div>
 
@@ -374,23 +272,23 @@
             <div class="grid lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-3 space-y-3">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">CPM Stages</h3>
-                    <div id="btn-stage-1" class="stage-btn active" data-action="stage" data-val="1">
+                    <div class="stage-btn active" data-action="stage" data-val="1">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 1</span>
                         <span class="font-bold text-[#002066]">Connect</span>
                     </div>
-                    <div id="btn-stage-2" class="stage-btn" data-action="stage" data-val="2">
+                    <div class="stage-btn" data-action="stage" data-val="2">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 2</span>
                         <span class="font-bold text-[#002066]">I Do</span>
                     </div>
-                    <div id="btn-stage-3" class="stage-btn" data-action="stage" data-val="3">
+                    <div class="stage-btn" data-action="stage" data-val="3">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 3</span>
                         <span class="font-bold text-[#002066]">We Do</span>
                     </div>
-                    <div id="btn-stage-4" class="stage-btn" data-action="stage" data-val="4">
+                    <div class="stage-btn" data-action="stage" data-val="4">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 4</span>
                         <span class="font-bold text-[#002066]">You Do</span>
                     </div>
-                    <div id="btn-stage-5" class="stage-btn" data-action="stage" data-val="5">
+                    <div class="stage-btn" data-action="stage" data-val="5">
                         <span class="block text-xs font-bold text-slate-400 uppercase mb-1">Stage 5</span>
                         <span class="font-bold text-[#002066]">Review</span>
                     </div>
@@ -406,8 +304,7 @@
                         <div class="grid md:grid-cols-2 gap-8 flex-grow">
                             <div>
                                 <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy to Update Prompt</h4>
-                                <div id="display-strategies" class="space-y-2">
-                                </div>
+                                <div id="display-strategies" class="space-y-2"></div>
                             </div>
                             
                             <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
@@ -455,6 +352,7 @@
             </div>
         </div>
 
+        <!-- TAB 2: UNIT PLANNER -->
         <div id="view-planning" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2>
@@ -571,6 +469,7 @@
             </div>
         </div>
 
+        <!-- TAB 3: LESSON BUILDER -->
         <div id="view-lesson" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Lesson Engine Builder</h2>
@@ -759,6 +658,7 @@
             </div>
         </div>
 
+        <!-- TAB 4: THEORY -->
         <div id="view-theory" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2>
@@ -771,7 +671,6 @@
                 </div>
             </div>
 
-            <!-- Horizontal Stages -->
             <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center">
                 <button id="th-stage-1" class="theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white whitespace-nowrap transition shadow-md" data-action="theory-stage" data-val="1">Stage 1: Connect</button>
                 <button id="th-stage-2" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="2">Stage 2: I Do</button>
@@ -781,15 +680,12 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- Tasks List (Left) -->
                 <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 max-h-[600px] overflow-y-auto custom-scrollbar">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 px-2" id="theory-tasks-header">Strategies</h4>
                     <div id="theory-tasks-list" class="space-y-1">
-                        <!-- JS injects tasks here -->
                     </div>
                 </div>
 
-                <!-- Detail View (Right) -->
                 <div class="md:col-span-2">
                     <div id="theory-task-detail" class="glass-card p-8 h-full">
                         <div class="flex items-center justify-center h-full text-slate-400 italic font-medium">Select a strategy from the left to view the classroom examples.</div>
@@ -798,6 +694,7 @@
             </div>
         </div>
 
+        <!-- TAB 5: ADVANCED AI -->
         <div id="view-advanced" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-[#c5a059] mb-4">Advanced AI Architecture</h2>
@@ -871,7 +768,6 @@ Step 6: Progress Monitoring
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- NotebookLM -->
                 <div class="glass-card border-t-8 border-t-purple-600 p-8">
                     <h3 class="text-2xl font-bold mb-4">NotebookLM <span class="text-sm font-normal text-slate-500">(Source-Grounded)</span></h3>
                     <p class="text-sm text-slate-700 mb-6">Upload the NZ Curriculum draft PDFs or link directly to the Tāhūrangi curriculum site in a Notebook. The AI will only use these specific sources to generate answers.</p>
@@ -890,7 +786,6 @@ Step 6: Progress Monitoring
                     </div>
                 </div>
 
-                <!-- Custom Gems -->
                 <div class="glass-card border-t-8 border-t-teal-600 p-8">
                     <h3 class="text-2xl font-bold mb-4">Gemini Gems <span class="text-sm font-normal text-slate-500">(Specialised Personas)</span></h3>
                     <p class="text-sm text-slate-700 mb-6">Create dedicated AI assistants pre-programmed with specific pedagogical rules so you don't have to rewrite instructions every time.</p>
@@ -911,12 +806,14 @@ Step 6: Progress Monitoring
             </div>
         </div>
 
+        <!-- FOOTER -->
         <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
             <p>© 2026 Waiheke High School Professional Learning Programme</p>
             <p class="mt-1 font-semibold text-[#002066]">Knowledge & Practices Framework • Developed for Aotearoa Educators</p>
         </footer>
     </div>
 
+    <!-- JAVASCRIPT -->
     <script>
         var tahurangiLinks = {
             'Social Sciences': {
@@ -1170,7 +1067,7 @@ Step 6: Progress Monitoring
             },
             "Self-Checking Task": { 
                 emoji: "✅", desc: "A task where the answers form a pattern or code so students know if they are right.", load: "Provides immediate feedback without teacher intervention.", 
-                ex: "Context: Year 10 Science (Electricity).\n\nTeacher action: Provides a worksheet where calculating the correct voltage gives them a letter. The letters spell a science joke.\n\nStudent action: Completes the math. If the joke doesn't make sense, they know they made an error and re-check their work." 
+                ex: "Context: Year 10 Science (Electricity).\n\nTeacher action: Provides a worksheet where calculating the correct voltage gives them a letter. The letters spell a science joke.\n\nStudent action: Completes the math. If the joke doesn't make sense, they know made an error and re-check their work." 
             },
             "Information Transformation Task": { 
                 emoji: "🔄", desc: "Taking knowledge and changing its format (e.g. text to diagram).", load: "Demands deep encoding and prevents copy-pasting.", 
@@ -1313,7 +1210,6 @@ Step 6: Progress Monitoring
             }
         };
 
-        // State Variables
         var currentDiscipline = 'Science';
         var currentStage = 1;
         var currentInstructionalYear = 'Year 11 (NCEA Level 1)';
@@ -1326,33 +1222,8 @@ Step 6: Progress Monitoring
         var aiTopPicks = { 1: "", 2: "", 3: "", 4: "", 5: "" };
         var isAppReady = false;
 
-        var unitState = {
-            dept: 'Science',
-            year: 'Year 11 (NCEA Level 1)',
-            dur: '12 lessons',
-            context: 'none',
-            maori: 'none',
-            lit: 'none',
-            num: 'none'
-        };
-
-        var lessonState = {
-            dept: 'Science',
-            year: 'Year 11 (NCEA Level 1)',
-            context: 'none',
-            maori: 'none',
-            lit: 'none',
-            num: 'none',
-            s1: '',
-            s2: '',
-            s3: '',
-            s4: '',
-            s5: '',
-            extra: 'None',
-            outputs: [],
-            relief: false,
-            notebookLM: false
-        };
+        var unitState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons', context: 'none', maori: 'none', lit: 'none', num: 'none' };
+        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false };
 
         function getDesc(name) {
             if (cpmTaskDB[name] && cpmTaskDB[name].desc) return cpmTaskDB[name].desc;
@@ -1375,10 +1246,7 @@ Step 6: Progress Monitoring
             var link = getCurriculumLink(dept, year);
             var parts = year.split(' ');
             var displayYear = parts[0] + ' ' + parts[1];
-            container.innerHTML = 
-                '<a href="' + link + '" target="_blank" class="inline-flex items-center gap-1.5 bg-yellow-100 text-[#002066] border border-[#002066] hover:bg-[#002066] hover:text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest transition-colors shadow-sm">' +
-                    'Open Tāhūrangi Draft for ' + dept + ' (' + displayYear + ') ↗' +
-                '</a>';
+            container.innerHTML = '<a href="' + link + '" target="_blank" class="inline-flex items-center gap-1.5 bg-yellow-100 text-[#002066] border border-[#002066] hover:bg-[#002066] hover:text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest transition-colors shadow-sm">Open Tāhūrangi Draft for ' + dept + ' (' + displayYear + ') ↗</a>';
         }
 
         function getGlobalTopic() {
@@ -1523,9 +1391,7 @@ Step 6: Progress Monitoring
                 unitState: unitState,
                 lessonState: lessonState
             };
-            try {
-                localStorage.setItem('whs_app_state', JSON.stringify(state));
-            } catch(e) { console.error("Could not save state"); }
+            try { localStorage.setItem('whs_app_state', JSON.stringify(state)); } catch(e) { }
         }
 
         function setActiveBtn(action, val, key) {
@@ -1544,9 +1410,7 @@ Step 6: Progress Monitoring
                     targetBtn.classList.add('active');
                     targetBtn.setAttribute('aria-pressed', 'true');
                 }
-            } catch (e) {
-                console.error("UI Sync Error:", e);
-            }
+            } catch (e) { }
         }
 
         function loadAppState() {
@@ -1563,12 +1427,8 @@ Step 6: Progress Monitoring
                     currentInstNum = state.currentInstNum || currentInstNum;
                     currentStrategy = state.currentStrategy || currentStrategy;
                     
-                    if (state.unitState) {
-                        for (var uk in state.unitState) unitState[uk] = state.unitState[uk];
-                    }
-                    if (state.lessonState) {
-                        for (var lk in state.lessonState) lessonState[lk] = state.lessonState[lk];
-                    }
+                    if (state.unitState) { for (var uk in state.unitState) unitState[uk] = state.unitState[uk]; }
+                    if (state.lessonState) { for (var lk in state.lessonState) lessonState[lk] = state.lessonState[lk]; }
                     
                     setActiveBtn('discipline', currentDiscipline);
                     setActiveBtn('inst-year', currentInstructionalYear);
@@ -1631,9 +1491,7 @@ Step 6: Progress Monitoring
                         if(nBtn) { nBtn.classList.add('bg-orange-500', 'text-white', 'border-orange-600'); nBtn.classList.remove('bg-orange-100', 'text-orange-800', 'border-orange-300'); nBtn.innerText = "Disable NotebookLM Mode"; }
                     }
 
-                } catch (e) {
-                    console.error("Failed to parse app state", e);
-                }
+                } catch (e) { }
             }
         }
 
@@ -2087,6 +1945,7 @@ Step 6: Progress Monitoring
             text += 'Design a comprehensive 60-minute lesson based on the 5 stages of the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
             
             text += 'CONSTRAINTS & RULES:\n';
+            text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs (e.g., do not explain that your formatting matches the reference files).\n';
             text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
             text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
             text += '- Local Context: Use New Zealand English spelling/terminology and integrate relevant Te Reo Māori vocabulary where appropriate.\n';
@@ -2107,6 +1966,8 @@ Step 6: Progress Monitoring
 
             text += 'OUTPUTS REQUIRED:\n';
             text += 'PART 1: The CPM Lesson Plan\n';
+            text += 'First, clearly print the Lesson Details above the table:\n';
+            text += '**Topic:** ' + topic + ' | **Duration:** 60 mins | **Learning Intention:** [Fill] | **Success Criteria:** [Fill]\n\n';
             text += 'Use EXACTLY the Markdown table template below to structure the lesson plan based on the specific strategies chosen for each stage:\n';
             text += '| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n';
             text += '| --- | --- | --- | --- |\n';
@@ -2144,7 +2005,8 @@ Step 6: Progress Monitoring
                 if (lessonState.extra !== 'None') {
                     text += 'DIFFERENTIATION RULE: You must include at least one specific slide tailored to provide the requested accommodation: ' + lessonState.extra + '.\n';
                 }
-                text += '\n';
+                text += 'GOOGLE SLIDES GENERATION (CRITICAL):\n';
+                text += 'After providing the text outline, you MUST trigger your @Google Workspace extension to generate a real Google Slides presentation and provide the working link. Do NOT hallucinate a fake URL.\n\n';
             }
             
             if (needsWorksheet) {
@@ -2152,6 +2014,11 @@ Step 6: Progress Monitoring
                 text += 'Design a highly detailed student worksheet that executes the \'You Do\' stage (' + lessonState.s4 + ').\n';
                 text += 'There is a file you can reference named "New Zealand\'s Role in World War I.pdf". Refer to this file by its name verbatim to match its level of detail and style.\n';
                 text += 'There is a file you can reference named "New Zealand\'s Journey in World War I.pdf". Refer to this file by its name verbatim to match its level of detail and style.\n';
+                text += 'CRITICAL REMINDER: You must use these reference files ONLY as a masterclass in layout, depth, pedagogical structure, and formatting. DO NOT include any World War I content in your output! Your content MUST be strictly focused on "' + topic + '".\n\n';
+                text += '**Worksheet Layout Constraints:** You must format the worksheet so it is highly visual and organised using Markdown tables.\n';
+                text += '- Use a 2-column Markdown table for Key Vocabulary (Left: Term, Right: Blank space for the definition).\n';
+                text += '- For any questions or written responses, create "fillable" answer boxes using a single-cell Markdown table (e.g., | |\\n| :- |\\n| |).\n';
+                text += '- Use Markdown tables as placeholder boxes to indicate where images, sources, or graphs should be placed.\n\n';
                 text += 'Structure the worksheet with the following sections:\n';
                 text += '1. Title & Advance Organizer (e.g., a timeline, graphic, or summary box).\n';
                 text += '2. Key Vocabulary: Explicitly list and define 4 to 6 critical terms for the lesson.\n';
@@ -2162,6 +2029,8 @@ Step 6: Progress Monitoring
                 } else {
                     text += '\n';
                 }
+                text += 'PDF DOWNLOAD LINK INSTRUCTION (CRITICAL):\n';
+                text += 'After providing the markdown text for the worksheet, you MUST use your built-in Advanced Data Analysis (Python) environment to write a script that generates a physical, beautifully formatted PDF version of this worksheet and provide a direct, working download link. Do NOT hallucinate a fake URL.\n\n';
             }
             
             if (needsContent) {
@@ -2192,9 +2061,7 @@ Step 6: Progress Monitoring
                         btnElement.classList.remove("copy-btn-success");
                     }, 2000);
                 }
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
+            } catch (err) { }
             document.body.removeChild(textArea);
         }
 
@@ -2222,13 +2089,8 @@ Step 6: Progress Monitoring
                 var originalHTML = btn.innerHTML;
                 btn.innerHTML = '<svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>';
                 btn.classList.add('bg-green-100');
-                setTimeout(function() {
-                    btn.innerHTML = originalHTML;
-                    btn.classList.remove('bg-green-100');
-                }, 2000);
-            } catch (err) {
-                console.error('Copy failed', err);
-            }
+                setTimeout(function() { btn.innerHTML = originalHTML; btn.classList.remove('bg-green-100'); }, 2000);
+            } catch (err) { }
             document.body.removeChild(textArea);
         }
 
@@ -2243,45 +2105,25 @@ Step 6: Progress Monitoring
                 data: {
                     labels: ['1: Connect', '2: I Do', '3: We Do', '4: You Do', '5: Review'],
                     datasets: [
-                        {
-                            label: 'Teacher Responsibility %',
-                            data: [85, 100, 50, 10, 40],
-                            backgroundColor: '#002066', 
-                            borderRadius: 6
-                        },
-                        {
-                            label: 'Student Cognitive Load %',
-                            data: [40, 60, 95, 100, 60],
-                            backgroundColor: '#c5a059', 
-                            borderRadius: 6
-                        }
+                        { label: 'Teacher Responsibility %', data: [85, 100, 50, 10, 40], backgroundColor: '#002066', borderRadius: 6 },
+                        { label: 'Student Cognitive Load %', data: [40, 60, 95, 100, 60], backgroundColor: '#c5a059', borderRadius: 6 }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 12, family: 'Manrope' } } },
-                        title: { display: true, text: 'Gradual Release & Cognitive Load Shift', font: { size: 16, weight: 'bold', family: 'Manrope' } }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, max: 110, title: { display: true, text: 'Intensity %', font: { size: 12, family: 'Manrope' } } },
-                        x: { grid: { display: false }, ticks: { font: { family: 'Manrope' } } }
-                    }
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { font: { size: 12, family: 'Manrope' } } }, title: { display: true, text: 'Gradual Release & Cognitive Load Shift', font: { size: 16, weight: 'bold', family: 'Manrope' } } },
+                    scales: { y: { beginAtZero: true, max: 110, title: { display: true, text: 'Intensity %', font: { size: 12, family: 'Manrope' } } }, x: { grid: { display: false }, ticks: { font: { family: 'Manrope' } } } }
                 }
             });
         }
 
         function loadTheoryStage(stageNum) {
             var btns = document.querySelectorAll('.theory-stage-btn');
-            for(var i=0; i<btns.length; i++) {
-                btns[i].className = "theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition";
-            }
+            for(var i=0; i<btns.length; i++) { btns[i].className = "theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition"; }
             var activeBtn = document.getElementById('th-stage-' + stageNum);
             if(activeBtn) activeBtn.className = "theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white whitespace-nowrap transition shadow-md";
 
             document.getElementById('theory-tasks-header').innerText = stageInfo[stageNum].title + " Strategies";
-            
             var strats = generateStrategies(stageNum);
             var listHtml = "";
             for(var j=0; j<strats.length; j++) {
@@ -2292,52 +2134,21 @@ Step 6: Progress Monitoring
             var elList = document.getElementById('theory-tasks-list');
             if(elList) elList.innerHTML = listHtml;
             
-            if(strats.length > 0) {
-                setTimeout(function(){
-                    var firstBtn = document.querySelector('.theory-task-list-btn');
-                    if(firstBtn) renderTheoryTaskDetail(strats[0], firstBtn);
-                }, 10);
-            }
+            if(strats.length > 0) { setTimeout(function(){ var firstBtn = document.querySelector('.theory-task-list-btn'); if(firstBtn) renderTheoryTaskDetail(strats[0], firstBtn); }, 10); }
         }
 
         function renderTheoryTaskDetail(taskName, btn) {
             var allBtns = document.querySelectorAll('.theory-task-list-btn');
-            for(var i=0; i<allBtns.length; i++) {
-                allBtns[i].classList.remove('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]');
-                allBtns[i].classList.add('text-slate-700');
-            }
-            if(btn) {
-                btn.classList.add('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]');
-                btn.classList.remove('text-slate-700');
-            }
+            for(var i=0; i<allBtns.length; i++) { allBtns[i].classList.remove('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]'); allBtns[i].classList.add('text-slate-700'); }
+            if(btn) { btn.classList.add('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]'); btn.classList.remove('text-slate-700'); }
 
-            var genericData = {
-                emoji: "📌", 
-                desc: "A powerful instructional strategy mapped to the Common Practice Model.", 
-                load: "Carefully designed to manage extraneous cognitive load by structuring student focus.", 
-                ex: "Context: Year 10 Core Subject.\nTeacher action: The teacher introduces the strategy to the ākonga (students), ensuring instructions are clear.\nStudent action: Students engage with the material utilizing the provided scaffolds."
-            };
-
+            var genericData = { emoji: "📌", desc: "A powerful instructional strategy mapped to the Common Practice Model.", load: "Carefully designed to manage extraneous cognitive load by structuring student focus.", ex: "Context: Year 10 Core Subject.\nTeacher action: The teacher introduces the strategy to the ākonga (students), ensuring instructions are clear.\nStudent action: Students engage with the material utilizing the provided scaffolds." };
             var data = cpmTaskDB[taskName] || genericData;
             var container = document.getElementById('theory-task-detail');
             
             if(container) {
                 container.innerHTML = 
-                    '<div class="animate-in">' +
-                        '<div class="text-6xl mb-4">' + data.emoji + '</div>' +
-                        '<h3 class="text-3xl font-black text-slate-900 mb-4">' + taskName + '</h3>' +
-                        '<p class="text-lg text-slate-600 font-medium mb-8 leading-relaxed">' + data.desc + '</p>' +
-                        '<div class="grid md:grid-cols-2 gap-8">' +
-                            '<div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm">' +
-                                '<h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest mb-3">Cognitive Load Profile</h4>' +
-                                '<p class="text-sm text-slate-700 leading-relaxed">' + data.load + '</p>' +
-                            '</div>' +
-                            '<div class="bg-green-50 p-6 rounded-2xl border border-green-200 shadow-sm">' +
-                                '<h4 class="text-xs font-bold uppercase text-green-800 tracking-widest mb-3">Classroom Scenario</h4>' +
-                                '<p class="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">' + data.ex + '</p>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>';
+                    '<div class="animate-in"><div class="text-6xl mb-4">' + data.emoji + '</div><h3 class="text-3xl font-black text-slate-900 mb-4">' + taskName + '</h3><p class="text-lg text-slate-600 font-medium mb-8 leading-relaxed">' + data.desc + '</p><div class="grid md:grid-cols-2 gap-8"><div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm"><h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest mb-3">Cognitive Load Profile</h4><p class="text-sm text-slate-700 leading-relaxed">' + data.load + '</p></div><div class="bg-green-50 p-6 rounded-2xl border border-green-200 shadow-sm"><h4 class="text-xs font-bold uppercase text-green-800 tracking-widest mb-3">Classroom Scenario</h4><p class="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">' + data.ex + '</p></div></div></div>';
             }
         }
 
@@ -2345,12 +2156,7 @@ Step 6: Progress Monitoring
             document.body.addEventListener('click', function(e) {
                 var target = e.target.closest('[data-action]');
                 if (!target) return;
-
-                var action = target.getAttribute('data-action');
-                var val = target.getAttribute('data-val');
-                var key = target.getAttribute('data-key');
-                var copyTarget = target.getAttribute('data-target');
-
+                var action = target.getAttribute('data-action'), val = target.getAttribute('data-val'), key = target.getAttribute('data-key'), copyTarget = target.getAttribute('data-target');
                 if (action === 'view') showView(copyTarget);
                 else if (action === 'copy-dashboard') copyStudentDashboard(target);
                 else if (action === 'discipline') setDiscipline(val);
@@ -2370,31 +2176,20 @@ Step 6: Progress Monitoring
             });
 
             document.body.addEventListener('input', function(e) {
-                if (e.target.classList.contains('sync-topic')) {
-                    syncTopics(e.target.value);
-                } else if (e.target.id === 'unit-custom-task') {
-                    updateUnitBuilderPrompt();
-                } else if (e.target.id === 'les-custom-task') {
-                    updateLessonBuilderPrompt();
-                }
+                if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
+                else if (e.target.id === 'unit-custom-task') updateUnitBuilderPrompt();
+                else if (e.target.id === 'les-custom-task') updateLessonBuilderPrompt();
             });
         }
 
         window.onload = function() {
             setupEventListeners();
-            
             var savedTopic = localStorage.getItem('whs_topic');
-            if(savedTopic) {
-                var inputs = document.querySelectorAll('.sync-topic');
-                for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic;
-            }
-
+            if(savedTopic) { var inputs = document.querySelectorAll('.sync-topic'); for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic; }
             loadAppState();
-
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
-
             isAppReady = true;
             forceAiPicks(); 
             initChart(); 
