@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en-NZ">
 <head>
     <meta charset="UTF-8">
@@ -248,6 +248,40 @@
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                         RESET SAVED DATA
                     </button>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <button class="dept-btn active" data-action="discipline" data-val="Science">Science</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Maths">Maths</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Social Sciences">Social Sciences</button>
+                    <button class="dept-btn" data-action="discipline" data-val="English">English</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Māori">Māori</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Technology">Technology</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Arts">Arts</button>
+                    <button class="dept-btn" data-action="discipline" data-val="PE & Health">PE & Health</button>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
+                    <button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
+                </div>
+                <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
+            </div>
+
+            <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8">
+                <div class="flex-grow">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label>
+                        <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
+                    </div>
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
                 </div>
             </div>
 
@@ -699,48 +733,7 @@
             </div>
         </div>
 
-        <!-- VIEW 4: THEORY -->
-        <div id="view-theory" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2>
-                <p class="text-slate-600">Explore the cognitive science and practical classroom examples behind each instructional move.</p>
-                
-                <div class="flex justify-center gap-3 mt-6 flex-wrap">
-                    <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/common-practice-model-news" target="_blank" class="inline-block text-xs font-bold bg-[#002066] text-white px-4 py-2 rounded-full hover:bg-blue-900 transition shadow-sm">Official MoE CPM Guidelines ↗</a>
-                    <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/" target="_blank" class="inline-block text-xs font-bold bg-emerald-700 text-white px-4 py-2 rounded-full hover:bg-emerald-800 transition shadow-sm">Tāhūrangi / Te Mātaiaho ↗</a>
-                    <a href="https://www.edresearch.edu.au/topics/explicit-instruction" target="_blank" class="inline-block text-xs font-bold bg-purple-700 text-white px-4 py-2 rounded-full hover:bg-purple-800 transition shadow-sm">Explicit Instruction Research ↗</a>
-                </div>
-                <div class="mt-6 flex justify-center">
-                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        RESET SAVED DATA
-                    </button>
-                </div>
-            </div>
-
-            <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center">
-                <button id="th-stage-1" class="theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white whitespace-nowrap transition shadow-md" data-action="theory-stage" data-val="1">Stage 1: Connect</button>
-                <button id="th-stage-2" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="2">Stage 2: I Do</button>
-                <button id="th-stage-3" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="3">Stage 3: We Do</button>
-                <button id="th-stage-4" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="4">Stage 4: You Do</button>
-                <button id="th-stage-5" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="5">Stage 5: Review</button>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 max-h-[600px] overflow-y-auto custom-scrollbar">
-                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 px-2" id="theory-tasks-header">Strategies</h4>
-                    <div id="theory-tasks-list" class="space-y-1"></div>
-                </div>
-
-                <div class="md:col-span-2">
-                    <div id="theory-task-detail" class="glass-card p-8 h-full">
-                        <div class="flex items-center justify-center h-full text-slate-400 italic font-medium">Select a strategy from the left to view the classroom examples.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW 5: ASSESSMENT GENERATOR -->
+        <!-- VIEW 4: ASSESSMENT GENERATOR -->
         <div id="view-assessment" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">Assessment Generator</h2>
@@ -792,7 +785,30 @@
                     <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
 
-                <div id="junior-assessment-container" class="hidden mt-4 pt-6 border-t border-slate-200">
+                <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Scope & Duration</span>
+                        <div class="flex flex-wrap gap-2" id="assess-dur-opts">
+                            <button class="builder-btn active" data-action="assessment-state" data-key="duration" data-val="1 Period Test">1 Period Test</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="2 Period Assessment">2 Period Assessment</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="1 Week Mini-Project">1 Week Mini-Project</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="3-4 Week Deep Dive">3-4 Week Deep Dive</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="Other">Other</button>
+                        </div>
+                        <div id="assess-custom-dur-container" class="hidden pt-2">
+                            <input type="text" id="assess-custom-dur" placeholder="Specify duration..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800 bg-white">
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
+                        <div class="flex flex-col xl:flex-row gap-2" id="assess-context-opts">
+                            <button class="builder-btn active text-left" data-action="assessment-state" data-key="context" data-val="none">Standard</button>
+                            <button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke">Waiheke Context</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="junior-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
                     <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
                         <span class="text-xs font-black text-blue-800 uppercase tracking-widest block mb-1">Junior Assessment (Years 7-10)</span>
                         
@@ -828,7 +844,7 @@
                     </div>
                 </div>
 
-                <div id="ncea-assessment-container" class="hidden mt-4 pt-6 border-t border-slate-200">
+                <div id="ncea-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
                     <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
                         <div>
                             <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span>
@@ -841,6 +857,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-4 pt-6 border-t border-slate-200">
+                    <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Extra Differentiated Resource</span>
+                    <div class="flex flex-wrap gap-2" id="assess-extra-opts">
+                        <button class="builder-btn active" data-action="assessment-state" data-key="extra" data-val="None">None (Standard)</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ESOL Learners">ESOL Resource</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Low Literacy">Low Lit Scaffold</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Extension/Gifted">Extension Task</button>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Additional Outputs (Select Multiple)</span>
+                    <div class="flex flex-wrap gap-2" id="assess-output-opts">
+                        <button class="builder-btn" data-action="assessment-output" data-val="Student Exemplars">+ Student Exemplars</button>
+                        <button class="builder-btn" data-action="assessment-output" data-val="Marking Schedule">+ Teacher Marking Schedule</button>
+                        <button class="builder-btn" data-action="assessment-output" data-val="Peer Check-bric">+ Peer/Self Check-bric</button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- Output Prompt Card -->
@@ -863,6 +899,47 @@
                     <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#002066] text-white rounded-xl font-bold hover:bg-blue-800 transition flex items-center justify-center gap-2 shadow-md">
                         Open Gemini App ↗
                     </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 5: THEORY -->
+        <div id="view-theory" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2>
+                <p class="text-slate-600">Explore the cognitive science and practical classroom examples behind each instructional move.</p>
+                
+                <div class="flex justify-center gap-3 mt-6 flex-wrap">
+                    <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/common-practice-model-news" target="_blank" class="inline-block text-xs font-bold bg-[#002066] text-white px-4 py-2 rounded-full hover:bg-blue-900 transition shadow-sm">Official MoE CPM Guidelines ↗</a>
+                    <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/" target="_blank" class="inline-block text-xs font-bold bg-emerald-700 text-white px-4 py-2 rounded-full hover:bg-emerald-800 transition shadow-sm">Tāhūrangi / Te Mātaiaho ↗</a>
+                    <a href="https://www.edresearch.edu.au/topics/explicit-instruction" target="_blank" class="inline-block text-xs font-bold bg-purple-700 text-white px-4 py-2 rounded-full hover:bg-purple-800 transition shadow-sm">Explicit Instruction Research ↗</a>
+                </div>
+                <div class="mt-6 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        RESET SAVED DATA
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center">
+                <button id="th-stage-1" class="theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white whitespace-nowrap transition shadow-md" data-action="theory-stage" data-val="1">Stage 1: Connect</button>
+                <button id="th-stage-2" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="2">Stage 2: I Do</button>
+                <button id="th-stage-3" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="3">Stage 3: We Do</button>
+                <button id="th-stage-4" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="4">Stage 4: You Do</button>
+                <button id="th-stage-5" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition" data-action="theory-stage" data-val="5">Stage 5: Review</button>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 max-h-[600px] overflow-y-auto custom-scrollbar">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 px-2" id="theory-tasks-header">Strategies</h4>
+                    <div id="theory-tasks-list" class="space-y-1"></div>
+                </div>
+
+                <div class="md:col-span-2">
+                    <div id="theory-task-detail" class="glass-card p-8 h-full">
+                        <div class="flex items-center justify-center h-full text-slate-400 italic font-medium">Select a strategy from the left to view the classroom examples.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1080,7 +1157,7 @@
 
         var unitState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons', context: 'none', maori: 'none', lit: 'none', num: 'none' };
         var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, activeStages: [1, 2, 3, 4, 5] };
-        var assessmentState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', formats: ['Short Answer'] };
+        var assessmentState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', formats: ['Short Answer'], duration: '1 Period Test', context: 'none', extra: 'None', outputs: [] };
 
         function getDesc(name) {
             if (cpmTaskDB[name] && cpmTaskDB[name].desc) return cpmTaskDB[name].desc;
@@ -1338,6 +1415,10 @@
                     if (state.assessmentState) {
                         for (var ak in state.assessmentState) assessmentState[ak] = state.assessmentState[ak];
                         if (!assessmentState.formats) assessmentState.formats = ['Short Answer'];
+                        if (!assessmentState.duration) assessmentState.duration = '1 Period Test';
+                        if (!assessmentState.context) assessmentState.context = 'none';
+                        if (!assessmentState.extra) assessmentState.extra = 'None';
+                        if (!assessmentState.outputs) assessmentState.outputs = [];
                     }
                     
                     setActiveBtn('discipline', currentDiscipline);
@@ -1366,6 +1447,15 @@
 
                     setActiveBtn('assessment-state', assessmentState.dept, 'dept');
                     setActiveBtn('assessment-state', assessmentState.year, 'year');
+                    setActiveBtn('assessment-state', assessmentState.duration, 'duration');
+                    
+                    if (assessmentState.duration === 'Other') {
+                        var cdContainer = document.getElementById('assess-custom-dur-container');
+                        if (cdContainer) cdContainer.classList.remove('hidden');
+                    }
+                    
+                    setActiveBtn('assessment-state', assessmentState.context, 'context');
+                    setActiveBtn('assessment-state', assessmentState.extra, 'extra');
                     
                     var assessFormatBtns = document.querySelectorAll('[data-action="assessment-format"]');
                     for(var af=0; af<assessFormatBtns.length; af++) {
@@ -1383,6 +1473,21 @@
                         if (assessmentState.formats.indexOf('Other') > -1) {
                             var cfContainer = document.getElementById('assess-custom-format-container');
                             if (cfContainer) cfContainer.classList.remove('hidden');
+                        }
+                    }
+
+                    var assessOutBtns = document.querySelectorAll('[data-action="assessment-output"]');
+                    for(var ao=0; ao<assessOutBtns.length; ao++) {
+                        assessOutBtns[ao].classList.remove('active');
+                        assessOutBtns[ao].setAttribute('aria-pressed', 'false');
+                    }
+                    if (assessmentState.outputs && assessmentState.outputs.length > 0) {
+                        for (var ao2=0; ao2<assessmentState.outputs.length; ao2++) {
+                            var btnAo = document.querySelector('[data-action="assessment-output"][data-val="' + assessmentState.outputs[ao2] + '"]');
+                            if (btnAo) {
+                                btnAo.classList.add('active');
+                                btnAo.setAttribute('aria-pressed', 'true');
+                            }
                         }
                     }
                     
@@ -1660,6 +1765,17 @@
                 renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
                 checkSeniorStatus();
             }
+
+            if (key === 'duration') {
+                var customDurContainer = document.getElementById('assess-custom-dur-container');
+                if (customDurContainer) {
+                    if (val === 'Other') {
+                        customDurContainer.classList.remove('hidden');
+                    } else {
+                        customDurContainer.classList.add('hidden');
+                    }
+                }
+            }
             
             updateAssessmentBuilderPrompt();
             saveAppState();
@@ -1704,6 +1820,31 @@
                     customFormatContainer.classList.remove('hidden');
                 } else {
                     customFormatContainer.classList.add('hidden');
+                }
+            }
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+        
+        function toggleAssessmentOutput(val) {
+            if (!assessmentState.outputs) assessmentState.outputs = [];
+            
+            var index = assessmentState.outputs.indexOf(val);
+            if (index > -1) {
+                assessmentState.outputs.splice(index, 1);
+            } else {
+                assessmentState.outputs.push(val);
+            }
+
+            var outBtns = document.querySelectorAll('[data-action="assessment-output"]');
+            for(var i=0; i<outBtns.length; i++) {
+                var btnVal = outBtns[i].getAttribute('data-val');
+                if (assessmentState.outputs.indexOf(btnVal) > -1) {
+                    outBtns[i].classList.add('active');
+                    outBtns[i].setAttribute('aria-pressed', 'true');
+                } else {
+                    outBtns[i].classList.remove('active');
+                    outBtns[i].setAttribute('aria-pressed', 'false');
                 }
             }
             updateAssessmentBuilderPrompt();
@@ -2019,21 +2160,18 @@
                 text += 'CONSTRAINTS & RULES:\n';
                 text += '- Audience: The relief teacher covering this class is a NON-SUBJECT SPECIALIST. DO NOT generate a standard 5-stage CPM lesson plan. Bypass teacher instruction entirely.\n';
                 text += '- Format: You MUST provide the worksheet in TWO formats: plain Markdown text (for easy copy-pasting) AND a beautifully styled HTML code block (' + ticks + 'html ... ' + ticks + '). The admin team will be able to save this HTML and simply \'Print to PDF\'. CRITICAL: You MUST close the HTML code block with ' + ticks + ' before moving on.\n';
-                text += '- Spelling: ' + nzSpellingRule + '\n';
+                text += '- Spelling: Ensure all output uses New Zealand English spelling and terminology.\n';
                 if (lessonState.context === 'waiheke') text += '- Local Context: Try to weave a local Waiheke context into the reading content.\n';
                 if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Try to weave relevant Mātauranga Māori into the reading content.\n';
                 
                 text += '\nOUTPUTS REQUIRED:\n';
                 text += 'PART 1: Relief Overview (For the Chat)\n';
-                text += 'Provide a brief, formatted summary in the chat so I can easily copy and paste it into an email to the relief coordinator. Include the Topic, Duration (60 mins), and a brief 2-sentence summary of what the students will be doing independently.\n\n';
-                text += 'PART 2: Student Worksheet (Markdown Text)\n';
-                text += 'Provide the entire worksheet as standard Markdown text directly in the chat so I can copy and paste it into a Word document.\n\n';
-                text += 'PART 3: Student Worksheet (HTML Code Block)\n';
-                text += 'Provide the exact same worksheet inside a SINGLE, beautifully styled HTML code block. Include CSS to make it look professional and printable.\n\n';
-                text += 'The worksheet content (for both formats) MUST follow this structure exactly:\n';
-                text += '1. Relief Teacher Instructions: A brief note explaining pacing at the top of the document. You MUST also explicitly include the following school-specific instructions for the relief teacher verbatim: "Please email me (the teacher) with any feedback on the lesson. Remember to remind students about the \'Waiheke Way - Ready, Respectful, Safe\', and feel free to allocate any Waiheke Wise Points or Engagement Scores. Please keep students in until the bell and ensure they leave the classroom in a tidy manner. If there are any discipline issues, please email the Faculty Leader, Deans, and/or SLT."\n';
+                text += 'Before outputting the HTML, provide a brief, formatted summary in the chat so I can easily copy and paste it into an email to the relief coordinator. Include the Topic, Duration (60 mins), and a brief 2-sentence summary of what the students will be doing independently.\n\n';
+                text += 'PART 2: The HTML Worksheet\n';
+                text += 'The HTML worksheet content MUST follow this structure exactly:\n';
+                text += '1. Relief Teacher Instructions: A brief note explaining pacing at the top of the document.\n';
                 text += '2. Introduction Content (15-20 mins reading): Detailed enough to replace teacher instruction entirely.\n';
-                text += '3. Visual Integration: Include actual diagrams or charts (or clear placeholders) within the content layout.\n';
+                text += '3. Visual Integration: Include actual diagrams or charts within the content layout.\n';
                 text += '4. Key Vocabulary: 8-10 crucial terms clearly defined.\n';
                 text += '5. Extensive \'You Do\' Tasks (30-40 mins): Progressive questions and activities to ensure fast-finishers do not finish early."';
                 
@@ -2047,7 +2185,7 @@
             text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class (mixed-ability). The topic is: "' + topic + '".\n\n';
             
             text += 'TASK:\n';
-            text += 'Design a comprehensive 60-minute lesson based on the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
+            text += 'Design a comprehensive 60-minute lesson based on the 5 stages of the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
             
             text += 'CONSTRAINTS & RULES:\n';
             text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
@@ -2057,7 +2195,7 @@
                 text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
             }
             text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
-            text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
+            text += '- Local Context: Use New Zealand English spelling/terminology and integrate relevant Te Reo Māori vocabulary where appropriate.\n';
             
             if (lessonState.activeStages.length < 5) {
                 text += '- Timing & Pacing Adjustment: You are only covering ' + lessonState.activeStages.length + ' of the 5 CPM stages in this 60-minute period. You MUST explicitly adjust the timing allocations and substantially expand the depth and duration of the requested activities (especially independent or collaborative tasks) to fill the full hour appropriately.\n';
@@ -2202,6 +2340,8 @@
             var nceaStandard = (nceaStandardInput && nceaStandardInput.value.trim()) ? nceaStandardInput.value.trim() : "[INSERT REQUIRED STANDARD NUMBER]";
             var customFormatInput = document.getElementById('assess-custom-format');
             var customFormat = (customFormatInput && customFormatInput.value.trim()) ? customFormatInput.value.trim() : "Custom Format";
+            var customDurInput = document.getElementById('assess-custom-dur');
+            var customDur = (customDurInput && customDurInput.value.trim()) ? customDurInput.value.trim() : "Custom Duration";
             
             var juniorKnowledgeInput = document.getElementById('assess-junior-knowledge');
             var juniorKnowledge = (juniorKnowledgeInput && juniorKnowledgeInput.value.trim()) ? juniorKnowledgeInput.value.trim() : "";
@@ -2262,12 +2402,26 @@
             
             text += 'CONSTRAINTS & RULES:\n';
             text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
+            
+            if (assessmentState.duration) {
+                var activeDuration = assessmentState.duration === 'Other' ? customDur : assessmentState.duration;
+                text += '- Scope & Duration: The intended scale of this assessment is: "' + activeDuration + '". Ensure the volume and depth of the task appropriately match this timeframe.\n';
+            }
+            
             if (isLegacyNcea) {
                 text += '- Curriculum Alignment: Align strictly with the CURRENT New Zealand Curriculum and existing NCEA standard requirements. (Do NOT use the new \'Knowledge & Practices\' drafts for Level 2/3).\n';
             } else {
                 text += '- Curriculum Alignment: You MUST use your integrated search tools to check the new \'Knowledge\' and \'Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
             }
             text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
+            
+            if (assessmentState.context === 'waiheke') {
+                text += '- Waiheke Context: Weave local Waiheke Island / Hauraki Gulf contexts into the assessment scenarios.\n';
+            }
+            
+            if (assessmentState.extra && assessmentState.extra !== 'None') {
+                text += '- Differentiation: You MUST provide a specific, modified version of the assessment task tailored explicitly for: ' + assessmentState.extra + '.\n';
+            }
             
             if (isJunior) {
                 if (hasResourceBased) {
@@ -2285,22 +2439,28 @@
 
             text += 'OUTPUTS REQUIRED:\n';
             
+            var partNum = 1;
+            
             if (isJunior) {
                 if (hasSurpriseMe) {
-                    text += 'PART 1: Innovative Assessment Options (Surprise Me!)\n';
+                    text += 'PART ' + partNum + ': Innovative Assessment Options (Surprise Me!)\n';
+                    partNum++;
                     text += 'Because the "Surprise Me" format was selected, you MUST come up with highly innovative, creative, and engaging ideas for this assessment. Generate TWO DIFFERENT out-of-the-box assessment task options that test the required knowledge and practices in an unconventional way (e.g., a podcast script, a Dragons Den pitch, an interactive museum exhibit, a mock trial, a simulation, etc.). Provide a brief scenario, specific instructions, and constraints for EACH option. Ensure both options directly test the target Knowledge and Practices.\n\n';
                 } else {
-                    text += 'PART 1: Assessment Task (' + formatChoiceStr + ')\n';
+                    text += 'PART ' + partNum + ': Assessment Task (' + formatChoiceStr + ')\n';
+                    partNum++;
                     text += 'Generate a clear, student-facing assessment task that structurally combines all requested formats (' + formatChoiceStr + '). Provide a brief scenario or context, the specific instructions for what the student must produce, and any necessary constraints (e.g., word count, formatting). Ensure the assessment directly tests the target Knowledge and Practices.\n\n';
                 }
                 
-                text += 'PART 2: Junior Grading Matrix\n';
+                text += 'PART ' + partNum + ': Junior Grading Matrix\n';
+                partNum++;
                 text += 'Generate a specific grading matrix (rubric) formatted as a Markdown table. The matrix MUST use the new official progress descriptors (Emerging, Developing, Consolidating, Proficient, Exceeding) as the grading levels.\n';
                 text += 'CRITICAL RULE: You MUST explicitly design the criteria for each level to demonstrate the specific cognitive verbs assigned to ' + assessmentState.year + ':\n';
                 text += juniorKeywords + '\n\n';
                 text += 'Ensure the criteria strictly evaluate the specific disciplinary Knowledge and Practices for this topic, mapped to those exact verbs.\n\n';
             } else if (isSenior) {
-                text += 'PART 1: NCEA Formative Assessment Options\n';
+                text += 'PART ' + partNum + ': NCEA Formative Assessment Options\n';
+                partNum++;
                 text += 'CRITICAL INSTRUCTION: You MUST use your integrated search tools and knowledge base to search the official NZQA website for Achievement Standard ' + nceaStandard + '. You MUST extract and apply the specific explanatory notes, step-up criteria (Achieved, Merit, Excellence), and learning outcomes to design these assessment options.\n';
                 if (isLegacyNcea) {
                     text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the CURRENT curriculum requirements for this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n\n';
@@ -2308,7 +2468,8 @@
                     text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the core knowledge and practices of this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n\n';
                 }
                 
-                text += 'PART 2: Shared NCEA Grading Matrix\n';
+                text += 'PART ' + partNum + ': Shared NCEA Grading Matrix\n';
+                partNum++;
                 text += 'Generate a single, strict NCEA-style grading matrix (rubric) formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. This single matrix MUST apply to both assessment options. ';
                 if (isLegacyNcea) {
                     text += 'The criteria MUST explicitly map to the grading requirements (Achieved, Merit, Excellence) of the CURRENT NZQA standard ' + nceaStandard + '.\n\n';
@@ -2317,11 +2478,33 @@
                 }
                 text += 'IMPORTANT: You MUST include a bold disclaimer at the very bottom of your output stating: "**Note: This AI-generated assessment and grading matrix is a draft and may not perfectly align with official NZQA requirements. Always verify against the current standard.**"\n\n';
             } else {
-                text += 'PART 1: Formative Assessment Task\n';
+                text += 'PART ' + partNum + ': Formative Assessment Task\n';
+                partNum++;
                 text += 'Generate a clear, student-facing formative assessment task. Provide a brief scenario or context, the specific instructions for what the student must produce, and any necessary constraints (e.g., word count, format).\n\n';
                 
-                text += 'PART 2: Success Criteria / Rubric\n';
+                text += 'PART ' + partNum + ': Success Criteria / Rubric\n';
+                partNum++;
                 text += 'Generate a specific grading rubric or a clear list of success criteria formatted as a Markdown table so students know exactly how they will be evaluated.\n\n';
+            }
+            
+            if (assessmentState.outputs && assessmentState.outputs.indexOf('Student Exemplars') > -1) {
+                text += 'PART ' + partNum + ': Student Exemplars\n';
+                partNum++;
+                var topGrade = isJunior ? "Exceeding" : "Excellence";
+                var midGrade = isJunior ? "Consolidating" : "Achieved";
+                text += 'Generate two realistic student exemplars (model answers). One must represent an \'' + topGrade + '\' grade and the other an \'' + midGrade + '\' grade, highlighting the exact differences in quality and depth.\n\n';
+            }
+            
+            if (assessmentState.outputs && assessmentState.outputs.indexOf('Marking Schedule') > -1) {
+                text += 'PART ' + partNum + ': Teacher Marking Schedule\n';
+                partNum++;
+                text += 'Generate a strict, bullet-pointed Teacher Marking Schedule. Instead of a general rubric, explicitly state the precise facts, keywords, and evidence a teacher must see to award each grade bracket. This is a rapid-grading tool.\n\n';
+            }
+            
+            if (assessmentState.outputs && assessmentState.outputs.indexOf('Peer Check-bric') > -1) {
+                text += 'PART ' + partNum + ': Peer/Self Assessment Check-bric\n';
+                partNum++;
+                text += 'Generate a simplified, checklist-style "Check-bric". Translate the formal grading criteria into highly accessible, student-friendly language ("I have...", "I can...") so students can peer-review or self-assess their work before final submission.\n\n';
             }
 
             text += '"';
@@ -2428,7 +2611,7 @@
             for(var i=0; i<allBtns.length; i++) { allBtns[i].classList.remove('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]'); allBtns[i].classList.add('text-slate-700'); }
             if(btn) { btn.classList.add('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]'); btn.classList.remove('text-slate-700'); }
 
-            var genericData = { emoji: "📌", desc: "A powerful instructional strategy mapped to the Common Practice Model.", load: "Carefully designed to manage extraneous cognitive load by structuring student focus.", ex: "Context: Year 10 Core Subject.\nTeacher action: The teacher introduces the strategy to the ākonga (students), ensuring instructions are clear.\nStudent action: Students engage with the material utilising the provided scaffolds." };
+            var genericData = { emoji: "📌", desc: "A powerful instructional strategy mapped to the Common Practice Model.", load: "Carefully designed to manage extraneous cognitive load by structuring student focus.", ex: "Context: Year 10 Core Subject.\nTeacher action: The teacher introduces the strategy to the ākonga (students), ensuring instructions are clear.\nStudent action: Students engage with the material utilizing the provided scaffolds." };
             var data = cpmTaskDB[taskName] || genericData;
             var container = document.getElementById('theory-task-detail');
             
@@ -2456,9 +2639,11 @@
                 else if (action === 'lesson-state') setLessonState(key, val, target);
                 else if (action === 'assessment-state') setAssessmentState(key, val, target);
                 else if (action === 'assessment-format') toggleAssessmentFormat(val);
+                else if (action === 'assessment-output') toggleAssessmentOutput(val);
                 else if (action === 'clear-assessment-formats') clearAssessmentFormats();
                 else if (action === 'toggle-relief') toggleReliefMode();
                 else if (action === 'toggle-notebooklm') toggleNotebookLMMode();
+                else if (action === 'toggle-ncea') toggleNceaMode();
                 else if (action === 'lesson-output') toggleLessonOutput(val);
                 else if (action === 'toggle-lesson-stage') toggleLessonStage(val);
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
@@ -2480,6 +2665,7 @@
                 else if (e.target.id === 'les-custom-task') updateLessonBuilderPrompt();
                 else if (e.target.id === 'assess-ncea-standard') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-custom-format') updateAssessmentBuilderPrompt();
+                else if (e.target.id === 'assess-custom-dur') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-junior-knowledge') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-junior-practices') updateAssessmentBuilderPrompt();
             });
