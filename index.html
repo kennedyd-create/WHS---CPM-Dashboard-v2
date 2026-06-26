@@ -198,8 +198,8 @@
             </svg>
         </header>
 
-        <!-- NAVIGATION -->
-        <nav class="flex items-center justify-center border-b-2 border-slate-300 mb-6 gap-2 md:gap-4 overflow-x-auto pb-1">
+        <!-- NAVIGATION (Sticky) -->
+        <nav class="sticky top-0 z-50 bg-[#e2e8f0]/95 backdrop-blur-md flex items-center justify-center border-b-2 border-slate-300 mb-6 gap-2 md:gap-4 overflow-x-auto pb-3 pt-3 -mx-4 px-4 md:-mx-8 md:px-8 shadow-sm transition-all duration-300">
             <button id="nav-instructional" class="nav-btn nav-active" data-action="view" data-target="instructional">Instructional Hub</button>
             <button id="nav-planning" class="nav-btn" data-action="view" data-target="planning">Unit Planner</button>
             <button id="nav-lesson" class="nav-btn" data-action="view" data-target="lesson">Lesson Builder</button>
@@ -207,6 +207,10 @@
             <button id="nav-advanced" class="nav-btn" data-action="view" data-target="advanced">Advanced AI</button>
             
             <div class="flex items-center ml-2 md:ml-4 flex-shrink-0">
+                <button class="px-3 py-2.5 bg-white hover:bg-slate-50 border border-slate-300 text-slate-600 rounded-lg transition tooltip-wrapper shadow-sm flex items-center justify-center mr-3" data-tooltip="Clear all data and start fresh" data-action="reset-app">
+                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <span class="text-xs font-bold tracking-wide">RESET</span>
+                </button>
                 <a href="https://kennedyd-create.github.io/WHS---Student-/" target="_blank" class="px-4 py-2.5 bg-red-50 text-red-800 hover:bg-red-100 border border-red-200 rounded-l-lg font-bold text-sm transition flex items-center gap-2 shadow-sm">
                     Student Revision Dashboard ↗
                 </a>
@@ -249,7 +253,10 @@
 
             <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8">
                 <div class="flex-grow">
-                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific)</label>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label>
+                        <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
+                    </div>
                     <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
                 </div>
             </div>
@@ -415,7 +422,10 @@
                         <div id="unit-curriculum-link" class="flex justify-start"></div>
 
                         <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
-                            <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Please be specific)</label>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label>
+                                <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
+                            </div>
                             <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                         </div>
 
@@ -529,7 +539,10 @@
                 <div id="les-curriculum-link" class="flex justify-start"></div>
 
                 <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
-                    <label class="text-xs font-black text-[#002066] uppercase tracking-widest block mb-2">What are you teaching? (Type to activate AI Top Picks)</label>
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Type to activate AI Top Picks)</label>
+                        <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
+                    </div>
                     <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
 
@@ -836,6 +849,21 @@ Step 6: Progress Monitoring
             <p class="mt-1 font-semibold text-[#002066]">Knowledge & Practices Framework • Developed for Aotearoa Educators</p>
         </footer>
     </div>
+    
+    <!-- RESET MODAL -->
+    <div id="reset-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl">
+            <div class="text-red-500 mb-4 flex justify-center">
+                <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-xl font-black text-center text-slate-900 mb-2">Start Fresh?</h3>
+            <p class="text-sm text-slate-600 text-center mb-6">This will permanently clear all your current planning data, selected strategies, and topics.</p>
+            <div class="flex gap-3 justify-center">
+                <button class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-lg transition" data-action="cancel-reset">Cancel</button>
+                <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition shadow-sm" data-action="confirm-reset">Yes, Clear Data</button>
+            </div>
+        </div>
+    </div>
 
     <!-- JAVASCRIPT -->
     <script>
@@ -1068,6 +1096,18 @@ Step 6: Progress Monitoring
             topicTimeout = setTimeout(function() {
                 localStorage.setItem('whs_topic', val);
                 forceAiPicks(); 
+                
+                var indicators = document.querySelectorAll('.save-indicator');
+                for(var j=0; j<indicators.length; j++) {
+                    indicators[j].classList.remove('opacity-0');
+                    indicators[j].classList.add('opacity-100');
+                }
+                setTimeout(function() {
+                    for(var j=0; j<indicators.length; j++) {
+                        indicators[j].classList.remove('opacity-100');
+                        indicators[j].classList.add('opacity-0');
+                    }
+                }, 2000);
             }, 300);
         }
 
@@ -2042,6 +2082,13 @@ Step 6: Progress Monitoring
                 else if (action === 'lesson-output') toggleLessonOutput(val);
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
                 else if (action === 'theory-detail') renderTheoryTaskDetail(val, target);
+                else if (action === 'reset-app') document.getElementById('reset-modal').classList.remove('hidden');
+                else if (action === 'cancel-reset') document.getElementById('reset-modal').classList.add('hidden');
+                else if (action === 'confirm-reset') {
+                    localStorage.removeItem('whs_app_state');
+                    localStorage.removeItem('whs_topic');
+                    window.location.reload();
+                }
             });
 
             document.body.addEventListener('input', function(e) {
