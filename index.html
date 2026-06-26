@@ -168,6 +168,28 @@
         }
         .ai-flash { animation: ai-pulse 0.5s ease-out; }
         
+        @keyframes surprise-pulse {
+            0% { background-color: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+            50% { background-color: #fca5a5; border-color: #dc2626; color: #991b1b; box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+            100% { background-color: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+        }
+        .surprise-btn {
+            animation: surprise-pulse 3s infinite ease-in-out;
+            transition: all 0.2s;
+        }
+        .surprise-btn:hover {
+            animation: none !important;
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #dc2626 !important;
+        }
+        .surprise-btn.active {
+            animation: none !important;
+            background-color: #dc2626 !important;
+            color: white !important;
+            border-color: #991b1b !important;
+        }
+        
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
@@ -203,14 +225,10 @@
             <button id="nav-instructional" class="nav-btn nav-active" data-action="view" data-target="instructional">Instructional Hub</button>
             <button id="nav-planning" class="nav-btn" data-action="view" data-target="planning">Unit Planner</button>
             <button id="nav-lesson" class="nav-btn" data-action="view" data-target="lesson">Lesson Builder</button>
+            <button id="nav-assessment" class="nav-btn" data-action="view" data-target="assessment">Assessment Generator</button>
             <button id="nav-theory" class="nav-btn" data-action="view" data-target="theory">CPM Theory</button>
-            <button id="nav-advanced" class="nav-btn" data-action="view" data-target="advanced">Advanced AI</button>
             
             <div class="flex items-center ml-2 md:ml-4 flex-shrink-0">
-                <button class="px-3 py-2.5 bg-white hover:bg-slate-50 border border-slate-300 text-slate-600 rounded-lg transition tooltip-wrapper shadow-sm flex items-center justify-center mr-3" data-tooltip="Clear all data and start fresh" data-action="reset-app">
-                    <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    <span class="text-xs font-bold tracking-wide">RESET</span>
-                </button>
                 <a href="https://kennedyd-create.github.io/WHS---Student-/" target="_blank" class="px-4 py-2.5 bg-red-50 text-red-800 hover:bg-red-100 border border-red-200 rounded-l-lg font-bold text-sm transition flex items-center gap-2 shadow-sm">
                     Student Revision Dashboard ↗
                 </a>
@@ -225,39 +243,11 @@
             <div class="text-center max-w-3xl mx-auto mb-4">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">The Instructional Hub</h2>
                 <p class="text-slate-600">Select a stage and strategy to generate explicit instructional scripts and materials.</p>
-            </div>
-
-            <div class="space-y-4">
-                <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                    <button class="dept-btn active" data-action="discipline" data-val="Science">Science</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Maths">Maths</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Social Sciences">Social Sciences</button>
-                    <button class="dept-btn" data-action="discipline" data-val="English">English</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Māori">Māori</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Technology">Technology</button>
-                    <button class="dept-btn" data-action="discipline" data-val="Arts">Arts</button>
-                    <button class="dept-btn" data-action="discipline" data-val="PE & Health">PE & Health</button>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
-                    <button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
-                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
-                </div>
-                <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
-            </div>
-
-            <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8">
-                <div class="flex-grow">
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label>
-                        <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
-                    </div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-slate-50">
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        RESET SAVED DATA
+                    </button>
                 </div>
             </div>
 
@@ -385,6 +375,12 @@
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2>
                 <p class="text-slate-600">Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.</p>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        RESET SAVED DATA
+                    </button>
+                </div>
             </div>
 
             <div class="glass-card p-8 border-t-8 border-t-[#c5a059]">
@@ -505,6 +501,12 @@
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Lesson Engine Builder</h2>
                 <p class="text-slate-600">Build a hyper-specific prompt by picking strategies for each CPM stage. The AI Engine will suggest its <span class="bg-[#10b981] text-white text-[10px] px-1 py-0.5 rounded font-bold shadow-sm">🏆 TOP PICK</span> as you type.</p>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        RESET SAVED DATA
+                    </button>
+                </div>
             </div>
 
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#10b981] max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
@@ -597,24 +599,6 @@
                             Enable NotebookLM Mode
                         </button>
                     </div>
-
-                    <div id="ncea-assessment-container" class="hidden md:col-span-2">
-                        <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
-                            <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4">
-                                <div>
-                                    <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span>
-                                    <p class="text-xs text-purple-600 font-medium leading-tight">Generate two NCEA-style formative assessment options with a shared Achieved/Merit/Excellence grading matrix.</p>
-                                </div>
-                                <button id="btn-ncea-mode" class="shrink-0 px-4 py-2.5 bg-purple-100 border border-purple-300 text-purple-800 text-xs font-bold rounded-lg hover:bg-purple-500 hover:text-white hover:border-purple-600 transition-colors shadow-sm whitespace-nowrap" data-action="toggle-ncea">
-                                    Enable NCEA Rubric
-                                </button>
-                            </div>
-                            <div id="les-ncea-standard-container" class="hidden border-t border-purple-200 pt-3">
-                                <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Achievement Standard Number (Optional)</label>
-                                <input type="text" id="les-ncea-standard" placeholder="e.g. AS91908 or 91908" class="w-full p-2.5 rounded-lg border border-purple-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 outline-none transition text-sm font-medium text-slate-800 bg-white placeholder-purple-300/70">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -622,7 +606,7 @@
                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Lesson Stage Selection</h3>
                 <p class="text-sm text-slate-600 mb-4">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-[#10b981] text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
 
-                <!-- NEW: STAGE TOGGLES -->
+                <!-- STAGE TOGGLES -->
                 <div class="mb-8 md:w-1/2 bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
                     <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-2">Include Stages in Lesson Plan</span>
                     <div class="flex flex-wrap gap-2" id="les-stage-toggles">
@@ -726,6 +710,12 @@
                     <a href="https://newzealandcurriculum.tahurangi.education.govt.nz/" target="_blank" class="inline-block text-xs font-bold bg-emerald-700 text-white px-4 py-2 rounded-full hover:bg-emerald-800 transition shadow-sm">Tāhūrangi / Te Mātaiaho ↗</a>
                     <a href="https://www.edresearch.edu.au/topics/explicit-instruction" target="_blank" class="inline-block text-xs font-bold bg-purple-700 text-white px-4 py-2 rounded-full hover:bg-purple-800 transition shadow-sm">Explicit Instruction Research ↗</a>
                 </div>
+                <div class="mt-6 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        RESET SAVED DATA
+                    </button>
+                </div>
             </div>
 
             <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center">
@@ -750,114 +740,129 @@
             </div>
         </div>
 
-        <!-- VIEW 5: ADVANCED AI -->
-        <div id="view-advanced" class="hidden space-y-8 animate-in fade-in duration-500">
+        <!-- VIEW 5: ASSESSMENT GENERATOR -->
+        <div id="view-assessment" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-4xl font-black text-[#c5a059] mb-4">Advanced AI Architecture</h2>
-                <p class="text-slate-600">Elevate your planning from generic chat to highly specialized, source-grounded instructional design.</p>
+                <h2 class="text-4xl font-black text-slate-900 mb-4">Assessment Generator</h2>
+                <p class="text-slate-600">Design customised formative and summative assessments aligned to the curriculum.</p>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 hover:border-red-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        RESET SAVED DATA
+                    </button>
+                </div>
             </div>
 
-            <div class="whs-gradient-bg p-10 rounded-3xl text-white mb-8 shadow-lg border border-blue-900">
-                <div class="flex items-center gap-4 mb-6">
-                    <div class="bg-amber-500 text-amber-900 p-2 rounded-lg font-black text-xl">✨</div>
-                    <h3 class="text-3xl font-bold tracking-tight">The "Tutor Gem" Generator</h3>
+            <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#c5a059] max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                        <div class="flex flex-wrap gap-2" id="assess-dept-opts">
+                            <button class="builder-btn active" data-action="assessment-state" data-key="dept" data-val="Science">Science</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Maths">Maths</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="English">English</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Māori">Māori</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Technology">Technology</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Arts">Arts</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="PE & Health">PE & Health</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                        <div class="flex flex-wrap gap-2" id="assess-year-opts">
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 7">Year 7</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 8">Year 8</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 9">Year 9</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 10">Year 10</button>
+                            <button class="builder-btn active" data-action="assessment-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-blue-100 mb-8 max-w-4xl text-sm leading-relaxed">
-                    Create a bespoke, highly-controlled AI Tutor for your specific class. Copy the system prompt below into a "Gemini Gem" (or ChatGPT Custom GPT). It forces the AI to act as a strict, patient pedagogical tutor that <strong>never gives away the answers</strong>, uses NZ spelling, and constantly checks for understanding.
-                </p>
-                
-                <div class="bg-white/10 p-6 rounded-2xl border border-white/20 relative group">
-                    <div class="flex justify-between items-start mb-4 border-b border-white/20 pb-4">
+
+                <div id="assess-curriculum-link" class="flex justify-start"></div>
+
+                <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you assessing? (Please be specific)</label>
+                        <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
+                    </div>
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
+                </div>
+
+                <div id="junior-assessment-container" class="hidden mt-4 pt-6 border-t border-slate-200">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
+                        <span class="text-xs font-black text-blue-800 uppercase tracking-widest block mb-1">Junior Assessment (Years 7-10)</span>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-2">
+                            <div>
+                                <label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge to Assess</label>
+                                <input type="text" id="assess-junior-knowledge" placeholder="e.g. The structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-blue-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition text-sm font-medium text-slate-800 bg-white">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices to Assess</label>
+                                <input type="text" id="assess-junior-practices" placeholder="e.g. Interpreting diagrams, justifying claims..." class="w-full p-2.5 rounded-lg border border-blue-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition text-sm font-medium text-slate-800 bg-white">
+                            </div>
+                        </div>
+
                         <div>
-                            <span class="text-xs font-bold uppercase tracking-widest text-amber-400 block mb-1">Copy this into the "System Instructions" of your Gem</span>
-                            <h4 class="font-bold text-xl">WHS Generic AI Tutor Protocol</h4>
-                        </div>
-                        <div class="flex gap-2">
-                            <button class="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-4 py-2 rounded-lg transition text-xs font-black tracking-wider shadow-sm backdrop-blur-sm" data-action="download" data-target="gem-tutor-prompt">DOWNLOAD</button>
-                            <button class="bg-white/20 hover:bg-white/30 text-white border border-white/30 px-4 py-2 rounded-lg transition text-xs font-black tracking-wider shadow-sm backdrop-blur-sm" data-action="copy" data-target="gem-tutor-prompt">COPY</button>
+                            <span class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-2">Assessment Formats (Select Multiple)</span>
+                            <div class="flex flex-wrap gap-2" id="assess-format-opts">
+                                <button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button>
+                                <button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button>
+                                <button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button>
+                                <button class="builder-btn border-dashed border-slate-400 text-slate-500 hover:text-slate-800 hover:border-slate-800 hover:bg-slate-100 ml-2" data-action="clear-assessment-formats">✕ Clear</button>
+                            </div>
+                            <div id="assess-custom-format-container" class="hidden pt-2">
+                                <input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-blue-300 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 outline-none transition text-sm font-medium text-slate-800 bg-white">
+                            </div>
                         </div>
                     </div>
-                    
-                    <div id="gem-tutor-prompt" class="text-xs font-mono text-blue-50 leading-relaxed whitespace-pre-wrap max-h-64 overflow-y-auto pr-4 custom-scrollbar">Role & Mission
-You are an enthusiastic, patient, and highly supportive AI tutor, dedicated to helping students in New Zealand achieve their academic goals. Your mission is to guide them through their learning journey with tailored support, encouragement, and interactive engagement.
+                </div>
 
-Step 1: Initialization & Gathering Details
-When a student first starts the chat, you must immediately ask them to provide:
-1. Their Name
-2. Their Year Level (e.g., Year 9, Year 11)
-3. The Subject they are studying (e.g., Science, English, History)
-4. The Specific Topic they want to revise today
-
-⚠️ DO NOT proceed to teach or explain anything until the student has provided these details.
-
-Step 2: Getting Started & Resource Introduction
-Warm Welcome: Once the details are provided, begin by addressing the student by name.
-Resource Introduction: Provide a concise, engaging overview of the topic (100-300 words). Ensure you outline 4 to 5 core knowledge facts or concepts essential for their year level according to the New Zealand Curriculum.
-🛑 Pacing Control: After providing the Warm Welcome and Resource Introduction, STOP. Ask the student if they are ready to begin the questions. Do not ask the first interactive question until the student explicitly confirms they are ready.
-
-Step 3: Interactive Learning & Testing
-Engage the student with one question at a time, encouraging active participation.
-🔄 Dynamic Variation (Replayability) Rule: Never generate the exact same quiz twice. Rotate the facts tested.
-🧠 Broader Knowledge Rule: Test the student on both foundational definitions and broader application/reasoning related to their topic. Use highly relevant New Zealand examples.
-
-📊 Presenting Visuals & Tables
-When testing data, timelines, or comparative concepts, format the facts into a clear Markdown table.
-
-🔢 Question Formats & Sequencing
-Ensure every question starts with a tracker (e.g., "Question 1/12:"):
-- Multiple-choice (Questions 1-3 ONLY): Build confidence with basic definitions or facts.
-- Fill-in-the-blank / Short Answer (Questions 4-8): Reinforce key vocabulary and comprehension.
-- Open-ended reasoning (Questions 9-12): Ask the student to evaluate varying hypothetical scenarios.
-
-Step 4: Handling Responses
-Handling Correct Answers: Offer positive reinforcement. Transition smoothly to the next question.
-Handling Incorrect Answers: Gently prompt for a second attempt. If still incorrect, provide a clear, step-by-step explanation.
-Handling "I don't know" / Skips: Do not just give them the answer. Break the current question down into a smaller, foundational question, or offer a highly relatable hint.
-
-Step 5: Personalised Learning & Motivation
-Maintain a positive, friendly, and encouraging tone throughout. Incorporate light humour. Ensure all output uses New Zealand English spelling and terminology.
-
-Step 6: Progress Monitoring
-8-Question Check-in Pause: Wait until the student has completely answered Question 8 and you have provided their feedback. Pause the quiz and check in by asking: "How do you feel about your progress so far?". Do not ask the next question until they reply to this check-in.
-12-Question Mandatory Report: Provide a mandatory progress report summarising their performance, strengths, and areas for improvement.</div>
+                <div id="ncea-assessment-container" class="hidden mt-4 pt-6 border-t border-slate-200">
+                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
+                        <div>
+                            <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span>
+                            <p class="text-xs text-purple-600 font-medium leading-tight">Generates two NCEA-style formative assessment options with a shared Achieved/Merit/Excellence grading matrix.</p>
+                        </div>
+                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-3">
+                            <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Achievement Standard Number <span class="text-red-500 text-xs">*</span></label>
+                            <input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908 (Required for NCEA Mode)" class="w-full p-2.5 rounded-lg border border-purple-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 outline-none transition text-sm font-medium text-slate-800 bg-white placeholder-purple-400">
+                            <p class="text-[10px] text-purple-600 font-bold italic mt-2">⚠️ NOTE: AI-generated assessments and matrices are drafts and may not perfectly align with official NZQA requirements. Always verify against the current standard.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-card border-t-8 border-t-purple-600 p-8">
-                    <h3 class="text-2xl font-bold mb-4">NotebookLM <span class="text-sm font-normal text-slate-500">(Source-Grounded)</span></h3>
-                    <p class="text-sm text-slate-700 mb-6">Upload the NZ Curriculum draft PDFs or link directly to the Tāhūrangi curriculum site in a Notebook. The AI will only use these specific sources to generate answers.</p>
-                    
-                    <div class="space-y-4">
-                        <div class="bg-purple-50 p-4 rounded-lg border border-purple-100 relative group">
-                            <span class="block text-xs font-bold text-purple-800 mb-1">Assessment Alignment</span>
-                            <span id="nl-prompt-1" class="text-sm font-mono text-slate-800">"Based on the uploaded Practice descriptors for this subject, evaluate this draft assignment. What specific Knowledge nodes are missing to achieve Merit or Excellence?"</span>
-                            <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-purple-800 shadow-sm" data-action="copy" data-target="nl-prompt-1">COPY</button>
-                        </div>
-                        <div class="bg-purple-50 p-4 rounded-lg border border-purple-100 relative group">
-                            <span class="block text-xs font-bold text-purple-800 mb-1">Knowledge Scaffolding</span>
-                            <span id="nl-prompt-2" class="text-sm font-mono text-slate-800">"Extract the 10 most complex Tier 3 vocabulary words from these draft documents. Create a glossary specifically differentiated for a student with a reading age of 10."</span>
-                            <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-purple-800 shadow-sm" data-action="copy" data-target="nl-prompt-2">COPY</button>
+            <!-- Output Prompt Card -->
+            <div class="glass-card p-8 border-t-8 border-t-[#002066] max-w-5xl mx-auto">
+                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col shadow-sm relative">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
+                        <div class="flex gap-2">
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="download" data-target="prompt-assessment-text">DOWNLOAD .TXT</button>
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
                         </div>
                     </div>
-                </div>
-
-                <div class="glass-card border-t-8 border-t-teal-600 p-8">
-                    <h3 class="text-2xl font-bold mb-4">Gemini Gems <span class="text-sm font-normal text-slate-500">(Specialised Personas)</span></h3>
-                    <p class="text-sm text-slate-700 mb-6">Create dedicated AI assistants pre-programmed with specific pedagogical rules so you don't have to rewrite instructions every time.</p>
-
-                    <div class="space-y-4">
-                        <div class="bg-teal-50 p-4 rounded-lg border border-teal-100 relative group">
-                            <span class="block text-xs font-bold text-teal-800 mb-1">Feedback & Evaluation Gem</span>
-                            <span id="gem-prompt-1" class="text-sm font-mono text-slate-800">System Instruction: "You are an expert NZ marker. I will provide student work. You must evaluate it strictly against the Te Mātaiaho practices. Provide 2 'glows' (positives) and 1 specific 'grow' (next step)."</span>
-                            <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-teal-800 shadow-sm" data-action="copy" data-target="gem-prompt-1">COPY</button>
-                        </div>
-                        <div class="bg-teal-50 p-4 rounded-lg border border-teal-100 relative group">
-                            <span class="block text-xs font-bold text-teal-800 mb-1">Dual-Coding Design Gem</span>
-                            <span id="gem-prompt-2" class="text-sm font-mono text-slate-800">System Instruction: "You are an expert in Cognitive Load Theory. When I give you a topic, explicitly describe a simple, non-redundant diagram I should draw on the whiteboard while I deliver the verbal explanation."</span>
-                            <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-white border border-slate-300 px-2 py-1 rounded text-[10px] font-bold text-teal-800 shadow-sm" data-action="copy" data-target="gem-prompt-2">COPY</button>
-                        </div>
+                    <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar">
+                        <span id="prompt-assessment-text">Select options to generate prompt...</span>
                     </div>
+                    <div class="flex justify-end mb-6 gap-2">
+                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="download" data-target="prompt-assessment-text">DOWNLOAD .TXT</button>
+                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
+                    </div>
+                    <a href="https://gemini.google.com/app" target="_blank" class="w-full text-center py-3 bg-[#002066] text-white rounded-xl font-bold hover:bg-blue-800 transition flex items-center justify-center gap-2 shadow-md">
+                        Open Gemini App ↗
+                    </a>
                 </div>
             </div>
         </div>
@@ -1074,7 +1079,8 @@ Step 6: Progress Monitoring
         var isAppReady = false;
 
         var unitState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons', context: 'none', maori: 'none', lit: 'none', num: 'none' };
-        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, nceaAssessment: false, activeStages: [1, 2, 3, 4, 5] };
+        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, activeStages: [1, 2, 3, 4, 5] };
+        var assessmentState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', formats: ['Short Answer'] };
 
         function getDesc(name) {
             if (cpmTaskDB[name] && cpmTaskDB[name].desc) return cpmTaskDB[name].desc;
@@ -1132,7 +1138,7 @@ Step 6: Progress Monitoring
 
         function showView(viewId) {
             sessionStorage.setItem('whs_active_view', viewId);
-            var views = ['instructional', 'planning', 'lesson', 'theory', 'advanced'];
+            var views = ['instructional', 'planning', 'lesson', 'assessment', 'theory'];
             for(var i=0; i<views.length; i++) {
                 var el = document.getElementById('view-' + views[i]);
                 if (el) el.classList.add('hidden');
@@ -1150,45 +1156,34 @@ Step 6: Progress Monitoring
 
         function checkSeniorStatus() {
             var isSenior = false;
+            var isJunior = false;
             var seniorLevels = ["Year 11", "Year 12", "Year 13", "Level 1", "Level 2", "Level 3"];
+            var juniorLevels = ["Year 7", "Year 8", "Year 9", "Year 10"];
+            
             for(var k=0; k<seniorLevels.length; k++) { 
-                if(lessonState.year.indexOf(seniorLevels[k]) !== -1) isSenior = true; 
+                if(assessmentState.year.indexOf(seniorLevels[k]) !== -1) isSenior = true; 
             }
-            var container = document.getElementById('ncea-assessment-container');
-            if(container) {
+            for(var j=0; j<juniorLevels.length; j++) { 
+                if(assessmentState.year.indexOf(juniorLevels[j]) !== -1) isJunior = true; 
+            }
+            
+            var nceaContainer = document.getElementById('ncea-assessment-container');
+            if(nceaContainer) {
                 if (isSenior) {
-                    container.classList.remove('hidden');
+                    nceaContainer.classList.remove('hidden');
                 } else {
-                    container.classList.add('hidden');
-                    if (lessonState.nceaAssessment) {
-                        lessonState.nceaAssessment = false;
-                        updateNceaUI();
-                    }
+                    nceaContainer.classList.add('hidden');
                 }
             }
-        }
 
-        function updateNceaUI() {
-            var btn = document.getElementById('btn-ncea-mode');
-            var standardContainer = document.getElementById('les-ncea-standard-container');
-            if (!btn) return;
-            if (lessonState.nceaAssessment) {
-                btn.classList.add('bg-purple-500', 'text-white', 'border-purple-600');
-                btn.classList.remove('bg-purple-100', 'text-purple-800', 'border-purple-300');
-                btn.innerText = "Disable NCEA Rubric";
-                if (standardContainer) standardContainer.classList.remove('hidden');
-            } else {
-                btn.classList.remove('bg-purple-500', 'text-white', 'border-purple-600');
-                btn.classList.add('bg-purple-100', 'text-purple-800', 'border-purple-300');
-                btn.innerText = "Enable NCEA Rubric";
-                if (standardContainer) standardContainer.classList.add('hidden');
+            var juniorContainer = document.getElementById('junior-assessment-container');
+            if(juniorContainer) {
+                if (isJunior) {
+                    juniorContainer.classList.remove('hidden');
+                } else {
+                    juniorContainer.classList.add('hidden');
+                }
             }
-        }
-
-        function toggleNceaMode() {
-            lessonState.nceaAssessment = !lessonState.nceaAssessment;
-            updateNceaUI();
-            updateLessonBuilderPrompt();
         }
 
         function getAiPicks(dept, year, topic, context, maori, lit, num) {
@@ -1296,7 +1291,8 @@ Step 6: Progress Monitoring
                 currentInstNum: currentInstNum,
                 currentStrategy: currentStrategy,
                 unitState: unitState,
-                lessonState: lessonState
+                lessonState: lessonState,
+                assessmentState: assessmentState
             };
             try { localStorage.setItem('whs_app_state', JSON.stringify(state)); } catch(e) { }
         }
@@ -1339,6 +1335,10 @@ Step 6: Progress Monitoring
                         for (var lk in state.lessonState) lessonState[lk] = state.lessonState[lk]; 
                         if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
                     }
+                    if (state.assessmentState) {
+                        for (var ak in state.assessmentState) assessmentState[ak] = state.assessmentState[ak];
+                        if (!assessmentState.formats) assessmentState.formats = ['Short Answer'];
+                    }
                     
                     setActiveBtn('discipline', currentDiscipline);
                     setActiveBtn('inst-year', currentInstructionalYear);
@@ -1363,6 +1363,28 @@ Step 6: Progress Monitoring
                     setActiveBtn('lesson-state', lessonState.lit, 'lit');
                     setActiveBtn('lesson-state', lessonState.num, 'num');
                     setActiveBtn('lesson-state', lessonState.extra, 'extra');
+
+                    setActiveBtn('assessment-state', assessmentState.dept, 'dept');
+                    setActiveBtn('assessment-state', assessmentState.year, 'year');
+                    
+                    var assessFormatBtns = document.querySelectorAll('[data-action="assessment-format"]');
+                    for(var af=0; af<assessFormatBtns.length; af++) {
+                        assessFormatBtns[af].classList.remove('active');
+                        assessFormatBtns[af].setAttribute('aria-pressed', 'false');
+                    }
+                    if (assessmentState.formats && assessmentState.formats.length > 0) {
+                        for (var af2=0; af2<assessmentState.formats.length; af2++) {
+                            var btnAf = document.querySelector('[data-action="assessment-format"][data-val="' + assessmentState.formats[af2] + '"]');
+                            if (btnAf) {
+                                btnAf.classList.add('active');
+                                btnAf.setAttribute('aria-pressed', 'true');
+                            }
+                        }
+                        if (assessmentState.formats.indexOf('Other') > -1) {
+                            var cfContainer = document.getElementById('assess-custom-format-container');
+                            if (cfContainer) cfContainer.classList.remove('hidden');
+                        }
+                    }
                     
                     var outBtns = document.querySelectorAll('[data-action="lesson-output"]');
                     for(var i=0; i<outBtns.length; i++) {
@@ -1401,7 +1423,6 @@ Step 6: Progress Monitoring
                         if(nBtn) { nBtn.classList.add('bg-orange-500', 'text-white', 'border-orange-600'); nBtn.classList.remove('bg-orange-100', 'text-orange-800', 'border-orange-300'); nBtn.innerText = "Disable NotebookLM Mode"; }
                     }
                     
-                    updateNceaUI();
                     checkSeniorStatus();
                     updateStageUI();
 
@@ -1544,8 +1565,12 @@ Step 6: Progress Monitoring
                 stageOutputRequest = "Provide an exit ticket, a summary review quiz, or a structured reflection task to lock in the learning before they leave.";
             }
             
+            var isLegacyNcea = (currentInstructionalYear.indexOf("Year 12") !== -1 || currentInstructionalYear.indexOf("Level 2") !== -1 || currentInstructionalYear.indexOf("Year 13") !== -1 || currentInstructionalYear.indexOf("Level 3") !== -1);
             var nzSuffix = currentDiscipline === 'Māori' ? "" : " CRITICAL INSTRUCTION: You MUST use New Zealand English spelling (e.g., 'analyse', 'colour', 'programme', 'behaviour') and terminology throughout all outputs.";
             var frameworkRule = " CRITICAL INSTRUCTION: DO NOT use the old 'Understand-Know-Do' (UKD) framework. You MUST use the new 'Knowledge & Practices' framework, explicitly teaching the disciplinary knowledge required.";
+            if (isLegacyNcea) {
+                frameworkRule = " CRITICAL INSTRUCTION: Align strictly with the CURRENT New Zealand Curriculum and existing NCEA requirements. (Do NOT use the phase 3 Knowledge & Practices drafts, as they are not yet active for Level 2/3).";
+            }
             var waihekeContext = currentInstContext === 'waiheke' ? " LOCAL CONTEXT RULE: Make Waiheke context (e.g., Hauraki Gulf, island life, Ngāti Pāoa) a core focus of this specific strategy's execution." : "";
             var maoriContext = currentInstMaori === 'integrate' ? " MĀTAURANGA MĀORI RULE: Make the integration of Mātauranga Māori, pūrākau, or tikanga a core focus of this strategy to ensure cultural responsiveness." : "";
             var litContext = currentInstLit === 'integrate' ? " LITERACY INTEGRATION: Make explicit disciplinary literacy (e.g., subject-specific vocab decoding, reading strategies) a core focus of this activity." : "";
@@ -1622,6 +1647,79 @@ Step 6: Progress Monitoring
             } else {
                 updateLessonBuilderPrompt();
             }
+        }
+
+        function setAssessmentState(key, val, btnElem) {
+            assessmentState[key] = val;
+            var parent = btnElem.parentElement;
+            var btns = parent.querySelectorAll('.builder-btn');
+            for(var i=0; i<btns.length; i++) btns[i].classList.remove('active');
+            btnElem.classList.add('active');
+            
+            if (key === 'dept' || key === 'year') {
+                renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
+                checkSeniorStatus();
+            }
+            
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+
+        function toggleAssessmentFormat(val) {
+            if (!assessmentState.formats) assessmentState.formats = [];
+            
+            if (val === 'Surprise Me') {
+                if (assessmentState.formats.length === 1 && assessmentState.formats[0] === 'Surprise Me') {
+                    assessmentState.formats = [];
+                } else {
+                    assessmentState.formats = ['Surprise Me'];
+                }
+            } else {
+                var surpriseIndex = assessmentState.formats.indexOf('Surprise Me');
+                if (surpriseIndex > -1) {
+                    assessmentState.formats.splice(surpriseIndex, 1);
+                }
+                
+                var index = assessmentState.formats.indexOf(val);
+                if (index > -1) {
+                    if (assessmentState.formats.length > 1) {
+                        assessmentState.formats.splice(index, 1);
+                    }
+                } else {
+                    assessmentState.formats.push(val);
+                }
+            }
+
+            var formatBtns = document.querySelectorAll('[data-action="assessment-format"]');
+            for(var i=0; i<formatBtns.length; i++) formatBtns[i].classList.remove('active');
+
+            for (var j=0; j<assessmentState.formats.length; j++) {
+                var btn = document.querySelector('[data-action="assessment-format"][data-val="' + assessmentState.formats[j] + '"]');
+                if (btn) btn.classList.add('active');
+            }
+
+            var customFormatContainer = document.getElementById('assess-custom-format-container');
+            if (customFormatContainer) {
+                if (assessmentState.formats.indexOf('Other') > -1) {
+                    customFormatContainer.classList.remove('hidden');
+                } else {
+                    customFormatContainer.classList.add('hidden');
+                }
+            }
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+
+        function clearAssessmentFormats() {
+            assessmentState.formats = [];
+            var formatBtns = document.querySelectorAll('[data-action="assessment-format"]');
+            for(var i=0; i<formatBtns.length; i++) formatBtns[i].classList.remove('active');
+            
+            var customFormatContainer = document.getElementById('assess-custom-format-container');
+            if (customFormatContainer) customFormatContainer.classList.add('hidden');
+            
+            updateAssessmentBuilderPrompt();
+            saveAppState();
         }
 
         function renderLessonStrategies(lesPicks) {
@@ -1771,6 +1869,7 @@ Step 6: Progress Monitoring
         function updateAllPrompts() {
             updateUnitBuilderPrompt();
             updateLessonBuilderPrompt();
+            updateAssessmentBuilderPrompt();
             if(currentStrategy) setStrategyPrompt(currentStrategy);
             saveAppState();
         }
@@ -1787,14 +1886,23 @@ Step 6: Progress Monitoring
             for(var i=0; i<juniorYears.length; i++) { if(unitState.year === juniorYears[i]) isJunior = true; }
 
             var curriculumUrl = getCurriculumLink(unitState.dept, unitState.year);
+            var isLegacyNcea = (unitState.year.indexOf("Year 12") !== -1 || unitState.year.indexOf("Level 2") !== -1 || unitState.year.indexOf("Year 13") !== -1 || unitState.year.indexOf("Level 3") !== -1);
 
             var text = '"Act as an expert curriculum designer.\n\n';
             text += 'CONTEXT:\nI am planning a ' + unitState.dur + ' unit on "' + topic + '" for a ' + unitState.year + ' ' + unitState.dept + ' class based on the New Zealand Curriculum.\n\n';
             
-            text += 'TASK:\nDesign a comprehensive, structured multi-week unit sequence outlining the specific Disciplinary Knowledge and Practices to be taught. Break the unit down into a detailed lesson-by-lesson sequence.\n\n';
+            if (isLegacyNcea) {
+                text += 'TASK:\nDesign a comprehensive, structured multi-week unit sequence outlining the specific curriculum concepts and learning outcomes to be taught. Break the unit down into a detailed lesson-by-lesson sequence.\n\n';
+            } else {
+                text += 'TASK:\nDesign a comprehensive, structured multi-week unit sequence outlining the specific Disciplinary Knowledge and Practices to be taught. Break the unit down into a detailed lesson-by-lesson sequence.\n\n';
+            }
             
             text += 'CONSTRAINTS & RULES:\n';
-            text += '- Curriculum Alignment: DO NOT use the old \'Understand-Know-Do\' (UKD) framework. You must base all design strictly on the new \'Knowledge\' and \'Practices\' framework drafts found here: ' + curriculumUrl + '\n';
+            if (isLegacyNcea) {
+                text += '- Curriculum Alignment: Align strictly with the CURRENT New Zealand Curriculum and existing NCEA requirements. (Do NOT use the phase 3 Knowledge & Practices drafts, as they are not yet active for Level 2/3).\n';
+            } else {
+                text += '- Curriculum Alignment: DO NOT use the old \'Understand-Know-Do\' (UKD) framework. You must base all design strictly on the new \'Knowledge\' and \'Practices\' framework drafts found here: ' + curriculumUrl + '\n';
+            }
             text += '- Lesson Structure: When designing the individual lessons in the \'Lesson Content\' table below, you MUST structure the learning activities using the 5 stages of the Common Practice Model (CPM).\n';
             text += '- Formatting: Provide all outputs clearly formatted using Markdown headers. No file creation commands.\n';
             if (unitState.dept !== 'Māori') text += '- Spelling: ' + nzSpellingRule + '\n';
@@ -1833,11 +1941,11 @@ Step 6: Progress Monitoring
             var topic = getGlobalTopic();
             var customTaskInput = document.getElementById('les-custom-task');
             var customTask = (customTaskInput && customTaskInput.value.trim()) ? customTaskInput.value.trim() : "";
-            var nceaStandardInput = document.getElementById('les-ncea-standard');
-            var nceaStandard = (nceaStandardInput && nceaStandardInput.value.trim()) ? nceaStandardInput.value.trim() : "";
             
             if (!lessonState.outputs) lessonState.outputs = [];
             if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
+
+            var isLegacyNcea = (lessonState.year.indexOf("Year 12") !== -1 || lessonState.year.indexOf("Level 2") !== -1 || lessonState.year.indexOf("Year 13") !== -1 || lessonState.year.indexOf("Level 3") !== -1);
             
             var needsSlides = false, needsWorksheet = false, needsContent = false, needsQuiz = false;
             for(var i=0; i<lessonState.outputs.length; i++) {
@@ -1872,10 +1980,17 @@ Step 6: Progress Monitoring
                 text += '<div style="font-family: \'Manrope\', Arial, sans-serif; color: #002066; position: relative; width: 100%; padding-bottom: 150px; border-bottom: 2px solid #002066; margin-bottom: 30px;"><div style="width: 100%;">\n';
                 text += '[Insert specific text, chunked material, prompts, or activities for students here.]</div><div style="position: absolute; bottom: 10px; right: 10px; width: 25%; min-width: 200px; background-color: #e8f5e9; border: 1px solid #002066; padding: 10px; box-shadow: -2px -2px 5px rgba(0,0,0,0.1); color: #002066;"><strong><small>[CPM STAGE TITLE]</small></strong><hr style="margin: 5px 0; border-top: 1px solid #002066;"><ul style="margin: 0; padding-left: 15px;"><li><small>[SHORT HITS BULLET 1]</small></li><li><small>[SHORT HITS BULLET 2]</small></li></ul></div></div>\n';
                 text += ticks + "\n\n";
-                text += 'PART 2: DETAILED SUBJECT CONTENT (The \'Knowledge and Practices\')\n';
-                text += 'Generate a highly detailed, textbook-level breakdown of the Knowledge and Practices for this topic. Include:\n';
-                text += '- Core disciplinary \'Knowledge\' (concepts, facts, and definitions) appropriate for ' + lessonState.year + ' in New Zealand.\n';
-                text += '- Core disciplinary \'Practices\' (how experts apply this knowledge).\n';
+                
+                if (isLegacyNcea) {
+                    text += 'PART 2: DETAILED SUBJECT CONTENT\n';
+                    text += 'Generate a highly detailed, textbook-level breakdown of the content for this topic under the CURRENT curriculum. Include:\n';
+                    text += '- Core disciplinary concepts, facts, and definitions appropriate for ' + lessonState.year + ' in New Zealand.\n';
+                } else {
+                    text += 'PART 2: DETAILED SUBJECT CONTENT (The \'Knowledge and Practices\')\n';
+                    text += 'Generate a highly detailed, textbook-level breakdown of the Knowledge and Practices for this topic. Include:\n';
+                    text += '- Core disciplinary \'Knowledge\' (concepts, facts, and definitions) appropriate for ' + lessonState.year + ' in New Zealand.\n';
+                    text += '- Core disciplinary \'Practices\' (how experts apply this knowledge).\n';
+                }
                 text += '- Common misconceptions and how to address them.\n';
                 text += '- Key disciplinary vocabulary (Tier 2 and Tier 3 words).\n\n';
 
@@ -1932,23 +2047,19 @@ Step 6: Progress Monitoring
             text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class (mixed-ability). The topic is: "' + topic + '".\n\n';
             
             text += 'TASK:\n';
-            if (lessonState.nceaAssessment) {
-                text += 'Design two different NCEA-style formative assessment options based on this topic, along with a single shared grading matrix. You must focus entirely on the assessment design. Do NOT generate a standard 5-stage CPM lesson plan.\n\n';
-            } else {
-                text += 'Design a comprehensive 60-minute lesson based on the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
-            }
+            text += 'Design a comprehensive 60-minute lesson based on the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
             
             text += 'CONSTRAINTS & RULES:\n';
             text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
-            text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
-            
-            if (!lessonState.nceaAssessment) {
-                text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
+            if (isLegacyNcea) {
+                text += '- Curriculum Alignment: Align strictly with the CURRENT New Zealand Curriculum and existing NCEA standard requirements. (Do NOT use the new \'Knowledge & Practices\' drafts for Level 2/3).\n';
+            } else {
+                text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
             }
-            
+            text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
             text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
             
-            if (!lessonState.nceaAssessment && lessonState.activeStages.length < 5) {
+            if (lessonState.activeStages.length < 5) {
                 text += '- Timing & Pacing Adjustment: You are only covering ' + lessonState.activeStages.length + ' of the 5 CPM stages in this 60-minute period. You MUST explicitly adjust the timing allocations and substantially expand the depth and duration of the requested activities (especially independent or collaborative tasks) to fill the full hour appropriately.\n';
             }
 
@@ -1958,11 +2069,7 @@ Step 6: Progress Monitoring
             if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
             
             if (lessonState.extra !== 'None') {
-                if (lessonState.nceaAssessment) {
-                    text += '- Differentiation: You MUST explicitly include targeted scaffolds or modified criteria within the assessment options for: ' + lessonState.extra + '.\n';
-                } else {
-                    text += '- Differentiation: You MUST adapt the Lesson Plan, Slideshow, and Worksheet to explicitly include targeted materials/scaffolds for: ' + lessonState.extra + '.\n';
-                }
+                text += '- Differentiation: You MUST adapt the Lesson Plan, Slideshow, and Worksheet to explicitly include targeted materials/scaffolds for: ' + lessonState.extra + '.\n';
             }
 
             if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests.\n';
@@ -1972,43 +2079,35 @@ Step 6: Progress Monitoring
 
             var partNum = 1;
             text += 'OUTPUTS REQUIRED:\n';
+            text += 'PART ' + partNum + ': The CPM Lesson Plan\n';
+            partNum++;
+            text += 'First, clearly print the Lesson Details above the table:\n';
+            text += '**Topic:** ' + topic + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
+            text += 'Use EXACTLY the Markdown table template below to structure the lesson plan based on the specific strategies chosen for each stage:\n';
+            text += '| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n';
+            text += '| --- | --- | --- | --- |\n';
             
-            if (lessonState.nceaAssessment) {
-                text += 'PART ' + partNum + ': NCEA Formative Assessment Options & Matrix\n';
-                partNum++;
-                text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the core knowledge and practices of this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n';
-                text += 'Following the two options, generate a single, strict NCEA-style grading matrix (rubric) formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. This single matrix MUST apply to both assessment options. The criteria MUST evaluate the specific disciplinary Knowledge and Practices aligned to the new curriculum drafts.\n\n';
-            } else {
-                text += 'PART ' + partNum + ': The CPM Lesson Plan\n';
-                partNum++;
-                text += 'First, clearly print the Lesson Details above the table:\n';
-                text += '**Topic:** ' + topic + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
-                text += 'Use EXACTLY the Markdown table template below to structure the lesson plan based on the specific strategies chosen for each stage:\n';
-                text += '| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n';
-                text += '| --- | --- | --- | --- |\n';
-                
-                if (lessonState.activeStages.indexOf(1) > -1) {
-                    text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation, exact questions, and a word-for-word opening script.] | [Specific URLs & materials] |\n';
-                    text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
-                }
-                if (lessonState.activeStages.indexOf(2) > -1) {
-                    text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
-                }
-                if (lessonState.activeStages.indexOf(3) > -1) {
-                    text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
-                }
-                if (lessonState.activeStages.indexOf(4) > -1) {
-                    var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
-                    if (lessonState.extra !== 'None') {
-                        stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
-                    }
-                    text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
-                }
-                if (lessonState.activeStages.indexOf(5) > -1) {
-                    text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n';
-                }
-                text += '\n';
+            if (lessonState.activeStages.indexOf(1) > -1) {
+                text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation, exact questions, and a word-for-word opening script.] | [Specific URLs & materials] |\n';
+                text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
             }
+            if (lessonState.activeStages.indexOf(2) > -1) {
+                text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
+            }
+            if (lessonState.activeStages.indexOf(3) > -1) {
+                text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
+            }
+            if (lessonState.activeStages.indexOf(4) > -1) {
+                var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
+                if (lessonState.extra !== 'None') {
+                    stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
+                }
+                text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
+            }
+            if (lessonState.activeStages.indexOf(5) > -1) {
+                text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n';
+            }
+            text += '\n';
 
             if (needsSlides) {
                 var isSeniorLevel = false;
@@ -2091,23 +2190,143 @@ Step 6: Progress Monitoring
                 text += 'Also provide a clean, plain-text list of the questions below the link as a backup, including a 1-sentence explanation/feedback for why each answer is correct.\n\n';
             }
 
-            if (lessonState.nceaAssessment) {
-                text += 'PART ' + partNum + ': NCEA Formative Assessment Options & Matrix\n';
-                partNum++;
-                if (nceaStandard) {
-                    text += 'CRITICAL INSTRUCTION: You MUST use your knowledge base to look up and apply the specific explanatory notes, criteria, and outcomes for NZQA Achievement Standard ' + nceaStandard + ' when designing these assessment options.\n';
+            text += '"';
+            
+            var box = document.getElementById('prompt-lesson-text');
+            if(box) box.innerText = text;
+        }
+
+        function updateAssessmentBuilderPrompt() {
+            var topic = getGlobalTopic();
+            var nceaStandardInput = document.getElementById('assess-ncea-standard');
+            var nceaStandard = (nceaStandardInput && nceaStandardInput.value.trim()) ? nceaStandardInput.value.trim() : "[INSERT REQUIRED STANDARD NUMBER]";
+            var customFormatInput = document.getElementById('assess-custom-format');
+            var customFormat = (customFormatInput && customFormatInput.value.trim()) ? customFormatInput.value.trim() : "Custom Format";
+            
+            var juniorKnowledgeInput = document.getElementById('assess-junior-knowledge');
+            var juniorKnowledge = (juniorKnowledgeInput && juniorKnowledgeInput.value.trim()) ? juniorKnowledgeInput.value.trim() : "";
+            var juniorPracticesInput = document.getElementById('assess-junior-practices');
+            var juniorPractices = (juniorPracticesInput && juniorPracticesInput.value.trim()) ? juniorPracticesInput.value.trim() : "";
+
+            var curriculumUrl = getCurriculumLink(assessmentState.dept, assessmentState.year);
+            var isSenior = false;
+            var seniorLevels = ["Year 11", "Year 12", "Year 13", "Level 1", "Level 2", "Level 3"];
+            for(var k=0; k<seniorLevels.length; k++) { 
+                if(assessmentState.year.indexOf(seniorLevels[k]) !== -1) isSenior = true; 
+            }
+            var isLegacyNcea = (assessmentState.year.indexOf("Year 12") !== -1 || assessmentState.year.indexOf("Level 2") !== -1 || assessmentState.year.indexOf("Year 13") !== -1 || assessmentState.year.indexOf("Level 3") !== -1);
+            
+            var isJunior = false;
+            var juniorLevels = ["Year 7", "Year 8", "Year 9", "Year 10"];
+            for(var j=0; j<juniorLevels.length; j++) {
+                if(assessmentState.year.indexOf(juniorLevels[j]) !== -1) isJunior = true;
+            }
+
+            var juniorKeywords = "";
+            if (assessmentState.year.indexOf("Year 7") !== -1) juniorKeywords = "- Emerging: Recall & Identify\n- Developing: Describe & Outline\n- Consolidating: Explain & Demonstrate\n- Proficient: Analyse & Evaluate\n- Exceeding: Synthesising (Integrating & Connecting)";
+            else if (assessmentState.year.indexOf("Year 8") !== -1) juniorKeywords = "- Emerging: Recognise & List\n- Developing: Describe & Paraphrase\n- Consolidating: Calculate & Apply\n- Proficient: Analyse & Critique\n- Exceeding: Synthesising (Predicting & Forecasting)";
+            else if (assessmentState.year.indexOf("Year 9") !== -1) juniorKeywords = "- Emerging: Identify & Name\n- Developing: Summarise & Discuss\n- Consolidating: Apply & Illustrate\n- Proficient: Evaluate & Justify\n- Exceeding: Synthesising (Deconstructing & Re-evaluating)";
+            else if (assessmentState.year.indexOf("Year 10") !== -1) juniorKeywords = "- Emerging: Recall & Recognise\n- Developing: Define & Interpret\n- Consolidating: Compare & Calculate\n- Proficient: Justify & Appraise\n- Exceeding: Synthesising (Theorising & Modelling)";
+            
+            var activeFormats = [];
+            if (assessmentState.formats) {
+                for (var f = 0; f < assessmentState.formats.length; f++) {
+                    if (assessmentState.formats[f] === 'Other' && customFormat !== "Custom Format") {
+                        activeFormats.push(customFormat);
+                    } else if (assessmentState.formats[f] !== 'Other' && assessmentState.formats[f] !== 'Surprise Me') {
+                        activeFormats.push(assessmentState.formats[f]);
+                    }
                 }
-                text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the core knowledge and practices of this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n';
-                text += 'Following the two options, generate a single, strict NCEA-style grading matrix (rubric) formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. This single matrix MUST apply to both assessment options. The criteria MUST evaluate the specific disciplinary Knowledge and Practices aligned to the new curriculum drafts';
-                if (nceaStandard) {
-                    text += ' AND explicitly map to the grading requirements of NZQA standard ' + nceaStandard;
+            }
+            if (activeFormats.length === 0 && assessmentState.formats && assessmentState.formats.indexOf('Surprise Me') === -1) activeFormats.push("Short Answer");
+            var formatChoiceStr = activeFormats.join(', ');
+            var hasResourceBased = assessmentState.formats ? (assessmentState.formats.indexOf('Resource Based') > -1) : false;
+            var hasSurpriseMe = assessmentState.formats ? (assessmentState.formats.indexOf('Surprise Me') > -1) : false;
+            
+            var text = '"Act as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n';
+            text += 'CONTEXT:\n';
+            text += 'I need an assessment for a ' + assessmentState.year + ' ' + assessmentState.dept + ' class. The topic is: "' + topic + '".\n\n';
+            
+            text += 'TASK:\n';
+            if (isJunior) {
+                if (hasSurpriseMe) {
+                    text += 'Design TWO highly innovative and creative formative assessment options, along with a specific grading matrix based on this topic. Do NOT generate a standard lesson plan.\n\n';
+                } else {
+                    text += 'Design a comprehensive formative assessment consisting of the following sections/formats: ' + formatChoiceStr + '. You must generate the assessment tasks and a specific grading matrix. Do NOT generate a standard lesson plan.\n\n';
                 }
-                text += '.\n\n';
+            } else if (isSenior) {
+                text += 'Design two different NCEA-style formative assessment options based on this topic, along with a single shared grading matrix. You must focus entirely on the assessment design. Do NOT generate a standard lesson plan.\n\n';
+            } else {
+                text += 'Design a comprehensive formative assessment task and a specific grading rubric/success criteria based on this topic. Do NOT generate a standard lesson plan.\n\n';
+            }
+            
+            text += 'CONSTRAINTS & RULES:\n';
+            text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
+            if (isLegacyNcea) {
+                text += '- Curriculum Alignment: Align strictly with the CURRENT New Zealand Curriculum and existing NCEA standard requirements. (Do NOT use the new \'Knowledge & Practices\' drafts for Level 2/3).\n';
+            } else {
+                text += '- Curriculum Alignment: You MUST use your integrated search tools to check the new \'Knowledge\' and \'Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
+            }
+            text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
+            
+            if (isJunior) {
+                if (hasResourceBased) {
+                    text += '- Resource Based Assessment: Because a "Resource Based" format was selected, you MUST use your integrated search tools to find highly relevant real-world resources (e.g., photos, diagrams, maps, primary written texts, data tables) related to the topic. Provide live, clickable URLs to these resources in the assessment and base your questions around them.\n';
+                }
+                if (juniorKnowledge) {
+                    text += '- Target Knowledge: The assessment MUST specifically test and require students to apply the following knowledge: "' + juniorKnowledge + '".\n';
+                }
+                if (juniorPractices) {
+                    text += '- Target Practices: The assessment MUST specifically require students to demonstrate the following practices: "' + juniorPractices + '".\n';
+                }
+            }
+
+            text += '- Formatting: Provide all outputs clearly formatted using Markdown headers. No file creation commands.\n\n';
+
+            text += 'OUTPUTS REQUIRED:\n';
+            
+            if (isJunior) {
+                if (hasSurpriseMe) {
+                    text += 'PART 1: Innovative Assessment Options (Surprise Me!)\n';
+                    text += 'Because the "Surprise Me" format was selected, you MUST come up with highly innovative, creative, and engaging ideas for this assessment. Generate TWO DIFFERENT out-of-the-box assessment task options that test the required knowledge and practices in an unconventional way (e.g., a podcast script, a Dragons Den pitch, an interactive museum exhibit, a mock trial, a simulation, etc.). Provide a brief scenario, specific instructions, and constraints for EACH option. Ensure both options directly test the target Knowledge and Practices.\n\n';
+                } else {
+                    text += 'PART 1: Assessment Task (' + formatChoiceStr + ')\n';
+                    text += 'Generate a clear, student-facing assessment task that structurally combines all requested formats (' + formatChoiceStr + '). Provide a brief scenario or context, the specific instructions for what the student must produce, and any necessary constraints (e.g., word count, formatting). Ensure the assessment directly tests the target Knowledge and Practices.\n\n';
+                }
+                
+                text += 'PART 2: Junior Grading Matrix\n';
+                text += 'Generate a specific grading matrix (rubric) formatted as a Markdown table. The matrix MUST use the new official progress descriptors (Emerging, Developing, Consolidating, Proficient, Exceeding) as the grading levels.\n';
+                text += 'CRITICAL RULE: You MUST explicitly design the criteria for each level to demonstrate the specific cognitive verbs assigned to ' + assessmentState.year + ':\n';
+                text += juniorKeywords + '\n\n';
+                text += 'Ensure the criteria strictly evaluate the specific disciplinary Knowledge and Practices for this topic, mapped to those exact verbs.\n\n';
+            } else if (isSenior) {
+                text += 'PART 1: NCEA Formative Assessment Options\n';
+                text += 'CRITICAL INSTRUCTION: You MUST use your integrated search tools and knowledge base to search the official NZQA website for Achievement Standard ' + nceaStandard + '. You MUST extract and apply the specific explanatory notes, step-up criteria (Achieved, Merit, Excellence), and learning outcomes to design these assessment options.\n';
+                if (isLegacyNcea) {
+                    text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the CURRENT curriculum requirements for this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n\n';
+                } else {
+                    text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the core knowledge and practices of this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n\n';
+                }
+                
+                text += 'PART 2: Shared NCEA Grading Matrix\n';
+                text += 'Generate a single, strict NCEA-style grading matrix (rubric) formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. This single matrix MUST apply to both assessment options. ';
+                if (isLegacyNcea) {
+                    text += 'The criteria MUST explicitly map to the grading requirements (Achieved, Merit, Excellence) of the CURRENT NZQA standard ' + nceaStandard + '.\n\n';
+                } else {
+                    text += 'The criteria MUST evaluate the specific disciplinary Knowledge and Practices aligned to the new curriculum drafts AND explicitly map to the grading requirements of NZQA standard ' + nceaStandard + '.\n\n';
+                }
+                text += 'IMPORTANT: You MUST include a bold disclaimer at the very bottom of your output stating: "**Note: This AI-generated assessment and grading matrix is a draft and may not perfectly align with official NZQA requirements. Always verify against the current standard.**"\n\n';
+            } else {
+                text += 'PART 1: Formative Assessment Task\n';
+                text += 'Generate a clear, student-facing formative assessment task. Provide a brief scenario or context, the specific instructions for what the student must produce, and any necessary constraints (e.g., word count, format).\n\n';
+                
+                text += 'PART 2: Success Criteria / Rubric\n';
+                text += 'Generate a specific grading rubric or a clear list of success criteria formatted as a Markdown table so students know exactly how they will be evaluated.\n\n';
             }
 
             text += '"';
             
-            var box = document.getElementById('prompt-lesson-text');
+            var box = document.getElementById('prompt-assessment-text');
             if(box) box.innerText = text;
         }
 
@@ -2235,9 +2454,11 @@ Step 6: Progress Monitoring
                 else if (action === 'strategy-prompt') setStrategyPrompt(val);
                 else if (action === 'unit-state') setUnitState(key, val, target);
                 else if (action === 'lesson-state') setLessonState(key, val, target);
+                else if (action === 'assessment-state') setAssessmentState(key, val, target);
+                else if (action === 'assessment-format') toggleAssessmentFormat(val);
+                else if (action === 'clear-assessment-formats') clearAssessmentFormats();
                 else if (action === 'toggle-relief') toggleReliefMode();
                 else if (action === 'toggle-notebooklm') toggleNotebookLMMode();
-                else if (action === 'toggle-ncea') toggleNceaMode();
                 else if (action === 'lesson-output') toggleLessonOutput(val);
                 else if (action === 'toggle-lesson-stage') toggleLessonStage(val);
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
@@ -2257,7 +2478,10 @@ Step 6: Progress Monitoring
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (e.target.id === 'unit-custom-task') updateUnitBuilderPrompt();
                 else if (e.target.id === 'les-custom-task') updateLessonBuilderPrompt();
-                else if (e.target.id === 'les-ncea-standard') updateLessonBuilderPrompt();
+                else if (e.target.id === 'assess-ncea-standard') updateAssessmentBuilderPrompt();
+                else if (e.target.id === 'assess-custom-format') updateAssessmentBuilderPrompt();
+                else if (e.target.id === 'assess-junior-knowledge') updateAssessmentBuilderPrompt();
+                else if (e.target.id === 'assess-junior-practices') updateAssessmentBuilderPrompt();
             });
         }
 
@@ -2269,6 +2493,7 @@ Step 6: Progress Monitoring
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
+            renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
             isAppReady = true;
             forceAiPicks(); 
             initChart(); 
