@@ -602,32 +602,45 @@
 
             <div class="glass-card p-8 border-t-8 border-t-[#002066]">
                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Lesson Stage Selection</h3>
-                <p class="text-sm text-slate-600 mb-6">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-[#10b981] text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
+                <p class="text-sm text-slate-600 mb-4">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-[#10b981] text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
+
+                <!-- NEW: STAGE TOGGLES -->
+                <div class="mb-8 md:w-1/2 bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
+                    <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-2">Include Stages in Lesson Plan</span>
+                    <div class="flex flex-wrap gap-2" id="les-stage-toggles">
+                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="all">All</button>
+                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="1">1 - Connect</button>
+                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="2">2 - I Do</button>
+                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="3">3 - We Do</button>
+                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="4">4 - You Do</button>
+                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="5">5 - Review</button>
+                    </div>
+                </div>
 
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="space-y-2">
                         
-                        <div class="stage-divider">
+                        <div id="stage-block-1" class="stage-divider transition-all duration-300">
                             <div class="stage-header mb-4"><span class="stage-number-badge">1</span> Connect</div>
                             <div class="flex flex-wrap gap-2" id="les-s1-opts"></div>
                         </div>
 
-                        <div class="stage-divider">
+                        <div id="stage-block-2" class="stage-divider transition-all duration-300">
                             <div class="stage-header mb-4"><span class="stage-number-badge">2</span> I Do</div>
                             <div class="flex flex-wrap gap-2" id="les-s2-opts"></div>
                         </div>
 
-                        <div class="stage-divider">
+                        <div id="stage-block-3" class="stage-divider transition-all duration-300">
                             <div class="stage-header mb-4"><span class="stage-number-badge">3</span> We Do</div>
                             <div class="flex flex-wrap gap-2" id="les-s3-opts"></div>
                         </div>
 
-                        <div class="stage-divider">
+                        <div id="stage-block-4" class="stage-divider transition-all duration-300">
                             <div class="stage-header mb-4"><span class="stage-number-badge">4</span> You Do</div>
                             <div class="flex flex-wrap gap-2" id="les-s4-opts"></div>
                         </div>
 
-                        <div class="stage-divider">
+                        <div id="stage-block-5" class="stage-divider transition-all duration-300">
                             <div class="stage-header mb-4"><span class="stage-number-badge">5</span> Review</div>
                             <div class="flex flex-wrap gap-2" id="les-s5-opts"></div>
                         </div>
@@ -1055,7 +1068,7 @@ Step 6: Progress Monitoring
         var isAppReady = false;
 
         var unitState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons', context: 'none', maori: 'none', lit: 'none', num: 'none' };
-        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, nceaAssessment: false };
+        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, nceaAssessment: false, activeStages: [1, 2, 3, 4, 5] };
 
         function getDesc(name) {
             if (cpmTaskDB[name] && cpmTaskDB[name].desc) return cpmTaskDB[name].desc;
@@ -1312,7 +1325,10 @@ Step 6: Progress Monitoring
                     currentStrategy = state.currentStrategy || currentStrategy;
                     
                     if (state.unitState) { for (var uk in state.unitState) unitState[uk] = state.unitState[uk]; }
-                    if (state.lessonState) { for (var lk in state.lessonState) lessonState[lk] = state.lessonState[lk]; }
+                    if (state.lessonState) { 
+                        for (var lk in state.lessonState) lessonState[lk] = state.lessonState[lk]; 
+                        if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
+                    }
                     
                     setActiveBtn('discipline', currentDiscipline);
                     setActiveBtn('inst-year', currentInstructionalYear);
@@ -1377,6 +1393,7 @@ Step 6: Progress Monitoring
                     
                     updateNceaUI();
                     checkSeniorStatus();
+                    updateStageUI();
 
                 } catch (e) { }
             }
@@ -1528,6 +1545,50 @@ Step 6: Progress Monitoring
             var promptBox = document.getElementById('prompt-text-instructional');
             if (promptBox) {
                 promptBox.innerText = '"Act as an expert pedagogical coach. I am teaching a lesson on ' + topic + ' to my ' + currentInstructionalYear + ' ' + currentDiscipline + ' class. We are currently in Stage ' + currentStage + ' of the Common Practice Model. I want to use the strategy: \'' + strategy + '\'. Generate the specific script, questions, or materials I need to execute this strategy effectively. Adapt the vocabulary, complexity, and tone specifically for a ' + currentInstructionalYear + ' level. Focus on managing cognitive load.\n\nOUTPUT REQUIREMENT:\n' + stageOutputRequest + '\n\nGOLD STANDARD FORMATTING: Do not provide a brief outline. You must write out the actual content, script, or questions in full so I can use them immediately in class.' + frameworkRule + nzSuffix + waihekeContext + maoriContext + litContext + numContext + fontRule + '"';
+            }
+        }
+
+        function toggleLessonStage(val) {
+            if (val === 'all') {
+                lessonState.activeStages = [1, 2, 3, 4, 5];
+            } else {
+                var stageNum = parseInt(val);
+                var idx = lessonState.activeStages.indexOf(stageNum);
+                if (idx > -1) {
+                    if (lessonState.activeStages.length > 1) { 
+                        lessonState.activeStages.splice(idx, 1);
+                    }
+                } else {
+                    lessonState.activeStages.push(stageNum);
+                }
+                lessonState.activeStages.sort();
+            }
+            updateStageUI();
+            updateLessonBuilderPrompt();
+            saveAppState();
+        }
+
+        function updateStageUI() {
+            var isAll = (lessonState.activeStages.length === 5);
+            var btnAll = document.querySelector('button[data-action="toggle-lesson-stage"][data-val="all"]');
+            if(btnAll) {
+                if(isAll) btnAll.classList.add('active'); else btnAll.classList.remove('active');
+            }
+            for(var i=1; i<=5; i++) {
+                var btn = document.querySelector('button[data-action="toggle-lesson-stage"][data-val="'+i+'"]');
+                var block = document.getElementById('stage-block-'+i);
+                var isActive = lessonState.activeStages.indexOf(i) > -1;
+                
+                if(btn) {
+                    if(isActive) btn.classList.add('active'); else btn.classList.remove('active');
+                }
+                if(block) {
+                    if(isActive) {
+                        block.classList.remove('opacity-40', 'pointer-events-none', 'grayscale');
+                    } else {
+                        block.classList.add('opacity-40', 'pointer-events-none', 'grayscale');
+                    }
+                }
             }
         }
 
@@ -1759,6 +1820,7 @@ Step 6: Progress Monitoring
             var customTaskInput = document.getElementById('les-custom-task');
             var customTask = (customTaskInput && customTaskInput.value.trim()) ? customTaskInput.value.trim() : "";
             if (!lessonState.outputs) lessonState.outputs = [];
+            if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
             
             var needsSlides = false, needsWorksheet = false, needsContent = false;
             for(var i=0; i<lessonState.outputs.length; i++) {
@@ -1779,6 +1841,7 @@ Step 6: Progress Monitoring
                 text += '- Spelling: ' + nzSpellingRule + '\n';
                 if (lessonState.context === 'waiheke') text += '- Local Context: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n';
                 if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Weave relevant Mātauranga Māori and local iwi history into the core content.\n';
+                if (lessonState.activeStages.length < 5) text += '- Timing Adjustment: You are only covering ' + lessonState.activeStages.length + ' of the 5 CPM stages in this 60-minute period. You MUST explicitly adjust the timing and substantially expand the depth and duration of the requested activities to fill the full hour appropriately.\n';
                 
                 text += '\nOUTPUTS REQUIRED:\n';
                 text += 'PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n';
@@ -1803,11 +1866,11 @@ Step 6: Progress Monitoring
                 text += '- Slide 1: Title & Hook\n';
                 text += '- Slide 2: Whāinga Ako (Learning Intentions) and Paearu Angitu (Success Criteria)\n';
                 text += '- Slide 3: Key Vocabulary (Define 4 to 6 critical terms for this lesson)\n';
-                text += '- Slide 4+: Stage 1: Connect - Strategy: ' + lessonState.s1 + '\n';
-                text += '- Slide(s) 5+: Stage 2: I Do - Strategy: ' + lessonState.s2 + '\n';
-                text += '- Slide(s) X+: Stage 3: We Do - Strategy: ' + lessonState.s3 + '\n';
-                text += '- Slide(s) Y+: Stage 4: You Do - Strategy: ' + lessonState.s4 + '\n';
-                text += '- Slide(s) Z+: Stage 5: Review - Strategy: ' + lessonState.s5 + '\n\n';
+                if (lessonState.activeStages.indexOf(1) > -1) text += '- Slide 4+: Stage 1: Connect - Strategy: ' + lessonState.s1 + '\n';
+                if (lessonState.activeStages.indexOf(2) > -1) text += '- Slide(s) 5+: Stage 2: I Do - Strategy: ' + lessonState.s2 + '\n';
+                if (lessonState.activeStages.indexOf(3) > -1) text += '- Slide(s) X+: Stage 3: We Do - Strategy: ' + lessonState.s3 + '\n';
+                if (lessonState.activeStages.indexOf(4) > -1) text += '- Slide(s) Y+: Stage 4: You Do - Strategy: ' + lessonState.s4 + '\n';
+                if (lessonState.activeStages.indexOf(5) > -1) text += '- Slide(s) Z+: Stage 5: Review - Strategy: ' + lessonState.s5 + '\n\n';
                 text += 'For each stage in this slideshow plan, write a brief instruction telling NotebookLM what type of content or activity it needs to inject into those specific slides based on the detailed subject content you wrote in Part 2."';
                 
                 var box = document.getElementById('prompt-lesson-text');
@@ -1851,7 +1914,7 @@ Step 6: Progress Monitoring
             text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class (mixed-ability). The topic is: "' + topic + '".\n\n';
             
             text += 'TASK:\n';
-            text += 'Design a comprehensive 60-minute lesson based on the 5 stages of the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
+            text += 'Design a comprehensive 60-minute lesson based on the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
             
             text += 'CONSTRAINTS & RULES:\n';
             text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
@@ -1859,6 +1922,10 @@ Step 6: Progress Monitoring
             text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
             text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
             
+            if (lessonState.activeStages.length < 5) {
+                text += '- Timing & Pacing Adjustment: You are only covering ' + lessonState.activeStages.length + ' of the 5 CPM stages in this 60-minute period. You MUST explicitly adjust the timing allocations and substantially expand the depth and duration of the requested activities (especially independent or collaborative tasks) to fill the full hour appropriately.\n';
+            }
+
             if (lessonState.context === 'waiheke') text += '- Waiheke Context: Weave local Waiheke Island / Hauraki Gulf contexts into the lesson.\n';
             if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Make the integration of Mātauranga Māori and local iwi history a core focus.\n';
             if (lessonState.lit === 'integrate') text += '- Literacy Integration: Make explicit disciplinary literacy practice a core focus.\n';
@@ -1880,18 +1947,28 @@ Step 6: Progress Monitoring
             text += 'Use EXACTLY the Markdown table template below to structure the lesson plan based on the specific strategies chosen for each stage:\n';
             text += '| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n';
             text += '| --- | --- | --- | --- |\n';
-            text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation, exact questions, and a word-for-word opening script.] | [Specific URLs & materials] |\n';
-            text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
-            text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
-            text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
             
-            var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
-            if (lessonState.extra !== 'None') {
-                stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
+            if (lessonState.activeStages.indexOf(1) > -1) {
+                text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation, exact questions, and a word-for-word opening script.] | [Specific URLs & materials] |\n';
+                text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
             }
-            text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
-            
-            text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n\n';
+            if (lessonState.activeStages.indexOf(2) > -1) {
+                text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
+            }
+            if (lessonState.activeStages.indexOf(3) > -1) {
+                text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
+            }
+            if (lessonState.activeStages.indexOf(4) > -1) {
+                var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
+                if (lessonState.extra !== 'None') {
+                    stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
+                }
+                text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
+            }
+            if (lessonState.activeStages.indexOf(5) > -1) {
+                text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n';
+            }
+            text += '\n';
 
             if (needsSlides) {
                 var isSeniorLevel = false;
@@ -1911,7 +1988,7 @@ Step 6: Progress Monitoring
                 }
                 text += 'Note: [A detailed speaker script of what I should actually say. CRUCIAL: Also describe a specific REAL-WORLD photograph or image you want included on this slide to ground the concept.]\n\n';
                 text += 'IMPORTANT STRUCTURE RULE: Slide 2 MUST be explicitly titled "Whāinga Ako & Paearu Angitu" and state the Learning Intention(s) and Success Criteria for the lesson.\n';
-                text += 'IMPORTANT STRUCTURE RULE: Slide 3 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson, immediately following the Stage 1 Connection slide.\n';
+                text += 'IMPORTANT STRUCTURE RULE: Slide 3 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson.\n';
                 if (lessonState.extra !== 'None') {
                     text += 'DIFFERENTIATION RULE: You must include at least one specific slide tailored to provide the requested accommodation: ' + lessonState.extra + '.\n';
                 }
@@ -1920,15 +1997,25 @@ Step 6: Progress Monitoring
             }
             
             if (needsWorksheet) {
+                var taskText = "the general tasks required";
+                var includedStages = [];
+                if (lessonState.activeStages.indexOf(2) > -1) includedStages.push("\\'" + lessonState.s2 + "\\' (I Do)");
+                if (lessonState.activeStages.indexOf(3) > -1) includedStages.push("\\'" + lessonState.s3 + "\\' (We Do)");
+                if (lessonState.activeStages.indexOf(4) > -1) includedStages.push("\\'" + lessonState.s4 + "\\' (You Do)");
+                
+                if (includedStages.length > 0) {
+                    taskText = "the exact " + includedStages.join(" and/or ") + " tasks outlined in your lesson plan";
+                }
+
                 text += 'PART 3: Differentiated Student Worksheet (Dual Format: Text & HTML)\n';
-                text += 'Design a highly detailed student worksheet that executes the \'We Do\' (' + lessonState.s3 + ') and \'You Do\' (' + lessonState.s4 + ') stages.\n';
+                text += 'Design a highly detailed student worksheet that executes the independent or collaborative portions of the lesson.\n';
                 text += 'CRITICAL FORMATTING INSTRUCTION: You MUST provide this worksheet in TWO formats:\n';
                 text += '1. Markdown Text: First, provide the entire worksheet as standard Markdown text directly in the chat so I can easily copy and paste it into a Word document.\n';
                 text += '2. HTML Code Block: Second, provide the exact same worksheet inside a SINGLE, beautifully styled HTML code block (' + ticks + 'html ... ' + ticks + '). Include CSS to make it look like a professional, printable worksheet. CRITICAL: You MUST close the HTML code block with ' + ticks + ' before moving on.\n\n';
                 text += 'Structure the worksheet with the following sections:\n';
                 text += '1. Title & Advance Organizer (e.g., a timeline, graphic, or summary box).\n';
                 text += '2. Key Vocabulary: Explicitly list and define 4 to 6 critical terms for the lesson.\n';
-                text += '3. Core Task: This section must specifically guide students through the exact \'' + lessonState.s3 + '\' (We Do) and \'' + lessonState.s4 + '\' (You Do) tasks outlined in your lesson plan. Incorporate elements like primary source analysis, data interpretation, or the CER (Claim, Evidence, Reasoning) framework depending on the subject.\n';
+                text += '3. Core Task: This section must specifically guide students through ' + taskText + '. Incorporate elements like primary source analysis, data interpretation, or the CER (Claim, Evidence, Reasoning) framework depending on the subject.\n';
                 text += '4. Fillable Areas: Ensure you use plenty of visual space, blank lines, or empty tables/divs so students have physical room to write their answers on the printed page.\n';
                 
                 if (lessonState.extra !== 'None') {
@@ -2052,7 +2139,7 @@ Step 6: Progress Monitoring
             for(var i=0; i<allBtns.length; i++) { allBtns[i].classList.remove('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]'); allBtns[i].classList.add('text-slate-700'); }
             if(btn) { btn.classList.add('bg-blue-50', 'text-[#002066]', 'border-l-4', 'border-l-[#002066]'); btn.classList.remove('text-slate-700'); }
 
-            var genericData = { emoji: "📌", desc: "A powerful instructional strategy mapped to the Common Practice Model.", load: "Carefully designed to manage extraneous cognitive load by structuring student focus.", ex: "Context: Year 10 Core Subject.\nTeacher action: The teacher introduces the strategy to the ākonga (students), ensuring instructions are clear.\nStudent action: Students engage with the material utilizing the provided scaffolds." };
+            var genericData = { emoji: "📌", desc: "A powerful instructional strategy mapped to the Common Practice Model.", load: "Carefully designed to manage extraneous cognitive load by structuring student focus.", ex: "Context: Year 10 Core Subject.\nTeacher action: The teacher introduces the strategy to the ākonga (students), ensuring instructions are clear.\nStudent action: Students engage with the material utilising the provided scaffolds." };
             var data = cpmTaskDB[taskName] || genericData;
             var container = document.getElementById('theory-task-detail');
             
@@ -2082,6 +2169,7 @@ Step 6: Progress Monitoring
                 else if (action === 'toggle-notebooklm') toggleNotebookLMMode();
                 else if (action === 'toggle-ncea') toggleNceaMode();
                 else if (action === 'lesson-output') toggleLessonOutput(val);
+                else if (action === 'toggle-lesson-stage') toggleLessonStage(val);
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
                 else if (action === 'theory-detail') renderTheoryTaskDetail(val, target);
                 else if (action === 'reset-app') document.getElementById('reset-modal').classList.remove('hidden');
