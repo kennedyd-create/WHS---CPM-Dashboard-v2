@@ -597,6 +597,24 @@
                             Enable NotebookLM Mode
                         </button>
                     </div>
+
+                    <div id="ncea-assessment-container" class="hidden md:col-span-2">
+                        <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
+                            <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4">
+                                <div>
+                                    <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span>
+                                    <p class="text-xs text-purple-600 font-medium leading-tight">Generate two NCEA-style formative assessment options with a shared Achieved/Merit/Excellence grading matrix.</p>
+                                </div>
+                                <button id="btn-ncea-mode" class="shrink-0 px-4 py-2.5 bg-purple-100 border border-purple-300 text-purple-800 text-xs font-bold rounded-lg hover:bg-purple-500 hover:text-white hover:border-purple-600 transition-colors shadow-sm whitespace-nowrap" data-action="toggle-ncea">
+                                    Enable NCEA Rubric
+                                </button>
+                            </div>
+                            <div id="les-ncea-standard-container" class="hidden border-t border-purple-200 pt-3">
+                                <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Achievement Standard Number (Optional)</label>
+                                <input type="text" id="les-ncea-standard" placeholder="e.g. AS91908 or 91908" class="w-full p-2.5 rounded-lg border border-purple-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 outline-none transition text-sm font-medium text-slate-800 bg-white placeholder-purple-300/70">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -657,6 +675,7 @@
                                 <button id="btn-out-slides" class="builder-btn" data-action="lesson-output" data-val="slides">+ Slides</button>
                                 <button id="btn-out-worksheet" class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
                                 <button id="btn-out-content" class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
+                                <button id="btn-out-quiz" class="builder-btn" data-action="lesson-output" data-val="quiz">+ Quiz</button>
                                 <button id="btn-out-all" class="builder-btn" data-action="lesson-output" data-val="all">All Outputs</button>
                             </div>
                         </div>
@@ -668,19 +687,6 @@
                                 <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners (simplified vocab, visual reliance)">ESOL Resource</button>
                                 <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Low Literacy Accommodations (heavy scaffolding)">Low Lit Scaffold</button>
                                 <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Extension/Gifted (abstract application, complex texts)">Extension Task</button>
-                            </div>
-                        </div>
-
-                        <div id="ncea-assessment-container" class="pt-4 border-t border-slate-200 hidden">
-                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">NCEA Assessment Mode (Senior Only)</span>
-                            <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm gap-4">
-                                <div>
-                                    <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">Formative Assessment & Rubric</span>
-                                    <p class="text-xs text-purple-600 font-medium leading-tight">Generate an NCEA-style formative task with an Achieved/Merit/Excellence grading rubric.</p>
-                                </div>
-                                <button id="btn-ncea-mode" class="shrink-0 px-4 py-2.5 bg-purple-100 border border-purple-300 text-purple-800 text-xs font-bold rounded-lg hover:bg-purple-500 hover:text-white hover:border-purple-600 transition-colors shadow-sm whitespace-nowrap" data-action="toggle-ncea">
-                                    Enable NCEA Rubric
-                                </button>
                             </div>
                         </div>
 
@@ -1125,6 +1131,7 @@ Step 6: Progress Monitoring
         }
 
         function showView(viewId) {
+            sessionStorage.setItem('whs_active_view', viewId);
             var views = ['instructional', 'planning', 'lesson', 'theory', 'advanced'];
             for(var i=0; i<views.length; i++) {
                 var el = document.getElementById('view-' + views[i]);
@@ -1163,15 +1170,18 @@ Step 6: Progress Monitoring
 
         function updateNceaUI() {
             var btn = document.getElementById('btn-ncea-mode');
+            var standardContainer = document.getElementById('les-ncea-standard-container');
             if (!btn) return;
             if (lessonState.nceaAssessment) {
                 btn.classList.add('bg-purple-500', 'text-white', 'border-purple-600');
                 btn.classList.remove('bg-purple-100', 'text-purple-800', 'border-purple-300');
                 btn.innerText = "Disable NCEA Rubric";
+                if (standardContainer) standardContainer.classList.remove('hidden');
             } else {
                 btn.classList.remove('bg-purple-500', 'text-white', 'border-purple-600');
                 btn.classList.add('bg-purple-100', 'text-purple-800', 'border-purple-300');
                 btn.innerText = "Enable NCEA Rubric";
+                if (standardContainer) standardContainer.classList.add('hidden');
             }
         }
 
@@ -1367,7 +1377,7 @@ Step 6: Progress Monitoring
                                 btn.setAttribute('aria-pressed', 'true');
                             }
                         }
-                        if (lessonState.outputs.length === 3) {
+                        if (lessonState.outputs.length === 4) {
                             var allBtn = document.querySelector('[data-action="lesson-output"][data-val="all"]');
                             if (allBtn) {
                                 allBtn.classList.add('active');
@@ -1661,7 +1671,7 @@ Step 6: Progress Monitoring
             if (type === 'none') {
                 lessonState.outputs = [];
             } else if (type === 'all') {
-                lessonState.outputs = ['slides', 'worksheet', 'content'];
+                lessonState.outputs = ['slides', 'worksheet', 'content', 'quiz'];
             } else {
                 var index = -1;
                 for(var i=0; i<lessonState.outputs.length; i++) { if(lessonState.outputs[i] === type) index = i; }
@@ -1679,25 +1689,29 @@ Step 6: Progress Monitoring
             var btnSlides = document.querySelector('[data-action="lesson-output"][data-val="slides"]');
             var btnWorksheet = document.querySelector('[data-action="lesson-output"][data-val="worksheet"]');
             var btnContent = document.querySelector('[data-action="lesson-output"][data-val="content"]');
+            var btnQuiz = document.querySelector('[data-action="lesson-output"][data-val="quiz"]');
             var btnAll = document.querySelector('[data-action="lesson-output"][data-val="all"]');
 
             if(btnNone) btnNone.classList.add('active');
             
-            if (lessonState.outputs.length === 3) {
+            if (lessonState.outputs.length === 4) {
                 if(btnSlides) btnSlides.classList.add('active');
                 if(btnWorksheet) btnWorksheet.classList.add('active');
                 if(btnContent) btnContent.classList.add('active');
+                if(btnQuiz) btnQuiz.classList.add('active');
                 if(btnAll) btnAll.classList.add('active');
             } else {
-                var hasSlides = false, hasWorksheet = false, hasContent = false;
+                var hasSlides = false, hasWorksheet = false, hasContent = false, hasQuiz = false;
                 for(var j=0; j<lessonState.outputs.length; j++) {
                     if(lessonState.outputs[j] === 'slides') hasSlides = true;
                     if(lessonState.outputs[j] === 'worksheet') hasWorksheet = true;
                     if(lessonState.outputs[j] === 'content') hasContent = true;
+                    if(lessonState.outputs[j] === 'quiz') hasQuiz = true;
                 }
                 if (hasSlides && btnSlides) btnSlides.classList.add('active');
                 if (hasWorksheet && btnWorksheet) btnWorksheet.classList.add('active');
                 if (hasContent && btnContent) btnContent.classList.add('active');
+                if (hasQuiz && btnQuiz) btnQuiz.classList.add('active');
             }
             updateLessonBuilderPrompt();
         }
@@ -1819,14 +1833,18 @@ Step 6: Progress Monitoring
             var topic = getGlobalTopic();
             var customTaskInput = document.getElementById('les-custom-task');
             var customTask = (customTaskInput && customTaskInput.value.trim()) ? customTaskInput.value.trim() : "";
+            var nceaStandardInput = document.getElementById('les-ncea-standard');
+            var nceaStandard = (nceaStandardInput && nceaStandardInput.value.trim()) ? nceaStandardInput.value.trim() : "";
+            
             if (!lessonState.outputs) lessonState.outputs = [];
             if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
             
-            var needsSlides = false, needsWorksheet = false, needsContent = false;
+            var needsSlides = false, needsWorksheet = false, needsContent = false, needsQuiz = false;
             for(var i=0; i<lessonState.outputs.length; i++) {
                 if(lessonState.outputs[i] === 'slides') needsSlides = true;
                 if(lessonState.outputs[i] === 'worksheet') needsWorksheet = true;
                 if(lessonState.outputs[i] === 'content') needsContent = true;
+                if(lessonState.outputs[i] === 'quiz') needsQuiz = true;
             }
 
             var curriculumUrl = getCurriculumLink(lessonState.dept, lessonState.year);
@@ -1914,15 +1932,23 @@ Step 6: Progress Monitoring
             text += 'I am teaching a ' + lessonState.year + ' ' + lessonState.dept + ' class (mixed-ability). The topic is: "' + topic + '".\n\n';
             
             text += 'TASK:\n';
-            text += 'Design a comprehensive 60-minute lesson based on the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
+            if (lessonState.nceaAssessment) {
+                text += 'Design two different NCEA-style formative assessment options based on this topic, along with a single shared grading matrix. You must focus entirely on the assessment design. Do NOT generate a standard 5-stage CPM lesson plan.\n\n';
+            } else {
+                text += 'Design a comprehensive 60-minute lesson based on the Common Practice Model (CPM). You must provide all content in full, ready-to-use detail—no brief outlines or filler. Ground the lesson in specific, real-world examples or case studies relevant to the topic.\n\n';
+            }
             
             text += 'CONSTRAINTS & RULES:\n';
             text += 'ABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
             text += '- Curriculum Alignment: Align strictly with the new \'Knowledge & Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n';
-            text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
+            
+            if (!lessonState.nceaAssessment) {
+                text += '- Pedagogy: Start with clear Learning Intention(s) and measurable Success Criteria.\n';
+            }
+            
             text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
             
-            if (lessonState.activeStages.length < 5) {
+            if (!lessonState.nceaAssessment && lessonState.activeStages.length < 5) {
                 text += '- Timing & Pacing Adjustment: You are only covering ' + lessonState.activeStages.length + ' of the 5 CPM stages in this 60-minute period. You MUST explicitly adjust the timing allocations and substantially expand the depth and duration of the requested activities (especially independent or collaborative tasks) to fill the full hour appropriately.\n';
             }
 
@@ -1932,7 +1958,11 @@ Step 6: Progress Monitoring
             if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
             
             if (lessonState.extra !== 'None') {
-                text += '- Differentiation: You MUST adapt the Lesson Plan, Slideshow, and Worksheet to explicitly include targeted materials/scaffolds for: ' + lessonState.extra + '.\n';
+                if (lessonState.nceaAssessment) {
+                    text += '- Differentiation: You MUST explicitly include targeted scaffolds or modified criteria within the assessment options for: ' + lessonState.extra + '.\n';
+                } else {
+                    text += '- Differentiation: You MUST adapt the Lesson Plan, Slideshow, and Worksheet to explicitly include targeted materials/scaffolds for: ' + lessonState.extra + '.\n';
+                }
             }
 
             if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests.\n';
@@ -1940,42 +1970,53 @@ Step 6: Progress Monitoring
             text += '- Live Links & Resources: Where appropriate, provide real, verifiable URLs to reputable sources (e.g. YouTube videos, interactives) for maps, statistics, and further reading.\n';
             text += '- Formatting: Provide all outputs clearly formatted using Markdown headers. No file creation commands.\n\n';
 
+            var partNum = 1;
             text += 'OUTPUTS REQUIRED:\n';
-            text += 'PART 1: The CPM Lesson Plan\n';
-            text += 'First, clearly print the Lesson Details above the table:\n';
-            text += '**Topic:** ' + topic + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
-            text += 'Use EXACTLY the Markdown table template below to structure the lesson plan based on the specific strategies chosen for each stage:\n';
-            text += '| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n';
-            text += '| --- | --- | --- | --- |\n';
             
-            if (lessonState.activeStages.indexOf(1) > -1) {
-                text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation, exact questions, and a word-for-word opening script.] | [Specific URLs & materials] |\n';
-                text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
-            }
-            if (lessonState.activeStages.indexOf(2) > -1) {
-                text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
-            }
-            if (lessonState.activeStages.indexOf(3) > -1) {
-                text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
-            }
-            if (lessonState.activeStages.indexOf(4) > -1) {
-                var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
-                if (lessonState.extra !== 'None') {
-                    stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
+            if (lessonState.nceaAssessment) {
+                text += 'PART ' + partNum + ': NCEA Formative Assessment Options & Matrix\n';
+                partNum++;
+                text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the core knowledge and practices of this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n';
+                text += 'Following the two options, generate a single, strict NCEA-style grading matrix (rubric) formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. This single matrix MUST apply to both assessment options. The criteria MUST evaluate the specific disciplinary Knowledge and Practices aligned to the new curriculum drafts.\n\n';
+            } else {
+                text += 'PART ' + partNum + ': The CPM Lesson Plan\n';
+                partNum++;
+                text += 'First, clearly print the Lesson Details above the table:\n';
+                text += '**Topic:** ' + topic + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
+                text += 'Use EXACTLY the Markdown table template below to structure the lesson plan based on the specific strategies chosen for each stage:\n';
+                text += '| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n';
+                text += '| --- | --- | --- | --- |\n';
+                
+                if (lessonState.activeStages.indexOf(1) > -1) {
+                    text += '| **Stage 1: CONNECTION** | **' + lessonState.s1 + '** | [Detailed explanation, exact questions, and a word-for-word opening script.] | [Specific URLs & materials] |\n';
+                    text += '| **KEY VOCABULARY** | **Explicit Instruction** | [List and define 4 to 6 key Tier 2 & Tier 3 terms required for this lesson] | [Vocab Resources/URLs] |\n';
                 }
-                text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
+                if (lessonState.activeStages.indexOf(2) > -1) {
+                    text += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Provide the actual word-for-word teacher script and exact whiteboard/modelling instructions.] | [Specific URLs & materials] |\n';
+                }
+                if (lessonState.activeStages.indexOf(3) > -1) {
+                    text += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [List the specific guided questions, hinge questions, and collaborative tasks.] | [Specific URLs & materials] |\n';
+                }
+                if (lessonState.activeStages.indexOf(4) > -1) {
+                    var stage4Content = '[Provide the exact instructions and scaffolds for the independent task.]';
+                    if (lessonState.extra !== 'None') {
+                        stage4Content = '[Provide exact instructions, explicitly detailing the differentiation/modifications for: ' + lessonState.extra + '.]';
+                    }
+                    text += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + stage4Content + ' | [Specific URLs & materials] |\n';
+                }
+                if (lessonState.activeStages.indexOf(5) > -1) {
+                    text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n';
+                }
+                text += '\n';
             }
-            if (lessonState.activeStages.indexOf(5) > -1) {
-                text += '| **Stage 5: REFLECTION** | **' + lessonState.s5 + '** | [Provide the exact questions or task for the exit ticket/review.] | [Specific URLs & materials] |\n';
-            }
-            text += '\n';
 
             if (needsSlides) {
                 var isSeniorLevel = false;
                 var seniorLevels = ["Year 11", "Year 12", "Year 13", "Level 1", "Level 2", "Level 3"];
                 for(var k=0; k<seniorLevels.length; k++) { if(lessonState.year.indexOf(seniorLevels[k]) !== -1) isSeniorLevel = true; }
 
-                text += 'PART 2: Complete Slideshow Content & Speaker Notes\n';
+                text += 'PART ' + partNum + ': Complete Slideshow Content & Speaker Notes\n';
+                partNum++;
                 text += 'Provide the exact, ready-to-paste content for at least 8 slides based on the ' + lessonState.year + ' level.\n';
                 text += 'There is a file you can reference named "WHS Generic Slide Template - Basic". Refer to this file by its name verbatim.\n';
                 text += 'You MUST format EVERY slide exactly like this text block:\n\n';
@@ -2007,7 +2048,8 @@ Step 6: Progress Monitoring
                     taskText = "the exact " + includedStages.join(" and/or ") + " tasks outlined in your lesson plan";
                 }
 
-                text += 'PART 3: Differentiated Student Worksheet (Dual Format: Text & HTML)\n';
+                text += 'PART ' + partNum + ': Differentiated Student Worksheet (Dual Format: Text & HTML)\n';
+                partNum++;
                 text += 'Design a highly detailed student worksheet that executes the independent or collaborative portions of the lesson.\n';
                 text += 'CRITICAL FORMATTING INSTRUCTION: You MUST provide this worksheet in TWO formats:\n';
                 text += '1. Markdown Text: First, provide the entire worksheet as standard Markdown text directly in the chat so I can easily copy and paste it into a Word document.\n';
@@ -2026,13 +2068,41 @@ Step 6: Progress Monitoring
             }
             
             if (needsContent) {
-                text += 'PART 4: Teacher Content Reference Sheet\n';
+                text += 'PART ' + partNum + ': Teacher Content Reference Sheet\n';
+                partNum++;
                 text += 'Provide a 1-page summary of the core facts, data, and disciplinary concepts regarding the chosen topic for me to use as a quick-reference guide. Include 2-3 live links to high-quality articles, YouTube videos, or data dashboards for my background reading.\n\n';
             }
 
+            if (needsQuiz) {
+                text += 'PART ' + partNum + ': Formative Quiz Generation (Kahoot & Google Forms)\n';
+                partNum++;
+                text += 'Generate a 10-question formative quiz based on this lesson\'s core knowledge. You MUST provide the quiz with the following output actions:\n\n';
+                text += 'ACTION 1: Kahoot Spreadsheet Export\n';
+                text += 'Generate the exact data required for Kahoot\'s template. You MUST adhere to these constraints:\n';
+                text += '- Columns MUST be exactly: Question, Answer 1, Answer 2, Answer 3, Answer 4, Time limit (sec), Correct answer(s)\n';
+                text += '- Question Length: Maximum 95 characters (including spaces).\n';
+                text += '- Answer Length: Maximum 60 characters (including spaces).\n';
+                text += '- Answer Options: Exactly 4 plausible answer options per question.\n';
+                text += '- Time Limit: Exactly 20 for all questions.\n';
+                text += '- Correct Answer: Just the column number (1, 2, 3, or 4). CRITICAL: You MUST randomly mix up which column contains the correct answer so it is not always the first option.\n';
+                text += 'OUTPUT: Provide this data inside a CSV (Comma Separated Values) code block so I can save it directly as a spreadsheet file (.csv) to upload to Kahoot.\n\n';
+                text += 'ACTION 2: Google Forms Auto-Generation\n';
+                text += 'You MUST attempt to automatically generate a functional Google Form Quiz. Trigger your @Google Workspace extension (if available) to create the form and provide me the live link.\n';
+                text += 'Also provide a clean, plain-text list of the questions below the link as a backup, including a 1-sentence explanation/feedback for why each answer is correct.\n\n';
+            }
+
             if (lessonState.nceaAssessment) {
-                text += 'PART 5: NCEA Formative Assessment & A/M/E Rubric\n';
-                text += 'Generate a specific formative assessment task based on today\'s lesson. Following the task, generate a strict NCEA-style grading rubric formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. The criteria MUST evaluate the specific disciplinary Knowledge and Practices aligned to the new curriculum drafts.\n\n';
+                text += 'PART ' + partNum + ': NCEA Formative Assessment Options & Matrix\n';
+                partNum++;
+                if (nceaStandard) {
+                    text += 'CRITICAL INSTRUCTION: You MUST use your knowledge base to look up and apply the specific explanatory notes, criteria, and outcomes for NZQA Achievement Standard ' + nceaStandard + ' when designing these assessment options.\n';
+                }
+                text += 'Generate TWO different formative assessment task options (Option 1 and Option 2) based on the core knowledge and practices of this topic. This gives the teacher a choice of assessment style (e.g., a written report vs. a visual presentation, or a theoretical essay vs. a practical application).\n';
+                text += 'Following the two options, generate a single, strict NCEA-style grading matrix (rubric) formatted as a Markdown table with explicit columns for Achieved, Merit, and Excellence. This single matrix MUST apply to both assessment options. The criteria MUST evaluate the specific disciplinary Knowledge and Practices aligned to the new curriculum drafts';
+                if (nceaStandard) {
+                    text += ' AND explicitly map to the grading requirements of NZQA standard ' + nceaStandard;
+                }
+                text += '.\n\n';
             }
 
             text += '"';
@@ -2177,6 +2247,8 @@ Step 6: Progress Monitoring
                 else if (action === 'confirm-reset') {
                     localStorage.removeItem('whs_app_state');
                     localStorage.removeItem('whs_topic');
+                    var inputs = document.querySelectorAll('input');
+                    for(var i=0; i<inputs.length; i++) inputs[i].value = '';
                     window.location.reload();
                 }
             });
@@ -2185,6 +2257,7 @@ Step 6: Progress Monitoring
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (e.target.id === 'unit-custom-task') updateUnitBuilderPrompt();
                 else if (e.target.id === 'les-custom-task') updateLessonBuilderPrompt();
+                else if (e.target.id === 'les-ncea-standard') updateLessonBuilderPrompt();
             });
         }
 
@@ -2199,7 +2272,8 @@ Step 6: Progress Monitoring
             isAppReady = true;
             forceAiPicks(); 
             initChart(); 
-            showView('instructional'); 
+            var initialView = sessionStorage.getItem('whs_active_view') || 'instructional';
+            showView(initialView); 
         };
     </script>
 </body>
