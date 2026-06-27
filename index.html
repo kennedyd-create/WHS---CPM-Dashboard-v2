@@ -203,7 +203,26 @@
         <header class="whs-gradient-bg rounded-lg p-8 md:p-12 text-white mb-10 shadow-md relative overflow-hidden flex justify-between items-center">
             <div class="relative z-10">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
-                    <img src="Asset 1@2x.png" alt="WHS Logo" class="h-16 md:h-24 w-auto object-contain bg-[#d1e6f6] p-3 rounded-2xl shadow-sm" onerror="this.onerror=null; this.outerHTML='<div class=\'border-2 border-white rounded-full px-4 py-1 inline-block\'><span class=\'font-extrabold text-lg tracking-widest uppercase\'>WHS</span></div>';">
+                    
+                    <!-- NEW HYBRID CPM + AI BADGE -->
+                    <div class="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#10b981]/20 to-white/10 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 shrink-0 group overflow-hidden">
+                        <div class="absolute inset-0 bg-[#c5a059] blur-[20px] opacity-20 group-hover:opacity-40 transition duration-700"></div>
+                        <div class="relative z-10 flex items-center justify-center">
+                            <svg class="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                            <svg class="absolute -top-2 -right-2 w-6 h-6 text-[#c5a059] drop-shadow-[0_0_8px_rgba(197,160,89,1)] animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2z"/>
+                            </svg>
+                            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-[1px]">
+                                <svg class="w-4 h-4 text-[#10b981] drop-shadow-[0_0_5px_rgba(16,185,129,0.8)]" fill="currentColor" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="2 4" class="animate-[spin_6s_linear_infinite]"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
                     <div>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1>
                         <h2 class="text-xl md:text-2xl font-normal opacity-90">CPM & AI Navigator</h2>
@@ -986,7 +1005,7 @@
             "Problem Pairs": { emoji: "⚖️", desc: "Teacher models one problem, students immediately try an identical one.", load: "High scaffolding prevents novice learners from guessing.", ex: "Context: Year 11 Physics.\nTeacher action: Solves calculation on left board. Writes identical structure on right.\nStudent action: Uses exact layout to solve new problem." },
             "Reverse Engineering": { emoji: "⚙️", desc: "Giving students an Excellence exemplar and asking them to deconstruct why it got that grade.", load: "Moves focus from 'generating content' to 'understanding criteria'.", ex: "Context: Year 11 English.\nTeacher action: Hands out Excellence paragraph. Asks to highlight specific structures.\nStudent action: Maps anatomy of perfect answer." },
             "Cold Call Follow-On": { emoji: "🧊", desc: "Asking one student a question, then asking another to evaluate or add to their answer.", load: "Prevents students from 'switching off' after someone else answers.", ex: "Context: Year 12 Biology.\nTeacher action: Student A answers. 'Student B, do you agree, and what happens next?'\nStudent action: Must listen to peers carefully." },
-            "Guided Calculation": { emoji: "🧮", desc: "Teacher and class do a complex math problem together, pausing at every single line.", load: "Prevents students from rushing ahead and practicing errors.", ex: "Context: Year 13 Physics.\nTeacher action: 'Write formula. Stop. Show me. Substitute value. Stop.'\nStudent action: Executes complex math one micro-step at a time." },
+            "Guided Calculation": { emoji: "🧮", desc: "Teacher and class do a complex math problem together, pausing at every single line.", load: "Prevents students from rushing ahead and practising errors.", ex: "Context: Year 13 Physics.\nTeacher action: 'Write formula. Stop. Show me. Substitute value. Stop.'\nStudent action: Executes complex math one micro-step at a time." },
             "Categorisation Task": { emoji: "🗃️", desc: "Sorting a messy list of items into designated groups.", load: "Forces pattern recognition and relational thinking.", ex: "Context: Year 9 Science.\nTeacher action: Provides list of items to sort into specific groups.\nStudent action: Debates boundaries of categories." },
             "Jigsaw Text Decoding": { emoji: "🧩", desc: "Students become experts on a chunk of text and teach peers.", load: "Divides massive intrinsic load of complex texts among multiple learners.", ex: "Context: Year 13 History.\nTeacher action: Divides dense reading among group members.\nStudent action: Summarises chunk to teach peers." },
             "Say It Again, Better": { emoji: "🗣️", desc: "Guiding students to upgrade casual speech into academic language.", load: "Forces the translation of casual thought into disciplinary schema.", ex: "Context: Year 10 History.\nTeacher action: 'Correct, but say it again using [Tier 3 term].'\nStudent action: Rephrases statement academically." },
@@ -1665,7 +1684,7 @@
             text += 'CONSTRAINTS & RULES:\nABSOLUTE RULE: Do NOT output any meta-commentary, conversational filler, or notes at the end of your outputs.\n';
             if (assessmentState.duration) { var activeDuration = assessmentState.duration === 'Other' ? customDur : assessmentState.duration; text += '- Scope & Duration: The intended scale of this assessment is: "' + activeDuration + '". Ensure the volume and depth of the task appropriately match this timeframe.\n'; }
             if (isLegacyNcea) { text += '- Curriculum Alignment: Align strictly with the CURRENT New Zealand Curriculum and existing NCEA standard requirements. (Do NOT use the new \'Knowledge & Practices\' drafts for Level 2/3).\n'; } else { text += '- Curriculum Alignment: You MUST use your integrated search tools to check the new \'Knowledge\' and \'Practices\' NZ Curriculum drafts (' + curriculumUrl + '). Do NOT use the old \'Understand-Know-Do\' framework.\n'; }
-            text += '- Spelling: ' + nzSpellingRule + '\n';
+            text += '- Spelling: ' + nzSpellingRule + ' Integrate relevant Te Reo Māori vocabulary where appropriate.\n';
             if (assessmentState.context === 'waiheke') { text += '- Waiheke Context: Weave local Waiheke Island / Hauraki Gulf contexts into the assessment scenarios.\n'; }
             if (sourceMaterial) text += '- Source Material Strictness: You MUST base the assessment scenario and questions strictly on the information found in this source material/URL: "' + sourceMaterial + '". Do not hallucinate outside information.\n';
 
