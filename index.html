@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-NZ">
 <head>
     <meta charset="UTF-8">
@@ -581,6 +581,11 @@
                     </div>
                     <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
+                
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label>
+                    <input type="text" id="les-source-material" placeholder="Paste an article URL, YouTube link, or raw text here to ground the AI..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800 bg-white">
+                </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-200">
                     <div>
@@ -694,17 +699,19 @@
                                 <button id="btn-out-worksheet" class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
                                 <button id="btn-out-content" class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
                                 <button id="btn-out-quiz" class="builder-btn" data-action="lesson-output" data-val="quiz">+ Quiz</button>
+                                <button id="btn-out-media" class="builder-btn" data-action="lesson-output" data-val="media">+ Media/Videos</button>
                                 <button id="btn-out-all" class="builder-btn" data-action="lesson-output" data-val="all">All Outputs</button>
                             </div>
                         </div>
 
                         <div class="pt-4 border-t border-slate-200">
-                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Extra Differentiated Resource (You Do)</span>
+                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
                             <div class="flex flex-wrap gap-2" id="les-extra-opts">
-                                <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard Lesson)</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners (simplified vocab, visual reliance)">ESOL Resource</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Low Literacy Accommodations (heavy scaffolding)">Low Lit Scaffold</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Extension/Gifted (abstract application, complex texts)">Extension Task</button>
+                                <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard)</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="3-Tiered Worksheet">3-Tiered Worksheet</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ADHD / Low-Stimulation">ADHD Friendly</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Dyslexia-Friendly">Dyslexia Friendly</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners">ESOL Scaffold</button>
                             </div>
                         </div>
 
@@ -785,6 +792,11 @@
                     <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
 
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label>
+                    <input type="text" id="assess-source-material" placeholder="Paste an article URL, YouTube link, or raw text here to ground the AI..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800 bg-white">
+                </div>
+
                 <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
                     <div>
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Scope & Duration</span>
@@ -859,12 +871,13 @@
                 </div>
 
                 <div class="mt-4 pt-6 border-t border-slate-200">
-                    <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Extra Differentiated Resource</span>
+                    <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
                     <div class="flex flex-wrap gap-2" id="assess-extra-opts">
                         <button class="builder-btn active" data-action="assessment-state" data-key="extra" data-val="None">None (Standard)</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ESOL Learners">ESOL Resource</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Low Literacy">Low Lit Scaffold</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Extension/Gifted">Extension Task</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="3-Tiered Assessment">3-Tiered Assessment</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ADHD / Low-Stimulation">ADHD Friendly</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Dyslexia-Friendly">Dyslexia Friendly</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ESOL Learners">ESOL Scaffold</button>
                     </div>
                 </div>
 
@@ -1156,8 +1169,8 @@
         var isAppReady = false;
 
         var unitState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', dur: '12 lessons', context: 'none', maori: 'none', lit: 'none', num: 'none' };
-        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, activeStages: [1, 2, 3, 4, 5] };
-        var assessmentState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', formats: ['Short Answer'], duration: '1 Period Test', context: 'none', extra: 'None', outputs: [] };
+        var lessonState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', context: 'none', maori: 'none', lit: 'none', num: 'none', s1: '', s2: '', s3: '', s4: '', s5: '', extra: 'None', outputs: [], relief: false, notebookLM: false, activeStages: [1, 2, 3, 4, 5], sourceMaterial: '' };
+        var assessmentState = { dept: 'Science', year: 'Year 11 (NCEA Level 1)', formats: ['Short Answer'], duration: '1 Period Test', context: 'none', extra: 'None', outputs: [], sourceMaterial: '' };
 
         function getDesc(name) {
             if (cpmTaskDB[name] && cpmTaskDB[name].desc) return cpmTaskDB[name].desc;
@@ -1411,6 +1424,7 @@
                     if (state.lessonState) { 
                         for (var lk in state.lessonState) lessonState[lk] = state.lessonState[lk]; 
                         if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
+                        if (lessonState.sourceMaterial === undefined) lessonState.sourceMaterial = '';
                     }
                     if (state.assessmentState) {
                         for (var ak in state.assessmentState) assessmentState[ak] = state.assessmentState[ak];
@@ -1419,6 +1433,7 @@
                         if (!assessmentState.context) assessmentState.context = 'none';
                         if (!assessmentState.extra) assessmentState.extra = 'None';
                         if (!assessmentState.outputs) assessmentState.outputs = [];
+                        if (assessmentState.sourceMaterial === undefined) assessmentState.sourceMaterial = '';
                     }
                     
                     setActiveBtn('discipline', currentDiscipline);
@@ -1504,7 +1519,7 @@
                                 btn.setAttribute('aria-pressed', 'true');
                             }
                         }
-                        if (lessonState.outputs.length === 4) {
+                        if (lessonState.outputs.length === 5) {
                             var allBtn = document.querySelector('[data-action="lesson-output"][data-val="all"]');
                             if (allBtn) {
                                 allBtn.classList.add('active');
@@ -1527,6 +1542,11 @@
                         var nBtn = document.getElementById('btn-notebooklm-mode');
                         if(nBtn) { nBtn.classList.add('bg-orange-500', 'text-white', 'border-orange-600'); nBtn.classList.remove('bg-orange-100', 'text-orange-800', 'border-orange-300'); nBtn.innerText = "Disable NotebookLM Mode"; }
                     }
+
+                    var lesSource = document.getElementById('les-source-material');
+                    if(lesSource && lessonState.sourceMaterial) { lesSource.value = lessonState.sourceMaterial; }
+                    var assessSource = document.getElementById('assess-source-material');
+                    if(assessSource && assessmentState.sourceMaterial) { assessSource.value = assessmentState.sourceMaterial; }
                     
                     checkSeniorStatus();
                     updateStageUI();
@@ -1910,7 +1930,7 @@
             if (type === 'none') {
                 lessonState.outputs = [];
             } else if (type === 'all') {
-                lessonState.outputs = ['slides', 'worksheet', 'content', 'quiz'];
+                lessonState.outputs = ['slides', 'worksheet', 'content', 'quiz', 'media'];
             } else {
                 var index = -1;
                 for(var i=0; i<lessonState.outputs.length; i++) { if(lessonState.outputs[i] === type) index = i; }
@@ -1929,28 +1949,32 @@
             var btnWorksheet = document.querySelector('[data-action="lesson-output"][data-val="worksheet"]');
             var btnContent = document.querySelector('[data-action="lesson-output"][data-val="content"]');
             var btnQuiz = document.querySelector('[data-action="lesson-output"][data-val="quiz"]');
+            var btnMedia = document.querySelector('[data-action="lesson-output"][data-val="media"]');
             var btnAll = document.querySelector('[data-action="lesson-output"][data-val="all"]');
 
             if(btnNone) btnNone.classList.add('active');
             
-            if (lessonState.outputs.length === 4) {
+            if (lessonState.outputs.length === 5) {
                 if(btnSlides) btnSlides.classList.add('active');
                 if(btnWorksheet) btnWorksheet.classList.add('active');
                 if(btnContent) btnContent.classList.add('active');
                 if(btnQuiz) btnQuiz.classList.add('active');
+                if(btnMedia) btnMedia.classList.add('active');
                 if(btnAll) btnAll.classList.add('active');
             } else {
-                var hasSlides = false, hasWorksheet = false, hasContent = false, hasQuiz = false;
+                var hasSlides = false, hasWorksheet = false, hasContent = false, hasQuiz = false, hasMedia = false;
                 for(var j=0; j<lessonState.outputs.length; j++) {
                     if(lessonState.outputs[j] === 'slides') hasSlides = true;
                     if(lessonState.outputs[j] === 'worksheet') hasWorksheet = true;
                     if(lessonState.outputs[j] === 'content') hasContent = true;
                     if(lessonState.outputs[j] === 'quiz') hasQuiz = true;
+                    if(lessonState.outputs[j] === 'media') hasMedia = true;
                 }
                 if (hasSlides && btnSlides) btnSlides.classList.add('active');
                 if (hasWorksheet && btnWorksheet) btnWorksheet.classList.add('active');
                 if (hasContent && btnContent) btnContent.classList.add('active');
                 if (hasQuiz && btnQuiz) btnQuiz.classList.add('active');
+                if (hasMedia && btnMedia) btnMedia.classList.add('active');
             }
             updateLessonBuilderPrompt();
         }
@@ -2083,17 +2107,22 @@
             var customTaskInput = document.getElementById('les-custom-task');
             var customTask = (customTaskInput && customTaskInput.value.trim()) ? customTaskInput.value.trim() : "";
             
+            var sourceInput = document.getElementById('les-source-material');
+            var sourceMaterial = (sourceInput && sourceInput.value.trim()) ? sourceInput.value.trim() : "";
+            lessonState.sourceMaterial = sourceMaterial;
+            
             if (!lessonState.outputs) lessonState.outputs = [];
             if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
 
             var isLegacyNcea = (lessonState.year.indexOf("Year 12") !== -1 || lessonState.year.indexOf("Level 2") !== -1 || lessonState.year.indexOf("Year 13") !== -1 || lessonState.year.indexOf("Level 3") !== -1);
             
-            var needsSlides = false, needsWorksheet = false, needsContent = false, needsQuiz = false;
+            var needsSlides = false, needsWorksheet = false, needsContent = false, needsQuiz = false, needsMedia = false;
             for(var i=0; i<lessonState.outputs.length; i++) {
                 if(lessonState.outputs[i] === 'slides') needsSlides = true;
                 if(lessonState.outputs[i] === 'worksheet') needsWorksheet = true;
                 if(lessonState.outputs[i] === 'content') needsContent = true;
                 if(lessonState.outputs[i] === 'quiz') needsQuiz = true;
+                if(lessonState.outputs[i] === 'media') needsMedia = true;
             }
 
             var curriculumUrl = getCurriculumLink(lessonState.dept, lessonState.year);
@@ -2109,6 +2138,7 @@
                 if (lessonState.context === 'waiheke') text += '- Local Context: Weave Waiheke Island / Hauraki Gulf contexts into the content examples.\n';
                 if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Weave relevant Mātauranga Māori and local iwi history into the core content.\n';
                 if (lessonState.activeStages.length < 5) text += '- Timing Adjustment: You are only covering ' + lessonState.activeStages.length + ' of the 5 CPM stages in this 60-minute period. You MUST explicitly adjust the timing and substantially expand the depth and duration of the requested activities to fill the full hour appropriately.\n';
+                if (sourceMaterial) text += '- Source Material Strictness: You MUST base the lesson content, vocabulary, and tasks entirely on this provided source material/URL: "' + sourceMaterial + '". Do not hallucinate outside information.\n';
                 
                 text += '\nOUTPUTS REQUIRED:\n';
                 text += 'PART 1: META-INSTRUCTIONS (System Prompt for NotebookLM)\n';
@@ -2163,6 +2193,7 @@
                 text += '- Spelling: Ensure all output uses New Zealand English spelling and terminology.\n';
                 if (lessonState.context === 'waiheke') text += '- Local Context: Try to weave a local Waiheke context into the reading content.\n';
                 if (lessonState.maori === 'integrate') text += '- Mātauranga Māori: Try to weave relevant Mātauranga Māori into the reading content.\n';
+                if (sourceMaterial) text += '- Source Material Strictness: You MUST base the content entirely on this provided source material/URL: "' + sourceMaterial + '".\n';
                 
                 text += '\nOUTPUTS REQUIRED:\n';
                 text += 'PART 1: Relief Overview (For the Chat)\n';
@@ -2206,8 +2237,20 @@
             if (lessonState.lit === 'integrate') text += '- Literacy Integration: Make explicit disciplinary literacy practice a core focus.\n';
             if (lessonState.num === 'integrate') text += '- Numeracy Integration: Make explicit disciplinary numeracy practice a core focus.\n';
             
-            if (lessonState.extra !== 'None') {
+            if (sourceMaterial) text += '- Source Material Strictness: You MUST base the lesson content, vocabulary, and tasks strictly on the information found in this source material/URL: "' + sourceMaterial + '". Do not hallucinate outside information.\n';
+
+            if (lessonState.extra === '3-Tiered Worksheet') {
+                text += '- Tiered Differentiation: You MUST generate the independent task/worksheet in THREE distinct versions: Support (heavy scaffolding), Core (standard), and Challenge (abstract extension).\n';
+            } else if (lessonState.extra === 'ADHD / Low-Stimulation') {
+                text += '- Inclusive Design (ADHD): You MUST format all outputs for students with ADHD/low-stimulation needs. Avoid walls of text. Use short bullet points, bolded keywords, explicitly chunked instructions, and generous spacing.\n';
+            } else if (lessonState.extra === 'Dyslexia-Friendly') {
+                text += '- Inclusive Design (Dyslexia): You MUST format all outputs for dyslexic readers. Use simple sentence structures, avoid double negatives, and clearly separate paragraphs. Do not use justified text.\n';
+            } else if (lessonState.extra !== 'None') {
                 text += '- Differentiation: You MUST adapt the Lesson Plan, Slideshow, and Worksheet to explicitly include targeted materials/scaffolds for: ' + lessonState.extra + '.\n';
+            }
+
+            if (needsMedia) {
+                text += '- Media & Interactive Links: You MUST explicitly suggest relevant live YouTube video links, PhET simulations, or specific Google Image search terms at appropriate points within the lesson plan and slideshow.\n';
             }
 
             if (customTask) text += '- Teacher Specific Instructions: "' + customTask + '". You MUST strictly follow these structural, timing, pacing, or activity requests.\n';
@@ -2267,7 +2310,7 @@
                 text += 'Note: [A detailed speaker script of what I should actually say. CRUCIAL: Also describe a specific REAL-WORLD photograph or image you want included on this slide to ground the concept.]\n\n';
                 text += 'IMPORTANT STRUCTURE RULE: Slide 2 MUST be explicitly titled "Whāinga Ako & Paearu Angitu" and state the Learning Intention(s) and Success Criteria for the lesson.\n';
                 text += 'IMPORTANT STRUCTURE RULE: Slide 3 MUST be a "Key Vocabulary" slide defining 4 to 6 critical terms for this lesson.\n';
-                if (lessonState.extra !== 'None') {
+                if (lessonState.extra !== 'None' && lessonState.extra !== '3-Tiered Worksheet' && lessonState.extra !== 'ADHD / Low-Stimulation' && lessonState.extra !== 'Dyslexia-Friendly') {
                     text += 'DIFFERENTIATION RULE: You must include at least one specific slide tailored to provide the requested accommodation: ' + lessonState.extra + '.\n';
                 }
                 text += 'GOOGLE SLIDES GENERATION (CRITICAL):\n';
@@ -2297,7 +2340,9 @@
                 text += '3. Core Task: This section must specifically guide students through ' + taskText + '. Incorporate elements like primary source analysis, data interpretation, or the CER (Claim, Evidence, Reasoning) framework depending on the subject.\n';
                 text += '4. Fillable Areas: Ensure you use plenty of visual space, blank lines, or empty tables/divs so students have physical room to write their answers on the printed page.\n';
                 
-                if (lessonState.extra !== 'None') {
+                if (lessonState.extra === '3-Tiered Worksheet') {
+                    text += '5. 3-Tiered Differentiation: You MUST provide three versions of the Core Task: Support, Core, and Challenge.\n\n';
+                } else if (lessonState.extra !== 'None') {
                     text += '5. Differentiation: A specific, highly detailed section tailored EXACTLY for this accommodation: ' + lessonState.extra + '.\n\n';
                 } else {
                     text += '\n';
@@ -2342,6 +2387,10 @@
             var customFormat = (customFormatInput && customFormatInput.value.trim()) ? customFormatInput.value.trim() : "Custom Format";
             var customDurInput = document.getElementById('assess-custom-dur');
             var customDur = (customDurInput && customDurInput.value.trim()) ? customDurInput.value.trim() : "Custom Duration";
+            
+            var sourceInput = document.getElementById('assess-source-material');
+            var sourceMaterial = (sourceInput && sourceInput.value.trim()) ? sourceInput.value.trim() : "";
+            assessmentState.sourceMaterial = sourceMaterial;
             
             var juniorKnowledgeInput = document.getElementById('assess-junior-knowledge');
             var juniorKnowledge = (juniorKnowledgeInput && juniorKnowledgeInput.value.trim()) ? juniorKnowledgeInput.value.trim() : "";
@@ -2419,7 +2468,15 @@
                 text += '- Waiheke Context: Weave local Waiheke Island / Hauraki Gulf contexts into the assessment scenarios.\n';
             }
             
-            if (assessmentState.extra && assessmentState.extra !== 'None') {
+            if (sourceMaterial) text += '- Source Material Strictness: You MUST base the assessment scenario and questions strictly on the information found in this source material/URL: "' + sourceMaterial + '". Do not hallucinate outside information.\n';
+
+            if (assessmentState.extra === '3-Tiered Assessment') {
+                text += '- Tiered Differentiation: You MUST explicitly provide three versions of the assessment task: Support (heavy scaffolding), Core (standard), and Challenge (abstract extension).\n';
+            } else if (assessmentState.extra === 'ADHD / Low-Stimulation') {
+                text += '- Inclusive Design (ADHD): You MUST format all outputs for students with ADHD/low-stimulation needs. Avoid walls of text. Use short bullet points, bolded keywords, explicitly chunked instructions, and generous spacing.\n';
+            } else if (assessmentState.extra === 'Dyslexia-Friendly') {
+                text += '- Inclusive Design (Dyslexia): You MUST format all outputs for dyslexic readers. Use simple sentence structures, avoid double negatives, and clearly separate paragraphs. Do not use justified text.\n';
+            } else if (assessmentState.extra && assessmentState.extra !== 'None') {
                 text += '- Differentiation: You MUST provide a specific, modified version of the assessment task tailored explicitly for: ' + assessmentState.extra + '.\n';
             }
             
@@ -2626,6 +2683,7 @@
                 var target = e.target.closest('[data-action]');
                 if (!target) return;
                 var action = target.getAttribute('data-action'), val = target.getAttribute('data-val'), key = target.getAttribute('data-key'), copyTarget = target.getAttribute('data-target');
+                
                 if (action === 'view') showView(copyTarget);
                 else if (action === 'copy-dashboard') copyStudentDashboard(target);
                 else if (action === 'discipline') setDiscipline(val);
@@ -2636,18 +2694,22 @@
                 else if (action === 'download') downloadPrompt(copyTarget);
                 else if (action === 'strategy-prompt') setStrategyPrompt(val);
                 else if (action === 'unit-state') setUnitState(key, val, target);
+                
                 else if (action === 'lesson-state') setLessonState(key, val, target);
-                else if (action === 'assessment-state') setAssessmentState(key, val, target);
-                else if (action === 'assessment-format') toggleAssessmentFormat(val);
-                else if (action === 'assessment-output') toggleAssessmentOutput(val);
-                else if (action === 'clear-assessment-formats') clearAssessmentFormats();
+                else if (action === 'toggle-lesson-stage') toggleLessonStage(val);
+                else if (action === 'lesson-output') toggleLessonOutput(val);
                 else if (action === 'toggle-relief') toggleReliefMode();
                 else if (action === 'toggle-notebooklm') toggleNotebookLMMode();
+                
+                else if (action === 'assessment-state') setAssessmentState(key, val, target);
+                else if (action === 'assessment-format') toggleAssessmentFormat(val);
+                else if (action === 'clear-assessment-formats') clearAssessmentFormats();
+                else if (action === 'assessment-output') toggleAssessmentOutput(val);
                 else if (action === 'toggle-ncea') toggleNceaMode();
-                else if (action === 'lesson-output') toggleLessonOutput(val);
-                else if (action === 'toggle-lesson-stage') toggleLessonStage(val);
+                
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
                 else if (action === 'theory-detail') renderTheoryTaskDetail(val, target);
+                
                 else if (action === 'reset-app') document.getElementById('reset-modal').classList.remove('hidden');
                 else if (action === 'cancel-reset') document.getElementById('reset-modal').classList.add('hidden');
                 else if (action === 'confirm-reset') {
@@ -2663,9 +2725,11 @@
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (e.target.id === 'unit-custom-task') updateUnitBuilderPrompt();
                 else if (e.target.id === 'les-custom-task') updateLessonBuilderPrompt();
+                else if (e.target.id === 'les-source-material') updateLessonBuilderPrompt();
                 else if (e.target.id === 'assess-ncea-standard') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-custom-format') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-custom-dur') updateAssessmentBuilderPrompt();
+                else if (e.target.id === 'assess-source-material') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-junior-knowledge') updateAssessmentBuilderPrompt();
                 else if (e.target.id === 'assess-junior-practices') updateAssessmentBuilderPrompt();
             });
