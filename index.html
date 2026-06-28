@@ -30,26 +30,21 @@
         .recommended-highlight { background-color: #ecfdf5 !important; border-color: #10b981 !important; color: #047857 !important; position: relative; }
         .recommended-highlight.active { background-color: #10b981 !important; border-color: #059669 !important; color: white !important; }
         .chart-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; height: 350px; max-height: 400px; }
-        
         .tooltip-wrapper { position: relative; }
         .tooltip-wrapper::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); padding: 0.5rem 0.75rem; background-color: #1e293b; color: #f8fafc; font-size: 0.75rem; font-weight: 500; line-height: 1.4; text-align: center; white-space: normal; width: max-content; max-width: 240px; border-radius: 0.25rem; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .tooltip-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none; }
         .tooltip-wrapper:hover::after, .tooltip-wrapper:hover::before { opacity: 1; visibility: visible; }
         .tooltip-wrapper:hover { z-index: 20; }
-
         .stage-divider { position: relative; padding-top: 1.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; }
         .stage-divider::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, #cbd5e1, transparent); }
         .stage-header { font-size: 1.125rem; font-weight: 800; color: var(--whs-dark-blue); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
         .stage-number-badge { background-color: var(--whs-dark-blue); color: white; border-radius: 9999px; width: 1.75rem; height: 1.75rem; display: inline-flex; align-items: center; justify-content: center; font-size: 0.875rem; }
-
         @keyframes ai-pulse { 0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(16,185,129,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
         .ai-flash { animation: ai-pulse 0.5s ease-out; }
-        
         @keyframes surprise-pulse { 0% { background-color: #fee2e2; border-color: #ef4444; color: #b91c1c; } 50% { background-color: #fca5a5; border-color: #dc2626; color: #991b1b; box-shadow: 0 0 10px rgba(239,68,68,0.4); } 100% { background-color: #fee2e2; border-color: #ef4444; color: #b91c1c; } }
         .surprise-btn { animation: surprise-pulse 3s infinite ease-in-out; transition: all 0.2s; }
         .surprise-btn:hover { animation: none !important; background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; }
         .surprise-btn.active { animation: none !important; background-color: #dc2626 !important; color: white !important; border-color: #991b1b !important; }
-        
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
@@ -63,7 +58,6 @@
         <header class="whs-gradient-bg rounded-lg p-8 md:p-12 text-white mb-10 shadow-md relative overflow-hidden flex justify-between items-center">
             <div class="relative z-10">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
-                    <!-- HYBRID CPM + AI BADGE -->
                     <div class="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#10b981]/20 to-white/10 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 shrink-0 group overflow-hidden">
                         <div class="absolute inset-0 bg-[#c5a059] blur-[20px] opacity-20 group-hover:opacity-40 transition duration-700"></div>
                         <div class="relative z-10 flex items-center justify-center">
@@ -91,7 +85,6 @@
             <button id="nav-assessment" class="nav-btn" data-action="view" data-target="assessment">Assessment Generator</button>
             <button id="nav-instructional" class="nav-btn" data-action="view" data-target="instructional">Strategy Hub</button>
             <button id="nav-theory" class="nav-btn" data-action="view" data-target="theory">CPM Theory</button>
-            
             <div class="flex items-center ml-2 md:ml-4 flex-shrink-0">
                 <a href="https://kennedyd-create.github.io/WHS---Student-/" target="_blank" class="px-4 py-2.5 bg-red-50 text-red-800 hover:bg-red-100 border border-red-200 rounded-l-lg font-bold text-sm transition flex items-center gap-2 shadow-sm">Student Dashboard ↗</a>
                 <button class="px-3 py-2.5 bg-red-50 hover:bg-red-100 border border-l-0 border-red-200 text-red-700 rounded-r-lg transition tooltip-wrapper shadow-sm flex items-center justify-center" data-tooltip="Copy link for students" data-action="copy-dashboard">
@@ -148,7 +141,7 @@
                         <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Type to activate AI Top Picks)</label>
                         <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
                     </div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
                 
                 <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
@@ -628,14 +621,11 @@
 
                 <div id="ncea-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
                     <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
-                        <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-4">
-                            <div>
-                                <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span>
-                                <p class="text-xs text-purple-600 font-medium leading-tight">Generate NCEA-style options with shared Achieved/Merit/Excellence matrix.</p>
-                            </div>
-                            <button id="btn-ncea-mode" class="shrink-0 px-4 py-2.5 bg-purple-100 border border-purple-300 text-purple-800 text-xs font-bold rounded-lg hover:bg-purple-500 hover:text-white hover:border-purple-600 transition-colors shadow-sm whitespace-nowrap" data-action="toggle-ncea">Enable NCEA Rubric</button>
+                        <div>
+                            <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span>
+                            <p class="text-xs text-purple-600 font-medium leading-tight">Generate NCEA-style options with shared Achieved/Merit/Excellence matrix.</p>
                         </div>
-                        <div id="assess-ncea-standard-container" class="hidden border-t border-purple-200 pt-3">
+                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-2 mt-2">
                             <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-red-500 text-xs">*</span></label>
                             <input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 focus:border-purple-600 focus:ring-1 focus:ring-purple-600 outline-none transition text-sm font-medium text-slate-800 bg-white placeholder-purple-400">
                         </div>
@@ -772,7 +762,6 @@
             "Karakia / Whakataukī Recall": { emoji: "🌿", desc: "Reciting a traditional incantation or proverb to settle the room and set the kaupapa.", load: "Routine establishes psychological safety and cultural grounding.", ex: "Context: Year 9 Te Reo Māori.\nTeacher action: Leads the class in an opening karakia.\nStudent action: Class stands and recites together to transition mentally." },
             "Concept Mapping (Whakapapa)": { emoji: "🌳", desc: "Using the framework of genealogy to map the origins of concepts.", load: "Adapts a culturally familiar structure to organise complex abstract ideas.", ex: "Context: Year 10 Te Reo Māori.\nTeacher action: Asks students to draw the whakapapa of a concept.\nStudent action: Students map familial relationships between ideas." },
             "Waiata/Kīwaha Practice": { emoji: "🎶", desc: "Singing or practising idioms to encode pronunciation and vocab.", load: "Uses rhythm and melody to bypass rote memorisation struggles.", ex: "Context: Year 7 Te Reo Māori.\nTeacher action: Leads the class in a waiata about vocabulary.\nStudent action: Students sing, encoding sequence and sounds effortlessly." },
-
             "Think-Aloud Script": { emoji: "🗣️", desc: "Unpacking cognitive processes by narrating your expert internal monologue.", load: "Manages extraneous load by making invisible expert thinking visible and sequential.", ex: "Context: Year 11 English.\nTeacher action: 'When I read this line, my brain pictures... so I will write...'\nStudent action: Watches physical annotation while hearing the metacognitive process." },
             "Dual-Coding Diagram": { emoji: "✏️", desc: "Combining visual diagrams with verbal explanations simultaneously.", load: "Bypasses the bottleneck of working memory by using both visual and phonological loops.", ex: "Context: Year 12 Economics.\nTeacher action: Draws curves step-by-step while verbally narrating the real-world scenario.\nStudent action: Listens to explanation while tracing the visual." },
             "Worked Example": { emoji: "✅", desc: "Providing a flawless step-by-step demonstration of a disciplinary practice.", load: "Eliminates guessing. Novices learn faster by studying solutions rather than solving problems.", ex: "Context: Year 10 Maths.\nTeacher action: Writes full algebraic solution on board, explaining logic out loud.\nStudent action: Copies flawless model exactly into books." },
@@ -787,7 +776,6 @@
             "The Silent Teacher": { emoji: "🤫", desc: "Teacher performs a process in silence to prevent split-attention effect.", load: "Removes verbal overload so students focus entirely on the visual process.", ex: "Context: Year 9 Technology.\nTeacher action: Executes a physical tool cut completely in silence.\nStudent action: Watches intently without distraction of speech." },
             "Disciplinary Text Decoding": { emoji: "📜", desc: "Teacher reads a complex text aloud, stopping to define Tier 3 vocabulary.", load: "Scaffolds reading comprehension for dense academic text.", ex: "Context: Year 12 History.\nTeacher action: Reads primary source, stops at complex word to define it.\nStudent action: Annotates text alongside teacher." },
             "Pronunciation Modelling": { emoji: "👄", desc: "Teacher exaggerates the mouth shapes and vowel sounds for new words.", load: "Isolates the phonological loop for accurate encoding.", ex: "Context: Year 11 Te Reo Māori.\nTeacher action: Points to a macron, holds sound, exaggerates mouth shape.\nStudent action: Observes physical mechanics of pronunciation." },
-
             "Mini-Whiteboards": { emoji: "📝", desc: "Students draft quick answers, allowing you to identify misconceptions instantly.", load: "Forces high participation ratio; catches encoding errors before they become permanent.", ex: "Context: Year 10 Languages.\nTeacher action: 'Translate this... 3, 2, 1, show me!' Instantly scans boards.\nStudent action: Holds up board, receives immediate feedback." },
             "Think-Pair-Share": { emoji: "👯", desc: "Think alone, discuss with partner, share with class.", load: "Lowers affective filter by letting students test answers on a peer first.", ex: "Context: Year 9 Social Studies.\nTeacher action: 'Think for 30s. Turn to partner and share.'\nStudent action: Rehearses argument in low-stakes pair." },
             "Choral Response": { emoji: "🗣️", desc: "Whole class answers simultaneously on a hand drop cue.", load: "Maintains 100% participation and builds acoustic memory.", ex: "Context: Year 9 Maths.\nTeacher action: Asks question, pauses 2 seconds, drops hand.\nStudent action: Entire class shouts answer simultaneously." },
@@ -802,7 +790,6 @@
             "Jigsaw Text Decoding": { emoji: "🧩", desc: "Students become experts on a chunk of text and teach peers.", load: "Divides massive intrinsic load of complex texts among multiple learners.", ex: "Context: Year 13 History.\nTeacher action: Divides dense reading among group members.\nStudent action: Summarises chunk to teach peers." },
             "Say It Again, Better": { emoji: "🗣️", desc: "Guiding students to upgrade casual speech into academic language.", load: "Forces the translation of casual thought into disciplinary schema.", ex: "Context: Year 10 History.\nTeacher action: 'Correct, but say it again using [Tier 3 term].'\nStudent action: Rephrases statement academically." },
             "Hexagonal Mapping": { emoji: "🛑", desc: "Students physically connect conceptual tiles to build relational understanding.", load: "Forces learners to move from isolated 'knowing' to complex 'connecting'.", ex: "Context: Year 13 History.\nTeacher action: Gives hexagon tiles to connect based on relationships.\nStudent action: Debates why tiles must touch." },
-
             "Tiered Tasks": { emoji: "🪜", desc: "Differentiated assignments moving progressively from concrete facts to abstract application.", load: "Matches intrinsic load to the learner's current schema level.", ex: "Context: Year 10 Social Sciences.\nTeacher action: Distributes worksheet with progressive difficulty sections.\nStudent action: All start at foundation, move up based on fluency." },
             "Independent Scaffolds": { emoji: "🏗️", desc: "Providing graphic organisers or sentence starters that students use silently.", load: "Reduces extraneous load so working memory can focus on content generation.", ex: "Context: Year 11 English.\nTeacher action: Hands out sensory grid to bullet point ideas before writing.\nStudent action: Separates idea generation from sentence structuring." },
             "Peer Critique": { emoji: "📝", desc: "Students evaluate a peer's work using a strict rubric.", load: "Deepens understanding of success criteria.", ex: "Context: Year 12 Arts.\nTeacher action: 'Swap work. Use NCEA rubric to grade.'\nStudent action: Reads rubric deeply to apply it." },
@@ -817,7 +804,6 @@
             "Information Transformation Task": { emoji: "🔄", desc: "Taking knowledge and changing its format (e.g. text to diagram).", load: "Demands deep encoding and prevents copy-pasting.", ex: "Context: Year 11 English.\nTeacher action: Provides descriptive text. 'Draw a floor plan.'\nStudent action: Translates text into annotated visual." },
             "Extended Writing": { emoji: "✍️", desc: "Sustained, silent writing applying all scaffolding from the lesson.", load: "The ultimate test of independent schema application.", ex: "Context: Year 13 History.\nTeacher action: '30 minutes silent writing time.'\nStudent action: Writes continuously drawing on notes." },
             "Independent Studio Task": { emoji: "🎨", desc: "Students work on physical projects while teacher circulates for 1-on-1 feedback.", load: "Focuses on procedural and psychomotor memory.", ex: "Context: Year 12 Technology.\nTeacher action: 'Rest of period to work on projects. I will circulate.'\nStudent action: Applies physical skills independently." },
-
             "Exit Ticket": { emoji: "🚪", desc: "Short, specific tasks linked directly to the Success Criteria, completed before leaving.", load: "Forces consolidation of the day's schema before the cognitive shift of changing periods.", ex: "Context: Year 9 Science.\nTeacher action: Hands out slip for a quick drawing/answer.\nStudent action: Completes and hands to teacher at door." },
             "3-2-1 Summary": { emoji: "🔢", desc: "Students write 3 facts, 2 questions, and 1 opinion/connection.", load: "Structures reflection and highlights areas needing reteaching.", ex: "Context: Year 10 English.\nTeacher action: 'Write 3 facts, 2 questions, 1 opinion.'\nStudent action: Synthesises lesson into structured summary." },
             "SOLO Taxonomy Check": { emoji: "📊", desc: "Categorising the depth of understanding from unistructural to relational.", load: "Provides metacognitive feedback, helping students gauge their own cognitive complexity.", ex: "Context: Year 12 Geography.\nTeacher action: 'Is your draft unistructural or relational?'\nStudent action: Self-assesses and upgrades depth." },
@@ -1128,7 +1114,7 @@
         function updateUnitBuilderPrompt() {
             var t=getGlobalTopic(), ct=(document.getElementById('unit-custom-task')||{}).value||"";
             var isJun=["Year 7","Year 8","Year 9","Year 10"].includes(unitState.year), isLeg=unitState.year.includes("Level"), cUrl=getCurriculumLink(unitState.dept, unitState.year);
-            var txt='"<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a '+unitState.dur+' unit on "'+t+'" for '+unitState.year+' '+unitState.dept+' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining '+(isLeg?'curriculum concepts and learning outcomes':'Disciplinary Knowledge and Practices')+' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to '+(isLeg?'CURRENT NCEA requirements':'new Knowledge & Practices drafts ('+cUrl+')')+'.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse 5 stages of CPM for lessons. Format via Markdown.\nSpelling: '+nzSpellingRule+'\n';
+            var txt='<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a '+unitState.dur+' unit on "'+t+'" for '+unitState.year+' '+unitState.dept+' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining '+(isLeg?'curriculum concepts and learning outcomes':'Disciplinary Knowledge and Practices')+' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to '+(isLeg?'CURRENT NCEA requirements':'new Knowledge & Practices drafts ('+cUrl+')')+'.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse 5 stages of CPM for lessons. Format via Markdown.\nSpelling: '+nzSpellingRule+'\n';
             if(unitState.context==='waiheke') txt+='Include local Waiheke Island contexts. Highlight with **[WAIHEKE CONTEXT]** in the sequence.\n'; 
             if(unitState.maori==='integrate') txt+='Weave in Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]** in the sequence.\n'; 
             if(unitState.lit==='integrate') txt+='Focus on disciplinary literacy. YOU MUST explicitly plan for the teaching of these literacy skills in the teacher-led sections of the lessons (I Do/We Do) before independent practice. Highlight with **[LITERACY]**.\n'; 
@@ -1154,7 +1140,7 @@
                 txt+='| [Continue rows for all ' + unitState.dur + '] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
             }
             txt+='## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
-            txt+='</output_format>"'; var b=document.getElementById('prompt-unit-text'); if(b) b.innerText=txt;
+            txt+='</output_format>'; var b=document.getElementById('prompt-unit-text'); if(b) b.innerText=txt;
         }
 
         function updateLessonBuilderPrompt() {
@@ -1163,7 +1149,7 @@
             var outs=lessonState.outputs||['plan'], stg=lessonState.activeStages||[1,2,3,4,5], isLeg=lessonState.year.includes("Level"); var tb=String.fromCharCode(96,96,96);
             var b=document.getElementById('prompt-lesson-text'); if(outs.length===0&&!lessonState.relief&&!lessonState.notebookLM){ if(b) b.innerText="Select an Output option."; return; }
             
-            var txt='"<system_role>Act as an expert pedagogical coach and curriculum designer.</system_role>\n\n<context>\nClass: '+lessonState.year+' '+lessonState.dept+'. Topic: "'+t+'".\n</context>\n\n';
+            var txt='<system_role>Act as an expert pedagogical coach and curriculum designer.</system_role>\n\n<context>\nClass: '+lessonState.year+' '+lessonState.dept+'. Topic: "'+t+'".\n</context>\n\n';
             
             if(lessonState.notebookLM) txt+='<task>\nGenerate a MASTER SOURCE DOCUMENT (Ground Truth) for NotebookLM including system instructions, textbook-level content, and slideshow plan.\n</task>\n\n';
             else if(lessonState.relief) txt+='<task>\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a 60-min self-contained Student Worksheet.\n</task>\n\n';
@@ -1173,9 +1159,10 @@
             if(!lessonState.relief) txt+='Align to '+(isLeg?'CURRENT NCEA requirements':'new Knowledge & Practices drafts ('+getCurriculumLink(lessonState.dept,lessonState.year)+')')+'.\n';
             if(ul&&un) txt+='UNIT LINK: Extract goals for "'+un+'" from: "'+ul+'" to build this lesson.\n';
             if(stg.length<5&&!lessonState.relief&&!lessonState.notebookLM) txt+='Timing: Cover only CPM stages '+stg.join(',')+'. Adjust durations to fill 60 mins.\n';
-            if(lessonState.context==='waiheke') txt+='Weave in Waiheke/Hauraki contexts.\n'; if(lessonState.maori==='integrate') txt+='Integrate Mātauranga Māori.\n';
-            if(lessonState.lit==='integrate') txt+='Literacy Integration: Make explicit disciplinary literacy practice a core focus. CRITICAL: You MUST explicitly teach and model these literacy skills in the "I Do" or "We Do" stage before assigning them in the "You Do" stage.\n';
-            if(lessonState.num==='integrate') txt+='Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL: You MUST explicitly teach and model these numeracy skills in the "I Do" or "We Do" stage before assigning them in the "You Do" stage.\n';
+            if(lessonState.context==='waiheke') txt+='Weave in Waiheke/Hauraki contexts. Highlight with **[WAIHEKE CONTEXT]**.\n';
+            if(lessonState.maori==='integrate') txt+='Integrate Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]**.\n';
+            if(lessonState.lit==='integrate') txt+='Literacy Integration: Make explicit disciplinary literacy practice a core focus. CRITICAL: You MUST explicitly teach and model these literacy skills in the "I Do" or "We Do" stage before assigning them in the "You Do" stage. Highlight with **[LITERACY]**.\n';
+            if(lessonState.num==='integrate') txt+='Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL: You MUST explicitly teach and model these numeracy skills in the "I Do" or "We Do" stage before assigning them in the "You Do" stage. Highlight with **[NUMERACY]**.\n';
             if(sm) txt+='Source Strictness: Base content entirely on: "'+sm+'". Do not hallucinate.\n';
             if(outs.includes('media')||lessonState.relief||lessonState.notebookLM) txt+='Provide actual live URLs to YouTube/PhET/resources.\n';
             if(lessonState.extra!=='None') txt+='Differentiate/Scaffold strictly for: '+lessonState.extra+'.\n';
@@ -1184,7 +1171,7 @@
             if(lessonState.relief) {
                 txt+='PART 1: Relief Overview (For Chat)\nPART 2: HTML Worksheet content in a single beautifully CSS styled block ('+tb+'html\n...\n'+tb+').\nUse WHS colors (#002066/#d1e6f6). Include pacing, 15-20 min reading, visual placeholders, vocab, and 40-min You Do task.\n';
             } else if(lessonState.notebookLM) {
-                txt+='PART 1: System Instructions for NotebookLM (CPM structure, dual coding, visual branding).\nPART 2: Detailed Subject Content (Knowledge/Practices, misconceptions, vocab).\nPART 3: Pre-programmed Slideshow Plan based on selected CPM stages.\nProvide explicit slide generation instructions.\n';
+                txt+='PART 1: System Instructions for NotebookLM (CPM structure, dual coding, visual branding).\\nPART 2: Detailed Subject Content (Knowledge/Practices, misconceptions, vocab).\\nPART 3: Pre-programmed Slideshow Plan based on selected CPM stages.\\nProvide explicit slide generation instructions.\\n';
             } else {
                 if(outs.includes('plan')){
                     txt+='PART A: The CPM Lesson Plan\nPrint this header exactly:\n**Topic:** '+t+' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure:\n| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n|---|---|---|---|\n';
@@ -1223,7 +1210,7 @@
             
             txt+='<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema for task instructions. Define complex task words.</cognitive_scaffolding>\n\n';
             
-            txt+='<output_format>\n';
+            txt+='<output_format>\nWrite a brief <pedagogical_rationale> detailing reliable measurement without extraneous load.\n';
             if(isJun){
                 if(hasSurp) txt+='PART 1: TWO out-of-the-box assessment options.\n'; else txt+='PART 1: Assessment Task ('+fStr+').\n';
                 txt+='PART 2: Junior Grading Matrix (Emerging to Exceeding) mapping explicit cognitive verbs for '+assessmentState.year+'.\n';
