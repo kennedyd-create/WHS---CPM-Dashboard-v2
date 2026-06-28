@@ -141,7 +141,7 @@
                         <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Type to activate AI Top Picks)</label>
                         <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
                     </div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources, The Water Cycle..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
                 
                 <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
@@ -288,11 +288,15 @@
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                             <div class="flex gap-2">
-                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-lesson-text">COPY</button>
+                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
                                 <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                             </div>
                         </div>
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-lesson-text">Select options...</span></div>
+                        <div class="flex justify-end gap-2 mt-auto">
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
+                            <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -365,6 +369,10 @@
                                 <button class="builder-btn active" data-action="unit-state" data-key="dur" data-val="12 lessons">12 Lessons</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="16 lessons">16 Lessons</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="20 lessons">20 Lessons</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="Other">Other</button>
+                            </div>
+                            <div id="unit-custom-dur-container" class="hidden pt-2">
+                                <input type="text" id="unit-custom-dur" placeholder="Specify duration (e.g. 5 weeks)..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800 bg-white">
                             </div>
                         </div>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -403,11 +411,15 @@
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
                             <div class="flex gap-2">
-                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-unit-text">COPY</button>
+                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
                                 <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                             </div>
                         </div>
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 custom-scrollbar overflow-y-auto max-h-[600px]"><span id="prompt-unit-text">...</span></div>
+                        <div class="flex justify-end gap-2 mt-auto">
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
+                            <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -484,12 +496,16 @@
                                 <div class="flex justify-between items-center mb-4">
                                     <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Expert Assistant Prompt</h4>
                                     <div class="flex gap-2">
-                                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-text-instructional">COPY</button>
+                                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button>
                                         <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                                     </div>
                                 </div>
                                 <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 mb-4 flex-grow shadow-inner overflow-y-auto max-h-[300px] custom-scrollbar">
                                     <span id="prompt-text-instructional">Select a strategy to generate prompt...</span>
+                                </div>
+                                <div class="flex justify-end gap-2 mt-auto">
+                                    <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button>
+                                    <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                                 </div>
                             </div>
                         </div>
@@ -660,11 +676,15 @@
                     <div class="flex justify-between items-center mb-4">
                         <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                         <div class="flex gap-2">
-                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-assessment-text">COPY</button>
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
                             <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                         </div>
                     </div>
                     <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-assessment-text">Select options...</span></div>
+                    <div class="flex justify-end gap-2 mt-auto">
+                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
+                        <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -934,6 +954,8 @@
                     if(assessmentState.duration==='Other'){ var cd=document.getElementById('assess-custom-dur-container'); if(cd) cd.classList.remove('hidden'); }
                     setActiveBtn('assessment-state',assessmentState.context,'context'); setActiveBtn('assessment-state',assessmentState.extra,'extra');
                     
+                    if(unitState.dur==='Other'){ var ud=document.getElementById('unit-custom-dur-container'); if(ud) ud.classList.remove('hidden'); }
+
                     document.querySelectorAll('[data-action="assessment-format"]').forEach(function(b){b.classList.remove('active');});
                     assessmentState.formats.forEach(function(f){ var b=document.querySelector('[data-action="assessment-format"][data-val="'+f+'"]'); if(b) b.classList.add('active'); });
                     if(assessmentState.formats.includes('Other')){ var fc=document.getElementById('assess-custom-format-container'); if(fc) fc.classList.remove('hidden'); }
@@ -1107,14 +1129,15 @@
             if(lessonState.notebookLM){ if(b){b.classList.add('bg-orange-500','text-white');b.classList.remove('bg-orange-100','text-orange-800');b.innerText="Disable NotebookLM Mode";} }else{ if(b){b.classList.remove('bg-orange-500','text-white');b.classList.add('bg-orange-100','text-orange-800');b.innerText="Enable NotebookLM Mode";} } updateLessonBuilderPrompt();
         }
 
-        function setUnitState(k, v, b) { unitState[k]=v; var p=b.parentElement; p.querySelectorAll('.builder-btn').forEach(function(el){el.classList.remove('active');}); b.classList.add('active'); if(k==='dept'||k==='year') renderCurriculumLink('unit-curriculum-link',unitState.dept,unitState.year); updateUnitBuilderPrompt(); }
+        function setUnitState(k, v, b) { unitState[k]=v; var p=b.parentElement; p.querySelectorAll('.builder-btn').forEach(function(el){el.classList.remove('active');}); b.classList.add('active'); if(k==='dept'||k==='year') renderCurriculumLink('unit-curriculum-link',unitState.dept,unitState.year); if(k==='dur') { var cd=document.getElementById('unit-custom-dur-container'); if(cd) v==='Other'?cd.classList.remove('hidden'):cd.classList.add('hidden'); } updateUnitBuilderPrompt(); }
 
         function updateAllPrompts() { updateUnitBuilderPrompt(); updateLessonBuilderPrompt(); updateAssessmentBuilderPrompt(); if(currentStrategy) setStrategyPrompt(currentStrategy); saveAppState(); }
 
         function updateUnitBuilderPrompt() {
-            var t=getGlobalTopic(), ct=(document.getElementById('unit-custom-task')||{}).value||"";
+            var t=getGlobalTopic(), ct=(document.getElementById('unit-custom-task')||{}).value||"", cd=(document.getElementById('unit-custom-dur')||{}).value||"";
             var isJun=["Year 7","Year 8","Year 9","Year 10"].includes(unitState.year), isLeg=unitState.year.includes("Level"), cUrl=getCurriculumLink(unitState.dept, unitState.year);
-            var txt='<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a '+unitState.dur+' unit on "'+t+'" for '+unitState.year+' '+unitState.dept+' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining '+(isLeg?'curriculum concepts and learning outcomes':'Disciplinary Knowledge and Practices')+' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to '+(isLeg?'CURRENT NCEA requirements':'new Knowledge & Practices drafts ('+cUrl+')')+'.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse 5 stages of CPM for lessons. Format via Markdown.\nSpelling: '+nzSpellingRule+'\n';
+            var actDur = unitState.dur === 'Other' ? (cd || "Custom Duration") : unitState.dur;
+            var txt='<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a '+actDur+' unit on "'+t+'" for '+unitState.year+' '+unitState.dept+' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining '+(isLeg?'curriculum concepts and learning outcomes':'Disciplinary Knowledge and Practices')+' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to '+(isLeg?'CURRENT NCEA requirements':'new Knowledge & Practices drafts ('+cUrl+')')+'.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse 5 stages of CPM for lessons. Format via Markdown.\nSpelling: '+nzSpellingRule+'\n';
             if(unitState.context==='waiheke') txt+='Include local Waiheke Island contexts. Highlight with **[WAIHEKE CONTEXT]** in the sequence.\n'; 
             if(unitState.maori==='integrate') txt+='Weave in Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]** in the sequence.\n'; 
             if(unitState.lit==='integrate') txt+='Focus on disciplinary literacy. YOU MUST explicitly plan for the teaching of these literacy skills in the teacher-led sections of the lessons (I Do/We Do) before independent practice. Highlight with **[LITERACY]**.\n'; 
@@ -1122,7 +1145,7 @@
             if(ct) txt+='Specific Instructions: "'+ct+'".\n';
             txt+='Provide actual, live URLs to relevant resources.</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             txt+='# WHS ' + unitState.year + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
-            txt+='## Overview\n| Year Level | ' + unitState.year + ' | Term | [Suggest Term] | Duration | ' + unitState.dur + ' |\n|---|---|---|---|---|---|\n';
+            txt+='## Overview\n| Year Level | ' + unitState.year + ' | Term | [Suggest Term] | Duration | ' + actDur + ' |\n|---|---|---|---|---|---|\n';
             txt+='| **Topic/ Strand/ Concept/ Context** | ' + t + ' | | | | |\n';
             if(isLeg) { txt+='| **Achievement Standard** | [Fill applicable standard] | | | | |\n| **The Standard Criteria** | [Fill] | | | | |\n'; }
             txt+='| **Overview** | [Fill brief description] | | | | |\n| **Purpose** | [Fill what is the point?] | | | | |\n\n';
@@ -1133,11 +1156,11 @@
             if(isJun || !isLeg) {
                 txt+='| Learning number/s | Knowledge (What they will be learning) | Practice (What they will do / How you know students have achieved success) | Student Learning Activities (CPM) | Preparation/ Resources |\n|---|---|---|---|---|\n';
                 txt+='| [Lesson 1] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n';
-                txt+='| [Continue rows for all ' + unitState.dur + '] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt+='| [Continue rows for all ' + actDur + '] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
             } else {
                 txt+='| Learning number/s | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources |\n|---|---|---|---|\n';
                 txt+='| [Lesson 1] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n';
-                txt+='| [Continue rows for all ' + unitState.dur + '] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt+='| [Continue rows for all ' + actDur + '] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
             }
             txt+='## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
             txt+='</output_format>'; var b=document.getElementById('prompt-unit-text'); if(b) b.innerText=txt;
@@ -1187,7 +1210,7 @@
                 if(outs.includes('quiz')) txt+='PART E: Quiz formats: '+(lessonState.quizFormats?lessonState.quizFormats.join(', '):'Google Forms')+'.\n';
                 if(outs.includes('lms')){ var yStr=(lessonState.year.includes('7')||lessonState.year.includes('8'))?'Friendly, heavy emojis':(lessonState.year.includes('9')||lessonState.year.includes('10'))?'Accessible, light emojis':'Formal, no emojis'; txt+='PART F: LMS Student Post. Tone: '+yStr+'.\n'; }
             }
-            txt+='</output_format>"'; if(b) b.innerText=txt;
+            txt+='</output_format>'; if(b) b.innerText=txt;
         }
 
         function updateAssessmentBuilderPrompt() {
@@ -1284,7 +1307,7 @@
             });
             document.body.addEventListener('input', function(e) {
                 if(e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
-                else if(e.target.id==='unit-custom-task') updateUnitBuilderPrompt();
+                else if(['unit-custom-task', 'unit-custom-dur'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if(['les-custom-task','les-source-material','les-unit-link','les-unit-number'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if(['assess-ncea-standard','assess-custom-format','assess-custom-dur','assess-source-material','assess-junior-knowledge','assess-junior-practices'].includes(e.target.id)) updateAssessmentBuilderPrompt();
             });
