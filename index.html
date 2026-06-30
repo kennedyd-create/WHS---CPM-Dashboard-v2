@@ -1,90 +1,201 @@
 <!DOCTYPE html>
 <html lang="en-NZ">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Waiheke High School: CPM & AI Navigator</title>
-    <script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
         :root { --whs-dark-blue: #002066; --whs-gold: #c5a059; --whs-light-blue: #d1e6f6; --whs-accent: #e2e8f0; }
         body { font-family: 'Manrope', sans-serif; background-color: var(--whs-accent); color: #1e293b; line-height: 1.6; }
-        .font-mono { font-family: 'JetBrains Mono', monospace; } .whs-gradient-bg { background: var(--whs-dark-blue); }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .whs-gradient-bg { background: var(--whs-dark-blue); }
         .glass-card { background: white; border: 1px solid var(--whs-light-blue); border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); }
         .nav-btn { padding: 0.75rem 1rem; color: #64748b; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
-        .nav-btn:hover { color: var(--whs-dark-blue); } .nav-active { border-bottom-color: var(--whs-dark-blue); color: var(--whs-dark-blue); font-weight: 800; }
+        .nav-btn:hover { color: var(--whs-dark-blue); }
+        .nav-active { border-bottom-color: var(--whs-dark-blue); color: var(--whs-dark-blue); font-weight: 800; }
         .dept-btn { padding: 0.5rem 1rem; border-radius: 0.25rem; font-size: 0.875rem; font-weight: 600; background: white; border: 1px solid #cbd5e1; color: #475569; transition: all 0.2s; }
-        .dept-btn:hover { background: #f1f5f9; } .dept-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
+        .dept-btn:hover { background: #f1f5f9; }
+        .dept-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
         .stage-btn { padding: 1rem; border-radius: 0.5rem; background: white; border: 2px solid transparent; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .stage-btn:hover { border-color: var(--whs-light-blue); } .stage-btn.active { border-color: var(--whs-dark-blue); background: var(--whs-light-blue); }
+        .stage-btn:hover { border-color: var(--whs-light-blue); }
+        .stage-btn.active { border-color: var(--whs-dark-blue); background: var(--whs-light-blue); }
         .builder-btn { padding: 0.5rem 0.75rem; font-size: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.25rem; background: white; transition: all 0.2s; font-weight: 600; color: #475569; }
-        .builder-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); } .builder-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
+        .builder-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
+        .builder-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
         .copy-btn-success { background-color: #16a34a !important; color: white !important; border-color: #16a34a !important; }
         .recommended-highlight { background-color: #ecfdf5 !important; border-color: #10b981 !important; color: #047857 !important; position: relative; }
         .recommended-highlight.active { background-color: #10b981 !important; border-color: #059669 !important; color: white !important; }
-        .platform-btn { background-color: #faf5ff; border-color: #d8b4fe; color: #6b21a8; } .platform-btn:hover { background-color: #f3e8ff; border-color: #c084fc; color: #581c87; }
+        .platform-btn { background-color: #faf5ff !important; border-color: #d8b4fe !important; color: #6b21a8 !important; }
+        .platform-btn:hover { background-color: #f3e8ff !important; border-color: #c084fc !important; color: #581c87 !important; }
         .chart-container { position: relative; width: 100%; max-width: 800px; margin: 0 auto; height: 350px; max-height: 400px; }
-        .tooltip-wrapper { position: relative; } .tooltip-wrapper::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); padding: 0.5rem 0.75rem; background-color: #1e293b; color: #f8fafc; font-size: 0.75rem; font-weight: 500; line-height: 1.4; text-align: center; white-space: normal; width: max-content; max-width: 240px; border-radius: 0.25rem; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        
+        .tooltip-wrapper { position: relative; }
+        .tooltip-wrapper::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); padding: 0.5rem 0.75rem; background-color: #1e293b; color: #f8fafc; font-size: 0.75rem; font-weight: 500; line-height: 1.4; text-align: center; white-space: normal; width: max-content; max-width: 240px; border-radius: 0.25rem; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
         .tooltip-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none; }
-        .tooltip-wrapper:hover::after, .tooltip-wrapper:hover::before { opacity: 1; visibility: visible; } .tooltip-wrapper:hover { z-index: 20; }
-        .stage-divider { position: relative; padding-top: 1.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; } .stage-divider::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, #cbd5e1, transparent); }
+        .tooltip-wrapper:hover::after, .tooltip-wrapper:hover::before { opacity: 1; visibility: visible; }
+        .tooltip-wrapper:hover { z-index: 20; }
+
+        .stage-divider { position: relative; padding-top: 1.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; }
+        .stage-divider::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, #cbd5e1, transparent); }
         .stage-header { font-size: 1.125rem; font-weight: 800; color: var(--whs-dark-blue); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
         .stage-number-badge { background-color: var(--whs-dark-blue); color: white; border-radius: 9999px; width: 1.75rem; height: 1.75rem; display: inline-flex; align-items: center; justify-content: center; font-size: 0.875rem; }
+
         @keyframes ai-pulse { 0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(16,185,129,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
         .ai-flash { animation: ai-pulse 0.5s ease-out; }
-        @keyframes surprise-pulse { 0% { background-color: #fee2e2; border-color: #ef4444; color: #b91c1c; } 50% { background-color: #fca5a5; border-color: #dc2626; color: #991b1b; box-shadow: 0 0 10px rgba(239,68,68,0.4); } 100% { background-color: #fee2e2; border-color: #ef4444; color: #b91c1c; } }
-        .surprise-btn { animation: surprise-pulse 3s infinite ease-in-out; transition: all 0.2s; } .surprise-btn:hover { animation: none !important; background-color: #ef4444 !important; color: white !important; border-color: #dc2626 !important; } .surprise-btn.active { animation: none !important; background-color: #dc2626 !important; color: white !important; border-color: #991b1b !important; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; } .custom-scrollbar::-webkit-scrollbar-track { background: transparent; } .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; } .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.4); }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
+        .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.4); }
     </style>
 </head>
 <body class="p-4 md:p-8">
+
     <div class="max-w-7xl mx-auto">
+        <!-- HEADER -->
         <header class="whs-gradient-bg rounded-lg p-8 md:p-12 text-white mb-10 shadow-md relative overflow-hidden flex justify-between items-center">
-            <div class="relative z-10"><div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
-                <div class="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#10b981]/20 to-white/10 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 shrink-0 group overflow-hidden">
-                    <div class="absolute inset-0 bg-[#c5a059] blur-[20px] opacity-20 group-hover:opacity-40 transition duration-700"></div>
-                    <div class="relative z-10 flex items-center justify-center"><svg class="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg></div>
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
+                    <div class="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#10b981]/20 to-white/10 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 shrink-0 group overflow-hidden">
+                        <div class="absolute inset-0 bg-[#c5a059] blur-[20px] opacity-20 group-hover:opacity-40 transition duration-700"></div>
+                        <div class="relative z-10 flex items-center justify-center">
+                            <svg class="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1>
+                        <h2 class="text-xl md:text-2xl font-normal opacity-90">CPM & AI Navigator</h2>
+                        <div class="mt-3 inline-block bg-white text-[#002066] px-4 py-1.5 border border-transparent text-xs font-bold uppercase tracking-widest shadow-sm rounded">Knowledge & Practices Hub</div>
+                    </div>
                 </div>
-                <div><h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1><h2 class="text-xl md:text-2xl font-normal opacity-90">CPM & AI Navigator</h2><div class="mt-3 inline-block bg-white text-[#002066] px-4 py-1.5 border border-transparent text-xs font-bold uppercase tracking-widest shadow-sm rounded">Knowledge & Practices Hub</div></div>
-            </div></div>
+            </div>
+            <svg class="absolute right-0 top-0 h-full w-64 text-white/5 transform translate-x-1/4 -translate-y-1/4 scale-150" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2zm-4-6h2v4H7zm0 6h2v2H7zm8-6h2v4h-2zm0 6h2v2h-2z" opacity="0.5"/><circle cx="12" cy="12" r="3" /><path d="M12 7l-3 4h6zM7 12l4 3v-6zM17 12l-4-3v6zM12 17l3-4H9z" opacity="0.8"/></svg>
         </header>
 
+        <!-- NAVIGATION -->
         <nav class="sticky top-0 z-50 bg-[#e2e8f0]/95 backdrop-blur-md flex items-center justify-center border-b-2 border-slate-300 mb-6 gap-2 md:gap-4 overflow-x-auto pb-3 pt-3 -mx-4 px-4 md:-mx-8 md:px-8 shadow-sm transition-all duration-300">
             <button id="nav-lesson" class="nav-btn nav-active" data-action="view" data-target="lesson">Lesson Builder</button>
             <button id="nav-planning" class="nav-btn" data-action="view" data-target="planning">Unit Planner</button>
             <button id="nav-assessment" class="nav-btn" data-action="view" data-target="assessment">Assessment Generator</button>
             <button id="nav-instructional" class="nav-btn" data-action="view" data-target="instructional">Strategy Hub</button>
             <button id="nav-theory" class="nav-btn" data-action="view" data-target="theory">CPM Theory</button>
+            
             <div class="flex items-center ml-2 md:ml-4 flex-shrink-0">
                 <a href="https://kennedyd-create.github.io/WHS---Student-/" target="_blank" class="px-4 py-2.5 bg-red-50 text-red-800 hover:bg-red-100 border border-red-200 rounded-l-lg font-bold text-sm transition flex items-center gap-2 shadow-sm">Student Dashboard ↗</a>
-                <button class="px-3 py-2.5 bg-red-50 hover:bg-red-100 border border-l-0 border-red-200 text-red-700 rounded-r-lg transition tooltip-wrapper shadow-sm flex items-center justify-center" data-tooltip="Copy link for students" data-action="copy-dashboard"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                <button class="px-3 py-2.5 bg-red-50 hover:bg-red-100 border border-l-0 border-red-200 text-red-700 rounded-r-lg transition tooltip-wrapper shadow-sm flex items-center justify-center" data-tooltip="Copy link for students" data-action="copy-dashboard">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                </button>
             </div>
         </nav>
 
         <!-- VIEW: LESSON BUILDER -->
         <div id="view-lesson" class="space-y-8 animate-in fade-in duration-500">
-            <div class="text-center max-w-3xl mx-auto mb-8"><h2 class="text-4xl font-black text-slate-900 mb-4">CPM Lesson Engine Builder</h2><div class="mt-4 flex justify-center"><button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">RESET SAVED DATA</button></div></div>
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Lesson Engine Builder</h2>
+                <p class="text-slate-600">Build a hyper-specific prompt by picking strategies for each CPM stage.</p>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        RESET SAVED DATA
+                    </button>
+                </div>
+            </div>
+
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#10b981] max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span><div class="flex flex-wrap gap-2" id="les-dept-opts"><button class="builder-btn active" data-action="lesson-state" data-key="dept" data-val="Science">Science</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Maths">Maths</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Social Sciences">Social Sciences</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="English">English</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Māori">Māori</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Technology">Technology</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Arts">Arts</button><button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="PE & Health">PE & Health</button></div></div>
-                    <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span><div class="flex flex-wrap gap-2" id="les-year-opts"><button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 7">Year 7</button><button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 8">Year 8</button><button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 9">Year 9</button><button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 10">Year 10</button><button class="builder-btn active" data-action="lesson-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button><button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button><button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button></div></div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                        <div class="flex flex-wrap gap-2" id="les-dept-opts">
+                            <button class="builder-btn active" data-action="lesson-state" data-key="dept" data-val="Science">Science</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Maths">Maths</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="English">English</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Māori">Māori</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Technology">Technology</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="Arts">Arts</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="dept" data-val="PE & Health">PE & Health</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                        <div class="flex flex-wrap gap-2" id="les-year-opts">
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 7">Year 7</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 8">Year 8</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 9">Year 9</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 10">Year 10</button>
+                            <button class="builder-btn active" data-action="lesson-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
+                        </div>
+                    </div>
                 </div>
+
                 <div id="les-curriculum-link" class="flex justify-start"></div>
+
                 <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
-                    <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching?</label><span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span></div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] outline-none font-medium text-slate-800 bg-white">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Type to activate AI Top Picks)</label>
+                        <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
+                    </div>
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white">
                 </div>
-                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200"><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label><input type="text" id="les-source-material" placeholder="Paste an article URL, YouTube link, or raw text here..." class="w-full p-2.5 rounded-lg border border-slate-300 outline-none text-sm font-medium text-slate-800 bg-white"></div>
-                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Connect to Existing Unit Plan (Optional)</span><div class="flex flex-col sm:flex-row gap-2"><input type="text" id="les-unit-link" placeholder="Paste Google Doc link or text of your Unit Plan..." class="flex-grow p-2.5 rounded-lg border border-slate-300 outline-none text-sm font-medium text-slate-800 bg-white"><input type="text" id="les-unit-number" placeholder="e.g. Lesson 4" class="w-full sm:w-32 p-2.5 rounded-lg border border-slate-300 outline-none text-sm font-medium text-slate-800 bg-white"></div></div>
+                
+                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label>
+                    <input type="text" id="les-source-material" placeholder="Paste an article URL, YouTube link, or raw text here to ground the AI..." class="w-full p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition text-sm font-medium text-slate-800 bg-white">
+                </div>
+                
+                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Connect to Existing Unit Plan (Optional)</span>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="les-unit-link" placeholder="Paste Google Doc link or text of your Unit Plan..." class="flex-grow p-2.5 rounded-lg border border-slate-300 focus:border-[#002066] outline-none transition text-sm font-medium text-slate-800 bg-white">
+                        <input type="text" id="les-unit-number" placeholder="e.g. Lesson 4" class="w-full sm:w-32 p-2.5 rounded-lg border border-slate-300 outline-none transition text-sm font-medium text-slate-800 bg-white">
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-slate-200">
-                    <div><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="lesson-state" data-key="context" data-val="none">Standard</button><button class="builder-btn text-left" data-action="lesson-state" data-key="context" data-val="waiheke">Waiheke Context</button></div></div>
-                    <div><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="lesson-state" data-key="maori" data-val="none">Standard</button><button class="builder-btn text-left" data-action="lesson-state" data-key="maori" data-val="integrate">Integrate</button></div></div>
-                    <div><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="lesson-state" data-key="lit" data-val="none">Standard</button><button class="builder-btn text-left" data-action="lesson-state" data-key="lit" data-val="integrate">Focus on Disciplinary Literacy</button></div></div>
-                    <div><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy Integration</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="lesson-state" data-key="num" data-val="none">Standard</button><button class="builder-btn text-left" data-action="lesson-state" data-key="num" data-val="integrate">Focus on Disciplinary Numeracy</button></div></div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-context-opts">
+                            <button class="builder-btn active text-left" data-action="lesson-state" data-key="context" data-val="none">Standard</button>
+                            <button class="builder-btn text-left" data-action="lesson-state" data-key="context" data-val="waiheke">Waiheke Context</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span>
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-maori-opts">
+                            <button class="builder-btn active text-left" data-action="lesson-state" data-key="maori" data-val="none">Standard</button>
+                            <button class="builder-btn text-left" data-action="lesson-state" data-key="maori" data-val="integrate">Integrate</button>
+                        </div>
+                    </div>
+                    <div id="les-lit-container">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span>
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-lit-opts">
+                            <button class="builder-btn active text-left" data-action="lesson-state" data-key="lit" data-val="none">Standard</button>
+                            <button class="builder-btn text-left" data-action="lesson-state" data-key="lit" data-val="integrate">Focus on Disciplinary Literacy</button>
+                        </div>
+                    </div>
+                    <div id="les-num-container">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy Integration</span>
+                        <div class="flex flex-col xl:flex-row gap-2" id="les-num-opts">
+                            <button class="builder-btn active text-left" data-action="lesson-state" data-key="num" data-val="none">Standard</button>
+                            <button class="builder-btn text-left" data-action="lesson-state" data-key="num" data-val="integrate">Focus on Disciplinary Numeracy</button>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-4 pt-6 mt-4 border-t border-slate-200">
                     <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm gap-4">
-                        <div><span class="text-xs font-black text-red-800 uppercase tracking-widest block mb-1">Emergency Relief Cover</span><p class="text-xs text-red-600 font-medium leading-tight">Bypass CPM planner and generate a self-contained worksheet.</p></div>
-                        <div class="flex flex-col gap-2 shrink-0"><button id="btn-relief-mode" class="w-full px-4 py-2.5 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded-lg hover:bg-red-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-relief">Enable Relief Mode</button></div>
+                        <div>
+                            <span class="text-xs font-black text-red-800 uppercase tracking-widest block mb-1">Emergency Relief Cover</span>
+                            <p class="text-xs text-red-600 font-medium leading-tight">Bypass the CPM planner and generate a self-contained worksheet for a non-specialist relief teacher.</p>
+                        </div>
+                        <div class="flex flex-col gap-2 shrink-0">
+                            <button id="btn-relief-mode" class="w-full px-4 py-2.5 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded-lg hover:bg-red-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-relief">Enable Relief Mode</button>
+                        </div>
                     </div>
                     <div id="relief-tasks-container" class="hidden col-span-1 md:col-span-2 bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm mb-4">
                         <span class="text-[10px] font-bold text-red-800 uppercase tracking-widest block mb-2">Relief Lesson Format (Optional)</span>
@@ -97,11 +208,15 @@
                         </div>
                         <div id="relief-custom-task-container" class="hidden pt-3 mt-3 border-t border-red-200">
                             <label class="text-[10px] font-bold text-red-800 uppercase tracking-widest block mb-1">Brief instructions for the relief teacher/students</label>
-                            <input type="text" id="les-relief-custom" placeholder="e.g. Complete the Algebra revision module..." class="w-full p-2.5 rounded-lg border border-red-300 outline-none text-sm font-medium">
+                            <input type="text" id="les-relief-custom" placeholder="e.g. Complete the Algebra revision module..." class="w-full p-2.5 rounded-lg border border-red-300 outline-none text-sm font-medium text-slate-800 bg-white">
                         </div>
                     </div>
+
                     <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-orange-50 p-4 rounded-xl border border-orange-200 shadow-sm gap-4">
-                        <div><span class="text-xs font-black text-orange-800 uppercase tracking-widest block mb-1">NotebookLM Source Generator</span><p class="text-xs text-orange-600 font-medium leading-tight">Generate a detailed Master Source Document.</p></div>
+                        <div>
+                            <span class="text-xs font-black text-orange-800 uppercase tracking-widest block mb-1">NotebookLM Source Generator</span>
+                            <p class="text-xs text-orange-600 font-medium leading-tight">Generate a detailed Master Source Document with built-in meta-instructions for NotebookLM.</p>
+                        </div>
                         <button id="btn-notebooklm-mode" class="shrink-0 px-4 py-2.5 bg-orange-100 border border-orange-300 text-orange-800 text-xs font-bold rounded-lg hover:bg-orange-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-notebooklm">Enable NotebookLM Mode</button>
                     </div>
                 </div>
@@ -109,6 +224,8 @@
 
             <div class="glass-card p-8 border-t-8 border-t-[#002066]">
                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Lesson Stage Selection</h3>
+                <p class="text-sm text-slate-600 mb-4">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-[#10b981] text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
+
                 <div class="mb-8 md:w-1/2 bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
                     <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-2">Include Stages in Lesson Plan</span>
                     <div class="flex flex-wrap gap-2" id="les-stage-toggles">
@@ -120,14 +237,20 @@
                         <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="5">5 - Review</button>
                     </div>
                 </div>
+
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="space-y-2">
-                        <div id="stage-block-1" class="stage-divider"><div class="stage-header mb-4"><span class="stage-number-badge">1</span> Connect</div><div class="flex flex-wrap gap-2" id="les-s1-opts"></div></div>
-                        <div id="stage-block-2" class="stage-divider"><div class="stage-header mb-4"><span class="stage-number-badge">2</span> I Do</div><div class="flex flex-wrap gap-2" id="les-s2-opts"></div></div>
-                        <div id="stage-block-3" class="stage-divider"><div class="stage-header mb-4"><span class="stage-number-badge">3</span> We Do</div><div class="flex flex-wrap gap-2" id="les-s3-opts"></div></div>
-                        <div id="stage-block-4" class="stage-divider"><div class="stage-header mb-4"><span class="stage-number-badge">4</span> You Do</div><div class="flex flex-wrap gap-2" id="les-s4-opts"></div></div>
-                        <div id="stage-block-5" class="stage-divider"><div class="stage-header mb-4"><span class="stage-number-badge">5</span> Review</div><div class="flex flex-wrap gap-2" id="les-s5-opts"></div></div>
-                        <div class="pt-8 mt-4 border-t border-slate-200"><span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span><input type="text" id="les-custom-task" placeholder="e.g. Only have stages 3 and 4 in this lesson..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm"></div>
+                        <div id="stage-block-1" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">1</span> Connect</div><div class="flex flex-wrap gap-2" id="les-s1-opts"></div></div>
+                        <div id="stage-block-2" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">2</span> I Do</div><div class="flex flex-wrap gap-2" id="les-s2-opts"></div></div>
+                        <div id="stage-block-3" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">3</span> We Do</div><div class="flex flex-wrap gap-2" id="les-s3-opts"></div></div>
+                        <div id="stage-block-4" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">4</span> You Do</div><div class="flex flex-wrap gap-2" id="les-s4-opts"></div></div>
+                        <div id="stage-block-5" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">5</span> Review</div><div class="flex flex-wrap gap-2" id="les-s5-opts"></div></div>
+                        
+                        <div class="pt-8 mt-4 border-t border-slate-200">
+                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span>
+                            <input type="text" id="les-custom-task" placeholder="e.g. Only have stages 3 and 4 in this lesson..." class="w-full p-2.5 rounded-lg border border-slate-300 outline-none transition text-sm font-medium text-slate-800">
+                        </div>
+
                         <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
                             <div class="flex flex-wrap gap-2" id="les-output-opts">
@@ -139,50 +262,129 @@
                                 <button class="builder-btn" data-action="lesson-output" data-val="media">+ Media/Videos</button>
                                 <button class="builder-btn" data-action="lesson-output" data-val="images">+ Images/Diagrams</button>
                                 <button class="builder-btn" data-action="lesson-output" data-val="lms">+ LMS Post</button>
-                                <button class="builder-btn border-dashed" data-action="lesson-output" data-val="all">Select All</button>
+                                <button class="builder-btn border-dashed border-slate-400 text-slate-500 hover:text-slate-800" data-action="lesson-output" data-val="all">Select All</button>
                             </div>
+                            
                             <div id="les-worksheet-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Worksheet Activity Style</span>
-                                <div class="flex flex-wrap gap-2"><button class="builder-btn active" data-action="lesson-ws-format" data-val="Standard Task">Standard Task</button><button class="builder-btn" data-action="lesson-ws-format" data-val="Gap Fill / Cloze">Gap Fill / Cloze</button><button class="builder-btn" data-action="lesson-ws-format" data-val="Matching / Sorting">Matching / Sorting</button></div>
+                                <div class="flex flex-wrap gap-2" id="les-worksheet-opts">
+                                    <button class="builder-btn active" data-action="lesson-ws-format" data-val="Standard Task">Standard Task</button>
+                                    <button class="builder-btn" data-action="lesson-ws-format" data-val="Gap Fill / Cloze">Gap Fill / Cloze</button>
+                                    <button class="builder-btn" data-action="lesson-ws-format" data-val="Matching / Sorting">Matching / Sorting</button>
+                                </div>
                             </div>
+                            
                             <div id="les-quiz-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Quiz Export Formats (Select Multiple)</span>
-                                <div class="flex flex-wrap gap-2"><button class="builder-btn active" data-action="lesson-quiz-format" data-val="Google Forms">Google Forms</button><button class="builder-btn" data-action="lesson-quiz-format" data-val="Kahoot CSV">Kahoot CSV</button><button class="builder-btn" data-action="lesson-quiz-format" data-val="Blooket CSV">Blooket CSV</button><button class="builder-btn" data-action="lesson-quiz-format" data-val="Gimkit CSV">Gimkit CSV</button></div>
+                                <div class="flex flex-wrap gap-2" id="les-quiz-opts">
+                                    <button class="builder-btn active" data-action="lesson-quiz-format" data-val="Google Forms">Google Forms</button>
+                                    <button class="builder-btn" data-action="lesson-quiz-format" data-val="Kahoot CSV">Kahoot CSV</button>
+                                    <button class="builder-btn" data-action="lesson-quiz-format" data-val="Blooket CSV">Blooket CSV</button>
+                                    <button class="builder-btn" data-action="lesson-quiz-format" data-val="Gimkit CSV">Gimkit CSV</button>
+                                </div>
                             </div>
                         </div>
+
                         <div class="pt-4 border-t border-slate-200">
                             <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
-                            <div class="flex flex-wrap gap-2"><button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard)</button><button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="3-Tiered Worksheet">3-Tiered Worksheet</button><button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ADHD / Low-Stimulation">ADHD Friendly</button><button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Dyslexia-Friendly">Dyslexia Friendly</button><button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners">ESOL Scaffold</button></div>
+                            <div class="flex flex-wrap gap-2" id="les-extra-opts">
+                                <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard)</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="3-Tiered Worksheet">3-Tiered Worksheet</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ADHD / Low-Stimulation">ADHD Friendly</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Dyslexia-Friendly">Dyslexia Friendly</button>
+                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners">ESOL Scaffold</button>
+                            </div>
                         </div>
+
                     </div>
+
                     <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col flex-grow shadow-sm relative">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
-                            <div class="flex gap-2"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                            <div class="flex gap-2">
+                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
+                                <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                            </div>
                         </div>
-                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-lesson-text">...</span></div>
-                        <div class="flex justify-end gap-2 mt-auto"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-lesson-text">Select options...</span></div>
+                        <div class="flex justify-end gap-2 mt-auto">
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
+                            <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW: UNIT PLANNER -->
+        <!-- VIEW 2: UNIT PLANNER -->
         <div id="view-planning" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div class="text-center max-w-3xl mx-auto mb-8"><h2 class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2><div class="mt-4 flex justify-center"><button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">RESET SAVED DATA</button></div></div>
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2>
+                <p class="text-slate-600">Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.</p>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
+                        RESET SAVED DATA
+                    </button>
+                </div>
+            </div>
+
             <div class="glass-card p-8 border-t-8 border-t-[#c5a059]">
                 <h3 class="text-2xl font-bold text-slate-900 mb-2">Unit Planner Configuration</h3>
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="space-y-6">
-                        <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span><div class="flex flex-wrap gap-2" id="unit-dept-opts"><button class="builder-btn active" data-action="unit-state" data-key="dept" data-val="Science">Science</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Maths">Maths</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Social Sciences">Social Sciences</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="English">English</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Māori">Māori</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Technology">Technology</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Arts">Arts</button><button class="builder-btn" data-action="unit-state" data-key="dept" data-val="PE & Health">PE & Health</button></div></div>
-                        <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span><div class="flex flex-wrap gap-2" id="unit-year-opts"><button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 7">Year 7</button><button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 8">Year 8</button><button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 9">Year 9</button><button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 10">Year 10</button><button class="builder-btn active" data-action="unit-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button><button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button><button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button></div></div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                            <div class="flex flex-wrap gap-2" id="unit-dept-opts">
+                                <button class="builder-btn active" data-action="unit-state" data-key="dept" data-val="Science">Science</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Maths">Maths</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="English">English</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Māori">Māori</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Technology">Technology</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="Arts">Arts</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dept" data-val="PE & Health">PE & Health</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                            <div class="flex flex-wrap gap-2" id="unit-year-opts">
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 7">Year 7</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 8">Year 8</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 9">Year 9</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 10">Year 10</button>
+                                <button class="builder-btn active" data-action="unit-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
+                            </div>
+                        </div>
+
                         <div id="unit-curriculum-link" class="flex justify-start"></div>
-                        <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200"><div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching?</label></div><input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white"></div>
-                        <div class="pt-2"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas</span><input type="text" id="unit-custom-task" placeholder="e.g. Include a debate in week 2..." class="w-full p-3 rounded-lg border border-slate-300 text-sm"></div>
+
+                        <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching?</label>
+                            </div>
+                            <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
+                        </div>
+
+                        <div class="pt-2">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas</span>
+                            <input type="text" id="unit-custom-task" placeholder="e.g. Include a debate in week 2..." class="w-full p-3 rounded-lg border border-slate-300 text-sm outline-none">
+                        </div>
+
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Duration</span>
-                            <div class="flex flex-wrap gap-2" id="unit-dur-opts"><button class="builder-btn" data-action="unit-state" data-key="dur" data-val="4 lessons">4 Lessons</button><button class="builder-btn" data-action="unit-state" data-key="dur" data-val="8 lessons">8 Lessons</button><button class="builder-btn active" data-action="unit-state" data-key="dur" data-val="12 lessons">12 Lessons</button><button class="builder-btn" data-action="unit-state" data-key="dur" data-val="16 lessons">16 Lessons</button><button class="builder-btn" data-action="unit-state" data-key="dur" data-val="20 lessons">20 Lessons</button><button class="builder-btn" data-action="unit-state" data-key="dur" data-val="Other">Other</button></div>
-                            <div id="unit-custom-dur-container" class="hidden pt-2"><input type="text" id="unit-custom-dur" placeholder="Specify duration (e.g. 5 weeks)..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm"></div>
+                            <div class="flex flex-wrap gap-2" id="unit-dur-opts">
+                                <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="4 lessons">4 Lessons</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="8 lessons">8 Lessons</button>
+                                <button class="builder-btn active" data-action="unit-state" data-key="dur" data-val="12 lessons">12 Lessons</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="16 lessons">16 Lessons</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="20 lessons">20 Lessons</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="Other">Other</button>
+                            </div>
+                            <div id="unit-custom-dur-container" class="hidden pt-2">
+                                <input type="text" id="unit-custom-dur" placeholder="Specify duration (e.g. 5 weeks)..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                            </div>
                         </div>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="unit-state" data-key="context" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="context" data-val="waiheke">Waiheke</button></div></div>
@@ -191,13 +393,20 @@
                             <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="unit-state" data-key="num" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="num" data-val="integrate">Integrate</button></div></div>
                         </div>
                     </div>
+                    
                     <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col">
                         <div class="flex justify-between items-center mb-4">
                             <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
-                            <div class="flex gap-2"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                            <div class="flex gap-2">
+                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
+                                <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                            </div>
                         </div>
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 custom-scrollbar overflow-y-auto max-h-[600px]"><span id="prompt-unit-text">...</span></div>
-                        <div class="flex justify-end gap-2 mt-auto"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                        <div class="flex justify-end gap-2 mt-auto">
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
+                            <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,73 +414,183 @@
 
         <!-- VIEW: ASSESSMENT GENERATOR -->
         <div id="view-assessment" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div class="text-center max-w-3xl mx-auto mb-8"><h2 class="text-4xl font-black text-slate-900 mb-4">Assessment Generator</h2><div class="mt-4 flex justify-center"><button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg" data-action="reset-app">RESET DATA</button></div></div>
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">Assessment Generator</h2>
+                <p class="text-slate-600">Design customised formative and summative assessments aligned to the curriculum.</p>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">RESET DATA</button>
+                </div>
+            </div>
+
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#c5a059] max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span><div class="flex flex-wrap gap-2" id="assess-dept-opts"><button class="builder-btn active" data-action="assessment-state" data-key="dept" data-val="Science">Science</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Maths">Maths</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Social Sciences">Social Sciences</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="English">English</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Māori">Māori</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Technology">Technology</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Arts">Arts</button><button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="PE & Health">PE & Health</button></div></div>
-                    <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span><div class="flex flex-wrap gap-2" id="assess-year-opts"><button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 7">Year 7</button><button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 8">Year 8</button><button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 9">Year 9</button><button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 10">Year 10</button><button class="builder-btn active" data-action="assessment-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button><button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button><button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button></div></div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                        <div class="flex flex-wrap gap-2" id="assess-dept-opts">
+                            <button class="builder-btn active" data-action="assessment-state" data-key="dept" data-val="Science">Science</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Maths">Maths</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="English">English</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Māori">Māori</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Technology">Technology</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Arts">Arts</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="PE & Health">PE & Health</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                        <div class="flex flex-wrap gap-2" id="assess-year-opts">
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 7">Year 7</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 8">Year 8</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 9">Year 9</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 10">Year 10</button>
+                            <button class="builder-btn active" data-action="assessment-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
+                        </div>
+                    </div>
                 </div>
+
                 <div id="assess-curriculum-link" class="flex justify-start"></div>
-                <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200"><div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you assessing?</label></div><input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white"></div>
-                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200"><label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label><input type="text" id="assess-source-material" placeholder="Paste an article URL, YouTube link, or raw text here..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm"></div>
+
+                <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
+                    <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you assessing?</label></div>
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
+                </div>
+
+                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label>
+                    <input type="text" id="assess-source-material" placeholder="Paste an article URL, YouTube link, or raw text here..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                </div>
+
                 <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
                     <div>
                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Scope & Duration</span>
-                        <div class="flex flex-wrap gap-2"><button class="builder-btn active" data-action="assessment-state" data-key="duration" data-val="1 Period Test">1 Period Test</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="2 Period Assessment">2 Period Assessment</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="1 Week Mini-Project">1 Week Mini-Project</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="3-4 Week Deep Dive">3-4 Week Deep Dive</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="Other">Other</button></div>
-                        <div id="assess-custom-dur-container" class="hidden pt-2"><input type="text" id="assess-custom-dur" placeholder="Specify duration..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm"></div>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="builder-btn active" data-action="assessment-state" data-key="duration" data-val="1 Period Test">1 Period Test</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="2 Period Assessment">2 Period Assessment</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="1 Week Mini-Project">1 Week Mini-Project</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="3-4 Week Deep Dive">3-4 Week Deep Dive</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="Other">Other</button>
+                        </div>
+                        <div id="assess-custom-dur-container" class="hidden pt-2"><input type="text" id="assess-custom-dur" placeholder="Specify duration..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none"></div>
                     </div>
                     <div><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="assessment-state" data-key="context" data-val="none">Standard</button><button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke">Waiheke Context</button></div></div>
                 </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <span class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Question Volume / Specific Instructions (Optional)</span>
+                    <input type="text" id="assess-custom-volume" placeholder="e.g. Exactly 10 multiple choice questions, or 5 short answer questions..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none text-slate-800 bg-white">
+                </div>
+
                 <div id="junior-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
                     <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
                         <span class="text-xs font-black text-blue-800 uppercase tracking-widest block mb-1">Junior Assessment (Years 7-10)</span>
                         <div class="grid md:grid-cols-2 gap-4 mb-2">
-                            <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="assess-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm"></div>
-                            <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="assess-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm"></div>
+                            <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="assess-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
+                            <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="assess-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
                         </div>
                         <div>
                             <span class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-2">Assessment Formats</span>
-                            <div class="flex flex-wrap gap-2"><button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button><button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button><button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button><button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button><button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button><button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button><button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button><button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button><button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button><button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button></div>
-                            <div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm"></div>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button>
+                                <button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button>
+                                <button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button>
+                                <button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button>
+                                <button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button>
+                            </div>
+                            <div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
                         </div>
                     </div>
                 </div>
+
                 <div id="ncea-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
                     <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
                         <div><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span><p class="text-xs text-purple-600 font-medium leading-tight">Generates NCEA-style options with shared Achieved/Merit/Excellence matrix.</p></div>
-                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-2 mt-2"><label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-red-500 text-xs">*</span></label><input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm"></div>
+                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-2 mt-2"><label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-red-500 text-xs">*</span></label><input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none"></div>
                     </div>
                 </div>
+
                 <div class="mt-4 pt-6 border-t border-slate-200">
                     <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
-                    <div class="flex flex-wrap gap-2"><button class="builder-btn active" data-action="assessment-state" data-key="extra" data-val="None">None (Standard)</button><button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="3-Tier Assessment">3-Tiered Assessment</button><button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ADHD Friendly">ADHD Friendly</button><button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Dyslexia Friendly">Dyslexia Friendly</button><button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ESOL Scaffold">ESOL Scaffold</button></div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="builder-btn active" data-action="assessment-state" data-key="extra" data-val="None">None (Standard)</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="3-Tier Assessment">3-Tiered Assessment</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ADHD Friendly">ADHD Friendly</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Dyslexia Friendly">Dyslexia Friendly</button>
+                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ESOL Scaffold">ESOL Scaffold</button>
+                    </div>
                 </div>
+
                 <div class="mt-4 pt-4 border-t border-slate-200">
                     <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Additional Outputs</span>
-                    <div class="flex flex-wrap gap-2"><button class="builder-btn" data-action="assessment-output" data-val="Student Exemplars">+ Student Exemplars</button><button class="builder-btn" data-action="assessment-output" data-val="Marking Schedule">+ Teacher Marking Schedule</button><button class="builder-btn" data-action="assessment-output" data-val="Peer Check-bric">+ Peer Check-bric</button></div>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="builder-btn" data-action="assessment-output" data-val="Student Exemplars">+ Student Exemplars</button>
+                        <button class="builder-btn" data-action="assessment-output" data-val="Marking Schedule">+ Teacher Marking Schedule</button>
+                        <button class="builder-btn" data-action="assessment-output" data-val="Peer Check-bric">+ Peer Check-bric</button>
+                    </div>
                 </div>
             </div>
+
             <div class="glass-card p-8 border-t-8 border-t-[#002066] max-w-5xl mx-auto">
                 <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col shadow-sm relative">
                     <div class="flex justify-between items-center mb-4">
                         <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
-                        <div class="flex gap-2"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                        <div class="flex gap-2">
+                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
+                            <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                        </div>
                     </div>
                     <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-assessment-text">...</span></div>
-                    <div class="flex justify-end gap-2 mt-auto"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                    <div class="flex justify-end gap-2 mt-auto">
+                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
+                        <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- VIEW: INSTRUCTIONAL HUB -->
         <div id="view-instructional" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div class="text-center max-w-3xl mx-auto mb-4"><h2 class="text-4xl font-black text-slate-900 mb-4">The Strategy Hub</h2><div class="mt-4 flex justify-center"><button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">RESET SAVED DATA</button></div></div>
+            <div class="text-center max-w-3xl mx-auto mb-4">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">The Strategy Hub</h2>
+                <div class="mt-4 flex justify-center">
+                    <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">RESET SAVED DATA</button>
+                </div>
+            </div>
             <div class="space-y-4">
-                <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200"><button class="dept-btn active" data-action="discipline" data-val="Science">Science</button><button class="dept-btn" data-action="discipline" data-val="Maths">Maths</button><button class="dept-btn" data-action="discipline" data-val="Social Sciences">Social Sciences</button><button class="dept-btn" data-action="discipline" data-val="English">English</button><button class="dept-btn" data-action="discipline" data-val="Māori">Māori</button><button class="dept-btn" data-action="discipline" data-val="Technology">Technology</button><button class="dept-btn" data-action="discipline" data-val="Arts">Arts</button><button class="dept-btn" data-action="discipline" data-val="PE & Health">PE & Health</button></div>
-                <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200"><button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button><button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button><button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button><button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button><button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button><button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button><button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button></div>
+                <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <button class="dept-btn active" data-action="discipline" data-val="Science">Science</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Maths">Maths</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Social Sciences">Social Sciences</button>
+                    <button class="dept-btn" data-action="discipline" data-val="English">English</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Māori">Māori</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Technology">Technology</button>
+                    <button class="dept-btn" data-action="discipline" data-val="Arts">Arts</button>
+                    <button class="dept-btn" data-action="discipline" data-val="PE & Health">PE & Health</button>
+                </div>
+                <div class="flex flex-wrap justify-center gap-2 bg-white p-3 rounded-2xl shadow-sm border border-slate-200">
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 7">Year 7</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
+                    <button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
+                </div>
                 <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
             </div>
-            <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8"><div class="flex-grow"><div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label></div><input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 outline-none text-slate-800 bg-slate-50"></div></div>
+            <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8">
+                <div class="flex-grow">
+                    <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label></div>
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 outline-none text-slate-800 bg-slate-50">
+                </div>
+            </div>
             <div class="grid lg:grid-cols-12 gap-8">
                 <div class="lg:col-span-3 space-y-3">
                     <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">CPM Stages</h3>
@@ -283,38 +602,81 @@
                 </div>
                 <div class="lg:col-span-9">
                     <div class="glass-card p-8 h-full flex flex-col">
-                        <div class="mb-6 border-b-2 border-[#002066] pb-4"><h3 id="display-title" class="text-3xl font-black text-[#002066] mb-2 uppercase tracking-wider">Stage 1: Connect</h3><p id="display-intent" class="text-sm text-slate-600 font-medium">Activates existing schemas.</p></div>
+                        <div class="mb-6 border-b-2 border-[#002066] pb-4">
+                            <h3 id="display-title" class="text-3xl font-black text-[#002066] mb-2 uppercase tracking-wider">Stage 1: Connect</h3>
+                            <p id="display-intent" class="text-sm text-slate-600 font-medium">Activates existing schemas.</p>
+                        </div>
                         <div class="grid md:grid-cols-2 gap-8 flex-grow">
-                            <div><h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy</h4><div id="display-strategies" class="space-y-2"></div></div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy</h4>
+                                <div id="display-strategies" class="space-y-2"></div>
+                            </div>
                             <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
                                 <div class="flex justify-between items-center mb-4">
                                     <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Expert Assistant Prompt</h4>
-                                    <div class="flex gap-2"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                                    <div class="flex gap-2">
+                                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button>
+                                        <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                                    </div>
                                 </div>
                                 <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 mb-4 flex-grow shadow-inner overflow-y-auto max-h-[300px] custom-scrollbar"><span id="prompt-text-instructional">...</span></div>
-                                <div class="flex justify-end gap-2 mt-auto"><button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button><a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a></div>
+                                <div class="flex justify-end gap-2 mt-auto">
+                                    <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button>
+                                    <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="glass-card p-8 md:p-10 border-t-8 border-t-[#c5a059] mt-8"><div class="grid lg:grid-cols-2 gap-12 items-center"><div class="chart-container"><canvas id="cpmChart"></canvas></div><div class="space-y-6"><h3 class="text-3xl font-black text-[#002066]">The Logic of the Routine</h3><p class="text-slate-700">The CPM acts as a <strong>Gradual Release of Responsibility (GRR)</strong> engine.</p></div></div></div>
+            <div class="glass-card p-8 md:p-10 border-t-8 border-t-[#c5a059] mt-8">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="chart-container"><canvas id="cpmChart"></canvas></div>
+                    <div class="space-y-6">
+                        <h3 class="text-3xl font-black text-[#002066]">The Logic of the Routine</h3>
+                        <p class="text-slate-700">The CPM acts as a <strong>Gradual Release of Responsibility (GRR)</strong> engine.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- VIEW 5: THEORY -->
         <div id="view-theory" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div class="text-center max-w-3xl mx-auto mb-8"><h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2></div>
-            <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center"><button id="th-stage-1" class="theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white" data-action="theory-stage" data-val="1">Stage 1: Connect</button><button id="th-stage-2" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="2">Stage 2: I Do</button><button id="th-stage-3" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="3">Stage 3: We Do</button><button id="th-stage-4" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="4">Stage 4: You Do</button><button id="th-stage-5" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="5">Stage 5: Review</button></div>
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2>
+            </div>
+            <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center">
+                <button id="th-stage-1" class="theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white" data-action="theory-stage" data-val="1">Stage 1: Connect</button>
+                <button id="th-stage-2" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="2">Stage 2: I Do</button>
+                <button id="th-stage-3" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="3">Stage 3: We Do</button>
+                <button id="th-stage-4" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="4">Stage 4: You Do</button>
+                <button id="th-stage-5" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="5">Stage 5: Review</button>
+            </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 max-h-[600px] overflow-y-auto custom-scrollbar"><h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 px-2" id="theory-tasks-header">Strategies</h4><div id="theory-tasks-list" class="space-y-1"></div></div>
-                <div class="md:col-span-2"><div id="theory-task-detail" class="glass-card p-8 h-full"></div></div>
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 max-h-[600px] overflow-y-auto custom-scrollbar">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 px-2" id="theory-tasks-header">Strategies</h4>
+                    <div id="theory-tasks-list" class="space-y-1"></div>
+                </div>
+                <div class="md:col-span-2">
+                    <div id="theory-task-detail" class="glass-card p-8 h-full"></div>
+                </div>
             </div>
         </div>
 
-        <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8"><p>© 2026 Waiheke High School Professional Learning Programme</p></footer>
+        <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
+            <p>© 2026 Waiheke High School Professional Learning Programme</p>
+        </footer>
     </div>
     
-    <div id="reset-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4"><div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl"><h3 class="text-xl font-black text-center text-slate-900 mb-2">Start Fresh?</h3><div class="flex gap-3 justify-center"><button class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-lg" data-action="cancel-reset">Cancel</button><button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg" data-action="confirm-reset">Yes, Clear Data</button></div></div></div>
+    <div id="reset-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl">
+            <h3 class="text-xl font-black text-center text-slate-900 mb-2">Start Fresh?</h3>
+            <div class="flex gap-3 justify-center">
+                <button class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-lg" data-action="cancel-reset">Cancel</button>
+                <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg" data-action="confirm-reset">Yes, Clear Data</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         var tahurangiLinks = {
@@ -328,15 +690,13 @@
             'PE & Health': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/health-and-physical-education-curriculum/5637165585.c' },
             'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz'
         };
-
         var stageInfo = {
-            1: { title: "Stage 1: Connect", intent: "Activates existing schemas in long-term memory. Primes working memory for new inputs." },
-            2: { title: "Stage 2: I Do", intent: "The teacher acts as the expert. Information is chunked. Use of dual coding is vital here to prevent cognitive overload." },
-            3: { title: "Stage 3: We Do", intent: "Shared responsibility. High-frequency CFU using mini-whiteboards or choral responses. Errors are corrected before encoding." },
-            4: { title: "Stage 4: You Do", intent: "Moving from concrete to abstract. Students build automaticity. Scaffolds are gradually faded." },
-            5: { title: "Stage 5: Review", intent: "Closing the loop. Signalling the transition. Consolidating learning and providing feedback." }
+            1: { title: "Stage 1: Connect", intent: "Activates schemas." },
+            2: { title: "Stage 2: I Do", intent: "Explicit instruction." },
+            3: { title: "Stage 3: We Do", intent: "Guided practice." },
+            4: { title: "Stage 4: You Do", intent: "Independent practice." },
+            5: { title: "Stage 5: Review", intent: "Closing and feedback." }
         };
-
         var cpmTaskDB = {
             "Retrieval Do-Now Quiz": { emoji: "🧠", desc: "Low-stakes 3-5 question quiz activating prior knowledge.", load: "Reduces intrinsic load by moving prerequisite knowledge into working memory.", ex: "Silent 3-min quiz on entry." },
             "Concept Mapping": { emoji: "🗺️", desc: "Visualising relationships between prior knowledge and new terms.", load: "Reduces extraneous load by spatially organising abstract connections.", ex: "Draw arrows and write linking verbs." },
@@ -441,13 +801,25 @@
             'Default': { 1: generateStrategies(1), 2: generateStrategies(2), 3: generateStrategies(3), 4: generateStrategies(4), 5: generateStrategies(5) }
         };
 
-        var currentDiscipline='Science', currentStage=1, currentInstructionalYear='Year 11 (NCEA Level 1)', currentStrategy=null, currentInstContext='none', currentInstMaori='none', currentInstLit='none', currentInstNum='none', chartInstance=null, aiTopPicks={1:"",2:"",3:"",4:"",5:""}, isAppReady=false;
+        var currentDiscipline = 'Science';
+        var currentStage = 1;
+        var currentInstructionalYear = 'Year 11 (NCEA Level 1)';
+        var currentStrategy = null;
+        var currentInstContext = 'none';
+        var currentInstMaori = 'none';
+        var currentInstLit = 'none';
+        var currentInstNum = 'none';
+        var chartInstance = null;
+        var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
+        var isAppReady = false;
+        
         var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', context:'none', maori:'none', lit:'none', num:'none' };
         var lessonState = { dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], relief:false, notebookLM:false, activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'' };
         var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
 
         function getDesc(name) { return cpmTaskDB[name] && cpmTaskDB[name].desc ? cpmTaskDB[name].desc : "Click to generate a specific AI prompt."; }
+        
         function getCurriculumLink(d, y) {
             var yr = y || "";
             var parts = yr.split(' ');
@@ -635,6 +1007,7 @@
                     setActiveBtn('inst-state', currentInstMaori, 'maori');
                     setActiveBtn('inst-state', currentInstLit, 'lit');
                     setActiveBtn('inst-state', currentInstNum, 'num');
+                    
                     setActiveBtn('unit-state', unitState.dept, 'dept');
                     setActiveBtn('unit-state', unitState.year, 'year');
                     setActiveBtn('unit-state', unitState.dur, 'dur');
@@ -642,6 +1015,7 @@
                     setActiveBtn('unit-state', unitState.maori, 'maori');
                     setActiveBtn('unit-state', unitState.lit, 'lit');
                     setActiveBtn('unit-state', unitState.num, 'num');
+                    
                     setActiveBtn('lesson-state', lessonState.dept, 'dept');
                     setActiveBtn('lesson-state', lessonState.year, 'year');
                     setActiveBtn('lesson-state', lessonState.context, 'context');
@@ -649,6 +1023,7 @@
                     setActiveBtn('lesson-state', lessonState.lit, 'lit');
                     setActiveBtn('lesson-state', lessonState.num, 'num');
                     setActiveBtn('lesson-state', lessonState.extra, 'extra');
+                    
                     setActiveBtn('assessment-state', assessmentState.dept, 'dept');
                     setActiveBtn('assessment-state', assessmentState.year, 'year');
                     setActiveBtn('assessment-state', assessmentState.duration, 'duration');
@@ -1081,21 +1456,41 @@
             var isJun = ["Year 7", "Year 8", "Year 9", "Year 10"].includes(yr), isLeg = yr.includes("Level"), cUrl = getCurriculumLink(unitState.dept, yr);
             var actDur = unitState.dur === 'Other' ? (cd || "Custom Duration") : unitState.dur;
             
-            var txt = '<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a ' + actDur + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse 5 stages of CPM for lessons. Format via Markdown.\n' + nzSpellingRule + '\n';
-            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island contexts. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
+            var txt = '<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a ' + actDur + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
+            
+            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
             if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
-            txt += 'Provide actual, live URLs to relevant resources.</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n## Overview\n| Field | Details |\n|---|---|\n| **Year Level** | ' + yr + ' |\n| **Term** | [Suggest Term] |\n| **Duration** | ' + actDur + ' |\n| **Topic/Strand/Concept** | ' + t + ' |\n';
+            
+            txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
+            
+            txt += '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
+            txt += '## Overview\n| Field | Details |\n|---|---|\n| **Year Level** | ' + yr + ' |\n| **Term** | [Suggest Term] |\n| **Duration** | ' + actDur + ' |\n| **Topic/Strand/Concept** | ' + t + ' |\n';
             if (isLeg) { txt += '| **Achievement Standard** | [Fill applicable standard] |\n| **The Standard Criteria** | [Fill] |\n'; }
-            txt += '| **Overview** | [Fill brief description] |\n| **Purpose** | [Fill what is the point?] |\n\n## Knowledge and Practices\n| Knowledge (rich contexts for exploring big ideas) | Practices (practices that bring rigour to learning) |\n|---|---|\n| [Fill] | [Fill] |\n| **Connections to prior learning** | **Connections to future learning** |\n| [Fill] | [Fill] |\n\n## Curriculum Integration\n| Literacy will be incorporated by: | Numeracy will be incorporated by: |\n|---|---|\n| [Fill] | [Fill] |\n| **Mātauranga Māori will be incorporated by:** | **Localised Curriculum (Waiheke) will be incorporated by:** |\n| [Fill] | [Fill] |\n\n## Assessment\n| How will I determine prior knowledge? (before) | How will I determine student progress? (after) |\n|---|---|\n| [Fill] | [Fill] |\n\n## Lesson Content - Unit Sequence\n';
+            txt += '| **Overview** | [Fill brief description] |\n| **Purpose** | [Fill what is the point?] |\n\n';
+            
+            txt += '## Key Unit Vocabulary\n| Tier 2 Vocabulary (Academic) | Tier 3 Vocabulary (Subject-Specific) |\n|---|---|\n| [List 5-8 words] | [List 5-8 words] |\n\n';
+
+            txt += '## Knowledge and Practices\n| Knowledge (rich contexts for exploring big ideas) | Practices (practices that bring rigour to learning) |\n|---|---|\n| [Fill] | [Fill] |\n| **Connections to prior learning** | **Connections to future learning** |\n| [Fill] | [Fill] |\n\n';
+            txt += '## Curriculum Integration\n| Literacy will be incorporated by: | Numeracy will be incorporated by: |\n|---|---|\n| [Fill] | [Fill] |\n| **Mātauranga Māori will be incorporated by:** | **Localised Curriculum (Waiheke) will be incorporated by:** |\n| [Fill] | [Fill] |\n\n';
+            txt += '## Assessment\n| How will I determine prior knowledge? (before) | How will I determine student progress? (after) |\n|---|---|\n| [Fill] | [Fill] |\n\n';
+            
+            txt += '## Lesson Content - Unit Sequence\n';
             if (isJun || !isLeg) {
-                txt += '| Learning number/s | Knowledge | Practice | Student Learning Activities (CPM) | Preparation/ Resources |\n|---|---|---|---|---|\n| [Lesson 1] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n| [Continue rows for all ' + actDur + '] | [Fill] | [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt += '| Learning number/s | Knowledge | Practice | Student Learning Activities (CPM) | Preparation/ Resources |\n|---|---|---|---|---|\n';
+                txt += '| [Lesson 1] | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
+                txt += '| [Continue rows for all ' + actDur + '] | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
             } else {
-                txt += '| Learning number/s | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources |\n|---|---|---|---|\n| [Lesson 1] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n| [Continue rows for all ' + actDur + '] | **Success Criteria:** [Fill] | **Strategies, activities, tasks:** [Fill]<br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt += '| Learning number/s | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources |\n|---|---|---|---|\n';
+                txt += '| [Lesson 1] | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
+                txt += '| [Continue rows for all ' + actDur + '] | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
             }
-            txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n</output_format>';
+            
+            txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
+            txt += '</output_format>';
+            
             var b = document.getElementById('prompt-unit-text');
             if (b) b.innerText = txt;
         }
@@ -1140,8 +1535,8 @@
             if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. CRITICAL RULE: Literacy skills must be explicitly taught/modelled in the teacher-led sections (I Do / We Do) before independent practice. Highlight with **[LITERACY]**.\n';
             if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL RULE: Numeracy skills must be explicitly taught/modelled in the teacher-led sections (I Do / We Do) before independent practice. Highlight with **[NUMERACY]**.\n';
             if (sm) txt += 'Source Strictness: Base content entirely on: "' + sm + '". Do not hallucinate.\n';
-            if (outs.includes('media') || lessonState.relief || lessonState.notebookLM) txt += 'Provide actual live URLs to YouTube/PhET/resources.\n';
-            if (outs.includes('images')) txt += 'Image/Diagram Integration: You MUST explicitly embed highly relevant, safe educational images, charts, or diagrams using real image URLs (e.g. Wikimedia Commons/Unsplash). Place these visuals strategically within the worksheet and content sections.\n';
+            if (outs.includes('media') || lessonState.relief || lessonState.notebookLM) txt += 'Media Integration: Do NOT hallucinate URLs. Instead, provide exact search queries (e.g. [Search YouTube: "Crash Course Mitosis"]).\n';
+            if (outs.includes('images')) txt += 'Image/Diagram Integration: AI models hallucinate dead links. Do NOT use direct URLs. Instead, insert highly descriptive placeholders where images should go using this format: `[📸 INSERT IMAGE: Detailed description - Search query: "exact google image search terms"]`.\n';
             if (lessonState.extra !== 'None') txt += 'Differentiate/Scaffold strictly for: ' + lessonState.extra + '.\n';
             
             if (lessonState.relief && lessonState.reliefType !== 'full-worksheet') {
@@ -1150,7 +1545,8 @@
                 txt += 'CRITICAL PLATFORM INSTRUCTION: Do NOT invent or write out click-by-click login paths or module navigation instructions for the worksheet. Simply state that the regular classroom teacher has allocated the lesson on ' + pName + '.\n';
                 if (lrc) txt += 'The teacher has provided these specific instructions for the task: "' + lrc + '". Incorporate this into the relief plan.\n';
             }
-            if (ct) txt += 'Instructions: "' + ct + '".\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
+            if (ct) txt += 'Instructions: "' + ct + '".\n';
+            txt += 'Token Limit Management: If generating all requested parts will dilute the quality or hit your output limit, generate Part A first, then pause and ask: "Would you like me to generate the Worksheet and remaining outputs?"\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
             
             if (lessonState.relief) {
                 if (lessonState.reliefType === 'full-worksheet') {
@@ -1171,7 +1567,7 @@
                     if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[Detailed instructions explicitly adapted for: ' + lessonState.extra + ']' : '[Detailed independent task instructions and scaffolds]') + ' | [Live URLs] |\n';
                     if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | **' + lessonState.s5 + '** | [Exit ticket or specific review task] | [Live URLs] |\n\n';
                 }
-                if (outs.includes('slides')) txt += 'PART B: Slideshow Content & Speaker Notes (8+ slides). Auto-generate via Workspace extension.\n';
+                if (outs.includes('slides')) txt += 'PART B: Slideshow Content & Speaker Notes (8+ slides). Format clearly as text. If the user is using Google Gemini, remind them they can type @GoogleSlides to auto-generate this.\n';
                 if (outs.includes('worksheet')) {
                     var wF = lessonState.worksheetFormat || 'Standard Task';
                     txt += 'PART C: Differentiated Student Worksheet (' + wF + '). You MUST provide this in TWO formats: 1) Plain Markdown text (for easy copy-pasting to Google Docs) AND 2) A beautifully CSS styled HTML code block (' + tb + 'html\n...\n' + tb + '). Use WHS colors (#002066/#d1e6f6).\n';
@@ -1189,6 +1585,7 @@
 
         function updateAssessmentBuilderPrompt() {
             var t = getGlobalTopic(), ns = (document.getElementById('assess-ncea-standard') || {}).value || "[Standard]", cf = (document.getElementById('assess-custom-format') || {}).value || "", cd = (document.getElementById('assess-custom-dur') || {}).value || "", sm = (document.getElementById('assess-source-material') || {}).value || "";
+            var vol = (document.getElementById('assess-custom-volume') || {}).value || "";
             assessmentState.sourceMaterial = sm;
             var jk = (document.getElementById('assess-junior-knowledge') || {}).value || "", jp = (document.getElementById('assess-junior-practices') || {}).value || "";
             var yr = assessmentState.year || "";
@@ -1197,18 +1594,30 @@
             if (af.length === 0 && !af.includes('Surprise Me')) af = ['Short Answer'];
             var fStr = af.join(', '), hasRes = af.includes('Resource Based'), hasSurp = af.includes('Surprise Me');
             
-            var txt = '<system_role>Act as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.</system_role>\n\n<context>\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n</context>\n\n<task>\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and grading matrix.' : 'Design formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design formative assessment task and rubric.') + '\n</task>\n\n<strict_rules>\nNo meta-commentary. Use Markdown.\n';
-            if (assessmentState.duration) txt += 'Scale matches duration: ' + (assessmentState.duration === 'Other' ? cd : assessmentState.duration) + '.\n';
+            var txt = '<system_role>Act as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.</system_role>\n\n<context>\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n</context>\n\n<task>\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n</task>\n\n<strict_rules>\nNo meta-commentary. Use Markdown.\n';
+            
+            var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
+            txt += 'Scale matches duration: ' + durText + '. ';
+            if (vol) {
+                txt += 'CRITICAL VOLUME REQUIREMENT: ' + vol + '.\n';
+            } else {
+                if (assessmentState.duration === '1 Period Test') txt += 'CRITICAL: Ensure the volume of work is realistic for a 45-50 minute class (e.g., exactly 3-4 structured short answer questions, or equivalent length).\n';
+                else if (assessmentState.duration === '2 Period Assessment') txt += 'CRITICAL: Ensure the volume of work is realistic for 90-100 minutes of class time.\n';
+                else if (assessmentState.duration === '1 Week Mini-Project') txt += 'CRITICAL: Ensure the scope fits 3-4 class periods plus homework.\n';
+                else txt += '\n';
+            }
+
             txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\n' + nzSpellingRule + '\n';
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
             if (sm) txt += 'Base strictly on source: ' + sm + '\n';
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
-            if (isJun && hasRes) txt += 'Include live URLs to real-world resources.\n';
+            if (isJun && hasRes) txt += 'Provide exact search queries for real-world resources, do not hallucinate URLs.\n';
             if (isJun && jk) txt += 'Test this knowledge: ' + jk + '.\n';
             if (isJun && jp) txt += 'Test these practices: ' + jp + '.\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema for task instructions. Define complex task words.</cognitive_scaffolding>\n\n<output_format>\n';
+            
             if (isJun) {
                 if (hasSurp) txt += 'PART 1: TWO out-of-the-box assessment options.\n'; else txt += 'PART 1: Assessment Task (' + fStr + ').\n';
-                txt += 'PART 2: Junior Grading Matrix (Emerging to Exceeding) mapping explicit cognitive verbs for ' + yr + '.\n';
+                txt += 'PART 2: Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n';
             } else if (isSen) {
                 txt += 'PART 1: TWO NCEA-style options based on standard ' + ns + '.\nPART 2: Shared NCEA Grading Matrix (Achieved/Merit/Excellence).\nAdd disclaimer regarding NZQA validity.\n';
             } else {
@@ -1219,6 +1628,7 @@
             if (outs.includes('Marking Schedule')) txt += 'PART 4: Strict Teacher Marking Schedule.\n';
             if (outs.includes('Peer Check-bric')) txt += 'PART 5: Student-friendly Peer Check-bric.\n';
             txt += '</output_format>';
+            
             var box = document.getElementById('prompt-assessment-text');
             if (box) box.innerText = txt;
         }
@@ -1354,15 +1764,15 @@
             document.body.addEventListener('click', function(e) {
                 var target = e.target.closest('[data-action]');
                 if (!target) return;
-                var action = target.getAttribute('data-action'), val = target.getAttribute('data-val'), key = target.getAttribute('data-key'), ct = target.getAttribute('data-target');
-                if (action === 'view') showView(ct);
+                var action = target.getAttribute('data-action'), val = target.getAttribute('data-val'), key = target.getAttribute('data-key'), copyTarget = target.getAttribute('data-target');
+                if (action === 'view') showView(copyTarget);
                 else if (action === 'copy-dashboard') copyStudentDashboard(target);
                 else if (action === 'discipline') setDiscipline(val);
                 else if (action === 'inst-year') setInstructionalYear(val);
                 else if (action === 'inst-state') setInstState(key, val, target);
                 else if (action === 'stage') setStage(parseInt(val));
-                else if (action === 'copy') copyText(ct, target);
-                else if (action === 'download') downloadPrompt(ct);
+                else if (action === 'copy') copyText(copyTarget, target);
+                else if (action === 'download') downloadPrompt(copyTarget);
                 else if (action === 'strategy-prompt') setStrategyPrompt(val);
                 else if (action === 'unit-state') setUnitState(key, val, target);
                 else if (action === 'lesson-state') setLessonState(key, val, target);
@@ -1383,30 +1793,29 @@
                 else if (action === 'cancel-reset') { var c = document.getElementById('reset-modal'); if (c) c.classList.add('hidden'); }
                 else if (action === 'confirm-reset') { localStorage.clear(); window.location.reload(); }
             });
+
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (['unit-custom-task', 'unit-custom-dur'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom'].includes(e.target.id)) updateLessonBuilderPrompt();
-                else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices'].includes(e.target.id)) updateAssessmentBuilderPrompt();
+                else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume'].includes(e.target.id)) updateAssessmentBuilderPrompt();
             });
         }
 
         window.onload = function() {
             setupEventListeners();
             var savedTopic = localStorage.getItem('whs_topic');
-            if (savedTopic) {
-                document.querySelectorAll('.sync-topic').forEach(function(i) { i.value = savedTopic; });
-            }
+            if(savedTopic) { var inputs = document.querySelectorAll('.sync-topic'); for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic; }
             loadAppState();
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
             renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
             isAppReady = true;
-            forceAiPicks();
-            initChart();
+            forceAiPicks(); 
+            initChart(); 
             var initialView = sessionStorage.getItem('whs_active_view') || 'lesson';
-            showView(initialView);
+            showView(initialView); 
         };
     </script>
 </body>
