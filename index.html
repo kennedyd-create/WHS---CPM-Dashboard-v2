@@ -1561,7 +1561,16 @@
                 if (lrc) txt += 'The teacher has provided these specific instructions for the task: "' + lrc + '". Incorporate this into the relief plan.\n';
             }
             if (ct) txt += 'Instructions: "' + ct + '".\n';
-            txt += 'Token Limit Management: If generating all requested parts will dilute the quality or hit your output limit, generate Part A first, then pause and ask: "Would you like me to generate the Worksheet and remaining outputs?"\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
+            
+            var extraOuts = [];
+            if(outs.includes('slides')) extraOuts.push('Slideshow');
+            if(outs.includes('worksheet')) extraOuts.push('Worksheet');
+            if(outs.includes('content')) extraOuts.push('Content Doc');
+            if(outs.includes('quiz')) extraOuts.push('Quiz');
+            if(outs.includes('lms')) extraOuts.push('LMS Post');
+            var extraOutsStr = extraOuts.length > 0 ? extraOuts.join(', ') : 'remaining outputs';
+            
+            txt += 'Token Limit Management: If generating all requested parts will dilute the quality or hit your output limit, generate Part A first, then pause and ask the user: "Would you like me to generate the ' + extraOutsStr + ' now?"\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
             
             if (lessonState.relief) {
                 if (lessonState.reliefType === 'full-worksheet') {
