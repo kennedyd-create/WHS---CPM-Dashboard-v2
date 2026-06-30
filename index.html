@@ -246,68 +246,77 @@
                         <div id="stage-block-4" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">4</span> You Do</div><div class="flex flex-wrap gap-2" id="les-s4-opts"></div></div>
                         <div id="stage-block-5" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">5</span> Review</div><div class="flex flex-wrap gap-2" id="les-s5-opts"></div></div>
                         
-                        <div class="pt-8 mt-4 border-t border-slate-200">
-                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span>
-                            <input type="text" id="les-custom-task" placeholder="e.g. Only have stages 3 and 4 in this lesson..." class="w-full p-2.5 rounded-lg border border-slate-300 outline-none transition text-sm font-medium text-slate-800">
-                        </div>
+                        <button id="btn-les-advanced" class="w-full text-center py-3 mt-6 bg-white hover:bg-slate-50 text-[#002066] text-xs font-bold uppercase tracking-widest rounded-xl transition border border-slate-200 shadow-sm flex justify-center items-center gap-2" data-action="toggle-les-advanced">
+                            <span>Show Advanced Options</span>
+                            <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
 
-                        <div class="pt-4 border-t border-slate-200">
-                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
-                            <div class="flex flex-wrap gap-2" id="les-output-opts">
-                                <button class="builder-btn active" data-action="lesson-output" data-val="plan">Lesson Plan</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="slides">+ Slides</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="quiz">+ Quiz</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="media">+ Media/Videos</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="images">+ Images/Diagrams</button>
-                                <button class="builder-btn" data-action="lesson-output" data-val="lms">+ LMS Post</button>
-                                <button class="builder-btn border-dashed border-slate-400 text-slate-500 hover:text-slate-800" data-action="lesson-output" data-val="all">Select All</button>
+                        <div id="les-advanced-options" class="hidden space-y-4 pt-4">
+                            <div class="pt-4 border-t border-slate-200">
+                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span>
+                                <input type="text" id="les-custom-task" placeholder="e.g. Only have stages 3 and 4 in this lesson..." class="w-full p-2.5 rounded-lg border border-slate-300 outline-none transition text-sm font-medium text-slate-800">
                             </div>
-                            
-                            <div id="les-worksheet-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Worksheet Activity Style</span>
-                                <div class="flex flex-wrap gap-2" id="les-worksheet-opts">
-                                    <button class="builder-btn active" data-action="lesson-ws-format" data-val="Standard Task">Standard Task</button>
-                                    <button class="builder-btn" data-action="lesson-ws-format" data-val="Gap Fill / Cloze">Gap Fill / Cloze</button>
-                                    <button class="builder-btn" data-action="lesson-ws-format" data-val="Matching / Sorting">Matching / Sorting</button>
+
+                            <div class="pt-4 border-t border-slate-200">
+                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
+                                <div class="flex flex-wrap gap-2" id="les-output-opts">
+                                    <button class="builder-btn active" data-action="lesson-output" data-val="plan">Lesson Plan</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="slides">+ Slides</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="quiz">+ Quiz</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="media">+ Media/Videos</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="images">+ Images/Diagrams</button>
+                                    <button class="builder-btn" data-action="lesson-output" data-val="lms">+ LMS Post</button>
+                                    <button class="builder-btn border-dashed border-slate-400 text-slate-500 hover:text-slate-800" data-action="lesson-output" data-val="all">Select All</button>
+                                </div>
+                                
+                                <div id="les-worksheet-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Worksheet Activity Style</span>
+                                    <div class="flex flex-wrap gap-2" id="les-worksheet-opts">
+                                        <button class="builder-btn active" data-action="lesson-ws-format" data-val="Standard Task">Standard Task</button>
+                                        <button class="builder-btn" data-action="lesson-ws-format" data-val="Gap Fill / Cloze">Gap Fill / Cloze</button>
+                                        <button class="builder-btn" data-action="lesson-ws-format" data-val="Matching / Sorting">Matching / Sorting</button>
+                                    </div>
+                                </div>
+                                
+                                <div id="les-quiz-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Quiz Export Formats (Select Multiple)</span>
+                                    <div class="flex flex-wrap gap-2" id="les-quiz-opts">
+                                        <button class="builder-btn active" data-action="lesson-quiz-format" data-val="Google Forms">Google Forms</button>
+                                        <button class="builder-btn" data-action="lesson-quiz-format" data-val="Kahoot CSV">Kahoot CSV</button>
+                                        <button class="builder-btn" data-action="lesson-quiz-format" data-val="Blooket CSV">Blooket CSV</button>
+                                        <button class="builder-btn" data-action="lesson-quiz-format" data-val="Gimkit CSV">Gimkit CSV</button>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div id="les-quiz-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Quiz Export Formats (Select Multiple)</span>
-                                <div class="flex flex-wrap gap-2" id="les-quiz-opts">
-                                    <button class="builder-btn active" data-action="lesson-quiz-format" data-val="Google Forms">Google Forms</button>
-                                    <button class="builder-btn" data-action="lesson-quiz-format" data-val="Kahoot CSV">Kahoot CSV</button>
-                                    <button class="builder-btn" data-action="lesson-quiz-format" data-val="Blooket CSV">Blooket CSV</button>
-                                    <button class="builder-btn" data-action="lesson-quiz-format" data-val="Gimkit CSV">Gimkit CSV</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="pt-4 border-t border-slate-200">
-                            <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
-                            <div class="flex flex-wrap gap-2" id="les-extra-opts">
-                                <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard)</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="3-Tiered Worksheet">3-Tiered Worksheet</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ADHD / Low-Stimulation">ADHD Friendly</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Dyslexia-Friendly">Dyslexia Friendly</button>
-                                <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners">ESOL Scaffold</button>
+                            <div class="pt-4 border-t border-slate-200">
+                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
+                                <div class="flex flex-wrap gap-2" id="les-extra-opts">
+                                    <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard)</button>
+                                    <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="3-Tiered Worksheet">3-Tiered Worksheet</button>
+                                    <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ADHD / Low-Stimulation">ADHD Friendly</button>
+                                    <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="Dyslexia-Friendly">Dyslexia Friendly</button>
+                                    <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="ESOL Learners">ESOL Scaffold</button>
+                                </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col flex-grow shadow-sm relative">
-                        <div class="flex justify-between items-center mb-4">
+                    <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col flex-grow shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
+                        <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-blue-100 flex justify-between items-center">
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                             <div class="flex gap-2">
                                 <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
                                 <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                             </div>
                         </div>
-                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-lesson-text">Select options...</span></div>
-                        <div class="flex justify-end gap-2 mt-auto">
+                        <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
+                            <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-lesson-text">Select options...</span></div>
+                        </div>
+                        <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex justify-end gap-2">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
                             <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                         </div>
@@ -394,16 +403,18 @@
                         </div>
                     </div>
                     
-                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100 flex flex-col">
-                        <div class="flex justify-between items-center mb-4">
+                    <div class="bg-amber-50 rounded-2xl border border-amber-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
+                        <div class="sticky top-0 z-10 bg-amber-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-amber-100 flex justify-between items-center">
                             <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
                             <div class="flex gap-2">
                                 <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
                                 <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                             </div>
                         </div>
-                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 custom-scrollbar overflow-y-auto max-h-[600px]"><span id="prompt-unit-text">...</span></div>
-                        <div class="flex justify-end gap-2 mt-auto">
+                        <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-amber-50/30">
+                            <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 shadow-inner whitespace-pre-wrap"><span id="prompt-unit-text">...</span></div>
+                        </div>
+                        <div class="sticky bottom-0 z-10 bg-amber-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-amber-100 flex justify-end gap-2">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
                             <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                         </div>
@@ -528,7 +539,7 @@
                 </div>
 
                 <div class="mt-4 pt-4 border-t border-slate-200">
-                    <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Additional Outputs</span>
+                    <span class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Additional Outputs</span>
                     <div class="flex flex-wrap gap-2">
                         <button class="builder-btn" data-action="assessment-output" data-val="Student Exemplars">+ Student Exemplars</button>
                         <button class="builder-btn" data-action="assessment-output" data-val="Marking Schedule">+ Teacher Marking Schedule</button>
@@ -538,16 +549,18 @@
             </div>
 
             <div class="glass-card p-8 border-t-8 border-t-[#002066] max-w-5xl mx-auto">
-                <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col shadow-sm relative">
-                    <div class="flex justify-between items-center mb-4">
+                <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
+                    <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-blue-100 flex justify-between items-center">
                         <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                         <div class="flex gap-2">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
                             <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                         </div>
                     </div>
-                    <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 flex-grow shadow-inner whitespace-pre-wrap mb-4 overflow-y-auto max-h-[800px] custom-scrollbar"><span id="prompt-assessment-text">...</span></div>
-                    <div class="flex justify-end gap-2 mt-auto">
+                    <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
+                        <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-assessment-text">...</span></div>
+                    </div>
+                    <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex justify-end gap-2">
                         <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
                         <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                     </div>
@@ -611,16 +624,18 @@
                                 <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy</h4>
                                 <div id="display-strategies" class="space-y-2"></div>
                             </div>
-                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 flex flex-col">
-                                <div class="flex justify-between items-center mb-4">
+                            <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
+                                <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 border-b border-blue-100 flex justify-between items-center">
                                     <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Expert Assistant Prompt</h4>
                                     <div class="flex gap-2">
                                         <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button>
                                         <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                                     </div>
                                 </div>
-                                <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 mb-4 flex-grow shadow-inner overflow-y-auto max-h-[300px] custom-scrollbar"><span id="prompt-text-instructional">...</span></div>
-                                <div class="flex justify-end gap-2 mt-auto">
+                                <div class="p-4 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
+                                    <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-800 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-text-instructional">...</span></div>
+                                </div>
+                                <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 border-t border-blue-100 flex justify-end gap-2">
                                     <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-text-instructional">COPY PROMPT</button>
                                     <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                                 </div>
@@ -1560,12 +1575,12 @@
                 txt += 'PART 1: System Instructions for NotebookLM (CPM structure, dual coding, visual branding).\nPART 2: Detailed Subject Content (Knowledge/Practices, misconceptions, vocab).\nPART 3: Pre-programmed Slideshow Plan based on selected CPM stages.\nProvide explicit slide generation instructions.\n';
             } else {
                 if (outs.includes('plan')) {
-                    txt += 'PART A: The CPM Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure:\n| Stage | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n|---|---|---|---|\n';
-                    if (stg.includes(1)) txt += '| **Stage 1: CONNECT** | **' + lessonState.s1 + '** | [Word-for-word opening script & specific questions] | [Live URLs] |\n| **KEY VOCAB** | **Explicit Instruction** | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n';
-                    if (stg.includes(2)) txt += '| **Stage 2: I DO** | **' + lessonState.s2 + '** | [Exact teacher script and whiteboard drawing/writing instructions] | [Live URLs] |\n';
-                    if (stg.includes(3)) txt += '| **Stage 3: WE DO** | **' + lessonState.s3 + '** | [Specific hinge questions, guided practice tasks] | [Live URLs] |\n';
-                    if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[Detailed instructions explicitly adapted for: ' + lessonState.extra + ']' : '[Detailed independent task instructions and scaffolds]') + ' | [Live URLs] |\n';
-                    if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | **' + lessonState.s5 + '** | [Exit ticket or specific review task] | [Live URLs] |\n\n';
+                    txt += 'PART A: The CPM Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure (distributing the 60 minutes realistically across the chosen stages):\n| Stage | Time (mins) | Teaching Strategy Focus | Learning Experiences & Scripting | Resources & Links |\n|---|---|---|---|---|\n';
+                    if (stg.includes(1)) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [Word-for-word opening script & specific questions] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n';
+                    if (stg.includes(2)) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [Exact teacher script and whiteboard drawing/writing instructions] | [Live URLs] |\n';
+                    if (stg.includes(3)) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [Specific hinge questions, guided practice tasks] | [Live URLs] |\n';
+                    if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[Detailed instructions explicitly adapted for: ' + lessonState.extra + ']' : '[Detailed independent task instructions and scaffolds]') + ' | [Live URLs] |\n';
+                    if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [Exit ticket or specific review task. CRITICAL: Explicitly loop back to measure the Success Criteria established in Stage 1] | [Live URLs] |\n\n';
                 }
                 if (outs.includes('slides')) txt += 'PART B: Slideshow Content & Speaker Notes (8+ slides). Format clearly as text. If the user is using Google Gemini, remind them they can type @GoogleSlides to auto-generate this.\n';
                 if (outs.includes('worksheet')) {
@@ -1594,7 +1609,7 @@
             if (af.length === 0 && !af.includes('Surprise Me')) af = ['Short Answer'];
             var fStr = af.join(', '), hasRes = af.includes('Resource Based'), hasSurp = af.includes('Surprise Me');
             
-            var txt = '<system_role>Act as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.</system_role>\n\n<context>\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n</context>\n\n<task>\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n</task>\n\n<strict_rules>\nNo meta-commentary. Use Markdown.\n';
+            var txt = '<system_role>Act as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.</system_role>\n\n<context>\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n</context>\n\n<task>\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n</task>\n\n<strict_rules>\nNo meta-commentary. Use Markdown.\nCRITICAL: Write Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
             
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
             txt += 'Scale matches duration: ' + durText + '. ';
@@ -1792,6 +1807,20 @@
                 else if (action === 'reset-app') { var r = document.getElementById('reset-modal'); if (r) r.classList.remove('hidden'); }
                 else if (action === 'cancel-reset') { var c = document.getElementById('reset-modal'); if (c) c.classList.add('hidden'); }
                 else if (action === 'confirm-reset') { localStorage.clear(); window.location.reload(); }
+                else if (action === 'toggle-les-advanced') {
+                    var container = document.getElementById('les-advanced-options');
+                    var text = target.querySelector('span');
+                    var icon = target.querySelector('svg');
+                    if (container.classList.contains('hidden')) {
+                        container.classList.remove('hidden');
+                        text.innerText = 'Hide Advanced Options';
+                        if(icon) icon.classList.add('rotate-180');
+                    } else {
+                        container.classList.add('hidden');
+                        text.innerText = 'Show Advanced Options';
+                        if(icon) icon.classList.remove('rotate-180');
+                    }
+                }
             });
 
             document.body.addEventListener('input', function(e) {
