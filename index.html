@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiheke High School: CPM & AI Navigator</title>
+    <title>Waiheke High School: Common Practice Model (CPM) - AI Prompt Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -47,6 +47,10 @@
         @keyframes ai-pulse { 0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(16,185,129,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
         .ai-flash { animation: ai-pulse 0.5s ease-out; }
         
+        /* New custom logo animations */
+        @keyframes globe-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes star-pulse { 0%, 100% { transform: scale(0.85); filter: drop-shadow(0 0 5px rgba(197,160,89,0.5)); opacity: 0.9; } 50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(253,224,71,0.9)); opacity: 1; } }
+
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
@@ -63,12 +67,42 @@
                     <div class="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#10b981]/20 to-white/10 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 shrink-0 group overflow-hidden">
                         <div class="absolute inset-0 bg-[#c5a059] blur-[20px] opacity-20 group-hover:opacity-40 transition duration-700"></div>
                         <div class="relative z-10 flex items-center justify-center">
-                            <svg class="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-md" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                            
+                            <!-- NEW GLOBE & AI STAR LOGO -->
+                            <svg class="w-12 h-12 md:w-14 md:h-14 drop-shadow-xl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Spinning Blue & Green Globe -->
+                                <g style="transform-origin: center; animation: globe-spin 25s linear infinite;">
+                                    <!-- Ocean -->
+                                    <circle cx="50" cy="50" r="46" fill="#1e3a8a" />
+                                    <!-- Landmasses -->
+                                    <path d="M 50 4 A 46 46 0 0 1 96 50 A 46 46 0 0 1 80 84 Q 70 60 50 60 Q 30 60 15 78 A 46 46 0 0 1 4 50 A 46 46 0 0 1 50 4 Z" fill="#10b981" opacity="0.8"/>
+                                    <path d="M 20 20 Q 40 40 60 30 T 90 40 A 46 46 0 0 0 50 4 A 46 46 0 0 0 20 20 Z" fill="#34d399" opacity="0.7"/>
+                                    <!-- Globe Graticule (Grid Lines) -->
+                                    <ellipse cx="50" cy="50" rx="20" ry="46" stroke="#60a5fa" stroke-width="1.5" opacity="0.5"/>
+                                    <ellipse cx="50" cy="50" rx="46" ry="20" stroke="#60a5fa" stroke-width="1.5" opacity="0.5"/>
+                                    <circle cx="50" cy="50" r="46" stroke="#93c5fd" stroke-width="2" opacity="0.6"/>
+                                </g>
+                                
+                                <!-- Pulsating Golden AI Star -->
+                                <g style="transform-origin: center; animation: star-pulse 3.5s ease-in-out infinite;">
+                                    <!-- Outer Gold Points -->
+                                    <path d="M50 8 L55 45 L92 50 L55 55 L50 92 L45 55 L8 50 L45 45 Z" fill="#c5a059" />
+                                    <!-- Inner Bright Yellow Points -->
+                                    <path d="M50 20 L53 47 L80 50 L53 53 L50 80 L47 53 L20 50 L47 47 Z" fill="#fde047" />
+                                    <!-- Core & Tech Nodes -->
+                                    <circle cx="50" cy="50" r="5" fill="#fff" />
+                                    <circle cx="50" cy="8" r="2.5" fill="#fff" />
+                                    <circle cx="92" cy="50" r="2.5" fill="#fff" />
+                                    <circle cx="50" cy="92" r="2.5" fill="#fff" />
+                                    <circle cx="8" cy="50" r="2.5" fill="#fff" />
+                                </g>
+                            </svg>
+
                         </div>
                     </div>
                     <div>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1>
-                        <h2 class="text-xl md:text-2xl font-normal opacity-90">CPM & AI Navigator</h2>
+                        <h2 class="text-xl md:text-2xl font-normal opacity-90">Common Practice Model (CPM) - AI Prompt Generator</h2>
                         <div class="mt-3 inline-block bg-white text-[#002066] px-4 py-1.5 border border-transparent text-xs font-bold uppercase tracking-widest shadow-sm rounded">Knowledge & Practices Hub</div>
                     </div>
                 </div>
