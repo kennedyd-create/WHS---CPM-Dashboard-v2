@@ -56,6 +56,18 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 3px; }
         .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.4); }
+
+        /* Master Toggle Transitions */
+        #alt-framework-dropdown { transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out; }
+        
+        .fw-btn { padding: 0.75rem 1rem; border-radius: 0.5rem; background: white; border: 1px solid #cbd5e1; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 2px rgba(0,0,0,0.05); color: #475569; font-weight: 600; font-size: 0.875rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; }
+        .fw-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
+        .fw-btn.active { border-color: var(--whs-dark-blue); background: var(--whs-light-blue); color: var(--whs-dark-blue); }
+        .fw-btn span { font-size: 0.75rem; opacity: 0.8; font-weight: normal; }
+
+        /* Disable framework options when relief mode active */
+        .fw-locked { opacity: 0.5; pointer-events: none; grayscale: 100%; }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -123,8 +135,8 @@
         <!-- VIEW: LESSON BUILDER -->
         <div id="view-lesson" class="space-y-8 animate-in fade-in duration-500">
             <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Lesson Engine Builder</h2>
-                <p class="text-slate-600">Build a hyper-specific prompt by picking strategies for each CPM stage.</p>
+                <h2 class="text-4xl font-black text-slate-900 mb-4">Pedagogical Lesson Engine Builder</h2>
+                <p class="text-slate-600">Build a hyper-specific prompt by picking a framework and strategies.</p>
                 <div class="mt-4 flex justify-center">
                     <button class="px-3 py-1.5 bg-white hover:bg-red-50 text-slate-500 hover:text-red-600 text-xs font-bold rounded-lg transition border border-slate-200 shadow-sm flex items-center gap-1.5" data-action="reset-app">
                         RESET SAVED DATA
@@ -216,17 +228,28 @@
                     </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-4 pt-6 mt-4 border-t border-slate-200">
-                    <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm gap-4">
-                        <div>
-                            <span class="text-xs font-black text-red-800 uppercase tracking-widest block mb-1">Emergency Relief Cover</span>
-                            <p class="text-xs text-red-600 font-medium leading-tight">Bypass the CPM planner and generate a self-contained worksheet for a non-specialist relief teacher.</p>
+                <!-- Relief & NotebookLM Controls (MOVED UP) -->
+                <div class="mt-8 pt-6 border-t border-slate-200">
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm gap-4">
+                            <div>
+                                <span class="text-xs font-black text-red-800 uppercase tracking-widest block mb-1">Emergency Relief Cover</span>
+                                <p class="text-xs text-red-600 font-medium leading-tight">Bypass the planner and generate a self-contained worksheet for a non-specialist relief teacher.</p>
+                            </div>
+                            <div class="flex flex-col gap-2 shrink-0">
+                                <button id="btn-relief-mode" class="w-full px-4 py-2.5 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded-lg hover:bg-red-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-relief">Enable Relief Mode</button>
+                            </div>
                         </div>
-                        <div class="flex flex-col gap-2 shrink-0">
-                            <button id="btn-relief-mode" class="w-full px-4 py-2.5 bg-red-100 border border-red-300 text-red-800 text-xs font-bold rounded-lg hover:bg-red-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-relief">Enable Relief Mode</button>
+                        <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-orange-50 p-4 rounded-xl border border-orange-200 shadow-sm gap-4">
+                            <div>
+                                <span class="text-xs font-black text-orange-800 uppercase tracking-widest block mb-1">NotebookLM Source Generator</span>
+                                <p class="text-xs text-orange-600 font-medium leading-tight">Generate a detailed Master Source Document with built-in meta-instructions for NotebookLM.</p>
+                            </div>
+                            <button id="btn-notebooklm-mode" class="shrink-0 px-4 py-2.5 bg-orange-100 border border-orange-300 text-orange-800 text-xs font-bold rounded-lg hover:bg-orange-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-notebooklm">Enable NotebookLM Mode</button>
                         </div>
                     </div>
-                    <div id="relief-tasks-container" class="hidden col-span-1 md:col-span-2 bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm mb-4">
+                    
+                    <div id="relief-tasks-container" class="hidden bg-red-50 p-4 rounded-xl border border-red-200 shadow-sm mb-4">
                         <span class="text-[10px] font-bold text-red-800 uppercase tracking-widest block mb-2">Relief Lesson Format (Optional)</span>
                         <div class="flex flex-wrap gap-2" id="relief-task-opts">
                             <button class="builder-btn active border-red-300 text-red-700 hover:border-red-600 hover:text-red-800" data-action="relief-type" data-val="full-worksheet">Generate Full AI Worksheet</button>
@@ -240,56 +263,88 @@
                             <input type="text" id="les-relief-custom" placeholder="e.g. Complete the Algebra revision module..." class="w-full p-2.5 rounded-lg border border-red-300 outline-none text-sm font-medium text-slate-800 bg-white">
                         </div>
                     </div>
-
-                    <div class="flex flex-col xl:flex-row items-start xl:items-center justify-between bg-orange-50 p-4 rounded-xl border border-orange-200 shadow-sm gap-4">
-                        <div>
-                            <span class="text-xs font-black text-orange-800 uppercase tracking-widest block mb-1">NotebookLM Source Generator</span>
-                            <p class="text-xs text-orange-600 font-medium leading-tight">Generate a detailed Master Source Document with built-in meta-instructions for NotebookLM.</p>
-                        </div>
-                        <button id="btn-notebooklm-mode" class="shrink-0 px-4 py-2.5 bg-orange-100 border border-orange-300 text-orange-800 text-xs font-bold rounded-lg hover:bg-orange-500 hover:text-white transition-colors shadow-sm whitespace-nowrap" data-action="toggle-notebooklm">Enable NotebookLM Mode</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab Color Theme: WHS Dark Blue -->
-            <div class="glass-card p-8 border-t-4 border-t-[#002066]">
-                <h3 class="text-2xl font-bold text-slate-900 mb-2">Lesson Stage Selection</h3>
-                <p class="text-sm text-slate-600 mb-4">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-[#10b981] text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
-
-                <div class="mb-8 md:w-1/2 bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
-                    <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-1">Include Stages in Lesson Plan</span>
-                    <!-- NEW INSTRUCTION TEXT HERE -->
-                    <p class="text-[10px] text-slate-500 mb-3 leading-tight font-medium">Click on the stages you want included.</p>
-                    <div class="flex flex-wrap gap-2" id="les-stage-toggles">
-                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="all">All</button>
-                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="1">1 - Connect</button>
-                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="2">2 - I Do</button>
-                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="3">3 - We Do</button>
-                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="4">4 - You Do</button>
-                        <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="5">5 - Review</button>
-                    </div>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="space-y-2">
-                        <div id="stage-block-1" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">1</span> Connect</div><div class="flex flex-wrap gap-2" id="les-s1-opts"></div></div>
-                        <div id="stage-block-2" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">2</span> I Do</div><div class="flex flex-wrap gap-2" id="les-s2-opts"></div></div>
-                        <div id="stage-block-3" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">3</span> We Do</div><div class="flex flex-wrap gap-2" id="les-s3-opts"></div></div>
-                        <div id="stage-block-4" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">4</span> You Do</div><div class="flex flex-wrap gap-2" id="les-s4-opts"></div></div>
-                        <div id="stage-block-5" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">5</span> Review</div><div class="flex flex-wrap gap-2" id="les-s5-opts"></div></div>
+                <!-- MAIN SPLIT LAYOUT -->
+                <div class="grid lg:grid-cols-12 gap-8 pt-6 mt-4 border-t border-slate-200">
+                    
+                    <!-- LEFT COLUMN: Settings -->
+                    <div class="lg:col-span-7 flex flex-col gap-6">
                         
-                        <button id="btn-les-advanced" class="w-full text-center py-3 mt-6 bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-300 text-xs font-bold uppercase tracking-widest rounded-xl transition border shadow-sm flex justify-center items-center gap-2" data-action="toggle-les-advanced">
-                            <span>Show Advanced Options</span>
-                            <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-
-                        <div id="les-advanced-options" class="hidden space-y-4 pt-4">
-                            <div class="pt-4 border-t border-slate-200">
-                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span>
-                                <input type="text" id="les-custom-task" placeholder="e.g. Only have stages 3 and 4 in this lesson..." class="w-full p-2.5 rounded-lg border border-slate-300 outline-none transition text-sm font-medium text-slate-800">
+                        <!-- Master Framework Toggle -->
+                        <div>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-4 text-center">Pedagogical Framework</span>
+                            <div class="flex flex-col md:flex-row gap-4 justify-center items-center" id="fw-master-toggle">
+                                <button class="fw-btn active w-full md:w-64" data-action="toggle-framework" data-val="cpm">
+                                    CPM 5 Stages
+                                    <span>(Default Selection)</span>
+                                </button>
+                                <button class="fw-btn w-full md:w-64" data-action="toggle-framework" data-val="alt">
+                                    Alternative Frameworks
+                                    <span>(SOLO, Six Hats, UDL...)</span>
+                                </button>
                             </div>
 
-                            <div class="pt-4 border-t border-slate-200">
+                            <!-- Hidden Alternative Frameworks Dropdown -->
+                            <div id="alt-framework-dropdown" class="overflow-hidden max-h-0 opacity-0 transition-all mt-4">
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner">
+                                    <button class="fw-btn tooltip-wrapper" data-action="select-alt-framework" data-val="solo" data-tooltip="SOLO Taxonomy (5 Stages): Pre-structural, Uni-structural, Multi-structural, Relational, Extended Abstract">
+                                        SOLO Taxonomy
+                                    </button>
+                                    <button class="fw-btn tooltip-wrapper" data-action="select-alt-framework" data-val="six-hats" data-tooltip="Six Thinking Hats (6 Perspectives): White (Facts), Red (Feelings), Black (Caution), Yellow (Optimism), Green (Creativity), Blue (Process)">
+                                        Six Thinking Hats
+                                    </button>
+                                    <button class="fw-btn tooltip-wrapper" data-action="select-alt-framework" data-val="udl" data-tooltip="Universal Design for Learning (3 Principles): Engagement, Representation, Action & Expression">
+                                        UDL Framework
+                                    </button>
+                                    <button class="fw-btn tooltip-wrapper" data-action="select-alt-framework" data-val="pdp" data-tooltip="The PDP Framework (3 Stages): Pre-task, During-task, Post-task">
+                                        PDP Framework
+                                    </button>
+                                    <button class="fw-btn tooltip-wrapper" data-action="select-alt-framework" data-val="ubd" data-tooltip="Understanding by Design (3 Phases): Desired Results, Acceptable Evidence, Plan Learning Experiences">
+                                        Backward Design (UbD)
+                                    </button>
+                                    <button class="fw-btn tooltip-wrapper" data-action="select-alt-framework" data-val="pbl" data-tooltip="Project-Based Learning (4 Elements): The Hook, Sustained Inquiry, Critique & Revision, Public Product">
+                                        Project-Based Learning
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CPM Specific Builder -->
+                        <div id="cpm-specific-builder" class="transition-opacity duration-300">
+                            <h3 class="text-2xl font-bold text-slate-900 mb-2 mt-4">Lesson Stage Selection</h3>
+                            <p class="text-sm text-slate-600 mb-4">Select specific strategies for each CPM stage. The AI Engine will suggest and auto-select its <span class="inline-block bg-[#10b981] text-white text-[10px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
+
+                            <div class="mb-6 bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-inner">
+                                <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-1">Include Stages in Lesson Plan</span>
+                                <p class="text-[10px] text-slate-500 mb-3 leading-tight font-medium">Click on the stages you want included.</p>
+                                <div class="flex flex-wrap gap-2" id="les-stage-toggles">
+                                    <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="all">All</button>
+                                    <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="1">1 - Connect</button>
+                                    <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="2">2 - I Do</button>
+                                    <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="3">3 - We Do</button>
+                                    <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="4">4 - You Do</button>
+                                    <button class="builder-btn active text-[10px] px-2.5 py-1.5" data-action="toggle-lesson-stage" data-val="5">5 - Review</button>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div id="stage-block-1" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">1</span> Connect</div><div class="flex flex-wrap gap-2" id="les-s1-opts"></div></div>
+                                <div id="stage-block-2" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">2</span> I Do</div><div class="flex flex-wrap gap-2" id="les-s2-opts"></div></div>
+                                <div id="stage-block-3" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">3</span> We Do</div><div class="flex flex-wrap gap-2" id="les-s3-opts"></div></div>
+                                <div id="stage-block-4" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">4</span> You Do</div><div class="flex flex-wrap gap-2" id="les-s4-opts"></div></div>
+                                <div id="stage-block-5" class="stage-divider transition-all duration-300"><div class="stage-header mb-4"><span class="stage-number-badge">5</span> Review</div><div class="flex flex-wrap gap-2" id="les-s5-opts"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Options & Formats (Always Visible) -->
+                        <div id="global-advanced-options" class="border-t border-slate-200 pt-6 space-y-4">
+                            <div>
+                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Instructions / Timing (Optional)</span>
+                                <input type="text" id="les-custom-task" placeholder="e.g. Include a debate on this topic..." class="w-full p-2.5 rounded-lg border border-slate-300 outline-none transition text-sm font-medium text-slate-800">
+                            </div>
+
+                            <div class="pt-2">
                                 <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Required Outputs (Select Multiple)</span>
                                 <div class="flex flex-wrap gap-2" id="les-output-opts">
                                     <button class="builder-btn shaded active" data-action="lesson-output" data-val="plan">Full Lesson Plan</button>
@@ -323,8 +378,8 @@
                                 </div>
                             </div>
 
-                            <div class="pt-4 border-t border-slate-200">
-                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
+                            <div class="pt-2 border-t border-slate-200 mt-4">
+                                <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2 mt-4">Differentiation & Inclusion</span>
                                 <div class="flex flex-wrap gap-2" id="les-extra-opts">
                                     <button class="builder-btn active" data-action="lesson-state" data-key="extra" data-val="None">None (Standard)</button>
                                     <button class="builder-btn" data-action="lesson-state" data-key="extra" data-val="3-Tiered Worksheet">3-Tiered Worksheet</button>
@@ -335,12 +390,26 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> <!-- End Left Column -->
 
-                    <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col flex-grow shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
-                        <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-blue-100 flex justify-between items-center">
-                            <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
-                            <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
+                    <!-- RIGHT COLUMN: Prompt Window -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
+                            <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-blue-100 flex justify-between items-center">
+                                <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
+                                <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
+                                    <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
+                                    <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                                    <div class="hidden sm:block w-px h-4 bg-blue-200 mx-0.5"></div>
+                                    <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CHATGPT ↗</a>
+                                    <a href="https://claude.ai/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CLAUDE ↗</a>
+                                    <a href="https://copilot.microsoft.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">COPILOT ↗</a>
+                                </div>
+                            </div>
+                            <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
+                                <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-lesson-text">Select options...</span></div>
+                            </div>
+                            <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
                                 <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
                                 <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
                                 <div class="hidden sm:block w-px h-4 bg-blue-200 mx-0.5"></div>
@@ -349,18 +418,8 @@
                                 <a href="https://copilot.microsoft.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">COPILOT ↗</a>
                             </div>
                         </div>
-                        <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
-                            <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-lesson-text">Select options...</span></div>
-                        </div>
-                        <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
-                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
-                            <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                            <div class="hidden sm:block w-px h-4 bg-blue-200 mx-0.5"></div>
-                            <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CHATGPT ↗</a>
-                            <a href="https://claude.ai/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CLAUDE ↗</a>
-                            <a href="https://copilot.microsoft.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">COPILOT ↗</a>
-                        </div>
-                    </div>
+                    </div> <!-- End Right Column -->
+
                 </div>
             </div>
         </div>
@@ -444,25 +503,25 @@
                         </div>
                     </div>
                     
-                    <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
-                        <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-blue-100 flex justify-between items-center">
-                            <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
+                    <div class="bg-amber-50 rounded-2xl border border-amber-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
+                        <div class="sticky top-0 z-10 bg-amber-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-amber-100 flex justify-between items-center">
+                            <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
                             <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
                                 <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
-                                <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                                <div class="hidden sm:block w-px h-4 bg-blue-200 mx-0.5"></div>
+                                <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                                <div class="hidden sm:block w-px h-4 bg-amber-200 mx-0.5"></div>
                                 <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CHATGPT ↗</a>
                                 <a href="https://claude.ai/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CLAUDE ↗</a>
                                 <a href="https://copilot.microsoft.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">COPILOT ↗</a>
                             </div>
                         </div>
-                        <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
-                            <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-unit-text">...</span></div>
+                        <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-amber-50/30">
+                            <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-amber-200 shadow-inner whitespace-pre-wrap"><span id="prompt-unit-text">...</span></div>
                         </div>
-                        <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
+                        <div class="sticky bottom-0 z-10 bg-amber-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-amber-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
-                            <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                            <div class="hidden sm:block w-px h-4 bg-blue-200 mx-0.5"></div>
+                            <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
+                            <div class="hidden sm:block w-px h-4 bg-amber-200 mx-0.5"></div>
                             <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CHATGPT ↗</a>
                             <a href="https://claude.ai/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">CLAUDE ↗</a>
                             <a href="https://copilot.microsoft.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded transition text-[8px] sm:text-[9px] font-bold tracking-wider text-slate-500 hover:bg-slate-50 hover:text-slate-800 shadow-sm flex items-center">COPILOT ↗</a>
@@ -722,16 +781,6 @@
                 <h2 class="text-4xl font-black text-slate-900 mb-4">CPM Pedagogical Theory</h2>
             </div>
             
-            <div class="glass-card p-8 md:p-10 border-t-8 border-t-[#c5a059] mb-8">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div class="chart-container"><canvas id="cpmChart"></canvas></div>
-                    <div class="space-y-6">
-                        <h3 class="text-3xl font-black text-[#002066]">The Logic of the Routine</h3>
-                        <p class="text-slate-700">The CPM acts as a <strong>Gradual Release of Responsibility (GRR)</strong> engine.</p>
-                    </div>
-                </div>
-            </div>
-            
             <div class="flex overflow-x-auto gap-2 pb-4 mb-4 border-b border-slate-200 justify-center">
                 <button id="th-stage-1" class="theory-stage-btn active px-6 py-3 rounded-full text-sm font-bold bg-[#002066] text-white" data-action="theory-stage" data-val="1">Stage 1: Connect</button>
                 <button id="th-stage-2" class="theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600" data-action="theory-stage" data-val="2">Stage 2: I Do</button>
@@ -901,7 +950,14 @@
         var isAppReady = false;
         
         var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', context:'none', maori:'none', lit:'none', num:'none' };
-        var lessonState = { dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], relief:false, notebookLM:false, activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'' };
+        
+        // NEW STATE VARS: track framework selection
+        var lessonState = { 
+            framework: 'cpm', // 'cpm' or one of the alt frameworks
+            altFramework: 'none',
+            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], relief:false, notebookLM:false, activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'' 
+        };
+        
         var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
 
@@ -958,10 +1014,8 @@
             var aB = document.getElementById('nav-' + viewId);
             if (aV) aV.classList.remove('hidden');
             if (aB) aB.classList.add('nav-active');
-            if (viewId === 'theory') {
-                setTimeout(initChart, 100);
-                loadTheoryStage(1);
-            }
+            if (viewId === 'instructional') setTimeout(initChart, 100);
+            if (viewId === 'theory') loadTheoryStage(1);
         }
 
         function checkSeniorStatus() {
@@ -1081,6 +1135,8 @@
                         if (!lessonState.quizFormats) lessonState.quizFormats = ['Google Forms'];
                         if (!lessonState.reliefType) lessonState.reliefType = 'full-worksheet';
                         if (lessonState.reliefCustom === undefined) lessonState.reliefCustom = '';
+                        if (!lessonState.framework) lessonState.framework = 'cpm';
+                        if (!lessonState.altFramework) lessonState.altFramework = 'none';
                     }
                     if (st.assessmentState) {
                         Object.assign(assessmentState, st.assessmentState);
@@ -1173,10 +1229,19 @@
                         if (b) b.classList.add('active');
                     });
                     
+                    // Framework loading
+                    if(lessonState.framework === 'alt') {
+                        toggleFramework('alt');
+                        if(lessonState.altFramework !== 'none') selectAltFramework(lessonState.altFramework);
+                    } else {
+                        toggleFramework('cpm');
+                    }
+
                     if (lessonState.relief) {
                         var r = document.getElementById('btn-relief-mode'), rtc = document.getElementById('relief-tasks-container');
                         if (r) { r.classList.add('bg-red-500', 'text-white', 'border-red-600'); r.classList.remove('bg-red-100', 'text-red-800', 'border-red-300'); r.innerText = "Disable Relief Mode"; }
                         if (rtc) rtc.classList.remove('hidden');
+                        document.getElementById('fw-master-toggle').classList.add('fw-locked');
                     }
                     
                     if (lessonState.notebookLM) {
@@ -1202,6 +1267,61 @@
                 } catch (e) {}
             }
         }
+
+        // --- NEW FRAMEWORK LOGIC --- //
+        function toggleFramework(val) {
+            lessonState.framework = val;
+            
+            var cpmBtn = document.querySelector('button[data-action="toggle-framework"][data-val="cpm"]');
+            var altBtn = document.querySelector('button[data-action="toggle-framework"][data-val="alt"]');
+            var cpmBuilder = document.getElementById('cpm-specific-builder');
+            var altDropdown = document.getElementById('alt-framework-dropdown');
+            
+            if (val === 'cpm') {
+                cpmBtn.classList.add('active');
+                altBtn.classList.remove('active');
+                
+                cpmBuilder.style.display = 'block';
+                // Trigger reflow
+                void cpmBuilder.offsetWidth; 
+                cpmBuilder.classList.remove('opacity-0');
+                
+                altDropdown.classList.remove('opacity-100');
+                altDropdown.style.maxHeight = '0px';
+                
+                lessonState.altFramework = 'none';
+                document.querySelectorAll('button[data-action="select-alt-framework"]').forEach(function(b){ b.classList.remove('active'); });
+                
+            } else {
+                altBtn.classList.add('active');
+                cpmBtn.classList.remove('active');
+                
+                cpmBuilder.classList.add('opacity-0');
+                setTimeout(function(){ cpmBuilder.style.display = 'none'; }, 300);
+                
+                altDropdown.classList.add('opacity-100');
+                altDropdown.style.maxHeight = '500px'; 
+                
+                if (lessonState.altFramework === 'none') {
+                    // Default to first option if none selected
+                    selectAltFramework('solo');
+                }
+            }
+            updateLessonBuilderPrompt();
+            saveAppState();
+        }
+
+        function selectAltFramework(val) {
+            lessonState.altFramework = val;
+            document.querySelectorAll('button[data-action="select-alt-framework"]').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            var target = document.querySelector('button[data-action="select-alt-framework"][data-val="'+val+'"]');
+            if(target) target.classList.add('active');
+            updateLessonBuilderPrompt();
+            saveAppState();
+        }
+
 
         function forceAiPicks() {
             var t = getGlobalTopic();
@@ -1466,17 +1586,15 @@
         function toggleLessonOutput(t) {
             if (!lessonState.outputs) lessonState.outputs = ['plan'];
             var allO = ['plan', 'slides', 'worksheet', 'content', 'quiz', 'media', 'images', 'lms'];
-            
             if (t === 'all') {
-                var isAll = allO.every(function(val) { return lessonState.outputs.includes(val); });
-                lessonState.outputs = isAll ? [] : allO.slice();
+                lessonState.outputs = (lessonState.outputs.length === 8) ? [] : allO.slice();
             } else {
                 var i = lessonState.outputs.indexOf(t);
                 if (i > -1) {
                     lessonState.outputs.splice(i, 1);
                 } else {
                     lessonState.outputs.push(t);
-                    // Mutual Exclusivity for Plan vs Short Plan
+                    // Mutual Exclusivity logic
                     if (t === 'plan') {
                         var idx = lessonState.outputs.indexOf('plan-short');
                         if (idx > -1) lessonState.outputs.splice(idx, 1);
@@ -1486,7 +1604,6 @@
                     }
                 }
             }
-            
             document.querySelectorAll('[data-action="lesson-output"]').forEach(function(b) { b.classList.remove('active'); });
             var wc = document.getElementById('les-worksheet-format-container');
             var qc = document.getElementById('les-quiz-format-container');
@@ -1499,13 +1616,10 @@
                 if (o === 'worksheet' && wc) wc.classList.remove('hidden');
                 if (o === 'quiz' && qc) qc.classList.remove('hidden');
             });
-            
-            var isAll = allO.every(function(val) { return lessonState.outputs.includes(val); });
-            var aB = document.querySelector('[data-action="lesson-output"][data-val="all"]');
-            if (aB) {
-                isAll ? aB.classList.add('active') : aB.classList.remove('active');
+            if (lessonState.outputs.length === 8) {
+                var aB = document.querySelector('[data-action="lesson-output"][data-val="all"]');
+                if (aB) aB.classList.add('active');
             }
-            
             updateLessonBuilderPrompt();
             saveAppState();
         }
@@ -1514,12 +1628,17 @@
             lessonState.relief = !lessonState.relief;
             var b = document.getElementById('btn-relief-mode'), rtc = document.getElementById('relief-tasks-container');
             if (lessonState.relief && lessonState.notebookLM) toggleNotebookLMMode();
+            
+            var fwToggle = document.getElementById('fw-master-toggle');
+            
             if (lessonState.relief) {
                 if (b) { b.classList.add('bg-red-500', 'text-white', 'border-red-600'); b.classList.remove('bg-red-100', 'text-red-800', 'border-red-300'); b.innerText = "Disable Relief Mode"; }
                 if (rtc) rtc.classList.remove('hidden');
+                if (fwToggle) fwToggle.classList.add('fw-locked');
             } else {
                 if (b) { b.classList.remove('bg-red-500', 'text-white', 'border-red-600'); b.classList.add('bg-red-100', 'text-red-800', 'border-red-300'); b.innerText = "Enable Relief Mode"; }
                 if (rtc) rtc.classList.add('hidden');
+                if (fwToggle) fwToggle.classList.remove('fw-locked');
             }
             updateLessonBuilderPrompt();
         }
@@ -1630,18 +1749,35 @@
                     txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + platformName + '.\n</task>\n\n';
                 }
             } else {
-                txt += '<task>\nDesign a comprehensive 60-minute lesson based on the 5 stages of the Common Practice Model (CPM) with full, ready-to-use detail.\n</task>\n\n';
+                
+                // NEW: Dynamic Task string based on Framework selection
+                var fwTaskStr = "Design a comprehensive 60-minute lesson based on the 5 stages of the Common Practice Model (CPM) with full, ready-to-use detail.";
+                
+                if (lessonState.framework === 'alt') {
+                    if (lessonState.altFramework === 'solo') fwTaskStr = "Design a comprehensive 60-minute lesson structured entirely around the 5 stages of the SOLO Taxonomy (Pre-structural, Uni-structural, Multi-structural, Relational, Extended Abstract).";
+                    if (lessonState.altFramework === 'six-hats') fwTaskStr = "Design a comprehensive 60-minute lesson structured entirely around De Bono's Six Thinking Hats to guide student perspective taking.";
+                    if (lessonState.altFramework === 'udl') fwTaskStr = "Design a comprehensive 60-minute lesson specifically engineered using the principles of Universal Design for Learning (UDL), explicitly offering multiple means of Engagement, Representation, and Action/Expression.";
+                    if (lessonState.altFramework === 'pdp') fwTaskStr = "Design a comprehensive 60-minute lesson structured using the PDP Framework (Pre-task, During-task, Post-task) focused on text/media analysis.";
+                    if (lessonState.altFramework === 'ubd') fwTaskStr = "Design a comprehensive 60-minute lesson using the principles of Backward Design (UbD). Start by explicitly defining the Acceptable Evidence, then map the learning experiences backward from that goal.";
+                    if (lessonState.altFramework === 'pbl') fwTaskStr = "Design a comprehensive 60-minute project kick-off lesson structured around Project-Based Learning (PBL) elements, specifically focusing on introducing a Driving Question and planning Sustained Inquiry.";
+                }
+                
+                txt += '<task>\n' + fwTaskStr + '\n</task>\n\n';
             }
 
             txt += '<strict_rules>\nNo meta-commentary. ' + (lessonState.notebookLM ? 'Strictly use plain Markdown formatting. Do NOT use HTML tags. Use heavy markdown headers (#, ##, ###) to create a rigorous hierarchy.' : 'Use Markdown/HTML.') + '\n' + nzSpellingRule + '\n';
             
             if (!lessonState.relief) txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')') + '.\n';
             if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson.\n';
-            if (stg.length < 5 && !lessonState.relief && !lessonState.notebookLM) txt += 'Timing: Cover only CPM stages ' + stg.join(',') + '. Adjust durations to fill 60 mins.\n';
+            
+            if (lessonState.framework === 'cpm') {
+                if (stg.length < 5 && !lessonState.relief && !lessonState.notebookLM) txt += 'Timing: Cover only CPM stages ' + stg.join(',') + '. Adjust durations to fill 60 mins.\n';
+            }
+            
             if (lessonState.context === 'waiheke') txt += 'Weave in Waiheke/Hauraki contexts. Highlight with **[WAIHEKE CONTEXT]**.\n';
             if (lessonState.maori === 'integrate') txt += 'Integrate Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]**.\n';
-            if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. CRITICAL RULE: Literacy skills must be explicitly taught/modelled in the teacher-led sections (I Do / We Do) before independent practice. Highlight with **[LITERACY]**.\n';
-            if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL RULE: Numeracy skills must be explicitly taught/modelled in the teacher-led sections (I Do / We Do) before independent practice. Highlight with **[NUMERACY]**.\n';
+            if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. CRITICAL RULE: Literacy skills must be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[LITERACY]**.\n';
+            if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL RULE: Numeracy skills must be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
             
             if (sm) {
                 txt += 'Source Strictness: Base content entirely on: "' + sm + '". Do not hallucinate.\n';
@@ -1690,23 +1826,50 @@
             } else if (lessonState.notebookLM) {
                 txt += 'DOCUMENT A: NotebookLM Prompt Template (To be pasted into the NotebookLM chat by the teacher to set its persona and instructions).\n';
                 txt += 'DOCUMENT B: The Source Text (The dense, factual textbook-level content, strict Markdown headings, definitions, contexts. NO meta-commentary, NO pedagogical notes, NO lesson plans. Just pure subject facts).\n';
-                txt += 'DOCUMENT C: Teacher\'s Slide Plan (The CPM structure and slide instructions, kept entirely separate from Document B so NotebookLM does not ingest it as subject material).\n';
+                txt += 'DOCUMENT C: Teacher\'s Slide Plan (The lesson structure and slide instructions, kept entirely separate from Document B so NotebookLM does not ingest it as subject material).\n';
             } else {
+                
+                // NEW: Dynamic Output Formats based on selected framework
                 if (outs.includes('plan')) {
-                    txt += 'PART A: The CPM Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure (distributing the 60 minutes realistically across the chosen stages):\n| Stage | Time (mins) | Teaching Strategy Focus | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|---|\n';
-                    if (stg.includes(1)) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [Word-for-word opening script & specific questions] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n';
-                    if (stg.includes(2)) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [Exact teacher script and whiteboard drawing/writing instructions] | [Live URLs] |\n';
-                    if (stg.includes(3)) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [Specific hinge questions, guided practice tasks] | [Live URLs] |\n';
-                    if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[Detailed instructions explicitly adapted for: ' + lessonState.extra + ']' : '[Detailed independent task instructions and scaffolds]') + ' | [Live URLs] |\n';
-                    if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [Exit ticket or specific review task. CRITICAL: Explicitly loop back to measure the Success Criteria established in Stage 1] | [Live URLs] |\n\n';
+                    if (lessonState.framework === 'cpm') {
+                        txt += 'PART A: The CPM Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure (distributing the 60 minutes realistically across the chosen stages):\n| Stage | Time (mins) | Teaching Strategy Focus | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|---|\n';
+                        if (stg.includes(1)) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [Word-for-word opening script & specific questions] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n';
+                        if (stg.includes(2)) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [Exact teacher script and whiteboard drawing/writing instructions] | [Live URLs] |\n';
+                        if (stg.includes(3)) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [Specific hinge questions, guided practice tasks] | [Live URLs] |\n';
+                        if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[Detailed instructions explicitly adapted for: ' + lessonState.extra + ']' : '[Detailed independent task instructions and scaffolds]') + ' | [Live URLs] |\n';
+                        if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [Exit ticket or specific review task. CRITICAL: Explicitly loop back to measure the Success Criteria established in Stage 1] | [Live URLs] |\n\n';
+                    } else if (lessonState.altFramework === 'solo') {
+                        txt += 'PART A: The SOLO Taxonomy Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| SOLO Stage | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Guiding Questions</div> | Resources & Links |\n|---|---|---|---|\n| **1. Pre-structural** (Hook) | [Time] | [Activities to uncover what they don\'t know] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n| **2. Uni-structural** (One idea) | [Time] | [Activities focusing on a single, isolated fact or concept] | [URLs] |\n| **3. Multi-structural** (Many ideas) | [Time] | [Activities introducing multiple disconnected facts/skills] | [URLs] |\n| **4. Relational** (Connecting ideas) | [Time] | [Tasks requiring students to link the facts together into a cohesive whole] | [URLs] |\n| **5. Extended Abstract** (Applying) | [Time] | [Extension task requiring application to a new, unseen context] | [URLs] |\n\n';
+                    } else if (lessonState.altFramework === 'six-hats') {
+                        txt += 'PART A: Six Thinking Hats Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| Thinking Hat | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Guiding Questions</div> | Resources & Links |\n|---|---|---|---|\n| **Blue Hat** (Process) | [Time] | [Setting the agenda, defining success criteria] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n| **White Hat** (Facts) | [Time] | [Information gathering, data analysis tasks] | [URLs] |\n| **Red Hat** (Feelings) | [Time] | [Intuitive, emotional, or gut-reaction tasks] | [URLs] |\n| **Black Hat** (Caution) | [Time] | [Critical thinking, risk assessment, finding flaws] | [URLs] |\n| **Yellow Hat** (Optimism) | [Time] | [Finding benefits, value, and positive outcomes] | [URLs] |\n| **Green Hat** (Creativity) | [Time] | [Brainstorming alternatives, new ideas, creative tasks] | [URLs] |\n| **Blue Hat** (Review) | [Time] | [Summarizing the thinking process, exit ticket] | [URLs] |\n\n';
+                    } else if (lessonState.altFramework === 'udl') {
+                         txt += 'PART A: Universal Design for Learning (UDL) Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| UDL Principle | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Options Provided</div> | Resources & Links |\n|---|---|---|---|\n| **Engagement** (The \'Why\') | [Time] | [Options for recruiting interest, sustaining effort, and self-regulation] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms using multiple media] | [URLs] |\n| **Representation** (The \'What\') | [Time] | [Options for perception, language/symbols, and comprehension] | [URLs] |\n| **Action & Expression** (The \'How\') | [Time] | [Options for physical action, expression/communication, and executive functions] | [URLs] |\n\n';
+                    } else if (lessonState.altFramework === 'pdp') {
+                        txt += 'PART A: The PDP Framework Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| PDP Stage | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|\n| **Pre-Task** | [Time] | [Activating prior knowledge, hook, setting the context] | [URLs] |\n| **KEY VOCAB** | [Time] | [Pre-teaching 4-6 critical Tier 2 & Tier 3 terms before the core task] | [URLs] |\n| **During-Task** | [Time] | [Structured activities to guide focus while reading/listening/analysing] | [URLs] |\n| **Post-Task** | [Time] | [Tasks that expand on the topic, summarize, or require personal response] | [URLs] |\n\n';
+                    } else if (lessonState.altFramework === 'ubd') {
+                         txt += 'PART A: Backward Design (UbD) Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this 3-row Markdown table structure:\n| UbD Phase | <div style="min-width: 400px;">Details & Execution</div> | Resources & Links |\n|---|---|---|\n| **1. Identify Desired Results** | [Explicitly define the essential questions and core understandings] | [URLs] |\n| **2. Determine Acceptable Evidence** | [Design the specific performance task or formative assessment used to prove understanding] | [URLs] |\n| **3. Plan Learning Experiences** | [Detail the specific chronological steps of the 60-min lesson to get students to the evidence phase] | [URLs] |\n\n';
+                    } else if (lessonState.altFramework === 'pbl') {
+                         txt += 'PART A: Project-Based Learning (PBL) Kick-off Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| PBL Element | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|\n| **The Hook & Driving Question** | [Time] | [The engaging entry event and the presentation of the core authentic problem] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms needed for the project] | [URLs] |\n| **Sustained Inquiry Planning** | [Time] | [Students identifying what they know, what they need to know, and planning research] | [URLs] |\n| **Critique / Public Product Prep** | [Time] | [Establishing the rubrics and requirements for the final presentation] | [URLs] |\n\n';
+                    }
                 }
+                
                 if (outs.includes('plan-short')) {
-                    txt += 'PART A: The Condensed CPM Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure. CRITICAL: Keep all descriptions extremely brief. MAX 10 WORDS per box. Bullet points only. ABSOLUTELY NO SCRIPTS.\n| Stage | Time (mins) | Teaching Strategy Focus | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|---|\n';
-                    if (stg.includes(1)) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [1 bullet: Hook activity] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [List 3-5 terms. NO definitions.] | [URLs] |\n';
-                    if (stg.includes(2)) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [1 bullet: Core instruction. NO scripts.] | [Live URLs] |\n';
-                    if (stg.includes(3)) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [1 bullet: Practice task.] | [Live URLs] |\n';
-                    if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[1 bullet: Independent task + 1 bullet for ' + lessonState.extra + ']' : '[1 bullet: Independent task.]') + ' | [Live URLs] |\n';
-                    if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [1 bullet: Review task.] | [Live URLs] |\n\n';
+                    var strFocus = (lessonState.framework === 'cpm') ? "Teaching Strategy Focus" : "Framework Stage";
+                    txt += 'PART A: The Condensed Lesson Plan\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\nUse EXACTLY this Markdown table structure. CRITICAL: Keep all descriptions extremely brief. MAX 10 WORDS per box. Bullet points only. ABSOLUTELY NO SCRIPTS.\n| Stage | Time (mins) | ' + strFocus + ' | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|---|\n';
+                    
+                    if (lessonState.framework === 'cpm') {
+                        if (stg.includes(1)) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [1 bullet: Hook activity] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [List 3-5 terms. NO definitions.] | [URLs] |\n';
+                        if (stg.includes(2)) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [1 bullet: Core instruction. NO scripts.] | [Live URLs] |\n';
+                        if (stg.includes(3)) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [1 bullet: Practice task.] | [Live URLs] |\n';
+                        if (stg.includes(4)) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[1 bullet: Independent task + 1 bullet for ' + lessonState.extra + ']' : '[1 bullet: Independent task.]') + ' | [Live URLs] |\n';
+                        if (stg.includes(5)) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [1 bullet: Review task.] | [Live URLs] |\n\n';
+                    } else {
+                        txt += '| **Core Phase 1** | [Time] | **Introduction** | [1 bullet point outline] | [Live URLs] |\n';
+                        txt += '| **KEY VOCAB** | [Time] | **Vocabulary** | [List 3-5 terms. NO definitions.] | [URLs] |\n';
+                        txt += '| **Core Phase 2** | [Time] | **Development** | [1 bullet point outline] | [Live URLs] |\n';
+                        txt += '| **Core Phase 3** | [Time] | **Application** | [1 bullet point outline] | [Live URLs] |\n';
+                        txt += '| **Core Phase 4** | [Time] | **Review** | [1 bullet point outline] | [Live URLs] |\n\n';
+                    }
                 }
                 if (outs.includes('slides')) txt += 'PART B: Slideshow Content & Speaker Notes (8+ slides). Format clearly as text. If the user is using Google Gemini, remind them they can type @GoogleSlides to auto-generate this.\n';
                 if (outs.includes('worksheet')) {
@@ -1934,7 +2097,7 @@
                 else if (action === 'cancel-reset') { var c = document.getElementById('reset-modal'); if (c) c.classList.add('hidden'); }
                 else if (action === 'confirm-reset') { localStorage.clear(); window.location.reload(); }
                 else if (action === 'toggle-les-advanced') {
-                    var container = document.getElementById('les-advanced-options');
+                    var container = document.getElementById('global-advanced-options');
                     var text = target.querySelector('span');
                     var icon = target.querySelector('svg');
                     if (container.classList.contains('hidden')) {
@@ -1947,6 +2110,11 @@
                         if(icon) icon.classList.remove('rotate-180');
                     }
                 }
+                
+                // NEW: Listeners for Framework selection
+                else if (action === 'toggle-framework') toggleFramework(val);
+                else if (action === 'select-alt-framework') selectAltFramework(val);
+                
             });
 
             document.body.addEventListener('input', function(e) {
