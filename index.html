@@ -144,10 +144,10 @@
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#002066] max-w-6xl mx-auto mb-8 shadow-sm bg-white">
                 
                 <!-- MASTER MODE SELECTOR -->
-                <div class="flex flex-wrap justify-center p-1.5 bg-slate-100 rounded-xl mb-8 w-fit mx-auto border border-slate-200 shadow-inner gap-1">
-                    <button id="mode-btn-standard" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-[#002066] text-white shadow-md" data-action="lesson-mode" data-val="standard">Standard Lesson</button>
-                    <button id="mode-btn-relief" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-600 hover:bg-slate-200" data-action="lesson-mode" data-val="relief">Emergency Relief</button>
-                    <button id="mode-btn-notebooklm" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all text-slate-600 hover:bg-slate-200" data-action="lesson-mode" data-val="notebooklm">NotebookLM Builder</button>
+                <div class="flex flex-wrap justify-center p-1.5 bg-slate-100 rounded-xl mb-8 w-fit mx-auto border border-slate-200 shadow-inner gap-2">
+                    <button id="mode-btn-standard" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-[#002066] text-white shadow-md border border-transparent" data-action="lesson-mode" data-val="standard">Standard Lesson</button>
+                    <button id="mode-btn-relief" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-50 text-red-600 hover:bg-red-100 border border-red-100" data-action="lesson-mode" data-val="relief">Emergency Relief</button>
+                    <button id="mode-btn-notebooklm" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100" data-action="lesson-mode" data-val="notebooklm">NotebookLM Builder</button>
                 </div>
 
                 <!-- CORE CONTEXT (Always Visible) -->
@@ -307,10 +307,17 @@
                                 <!-- Sequence -->
                                 <div class="w-full md:w-auto">
                                     <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2 text-center md:text-left">Lesson Sequence</span>
-                                    <div class="flex justify-center md:justify-start gap-1.5" id="les-sequence-opts">
+                                    <div class="flex flex-wrap justify-center md:justify-start gap-1.5" id="les-sequence-opts">
                                         <button class="builder-btn active text-[10px] px-3 py-1.5 shadow-sm" data-action="lesson-state" data-key="sequence" data-val="1">1 Lesson</button>
                                         <button class="builder-btn text-[10px] px-3 py-1.5 shadow-sm" data-action="lesson-state" data-key="sequence" data-val="2">2 Lessons</button>
                                         <button class="builder-btn text-[10px] px-3 py-1.5 shadow-sm" data-action="lesson-state" data-key="sequence" data-val="3">3 Lessons</button>
+                                        <button class="builder-btn text-[10px] px-3 py-1.5 shadow-sm" data-action="lesson-state" data-key="sequence" data-val="more">More +</button>
+                                    </div>
+                                    <div id="les-custom-sequence-container" class="hidden mt-2 flex flex-col gap-1.5 max-w-[180px] mx-auto md:mx-0">
+                                        <input type="number" min="4" id="les-custom-sequence" placeholder="e.g. 4" class="w-full p-1.5 rounded border border-slate-300 focus:border-[#002066] text-xs outline-none text-center md:text-left shadow-inner">
+                                        <div id="les-sequence-warning" class="hidden text-[9px] font-bold text-red-700 bg-red-100 p-1.5 rounded shadow-sm border border-red-200 leading-tight">
+                                            ⚠️ For 6+ lessons, consider using the Unit Planner generator!
+                                        </div>
                                     </div>
                                     <div id="sequence-alert" class="hidden mt-2 text-center md:text-left">
                                         <span class="inline-block bg-amber-50 text-amber-800 border border-amber-200 text-[9px] font-bold px-2 py-1 rounded shadow-sm">💡 AI will automatically adapt stages across days.</span>
@@ -1273,19 +1280,19 @@
         function setLessonMode(mode, targetBtn) {
             lessonState.mode = mode;
             
-            // Update Buttons Styling
-            document.querySelectorAll('[data-action="lesson-mode"]').forEach(function(btn) {
-                btn.classList.remove('bg-[#002066]', 'bg-red-600', 'bg-orange-600', 'text-white', 'shadow-md');
-                btn.classList.add('text-slate-600', 'hover:bg-slate-200');
-            });
+            // Reset all buttons to their designated inactive states
+            var sBtn = document.getElementById('mode-btn-standard');
+            var rBtn = document.getElementById('mode-btn-relief');
+            var nBtn = document.getElementById('mode-btn-notebooklm');
             
-            if(targetBtn) {
-                targetBtn.classList.remove('text-slate-600', 'hover:bg-slate-200', 'text-red-700', 'text-orange-700');
-                targetBtn.classList.add('text-white', 'shadow-md');
-                if(mode === 'standard') targetBtn.classList.add('bg-[#002066]');
-                if(mode === 'relief') targetBtn.classList.add('bg-red-600');
-                if(mode === 'notebooklm') targetBtn.classList.add('bg-orange-600');
-            }
+            if(sBtn) sBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-slate-600 hover:bg-slate-100 border border-slate-200";
+            if(rBtn) rBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-50 text-red-600 hover:bg-red-100 border border-red-100";
+            if(nBtn) nBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100";
+            
+            // Apply unique active states based on selection
+            if(mode === 'standard' && sBtn) sBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-[#002066] text-white shadow-md border border-transparent";
+            if(mode === 'relief' && rBtn) rBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-600 text-white shadow-md border border-transparent";
+            if(mode === 'notebooklm' && nBtn) nBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-600 text-white shadow-md border border-transparent";
             
             // Toggle Layout Blocks
             var stdTools = document.getElementById('standard-builder-tools');
@@ -1475,13 +1482,23 @@
             b.classList.add('active');
             
             if (k === 'sequence') {
+                var customContainer = document.getElementById('les-custom-sequence-container');
+                if (v === 'more') {
+                    if (customContainer) customContainer.classList.remove('hidden');
+                } else {
+                    if (customContainer) customContainer.classList.add('hidden');
+                    var warnEl = document.getElementById('les-sequence-warning');
+                    if (warnEl) warnEl.classList.add('hidden');
+                }
+
+                var isMulti = v !== '1';
                 var alertEl = document.getElementById('sequence-alert');
                 if (alertEl) {
-                    if (v !== '1') alertEl.classList.remove('hidden');
+                    if (isMulti) alertEl.classList.remove('hidden');
                     else alertEl.classList.add('hidden');
                 }
                 
-                if (v !== '1') {
+                if (isMulti) {
                     var planIdx = lessonState.outputs.indexOf('plan');
                     if (planIdx > -1) lessonState.outputs.splice(planIdx, 1);
                     if (!lessonState.outputs.includes('plan-short')) lessonState.outputs.push('plan-short');
@@ -1765,7 +1782,15 @@
             var outs = lessonState.outputs || ['plan'], stg = lessonState.activeStages || [1, 2, 3, 4, 5];
             var yr = lessonState.year || "";
             var isLeg = yr.includes("Level");
-            var seq = parseInt(lessonState.sequence) || 1;
+            
+            var seqVal = lessonState.sequence;
+            var seq = 1;
+            if (seqVal === 'more') {
+                seq = parseInt((document.getElementById('les-custom-sequence') || {}).value) || 4;
+            } else {
+                seq = parseInt(seqVal) || 1;
+            }
+            
             var tb = String.fromCharCode(96, 96, 96);
             var b = document.getElementById('prompt-lesson-text');
             if (outs.length === 0 && lessonState.mode === 'standard') { if (b) b.innerText = "Select an Output option."; return; }
@@ -2181,6 +2206,39 @@
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom'].includes(e.target.id)) updateLessonBuilderPrompt();
+                else if (e.target.id === 'les-custom-sequence') {
+                    var val = parseInt(e.target.value || 0);
+                    var warn = document.getElementById('les-sequence-warning');
+                    if (warn) {
+                        if (val >= 6) warn.classList.remove('hidden');
+                        else warn.classList.add('hidden');
+                    }
+                    var isMulti = val > 1 || !e.target.value; 
+                    var alertEl = document.getElementById('sequence-alert');
+                    if(alertEl) { isMulti ? alertEl.classList.remove('hidden') : alertEl.classList.add('hidden'); }
+                    
+                    if (isMulti) {
+                        var planIdx = lessonState.outputs.indexOf('plan');
+                        if (planIdx > -1) lessonState.outputs.splice(planIdx, 1);
+                        if (!lessonState.outputs.includes('plan-short')) lessonState.outputs.push('plan-short');
+                    } else {
+                        var shortIdx = lessonState.outputs.indexOf('plan-short');
+                        if (shortIdx > -1) lessonState.outputs.splice(shortIdx, 1);
+                        if (!lessonState.outputs.includes('plan')) lessonState.outputs.push('plan');
+                    }
+                    
+                    document.querySelectorAll('[data-action="lesson-output"]').forEach(function(btn) {
+                        var ob = btn.getAttribute('data-val');
+                        if (ob === 'all') {
+                            if (lessonState.outputs.length >= 8) btn.classList.add('active');
+                            else btn.classList.remove('active');
+                        } else {
+                            if (lessonState.outputs.includes(ob)) btn.classList.add('active');
+                            else btn.classList.remove('active');
+                        }
+                    });
+                    updateLessonBuilderPrompt();
+                }
                 else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume'].includes(e.target.id)) updateAssessmentBuilderPrompt();
             });
         }
