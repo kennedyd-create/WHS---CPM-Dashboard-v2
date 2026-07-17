@@ -1803,36 +1803,41 @@
             var b = document.getElementById('prompt-lesson-text');
             if (outs.length === 0 && lessonState.mode === 'standard') { if (b) b.innerText = "Select an Output option."; return; }
             
-            var txt = '<system_role>Act as an expert pedagogical coach and curriculum designer.</system_role>\n\n<context>\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n</context>\n\n';
-            
-            if (lessonState.mode === 'notebooklm') {
-                txt += '<task>\nGenerate separated materials to be used with NotebookLM. You must separate the meta-prompts, the factual source document, and the teacher\'s slide plan into completely distinct sections to prevent NotebookLM from confusing pedagogical instructions with subject facts.\n</task>\n\n';
-            } else if (lessonState.mode === 'relief') {
-                if (lessonState.reliefType === 'full-worksheet') {
-                    txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained Student Worksheet.\n</task>\n\n';
-                } else {
-                    var platformMap = { 'ep': 'Education Perfect (EP)', 'wt': "Writer's Toolbox", 'gc': 'Google Classroom', 'other': 'Online Platform' };
-                    var platformName = platformMap[lessonState.reliefType] || 'Online Platform';
-                    txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + platformName + '.\n</task>\n\n';
-                }
-            } else {
-                
-                var fwTaskStr = "Design a comprehensive lesson based on the 5 stages of the Common Practice Model (CPM) with full, ready-to-use detail.";
-                
-                if (lessonState.framework === 'alt') {
-                    if (lessonState.altFramework === 'solo') fwTaskStr = "Design a comprehensive lesson structured entirely around the 5 stages of the SOLO Taxonomy (Pre-structural, Uni-structural, Multi-structural, Relational, Extended Abstract).";
-                    if (lessonState.altFramework === 'six-hats') fwTaskStr = "Design a comprehensive lesson structured entirely around De Bono's Six Thinking Hats to guide student perspective taking.";
-                    if (lessonState.altFramework === 'udl') fwTaskStr = "Design a comprehensive lesson specifically engineered using the principles of Universal Design for Learning (UDL), explicitly offering multiple means of Engagement, Representation, and Action/Expression.";
-                    if (lessonState.altFramework === 'pdp') fwTaskStr = "Design a comprehensive lesson structured using the PDP Framework (Pre-task, During-task, Post-task) focused on text/media analysis.";
-                    if (lessonState.altFramework === 'ubd') fwTaskStr = "Design a comprehensive lesson using the principles of Backward Design (UbD). Start by explicitly defining the Acceptable Evidence, then map the learning experiences backward from that goal.";
-                    if (lessonState.altFramework === 'pbl') fwTaskStr = "Design a comprehensive project kick-off lesson structured around Project-Based Learning (PBL) elements, specifically focusing on introducing a Driving Question and planning Sustained Inquiry.";
-                }
-                
-                txt += '<task>\n' + fwTaskStr + '\n</task>\n\n';
-            }
+            var txt = '';
 
-            txt += '<strict_rules>\nNo meta-commentary. ' + (lessonState.mode === 'notebooklm' ? 'Strictly use plain Markdown formatting. Do NOT use HTML tags. Use heavy markdown headers (#, ##, ###) to create a rigorous hierarchy.' : 'Use Markdown/HTML.') + '\n' + nzSpellingRule + '\n';
+            // 1. SYSTEM ROLE & CONTEXT
+            if (lessonState.mode === 'notebooklm') {
+                txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n\n';
+                txt += '### Task\nGenerate separated materials to be used with NotebookLM. You must separate the meta-prompts, the factual source document, and the slide generation prompt into completely distinct sections to prevent NotebookLM from confusing pedagogical instructions with subject facts.\n\n';
+                txt += '### Strict Rules\n';
+                txt += 'Output using ONLY plain text and standard Markdown headers (#, ##, ###) to create a rigorous hierarchy. DO NOT use HTML tags.\n';
+                txt += 'You MUST use New Zealand English spelling (e.g. \'analyse\', \'colour\', \'programme\') throughout YOUR output, AND you must explicitly command NotebookLM in Documents A and C to use New Zealand English spelling in its final outputs.\n';
+            } else {
+                txt += '<system_role>Act as an expert pedagogical coach and curriculum designer.</system_role>\n\n<context>\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n</context>\n\n';
+                if (lessonState.mode === 'relief') {
+                    if (lessonState.reliefType === 'full-worksheet') {
+                        txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained Student Worksheet.\n</task>\n\n';
+                    } else {
+                        var platformMap = { 'ep': 'Education Perfect (EP)', 'wt': "Writer's Toolbox", 'gc': 'Google Classroom', 'other': 'Online Platform' };
+                        var platformName = platformMap[lessonState.reliefType] || 'Online Platform';
+                        txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + platformName + '.\n</task>\n\n';
+                    }
+                } else {
+                    var fwTaskStr = "Design a comprehensive lesson based on the 5 stages of the Common Practice Model (CPM) with full, ready-to-use detail.";
+                    if (lessonState.framework === 'alt') {
+                        if (lessonState.altFramework === 'solo') fwTaskStr = "Design a comprehensive lesson structured entirely around the 5 stages of the SOLO Taxonomy (Pre-structural, Uni-structural, Multi-structural, Relational, Extended Abstract).";
+                        if (lessonState.altFramework === 'six-hats') fwTaskStr = "Design a comprehensive lesson structured entirely around De Bono's Six Thinking Hats to guide student perspective taking.";
+                        if (lessonState.altFramework === 'udl') fwTaskStr = "Design a comprehensive lesson specifically engineered using the principles of Universal Design for Learning (UDL), explicitly offering multiple means of Engagement, Representation, and Action/Expression.";
+                        if (lessonState.altFramework === 'pdp') fwTaskStr = "Design a comprehensive lesson structured using the PDP Framework (Pre-task, During-task, Post-task) focused on text/media analysis.";
+                        if (lessonState.altFramework === 'ubd') fwTaskStr = "Design a comprehensive lesson using the principles of Backward Design (UbD). Start by explicitly defining the Acceptable Evidence, then map the learning experiences backward from that goal.";
+                        if (lessonState.altFramework === 'pbl') fwTaskStr = "Design a comprehensive project kick-off lesson structured around Project-Based Learning (PBL) elements, specifically focusing on introducing a Driving Question and planning Sustained Inquiry.";
+                    }
+                    txt += '<task>\n' + fwTaskStr + '\n</task>\n\n';
+                }
+                txt += '<strict_rules>\nNo meta-commentary. Use Markdown/HTML.\n' + nzSpellingRule + '\n';
+            }
             
+            // 2. RULES (SHARED & SPECIFIC)
             if (lessonState.mode !== 'relief') txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')') + '.\n';
             if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson. CRITICAL INSTRUCTION: If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             
@@ -1875,9 +1880,12 @@
             }
             if (ct) txt += 'Instructions: "' + ct + '".\n';
             
+            // 3. TONE & CLOSING RULES
             if (lessonState.mode === 'notebooklm') {
                  txt += 'Depth Over Breadth: Ensure Document B (The Source Text) is dense, rigorous, and highly factual (aim for 1000+ words). NotebookLM thrives on depth.\n';
-                 txt += 'Token Limit Management: If generating all documents dilutes quality or hits your output limit, generate Documents A and B first, then pause and ask: "Would you like me to generate Document C (The Slide Plan) now?"\n';
+                 txt += 'Token Limit Management: If generating all documents dilutes quality or hits your output limit, generate Documents A and B first, then pause and ask: "Would you like me to generate Document C (NotebookLM Slide Generation Prompt) now?"\n\n';
+                 txt += '### Tone and Style\nProfessional, direct teacher tone. No AI filler.\n\n';
+                 txt += '### Output Format\n';
             } else if (seq === 1) {
                 var extraOuts = [];
                 if(outs.includes('slides')) extraOuts.push('Slideshow');
@@ -1888,10 +1896,12 @@
                 var extraOutsStr = extraOuts.length > 0 ? extraOuts.join(', ') : 'remaining outputs';
                 
                 txt += 'Token Limit Management: If generating all requested parts will dilute the quality or hit your output limit, generate Part A first, then pause and ask the user: "Would you like me to generate the ' + extraOutsStr + ' now?"\n';
+                txt += '</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
+            } else {
+                 txt += '</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
             }
             
-            txt += '</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
-            
+            // 4. OUTPUT STRUCTURE
             if (lessonState.mode === 'relief') {
                 if (lessonState.reliefType === 'full-worksheet') {
                     txt += 'PART 1: Relief Overview (For Chat)\nPART 2: Full Worksheet in plain text/Markdown (for easy copy-pasting into Google Docs)\nPART 3: HTML Worksheet content in a single beautifully CSS styled block (' + tb + 'html\n...\n' + tb + ').\nUse WHS colors (#002066/#d1e6f6). Include pacing, 15-20 min reading, visual placeholders, vocab, and 40-min You Do task.\n';
@@ -1901,9 +1911,9 @@
                     txt += 'PART 1: Relief Teacher Instructions (For Chat)\nA brief, clear email-style summary for the relief teacher explaining the 60-minute lesson flow (e.g., 10 mins reading/vocab intro offline, 50 mins on ' + pName2 + ').\nPART 2: Student Handout (HTML)\nGenerate a short HTML student handout in a beautifully CSS styled block (' + tb + 'html\n...\n' + tb + '). Use WHS colors (#002066/#d1e6f6). This handout should have a brief engaging hook/introduction to the topic, 4-6 Key Vocabulary words, and clear instructions directing them to ' + pName2 + ' to complete their allocated work.\n';
                 }
             } else if (lessonState.mode === 'notebooklm') {
-                txt += 'DOCUMENT A: NotebookLM Prompt Template (To be pasted into the NotebookLM chat by the teacher to set its persona and instructions).\n';
-                txt += 'DOCUMENT B: The Source Text (The dense, factual textbook-level content, strict Markdown headings, definitions, contexts. NO meta-commentary, NO pedagogical notes, NO lesson plans. Just pure subject facts).\n';
-                txt += 'DOCUMENT C: Teacher\'s Slide Plan (The lesson structure and slide instructions, kept entirely separate from Document B so NotebookLM does not ingest it as subject material).\n';
+                txt += 'DOCUMENT A: NotebookLM Prompt Template. Write a prompt to be pasted into the NotebookLM chat box to set its persona and instructions. Remind it to use New Zealand English.\n';
+                txt += 'DOCUMENT B: The Source Text. The dense, factual textbook-level content, strict Markdown headings, definitions, contexts. NO meta-commentary, NO pedagogical notes, NO lesson plans. Just pure subject facts.\n';
+                txt += 'DOCUMENT C: NotebookLM Slide Generation Prompt. Do NOT write a slide deck yourself. Instead, write a specific prompt that I will paste into NotebookLM asking it to generate a slide deck based on Document B. Explicitly command NotebookLM in this prompt to "use the WHS Slideshow template if available".\n';
             } else {
                 
                 var partALabel = seq > 1 ? 'PART A: The Lesson Sequence Outline' : 'PART A: The Lesson Plan';
@@ -1975,7 +1985,7 @@
                 if (outs.includes('quiz')) txt += 'PART E: Quiz formats: ' + (lessonState.quizFormats ? lessonState.quizFormats.join(', ') : 'Google Forms') + '.\n';
                 if (outs.includes('lms')) txt += 'PART F: LMS Student Post (Google Classroom/Canvas). Write a short, engaging announcement for the students summarizing the lesson, highlighting key takeaways, and outlining any specific independent tasks or homework.\n';
             }
-            txt += '</output_format>';
+            if (lessonState.mode !== 'notebooklm') txt += '</output_format>';
             if (b) b.innerText = txt;
         }
 
