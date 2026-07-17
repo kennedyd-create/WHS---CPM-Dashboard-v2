@@ -576,8 +576,8 @@
                 </div>
 
                 <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material / URL (Optional)</label>
-                    <input type="text" id="assess-source-material" placeholder="Paste an article URL, YouTube link, or raw text here..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material (Google Docs / Slides Allowed)</label>
+                    <input type="text" id="assess-source-material" placeholder="Paste Google Docs, Slides, or other URLs (separate multiple links with commas)..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
@@ -1259,6 +1259,7 @@
                     var ul = document.getElementById('les-unit-link'); if (ul) ul.value = lessonState.unitLink || "";
                     var un = document.getElementById('les-unit-number'); if (un) un.value = lessonState.unitNum || "";
                     var as = document.getElementById('assess-source-material'); if (as) as.value = assessmentState.sourceMaterial || "";
+                    var usm = document.getElementById('unit-source-material'); if (usm) usm.value = unitState.sourceMaterial || "";
                     
                     checkSeniorStatus();
                     updateStageUI();
@@ -1704,6 +1705,8 @@
 
         function updateUnitBuilderPrompt() {
             var t = getGlobalTopic(), ct = (document.getElementById('unit-custom-task') || {}).value || "", cd = (document.getElementById('unit-custom-dur') || {}).value || "";
+            var sm = (document.getElementById('unit-source-material') || {}).value || "";
+            unitState.sourceMaterial = sm;
             var yr = unitState.year || "";
             var isJun = ["Year 7", "Year 8", "Year 9", "Year 10"].includes(yr), isLeg = yr.includes("Level"), cUrl = getCurriculumLink(unitState.dept, yr);
             var actDur = unitState.dur === 'Other' ? (cd || "Custom Duration") : unitState.dur;
@@ -1715,6 +1718,10 @@
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
             if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
+            if (sm) {
+                txt += 'Source Strictness: Base the unit STRICTLY on these source materials: "' + sm + '". ';
+                txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
+            }
             
             txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             
@@ -1794,7 +1801,7 @@
             txt += '<strict_rules>\nNo meta-commentary. ' + (lessonState.mode === 'notebooklm' ? 'Strictly use plain Markdown formatting. Do NOT use HTML tags. Use heavy markdown headers (#, ##, ###) to create a rigorous hierarchy.' : 'Use Markdown/HTML.') + '\n' + nzSpellingRule + '\n';
             
             if (lessonState.mode !== 'relief') txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')') + '.\n';
-            if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson.\n';
+            if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson. CRITICAL INSTRUCTION: If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             
             if (lessonState.framework === 'cpm' && seq === 1) {
                 if (stg.length < 5 && lessonState.mode === 'standard') txt += 'Timing: Cover only CPM stages ' + stg.join(',') + '. Adjust durations to fill the period.\n';
@@ -1817,7 +1824,7 @@
             if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL RULE: Numeracy skills must be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
             
             if (sm) {
-                txt += 'Source Strictness: Base content entirely on: "' + sm + '". Do not hallucinate.\n';
+                txt += 'Source Strictness: Base content entirely on these source materials: "' + sm + '". Do not hallucinate. CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the lesson.\n';
             } else if (lessonState.mode === 'notebooklm') {
                 txt += 'Curriculum Knowledge: Rely on your deep internal knowledge of the New Zealand Curriculum, but do NOT hallucinate dead URLs.\n';
             }
@@ -1965,7 +1972,10 @@
 
             txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\n' + nzSpellingRule + '\n';
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
-            if (sm) txt += 'Base strictly on source: ' + sm + '\n';
+            if (sm) {
+                txt += 'Base the assessment STRICTLY on these source materials: "' + sm + '". ';
+                txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
+            }
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
             if (isJun && hasRes) txt += 'Provide exact search queries for real-world resources, do not hallucinate URLs.\n';
             if (isJun && jk) txt += 'Test this knowledge: ' + jk + '.\n';
@@ -2169,7 +2179,7 @@
 
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
-                else if (['unit-custom-task', 'unit-custom-dur'].includes(e.target.id)) updateUnitBuilderPrompt();
+                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume'].includes(e.target.id)) updateAssessmentBuilderPrompt();
             });
