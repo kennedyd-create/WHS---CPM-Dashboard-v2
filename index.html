@@ -491,12 +491,23 @@
 
                         <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
                             <div class="flex justify-between items-center mb-2">
-                                <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching?</label>
+                                <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">Unit Plan Title</label>
                             </div>
                             <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
                         </div>
 
-                        <div class="pt-2">
+                        <!-- JUNIOR FOCUS (Hidden for seniors) -->
+                        <div id="unit-junior-focus-container" class="hidden pt-2">
+                            <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
+                                <span class="text-xs font-black text-blue-800 uppercase tracking-widest block mb-1">Junior Focus (Years 7-10)</span>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="unit-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
+                                    <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="unit-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-2">
                             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas</span>
                             <input type="text" id="unit-custom-task" placeholder="e.g. Include a debate in week 2..." class="w-full p-3 rounded-lg border border-slate-300 text-sm outline-none">
                         </div>
@@ -1037,6 +1048,14 @@
             if(isSen) assessmentState.nceaMode = true; 
         }
 
+        function checkUnitSeniorStatus() {
+            var yr = unitState.year || "";
+            var isSen = yr.includes("Level");
+            var isJun = !isSen;
+            var jCon = document.getElementById('unit-junior-focus-container');
+            if(jCon) isJun ? jCon.classList.remove('hidden') : jCon.classList.add('hidden');
+        }
+
         function getAiPicks(d, y, t, c, m, l, n) {
             var yr = y || "";
             var isSen = yr.includes("Level");
@@ -1276,7 +1295,11 @@
                     var as = document.getElementById('assess-source-material'); if (as) as.value = assessmentState.sourceMaterial || "";
                     var usm = document.getElementById('unit-source-material'); if (usm) usm.value = unitState.sourceMaterial || "";
                     
+                    var uk = document.getElementById('unit-junior-knowledge'); if (uk) uk.value = unitState.juniorKnowledge || "";
+                    var up = document.getElementById('unit-junior-practices'); if (up) up.value = unitState.juniorPractices || "";
+
                     checkSeniorStatus();
+                    checkUnitSeniorStatus();
                     updateStageUI();
                 } catch (e) {}
             } else {
@@ -1443,12 +1466,12 @@
             var yr = currentInstructionalYear || "";
             var isL = yr.includes("Level");
             
-            var txt = '<system_role>Act as an expert pedagogical coach.</system_role>\n\n<context>\nTeaching a lesson on "' + t + '" to ' + yr + ' ' + currentDiscipline + '. CPM Stage ' + currentStage + '.\n</context>\n\n<task>\nUse the strategy: \'' + s + '\'. Generate script/materials to execute it effectively, adapted for ' + yr + ' level.\n</task>\n\n<strict_rules>\nGOLD STANDARD FORMATTING: Write actual content in full for immediate classroom use.\n' + (isL ? 'Align to CURRENT NCEA requirements.' : 'Use the new Knowledge & Practices framework.') + '\n' + nzSpellingRule + '\n';
+            var txt = '### System Role\nAct as an expert pedagogical coach.\n\n### Context\nTeaching a lesson on "' + t + '" to ' + yr + ' ' + currentDiscipline + '. CPM Stage ' + currentStage + '.\n\n### Task\nUse the strategy: \'' + s + '\'. Generate script/materials to execute it effectively, adapted for ' + yr + ' level.\n\n### Strict Rules\nGOLD STANDARD FORMATTING: Write actual content in full for immediate classroom use.\n' + (isL ? 'Align to CURRENT NCEA requirements.' : 'Use the new Knowledge & Practices framework.') + '\n' + nzSpellingRule + '\n';
             if (currentInstContext === 'waiheke') txt += 'Include local Waiheke Island contexts.\n';
             if (currentInstMaori === 'integrate') txt += 'Integrate Mātauranga Māori/pūrākau.\n';
             if (currentInstLit === 'integrate') txt += 'Focus on disciplinary literacy.\n';
             if (currentInstNum === 'integrate') txt += 'Focus on disciplinary numeracy.\n';
-            txt += 'BRANDING RULE: Set font to \'Manrope\'.\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.\n</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.\n</cognitive_scaffolding>\n\n<output_format>\n' + req + '\n</output_format>';
+            txt += 'BRANDING RULE: Set font to \'Manrope\'.\n\n### Tone and Style\nProfessional, direct teacher tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\n' + req;
             var box = document.getElementById('prompt-text-instructional');
             if (box) box.innerText = txt;
         }
@@ -1712,12 +1735,16 @@
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
             b.classList.add('active');
-            if (k === 'dept' || k === 'year') renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
+            if (k === 'dept' || k === 'year') {
+                renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
+                checkUnitSeniorStatus();
+            }
             if (k === 'dur') {
                 var cd = document.getElementById('unit-custom-dur-container');
                 if (cd) v === 'Other' ? cd.classList.remove('hidden') : cd.classList.add('hidden');
             }
             updateUnitBuilderPrompt();
+            saveAppState();
         }
 
         function updateAllPrompts() {
@@ -1732,23 +1759,31 @@
             var t = getGlobalTopic(), ct = (document.getElementById('unit-custom-task') || {}).value || "", cd = (document.getElementById('unit-custom-dur') || {}).value || "";
             var sm = (document.getElementById('unit-source-material') || {}).value || "";
             unitState.sourceMaterial = sm;
+            
+            var uk = (document.getElementById('unit-junior-knowledge') || {}).value || "";
+            var up = (document.getElementById('unit-junior-practices') || {}).value || "";
+            unitState.juniorKnowledge = uk;
+            unitState.juniorPractices = up;
+
             var yr = unitState.year || "";
             var isJun = ["Year 7", "Year 8", "Year 9", "Year 10"].includes(yr), isLeg = yr.includes("Level"), cUrl = getCurriculumLink(unitState.dept, yr);
             var actDur = unitState.dur === 'Other' ? (cd || "Custom Duration") : unitState.dur;
             
-            var txt = '<system_role>Act as an expert curriculum designer.</system_role>\n\n<context>\nPlanning a ' + actDur + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n</context>\n\n<task>\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n</task>\n\n<strict_rules>\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
+            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + actDur + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
             
             if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
             if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
+            if (isJun && uk) txt += 'CRITICAL: Explicitly cover this specific Knowledge throughout the unit sequence: ' + uk + '.\n';
+            if (isJun && up) txt += 'CRITICAL: Explicitly cover these specific Practices throughout the unit sequence: ' + up + '.\n';
             if (sm) {
                 txt += 'Source Strictness: Base the unit STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
             }
             
-            txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
+            txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             
             txt += '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
             txt += '## Overview\n| Field | Details |\n|---|---|\n| **Year Level** | ' + yr + ' |\n| **Term** | [Suggest Term] |\n| **Duration** | ' + actDur + ' |\n| **Topic/Strand/Concept** | ' + t + ' |\n';
@@ -1763,17 +1798,16 @@
             
             txt += '## Lesson Content - Unit Sequence\n';
             if (isJun || !isLeg) {
-                txt += '| Learning number/s | Knowledge | Practice | Student Learning Activities (CPM) | Preparation/ Resources |\n|---|---|---|---|---|\n';
-                txt += '| [Lesson 1] | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
-                txt += '| [Continue rows for all ' + actDur + '] | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Preparation/ Resources |\n|---|---|---|---|---|\n';
+                txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
+                txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
             } else {
-                txt += '| Learning number/s | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources |\n|---|---|---|---|\n';
-                txt += '| [Lesson 1] | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
-                txt += '| [Continue rows for all ' + actDur + '] | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt += '| Lesson & Learning Intention | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources |\n|---|---|---|---|\n';
+                txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
+                txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
             }
             
             txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
-            txt += '</output_format>';
             
             var b = document.getElementById('prompt-unit-text');
             if (b) b.innerText = txt;
@@ -1813,14 +1847,14 @@
                 txt += 'Output using ONLY plain text and standard Markdown headers (#, ##, ###) to create a rigorous hierarchy. DO NOT use HTML tags.\n';
                 txt += 'You MUST use New Zealand English spelling (e.g. \'analyse\', \'colour\', \'programme\') throughout YOUR output, AND you must explicitly command NotebookLM in Documents A and C to use New Zealand English spelling in its final outputs.\n';
             } else {
-                txt += '<system_role>Act as an expert pedagogical coach and curriculum designer.</system_role>\n\n<context>\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n</context>\n\n';
+                txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n\n';
                 if (lessonState.mode === 'relief') {
                     if (lessonState.reliefType === 'full-worksheet') {
-                        txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained Student Worksheet.\n</task>\n\n';
+                        txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained Student Worksheet.\n\n';
                     } else {
                         var platformMap = { 'ep': 'Education Perfect (EP)', 'wt': "Writer's Toolbox", 'gc': 'Google Classroom', 'other': 'Online Platform' };
                         var platformName = platformMap[lessonState.reliefType] || 'Online Platform';
-                        txt += '<task>\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + platformName + '.\n</task>\n\n';
+                        txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + platformName + '.\n\n';
                     }
                 } else {
                     var fwTaskStr = "Design a comprehensive lesson based on the 5 stages of the Common Practice Model (CPM) with full, ready-to-use detail.";
@@ -1832,9 +1866,9 @@
                         if (lessonState.altFramework === 'ubd') fwTaskStr = "Design a comprehensive lesson using the principles of Backward Design (UbD). Start by explicitly defining the Acceptable Evidence, then map the learning experiences backward from that goal.";
                         if (lessonState.altFramework === 'pbl') fwTaskStr = "Design a comprehensive project kick-off lesson structured around Project-Based Learning (PBL) elements, specifically focusing on introducing a Driving Question and planning Sustained Inquiry.";
                     }
-                    txt += '<task>\n' + fwTaskStr + '\n</task>\n\n';
+                    txt += '### Task\n' + fwTaskStr + '\n\n';
                 }
-                txt += '<strict_rules>\nNo meta-commentary. Use Markdown/HTML.\n' + nzSpellingRule + '\n';
+                txt += '### Strict Rules\nNo meta-commentary. Use Markdown/HTML.\n' + nzSpellingRule + '\n';
             }
             
             // 2. RULES (SHARED & SPECIFIC)
@@ -1896,9 +1930,9 @@
                 var extraOutsStr = extraOuts.length > 0 ? extraOuts.join(', ') : 'remaining outputs';
                 
                 txt += 'Token Limit Management: If generating all requested parts will dilute the quality or hit your output limit, generate Part A first, then pause and ask the user: "Would you like me to generate the ' + extraOutsStr + ' now?"\n';
-                txt += '</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
+                txt += '\n### Tone and Style\nProfessional, direct teacher tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\n';
             } else {
-                 txt += '</strict_rules>\n\n<tone_and_style>\nProfessional, direct teacher tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema. Define Tier 3 vocab simply.</cognitive_scaffolding>\n\n<output_format>\n';
+                 txt += '\n### Tone and Style\nProfessional, direct teacher tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\n';
             }
             
             // 4. OUTPUT STRUCTURE
@@ -1985,7 +2019,8 @@
                 if (outs.includes('quiz')) txt += 'PART E: Quiz formats: ' + (lessonState.quizFormats ? lessonState.quizFormats.join(', ') : 'Google Forms') + '.\n';
                 if (outs.includes('lms')) txt += 'PART F: LMS Student Post (Google Classroom/Canvas). Write a short, engaging announcement for the students summarizing the lesson, highlighting key takeaways, and outlining any specific independent tasks or homework.\n';
             }
-            if (lessonState.mode !== 'notebooklm') txt += '</output_format>';
+            
+            var b = document.getElementById('prompt-lesson-text');
             if (b) b.innerText = txt;
         }
 
@@ -2000,7 +2035,7 @@
             if (af.length === 0 && !af.includes('Surprise Me')) af = ['Short Answer'];
             var fStr = af.join(', '), hasRes = af.includes('Resource Based'), hasSurp = af.includes('Surprise Me');
             
-            var txt = '<system_role>Act as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.</system_role>\n\n<context>\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n</context>\n\n<task>\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n</task>\n\n<strict_rules>\nNo meta-commentary. Use Markdown.\nCRITICAL: Write Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
+            var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n\n### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nCRITICAL: Write Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
             
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
             txt += 'Scale matches duration: ' + durText + '. ';
@@ -2022,7 +2057,7 @@
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
             if (isJun && hasRes) txt += 'Provide exact search queries for real-world resources, do not hallucinate URLs.\n';
             if (isJun && jk) txt += 'Test this knowledge: ' + jk + '.\n';
-            if (isJun && jp) txt += 'Test these practices: ' + jp + '.\n</strict_rules>\n\n<tone_and_style>\nProfessional, direct, academic tone. No AI filler.</tone_and_style>\n\n<cognitive_scaffolding>\nAssume blank schema for task instructions. Define complex task words.</cognitive_scaffolding>\n\n<output_format>\n';
+            if (isJun && jp) txt += 'Test these practices: ' + jp + '.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema for task instructions. Define complex task words.\n\n### Output Format\n';
             
             if (isJun) {
                 if (hasSurp) txt += 'PART 1: TWO out-of-the-box assessment options.\n'; else txt += 'PART 1: Assessment Task (' + fStr + ').\n';
@@ -2036,7 +2071,6 @@
             if (outs.includes('Student Exemplars')) txt += 'PART 3: Student Exemplars (Top grade and Mid grade).\n';
             if (outs.includes('Marking Schedule')) txt += 'PART 4: Strict Teacher Marking Schedule.\n';
             if (outs.includes('Peer Check-bric')) txt += 'PART 5: Student-friendly Peer Check-bric.\n';
-            txt += '</output_format>';
             
             var box = document.getElementById('prompt-assessment-text');
             if (box) box.innerText = txt;
@@ -2222,7 +2256,7 @@
 
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
-                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material'].includes(e.target.id)) updateUnitBuilderPrompt();
+                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
