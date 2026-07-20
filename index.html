@@ -28,6 +28,7 @@
         
         /* Shaded red core options */
         .builder-btn.shaded:not(.active) { background-color: #fff1f2; border-color: #fecdd3; color: #9f1239; }
+        .builder-btn.moe-shaded:not(.active) { background-color: #faf5ff; border-color: #e9d5ff; color: #7e22ce; }
         
         .builder-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
         .builder-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
@@ -387,6 +388,7 @@
                                 <div class="flex flex-wrap gap-2" id="les-output-opts">
                                     <button class="builder-btn shaded active" data-action="lesson-output" data-val="plan">Full Lesson Plan</button>
                                     <button class="builder-btn shaded" data-action="lesson-output" data-val="plan-short">Short Lesson Plan</button>
+                                    <button class="builder-btn moe-shaded tooltip-wrapper" data-tooltip="Format using the Ministry of Education exemplar template" data-action="lesson-output" data-val="moe-plan">MoE Lesson Plan</button>
                                     <button class="builder-btn" data-action="lesson-output" data-val="slides">+ Slides</button>
                                     <button class="builder-btn" data-action="lesson-output" data-val="worksheet">+ Worksheet</button>
                                     <button class="builder-btn" data-action="lesson-output" data-val="content">+ Content Doc</button>
@@ -495,7 +497,7 @@
                             </div>
                             <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
                         </div>
-
+                        
                         <!-- JUNIOR FOCUS (Hidden for seniors) -->
                         <div id="unit-junior-focus-container" class="hidden pt-2">
                             <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
@@ -507,7 +509,7 @@
                             </div>
                         </div>
 
-                        <div class="pt-4 border-t border-slate-200 mt-2">
+                        <div class="pt-2">
                             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas</span>
                             <input type="text" id="unit-custom-task" placeholder="e.g. Include a debate in week 2..." class="w-full p-3 rounded-lg border border-slate-300 text-sm outline-none">
                         </div>
@@ -526,14 +528,17 @@
                                 <input type="text" id="unit-custom-dur" placeholder="Specify duration (e.g. 5 weeks)..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="unit-state" data-key="context" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="context" data-val="waiheke">Waiheke</button></div></div>
-                            <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="unit-state" data-key="maori" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="maori" data-val="integrate">Integrate</button></div></div>
-                            <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="unit-state" data-key="lit" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="lit" data-val="integrate">Integrate</button></div></div>
-                            <div><span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="unit-state" data-key="num" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="num" data-val="integrate">Integrate</button></div></div>
+                        
+                        <div class="pt-4 border-t border-slate-200 mt-2">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Lesson Plan Format</span>
+                            <div class="flex flex-wrap gap-2" id="unit-plan-type-opts">
+                                <button class="builder-btn shaded active" data-action="unit-state" data-key="planType" data-val="full">Full CPM Sequence</button>
+                                <button class="builder-btn shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
+                                <button class="builder-btn moe-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed MoE tables for every lesson" data-action="unit-state" data-key="planType" data-val="moe">MoE Lesson Plans</button>
+                            </div>
                         </div>
                     </div>
-                    
+
                     <div class="bg-amber-50 rounded-2xl border border-amber-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
                         <div class="sticky top-0 z-10 bg-amber-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-amber-100 flex justify-between items-center">
                             <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
@@ -967,7 +972,7 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', context:'none', maori:'none', lit:'none', num:'none' };
+        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -1189,6 +1194,8 @@
                     setActiveBtn('unit-state', unitState.dept, 'dept');
                     setActiveBtn('unit-state', unitState.year, 'year');
                     setActiveBtn('unit-state', unitState.dur, 'dur');
+                    if (!unitState.planType) unitState.planType = 'full';
+                    setActiveBtn('unit-state', unitState.planType, 'planType');
                     setActiveBtn('unit-state', unitState.context, 'context');
                     setActiveBtn('unit-state', unitState.maori, 'maori');
                     setActiveBtn('unit-state', unitState.lit, 'lit');
@@ -1384,7 +1391,6 @@
             updateLessonBuilderPrompt();
             saveAppState();
         }
-
 
         function forceAiPicks() {
             var t = getGlobalTopic();
@@ -1688,28 +1694,32 @@
 
         function toggleLessonOutput(t) {
             if (!lessonState.outputs) lessonState.outputs = ['plan'];
-            var allO = ['plan', 'slides', 'worksheet', 'content', 'quiz', 'media', 'images', 'lms'];
+            var allAddons = ['slides', 'worksheet', 'content', 'quiz', 'media', 'images', 'lms'];
+            var planTypes = ['plan', 'plan-short', 'moe-plan'];
+
             if (t === 'all') {
-                lessonState.outputs = (lessonState.outputs.length >= 8) ? [] : allO.slice();
-                if (lessonState.sequence !== '1') {
-                    var planIdx = lessonState.outputs.indexOf('plan');
-                    if (planIdx > -1) lessonState.outputs[planIdx] = 'plan-short';
+                var hasAllAddons = allAddons.every(function(addon) { return lessonState.outputs.includes(addon); });
+                var currentPlan = planTypes.find(function(p) { return lessonState.outputs.includes(p); }) || 'plan';
+                
+                if (hasAllAddons) {
+                    lessonState.outputs = [currentPlan]; // Turn off addons
+                } else {
+                    lessonState.outputs = [currentPlan].concat(allAddons); // Turn on addons
                 }
+            } else if (planTypes.includes(t)) {
+                // Swap the main plan type without affecting addons
+                lessonState.outputs = lessonState.outputs.filter(function(o) { return !planTypes.includes(o); });
+                lessonState.outputs.push(t);
             } else {
+                // Toggle individual addon
                 var i = lessonState.outputs.indexOf(t);
                 if (i > -1) {
                     lessonState.outputs.splice(i, 1);
                 } else {
                     lessonState.outputs.push(t);
-                    if (t === 'plan') {
-                        var idx = lessonState.outputs.indexOf('plan-short');
-                        if (idx > -1) lessonState.outputs.splice(idx, 1);
-                    } else if (t === 'plan-short') {
-                        var idx = lessonState.outputs.indexOf('plan');
-                        if (idx > -1) lessonState.outputs.splice(idx, 1);
-                    }
                 }
             }
+            
             document.querySelectorAll('[data-action="lesson-output"]').forEach(function(b) { b.classList.remove('active'); });
             var wc = document.getElementById('les-worksheet-format-container');
             var qc = document.getElementById('les-quiz-format-container');
@@ -1722,10 +1732,13 @@
                 if (o === 'worksheet' && wc) wc.classList.remove('hidden');
                 if (o === 'quiz' && qc) qc.classList.remove('hidden');
             });
-            if (lessonState.outputs.length >= 8) {
-                var aB = document.querySelector('[data-action="lesson-output"][data-val="all"]');
-                if (aB) aB.classList.add('active');
+            
+            var aB = document.querySelector('[data-action="lesson-output"][data-val="all"]');
+            var hasAllAddons = allAddons.every(function(addon) { return lessonState.outputs.includes(addon); });
+            if (hasAllAddons && aB) {
+                aB.classList.add('active');
             }
+            
             updateLessonBuilderPrompt();
             saveAppState();
         }
@@ -1783,9 +1796,11 @@
                 txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
             }
             
+            txt += 'CRITICAL RULE: For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
             txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             
             txt += '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
+            
             txt += '## Overview\n| Field | Details |\n|---|---|\n| **Year Level** | ' + yr + ' |\n| **Term** | [Suggest Term] |\n| **Duration** | ' + actDur + ' |\n| **Topic/Strand/Concept** | ' + t + ' |\n';
             if (isLeg) { txt += '| **Achievement Standard** | [Fill applicable standard] |\n| **The Standard Criteria** | [Fill] |\n'; }
             txt += '| **Overview** | [Fill brief description] |\n| **Purpose** | [Fill what is the point?] |\n\n';
@@ -1795,16 +1810,61 @@
             txt += '## Knowledge and Practices\n| Knowledge (rich contexts for exploring big ideas) | Practices (practices that bring rigour to learning) |\n|---|---|\n| [Fill] | [Fill] |\n| **Connections to prior learning** | **Connections to future learning** |\n| [Fill] | [Fill] |\n\n';
             txt += '## Curriculum Integration\n| Literacy will be incorporated by: | Numeracy will be incorporated by: |\n|---|---|\n| [Fill] | [Fill] |\n| **Mātauranga Māori will be incorporated by:** | **Localised Curriculum (Waiheke) will be incorporated by:** |\n| [Fill] | [Fill] |\n\n';
             txt += '## Assessment\n| How will I determine prior knowledge? (before) | How will I determine student progress? (after) |\n|---|---|\n| [Fill] | [Fill] |\n\n';
-            
-            txt += '## Lesson Content - Unit Sequence\n';
-            if (isJun || !isLeg) {
-                txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Preparation/ Resources |\n|---|---|---|---|---|\n';
-                txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
-                txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
+
+            if (unitState.planType === 'moe') {
+                txt += '## Unit Table of Contents\n';
+                txt += 'Provide a numbered list of all lessons (' + actDur + ') in this unit with their titles.\n\n';
+                txt += '## Lesson Plans\n';
+                txt += 'For EACH of the lessons (' + actDur + '), generate a highly detailed lesson plan exactly following this MoE Exemplar format:\n\n';
+                txt += '### [Lesson Number]: [Lesson Title]\n\n';
+                txt += '**Learning objectives**\n';
+                txt += 'These are derived from the content specified in the knowledge and practices of the curriculum.\n';
+                txt += 'Students should know that:\n';
+                txt += '- [Fill objective 1]\n';
+                txt += '- [Fill objective 2]\n';
+                txt += 'And be able to:\n';
+                txt += '- [Fill skill 1]\n';
+                txt += '- [Fill skill 2]\n\n';
+                txt += '**Lesson overview**\n';
+                txt += '[Detailed paragraph explaining the foundation and importance of the topic.]\n\n';
+                txt += '**Lesson plan**\n';
+                txt += '| Part of lesson (CPM Stage) | Possible timings | Notes | Resources & Links |\n';
+                txt += '|---|---|---|---|\n';
+                txt += '| Stage 1: Connect | [Time] | [Prior knowledge review and hook task details] | [Suggested resources] |\n';
+                txt += '| Stage 2: I Do | [Time] | [Teacher explanation and modelling details, including example questions] | [Suggested resources & live URLs] |\n';
+                txt += '| Stage 3: We Do | [Time] | [Guided practice and check for understanding / formative assessment] | [Suggested resources & live URLs] |\n';
+                txt += '| Stage 4: You Do | [Time] | [Independent student practice task details] | [Suggested resources & live URLs] |\n';
+                txt += '| Stage 5: Review | [Time] | [Plenary/exit task strategy] | [Suggested resources] |\n\n';
+                txt += '**Core knowledge for retrieval and retrieval opportunities**\n';
+                txt += '| Non-negotiable knowledge |\n';
+                txt += '|---|\n';
+                txt += '| - [Fact 1]<br>- [Fact 2] |\n\n';
+                txt += '| Retrieval opportunities |\n';
+                txt += '|---|\n';
+                txt += '| - [Opportunity 1] |\n\n';
+                txt += '**Responsive teaching**\n';
+                txt += '| Common gaps teachers may encounter | How to respond in the lesson |\n';
+                txt += '|---|---|\n';
+                txt += '| - [Gap 1] | - [Response 1] |\n\n';
+                txt += '---\n\n';
             } else {
-                txt += '| Lesson & Learning Intention | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources |\n|---|---|---|---|\n';
-                txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n';
-                txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Fill] |\n\n';
+                txt += '## Lesson Content - Unit Sequence\n';
+                
+                if (unitState.planType === 'short') {
+                    txt += '| Lesson & Learning Intention | Significant learning covered | Condensed Outline | Resources & Links |\n|---|---|---|---|\n';
+                    txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n';
+                    txt += '| **[Continue rows for all ' + actDur + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n\n';
+                } else {
+                    if (isJun || !isLeg) {
+                        txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Resources & Links |\n|---|---|---|---|---|\n';
+                        txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
+                        txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
+                    } else {
+                        txt += '| Lesson & Learning Intention | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources & Links |\n|---|---|---|---|\n';
+                        txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
+                        txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
+                    }
+                }
             }
             
             txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
@@ -1914,6 +1974,8 @@
             }
             if (ct) txt += 'Instructions: "' + ct + '".\n';
             
+            txt += 'CRITICAL RULE: For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
+            
             // 3. TONE & CLOSING RULES
             if (lessonState.mode === 'notebooklm') {
                  txt += 'Depth Over Breadth: Ensure Document B (The Source Text) is dense, rigorous, and highly factual (aim for 1000+ words). NotebookLM thrives on depth.\n';
@@ -2010,6 +2072,38 @@
                         txt += '| **Core Phase 4** | [Time] | **Review** | [1 bullet point outline] | [Live URLs] |\n\n';
                     }
                 }
+
+                if (outs.includes('moe-plan')) {
+                    txt += 'PART A: MoE Lesson Plan\n';
+                    txt += 'Generate the lesson plan exactly following this MoE Exemplar format:\n\n';
+                    txt += t + '\n';
+                    txt += lessonState.dept + ' ' + yr + ' Lesson Plan\n\n';
+                    txt += 'Learning objectives\n';
+                    txt += 'These are derived from the content specified in the knowledge and practices of the curriculum.\n';
+                    txt += 'Students should know that:\n';
+                    txt += '- [Fill objective 1]\n';
+                    txt += '- [Fill objective 2]\n';
+                    txt += 'And be able to:\n';
+                    txt += '- [Fill skill 1]\n';
+                    txt += '- [Fill skill 2]\n\n';
+                    txt += 'Lesson overview\n';
+                    txt += '[Detailed paragraph explaining the foundation and importance of the topic.]\n\n';
+                    txt += 'Lesson plan\n';
+                    txt += '| Part of lesson (CPM Stage) | Possible timings | Notes | Resources & Links |\n';
+                    txt += '|---|---|---|---|\n';
+                    txt += '| Stage 1: Connect | [Time] | [Prior knowledge review and hook task details] | [Suggested resources] |\n';
+                    txt += '| Stage 2: I Do | [Time] | [Teacher explanation and modelling details, including example questions] | [Suggested resources & live URLs] |\n';
+                    txt += '| Stage 3: We Do | [Time] | [Guided practice and check for understanding / formative assessment] | [Suggested resources & live URLs] |\n';
+                    txt += '| Stage 4: You Do | [Time] | [Independent student practice task details] | [Suggested resources & live URLs] |\n';
+                    txt += '| Stage 5: Review | [Time] | [Plenary/exit task strategy] | [Suggested resources] |\n\n';
+                    txt += '| Core knowledge for retrieval and retrieval opportunities |\n';
+                    txt += '|---|\n';
+                    txt += '| Non-negotiable knowledge:\n- [Fact 1]\n- [Fact 2]\nRetrieval opportunities:\n- [Opportunity 1] |\n\n';
+                    txt += '| Responsive teaching |\n';
+                    txt += '|---|\n';
+                    txt += '| Common gaps teachers may encounter:\n- [Gap 1]\nHow to respond in the lesson:\n- [Response 1] |\n\n';
+                }
+
                 if (outs.includes('slides')) txt += 'PART B: Slideshow Content & Speaker Notes (8+ slides). Format clearly as text. If the user is using Google Gemini, remind them they can type @GoogleSlides to auto-generate this.\n';
                 if (outs.includes('worksheet')) {
                     var wF = lessonState.worksheetFormat || 'Standard Task';
@@ -2271,11 +2365,15 @@
                     
                     if (isMulti) {
                         var planIdx = lessonState.outputs.indexOf('plan');
+                        var moeIdx = lessonState.outputs.indexOf('moe-plan');
                         if (planIdx > -1) lessonState.outputs.splice(planIdx, 1);
+                        if (moeIdx > -1) lessonState.outputs.splice(moeIdx, 1);
                         if (!lessonState.outputs.includes('plan-short')) lessonState.outputs.push('plan-short');
                     } else {
                         var shortIdx = lessonState.outputs.indexOf('plan-short');
+                        var moeIdx = lessonState.outputs.indexOf('moe-plan');
                         if (shortIdx > -1) lessonState.outputs.splice(shortIdx, 1);
+                        if (moeIdx > -1) lessonState.outputs.splice(moeIdx, 1);
                         if (!lessonState.outputs.includes('plan')) lessonState.outputs.push('plan');
                     }
                     
