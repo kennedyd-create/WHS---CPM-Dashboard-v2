@@ -534,7 +534,47 @@
                             <div class="flex flex-wrap gap-2" id="unit-plan-type-opts">
                                 <button class="builder-btn shaded active" data-action="unit-state" data-key="planType" data-val="full">Full CPM Sequence</button>
                                 <button class="builder-btn shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
+                                <button class="builder-btn shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed lesson overviews without full CPM tables" data-action="unit-state" data-key="planType" data-val="outlines">Lesson Outlines Only</button>
                                 <button class="builder-btn moe-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed MoE tables for every lesson" data-action="unit-state" data-key="planType" data-val="moe">MoE Lesson Plans</button>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-4">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Assessment Options</span>
+                            <p class="text-[10px] text-slate-500 mb-2 font-medium">Do you want time built in for an assessment in this unit?</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <button class="builder-btn active" data-action="unit-state" data-key="assessmentIncluded" data-val="no">No</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="assessmentIncluded" data-val="yes">Yes</button>
+                            </div>
+
+                            <div id="unit-assessment-sub-options" class="hidden bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                                <div class="text-[10px] font-bold text-amber-800 bg-amber-50 p-2 rounded border border-amber-200 inline-flex items-center gap-1.5 shadow-sm">
+                                    💡 The assessment time will be ADDED to your core duration. This prompt will NOT create the assessment content itself, only reserve the time in the sequence.
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Assessment Type</span>
+                                        <div class="flex flex-wrap gap-2">
+                                            <button class="builder-btn active" data-action="unit-state" data-key="assessmentType" data-val="Test">Test</button>
+                                            <button class="builder-btn" data-action="unit-state" data-key="assessmentType" data-val="Assignment">Assignment</button>
+                                            <button class="builder-btn" data-action="unit-state" data-key="assessmentType" data-val="Other">Other</button>
+                                        </div>
+                                        <div id="unit-custom-assess-type-container" class="hidden pt-2">
+                                            <input type="text" id="unit-custom-assess-type" placeholder="Specify type..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Time Required</span>
+                                        <div class="flex flex-wrap gap-2">
+                                            <button class="builder-btn active" data-action="unit-state" data-key="assessmentTime" data-val="1 Lesson">1 Lesson</button>
+                                            <button class="builder-btn" data-action="unit-state" data-key="assessmentTime" data-val="2 Lessons">2 Lessons</button>
+                                            <button class="builder-btn" data-action="unit-state" data-key="assessmentTime" data-val="More">More</button>
+                                        </div>
+                                        <div id="unit-custom-assess-time-container" class="hidden pt-2">
+                                            <input type="text" id="unit-custom-assess-time" placeholder="Specify time..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -972,7 +1012,7 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'' };
+        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -1201,6 +1241,26 @@
                     setActiveBtn('unit-state', unitState.lit, 'lit');
                     setActiveBtn('unit-state', unitState.num, 'num');
                     
+                    if (!unitState.assessmentIncluded) unitState.assessmentIncluded = 'no';
+                    if (!unitState.assessmentType) unitState.assessmentType = 'Test';
+                    if (!unitState.assessmentTime) unitState.assessmentTime = '1 Lesson';
+                    setActiveBtn('unit-state', unitState.assessmentIncluded, 'assessmentIncluded');
+                    setActiveBtn('unit-state', unitState.assessmentType, 'assessmentType');
+                    setActiveBtn('unit-state', unitState.assessmentTime, 'assessmentTime');
+                    var uao = document.getElementById('unit-assessment-sub-options');
+                    if (uao) {
+                        unitState.assessmentIncluded === 'yes' ? uao.classList.remove('hidden') : uao.classList.add('hidden');
+                    }
+                    
+                    if (unitState.assessmentType === 'Other') {
+                        var cat = document.getElementById('unit-custom-assess-type-container');
+                        if (cat) cat.classList.remove('hidden');
+                    }
+                    if (unitState.assessmentTime === 'More') {
+                        var catime = document.getElementById('unit-custom-assess-time-container');
+                        if (catime) catime.classList.remove('hidden');
+                    }
+
                     setActiveBtn('lesson-state', lessonState.dept, 'dept');
                     setActiveBtn('lesson-state', lessonState.year, 'year');
                     setActiveBtn('lesson-state', lessonState.context, 'context');
@@ -1756,6 +1816,18 @@
                 var cd = document.getElementById('unit-custom-dur-container');
                 if (cd) v === 'Other' ? cd.classList.remove('hidden') : cd.classList.add('hidden');
             }
+            if (k === 'assessmentIncluded') {
+                var uao = document.getElementById('unit-assessment-sub-options');
+                if (uao) v === 'yes' ? uao.classList.remove('hidden') : uao.classList.add('hidden');
+            }
+            if (k === 'assessmentType') {
+                var cat = document.getElementById('unit-custom-assess-type-container');
+                if (cat) v === 'Other' ? cat.classList.remove('hidden') : cat.classList.add('hidden');
+            }
+            if (k === 'assessmentTime') {
+                var catime = document.getElementById('unit-custom-assess-time-container');
+                if (catime) v === 'More' ? catime.classList.remove('hidden') : catime.classList.add('hidden');
+            }
             updateUnitBuilderPrompt();
             saveAppState();
         }
@@ -1781,13 +1853,27 @@
             var yr = unitState.year || "";
             var isJun = ["Year 7", "Year 8", "Year 9", "Year 10"].includes(yr), isLeg = yr.includes("Level"), cUrl = getCurriculumLink(unitState.dept, yr);
             var actDur = unitState.dur === 'Other' ? (cd || "Custom Duration") : unitState.dur;
+            var actAssessType = unitState.assessmentType === 'Other' ? ((document.getElementById('unit-custom-assess-type') || {}).value || "Custom Assessment") : unitState.assessmentType;
+            var actAssessTime = unitState.assessmentTime === 'More' ? ((document.getElementById('unit-custom-assess-time') || {}).value || "Custom Time") : unitState.assessmentTime;
             
-            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + actDur + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
+            var totalDurText = actDur;
+            if (unitState.assessmentIncluded === 'yes') {
+                var numBase = parseInt(actDur);
+                var numAssess = parseInt(actAssessTime);
+                if (!isNaN(numBase) && !isNaN(numAssess) && actDur.toLowerCase().includes('lesson') && actAssessTime.toLowerCase().includes('lesson')) {
+                    totalDurText = (numBase + numAssess) + " lessons (" + numBase + " core + " + numAssess + " assessment)";
+                } else {
+                    totalDurText = actDur + " (core) + " + actAssessTime + " (assessment)";
+                }
+            }
+
+            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
             
             if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
+            if (unitState.assessmentIncluded === 'yes') txt += 'CRITICAL INSTRUCTION: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
             if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
             if (isJun && uk) txt += 'CRITICAL: Explicitly cover this specific Knowledge throughout the unit sequence: ' + uk + '.\n';
             if (isJun && up) txt += 'CRITICAL: Explicitly cover these specific Practices throughout the unit sequence: ' + up + '.\n';
@@ -1801,7 +1887,7 @@
             
             txt += '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
             
-            txt += '## Overview\n| Field | Details |\n|---|---|\n| **Year Level** | ' + yr + ' |\n| **Term** | [Suggest Term] |\n| **Duration** | ' + actDur + ' |\n| **Topic/Strand/Concept** | ' + t + ' |\n';
+            txt += '## Overview\n| Field | Details |\n|---|---|\n| **Year Level** | ' + yr + ' |\n| **Term** | [Suggest Term] |\n| **Duration** | ' + totalDurText + ' |\n| **Topic/Strand/Concept** | ' + t + ' |\n';
             if (isLeg) { txt += '| **Achievement Standard** | [Fill applicable standard] |\n| **The Standard Criteria** | [Fill] |\n'; }
             txt += '| **Overview** | [Fill brief description] |\n| **Purpose** | [Fill what is the point?] |\n\n';
             
@@ -1813,9 +1899,9 @@
 
             if (unitState.planType === 'moe') {
                 txt += '## Unit Table of Contents\n';
-                txt += 'Provide a numbered list of all lessons (' + actDur + ') in this unit with their titles.\n\n';
+                txt += 'Provide a numbered list of all lessons (' + totalDurText + ') in this unit with their titles.\n\n';
                 txt += '## Lesson Plans\n';
-                txt += 'For EACH of the lessons (' + actDur + '), generate a highly detailed lesson plan exactly following this MoE Exemplar format:\n\n';
+                txt += 'For EACH of the lessons (' + totalDurText + '), generate a highly detailed lesson plan exactly following this MoE Exemplar format:\n\n';
                 txt += '### [Lesson Number]: [Lesson Title]\n\n';
                 txt += '**Learning objectives**\n';
                 txt += 'These are derived from the content specified in the knowledge and practices of the curriculum.\n';
@@ -1853,16 +1939,24 @@
                 if (unitState.planType === 'short') {
                     txt += '| Lesson & Learning Intention | Significant learning covered | Condensed Outline | Resources & Links |\n|---|---|---|---|\n';
                     txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n';
-                    txt += '| **[Continue rows for all ' + actDur + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n\n';
+                    txt += '| **[Continue rows for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n\n';
+                } else if (unitState.planType === 'outlines') {
+                    txt += 'CRITICAL INSTRUCTION: Generate BRIEF OUTLINES only. Do NOT generate full 5-stage CPM lesson plans. Do NOT list specific tasks or activities. These outlines are short overviews that will be used by the teacher later to generate the specific daily lesson plans.\n\n';
+                    txt += '### Sequence Contents List\n';
+                    txt += 'First, provide a simple numbered list of all lessons (' + totalDurText + ') in this sequence with their titles (e.g., "Lesson 1 - [Lesson Title]").\n\n';
+                    txt += '### Lesson Outlines Table\n';
+                    txt += '| Lesson & Target | Core Concepts | Brief Lesson Outline | Preparation / Resources |\n|---|---|---|---|\n';
+                    txt += '| **Lesson 1**<br>*Focus: [Main Topic]* | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary of the lesson\'s overall narrative and focus. No specific tasks.] | [URLs / Needed Materials] |\n';
+                    txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. No specific tasks.] | [URLs / Needed Materials] |\n\n';
                 } else {
                     if (isJun || !isLeg) {
                         txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Resources & Links |\n|---|---|---|---|---|\n';
                         txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
-                        txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
+                        txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
                     } else {
                         txt += '| Lesson & Learning Intention | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources & Links |\n|---|---|---|---|\n';
                         txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
-                        txt += '| **[Continue for all ' + actDur + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
+                        txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
                     }
                 }
             }
@@ -2350,7 +2444,7 @@
 
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
-                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices'].includes(e.target.id)) updateUnitBuilderPrompt();
+                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
