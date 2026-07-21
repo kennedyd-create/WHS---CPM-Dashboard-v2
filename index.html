@@ -26,9 +26,15 @@
         .stage-btn.active { border-color: var(--whs-dark-blue); background: var(--whs-light-blue); }
         .builder-btn { padding: 0.5rem 0.75rem; font-size: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.25rem; background: white; transition: all 0.2s; font-weight: 600; color: #475569; }
         
-        /* Shaded red core options */
+        /* Shaded lesson-plan-format options, each with its own colour */
         .builder-btn.shaded:not(.active) { background-color: #fff1f2; border-color: #fecdd3; color: #9f1239; }
+        .builder-btn.shaded.active { background-color: #e11d48; border-color: #e11d48; }
+        .builder-btn.teal-shaded:not(.active) { background-color: #f0fdfa; border-color: #99f6e4; color: #0f766e; }
+        .builder-btn.teal-shaded.active { background-color: #0f766e; border-color: #0f766e; }
+        .builder-btn.amber-shaded:not(.active) { background-color: #fffbeb; border-color: #fde68a; color: #92400e; }
+        .builder-btn.amber-shaded.active { background-color: #b45309; border-color: #b45309; }
         .builder-btn.moe-shaded:not(.active) { background-color: #faf5ff; border-color: #e9d5ff; color: #7e22ce; }
+        .builder-btn.moe-shaded.active { background-color: #7e22ce; border-color: #7e22ce; }
         
         .builder-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
         .builder-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
@@ -44,6 +50,8 @@
         .tooltip-wrapper::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; opacity: 0; visibility: hidden; transition: all 0.2s ease-in-out; z-index: 50; pointer-events: none; }
         .tooltip-wrapper:hover::after, .tooltip-wrapper:hover::before { opacity: 1; visibility: visible; }
         .tooltip-wrapper:hover { z-index: 20; }
+        .tooltip-wrapper:focus-visible::after, .tooltip-wrapper:focus-visible::before { opacity: 1; visibility: visible; }
+        .tooltip-wrapper:focus-visible { z-index: 20; }
         
         .tooltip-bottom::after { bottom: auto; top: calc(100% + 8px); }
         .tooltip-bottom::before { bottom: auto; top: 100%; border-color: transparent transparent #1e293b transparent; }
@@ -77,12 +85,65 @@
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
 
+        /* Global toast (draft saved / export confirmations) */
+        #global-toast { position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 200; background: #0f172a; color: #f1f5f9; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.02em; padding: 0.65rem 1.1rem; border-radius: 0.6rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2), 0 4px 6px -4px rgba(0,0,0,0.2); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; display: flex; align-items: center; gap: 0.5rem; }
+        #global-toast.show { opacity: 1; transform: translateY(0); }
+
+        /* Dark mode (manual toggle) */
+        html.dark body { background-color: #0f172a; color: #e2e8f0; }
+        html.dark .whs-gradient-bg { background: #001233; }
+        html.dark nav.sticky { background-color: rgba(15,23,42,0.95) !important; border-color: #334155 !important; }
+        html.dark .nav-btn { color: #94a3b8; }
+        html.dark .nav-btn:hover { color: #93c5fd; }
+        html.dark .nav-active { color: #93c5fd !important; border-bottom-color: #93c5fd !important; }
+        html.dark .nav-btn:hover { color: #93c5fd; }
+        html.dark .stage-header { color: #7fb2f0 !important; }
+        html.dark .builder-btn:hover { border-color: #7fb2f0; color: #7fb2f0; }
+        html.dark .fw-btn:hover, html.dark .fw-btn.active { color: #7fb2f0; }
+        html.dark .fw-btn.active { background: rgba(127,178,240,0.15); border-color: #7fb2f0; }
+        html.dark .stage-btn.active { background: rgba(127,178,240,0.15); border-color: #7fb2f0; }
+        html.dark .glass-card,
+        html.dark .bg-white { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0; }
+        html.dark [class*="bg-blue-50"], html.dark [class*="bg-amber-50"], html.dark [class*="bg-purple-50"],
+        html.dark [class*="bg-emerald-50"], html.dark [class*="bg-red-50"], html.dark [class*="bg-slate-50"],
+        html.dark [class*="bg-green-50"], html.dark [class*="bg-[#ecfdf5]"], html.dark [class*="bg-slate-100"] { background-color: #1e293b !important; border-color: #334155 !important; }
+        html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700, html.dark .text-slate-600 { color: #e2e8f0 !important; }
+        html.dark .text-slate-500, html.dark .text-slate-400 { color: #94a3b8 !important; }
+        html.dark .border-slate-200, html.dark .border-slate-300, html.dark .border-blue-100, html.dark .border-amber-100,
+        html.dark .border-purple-100 { border-color: #334155 !important; }
+        html.dark input, html.dark textarea, html.dark select { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
+        html.dark input::placeholder { color: #64748b !important; }
+        html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .fw-btn, html.dark .stage-btn, html.dark .dept-btn { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .font-mono, html.dark [id^="prompt-"] { color: #e2e8f0 !important; }
+        html.dark #global-toast { background: #f1f5f9; color: #0f172a; }
+        html.dark #dark-mode-toggle .sun-icon { display: inline; }
+        html.dark #dark-mode-toggle .moon-icon { display: none; }
+        #dark-mode-toggle .sun-icon { display: none; }
+        #dark-mode-toggle .moon-icon { display: inline; }
+
+        /* Dark mode: lighten dark-shade text colours (headers, labels, links) that were unreadable on a dark background */
+        html.dark [class*="text-[#002066]"] { color: #7fb2f0 !important; }
+        html.dark [class*="text-blue-800"], html.dark [class*="text-blue-900"] { color: #93c5fd !important; }
+        html.dark [class*="text-amber-800"], html.dark [class*="text-amber-900"] { color: #fcd34d !important; }
+        html.dark [class*="text-purple-600"], html.dark [class*="text-purple-800"], html.dark [class*="text-purple-900"] { color: #d8b4fe !important; }
+        html.dark [class*="text-emerald-800"], html.dark [class*="text-emerald-900"] { color: #6ee7b7 !important; }
+        html.dark [class*="text-green-600"], html.dark [class*="text-green-800"] { color: #86efac !important; }
+        html.dark [class*="text-red-500"], html.dark [class*="text-red-600"], html.dark [class*="text-red-700"], html.dark [class*="text-red-800"] { color: #fca5a5 !important; }
+        html.dark [class*="text-[#047857]"] { color: #6ee7b7 !important; }
+        html.dark [class*="text-[#9f1239]"] { color: #fda4af !important; }
+        html.dark [class*="text-[#0f766e]"] { color: #5eead4 !important; }
+        html.dark [class*="text-[#92400e]"] { color: #fcd34d !important; }
+        html.dark [class*="text-[#7e22ce]"] { color: #d8b4fe !important; }
+
     </style>
 </head>
 <body class="p-4 md:p-8">
 
+    <div id="global-toast" role="status" aria-live="polite"></div>
+
     <div class="max-w-7xl mx-auto">
-        <header class="whs-gradient-bg rounded-lg p-8 md:p-12 text-white mb-10 shadow-md relative overflow-hidden flex justify-between items-center">
+        <header class="whs-gradient-bg rounded-lg p-5 md:p-8 text-white mb-8 shadow-md relative overflow-hidden flex justify-between items-center">
             <div class="relative z-10">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-6 mb-3">
                     <div class="relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-[#10b981]/20 to-white/10 backdrop-blur-md rounded-2xl shadow-lg border border-white/30 shrink-0 group overflow-hidden">
@@ -117,6 +178,10 @@
                 </div>
             </div>
             <svg class="absolute right-0 top-0 h-full w-64 text-white/5 transform translate-x-1/4 -translate-y-1/4 scale-150" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v4h-2zm0 6h2v2h-2zm-4-6h2v4H7zm0 6h2v2H7zm8-6h2v4h-2zm0 6h2v2h-2z" opacity="0.5"/><circle cx="12" cy="12" r="3" /><path d="M12 7l-3 4h6zM7 12l4 3v-6zM17 12l-4-3v6zM12 17l3-4H9z" opacity="0.8"/></svg>
+            <button id="dark-mode-toggle" class="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-20 w-9 h-9 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full transition shadow-sm tooltip-wrapper tooltip-bottom flex items-center justify-center backdrop-blur-sm" data-tooltip="Toggle dark mode" data-action="toggle-dark-mode" aria-pressed="false">
+                <svg class="moon-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <svg class="sun-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
         </header>
 
         <nav class="sticky top-0 z-50 bg-[#e2e8f0]/95 backdrop-blur-md flex flex-wrap items-center justify-center border-b-2 border-slate-300 mb-6 gap-1 md:gap-2 pb-2 pt-2 px-2 md:px-4 shadow-sm transition-all duration-300 overflow-visible">
@@ -135,6 +200,8 @@
                         <svg class="w-3 h-3 md:w-3.5 md:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                     </button>
                 </div>
+
+                <button class="w-full justify-center px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Download every generated prompt from this session as one text file" data-action="export-all">⬇ Export All Prompts</button>
             </div>
         </nav>
 
@@ -196,7 +263,8 @@
                         <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Type to activate AI Top Picks)</label>
                         <span class="save-indicator opacity-0 text-[10px] font-bold text-green-600 uppercase tracking-widest transition-opacity duration-300">Saved ✓</span>
                     </div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white mb-4">
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma, Evaluating Bias in Primary Sources..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 focus:border-[#002066] focus:ring-1 focus:ring-[#002066] outline-none transition font-medium text-slate-800 bg-white mb-2">
+                    <div class="recent-topics-row flex flex-wrap gap-1.5 items-center mb-4" aria-label="Recently used topics"></div>
                     
                     <div class="pt-3 border-t border-[#10b981]/30">
                         <span class="text-[10px] font-bold text-[#047857] uppercase tracking-widest block mb-2">Differentiation & Inclusion Focus</span>
@@ -495,7 +563,8 @@
                             <div class="flex justify-between items-center mb-2">
                                 <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">Unit Plan Title</label>
                             </div>
-                            <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
+                            <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none mb-2">
+                            <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
                         </div>
                         
                         <!-- JUNIOR FOCUS (Hidden for seniors) -->
@@ -533,11 +602,58 @@
                             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Lesson Plan Format</span>
                             <div class="flex flex-wrap gap-2" id="unit-plan-type-opts">
                                 <button class="builder-btn shaded active" data-action="unit-state" data-key="planType" data-val="full">Full CPM Sequence</button>
-                                <button class="builder-btn shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
-                                <button class="builder-btn shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed lesson overviews without full CPM tables" data-action="unit-state" data-key="planType" data-val="outlines">Lesson Outlines Only</button>
+                                <button class="builder-btn teal-shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
+                                <button class="builder-btn amber-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed lesson overviews without full CPM tables" data-action="unit-state" data-key="planType" data-val="outlines">Lesson Outlines Only</button>
                                 <button class="builder-btn moe-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed MoE tables for every lesson" data-action="unit-state" data-key="planType" data-val="moe">MoE Lesson Plans</button>
                             </div>
+                            <p class="text-[10px] text-slate-400 mt-2 flex items-center gap-2 flex-wrap">
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#e11d48"></span>Full detail</span>
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#0f766e"></span>Brief summaries</span>
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#b45309"></span>Outline only, no tasks</span>
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#7e22ce"></span>MoE exemplar format</span>
+                            </p>
                         </div>
+
+                        <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
+                            <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-[#002066] hover:bg-slate-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
+                                <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations (Optional)</span>
+                                <span class="transition-transform duration-300 group-open:rotate-180">
+                                    <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
+                                </span>
+                            </summary>
+                            <div class="p-5 pt-2 border-t border-slate-100">
+                                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div>
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
+                                        <div class="flex flex-col gap-2" id="unit-context-opts">
+                                            <button class="builder-btn active text-left" data-action="unit-state" data-key="context" data-val="none">Standard</button>
+                                            <button class="builder-btn text-left" data-action="unit-state" data-key="context" data-val="waiheke">Waiheke Context</button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span>
+                                        <div class="flex flex-col gap-2" id="unit-maori-opts">
+                                            <button class="builder-btn active text-left" data-action="unit-state" data-key="maori" data-val="none">Standard</button>
+                                            <button class="builder-btn text-left" data-action="unit-state" data-key="maori" data-val="integrate">Integrate</button>
+                                        </div>
+                                    </div>
+                                    <div id="unit-lit-container">
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span>
+                                        <div class="flex flex-col gap-2" id="unit-lit-opts">
+                                            <button class="builder-btn active text-left" data-action="unit-state" data-key="lit" data-val="none">Standard</button>
+                                            <button class="builder-btn text-left" data-action="unit-state" data-key="lit" data-val="integrate">Focus on Literacy</button>
+                                        </div>
+                                    </div>
+                                    <div id="unit-num-container">
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy Integration</span>
+                                        <div class="flex flex-col gap-2" id="unit-num-opts">
+                                            <button class="builder-btn active text-left" data-action="unit-state" data-key="num" data-val="none">Standard</button>
+                                            <button class="builder-btn text-left" data-action="unit-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </details>
 
                         <div class="pt-4 border-t border-slate-200 mt-4">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Assessment Options</span>
@@ -643,7 +759,8 @@
 
                 <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
                     <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you assessing?</label></div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none mb-2">
+                    <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
                 </div>
 
                 <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
@@ -779,7 +896,8 @@
             <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8">
                 <div class="flex-grow">
                     <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you teaching? (Please be specific)</label></div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 outline-none text-slate-800 bg-slate-50">
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 outline-none text-slate-800 bg-slate-50 mb-2">
+                    <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
                 </div>
             </div>
             
@@ -1150,6 +1268,99 @@
             return p;
         }
 
+        /* ---------- Global toast ---------- */
+        var toastTimeout;
+        function showGlobalToast(msg) {
+            var t = document.getElementById('global-toast');
+            if (!t) return;
+            t.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(function() { t.classList.remove('show'); }, 2200);
+        }
+
+        var draftSavedTimeout;
+        function notifyDraftSaved() {
+            clearTimeout(draftSavedTimeout);
+            draftSavedTimeout = setTimeout(function() { showGlobalToast('Draft saved ✓'); }, 600);
+        }
+
+        /* ---------- Dark mode ---------- */
+        function applyDarkMode(on) {
+            document.documentElement.classList.toggle('dark', !!on);
+            var btn = document.getElementById('dark-mode-toggle');
+            if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }
+        function toggleDarkMode() {
+            var on = !document.documentElement.classList.contains('dark');
+            applyDarkMode(on);
+            try { localStorage.setItem('whs_dark_mode', on ? '1' : '0'); } catch (e) {}
+        }
+
+        /* ---------- Recent topics ---------- */
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, function(c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+        function getRecentTopics() {
+            try { return JSON.parse(localStorage.getItem('whs_recent_topics') || '[]'); } catch (e) { return []; }
+        }
+        function addRecentTopic(t) {
+            if (!t || !t.trim()) return;
+            t = t.trim();
+            var list = getRecentTopics().filter(function(x) { return x.toLowerCase() !== t.toLowerCase(); });
+            list.unshift(t);
+            list = list.slice(0, 6);
+            try { localStorage.setItem('whs_recent_topics', JSON.stringify(list)); } catch (e) {}
+            renderRecentTopics();
+        }
+        function renderRecentTopics() {
+            var list = getRecentTopics();
+            document.querySelectorAll('.recent-topics-row').forEach(function(row) {
+                if (!list.length) { row.innerHTML = ''; return; }
+                var html = '<span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-1">Recent:</span>';
+                list.forEach(function(t) {
+                    html += '<button type="button" class="text-[11px] font-semibold px-2 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition" data-action="use-recent-topic" data-val="' + escapeHtml(t) + '">' + escapeHtml(t) + '</button>';
+                });
+                row.innerHTML = html;
+            });
+        }
+
+        /* ---------- Export all prompts ---------- */
+        function exportAllPrompts() {
+            var sections = [
+                { id: 'prompt-lesson-text', label: 'LESSON BUILDER PROMPT' },
+                { id: 'prompt-unit-text', label: 'UNIT PLANNER PROMPT' },
+                { id: 'prompt-assessment-text', label: 'ASSESSMENT GENERATOR PROMPT' },
+                { id: 'prompt-text-instructional', label: 'STRATEGY HUB PROMPT' }
+            ];
+            var placeholders = ['select options...', '...', ''];
+            var parts = [];
+            sections.forEach(function(s) {
+                var el = document.getElementById(s.id);
+                if (!el) return;
+                var text = (el.innerText || el.textContent || '').trim();
+                if (!text || placeholders.indexOf(text.toLowerCase()) > -1) return;
+                parts.push('===== ' + s.label + ' =====\n\n' + text);
+            });
+            if (!parts.length) {
+                showGlobalToast('Nothing to export yet — generate a prompt first');
+                return;
+            }
+            var combined = parts.join('\n\n\n');
+            var blob = new Blob([combined], { type: 'text/plain' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'WHS_All_Prompts.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showGlobalToast('Downloaded all generated prompts ✓');
+        }
+
         function saveAppState() {
             if (!isAppReady) return;
             try {
@@ -1166,6 +1377,7 @@
                     lessonState: lessonState,
                     assessmentState: assessmentState
                 }));
+                notifyDraftSaved();
             } catch (e) {}
         }
 
@@ -1386,11 +1598,12 @@
             if(sBtn) sBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-white text-slate-600 hover:bg-slate-100 border border-slate-200";
             if(rBtn) rBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-50 text-red-600 hover:bg-red-100 border border-red-100";
             if(nBtn) nBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100";
+            [sBtn, rBtn, nBtn].forEach(function(b) { if (b) b.setAttribute('aria-pressed', 'false'); });
             
             // Apply unique active states based on selection
-            if(mode === 'standard' && sBtn) sBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-[#002066] text-white shadow-md border border-transparent";
-            if(mode === 'relief' && rBtn) rBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-600 text-white shadow-md border border-transparent";
-            if(mode === 'notebooklm' && nBtn) nBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-600 text-white shadow-md border border-transparent";
+            if(mode === 'standard' && sBtn) { sBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-[#002066] text-white shadow-md border border-transparent"; sBtn.setAttribute('aria-pressed', 'true'); }
+            if(mode === 'relief' && rBtn) { rBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-600 text-white shadow-md border border-transparent"; rBtn.setAttribute('aria-pressed', 'true'); }
+            if(mode === 'notebooklm' && nBtn) { nBtn.className = "px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-600 text-white shadow-md border border-transparent"; nBtn.setAttribute('aria-pressed', 'true'); }
             
             // Toggle Layout Blocks
             var stdTools = document.getElementById('standard-builder-tools');
@@ -1418,17 +1631,21 @@
             
             if (val === 'cpm') {
                 cpmBtn.classList.add('active');
+                cpmBtn.setAttribute('aria-pressed', 'true');
                 altBtn.classList.remove('active');
+                altBtn.setAttribute('aria-pressed', 'false');
                 
                 cpmBuilder.classList.remove('hidden');
                 altDropdown.classList.add('hidden');
                 
                 lessonState.altFramework = 'none';
-                document.querySelectorAll('button[data-action="select-alt-framework"]').forEach(function(b){ b.classList.remove('active'); });
+                document.querySelectorAll('button[data-action="select-alt-framework"]').forEach(function(b){ b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
                 
             } else {
                 altBtn.classList.add('active');
+                altBtn.setAttribute('aria-pressed', 'true');
                 cpmBtn.classList.remove('active');
+                cpmBtn.setAttribute('aria-pressed', 'false');
                 
                 cpmBuilder.classList.add('hidden');
                 altDropdown.classList.remove('hidden');
@@ -1445,9 +1662,10 @@
             lessonState.altFramework = val;
             document.querySelectorAll('button[data-action="select-alt-framework"]').forEach(function(b) {
                 b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
             });
             var target = document.querySelector('button[data-action="select-alt-framework"][data-val="'+val+'"]');
-            if(target) target.classList.add('active');
+            if(target) { target.classList.add('active'); target.setAttribute('aria-pressed', 'true'); }
             updateLessonBuilderPrompt();
             saveAppState();
         }
@@ -1882,7 +2100,11 @@
                 txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
             }
             
-            txt += 'CRITICAL RULE: For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
+            if (unitState.planType === 'outlines') {
+                txt += 'CRITICAL RULE: The "Preparation / Resources" column should list only general materials/resources needed for the lesson as a whole (e.g. a URL, a text, equipment) — do NOT tie resources to specific stages, tasks, or activities, since none should be described.\n';
+            } else {
+                txt += 'CRITICAL RULE: For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
+            }
             txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             
             txt += '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
@@ -1941,13 +2163,14 @@
                     txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n';
                     txt += '| **[Continue rows for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n\n';
                 } else if (unitState.planType === 'outlines') {
-                    txt += 'CRITICAL INSTRUCTION: Generate BRIEF OUTLINES only. Do NOT generate full 5-stage CPM lesson plans. Do NOT list specific tasks or activities. These outlines are short overviews that will be used by the teacher later to generate the specific daily lesson plans.\n\n';
+                    txt += 'CRITICAL INSTRUCTION: Generate BRIEF OUTLINES only for each lesson — a short narrative summary of its overall focus and purpose. Absolutely DO NOT generate full 5-stage CPM lesson plans, and DO NOT describe, list, or imply any specific tasks, activities, questions, or step-by-step instructions for any part of the lesson (including Connect, I Do, We Do, You Do, or Review). These outlines exist purely so a teacher can later generate the detailed daily lesson plan separately — treat each outline as a one-paragraph "what this lesson is about", not a "what students will do".\n\n';
                     txt += '### Sequence Contents List\n';
                     txt += 'First, provide a simple numbered list of all lessons (' + totalDurText + ') in this sequence with their titles (e.g., "Lesson 1 - [Lesson Title]").\n\n';
                     txt += '### Lesson Outlines Table\n';
                     txt += '| Lesson & Target | Core Concepts | Brief Lesson Outline | Preparation / Resources |\n|---|---|---|---|\n';
-                    txt += '| **Lesson 1**<br>*Focus: [Main Topic]* | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary of the lesson\'s overall narrative and focus. No specific tasks.] | [URLs / Needed Materials] |\n';
-                    txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. No specific tasks.] | [URLs / Needed Materials] |\n\n';
+                    txt += '| **Lesson 1**<br>*Focus: [Main Topic]* | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary of what this lesson is about and why it matters. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n';
+                    txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n\n';
+                    txt += 'FINAL CHECK: Before outputting, re-read every "Brief Lesson Outline" cell and remove any wording that describes a task, activity, question, or instruction a student or teacher would carry out — only overall focus/purpose should remain.\n\n';
                 } else {
                     if (isJun || !isLeg) {
                         txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Resources & Links |\n|---|---|---|---|---|\n';
@@ -2425,6 +2648,9 @@
                 else if (action === 'assessment-output') toggleAssessmentOutput(val);
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
                 else if (action === 'theory-detail') renderTheoryTaskDetail(val, target);
+                else if (action === 'use-recent-topic') syncTopics(val);
+                else if (action === 'toggle-dark-mode') toggleDarkMode();
+                else if (action === 'export-all') exportAllPrompts();
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
@@ -2440,6 +2666,10 @@
                     sessionStorage.clear(); 
                     window.location.reload(); 
                 }
+            });
+
+            document.body.addEventListener('focusout', function(e) {
+                if (e.target.classList && e.target.classList.contains('sync-topic')) addRecentTopic(e.target.value);
             });
 
             document.body.addEventListener('input', function(e) {
@@ -2489,6 +2719,8 @@
 
         window.onload = function() {
             setupEventListeners();
+            applyDarkMode(localStorage.getItem('whs_dark_mode') === '1');
+            renderRecentTopics();
             var savedTopic = localStorage.getItem('whs_topic');
             if(savedTopic) { var inputs = document.querySelectorAll('.sync-topic'); for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic; }
             loadAppState();
