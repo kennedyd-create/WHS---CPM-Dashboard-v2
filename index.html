@@ -399,6 +399,11 @@
                                     <div id="sequence-alert" class="hidden mt-2 text-center md:text-left">
                                         <span class="inline-block bg-amber-50 text-amber-800 border border-amber-200 text-[9px] font-bold px-2 py-1 rounded shadow-sm">💡 AI will automatically adapt stages across days.</span>
                                     </div>
+                                    <div class="mt-3 flex items-center gap-2 justify-center md:justify-start">
+                                        <label for="les-lesson-duration" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Period Length</label>
+                                        <input type="number" min="1" id="les-lesson-duration" value="60" class="w-16 p-1.5 rounded border border-slate-300 focus:border-[#002066] text-xs outline-none text-center shadow-inner">
+                                        <span class="text-[10px] text-slate-400">mins</span>
+                                    </div>
                                 </div>
 
                                 <div class="hidden md:block w-px h-12 bg-slate-200"></div>
@@ -1137,7 +1142,7 @@
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'' 
+            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60' 
         };
         
         var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true };
@@ -2076,10 +2081,19 @@
             
             var totalDurText = actDur;
             if (unitState.assessmentIncluded === 'yes') {
-                var numBase = parseInt(actDur);
-                var numAssess = parseInt(actAssessTime);
-                if (!isNaN(numBase) && !isNaN(numAssess) && actDur.toLowerCase().includes('lesson') && actAssessTime.toLowerCase().includes('lesson')) {
-                    totalDurText = (numBase + numAssess) + " lessons (" + numBase + " core + " + numAssess + " assessment)";
+                var durMatch = actDur.match(/^(\d+(?:\.\d+)?)\s*(.*)$/);
+                var assessMatch = actAssessTime.match(/^(\d+(?:\.\d+)?)\s*(.*)$/);
+                if (durMatch && assessMatch) {
+                    var numBase = parseFloat(durMatch[1]), numAssess = parseFloat(assessMatch[1]);
+                    var unitBase = durMatch[2].trim().toLowerCase().replace(/s$/, '');
+                    var unitAssess = assessMatch[2].trim().toLowerCase().replace(/s$/, '');
+                    if (unitBase && unitBase === unitAssess) {
+                        var totalNum = numBase + numAssess;
+                        var unitLabel = unitBase + (totalNum === 1 ? '' : 's');
+                        totalDurText = totalNum + " " + unitLabel + " (" + numBase + " core + " + numAssess + " assessment)";
+                    } else {
+                        totalDurText = actDur + " (core) + " + actAssessTime + " (assessment)";
+                    }
                 } else {
                     totalDurText = actDur + " (core) + " + actAssessTime + " (assessment)";
                 }
@@ -2087,25 +2101,25 @@
 
             var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
             
-            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
-            if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once in the unit. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
-            if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
-            if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. CRITICAL: Do NOT put this in every lesson; it only needs to appear at least once. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
-            if (unitState.assessmentIncluded === 'yes') txt += 'CRITICAL INSTRUCTION: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
+            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
+            if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
+            if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
+            if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
+            if (unitState.assessmentIncluded === 'yes') txt += 'Important: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
             if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
-            if (isJun && uk) txt += 'CRITICAL: Explicitly cover this specific Knowledge throughout the unit sequence: ' + uk + '.\n';
-            if (isJun && up) txt += 'CRITICAL: Explicitly cover these specific Practices throughout the unit sequence: ' + up + '.\n';
+            if (isJun && uk) txt += 'Important: Explicitly cover this specific Knowledge throughout the unit sequence: ' + uk + '.\n';
+            if (isJun && up) txt += 'Important: Explicitly cover these specific Practices throughout the unit sequence: ' + up + '.\n';
             if (sm) {
                 txt += 'Source Strictness: Base the unit STRICTLY on these source materials: "' + sm + '". ';
-                txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
+                txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
             }
             
             if (unitState.planType === 'outlines') {
                 txt += 'CRITICAL RULE: The "Preparation / Resources" column should list only general materials/resources needed for the lesson as a whole (e.g. a URL, a text, equipment) — do NOT tie resources to specific stages, tasks, or activities, since none should be described.\n';
             } else {
-                txt += 'CRITICAL RULE: For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
+                txt += 'For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
             }
-            txt += 'Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
+            txt += 'CRITICAL: Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             
             txt += '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
             
@@ -2209,6 +2223,8 @@
             } else {
                 seq = parseInt(seqVal) || 1;
             }
+            var durMins = parseInt((document.getElementById('les-lesson-duration') || {}).value) || 60;
+            lessonState.duration = String(durMins);
             
             var tb = String.fromCharCode(96, 96, 96);
             var b = document.getElementById('prompt-lesson-text');
@@ -2250,7 +2266,7 @@
             
             // 2. RULES (SHARED & SPECIFIC)
             if (lessonState.mode !== 'relief') txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')') + '.\n';
-            if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson. CRITICAL INSTRUCTION: If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
+            if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson. If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             
             if (lessonState.framework === 'cpm' && seq === 1) {
                 if (stg.length < 5 && lessonState.mode === 'standard') txt += 'Timing: Cover only CPM stages ' + stg.join(',') + '. Adjust durations to fill the period.\n';
@@ -2263,23 +2279,27 @@
                     txt += '1. EVERY single lesson MUST begin with Stage 1 (Connect) and end with Stage 5 (Review).\n';
                     txt += '2. The core content (Stage 2: I Do, Stage 3: We Do, Stage 4: You Do) must be logically distributed across the sequence. For example, Lesson 1 may focus heavily on \'I Do/We Do\', while Lesson 2 shifts heavily into \'You Do\'.\n';
                     txt += '3. Stage 1 of Lesson 2 (and 3) MUST explicitly retrieve knowledge taught in the previous lesson.\n';
+                } else {
+                    txt += '1. EVERY single lesson MUST work through the full set of stages/phases of the chosen framework — do not split one stage per lesson.\n';
+                    txt += '2. The depth of content within each stage must be logically distributed across the sequence so each lesson has a distinct focus rather than repeating the same content.\n';
+                    txt += '3. The opening stage of Lesson 2 (and 3) MUST explicitly retrieve knowledge or skills introduced in the previous lesson before moving on.\n';
                 }
                 txt += '4. CRITICAL: Output ONE single header at the very top for the entire sequence (Topic, Total Duration, Learning Intentions, Success Criteria). DO NOT repeat this header for each individual lesson.\n\n';
             }
             
             if (lessonState.context === 'waiheke') txt += 'Weave in Waiheke/Hauraki contexts. Highlight with **[WAIHEKE CONTEXT]**.\n';
             if (lessonState.maori === 'integrate') txt += 'Integrate Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]**.\n';
-            if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. CRITICAL RULE: Literacy skills must be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[LITERACY]**.\n';
-            if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. CRITICAL RULE: Numeracy skills must be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
+            if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. Important: Literacy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[LITERACY]**.\n';
+            if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. Important: Numeracy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
             
             if (sm) {
-                txt += 'Source Strictness: Base content entirely on these source materials: "' + sm + '". Do not hallucinate. CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the lesson.\n';
+                txt += 'Source Strictness: Base content entirely on these source materials: "' + sm + '". CRITICAL: Do not hallucinate. If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the lesson.\n';
             } else if (lessonState.mode === 'notebooklm') {
-                txt += 'Curriculum Knowledge: Rely on your deep internal knowledge of the New Zealand Curriculum, but do NOT hallucinate dead URLs.\n';
+                txt += 'Curriculum Knowledge: Rely on your deep internal knowledge of the New Zealand Curriculum, but CRITICAL: do NOT hallucinate dead URLs.\n';
             }
             
-            if (lessonState.mode !== 'notebooklm' && (outs.includes('media') || lessonState.mode === 'relief')) txt += 'Media Integration: Do NOT hallucinate URLs. Instead, provide exact search queries (e.g. [Search YouTube: "Crash Course Mitosis"]).\n';
-            if (lessonState.mode !== 'notebooklm' && outs.includes('images')) txt += 'Image/Diagram Integration: AI models hallucinate dead links. Do NOT use direct URLs. Instead, insert highly descriptive placeholders where images should go using this format: `[📸 INSERT IMAGE: Detailed description - Search query: "exact google image search terms"]`.\n';
+            if (lessonState.mode !== 'notebooklm' && (outs.includes('media') || lessonState.mode === 'relief')) txt += 'CRITICAL: Media Integration: Do NOT hallucinate URLs. Instead, provide exact search queries (e.g. [Search YouTube: "Crash Course Mitosis"]).\n';
+            if (lessonState.mode !== 'notebooklm' && outs.includes('images')) txt += 'CRITICAL: Image/Diagram Integration: AI models hallucinate dead links. Do NOT use direct URLs. Instead, insert highly descriptive placeholders where images should go using this format: `[📸 INSERT IMAGE: Detailed description - Search query: "exact google image search terms"]`.\n';
             
             if (lessonState.extra !== 'None') txt += 'Differentiate/Scaffold strictly for: ' + lessonState.extra + '.\n';
             
@@ -2291,7 +2311,7 @@
             }
             if (ct) txt += 'Instructions: "' + ct + '".\n';
             
-            txt += 'CRITICAL RULE: For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
+            if (lessonState.mode === 'standard') txt += 'For ALL lesson plan formats, ensure suggested resources and/or live URLs are explicitly provided (as a table column or dedicated list, depending on the format specified below), particularly for the I Do, We Do, and You Do stages.\n';
             
             // 3. TONE & CLOSING RULES
             if (lessonState.mode === 'notebooklm') {
@@ -2317,11 +2337,15 @@
             // 4. OUTPUT STRUCTURE
             if (lessonState.mode === 'relief') {
                 if (lessonState.reliefType === 'full-worksheet') {
-                    txt += 'PART 1: Relief Overview (For Chat)\nPART 2: Full Worksheet in plain text/Markdown (for easy copy-pasting into Google Docs)\nPART 3: HTML Worksheet content in a single beautifully CSS styled block (' + tb + 'html\n...\n' + tb + ').\nUse WHS colors (#002066/#d1e6f6). Include pacing, 15-20 min reading, visual placeholders, vocab, and 40-min You Do task.\n';
+                    var readingMin = Math.max(10, Math.round(durMins * 0.3));
+                    var taskMin = Math.max(10, durMins - readingMin);
+                    txt += 'PART 1: Relief Overview (For Chat)\nPART 2: Full Worksheet in plain text/Markdown (for easy copy-pasting into Google Docs)\nPART 3: HTML Worksheet content in a single beautifully CSS styled block (' + tb + 'html\n...\n' + tb + ').\nUse WHS colors (#002066/#d1e6f6). Include pacing appropriate for a ' + durMins + '-minute lesson (e.g. roughly ' + readingMin + ' mins reading/vocab intro, visual placeholders, and roughly ' + taskMin + ' mins on the independent You Do task).\n';
                 } else {
+                    var introMin = Math.max(5, Math.round(durMins * 0.15));
+                    var platformMin = Math.max(5, durMins - introMin);
                     var pMap2 = { 'ep': 'Education Perfect (EP)', 'wt': "Writer's Toolbox", 'gc': 'Google Classroom', 'other': 'the online platform' };
                     var pName2 = pMap2[lessonState.reliefType] || 'the online platform';
-                    txt += 'PART 1: Relief Teacher Instructions (For Chat)\nA brief, clear email-style summary for the relief teacher explaining the 60-minute lesson flow (e.g., 10 mins reading/vocab intro offline, 50 mins on ' + pName2 + ').\nPART 2: Student Handout (HTML)\nGenerate a short HTML student handout in a beautifully CSS styled block (' + tb + 'html\n...\n' + tb + '). Use WHS colors (#002066/#d1e6f6). This handout should have a brief engaging hook/introduction to the topic, 4-6 Key Vocabulary words, and clear instructions directing them to ' + pName2 + ' to complete their allocated work.\n';
+                    txt += 'PART 1: Relief Teacher Instructions (For Chat)\nA brief, clear email-style summary for the relief teacher explaining the ' + durMins + '-minute lesson flow (e.g., roughly ' + introMin + ' mins reading/vocab intro offline, roughly ' + platformMin + ' mins on ' + pName2 + ').\nPART 2: Student Handout (HTML)\nGenerate a short HTML student handout in a beautifully CSS styled block (' + tb + 'html\n...\n' + tb + '). Use WHS colors (#002066/#d1e6f6). This handout should have a brief engaging hook/introduction to the topic, 4-6 Key Vocabulary words, and clear instructions directing them to ' + pName2 + ' to complete their allocated work.\n';
                 }
             } else if (lessonState.mode === 'notebooklm') {
                 txt += 'DOCUMENT A: NotebookLM Prompt Template. Write a prompt to be pasted into the NotebookLM chat box to set its persona and instructions. Remind it to use New Zealand English.\n';
@@ -2330,63 +2354,78 @@
             } else {
                 
                 var partALabel = seq > 1 ? 'PART A: The Lesson Sequence Outline' : 'PART A: The Lesson Plan';
+                var totalSeqMins = seq * durMins;
+
+                // Detailed & condensed table bodies for each alternative framework (no header reprint — the shared header above already covers Topic/Duration/LI/SC)
+                var altDetailBodies = {
+                    solo: '| SOLO Stage | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Guiding Questions</div> | Resources & Links |\n|---|---|---|---|\n| **1. Pre-structural** (Hook) | [Time] | [Activities to uncover what they don\'t know] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n| **2. Uni-structural** (One idea) | [Time] | [Activities focusing on a single, isolated fact or concept] | [URLs] |\n| **3. Multi-structural** (Many ideas) | [Time] | [Activities introducing multiple disconnected facts/skills] | [URLs] |\n| **4. Relational** (Connecting ideas) | [Time] | [Tasks requiring students to link the facts together into a cohesive whole] | [URLs] |\n| **5. Extended Abstract** (Applying) | [Time] | [Extension task requiring application to a new, unseen context] | [URLs] |\n\n',
+                    'six-hats': '| Thinking Hat | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Guiding Questions</div> | Resources & Links |\n|---|---|---|---|\n| **Blue Hat** (Process) | [Time] | [Setting the agenda, defining success criteria] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n| **White Hat** (Facts) | [Time] | [Information gathering, data analysis tasks] | [URLs] |\n| **Red Hat** (Feelings) | [Time] | [Intuitive, emotional, or gut-reaction tasks] | [URLs] |\n| **Black Hat** (Caution) | [Time] | [Critical thinking, risk assessment, finding flaws] | [URLs] |\n| **Yellow Hat** (Optimism) | [Time] | [Finding benefits, value, and positive outcomes] | [URLs] |\n| **Green Hat** (Creativity) | [Time] | [Brainstorming alternatives, new ideas, creative tasks] | [URLs] |\n| **Blue Hat** (Review) | [Time] | [Summarizing the thinking process, exit ticket] | [URLs] |\n\n',
+                    udl: '| UDL Principle | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Options Provided</div> | Resources & Links |\n|---|---|---|---|\n| **Engagement** (The \'Why\') | [Time] | [Options for recruiting interest, sustaining effort, and self-regulation] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms using multiple media] | [URLs] |\n| **Representation** (The \'What\') | [Time] | [Options for perception, language/symbols, and comprehension] | [URLs] |\n| **Action & Expression** (The \'How\') | [Time] | [Options for physical action, expression/communication, and executive functions] | [URLs] |\n\n',
+                    pdp: '| PDP Stage | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|\n| **Pre-Task** | [Time] | [Activating prior knowledge, hook, setting the context] | [URLs] |\n| **KEY VOCAB** | [Time] | [Pre-teaching 4-6 critical Tier 2 & Tier 3 terms before the core task] | [URLs] |\n| **During-Task** | [Time] | [Structured activities to guide focus while reading/listening/analysing] | [URLs] |\n| **Post-Task** | [Time] | [Tasks that expand on the topic, summarize, or require personal response] | [URLs] |\n\n',
+                    ubd: '| UbD Phase | <div style="min-width: 400px;">Details & Execution</div> | Resources & Links |\n|---|---|---|\n| **1. Identify Desired Results** | [Explicitly define the essential questions and core understandings] | [URLs] |\n| **2. Determine Acceptable Evidence** | [Design the specific performance task or formative assessment used to prove understanding] | [URLs] |\n| **3. Plan Learning Experiences** | [Detail the specific chronological steps of the lesson to get students to the evidence phase] | [URLs] |\n\n',
+                    pbl: '| PBL Element | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|\n| **The Hook & Driving Question** | [Time] | [The engaging entry event and the presentation of the core authentic problem] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms needed for the project] | [URLs] |\n| **Sustained Inquiry Planning** | [Time] | [Students identifying what they know, what they need to know, and planning research] | [URLs] |\n| **Critique / Public Product Prep** | [Time] | [Establishing the rubrics and requirements for the final presentation] | [URLs] |\n\n'
+                };
+                var altCondensedBodies = {
+                    solo: '| SOLO Stage | Time (mins) | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|\n| **1. Pre-structural** (Hook) | [Time] | [1 bullet: uncovering prior gaps] | [URLs] |\n| **KEY VOCAB** | [Time] | [List 3-5 terms. NO definitions.] | [URLs] |\n| **2. Uni-structural** | [Time] | [1 bullet: single fact/concept] | [URLs] |\n| **3. Multi-structural** | [Time] | [1 bullet: multiple facts/skills] | [URLs] |\n| **4. Relational** | [Time] | [1 bullet: connecting ideas] | [URLs] |\n| **5. Extended Abstract** | [Time] | [1 bullet: new-context application] | [URLs] |\n\n',
+                    'six-hats': '| Thinking Hat | Time (mins) | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|\n| **Blue Hat** (Process) | [Time] | [1 bullet: agenda/success criteria] | [URLs] |\n| **KEY VOCAB** | [Time] | [List 3-5 terms. NO definitions.] | [URLs] |\n| **White Hat** (Facts) | [Time] | [1 bullet: data gathering] | [URLs] |\n| **Red Hat** (Feelings) | [Time] | [1 bullet: gut-reaction task] | [URLs] |\n| **Black Hat** (Caution) | [Time] | [1 bullet: risk/flaw finding] | [URLs] |\n| **Yellow Hat** (Optimism) | [Time] | [1 bullet: value/benefits] | [URLs] |\n| **Green Hat** (Creativity) | [Time] | [1 bullet: brainstorm] | [URLs] |\n| **Blue Hat** (Review) | [Time] | [1 bullet: summary/exit ticket] | [URLs] |\n\n',
+                    udl: '| UDL Principle | Time (mins) | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|\n| **Engagement** | [Time] | [1 bullet: interest/effort options] | [URLs] |\n| **KEY VOCAB** | [Time] | [List 3-5 terms. NO definitions.] | [URLs] |\n| **Representation** | [Time] | [1 bullet: perception/comprehension options] | [URLs] |\n| **Action & Expression** | [Time] | [1 bullet: expression/action options] | [URLs] |\n\n',
+                    pdp: '| PDP Stage | Time (mins) | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|\n| **Pre-Task** | [Time] | [1 bullet: hook/context] | [URLs] |\n| **KEY VOCAB** | [Time] | [List 3-5 terms. NO definitions.] | [URLs] |\n| **During-Task** | [Time] | [1 bullet: focus activity] | [URLs] |\n| **Post-Task** | [Time] | [1 bullet: summary/response] | [URLs] |\n\n',
+                    ubd: '| UbD Phase | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|\n| **1. Desired Results** | [1 bullet: essential question] | [URLs] |\n| **2. Acceptable Evidence** | [1 bullet: assessment task] | [URLs] |\n| **3. Learning Experiences** | [1 bullet: key chronological steps] | [URLs] |\n\n',
+                    pbl: '| PBL Element | Time (mins) | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|\n| **Hook & Driving Question** | [Time] | [1 bullet: authentic problem] | [URLs] |\n| **KEY VOCAB** | [Time] | [List 3-5 terms. NO definitions.] | [URLs] |\n| **Sustained Inquiry** | [Time] | [1 bullet: research plan] | [URLs] |\n| **Critique / Product Prep** | [Time] | [1 bullet: rubric/requirements] | [URLs] |\n\n'
+                };
                 
                 if (outs.includes('plan')) {
                     txt += partALabel + '\n';
                     if (seq > 1) {
-                        txt += 'Print this header ONCE at the top:\n**Topic:** ' + t + ' | **Total Sequence Duration:** ' + (seq * 60) + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
-                        txt += 'Then, for EACH lesson in the sequence (Lesson 1, Lesson 2, etc.), provide a brief heading (e.g. ### Lesson 1) followed by EXACTLY this Markdown table structure:\n';
+                        txt += 'Print this header ONCE at the top:\n**Topic:** ' + t + ' | **Total Sequence Duration:** ' + totalSeqMins + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
+                        txt += 'Then, for EACH lesson in the sequence (Lesson 1, Lesson 2, etc.), provide a brief heading (e.g. ### Lesson 1) followed by EXACTLY the structure below:\n';
                     } else {
-                        txt += 'Print this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
-                        txt += 'Use EXACTLY this Markdown table structure (distributing the 60 minutes realistically across the chosen stages):\n';
+                        txt += 'Print this header exactly:\n**Topic:** ' + t + ' | **Duration:** ' + durMins + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
+                        txt += 'Use EXACTLY the structure below (distributing the ' + durMins + ' minutes realistically across the chosen stages):\n';
                     }
                     
                     if (lessonState.framework === 'cpm') {
-                        txt += '| Stage | Time (mins) | Teaching Strategy Focus | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|---|\n';
-                        if (stg.includes(1) || seq > 1) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [Word-for-word opening script & specific questions] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n';
-                        if (stg.includes(2) || seq > 1) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [Exact teacher script and whiteboard drawing/writing instructions] | [Live URLs] |\n';
-                        if (stg.includes(3) || seq > 1) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [Specific hinge questions, guided practice tasks] | [Live URLs] |\n';
-                        if (stg.includes(4) || seq > 1) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[Detailed instructions explicitly adapted for: ' + lessonState.extra + ']' : '[Detailed independent task instructions and scaffolds]') + ' | [Live URLs] |\n';
-                        if (stg.includes(5) || seq > 1) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [Exit ticket or specific review task. CRITICAL: Explicitly loop back to measure the Success Criteria established in Stage 1] | [Live URLs] |\n\n';
-                    } else if (lessonState.altFramework === 'solo') {
-                        txt += partALabel + '\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| SOLO Stage | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Guiding Questions</div> | Resources & Links |\n|---|---|---|---|\n| **1. Pre-structural** (Hook) | [Time] | [Activities to uncover what they don\'t know] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n| **2. Uni-structural** (One idea) | [Time] | [Activities focusing on a single, isolated fact or concept] | [URLs] |\n| **3. Multi-structural** (Many ideas) | [Time] | [Activities introducing multiple disconnected facts/skills] | [URLs] |\n| **4. Relational** (Connecting ideas) | [Time] | [Tasks requiring students to link the facts together into a cohesive whole] | [URLs] |\n| **5. Extended Abstract** (Applying) | [Time] | [Extension task requiring application to a new, unseen context] | [URLs] |\n\n';
-                    } else if (lessonState.altFramework === 'six-hats') {
-                        txt += partALabel + '\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| Thinking Hat | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Guiding Questions</div> | Resources & Links |\n|---|---|---|---|\n| **Blue Hat** (Process) | [Time] | [Setting the agenda, defining success criteria] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms] | [URLs] |\n| **White Hat** (Facts) | [Time] | [Information gathering, data analysis tasks] | [URLs] |\n| **Red Hat** (Feelings) | [Time] | [Intuitive, emotional, or gut-reaction tasks] | [URLs] |\n| **Black Hat** (Caution) | [Time] | [Critical thinking, risk assessment, finding flaws] | [URLs] |\n| **Yellow Hat** (Optimism) | [Time] | [Finding benefits, value, and positive outcomes] | [URLs] |\n| **Green Hat** (Creativity) | [Time] | [Brainstorming alternatives, new ideas, creative tasks] | [URLs] |\n| **Blue Hat** (Review) | [Time] | [Summarizing the thinking process, exit ticket] | [URLs] |\n\n';
-                    } else if (lessonState.altFramework === 'udl') {
-                         txt += partALabel + '\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| UDL Principle | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Options Provided</div> | Resources & Links |\n|---|---|---|---|\n| **Engagement** (The \'Why\') | [Time] | [Options for recruiting interest, sustaining effort, and self-regulation] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms using multiple media] | [URLs] |\n| **Representation** (The \'What\') | [Time] | [Options for perception, language/symbols, and comprehension] | [URLs] |\n| **Action & Expression** (The \'How\') | [Time] | [Options for physical action, expression/communication, and executive functions] | [URLs] |\n\n';
-                    } else if (lessonState.altFramework === 'pdp') {
-                        txt += partALabel + '\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| PDP Stage | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|\n| **Pre-Task** | [Time] | [Activating prior knowledge, hook, setting the context] | [URLs] |\n| **KEY VOCAB** | [Time] | [Pre-teaching 4-6 critical Tier 2 & Tier 3 terms before the core task] | [URLs] |\n| **During-Task** | [Time] | [Structured activities to guide focus while reading/listening/analysing] | [URLs] |\n| **Post-Task** | [Time] | [Tasks that expand on the topic, summarize, or require personal response] | [URLs] |\n\n';
-                    } else if (lessonState.altFramework === 'ubd') {
-                         txt += partALabel + '\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this 3-row Markdown table structure:\n| UbD Phase | <div style="min-width: 400px;">Details & Execution</div> | Resources & Links |\n|---|---|---|\n| **1. Identify Desired Results** | [Explicitly define the essential questions and core understandings] | [URLs] |\n| **2. Determine Acceptable Evidence** | [Design the specific performance task or formative assessment used to prove understanding] | [URLs] |\n| **3. Plan Learning Experiences** | [Detail the specific chronological steps of the 60-min lesson to get students to the evidence phase] | [URLs] |\n\n';
-                    } else if (lessonState.altFramework === 'pbl') {
-                         txt += partALabel + '\nPrint this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins\n\nUse EXACTLY this Markdown table structure:\n| PBL Element | Time (mins) | <div style="min-width: 400px;">Learning Experiences & Scripting</div> | Resources & Links |\n|---|---|---|---|\n| **The Hook & Driving Question** | [Time] | [The engaging entry event and the presentation of the core authentic problem] | [URLs] |\n| **KEY VOCAB** | [Time] | [Define 4-6 key Tier 2 & Tier 3 terms needed for the project] | [URLs] |\n| **Sustained Inquiry Planning** | [Time] | [Students identifying what they know, what they need to know, and planning research] | [URLs] |\n| **Critique / Public Product Prep** | [Time] | [Establishing the rubrics and requirements for the final presentation] | [URLs] |\n\n';
+                        txt += '\n**Overview**\n| Stage & Strategy Focus | Time (mins) |\n|---|---|\n';
+                        if (stg.includes(1) || seq > 1) txt += '| **Stage 1: CONNECT** — ' + lessonState.s1 + ' | [Time] |\n';
+                        if (stg.includes(2) || seq > 1) txt += '| **Stage 2: I DO** — ' + lessonState.s2 + ' | [Time] |\n';
+                        if (stg.includes(3) || seq > 1) txt += '| **Stage 3: WE DO** — ' + lessonState.s3 + ' | [Time] |\n';
+                        if (stg.includes(4) || seq > 1) txt += '| **Stage 4: YOU DO** — ' + lessonState.s4 + ' | [Time] |\n';
+                        if (stg.includes(5) || seq > 1) txt += '| **Stage 5: REVIEW** — ' + lessonState.s5 + ' | [Time] |\n';
+                        txt += '\n**Key Vocabulary**\nList 4-6 key Tier 2 & Tier 3 terms for this lesson as a short bullet list (term — brief definition). Do NOT put this in the table above.\n\n';
+                        txt += '**Learning Experiences & Scripting**\nFor EACH stage listed in the Overview table, write a heading (e.g. ### Stage 1: CONNECT) followed by the content in full prose/paragraphs (NOT a table cell):\n';
+                        if (stg.includes(1) || seq > 1) txt += '- Stage 1 (CONNECT): Word-for-word opening script & specific questions.\n';
+                        if (stg.includes(2) || seq > 1) txt += '- Stage 2 (I DO): Exact teacher script and whiteboard drawing/writing instructions.\n';
+                        if (stg.includes(3) || seq > 1) txt += '- Stage 3 (WE DO): Specific hinge questions, guided practice tasks.\n';
+                        if (stg.includes(4) || seq > 1) txt += '- Stage 4 (YOU DO): ' + (lessonState.extra !== 'None' ? 'Detailed instructions explicitly adapted for: ' + lessonState.extra + '.' : 'Detailed independent task instructions and scaffolds.') + '\n';
+                        if (stg.includes(5) || seq > 1) txt += '- Stage 5 (REVIEW): Exit ticket or specific review task. CRITICAL: Explicitly loop back to measure the Success Criteria established in Stage 1.\n';
+                        txt += '\n**Resources & Links**\nAfter the stage-by-stage scripting, provide one consolidated bullet list mapping each stage to its suggested resources and/or live URLs (e.g. "Stage 2 (I Do): [URL/resource]"). Do NOT put resources inside the Overview table or the stage scripting.\n\n';
+                    } else if (altDetailBodies[lessonState.altFramework]) {
+                        txt += '\n' + altDetailBodies[lessonState.altFramework];
                     }
                 }
                 
                 if (outs.includes('plan-short')) {
-                    var strFocus = (lessonState.framework === 'cpm') ? "Teaching Strategy Focus" : "Framework Stage";
+                    var strFocus = (lessonState.framework === 'cpm') ? "Stage & Strategy Focus" : "Framework Stage";
                     txt += partALabel + ' (CONDENSED)\n';
                     if (seq > 1) {
-                        txt += 'Print this header ONCE at the top:\n**Topic:** ' + t + ' | **Total Sequence Duration:** ' + (seq * 60) + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
+                        txt += 'Print this header ONCE at the top:\n**Topic:** ' + t + ' | **Total Sequence Duration:** ' + totalSeqMins + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
                         txt += 'Then, for EACH lesson in the sequence (Lesson 1, Lesson 2, etc.), provide a brief heading (e.g. ### Lesson 1) followed by EXACTLY this Markdown table structure. CRITICAL: Keep all descriptions extremely brief. MAX 10 WORDS per box. Bullet points only. ABSOLUTELY NO SCRIPTS.\n';
                     } else {
-                        txt += 'Print this header exactly:\n**Topic:** ' + t + ' | **Duration:** 60 mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
+                        txt += 'Print this header exactly:\n**Topic:** ' + t + ' | **Duration:** ' + durMins + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
                         txt += 'Use EXACTLY this Markdown table structure. CRITICAL: Keep all descriptions extremely brief. MAX 10 WORDS per box. Bullet points only. ABSOLUTELY NO SCRIPTS.\n';
                     }
-                    txt += '| Stage | Time (mins) | ' + strFocus + ' | <div style="min-width: 400px;">Condensed Outline</div> | Resources & Links |\n|---|---|---|---|---|\n';
+                    txt += 'Note: Key Vocabulary and Resources & Links must NOT be columns in this table — provide them as short bullet lists immediately after the table instead.\n';
                     
                     if (lessonState.framework === 'cpm') {
-                        if (stg.includes(1) || seq > 1) txt += '| **Stage 1: CONNECT** | [Time] | **' + lessonState.s1 + '** | [1 bullet: Hook activity] | [Live URLs] |\n| **KEY VOCAB** | [Time] | **Explicit Instruction** | [List 3-5 terms. NO definitions.] | [URLs] |\n';
-                        if (stg.includes(2) || seq > 1) txt += '| **Stage 2: I DO** | [Time] | **' + lessonState.s2 + '** | [1 bullet: Core instruction. NO scripts.] | [Live URLs] |\n';
-                        if (stg.includes(3) || seq > 1) txt += '| **Stage 3: WE DO** | [Time] | **' + lessonState.s3 + '** | [1 bullet: Practice task.] | [Live URLs] |\n';
-                        if (stg.includes(4) || seq > 1) txt += '| **Stage 4: YOU DO** | [Time] | **' + lessonState.s4 + '** | ' + (lessonState.extra !== 'None' ? '[1 bullet: Independent task + 1 bullet for ' + lessonState.extra + ']' : '[1 bullet: Independent task.]') + ' | [Live URLs] |\n';
-                        if (stg.includes(5) || seq > 1) txt += '| **Stage 5: REVIEW** | [Time] | **' + lessonState.s5 + '** | [1 bullet: Review task.] | [Live URLs] |\n\n';
-                    } else {
-                        txt += '| **Core Phase 1** | [Time] | **Introduction** | [1 bullet point outline] | [Live URLs] |\n';
-                        txt += '| **KEY VOCAB** | [Time] | **Vocabulary** | [List 3-5 terms. NO definitions.] | [URLs] |\n';
-                        txt += '| **Core Phase 2** | [Time] | **Development** | [1 bullet point outline] | [Live URLs] |\n';
-                        txt += '| **Core Phase 3** | [Time] | **Application** | [1 bullet point outline] | [Live URLs] |\n';
-                        txt += '| **Core Phase 4** | [Time] | **Review** | [1 bullet point outline] | [Live URLs] |\n\n';
+                        txt += '| ' + strFocus + ' | Time (mins) | <div style="min-width: 400px;">Condensed Outline</div> |\n|---|---|---|\n';
+                        if (stg.includes(1) || seq > 1) txt += '| **Stage 1: CONNECT** — ' + lessonState.s1 + ' | [Time] | [1 bullet: Hook activity] |\n';
+                        if (stg.includes(2) || seq > 1) txt += '| **Stage 2: I DO** — ' + lessonState.s2 + ' | [Time] | [1 bullet: Core instruction. NO scripts.] |\n';
+                        if (stg.includes(3) || seq > 1) txt += '| **Stage 3: WE DO** — ' + lessonState.s3 + ' | [Time] | [1 bullet: Practice task.] |\n';
+                        if (stg.includes(4) || seq > 1) txt += '| **Stage 4: YOU DO** — ' + lessonState.s4 + ' | [Time] | ' + (lessonState.extra !== 'None' ? '[1 bullet: Independent task + 1 bullet for ' + lessonState.extra + ']' : '[1 bullet: Independent task.]') + ' |\n';
+                        if (stg.includes(5) || seq > 1) txt += '| **Stage 5: REVIEW** — ' + lessonState.s5 + ' | [Time] | [1 bullet: Review task.] |\n\n';
+                        txt += '**Key Vocabulary:** List 3-5 terms only, no definitions.\n\n**Resources & Links:** One consolidated bullet list mapping stage → resource/URL.\n\n';
+                    } else if (altCondensedBodies[lessonState.altFramework]) {
+                        txt += altCondensedBodies[lessonState.altFramework];
                     }
                 }
 
@@ -2446,16 +2485,16 @@
             if (af.length === 0 && !af.includes('Surprise Me')) af = ['Short Answer'];
             var fStr = af.join(', '), hasRes = af.includes('Resource Based'), hasSurp = af.includes('Surprise Me');
             
-            var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n\n### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nCRITICAL: Write Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
+            var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n\n### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
             
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
             txt += 'Scale matches duration: ' + durText + '. ';
             if (vol) {
                 txt += 'CRITICAL VOLUME REQUIREMENT: ' + vol + '.\n';
             } else {
-                if (assessmentState.duration === '1 Period Test') txt += 'CRITICAL: Ensure the volume of work is realistic for a 45-50 minute class (e.g., exactly 3-4 structured short answer questions, or equivalent length).\n';
-                else if (assessmentState.duration === '2 Period Assessment') txt += 'CRITICAL: Ensure the volume of work is realistic for 90-100 minutes of class time.\n';
-                else if (assessmentState.duration === '1 Week Mini-Project') txt += 'CRITICAL: Ensure the scope fits 3-4 class periods plus homework.\n';
+                if (assessmentState.duration === '1 Period Test') txt += 'Important: Ensure the volume of work is realistic for a 45-50 minute class (e.g., exactly 3-4 structured short answer questions, or equivalent length).\n';
+                else if (assessmentState.duration === '2 Period Assessment') txt += 'Important: Ensure the volume of work is realistic for 90-100 minutes of class time.\n';
+                else if (assessmentState.duration === '1 Week Mini-Project') txt += 'Important: Ensure the scope fits 3-4 class periods plus homework.\n';
                 else txt += '\n';
             }
 
@@ -2463,10 +2502,10 @@
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
             if (sm) {
                 txt += 'Base the assessment STRICTLY on these source materials: "' + sm + '". ';
-                txt += 'CRITICAL INSTRUCTION: If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
+                txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
             }
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
-            if (isJun && hasRes) txt += 'Provide exact search queries for real-world resources, do not hallucinate URLs.\n';
+            if (hasRes) txt += 'CRITICAL: Provide exact search queries for real-world resources; do NOT hallucinate URLs or invent source texts/authors — this applies at every year level.\n';
             if (isJun && jk) txt += 'Test this knowledge: ' + jk + '.\n';
             if (isJun && jp) txt += 'Test these practices: ' + jp + '.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema for task instructions. Define complex task words.\n\n### Output Format\n';
             
@@ -2474,7 +2513,12 @@
                 if (hasSurp) txt += 'PART 1: TWO out-of-the-box assessment options.\n'; else txt += 'PART 1: Assessment Task (' + fStr + ').\n';
                 txt += 'PART 2: Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n';
             } else if (isSen) {
-                txt += 'PART 1: TWO NCEA-style options based on standard ' + ns + '.\nPART 2: Shared NCEA Grading Matrix (Achieved/Merit/Excellence).\nAdd disclaimer regarding NZQA validity.\n';
+                if (ns === '[Standard]' || !ns.trim()) {
+                    txt += 'PART 1: CRITICAL — No specific Achievement Standard number was provided. Do NOT invent, guess, or substitute a plausible-sounding standard code or title under any circumstances. Instead, before writing anything else, ask me to confirm the exact Achievement Standard number and title, then wait for my reply before generating the assessment.\nPART 2: Shared NCEA Grading Matrix (Achieved/Merit/Excellence), to follow once the standard is confirmed.\n';
+                } else {
+                    txt += 'PART 1: TWO NCEA-style options based on standard ' + ns + '. CRITICAL: Use only this exact standard number/title as given — do not invent or substitute a different one.\nPART 2: Shared NCEA Grading Matrix (Achieved/Merit/Excellence).\n';
+                }
+                txt += 'Add disclaimer regarding NZQA validity.\n';
             } else {
                 txt += 'PART 1: Assessment Task.\nPART 2: Success Criteria / Rubric.\n';
             }
@@ -2675,7 +2719,7 @@
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time'].includes(e.target.id)) updateUnitBuilderPrompt();
-                else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom'].includes(e.target.id)) updateLessonBuilderPrompt();
+                else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
                     var warn = document.getElementById('les-sequence-warning');
