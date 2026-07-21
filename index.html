@@ -202,6 +202,7 @@
                 </div>
 
                 <button class="w-full justify-center px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Download every generated prompt from this session as one text file" data-action="export-all">⬇ Export All Prompts</button>
+                <button class="w-full justify-center px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Not sure which tool to use? Reopen the quick guide" data-action="show-onboarding">❓ New Here? Guide Me</button>
             </div>
         </nav>
 
@@ -1001,9 +1002,46 @@
 
         <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
             <p>© 2026 Waiheke High School Professional Learning Programme</p>
+            <p class="mt-2 text-xs flex items-center justify-center gap-2 flex-wrap">
+                <span>Version 2.2</span>
+                <span class="text-slate-300">·</span>
+                <span>Last updated: 22 July 2026</span>
+                <span class="text-slate-300">·</span>
+                <a href="mailto:feedback@waiheke.school.nz?subject=CPM%20Prompt%20Generator%20Feedback" class="text-[#002066] hover:underline font-semibold">Send Feedback</a>
+            </p>
         </footer>
     </div>
     
+    <div id="onboarding-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl">
+            <h3 class="text-xl md:text-2xl font-black text-center text-slate-900 mb-1">👋 Welcome to the CPM AI Prompt Generator</h3>
+            <p class="text-center text-slate-500 text-sm mb-6">What are you trying to do today?</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+                <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="lesson">
+                    <span class="block font-bold text-[#002066] text-sm">⭐ Plan a single lesson</span>
+                    <span class="block text-xs text-slate-500 mt-1">Create one highly detailed lesson plan → <strong>Lesson Builder</strong></span>
+                </button>
+                <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="planning">
+                    <span class="block font-bold text-[#002066] text-sm">📅 Plan a multi-week unit</span>
+                    <span class="block text-xs text-slate-500 mt-1">Sequence a whole topic across many lessons → <strong>Unit Planner</strong></span>
+                </button>
+                <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="assessment">
+                    <span class="block font-bold text-[#002066] text-sm">📝 Create a test or task</span>
+                    <span class="block text-xs text-slate-500 mt-1">Generate assessments, tasks, and rubrics → <strong>Assessment Generator</strong></span>
+                </button>
+                <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="instructional">
+                    <span class="block font-bold text-[#002066] text-sm">💡 Find a teaching strategy</span>
+                    <span class="block text-xs text-slate-500 mt-1">Explore pedagogical strategies by CPM stage → <strong>Strategy Hub</strong></span>
+                </button>
+                <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition sm:col-span-2" data-action="onboarding-go" data-target="theory">
+                    <span class="block font-bold text-[#002066] text-sm">📖 Understand the CPM itself</span>
+                    <span class="block text-xs text-slate-500 mt-1">Read the research and theory behind the Common Practice Model → <strong>CPM Theory</strong></span>
+                </button>
+            </div>
+            <button class="w-full mt-5 text-center text-xs text-slate-400 hover:text-slate-600 font-semibold" data-action="onboarding-dismiss">Just let me explore →</button>
+        </div>
+    </div>
+
     <div id="reset-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full shadow-2xl">
             <h3 class="text-xl font-black text-center text-slate-900 mb-2">Start Fresh?</h3>
@@ -1304,6 +1342,21 @@
 
         /* ---------- Global toast ---------- */
         var toastTimeout;
+        /* ---------- Onboarding guide ---------- */
+        function showOnboardingModal() {
+            var m = document.getElementById('onboarding-modal');
+            if (m) m.classList.remove('hidden');
+        }
+        function dismissOnboardingModal() {
+            var m = document.getElementById('onboarding-modal');
+            if (m) m.classList.add('hidden');
+            try { localStorage.setItem('whs_onboarding_seen', '1'); } catch (e) {}
+        }
+        function onboardingGoTo(target) {
+            dismissOnboardingModal();
+            showView(target);
+        }
+
         function showGlobalToast(msg) {
             var t = document.getElementById('global-toast');
             if (!t) return;
@@ -2740,6 +2793,9 @@
                 else if (action === 'toggle-dark-mode') toggleDarkMode();
                 else if (action === 'export-all') exportAllPrompts();
                 else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
+                else if (action === 'show-onboarding') showOnboardingModal();
+                else if (action === 'onboarding-go') onboardingGoTo(copyTarget);
+                else if (action === 'onboarding-dismiss') dismissOnboardingModal();
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
@@ -2821,6 +2877,9 @@
             forceAiPicks(); 
             var initialView = sessionStorage.getItem('whs_active_view') || 'lesson';
             showView(initialView); 
+            if (!localStorage.getItem('whs_onboarding_seen')) {
+                setTimeout(showOnboardingModal, 400);
+            }
         };
     </script>
 </body>
