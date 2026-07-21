@@ -223,7 +223,7 @@
                 <div class="flex flex-wrap justify-center p-1.5 bg-slate-100 rounded-xl mb-8 w-fit mx-auto border border-slate-200 shadow-inner gap-2">
                     <button id="mode-btn-standard" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-[#002066] text-white shadow-md border border-transparent" data-action="lesson-mode" data-val="standard">Standard Lesson</button>
                     <button id="mode-btn-relief" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-red-50 text-red-600 hover:bg-red-100 border border-red-100" data-action="lesson-mode" data-val="relief">Emergency Relief</button>
-                    <button id="mode-btn-notebooklm" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100" data-action="lesson-mode" data-val="notebooklm">NotebookLM Builder</button>
+                    <button id="mode-btn-notebooklm" class="px-6 py-2.5 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-100" data-action="lesson-mode" data-val="notebooklm">Gemini Notebook Builder</button>
                 </div>
 
                 <!-- CORE CONTEXT (Always Visible) -->
@@ -583,6 +583,15 @@
                             </div>
                         </div>
 
+                        <!-- SENIOR NCEA STANDARD (Hidden for juniors) -->
+                        <div id="unit-ncea-standard-container" class="hidden pt-2">
+                            <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-2">
+                                <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-slate-400 normal-case font-medium">(Optional)</span></label>
+                                <input type="text" id="unit-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none">
+                                <p class="text-[10px] text-purple-600 leading-tight">If provided, the unit sequence will be explicitly built to prepare students for this standard.</p>
+                            </div>
+                        </div>
+
                         <div class="pt-2">
                             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas</span>
                             <input type="text" id="unit-custom-task" placeholder="e.g. Include a debate in week 2..." class="w-full p-3 rounded-lg border border-slate-300 text-sm outline-none">
@@ -617,6 +626,11 @@
                                 <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#b45309"></span>Outline only, no tasks</span>
                                 <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#7e22ce"></span>MoE exemplar format</span>
                             </p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-2">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-On</span>
+                            <button id="unit-gemini-notebook-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom" data-tooltip="After the unit plan, the AI will ask if you'd like a dense knowledge document for this unit, ready to paste into a Gemini Notebook" data-action="toggle-unit-gemini-notebook" aria-pressed="false">📓 Gemini Notebook Knowledge</button>
                         </div>
 
                         <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
@@ -1135,7 +1149,7 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
+        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -1221,7 +1235,22 @@
             var isSen = yr.includes("Level");
             var isJun = !isSen;
             var jCon = document.getElementById('unit-junior-focus-container');
+            var nCon = document.getElementById('unit-ncea-standard-container');
             if(jCon) isJun ? jCon.classList.remove('hidden') : jCon.classList.add('hidden');
+            if(nCon) isSen ? nCon.classList.remove('hidden') : nCon.classList.add('hidden');
+        }
+
+        function toggleUnitGeminiNotebook(btn) {
+            unitState.geminiNotebook = !unitState.geminiNotebook;
+            if (btn) {
+                btn.classList.toggle('active', unitState.geminiNotebook);
+                btn.setAttribute('aria-pressed', unitState.geminiNotebook ? 'true' : 'false');
+                btn.className = unitState.geminiNotebook
+                    ? "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
+                    : "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom";
+            }
+            updateUnitBuilderPrompt();
+            saveAppState();
         }
 
         function getAiPicks(d, y, t, c, m, l, n) {
@@ -1581,6 +1610,13 @@
                     
                     var uk = document.getElementById('unit-junior-knowledge'); if (uk) uk.value = unitState.juniorKnowledge || "";
                     var up = document.getElementById('unit-junior-practices'); if (up) up.value = unitState.juniorPractices || "";
+                    var uns = document.getElementById('unit-ncea-standard'); if (uns) uns.value = unitState.ncea || "";
+                    var ugnBtn = document.getElementById('unit-gemini-notebook-btn');
+                    if (ugnBtn && unitState.geminiNotebook) {
+                        ugnBtn.classList.add('active');
+                        ugnBtn.setAttribute('aria-pressed', 'true');
+                        ugnBtn.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
+                    }
 
                     checkSeniorStatus();
                     checkUnitSeniorStatus();
@@ -2073,6 +2109,9 @@
             unitState.juniorKnowledge = uk;
             unitState.juniorPractices = up;
 
+            var ns = ((document.getElementById('unit-ncea-standard') || {}).value || "").trim();
+            unitState.ncea = ns;
+
             var yr = unitState.year || "";
             var isJun = ["Year 7", "Year 8", "Year 9", "Year 10"].includes(yr), isLeg = yr.includes("Level"), cUrl = getCurriculumLink(unitState.dept, yr);
             var actDur = unitState.dur === 'Other' ? (cd || "Custom Duration") : unitState.dur;
@@ -2109,6 +2148,7 @@
             if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
             if (isJun && uk) txt += 'Important: Explicitly cover this specific Knowledge throughout the unit sequence: ' + uk + '.\n';
             if (isJun && up) txt += 'Important: Explicitly cover these specific Practices throughout the unit sequence: ' + up + '.\n';
+            if (isLeg && ns) txt += 'Target NZQA Standard: ' + ns + '. CRITICAL: Use only this exact standard number as given — do not invent or substitute a different one. Design the unit sequence so it explicitly builds toward and prepares students for the specific knowledge, skills, and assessment demands of this standard, and note where in the sequence students would be ready for a related summative assessment.\n';
             if (sm) {
                 txt += 'Source Strictness: Base the unit STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
@@ -2200,6 +2240,10 @@
             
             txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
             
+            if (unitState.geminiNotebook) {
+                txt += '\n---\n\n### Follow-Up: Gemini Notebook Knowledge Document\nCRITICAL INSTRUCTION: Generate ONLY the unit plan above in this response. Do NOT generate the knowledge document yet — this is to avoid the output becoming too large and losing quality in a single pass.\nOnce you have finished the unit plan above, stop and ask me exactly this: "Would you like me to now generate a detailed Knowledge Document for this unit, suitable for uploading into a Gemini Notebook?" Then wait for my reply before continuing.\nIf I confirm, generate a single dense, factual knowledge document covering everything a student would need to know for this unit (aim for 1500+ words, structured with clear headings matching the lesson sequence above). CRITICAL: This document must be pure subject-matter content — do NOT include any pedagogical instructions, lesson staging, activities, or teaching strategy language; it exists purely as source material for Gemini Notebook to generate summaries, quizzes, and audio overviews from. ' + nzSpellingRule + ' CRITICAL: Do not hallucinate facts, dates, figures, or sources — where you are not certain of a specific fact, state it in general terms rather than inventing specifics.\n';
+            }
+            
             var b = document.getElementById('prompt-unit-text');
             if (b) b.innerText = txt;
         }
@@ -2235,10 +2279,10 @@
             // 1. SYSTEM ROLE & CONTEXT
             if (lessonState.mode === 'notebooklm') {
                 txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n\n';
-                txt += '### Task\nGenerate separated materials to be used with NotebookLM. You must separate the meta-prompts, the factual source document, and the slide generation prompt into completely distinct sections to prevent NotebookLM from confusing pedagogical instructions with subject facts.\n\n';
+                txt += '### Task\nGenerate separated materials to be used with Gemini Notebook. You must separate the meta-prompts, the factual source document, and the slide generation prompt into completely distinct sections to prevent Gemini Notebook from confusing pedagogical instructions with subject facts.\n\n';
                 txt += '### Strict Rules\n';
                 txt += 'Output using ONLY plain text and standard Markdown headers (#, ##, ###) to create a rigorous hierarchy. DO NOT use HTML tags.\n';
-                txt += 'You MUST use New Zealand English spelling (e.g. \'analyse\', \'colour\', \'programme\') throughout YOUR output, AND you must explicitly command NotebookLM in Documents A and C to use New Zealand English spelling in its final outputs.\n';
+                txt += 'You MUST use New Zealand English spelling (e.g. \'analyse\', \'colour\', \'programme\') throughout YOUR output, AND you must explicitly command Gemini Notebook in Documents A and C to use New Zealand English spelling in its final outputs.\n';
             } else {
                 txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n\n';
                 if (lessonState.mode === 'relief') {
@@ -2315,8 +2359,8 @@
             
             // 3. TONE & CLOSING RULES
             if (lessonState.mode === 'notebooklm') {
-                 txt += 'Depth Over Breadth: Ensure Document B (The Source Text) is dense, rigorous, and highly factual (aim for 1000+ words). NotebookLM thrives on depth.\n';
-                 txt += 'Token Limit Management: If generating all documents dilutes quality or hits your output limit, generate Documents A and B first, then pause and ask: "Would you like me to generate Document C (NotebookLM Slide Generation Prompt) now?"\n\n';
+                 txt += 'Depth Over Breadth: Ensure Document B (The Source Text) is dense, rigorous, and highly factual (aim for 1000+ words). Gemini Notebook thrives on depth.\n';
+                 txt += 'Token Limit Management: If generating all documents dilutes quality or hits your output limit, generate Documents A and B first, then pause and ask: "Would you like me to generate Document C (Gemini Notebook Slide Generation Prompt) now?"\n\n';
                  txt += '### Tone and Style\nProfessional, direct teacher tone. No AI filler.\n\n';
                  txt += '### Output Format\n';
             } else if (seq === 1) {
@@ -2348,9 +2392,9 @@
                     txt += 'PART 1: Relief Teacher Instructions (For Chat)\nA brief, clear email-style summary for the relief teacher explaining the ' + durMins + '-minute lesson flow (e.g., roughly ' + introMin + ' mins reading/vocab intro offline, roughly ' + platformMin + ' mins on ' + pName2 + ').\nPART 2: Student Handout (HTML)\nGenerate a short HTML student handout in a beautifully CSS styled block (' + tb + 'html\n...\n' + tb + '). Use WHS colors (#002066/#d1e6f6). This handout should have a brief engaging hook/introduction to the topic, 4-6 Key Vocabulary words, and clear instructions directing them to ' + pName2 + ' to complete their allocated work.\n';
                 }
             } else if (lessonState.mode === 'notebooklm') {
-                txt += 'DOCUMENT A: NotebookLM Prompt Template. Write a prompt to be pasted into the NotebookLM chat box to set its persona and instructions. Remind it to use New Zealand English.\n';
+                txt += 'DOCUMENT A: Gemini Notebook Prompt Template. Write a prompt to be pasted into the Gemini Notebook chat box to set its persona and instructions. Remind it to use New Zealand English.\n';
                 txt += 'DOCUMENT B: The Source Text. The dense, factual textbook-level content, strict Markdown headings, definitions, contexts. NO meta-commentary, NO pedagogical notes, NO lesson plans. Just pure subject facts.\n';
-                txt += 'DOCUMENT C: NotebookLM Slide Generation Prompt. Do NOT write a slide deck yourself. Instead, write a specific prompt that I will paste into NotebookLM asking it to generate a slide deck based on Document B. Explicitly command NotebookLM in this prompt to "use the WHS Slideshow template if available".\n';
+                txt += 'DOCUMENT C: Gemini Notebook Slide Generation Prompt. Do NOT write a slide deck yourself. Instead, write a specific prompt that I will paste into Gemini Notebook asking it to generate a slide deck based on Document B. Explicitly command Gemini Notebook in this prompt to "use the WHS Slideshow template if available".\n';
             } else {
                 
                 var partALabel = seq > 1 ? 'PART A: The Lesson Sequence Outline' : 'PART A: The Lesson Plan';
@@ -2695,6 +2739,7 @@
                 else if (action === 'use-recent-topic') syncTopics(val);
                 else if (action === 'toggle-dark-mode') toggleDarkMode();
                 else if (action === 'export-all') exportAllPrompts();
+                else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
@@ -2718,7 +2763,7 @@
 
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
-                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time'].includes(e.target.id)) updateUnitBuilderPrompt();
+                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time', 'unit-ncea-standard'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
