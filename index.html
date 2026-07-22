@@ -630,8 +630,12 @@
                         </div>
 
                         <div class="pt-4 border-t border-slate-200 mt-2">
-                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-On</span>
-                            <button id="unit-gemini-notebook-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom" data-tooltip="After the unit plan, the AI will ask if you'd like a dense knowledge document for this unit, ready to paste into a Gemini Notebook" data-action="toggle-unit-gemini-notebook" aria-pressed="false">📓 Gemini Notebook Knowledge</button>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-Ons</span>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="unit-gemini-notebook-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom" data-tooltip="After the unit plan, the AI will ask if you'd like a dense knowledge document for this unit, ready to paste into a Gemini Notebook" data-action="toggle-unit-gemini-notebook" aria-pressed="false">📓 Gemini Notebook Knowledge</button>
+                                <button id="unit-whs-template-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom" data-tooltip="Experimental: outputs the unit as a single HTML file matching the official WHS Doc template — save the AI's response as .html and upload to Google Drive to auto-convert it into a formatted Doc. Overrides the Lesson Plan Format above." data-action="toggle-unit-whs-template" aria-pressed="false">🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
+                                <button class="w-8 h-8 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
+                            </div>
                         </div>
 
                         <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
@@ -1012,6 +1016,40 @@
         </footer>
     </div>
     
+    <div id="whs-template-help-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl">
+            <h3 class="text-xl font-black text-slate-900 mb-1">🏫 Turning the AI's output into a Doc</h3>
+            <p class="text-sm text-slate-500 mb-5">The AI will return a block of HTML code. Here's the quickest way to turn it into a real, formatted Google Doc.</p>
+            <ol class="space-y-4 text-sm text-slate-700">
+                <li class="flex gap-3">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">1</span>
+                    <span>Copy <strong>only</strong> the code from the AI's reply — everything between the <code class="bg-slate-100 px-1 rounded text-xs">```html</code> and the closing <code class="bg-slate-100 px-1 rounded text-xs">```</code>, not the backticks themselves.</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">2</span>
+                    <span>Paste it into a plain text editor — <strong>Notepad</strong> (Windows) or <strong>TextEdit</strong> (Mac, first switch to <em>Format → Make Plain Text</em>) — and save it as <code class="bg-slate-100 px-1 rounded text-xs">UnitPlan.html</code>.</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">3</span>
+                    <span>Double-click that file to open it in your web browser — it'll render as a formatted page with real tables and colours.</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">4</span>
+                    <span>Select everything and copy it: <strong>Ctrl+A</strong> then <strong>Ctrl+C</strong> (Mac: <strong>Cmd+A</strong> then <strong>Cmd+C</strong>).</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">5</span>
+                    <span>Open a new Google Doc and set it to <strong>Landscape</strong> first — <em>File → Page setup → Orientation → Landscape</em> — since this template is designed for a wide layout.</span>
+                </li>
+                <li class="flex gap-3">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">6</span>
+                    <span>Paste into the doc: <strong>Ctrl+V</strong> (Mac: <strong>Cmd+V</strong>). Tables, shading, and borders should come through — you may just need to nudge column widths afterwards.</span>
+                </li>
+            </ol>
+            <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-whs-template-help">Got it</button>
+        </div>
+    </div>
+
     <div id="onboarding-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl">
             <h3 class="text-xl md:text-2xl font-black text-center text-slate-900 mb-1">👋 Welcome to the CPM AI Prompt Generator</h3>
@@ -1187,7 +1225,7 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
+        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -1291,6 +1329,25 @@
             saveAppState();
         }
 
+        function toggleUnitWhsTemplate(btn) {
+            unitState.whsTemplate = !unitState.whsTemplate;
+            if (btn) {
+                btn.setAttribute('aria-pressed', unitState.whsTemplate ? 'true' : 'false');
+                btn.innerHTML = unitState.whsTemplate
+                    ? '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>'
+                    : '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span>';
+                btn.className = unitState.whsTemplate
+                    ? "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
+                    : "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom";
+            }
+            updateUnitBuilderPrompt();
+            saveAppState();
+            if (unitState.whsTemplate && !localStorage.getItem('whs_template_help_seen')) {
+                showWhsTemplateHelpModal();
+                try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
+            }
+        }
+
         function getAiPicks(d, y, t, c, m, l, n) {
             var yr = y || "";
             var isSen = yr.includes("Level");
@@ -1355,6 +1412,16 @@
         function onboardingGoTo(target) {
             dismissOnboardingModal();
             showView(target);
+        }
+
+        /* ---------- WHS Template help modal ---------- */
+        function showWhsTemplateHelpModal() {
+            var m = document.getElementById('whs-template-help-modal');
+            if (m) m.classList.remove('hidden');
+        }
+        function closeWhsTemplateHelpModal() {
+            var m = document.getElementById('whs-template-help-modal');
+            if (m) m.classList.add('hidden');
         }
 
         function showGlobalToast(msg) {
@@ -1669,6 +1736,12 @@
                         ugnBtn.classList.add('active');
                         ugnBtn.setAttribute('aria-pressed', 'true');
                         ugnBtn.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
+                    }
+                    var uwtBtn = document.getElementById('unit-whs-template-btn');
+                    if (uwtBtn && unitState.whsTemplate) {
+                        uwtBtn.setAttribute('aria-pressed', 'true');
+                        uwtBtn.innerHTML = '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>';
+                        uwtBtn.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
                     }
 
                     checkSeniorStatus();
@@ -2153,6 +2226,7 @@
         }
 
         function updateUnitBuilderPrompt() {
+            var tb = String.fromCharCode(96, 96, 96);
             var t = getGlobalTopic(), ct = (document.getElementById('unit-custom-task') || {}).value || "", cd = (document.getElementById('unit-custom-dur') || {}).value || "";
             var sm = (document.getElementById('unit-source-material') || {}).value || "";
             unitState.sourceMaterial = sm;
@@ -2206,6 +2280,22 @@
                 txt += 'Source Strictness: Base the unit STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
             }
+            
+            if (unitState.whsTemplate) {
+                txt += 'CRITICAL: Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n';
+                txt += '### OUTPUT FORMAT OVERRIDE: WHS OFFICIAL TEMPLATE (HTML, LANDSCAPE)\n';
+                txt += 'CRITICAL: Ignore any other table-format instructions. Output your ENTIRE response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
+                txt += 'Fill in every [Fill] placeholder with real content (use exact search queries for any live URLs — do NOT hallucinate URLs). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table at the very end, which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
+                txt += tb + 'html\n';
+                txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 8px 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .top-banner { background-color: #87499c; color: #ffffff; font-weight: 700; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        .shaded-2nd-table { background-color: #d6bbdf; font-weight: 700; }\n        .knowledge-title { background-color: #70cdb2; font-weight: 700; }\n        .knowledge-section { background-color: #d4edef; }\n        .practices-title { background-color: #e1b846; font-weight: 700; }\n        .practices-section { background-color: #f4e5c2; }\n        h2 { font-size: 14pt; font-weight: 700; color: #000000; margin-bottom: 6px; margin-top: 24px; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; }\n        strong { font-weight: 700; }\n        .col-15 { width: 15%; }\n        .col-20 { width: 20%; }\n        .col-25 { width: 25%; }\n        .col-50 { width: 50%; }\n    </style>\n</head>\n<body>\n';
+                txt += '    <table>\n        <tr><td colspan="6" class="top-banner" style="text-align: left; font-size: 26pt;">WHS ' + yr + ' ' + unitState.dept + ' - ' + t + '</td></tr>\n        <tr>\n            <td class="header-bg" style="width: 15%;">Year Level</td><td style="width: 20%;">' + yr + '</td>\n            <td class="header-bg" style="width: 10%;">Term</td><td style="width: 20%;">[Fill suggested term]</td>\n            <td class="header-bg" style="width: 15%;">Duration</td><td style="width: 20%;">' + totalDurText + '</td>\n        </tr>\n        <tr><td class="header-bg">Topic/ Strand/ Concept/ Context</td><td colspan="5">' + t + '</td></tr>\n        <tr><td class="header-bg">Overview <span class="small-text">(description)</span></td><td colspan="5">[Fill a 1-2 sentence overview]</td></tr>\n        <tr><td class="header-bg">Purpose <span class="small-text">(what is the point?)</span></td><td colspan="5">[Fill the purpose of this unit]</td></tr>\n    </table>\n\n';
+                txt += '    <h2>Knowledge and Practices</h2>\n    <table>\n        <tr>\n            <td class="knowledge-title col-50">Knowledge <br><span class="small-text">(rich contexts for exploring big ideas)</span></td>\n            <td class="practices-title col-50">Practices <br><span class="small-text">(practices that bring rigour to learning)</span></td>\n        </tr>\n        <tr>\n            <td class="knowledge-section"><ul><li>[Fill knowledge point 1]</li><li>[Fill knowledge point 2]</li></ul></td>\n            <td class="practices-section"><ul><li>[Fill practice 1]</li><li>[Fill practice 2]</li></ul></td>\n        </tr>\n        <tr><td class="header-bg">Connections to prior learning</td><td class="header-bg">Connections to future learning</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n    </table>\n\n';
+                txt += '    <h2>Curriculum Integration</h2>\n    <table>\n        <tr><td class="header-bg col-50">Literacy will be incorporated into this unit by:</td><td class="header-bg col-50">Numeracy will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg">Mātauranga Māori will be incorporated into this unit by:</td><td class="header-bg">Localised Curriculum will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td><strong>Waiheke High School Cross Curricular</strong><br><strong>Waiheke community links</strong><br><br>[Fill]</td></tr>\n    </table>\n\n';
+                txt += '    <h2>Assessment</h2>\n    <table>\n        <tr><td class="header-bg col-50">How will I determine my learners prior knowledge? (before)</td><td class="header-bg col-50">How will I determine my student\u2019s progress in learning? (after)</td></tr>\n        <tr>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]<br><strong>Previous results or work:</strong> [Fill or N/A]</td>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]</td>\n        </tr>\n    </table>\n\n';
+                txt += '    <h2>Lesson Content - Unit Folder Link</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning number/s<br><span class="small-text">The sequence of lessons and groups of lessons.</span></td>\n            <td class="header-bg col-20">Knowledge<br><span class="small-text">What they will be learning</span></td>\n            <td class="header-bg col-20">Practice<br><span class="small-text">What they will do / How you know students have achieved success</span></td>\n            <td class="header-bg col-25">Student Learning Activities<br><span class="small-text">What strategies, activities and tasks do you want students to do?<br>Include explicit teaching where relevant</span></td>\n            <td class="header-bg col-20">Preparation/ Resources<br><span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td><strong>Strategies, activities, tasks:</strong> [Fill] <br><br><strong>Differentiation:</strong> [Fill]</td>\n            <td>[Fill]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
+                txt += '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n</body>\n</html>\n';
+                txt += tb + '\n';
+            } else {
             
             if (unitState.planType === 'outlines') {
                 txt += 'CRITICAL RULE: The "Preparation / Resources" column should list only general materials/resources needed for the lesson as a whole (e.g. a URL, a text, equipment) — do NOT tie resources to specific stages, tasks, or activities, since none should be described.\n';
@@ -2292,6 +2382,7 @@
             }
             
             txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
+            }
             
             if (unitState.geminiNotebook) {
                 txt += '\n---\n\n### Follow-Up: Gemini Notebook Knowledge Document\nCRITICAL INSTRUCTION: Generate ONLY the unit plan above in this response. Do NOT generate the knowledge document yet — this is to avoid the output becoming too large and losing quality in a single pass.\nOnce you have finished the unit plan above, stop and ask me exactly this: "Would you like me to now generate a detailed Knowledge Document for this unit, suitable for uploading into a Gemini Notebook?" Then wait for my reply before continuing.\nIf I confirm, generate a single dense, factual knowledge document covering everything a student would need to know for this unit (aim for 1500+ words, structured with clear headings matching the lesson sequence above). CRITICAL: This document must be pure subject-matter content — do NOT include any pedagogical instructions, lesson staging, activities, or teaching strategy language; it exists purely as source material for Gemini Notebook to generate summaries, quizzes, and audio overviews from. ' + nzSpellingRule + ' CRITICAL: Do not hallucinate facts, dates, figures, or sources — where you are not certain of a specific fact, state it in general terms rather than inventing specifics.\n';
@@ -2793,9 +2884,12 @@
                 else if (action === 'toggle-dark-mode') toggleDarkMode();
                 else if (action === 'export-all') exportAllPrompts();
                 else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
+                else if (action === 'toggle-unit-whs-template') toggleUnitWhsTemplate(target);
                 else if (action === 'show-onboarding') showOnboardingModal();
                 else if (action === 'onboarding-go') onboardingGoTo(copyTarget);
                 else if (action === 'onboarding-dismiss') dismissOnboardingModal();
+                else if (action === 'show-whs-template-help') showWhsTemplateHelpModal();
+                else if (action === 'close-whs-template-help') closeWhsTemplateHelpModal();
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
