@@ -107,7 +107,10 @@
         html.dark [class*="bg-blue-50"], html.dark [class*="bg-amber-50"], html.dark [class*="bg-purple-50"],
         html.dark [class*="bg-emerald-50"], html.dark [class*="bg-red-50"], html.dark [class*="bg-slate-50"],
         html.dark [class*="bg-green-50"], html.dark [class*="bg-[#ecfdf5]"], html.dark [class*="bg-slate-100"],
-        html.dark [class*="bg-indigo-50"], html.dark [class*="bg-orange-50"] { background-color: #1e293b !important; border-color: #334155 !important; }
+        html.dark [class*="bg-indigo-50"], html.dark [class*="bg-orange-50"], html.dark [class*="bg-violet-50"] { background-color: #1e293b !important; border-color: #334155 !important; }
+        html.dark [class*="border-violet-200"] { border-color: #334155 !important; }
+        html.dark [class*="hover:bg-violet-100"]:hover { background-color: #29354a !important; }
+        html.dark [class*="text-violet-700"] { color: #c4b5fd !important; }
         html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700, html.dark .text-slate-600 { color: #e2e8f0 !important; }
         html.dark .text-slate-500, html.dark .text-slate-400 { color: #94a3b8 !important; }
         html.dark .border-slate-200, html.dark .border-slate-300, html.dark .border-blue-100, html.dark .border-amber-100,
@@ -485,7 +488,7 @@
                                     <button class="builder-btn" data-action="lesson-output" data-val="media">+ Media/Videos</button>
                                     <button class="builder-btn" data-action="lesson-output" data-val="images">+ Images</button>
                                     <button class="builder-btn" data-action="lesson-output" data-val="lms">+ LMS Post</button>
-                                    <button class="builder-btn shaded border-dashed" data-action="lesson-output" data-val="all">Select All</button>
+                                    <button class="builder-btn border-dashed bg-green-50 border-green-300 text-green-700 hover:bg-green-100" data-action="lesson-output" data-val="all">Select All</button>
                                 </div>
 
                                 <div class="mt-4 pt-4 border-t border-slate-200">
@@ -972,7 +975,10 @@
                         </div>
                         <div class="grid md:grid-cols-2 gap-8 flex-grow">
                             <div>
-                                <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Click a Strategy</h4>
+                                <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
+                                    <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest">Click a Strategy</h4>
+                                    <button id="expand-strategies-btn" class="text-[10px] font-bold px-2.5 py-1.5 rounded-full bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200 transition tooltip-wrapper tooltip-bottom" data-tooltip="Swaps the list to show ONLY 18 curated strategies from Paul Ginnis & David Whitehead's research (e.g. The Marketplace, Hot-Seating, Concept Frame, Mantle of the Expert), spread across all 5 CPM stages. Turn off to go back to the normal list." data-action="toggle-expand-strategies" aria-pressed="false">✨ Expand Your Teaching Strategies</button>
+                                </div>
                                 <div id="display-strategies" class="space-y-2"></div>
                             </div>
                             <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
@@ -1191,6 +1197,24 @@
             5: { title: "Stage 5: Review", intent: "Closing and feedback." }
         };
         var cpmTaskDB = {
+            "Concept Frame": { emoji: "🧩", desc: "A four-quadrant matrix prompting students to define a concept's actions, attributes, examples, and category.", load: "Reduces cognitive overload by giving abstract inquiry a fixed visual structure.", ex: "Context: Year 9 Science.\nTeacher action: Draws a 4-box grid on the board labelled Actions/Attributes/Examples/Category.\nStudent action: Students populate each box for the target concept before writing." },
+            "Quick on the Draw": { emoji: "🏃", desc: "Teams race to skim a text and locate the answer to one question before unlocking the next.", load: "Builds fast, targeted scanning skills while keeping the whole class engaged.", ex: "Context: Year 11 Psychology.\nTeacher action: Hands team 1 a single question tied to a dense textbook page.\nStudent action: Team skims to find the answer, shows the teacher, then receives the next question." },
+            "The Value Continuum": { emoji: "📏", desc: "Students physically position themselves along an imaginary line to represent where they stand on a debatable statement.", load: "Makes abstract opinion spatial, boosting engagement and encoding.", ex: "Context: Year 12 Science.\nTeacher action: Poses a provocative statement and marks 'Strongly Agree' to 'Strongly Disagree' across the room.\nStudent action: Students walk to their position and justify it to their nearest neighbour." },
+            "Sequencing and Logical Ranking": { emoji: "🔢", desc: "Groups rank a randomised set of causes, steps, or events by significance or order.", load: "Turns a passive list into an active exercise in weighing evidence.", ex: "Context: Year 10 History.\nTeacher action: Hands out 8 cause cards for WW1.\nStudent action: Groups physically rank the cards most-to-least significant and defend their order to the class." },
+            "The Marketplace": { emoji: "🏪", desc: "Groups research a sub-topic and set up a 'stall' — half teach visitors, half circulate to learn from other stalls, then roles swap.", load: "Deepens mastery by forcing students to teach, not just consume, content.", ex: "Context: Year 9 Geography.\nTeacher action: Assigns each group a biome to research and present at a 'stall'.\nStudent action: Half the group teaches visiting classmates; the rest circulate gathering notes, then swap." },
+            "Mantle of the Expert": { emoji: "🕵️", desc: "Students take on the role of a professional (e.g., scientist, planner) tasked with solving a real-world problem.", load: "Reframes the task so motivation comes from role and purpose, not just grades.", ex: "Context: Year 10 Science.\nTeacher action: Presents a 'letter from the mayor' asking students, as environmental scientists, to solve a pollution crisis.\nStudent action: Students draft a protocol in role, applying course content to the scenario." },
+            "Hot-Seating": { emoji: "🎭", desc: "One student answers rapid-fire questions in character as a historical figure, literary character, or abstract concept.", load: "Stress-tests depth of understanding by demanding spontaneous, in-character synthesis.", ex: "Context: Year 11 Biology.\nTeacher action: A student sits at the front 'as' a red blood cell.\nStudent action: Class fires questions ('Where are you going? What are you carrying?'); the student answers in character using course knowledge." },
+            "Fiction Meaning Grid": { emoji: "📖", desc: "A grid mapping a character's actions, hidden motivations, and cultural context to structure literary analysis.", load: "Turns vague character analysis into a systematic tracking of cause and motive.", ex: "Context: Year 10 English.\nTeacher action: Draws a grid with columns for Action/Motivation/Context on the board.\nStudent action: Students fill in cells tracking a character's choices through the text." },
+            "MTW: Mental Time Travel and Empathy Charts": { emoji: "🕰️", desc: "Students imaginatively enter a different time or place using a sensory W-Chart (see/hear/smell) and a T-Chart (thinking/feeling).", load: "Builds an authentic mental model of an era before asking students to reason about it.", ex: "Context: Year 9 History.\nTeacher action: Asks students to imagine sheltering during the London Blitz.\nStudent action: Students fill a W-Chart with sensory details, then a T-Chart separating logical thoughts from emotions." },
+            "Venn Diagrams as Cognitive Construction Tools": { emoji: "⭕", desc: "Using a Venn diagram as a precise comparison tool rather than a generic organiser, forcing explicit trait-by-trait analysis.", load: "Physically constrains space to prevent vague, meandering comparisons.", ex: "Context: Year 9 Science.\nTeacher action: Draws two overlapping circles comparing two animal species.\nStudent action: Students sort specific traits into each circle or the overlap, justifying each placement." },
+            "Explicit Paraphrasing and Metacognitive Checking": { emoji: "🔄", desc: "Students continuously translate complex text or instructions into their own words, then explain how they did it.", load: "Disrupts the illusion of understanding by forcing active processing, not passive reading.", ex: "Context: Year 10 Biology.\nTeacher action: Pauses mid-reading on a dense paragraph about mitochondria.\nStudent action: Student explains the paragraph to a peer in casual language, exposing any gaps in understanding." },
+            "The Murder Hunt / Broken Information Synthesis": { emoji: "🔍", desc: "A complex problem is broken into fragmented clues distributed one-per-student, forcing the group to pool information to solve it.", load: "Makes every student mathematically essential, preventing one student from dominating the task.", ex: "Context: Year 10 History.\nTeacher action: Hands each student in a group one fragmented clue about a Tudor-era mystery.\nStudent action: Group members verbally share their clues and debate how they fit together to build a timeline." },
+            "Ambassadors for Intellectual Cross-Pollination": { emoji: "🕊️", desc: "One student from each group visits other groups to observe their approach, then returns to share ideas with their own team.", load: "Breaks group tunnel-vision by injecting outside perspectives mid-task.", ex: "Context: Year 11 Physics.\nTeacher action: Pauses a bridge-building design task and asks one 'ambassador' per group to tour other groups.\nStudent action: Ambassadors observe other designs, then return to report and integrate ideas into their own group's build." },
+            "Pairs to Fours: Progressive Synthesis": { emoji: "👥", desc: "Students debate a question in pairs first, then merge with another pair to synthesise their two conclusions into one.", load: "Builds confidence in a low-stakes pair before the pressure of a larger group debate.", ex: "Context: Year 12 English.\nTeacher action: Sets a question on a poem's central theme for pairs to discuss.\nStudent action: Pairs agree on an answer, then merge with another pair and debate to synthesise a single shared thesis." },
+            "Observer Servers": { emoji: "👁️", desc: "One student is removed from the task itself and assigned to silently track the group's teamwork (turn-taking, listening, conflict) using a checklist.", load: "Makes the usually invisible social mechanics of teamwork explicit and improvable.", ex: "Context: Year 11 Maths.\nTeacher action: Hands one student a checklist and asks them not to touch the maths problem.\nStudent action: The Observer tracks interruptions and positive listening, then reports feedback to the group at the end." },
+            "CREATE: Elaborated Metaphor Construction": { emoji: "🌉", desc: "A six-step process (Connect, Relate, Explore, Analyze, Transform, Evaluate) guiding students to build and test their own metaphors or analogies.", load: "Trains lateral thinking by mapping a known structure onto an unfamiliar concept.", ex: "Context: Year 10 Science.\nTeacher action: Asks students to compare a cell to a fortified city.\nStudent action: Students work through each CREATE step, extending the analogy and evaluating where it breaks down." },
+            "Vocabulary Matching for Ecological Assessment": { emoji: "🔗", desc: "Instead of an isolated spelling/definition test, students match key terms directly onto the same framework or grid they used to learn the content.", load: "Reduces assessment anxiety by mirroring the exact tool used during learning.", ex: "Context: Year 9 English.\nTeacher action: Sets a post-unit matching test using the same character grid students filled in earlier.\nStudent action: Students match vocabulary terms to the specific roles and traits they had already mapped." },
+            "Map from Memory": { emoji: "🗺️", desc: "Numbered group members take brief turns viewing a complex diagram, then return to instruct a scribe, iterating until the group reconstructs it.", load: "Trains targeted observation and precise verbal communication of spatial detail.", ex: "Context: Year 11 Biology (revision).\nTeacher action: Displays a complex mind map at the front for 30 seconds.\nStudent action: One student from each group views it, returns to dictate to a scribe, then a second student repeats to fix gaps." },
             "Retrieval Do-Now Quiz": { emoji: "🧠", desc: "Low-stakes 3-5 question quiz activating prior knowledge from the last lesson.", load: "Reduces intrinsic load by moving prerequisite knowledge into working memory.", ex: "Context: Year 10 Science.\nTeacher action: Displays 3 questions on the board as students enter.\nStudent action: Students complete the questions in silence for the first 3 minutes." },
             "Concept Mapping": { emoji: "🗺️", desc: "Visualising relationships between prior knowledge and new terms.", load: "Reduces extraneous load by spatially organising abstract connections.", ex: "Context: Year 12 Geography.\nTeacher action: Writes central topic on board. Asks students to draw connecting terms.\nStudent action: Students draw arrows and write linking verbs." },
             "Vocabulary Flash-drills": { emoji: "⚡", desc: "High-speed repetition of core tier-3 vocabulary.", load: "Builds automaticity to free up working memory later.", ex: "Context: Year 9 Te Reo Māori.\nTeacher action: Holds up A4 flashcards with vocabulary. Rapid-fire 1 second per card.\nStudent action: Choral whole-class verbal response." },
@@ -1281,6 +1305,16 @@
             }
             return res;
         }
+
+        /* Curated strategies from Ginnis (Teacher's Toolkit) & Whitehead (Top Tools), mapped to the CPM stage they suit best. Toggleable and purely additive — see toggleExpandStrategies(). SOLO Taxonomy Integration and Odd One Out Classification are deliberately excluded since they overlap with strategies already in the tool (the SOLO Framework tab, and "Odd One Out Concept Check"). */
+        var ginnisWhiteheadStrategies = {
+            1: ["MTW: Mental Time Travel and Empathy Charts"],
+            2: ["Concept Frame", "Fiction Meaning Grid", "Explicit Paraphrasing and Metacognitive Checking"],
+            3: ["Quick on the Draw", "The Value Continuum", "Sequencing and Logical Ranking", "Venn Diagrams as Cognitive Construction Tools", "The Murder Hunt / Broken Information Synthesis", "Ambassadors for Intellectual Cross-Pollination", "Pairs to Fours: Progressive Synthesis", "Observer Servers"],
+            4: ["The Marketplace", "Mantle of the Expert", "CREATE: Elaborated Metaphor Construction"],
+            5: ["Hot-Seating", "Vocabulary Matching for Ecological Assessment", "Map from Memory"]
+        };
+        var showExpandedStrategies = false;
 
         var cpmMatrix = {
             'Science': { 1: generateStrategies(1), 2: generateStrategies(2), 3: generateStrategies(3), 4: generateStrategies(4, ["Tiered Tasks", "Spaced Retrieval Worksheet", "Self-Checking Task", "Concept Synthesis Task", "Create Your Own Question", "Interleaved Practice Set", "Sentence Scaffolds", "Past Paper Simulation", "Independent Scaffolds", "Speed Fluency Drills", "Peer Critique", "Information Transformation Task", "Hexagonal Mapping"]), 5: generateStrategies(5) },
@@ -1634,6 +1668,23 @@
             var on = !document.documentElement.classList.contains('dark');
             applyDarkMode(on);
             try { localStorage.setItem('whs_dark_mode', on ? '1' : '0'); } catch (e) {}
+        }
+
+        /* ---------- Expanded (Ginnis/Whitehead) strategies toggle ---------- */
+        function applyExpandStrategies(on) {
+            showExpandedStrategies = !!on;
+            var btn = document.getElementById('expand-strategies-btn');
+            if (btn) {
+                btn.setAttribute('aria-pressed', showExpandedStrategies ? 'true' : 'false');
+                btn.className = showExpandedStrategies
+                    ? "text-[10px] font-bold px-2.5 py-1.5 rounded-full bg-violet-600 text-white border border-transparent transition tooltip-wrapper tooltip-bottom"
+                    : "text-[10px] font-bold px-2.5 py-1.5 rounded-full bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200 transition tooltip-wrapper tooltip-bottom";
+            }
+        }
+        function toggleExpandStrategies(btn) {
+            applyExpandStrategies(!showExpandedStrategies);
+            try { localStorage.setItem('whs_expand_strategies', showExpandedStrategies ? '1' : '0'); } catch (e) {}
+            renderInstructionalHub();
         }
 
         /* ---------- Recent topics ---------- */
@@ -2065,7 +2116,9 @@
             hP = hP || aiTopPicks;
             document.getElementById('display-title').innerText = stageInfo[currentStage].title;
             document.getElementById('display-intent').innerText = stageInfo[currentStage].intent;
-            var st = cpmMatrix[currentDiscipline][currentStage] || [];
+            var st = showExpandedStrategies
+                ? (ginnisWhiteheadStrategies[currentStage] || []).slice()
+                : (cpmMatrix[currentDiscipline][currentStage] || []).slice();
             var con = document.getElementById('display-strategies');
             var tp = hP[currentStage];
             var html = "";
@@ -2309,7 +2362,7 @@
                 var c = document.getElementById('les-s' + i + '-opts');
                 if (!c) continue;
                 c.innerHTML = '';
-                var sts = dM[i] || [];
+                var sts = (dM[i] || []).concat(ginnisWhiteheadStrategies[i] || []);
                 if (!sts.includes(lessonState['s' + i]) && sts.length > 0) {
                     lessonState['s' + i] = lP[i] || sts[0];
                 }
@@ -2563,6 +2616,14 @@
                     txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n\n';
                     txt += 'FINAL CHECK: Before outputting, re-read every "Brief Lesson Outline" cell and remove any wording that describes a task, activity, question, or instruction a student or teacher would carry out — only overall focus/purpose should remain.\n\n';
                 } else {
+                    var dM = cpmMatrix[unitState.dept] || cpmMatrix['Default'];
+                    var stageNames = ['Connect', 'I Do', 'We Do', 'You Do', 'Review'];
+                    txt += 'Suggested strategies for each stage (optional inspiration — vary them across the sequence rather than repeating the same one every lesson, and feel free to substitute a different, well-suited strategy instead if you judge it fits the learning better for a specific lesson):\n';
+                    for (var si = 1; si <= 5; si++) {
+                        var pool = (dM[si] || []).concat(ginnisWhiteheadStrategies[si] || []);
+                        txt += '- ' + stageNames[si - 1] + ': ' + pool.join(', ') + '\n';
+                    }
+                    txt += '\n';
                     if (isJun || !isLeg) {
                         txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Resources & Links |\n|---|---|---|---|---|\n';
                         txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
@@ -3120,6 +3181,7 @@
                 else if (action === 'theory-detail') renderTheoryTaskDetail(val, target);
                 else if (action === 'use-recent-topic') syncTopics(val);
                 else if (action === 'toggle-dark-mode') toggleDarkMode();
+                else if (action === 'toggle-expand-strategies') toggleExpandStrategies(target);
                 else if (action === 'export-all') exportAllPrompts();
                 else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
                 else if (action === 'toggle-unit-whs-template') toggleUnitWhsTemplate(target);
@@ -3206,6 +3268,7 @@
         window.onload = function() {
             setupEventListeners();
             applyDarkMode(localStorage.getItem('whs_dark_mode') === '1');
+            applyExpandStrategies(localStorage.getItem('whs_expand_strategies') === '1');
             renderRecentTopics();
             var savedTopic = localStorage.getItem('whs_topic');
             if(savedTopic) { var inputs = document.querySelectorAll('.sync-topic'); for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic; }
