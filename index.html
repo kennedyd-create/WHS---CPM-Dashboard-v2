@@ -258,6 +258,15 @@
 
                 <div id="les-curriculum-link" class="flex justify-start mb-6"></div>
 
+                <!-- LESSON PLAN TITLE (like Unit Plan Title in Unit Planner) -->
+                <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200 mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <label for="les-lesson-topic" class="text-xs font-black text-[#002066] uppercase tracking-widest block">Lesson Plan Title <span class="text-slate-400 normal-case font-medium">(Optional)</span></label>
+                    </div>
+                    <input type="text" id="les-lesson-topic" placeholder="e.g. How tropical cyclones form (physical processes)..." class="w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none">
+                    <p class="text-[10px] text-slate-500 mt-1.5 leading-tight">Use this if this lesson is one part of a broader subject topic below — e.g. subject topic is "Tropical Cyclones", but this lesson's specific title/focus is "How cyclones form". Leave blank to just use the subject topic below.</p>
+                </div>
+
                 <!-- TOPIC & DIFFERENTIATION -->
                 <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200 mb-6">
                     <div class="flex justify-between items-center mb-2">
@@ -472,6 +481,14 @@
                                     <button class="builder-btn" data-action="lesson-output" data-val="lms">+ LMS Post</button>
                                     <button class="builder-btn shaded border-dashed" data-action="lesson-output" data-val="all">Select All</button>
                                 </div>
+
+                                <div class="mt-4 pt-4 border-t border-slate-200">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-On</span>
+                                    <div class="flex gap-2">
+                                        <button id="les-whs-template-btn" class="flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom" data-tooltip="Experimental: only applies to the Full Lesson Plan format on the CPM framework (ignored for Short/MoE plans, Relief, Gemini Notebook, or alternative frameworks). Outputs the lesson as a single HTML file matching the official WHS Doc template." data-action="toggle-lesson-whs-template" aria-pressed="false">🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
+                                        <button class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
+                                    </div>
+                                </div>
                                 
                                 <div id="les-worksheet-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                                     <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Worksheet Activity Style</span>
@@ -594,8 +611,9 @@
                         </div>
 
                         <div class="pt-2">
-                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas</span>
-                            <input type="text" id="unit-custom-task" placeholder="e.g. Include a debate in week 2..." class="w-full p-3 rounded-lg border border-slate-300 text-sm outline-none">
+                            <span class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span class="text-slate-400 normal-case font-medium">(Optional — but the more detail, the better the result!)</span></span>
+                            <textarea id="unit-custom-task" rows="1" placeholder="e.g. Include a debate in week 2, make sure lesson 4 covers the marae visit, avoid worksheets for the differentiated group..." class="autosize-textarea w-full p-3 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
+                            <p class="text-[10px] text-slate-400 mt-1.5 leading-tight">Write as much as you want here — specific requests, things to avoid, key dates, resources to use. This box will grow as you type.</p>
                         </div>
 
                         <div>
@@ -613,31 +631,6 @@
                             </div>
                         </div>
                         
-                        <div class="pt-4 border-t border-slate-200 mt-2">
-                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Lesson Plan Format</span>
-                            <div class="flex flex-wrap gap-2" id="unit-plan-type-opts">
-                                <button class="builder-btn shaded active" data-action="unit-state" data-key="planType" data-val="full">Full CPM Sequence</button>
-                                <button class="builder-btn teal-shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
-                                <button class="builder-btn amber-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed lesson overviews without full CPM tables" data-action="unit-state" data-key="planType" data-val="outlines">Lesson Outlines Only</button>
-                                <button class="builder-btn moe-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed MoE tables for every lesson" data-action="unit-state" data-key="planType" data-val="moe">MoE Lesson Plans</button>
-                            </div>
-                            <p class="text-[10px] text-slate-400 mt-2 flex items-center gap-2 flex-wrap">
-                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#e11d48"></span>Full detail</span>
-                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#0f766e"></span>Brief summaries</span>
-                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#b45309"></span>Outline only, no tasks</span>
-                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#7e22ce"></span>MoE exemplar format</span>
-                            </p>
-                        </div>
-
-                        <div class="pt-4 border-t border-slate-200 mt-2">
-                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-Ons</span>
-                            <div class="flex flex-wrap gap-2">
-                                <button id="unit-gemini-notebook-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom" data-tooltip="After the unit plan, the AI will ask if you'd like a dense knowledge document for this unit, ready to paste into a Gemini Notebook" data-action="toggle-unit-gemini-notebook" aria-pressed="false">📓 Gemini Notebook Knowledge</button>
-                                <button id="unit-whs-template-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom" data-tooltip="Experimental: outputs the unit as a single HTML file matching the official WHS Doc template — save the AI's response as .html and upload to Google Drive to auto-convert it into a formatted Doc. Overrides the Lesson Plan Format above." data-action="toggle-unit-whs-template" aria-pressed="false">🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
-                                <button class="w-8 h-8 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
-                            </div>
-                        </div>
-
                         <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
                             <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-[#002066] hover:bg-slate-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
                                 <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations (Optional)</span>
@@ -679,6 +672,22 @@
                             </div>
                         </details>
 
+                        <div class="pt-4 border-t border-slate-200 mt-2">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Lesson Plan Format</span>
+                            <div class="flex flex-wrap gap-2" id="unit-plan-type-opts">
+                                <button class="builder-btn shaded active" data-action="unit-state" data-key="planType" data-val="full">Full CPM Sequence</button>
+                                <button class="builder-btn teal-shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
+                                <button class="builder-btn amber-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed lesson overviews without full CPM tables" data-action="unit-state" data-key="planType" data-val="outlines">Lesson Outlines Only</button>
+                                <button class="builder-btn moe-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed MoE tables for every lesson" data-action="unit-state" data-key="planType" data-val="moe">MoE Lesson Plans</button>
+                            </div>
+                            <p class="text-[10px] text-slate-400 mt-2 flex items-center gap-2 flex-wrap">
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#e11d48"></span>Full detail</span>
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#0f766e"></span>Brief summaries</span>
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#b45309"></span>Outline only, no tasks</span>
+                                <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#7e22ce"></span>MoE exemplar format</span>
+                            </p>
+                        </div>
+
                         <div class="pt-4 border-t border-slate-200 mt-4">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Assessment Options</span>
                             <p class="text-[10px] text-slate-500 mb-2 font-medium">Do you want time built in for an assessment in this unit?</p>
@@ -714,6 +723,17 @@
                                             <input type="text" id="unit-custom-assess-time" placeholder="Specify time..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-2">
+                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-Ons</span>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <button id="unit-gemini-notebook-btn" class="flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom" data-tooltip="After the unit plan, the AI will ask if you'd like a dense knowledge document for this unit, ready to paste into a Gemini Notebook" data-action="toggle-unit-gemini-notebook" aria-pressed="false">📓 Gemini Notebook Knowledge</button>
+                                <div class="flex gap-2">
+                                    <button id="unit-whs-template-btn" class="flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom" data-tooltip="Experimental: outputs the unit as a single HTML file matching the official WHS Doc template — save the AI's response as .html and upload to Google Drive to auto-convert it into a formatted Doc. Overrides the Lesson Plan Format above." data-action="toggle-unit-whs-template" aria-pressed="false">🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
+                                    <button class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
                                 </div>
                             </div>
                         </div>
@@ -1016,6 +1036,20 @@
         </footer>
     </div>
     
+    <div id="whs-copy-warning-modal" class="hidden fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border-t-4 border-red-500">
+            <div class="flex items-center gap-3 mb-3">
+                <span class="text-2xl">⚠️</span>
+                <h3 class="text-lg font-black text-red-700">HTML Template Option Selected</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-6">You currently have the <strong>WHS Official Template (HTML)</strong> add-on turned on. This will generate the ENTIRE output as a single HTML code block instead of the normal format — you'll need to save it as a file and convert it into a Doc afterwards. Are you sure this is what you want to copy?</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button class="flex-1 py-2.5 border border-slate-300 text-slate-600 hover:bg-slate-50 text-sm font-bold rounded-lg transition" data-action="whs-copy-cancel">← Return to Prompt Maker</button>
+                <button class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-lg transition" data-action="whs-copy-confirm">Yes, Confirm</button>
+            </div>
+        </div>
+    </div>
+
     <div id="whs-template-help-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl">
             <h3 class="text-xl font-black text-slate-900 mb-1">🏫 Turning the AI's output into a Doc</h3>
@@ -1232,7 +1266,7 @@
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60' 
+            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
         var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true };
@@ -1337,8 +1371,8 @@
                     ? '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>'
                     : '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span>';
                 btn.className = unitState.whsTemplate
-                    ? "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
-                    : "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom";
+                    ? "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
+                    : "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom";
             }
             updateUnitBuilderPrompt();
             saveAppState();
@@ -1347,6 +1381,26 @@
                 try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
             }
         }
+
+        function toggleLessonWhsTemplate(btn) {
+            lessonState.whsTemplate = !lessonState.whsTemplate;
+            if (btn) {
+                btn.setAttribute('aria-pressed', lessonState.whsTemplate ? 'true' : 'false');
+                btn.innerHTML = lessonState.whsTemplate
+                    ? '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>'
+                    : '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span>';
+                btn.className = lessonState.whsTemplate
+                    ? "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
+                    : "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom";
+            }
+            updateLessonBuilderPrompt();
+            saveAppState();
+            if (lessonState.whsTemplate && !localStorage.getItem('whs_template_help_seen')) {
+                showWhsTemplateHelpModal();
+                try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
+            }
+        }
+
 
         function getAiPicks(d, y, t, c, m, l, n) {
             var yr = y || "";
@@ -1415,6 +1469,43 @@
         }
 
         /* ---------- WHS Template help modal ---------- */
+        var pendingWhsCopy = null;
+
+        function attemptCopy(targetId, btn) {
+            var isWhs = (targetId === 'prompt-unit-text' && unitState.whsTemplate) ||
+                        (targetId === 'prompt-lesson-text' && lessonState.whsTemplate);
+            if (isWhs) {
+                pendingWhsCopy = { id: targetId, btn: btn };
+                showWhsCopyWarningModal();
+                return;
+            }
+            if (targetId === 'prompt-unit-text') maybeShowTaskFieldTip();
+            copyText(targetId, btn);
+        }
+        function maybeShowTaskFieldTip() {
+            var field = document.getElementById('unit-custom-task');
+            if (field && !field.value.trim() && !sessionStorage.getItem('unit_task_tip_shown')) {
+                showGlobalToast('💡 Tip: the "Specific Activities" box above lets you add your own requests');
+                try { sessionStorage.setItem('unit_task_tip_shown', '1'); } catch (e) {}
+            }
+        }
+        function showWhsCopyWarningModal() {
+            var m = document.getElementById('whs-copy-warning-modal');
+            if (m) m.classList.remove('hidden');
+        }
+        function closeWhsCopyWarningModal() {
+            var m = document.getElementById('whs-copy-warning-modal');
+            if (m) m.classList.add('hidden');
+        }
+        function cancelWhsCopy() {
+            pendingWhsCopy = null;
+            closeWhsCopyWarningModal();
+        }
+        function confirmWhsCopy() {
+            closeWhsCopyWarningModal();
+            showWhsTemplateHelpModal();
+        }
+
         function showWhsTemplateHelpModal() {
             var m = document.getElementById('whs-template-help-modal');
             if (m) m.classList.remove('hidden');
@@ -1422,6 +1513,16 @@
         function closeWhsTemplateHelpModal() {
             var m = document.getElementById('whs-template-help-modal');
             if (m) m.classList.add('hidden');
+            if (pendingWhsCopy) {
+                copyText(pendingWhsCopy.id, pendingWhsCopy.btn);
+                pendingWhsCopy = null;
+            }
+        }
+
+        /* ---------- Auto-expanding textarea ---------- */
+        function autosizeTextarea(el) {
+            el.style.height = 'auto';
+            el.style.height = Math.min(el.scrollHeight, 280) + 'px';
         }
 
         function showGlobalToast(msg) {
@@ -1725,6 +1826,7 @@
                     var sm = document.getElementById('les-source-material'); if (sm) sm.value = lessonState.sourceMaterial || "";
                     var ul = document.getElementById('les-unit-link'); if (ul) ul.value = lessonState.unitLink || "";
                     var un = document.getElementById('les-unit-number'); if (un) un.value = lessonState.unitNum || "";
+                    var lt = document.getElementById('les-lesson-topic'); if (lt) lt.value = lessonState.lessonTopic || "";
                     var as = document.getElementById('assess-source-material'); if (as) as.value = assessmentState.sourceMaterial || "";
                     var usm = document.getElementById('unit-source-material'); if (usm) usm.value = unitState.sourceMaterial || "";
                     
@@ -1741,7 +1843,13 @@
                     if (uwtBtn && unitState.whsTemplate) {
                         uwtBtn.setAttribute('aria-pressed', 'true');
                         uwtBtn.innerHTML = '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>';
-                        uwtBtn.className = "px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
+                        uwtBtn.className = "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
+                    }
+                    var lwtBtn = document.getElementById('les-whs-template-btn');
+                    if (lwtBtn && lessonState.whsTemplate) {
+                        lwtBtn.setAttribute('aria-pressed', 'true');
+                        lwtBtn.innerHTML = '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>';
+                        lwtBtn.className = "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
                     }
 
                     checkSeniorStatus();
@@ -2414,6 +2522,10 @@
             var durMins = parseInt((document.getElementById('les-lesson-duration') || {}).value) || 60;
             lessonState.duration = String(durMins);
             
+            var lt = ((document.getElementById('les-lesson-topic') || {}).value || "").trim();
+            lessonState.lessonTopic = lt;
+            var lessonTopicLine = 'Lesson Topic: "' + (lt || t) + '"' + (lt && lt !== t ? '\n(Broader subject topic: "' + t + '")' : '');
+            
             var tb = String.fromCharCode(96, 96, 96);
             var b = document.getElementById('prompt-lesson-text');
             if (outs.length === 0 && lessonState.mode === 'standard') { if (b) b.innerText = "Select an Output option."; return; }
@@ -2422,13 +2534,13 @@
 
             // 1. SYSTEM ROLE & CONTEXT
             if (lessonState.mode === 'notebooklm') {
-                txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n\n';
+                txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nSubject: ' + lessonState.dept + '\nYear Level: ' + yr + '\n' + lessonTopicLine + '\n\n';
                 txt += '### Task\nGenerate separated materials to be used with Gemini Notebook. You must separate the meta-prompts, the factual source document, and the slide generation prompt into completely distinct sections to prevent Gemini Notebook from confusing pedagogical instructions with subject facts.\n\n';
                 txt += '### Strict Rules\n';
                 txt += 'Output using ONLY plain text and standard Markdown headers (#, ##, ###) to create a rigorous hierarchy. DO NOT use HTML tags.\n';
                 txt += 'You MUST use New Zealand English spelling (e.g. \'analyse\', \'colour\', \'programme\') throughout YOUR output, AND you must explicitly command Gemini Notebook in Documents A and C to use New Zealand English spelling in its final outputs.\n';
             } else {
-                txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nClass: ' + yr + ' ' + lessonState.dept + '. Topic: "' + t + '".\n\n';
+                txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nSubject: ' + lessonState.dept + '\nYear Level: ' + yr + '\n' + lessonTopicLine + '\n\n';
                 if (lessonState.mode === 'relief') {
                     if (lessonState.reliefType === 'full-worksheet') {
                         txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained Student Worksheet.\n\n';
@@ -2563,6 +2675,45 @@
                 };
                 
                 if (outs.includes('plan')) {
+                  if (lessonState.whsTemplate && lessonState.framework === 'cpm' && lessonState.mode === 'standard') {
+                    txt += '### OUTPUT FORMAT OVERRIDE: WHS OFFICIAL TEMPLATE (HTML, LANDSCAPE)\n';
+                    txt += 'CRITICAL: Ignore the Markdown table instructions elsewhere for the Full Lesson Plan. Output the lesson plan as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
+                    txt += 'Fill in every [Fill] placeholder with real content (use exact search queries for any live URLs — do NOT hallucinate URLs). Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything.\n\n';
+                    if (seq > 1) {
+                        txt += 'CRITICAL: This is a ' + seq + '-lesson sequence. Repeat the ENTIRE structure below (from <h1> through the final Resources & Links table) once per lesson, all inside this SAME html/body — do not produce separate code blocks. Change the <h1> heading for each to "Lesson N: [Lesson Title]".\n\n';
+                    }
+                    txt += tb + 'html\n';
+                    txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 11pt; color: #000000; line-height: 1.5; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; background-color: #ffffff; table-layout: fixed; }\n        th, td { border: 1px solid #000000; padding: 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .shaded { background-color: #dbe5f1; font-weight: 700; }\n        h1 { font-size: 18pt; font-weight: 700; margin-bottom: 16px; margin-top: 0; text-align: center; }\n        strong { font-weight: 700; }\n        ul { margin-top: 0; margin-bottom: 0; padding-left: 20px; }\n        li { margin-bottom: 6px; }\n    </style>\n</head>\n<body>\n\n';
+                    txt += '    <h1>' + (seq > 1 ? 'Lesson 1: [Fill Title]' : 'Lesson Plan') + '</h1>\n\n';
+                    txt += '    <table>\n        <tr>\n            <td class="shaded" style="width: 15%;">Department</td>\n            <td style="width: 35%;"><strong>' + lessonState.dept + '</strong></td>\n            <td class="shaded" style="width: 15%;">Year Level</td>\n            <td style="width: 35%;"><strong>' + yr + '</strong></td>\n        </tr>\n        <tr>\n            <td class="shaded">Topic</td>\n            <td colspan="3">' + (lt || t) + '</td>\n        </tr>\n    </table>\n\n';
+                    txt += '    <table>\n        <tr>\n            <td class="shaded" style="width: 85%;">Topic Content</td>\n            <td class="shaded" style="width: 15%;">Duration</td>\n        </tr>\n        <tr>\n            <td>[Fill 1-2 bold subheadings with short paragraphs summarising the core factual/practical content of the lesson]</td>\n            <td>' + durMins + ' mins</td>\n        </tr>\n    </table>\n\n';
+                    txt += '    <table>\n        <tr>\n            <td class="shaded" style="width: 50%;">Whāinga Ako (Learning Intentions)</td>\n            <td class="shaded" style="width: 50%;">Paearu Angitu (Success Criteria)</td>\n        </tr>\n        <tr>\n            <td>[Fill Learning Intention]</td>\n            <td><ul><li>1. [Fill]</li><li>2. [Fill]</li><li>3. [Fill]</li></ul></td>\n        </tr>\n    </table>\n\n';
+                    txt += '    <table>\n        <tr><td colspan="2" class="shaded">Overview</td></tr>\n        <tr>\n            <td class="shaded" style="width: 85%;">Stage & Strategy Focus</td>\n            <td class="shaded" style="width: 15%;">Time (mins)</td>\n        </tr>\n';
+                    if (stg.includes(1) || seq > 1) txt += '        <tr><td>Stage 1: CONNECT — ' + lessonState.s1 + '</td><td>[Time]</td></tr>\n';
+                    if (stg.includes(2) || seq > 1) txt += '        <tr><td>Stage 2: I DO — ' + lessonState.s2 + '</td><td>[Time]</td></tr>\n';
+                    if (stg.includes(3) || seq > 1) txt += '        <tr><td>Stage 3: WE DO — ' + lessonState.s3 + '</td><td>[Time]</td></tr>\n';
+                    if (stg.includes(4) || seq > 1) txt += '        <tr><td>Stage 4: YOU DO — ' + lessonState.s4 + '</td><td>[Time]</td></tr>\n';
+                    if (stg.includes(5) || seq > 1) txt += '        <tr><td>Stage 5: REVIEW — ' + lessonState.s5 + '</td><td>[Time]</td></tr>\n';
+                    txt += '    </table>\n\n';
+                    txt += '    <table>\n        <tr><td class="shaded">Key Vocabulary</td></tr>\n        <tr><td><ul><li>[Term 1 — definition]</li><li>[Term 2 — definition]</li><li>[Term 3 — definition]</li><li>[Term 4 — definition]</li></ul></td></tr>\n    </table>\n\n';
+                    txt += '    <table>\n        <tr><td class="shaded">Lesson Details</td></tr>\n        <tr>\n            <td>\n';
+                    if (stg.includes(1) || seq > 1) txt += '                <strong>Stage 1: CONNECT</strong><br>\n                [Word-for-word opening script & specific questions to activate prior knowledge]<br><br>\n';
+                    if (stg.includes(2) || seq > 1) txt += '                <strong>Stage 2: I DO</strong><br>\n                [Exact teacher script and whiteboard drawing/writing instructions]<br><br>\n';
+                    if (stg.includes(3) || seq > 1) txt += '                <strong>Stage 3: WE DO</strong><br>\n                [Specific hinge questions, guided practice tasks and scenarios]<br><br>\n';
+                    if (stg.includes(4) || seq > 1) txt += '                <strong>Stage 4: YOU DO</strong><br>\n                [' + (lessonState.extra !== 'None' ? 'Detailed independent task instructions explicitly adapted for: ' + lessonState.extra : 'Detailed independent task instructions and scaffolds') + ']<br><br>\n';
+                    if (stg.includes(5) || seq > 1) txt += '                <strong>Stage 5: REVIEW</strong><br>\n                [Exit ticket or specific review task. CRITICAL: Explicitly loop back to measure the Success Criteria established above]\n';
+                    txt += '            </td>\n        </tr>\n    </table>\n\n';
+                    txt += '    <table>\n        <tr><td class="shaded">Resources & Links</td></tr>\n        <tr>\n            <td>\n                <ul>\n';
+                    if (stg.includes(1) || seq > 1) txt += '                    <li><strong>Stage 1 (Connect):</strong> [Resource or "No external resources required"]</li>\n';
+                    if (stg.includes(2) || seq > 1) txt += '                    <li><strong>Stage 2 (I Do):</strong> [Resource / live URL]</li>\n';
+                    if (stg.includes(3) || seq > 1) txt += '                    <li><strong>Stage 3 (We Do):</strong> [Resource / live URL]</li>\n';
+                    if (stg.includes(4) || seq > 1) txt += '                    <li><strong>Stage 4 (You Do):</strong> [Resource / live URL]</li>\n';
+                    if (stg.includes(5) || seq > 1) txt += '                    <li><strong>Stage 5 (Review):</strong> [Resource]</li>\n';
+                    txt += '                </ul>\n            </td>\n        </tr>\n    </table>\n\n';
+                    if (seq > 1) txt += '    <!-- CRITICAL: Repeat the full structure above (h1 through Resources & Links table) for Lesson 2, Lesson 3, etc. through all ' + seq + ' lessons, each with its own real, distinct content. -->\n\n';
+                    txt += '</body>\n</html>\n';
+                    txt += tb + '\n';
+                  } else {
                     txt += partALabel + '\n';
                     if (seq > 1) {
                         txt += 'Print this header ONCE at the top:\n**Topic:** ' + t + ' | **Total Sequence Duration:** ' + totalSeqMins + ' mins | **Whāinga Ako (Learning Intentions):** [Fill] | **Paearu Angitu (Success Criteria):** [Fill]\n\n';
@@ -2590,6 +2741,7 @@
                     } else if (altDetailBodies[lessonState.altFramework]) {
                         txt += '\n' + altDetailBodies[lessonState.altFramework];
                     }
+                  }
                 }
                 
                 if (outs.includes('plan-short')) {
@@ -2858,7 +3010,7 @@
                 else if (action === 'inst-year') setInstructionalYear(val);
                 else if (action === 'inst-state') setInstState(key, val, target);
                 else if (action === 'stage') setStage(parseInt(val));
-                else if (action === 'copy') copyText(copyTarget, target);
+                else if (action === 'copy') attemptCopy(copyTarget, target);
                 else if (action === 'download') downloadPrompt(copyTarget);
                 else if (action === 'strategy-prompt') setStrategyPrompt(val);
                 else if (action === 'unit-state') setUnitState(key, val, target);
@@ -2885,11 +3037,14 @@
                 else if (action === 'export-all') exportAllPrompts();
                 else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
                 else if (action === 'toggle-unit-whs-template') toggleUnitWhsTemplate(target);
+                else if (action === 'toggle-lesson-whs-template') toggleLessonWhsTemplate(target);
                 else if (action === 'show-onboarding') showOnboardingModal();
                 else if (action === 'onboarding-go') onboardingGoTo(copyTarget);
                 else if (action === 'onboarding-dismiss') dismissOnboardingModal();
                 else if (action === 'show-whs-template-help') showWhsTemplateHelpModal();
                 else if (action === 'close-whs-template-help') closeWhsTemplateHelpModal();
+                else if (action === 'whs-copy-cancel') cancelWhsCopy();
+                else if (action === 'whs-copy-confirm') confirmWhsCopy();
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
@@ -2909,12 +3064,16 @@
 
             document.body.addEventListener('focusout', function(e) {
                 if (e.target.classList && e.target.classList.contains('sync-topic')) addRecentTopic(e.target.value);
+                if (e.target.classList && e.target.classList.contains('autosize-textarea') && !e.target.value.trim()) {
+                    e.target.style.height = '';
+                }
             });
 
             document.body.addEventListener('input', function(e) {
+                if (e.target.classList.contains('autosize-textarea')) autosizeTextarea(e.target);
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time', 'unit-ncea-standard'].includes(e.target.id)) updateUnitBuilderPrompt();
-                else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration'].includes(e.target.id)) updateLessonBuilderPrompt();
+                else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration', 'les-lesson-topic'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
                     var warn = document.getElementById('les-sequence-warning');
