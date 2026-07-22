@@ -106,11 +106,15 @@
         html.dark .bg-white { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0; }
         html.dark [class*="bg-blue-50"], html.dark [class*="bg-amber-50"], html.dark [class*="bg-purple-50"],
         html.dark [class*="bg-emerald-50"], html.dark [class*="bg-red-50"], html.dark [class*="bg-slate-50"],
-        html.dark [class*="bg-green-50"], html.dark [class*="bg-[#ecfdf5]"], html.dark [class*="bg-slate-100"] { background-color: #1e293b !important; border-color: #334155 !important; }
+        html.dark [class*="bg-green-50"], html.dark [class*="bg-[#ecfdf5]"], html.dark [class*="bg-slate-100"],
+        html.dark [class*="bg-indigo-50"], html.dark [class*="bg-orange-50"] { background-color: #1e293b !important; border-color: #334155 !important; }
         html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700, html.dark .text-slate-600 { color: #e2e8f0 !important; }
         html.dark .text-slate-500, html.dark .text-slate-400 { color: #94a3b8 !important; }
         html.dark .border-slate-200, html.dark .border-slate-300, html.dark .border-blue-100, html.dark .border-amber-100,
-        html.dark .border-purple-100 { border-color: #334155 !important; }
+        html.dark .border-purple-100, html.dark [class*="border-indigo-200"], html.dark [class*="border-orange-200"] { border-color: #334155 !important; }
+        html.dark [class*="hover:bg-indigo-100"]:hover, html.dark [class*="hover:bg-orange-100"]:hover { background-color: #29354a !important; }
+        html.dark [class*="text-indigo-600"] { color: #a5b4fc !important; }
+        html.dark [class*="text-orange-600"] { color: #fdba74 !important; }
         html.dark input, html.dark textarea, html.dark select { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
         html.dark input::placeholder { color: #64748b !important; }
         html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
@@ -217,6 +221,8 @@
                     </button>
                 </div>
             </div>
+
+            <div id="lesson-addons-banner" class="hidden max-w-6xl mx-auto -mb-2"></div>
 
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#002066] max-w-6xl mx-auto mb-8 shadow-sm bg-white">
                 
@@ -549,6 +555,8 @@
                 </div>
             </div>
 
+            <div id="unit-addons-banner" class="hidden max-w-5xl mx-auto -mb-4"></div>
+
             <!-- Tab Color Theme: WHS Gold -->
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#c5a059] max-w-5xl mx-auto mb-8 shadow-sm bg-white">
                 <h3 class="text-2xl font-bold text-slate-900 mb-6">Unit Planner Configuration</h3>
@@ -584,9 +592,9 @@
 
                         <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
                             <div class="flex justify-between items-center mb-2">
-                                <label class="text-xs font-black text-[#002066] uppercase tracking-widest block">Unit Plan Title</label>
+                                <label for="unit-plan-title-input" class="text-xs font-black text-[#002066] uppercase tracking-widest block">Unit Plan Title</label>
                             </div>
-                            <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none mb-2">
+                            <input type="text" id="unit-plan-title-input" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none mb-2">
                             <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
                         </div>
                         
@@ -604,14 +612,14 @@
                         <!-- SENIOR NCEA STANDARD (Hidden for juniors) -->
                         <div id="unit-ncea-standard-container" class="hidden pt-2">
                             <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-2">
-                                <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-slate-400 normal-case font-medium">(Optional)</span></label>
+                                <label for="unit-ncea-standard" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-slate-400 normal-case font-medium">(Optional)</span></label>
                                 <input type="text" id="unit-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none">
                                 <p class="text-[10px] text-purple-600 leading-tight">If provided, the unit sequence will be explicitly built to prepare students for this standard.</p>
                             </div>
                         </div>
 
                         <div class="pt-2">
-                            <span class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span class="text-slate-400 normal-case font-medium">(Optional — but the more detail, the better the result!)</span></span>
+                            <label for="unit-custom-task" class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span class="text-slate-400 normal-case font-medium">(Optional — but the more detail, the better the result!)</span></label>
                             <textarea id="unit-custom-task" rows="1" placeholder="e.g. Include a debate in week 2, make sure lesson 4 covers the marae visit, avoid worksheets for the differentiated group..." class="autosize-textarea w-full p-3 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
                             <p class="text-[10px] text-slate-400 mt-1.5 leading-tight">Write as much as you want here — specific requests, things to avoid, key dates, resources to use. This box will grow as you type.</p>
                         </div>
@@ -861,7 +869,7 @@
                 <div id="ncea-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
                     <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
                         <div><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span><p class="text-xs text-purple-600 font-medium leading-tight">Generates NCEA-style options with shared Achieved/Merit/Excellence matrix.</p></div>
-                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-2 mt-2"><label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-red-500 text-xs">*</span></label><input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none"></div>
+                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-2 mt-2"><label for="assess-ncea-standard" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-red-500 text-xs">*</span></label><input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none"></div>
                     </div>
                 </div>
 
@@ -1027,15 +1035,54 @@
         <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
             <p>© 2026 Waiheke High School Professional Learning Programme</p>
             <p class="mt-2 text-xs flex items-center justify-center gap-2 flex-wrap">
-                <span>Version 2.2</span>
+                <span>Version 2.3</span>
                 <span class="text-slate-300">·</span>
-                <span>Last updated: 22 July 2026</span>
+                <span>Last updated: 23 July 2026</span>
+                <span class="text-slate-300">·</span>
+                <button class="text-[#002066] hover:underline font-semibold" data-action="show-changelog">What's New?</button>
                 <span class="text-slate-300">·</span>
                 <a href="mailto:feedback@waiheke.school.nz?subject=CPM%20Prompt%20Generator%20Feedback" class="text-[#002066] hover:underline font-semibold">Send Feedback</a>
             </p>
         </footer>
     </div>
     
+    <div id="changelog-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-xl w-full shadow-2xl max-h-[80vh] overflow-y-auto">
+            <h3 class="text-xl font-black text-slate-900 mb-4">📋 What's New</h3>
+            <div class="space-y-5 text-sm text-slate-700">
+                <div>
+                    <p class="font-bold text-[#002066]">23 July 2026 — v2.3</p>
+                    <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
+                        <li>Reordered Unit Planner sections for a more logical flow (Curriculum Integrations → Lesson Plan Format → Assessment Options → Add-Ons)</li>
+                        <li>"Specific Activities" box now auto-expands as you type, with clearer encouragement to add detail</li>
+                        <li>A gentle one-time reminder about the "Specific Activities" box if you copy a prompt without using it</li>
+                        <li>Fixed several dark mode colour gaps on newer buttons and fields</li>
+                        <li>Improved accessibility (screen reader labels) on several fields</li>
+                        <li>Added a visible banner when an add-on (WHS Template, Gemini Notebook) is switched on, so it's never a silent surprise later</li>
+                        <li>This "What's New" panel!</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-[#002066]">22 July 2026 — v2.2</p>
+                    <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
+                        <li>Added an experimental "WHS Official Template (HTML)" add-on to both the Unit Planner and Lesson Builder, matching the official landscape Doc templates</li>
+                        <li>Added a confirmation step before copying a prompt with the HTML template active</li>
+                        <li>Added optional NZQA Standard Number field, "Lesson Plan Title" field, and Gemini Notebook Knowledge add-on</li>
+                        <li>Renamed all "NotebookLM" references to "Gemini Notebook" following Google's rename</li>
+                        <li>Added dark mode, a first-visit onboarding guide, recent topics, and a footer with version info</li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="font-bold text-[#002066]">Earlier</p>
+                    <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
+                        <li>Core Lesson Builder, Unit Planner, Assessment Generator, and Strategy Hub tools built out</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-changelog">Close</button>
+        </div>
+    </div>
+
     <div id="whs-copy-warning-modal" class="hidden fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border-t-4 border-red-500">
             <div class="flex items-center gap-3 mb-3">
@@ -1361,6 +1408,7 @@
             }
             updateUnitBuilderPrompt();
             saveAppState();
+            updateUnitAddonsBanner();
         }
 
         function toggleUnitWhsTemplate(btn) {
@@ -1376,6 +1424,7 @@
             }
             updateUnitBuilderPrompt();
             saveAppState();
+            updateUnitAddonsBanner();
             if (unitState.whsTemplate && !localStorage.getItem('whs_template_help_seen')) {
                 showWhsTemplateHelpModal();
                 try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
@@ -1395,6 +1444,7 @@
             }
             updateLessonBuilderPrompt();
             saveAppState();
+            updateLessonAddonsBanner();
             if (lessonState.whsTemplate && !localStorage.getItem('whs_template_help_seen')) {
                 showWhsTemplateHelpModal();
                 try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
@@ -1489,6 +1539,16 @@
                 try { sessionStorage.setItem('unit_task_tip_shown', '1'); } catch (e) {}
             }
         }
+        /* ---------- Changelog ---------- */
+        function showChangelogModal() {
+            var m = document.getElementById('changelog-modal');
+            if (m) m.classList.remove('hidden');
+        }
+        function closeChangelogModal() {
+            var m = document.getElementById('changelog-modal');
+            if (m) m.classList.add('hidden');
+        }
+
         function showWhsCopyWarningModal() {
             var m = document.getElementById('whs-copy-warning-modal');
             if (m) m.classList.remove('hidden');
@@ -1523,6 +1583,30 @@
         function autosizeTextarea(el) {
             el.style.height = 'auto';
             el.style.height = Math.min(el.scrollHeight, 280) + 'px';
+        }
+
+        /* ---------- Active add-ons banner (so returning users aren't surprised by persisted toggles) ---------- */
+        function renderAddonsBanner(elId, items) {
+            var b = document.getElementById(elId);
+            if (!b) return;
+            if (items.length) {
+                b.classList.remove('hidden');
+                b.innerHTML = '<div class="bg-indigo-50 border border-indigo-200 rounded-lg px-4 py-2.5 text-xs font-bold text-indigo-700 shadow-sm flex flex-wrap items-center gap-x-2 gap-y-1"><span>⚡ Active add-on' + (items.length > 1 ? 's' : '') + ':</span>' + items.map(function(a) { return '<span class="bg-white px-2 py-0.5 rounded border border-indigo-200">' + a + '</span>'; }).join('') + '</div>';
+            } else {
+                b.classList.add('hidden');
+                b.innerHTML = '';
+            }
+        }
+        function updateUnitAddonsBanner() {
+            var active = [];
+            if (unitState.whsTemplate) active.push('🏫 WHS Official Template (HTML)');
+            if (unitState.geminiNotebook) active.push('📓 Gemini Notebook Knowledge');
+            renderAddonsBanner('unit-addons-banner', active);
+        }
+        function updateLessonAddonsBanner() {
+            var active = [];
+            if (lessonState.whsTemplate) active.push('🏫 WHS Official Template (HTML)');
+            renderAddonsBanner('lesson-addons-banner', active);
         }
 
         function showGlobalToast(msg) {
@@ -1851,6 +1935,8 @@
                         lwtBtn.innerHTML = '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>';
                         lwtBtn.className = "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
                     }
+                    updateUnitAddonsBanner();
+                    updateLessonAddonsBanner();
 
                     checkSeniorStatus();
                     checkUnitSeniorStatus();
@@ -3045,6 +3131,8 @@
                 else if (action === 'close-whs-template-help') closeWhsTemplateHelpModal();
                 else if (action === 'whs-copy-cancel') cancelWhsCopy();
                 else if (action === 'whs-copy-confirm') confirmWhsCopy();
+                else if (action === 'show-changelog') showChangelogModal();
+                else if (action === 'close-changelog') closeChangelogModal();
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
