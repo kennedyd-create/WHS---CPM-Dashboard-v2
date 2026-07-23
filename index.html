@@ -25,6 +25,8 @@
         .stage-btn:hover { border-color: var(--whs-light-blue); }
         .stage-btn.active { border-color: var(--whs-dark-blue); background: var(--whs-light-blue); }
         .builder-btn { padding: 0.5rem 0.75rem; font-size: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.25rem; background: white; transition: all 0.2s; font-weight: 600; color: #475569; }
+        /* Compact strategy buttons — used in Lesson Builder's 5-stage pickers and Strategy Hub's strategy list, since these lists have grown long */
+        .strategy-btn-sm { padding: 0.3rem 0.55rem !important; font-size: 0.68rem !important; line-height: 1.15 !important; }
         
         /* Shaded lesson-plan-format options, each with its own colour */
         .builder-btn.shaded:not(.active) { background-color: #fff1f2; border-color: #fecdd3; color: #9f1239; }
@@ -977,9 +979,9 @@
                             <div>
                                 <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
                                     <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest">Click a Strategy</h4>
-                                    <button id="expand-strategies-btn" class="text-[10px] font-bold px-2.5 py-1.5 rounded-full bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200 transition tooltip-wrapper tooltip-bottom" data-tooltip="Swaps the list to show ONLY 18 curated strategies from Paul Ginnis & David Whitehead's research (e.g. The Marketplace, Hot-Seating, Concept Frame, Mantle of the Expert), spread across all 5 CPM stages. Turn off to go back to the normal list." data-action="toggle-expand-strategies" aria-pressed="false">✨ Expand Your Teaching Strategies</button>
+                                    <button id="expand-strategies-btn" class="text-[10px] font-bold px-2.5 py-1.5 rounded-full bg-violet-50 text-violet-700 hover:bg-violet-100 border border-violet-200 transition tooltip-wrapper tooltip-bottom" data-tooltip="Swaps the list to show ONLY 23 curated strategies from Paul Ginnis, David Whitehead, and Cubitt/Irvine/Dow's research (e.g. The Marketplace, Hot-Seating, Fishbone Diagram, I-Chart), spread across all 5 CPM stages. Turn off to go back to the normal list." data-action="toggle-expand-strategies" aria-pressed="false">✨ Expand Your Teaching Strategies</button>
                                 </div>
-                                <div id="display-strategies" class="space-y-2"></div>
+                                <div id="display-strategies" class="space-y-1"></div>
                             </div>
                             <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
                                 <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 border-b border-blue-100 flex justify-between items-center">
@@ -1215,6 +1217,11 @@
             "CREATE: Elaborated Metaphor Construction": { emoji: "🌉", desc: "A six-step process (Connect, Relate, Explore, Analyze, Transform, Evaluate) guiding students to build and test their own metaphors or analogies.", load: "Trains lateral thinking by mapping a known structure onto an unfamiliar concept.", ex: "Context: Year 10 Science.\nTeacher action: Asks students to compare a cell to a fortified city.\nStudent action: Students work through each CREATE step, extending the analogy and evaluating where it breaks down." },
             "Vocabulary Matching for Ecological Assessment": { emoji: "🔗", desc: "Instead of an isolated spelling/definition test, students match key terms directly onto the same framework or grid they used to learn the content.", load: "Reduces assessment anxiety by mirroring the exact tool used during learning.", ex: "Context: Year 9 English.\nTeacher action: Sets a post-unit matching test using the same character grid students filled in earlier.\nStudent action: Students match vocabulary terms to the specific roles and traits they had already mapped." },
             "Map from Memory": { emoji: "🗺️", desc: "Numbered group members take brief turns viewing a complex diagram, then return to instruct a scribe, iterating until the group reconstructs it.", load: "Trains targeted observation and precise verbal communication of spatial detail.", ex: "Context: Year 11 Biology (revision).\nTeacher action: Displays a complex mind map at the front for 30 seconds.\nStudent action: One student from each group views it, returns to dictate to a scribe, then a second student repeats to fix gaps." },
+            "Mind Mapping (Star Diagram)": { emoji: "🌟", desc: "A non-linear radial diagram capturing rapid, associative ideas branching out from a central topic.", load: "Frees up divergent thinking by removing rigid hierarchical structure.", ex: "Context: Year 10 History.\nTeacher action: Writes 'Long-term hiding' in the centre of the board.\nStudent action: Groups branch out ideas about the psychological, physical, and social effects, then reflect on why they generated each idea." },
+            "Flow Chart": { emoji: "➡️", desc: "Maps a linear process or chronological sequence of events, showing how each stage connects to the next.", load: "Forces students to rank, order, and causally link events rather than just listing them.", ex: "Context: Year 11 History.\nTeacher action: Provides a set of key events leading to a conflict's escalation.\nStudent action: Students sequence the events into a flow chart, drawing arrows showing how each stage triggered the next." },
+            "Fishbone Diagram": { emoji: "🐟", desc: "Maps multiple contributing causes of an outcome onto a fish-skeleton shape, with major categories as 'ribs' and specific factors as smaller branches.", load: "Prevents single-variable thinking by visually forcing multiple causal categories.", ex: "Context: Year 9 Geography.\nTeacher action: Draws a fishbone template with 'Dense Population' at the head.\nStudent action: Groups research and add causal categories (economic, environmental, historical) along the ribs, with specific factors branching off each." },
+            "T-Chart / SEEC Analysis": { emoji: "📊", desc: "A two-column (or four-quadrant SEEC) chart categorising information by Social, Economic, Environmental, and Cultural impact.", load: "Prevents generalised thinking by forcing categorisation into specific societal domains.", ex: "Context: Year 12 Geography.\nTeacher action: Sets up four SEEC-labelled sheets around the room for a demographic shift.\nStudent action: Groups record and categorise the impacts under each heading, then present policy-level conclusions." },
+            "I-Chart (Inquiry Chart)": { emoji: "🔎", desc: "A research matrix with key questions across the top and information sources down the side, used to structure independent research.", load: "Separates the source from the answer, encouraging cross-referencing and bias-checking.", ex: "Context: Year 13 Social Studies.\nTeacher action: Provides an I-Chart with questions on population migration drivers across the top and source types down the side.\nStudent action: Groups populate cells as they research, then synthesise the bottom row into a class presentation." },
             "Retrieval Do-Now Quiz": { emoji: "🧠", desc: "Low-stakes 3-5 question quiz activating prior knowledge from the last lesson.", load: "Reduces intrinsic load by moving prerequisite knowledge into working memory.", ex: "Context: Year 10 Science.\nTeacher action: Displays 3 questions on the board as students enter.\nStudent action: Students complete the questions in silence for the first 3 minutes." },
             "Concept Mapping": { emoji: "🗺️", desc: "Visualising relationships between prior knowledge and new terms.", load: "Reduces extraneous load by spatially organising abstract connections.", ex: "Context: Year 12 Geography.\nTeacher action: Writes central topic on board. Asks students to draw connecting terms.\nStudent action: Students draw arrows and write linking verbs." },
             "Vocabulary Flash-drills": { emoji: "⚡", desc: "High-speed repetition of core tier-3 vocabulary.", load: "Builds automaticity to free up working memory later.", ex: "Context: Year 9 Te Reo Māori.\nTeacher action: Holds up A4 flashcards with vocabulary. Rapid-fire 1 second per card.\nStudent action: Choral whole-class verbal response." },
@@ -1306,12 +1313,12 @@
             return res;
         }
 
-        /* Curated strategies from Ginnis (Teacher's Toolkit) & Whitehead (Top Tools), mapped to the CPM stage they suit best. Toggleable and purely additive — see toggleExpandStrategies(). SOLO Taxonomy Integration and Odd One Out Classification are deliberately excluded since they overlap with strategies already in the tool (the SOLO Framework tab, and "Odd One Out Concept Check"). */
+        /* Curated strategies from Ginnis (Teacher's Toolkit), Whitehead (Top Tools), and Cubitt/Irvine/Dow (Top Tools for Social Sciences Teachers), mapped to the CPM stage they suit best. Toggleable and purely additive — see toggleExpandStrategies(). SOLO Taxonomy Integration and Odd One Out Classification are deliberately excluded since they overlap with strategies already in the tool (the SOLO Framework tab, and "Odd One Out Concept Check"). */
         var ginnisWhiteheadStrategies = {
-            1: ["MTW: Mental Time Travel and Empathy Charts"],
-            2: ["Concept Frame", "Fiction Meaning Grid", "Explicit Paraphrasing and Metacognitive Checking"],
-            3: ["Quick on the Draw", "The Value Continuum", "Sequencing and Logical Ranking", "Venn Diagrams as Cognitive Construction Tools", "The Murder Hunt / Broken Information Synthesis", "Ambassadors for Intellectual Cross-Pollination", "Pairs to Fours: Progressive Synthesis", "Observer Servers"],
-            4: ["The Marketplace", "Mantle of the Expert", "CREATE: Elaborated Metaphor Construction"],
+            1: ["MTW: Mental Time Travel and Empathy Charts", "Mind Mapping (Star Diagram)"],
+            2: ["Concept Frame", "Fiction Meaning Grid", "Explicit Paraphrasing and Metacognitive Checking", "Flow Chart"],
+            3: ["Quick on the Draw", "The Value Continuum", "Sequencing and Logical Ranking", "Venn Diagrams as Cognitive Construction Tools", "The Murder Hunt / Broken Information Synthesis", "Ambassadors for Intellectual Cross-Pollination", "Pairs to Fours: Progressive Synthesis", "Observer Servers", "Fishbone Diagram", "T-Chart / SEEC Analysis"],
+            4: ["The Marketplace", "Mantle of the Expert", "CREATE: Elaborated Metaphor Construction", "I-Chart (Inquiry Chart)"],
             5: ["Hot-Seating", "Vocabulary Matching for Ecological Assessment", "Map from Memory"]
         };
         var showExpandedStrategies = false;
@@ -1532,6 +1539,33 @@
             if (m === 'integrate') { p[1] = getS(1, ["whakataukī", "karakia", "pūrākau"]); p[2] = getS(2, ["analogy", "pronunciation"]); p[3] = getS(3, ["peer", "tuakana"]); }
             if (c === 'waiheke') { p[1] = getS(1, ["hook", "image", "prompt"]); p[4] = getS(4, ["scenario", "application"]); }
             
+            /* Curated (Ginnis/Whitehead/Cubitt-Irvine-Dow) strategies — topic keywords can override the pick above when the topic strongly suggests one of these */
+            if (top.includes("empathy") || top.includes("perspective") || top.includes("hardship") || top.includes("persecut") || top.includes("oppress") || top.includes("living through") || top.includes("imagine living")) p[1] = "MTW: Mental Time Travel and Empathy Charts";
+            else if (top.includes("brainstorm") || top.includes("prior knowledge")) p[1] = "Mind Mapping (Star Diagram)";
+
+            if (top.includes("character") || top.includes("motivation") || top.includes("novel") || top.includes("narrative")) p[2] = "Fiction Meaning Grid";
+            else if (top.includes("process") || top.includes("sequence of") || top.includes("escalat") || top.includes("stages of")) p[2] = "Flow Chart";
+            else if (top.includes("dense text") || top.includes("comprehension")) p[2] = "Explicit Paraphrasing and Metacognitive Checking";
+            else if (top.includes("define") || top.includes("concept") || top.includes("classif")) p[2] = "Concept Frame";
+
+            if (top.includes("cause") || top.includes("why did") || top.includes("factors")) p[3] = "Fishbone Diagram";
+            else if (top.includes("impact") || top.includes("effect of") || top.includes("consequence")) p[3] = "T-Chart / SEEC Analysis";
+            else if (top.includes("debate") || top.includes("opinion") || top.includes("controvers") || top.includes("ethic")) p[3] = "The Value Continuum";
+            else if (top.includes("rank") || top.includes("priorit") || top.includes("significan")) p[3] = "Sequencing and Logical Ranking";
+            else if (top.includes("compare") || top.includes("contrast") || top.includes("similar")) p[3] = "Venn Diagrams as Cognitive Construction Tools";
+            else if (top.includes("mystery") || top.includes("detective") || top.includes("solve")) p[3] = "The Murder Hunt / Broken Information Synthesis";
+            else if (top.includes("thesis") || top.includes("central theme") || top.includes("synthesis")) p[3] = "Pairs to Fours: Progressive Synthesis";
+            else if (top.includes("skim") || top.includes("scan")) p[3] = "Quick on the Draw";
+
+            if (top.includes("research") || top.includes("investigat") || top.includes("inquiry")) p[4] = "I-Chart (Inquiry Chart)";
+            else if (top.includes("metaphor") || top.includes("analog")) p[4] = "CREATE: Elaborated Metaphor Construction";
+            else if (top.includes("role") || top.includes("scenario") || top.includes("real-world problem")) p[4] = "Mantle of the Expert";
+            else if (top.includes("present") || top.includes("teach each other")) p[4] = "The Marketplace";
+
+            if (top.includes("revis") || top.includes("recall")) p[5] = "Map from Memory";
+            else if (top.includes("vocabulary") || top.includes("terminology")) p[5] = "Vocabulary Matching for Ecological Assessment";
+            else if (top.includes("interrogat") || top.includes("probe understanding")) p[5] = "Hot-Seating";
+
             return p;
         }
 
@@ -2125,7 +2159,7 @@
             st.forEach(function(s) {
                 var isTp = (s === tp);
                 var isPlatform = (s === "Writer's Toolbox" || s === "Education Perfect (EP)");
-                var bc = "tooltip-wrapper w-full text-left border-l-4 p-3 rounded-r-lg shadow-sm transition text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 relative group ";
+                var bc = "tooltip-wrapper strategy-btn-sm w-full text-left border-l-2 p-2 rounded-r-lg shadow-sm transition text-xs font-medium focus:outline-none focus:ring-2 focus:ring-blue-300 relative group ";
                 if (currentStrategy === s) bc += "border-[#002066] bg-[#002066] text-white ";
                 else if (isTp) bc += "border-[#10b981] bg-[#ecfdf5] text-[#047857] hover:bg-[#d1fae5] recommended-highlight ";
                 else if (isPlatform) bc += "platform-btn ";
@@ -2144,13 +2178,13 @@
             document.querySelectorAll('#display-strategies button').forEach(function(b) {
                 var isPlatform = (b.innerText.includes("Writer's Toolbox") || b.innerText.includes("Education Perfect"));
                 if (b.innerText.includes(s)) {
-                    b.className = "tooltip-wrapper w-full text-left bg-[#002066] border-l-4 border-[#002066] p-3 rounded-r-lg shadow-sm transition text-sm font-medium relative group text-white";
+                    b.className = "tooltip-wrapper strategy-btn-sm w-full text-left bg-[#002066] border-l-2 border-[#002066] p-2 rounded-r-lg shadow-sm transition text-xs font-medium relative group text-white";
                 } else if (b.innerHTML.includes("TOP PICK")) {
-                    b.className = "tooltip-wrapper w-full text-left bg-[#ecfdf5] hover:bg-[#d1fae5] border-l-4 border-[#10b981] p-3 rounded-r-lg shadow-sm transition text-sm font-medium relative group text-[#047857] recommended-highlight";
+                    b.className = "tooltip-wrapper strategy-btn-sm w-full text-left bg-[#ecfdf5] hover:bg-[#d1fae5] border-l-2 border-[#10b981] p-2 rounded-r-lg shadow-sm transition text-xs font-medium relative group text-[#047857] recommended-highlight";
                 } else if (isPlatform) {
-                    b.className = "tooltip-wrapper w-full text-left platform-btn p-3 rounded-r-lg shadow-sm transition text-sm font-medium relative group";
+                    b.className = "tooltip-wrapper strategy-btn-sm w-full text-left platform-btn p-2 rounded-r-lg shadow-sm transition text-xs font-medium relative group";
                 } else {
-                    b.className = "tooltip-wrapper w-full text-left bg-white border-l-4 border-[#cbd5e1] p-3 rounded-r-lg shadow-sm transition text-sm font-medium relative group text-slate-700 hover:bg-blue-50";
+                    b.className = "tooltip-wrapper strategy-btn-sm w-full text-left bg-white border-l-2 border-[#cbd5e1] p-2 rounded-r-lg shadow-sm transition text-xs font-medium relative group text-slate-700 hover:bg-blue-50";
                 }
             });
             
@@ -2372,7 +2406,7 @@
                     var isS = (lessonState['s' + i] === s);
                     var isPlatform = (s === "Writer's Toolbox" || s === "Education Perfect (EP)");
                     
-                    var bc = "builder-btn text-left tooltip-wrapper ";
+                    var bc = "builder-btn strategy-btn-sm text-left tooltip-wrapper ";
                     if (isS) bc += "active ";
                     if (isTp) bc += "recommended-highlight ";
                     if (isPlatform && !isS && !isTp) bc += "platform-btn ";
