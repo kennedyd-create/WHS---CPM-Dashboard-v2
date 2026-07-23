@@ -109,14 +109,25 @@
         html.dark [class*="bg-blue-50"], html.dark [class*="bg-amber-50"], html.dark [class*="bg-purple-50"],
         html.dark [class*="bg-emerald-50"], html.dark [class*="bg-red-50"], html.dark [class*="bg-slate-50"],
         html.dark [class*="bg-green-50"], html.dark [class*="bg-[#ecfdf5]"], html.dark [class*="bg-slate-100"],
-        html.dark [class*="bg-indigo-50"], html.dark [class*="bg-orange-50"], html.dark [class*="bg-violet-50"] { background-color: #1e293b !important; border-color: #334155 !important; }
+        html.dark [class*="bg-indigo-50"], html.dark [class*="bg-orange-50"], html.dark [class*="bg-violet-50"],
+        html.dark [class*="bg-amber-100"] { background-color: #1e293b !important; border-color: #334155 !important; }
         html.dark [class*="border-violet-200"] { border-color: #334155 !important; }
         html.dark [class*="hover:bg-violet-100"]:hover { background-color: #29354a !important; }
         html.dark [class*="text-violet-700"] { color: #c4b5fd !important; }
+        /* Assessment Generator only (scoped to avoid affecting Lesson Builder's own emerald usage) */
+        html.dark #view-assessment [class*="bg-emerald-100"], html.dark #view-assessment [class*="bg-sky-50"],
+        html.dark #view-assessment [class*="bg-yellow-50"] { background-color: #1e293b !important; border-color: #334155 !important; }
+        html.dark #view-assessment [class*="border-emerald-200"], html.dark #view-assessment [class*="border-emerald-300"],
+        html.dark #view-assessment [class*="border-sky-200"], html.dark #view-assessment [class*="border-sky-300"],
+        html.dark #view-assessment [class*="border-yellow-200"], html.dark #view-assessment [class*="border-yellow-300"] { border-color: #334155 !important; }
+        html.dark #view-assessment [class*="text-emerald-700"], html.dark #view-assessment [class*="text-emerald-600"] { color: #6ee7b7 !important; }
+        html.dark #view-assessment [class*="text-sky-700"], html.dark #view-assessment [class*="text-sky-600"], html.dark #view-assessment [class*="text-sky-500"] { color: #7dd3fc !important; }
+        html.dark #view-assessment [class*="text-yellow-700"], html.dark #view-assessment [class*="text-yellow-600"] { color: #fde68a !important; }
         html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700, html.dark .text-slate-600 { color: #e2e8f0 !important; }
         html.dark .text-slate-500, html.dark .text-slate-400 { color: #94a3b8 !important; }
         html.dark .border-slate-200, html.dark .border-slate-300, html.dark .border-blue-100, html.dark .border-amber-100,
-        html.dark .border-purple-100, html.dark [class*="border-indigo-200"], html.dark [class*="border-orange-200"] { border-color: #334155 !important; }
+        html.dark .border-purple-100, html.dark [class*="border-purple-200"], html.dark [class*="border-indigo-200"], html.dark [class*="border-orange-200"] { border-color: #334155 !important; }
+        html.dark [class*="bg-purple-100"] { background-color: #1e293b !important; }
         html.dark [class*="hover:bg-indigo-100"]:hover, html.dark [class*="hover:bg-orange-100"]:hover { background-color: #29354a !important; }
         html.dark [class*="text-indigo-600"] { color: #a5b4fc !important; }
         html.dark [class*="text-orange-600"] { color: #fdba74 !important; }
@@ -135,7 +146,7 @@
         html.dark [class*="text-[#002066]"] { color: #7fb2f0 !important; }
         html.dark [class*="text-blue-800"], html.dark [class*="text-blue-900"] { color: #93c5fd !important; }
         html.dark [class*="text-amber-800"], html.dark [class*="text-amber-900"] { color: #fcd34d !important; }
-        html.dark [class*="text-purple-600"], html.dark [class*="text-purple-800"], html.dark [class*="text-purple-900"] { color: #d8b4fe !important; }
+        html.dark [class*="text-purple-600"], html.dark [class*="text-purple-700"], html.dark [class*="text-purple-800"], html.dark [class*="text-purple-900"] { color: #d8b4fe !important; }
         html.dark [class*="text-emerald-800"], html.dark [class*="text-emerald-900"] { color: #6ee7b7 !important; }
         html.dark [class*="text-green-600"], html.dark [class*="text-green-800"] { color: #86efac !important; }
         html.dark [class*="text-red-500"], html.dark [class*="text-red-600"], html.dark [class*="text-red-700"], html.dark [class*="text-red-800"] { color: #fca5a5 !important; }
@@ -210,7 +221,6 @@
                     </button>
                 </div>
 
-                <button class="w-full justify-center px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Download every generated prompt from this session as one text file" data-action="export-all">⬇ Export All Prompts</button>
                 <button class="w-full justify-center px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Not sure which tool to use? Reopen the quick guide" data-action="show-onboarding">❓ New Here? Guide Me</button>
             </div>
         </nav>
@@ -800,9 +810,10 @@
 
             <!-- Tab Color Theme: Purple -->
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-purple-600 max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
+                <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-200 shadow-sm rounded-xl p-5">
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
+                        <span class="text-xs font-bold text-purple-700 uppercase tracking-widest block mb-2">Department <span class="text-[9px] font-black text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full ml-1">Required</span></span>
                         <div class="flex flex-wrap gap-2" id="assess-dept-opts">
                             <button class="builder-btn active" data-action="assessment-state" data-key="dept" data-val="Science">Science</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="dept" data-val="Maths">Maths</button>
@@ -815,7 +826,7 @@
                         </div>
                     </div>
                     <div>
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Year Level</span>
+                        <span class="text-xs font-bold text-purple-700 uppercase tracking-widest block mb-2">Year Level <span class="text-[9px] font-black text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full ml-1">Required</span></span>
                         <div class="flex flex-wrap gap-2" id="assess-year-opts">
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 7">Year 7</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 8">Year 8</button>
@@ -827,23 +838,90 @@
                         </div>
                     </div>
                 </div>
+                </div>
 
                 <div id="assess-curriculum-link" class="flex justify-start"></div>
 
-                <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
-                    <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-[#002066] uppercase tracking-widest block">What are you assessing?</label></div>
-                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none mb-2">
+                <div id="junior-scope-container" class="hidden">
+                    <div class="bg-emerald-50 border-l-4 border-l-emerald-500 border border-emerald-200 shadow-sm rounded-xl p-5">
+                        <span class="text-xs font-black text-emerald-700 uppercase tracking-widest block mb-2">Junior Assessment Scope (Years 7-10) <span class="text-[9px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full ml-1">Required</span></span>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div><label class="text-[10px] font-bold text-emerald-700 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="assess-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-emerald-300 text-sm outline-none"></div>
+                            <div><label class="text-[10px] font-bold text-emerald-700 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="assess-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-emerald-300 text-sm outline-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ncea-standard-container-outer" class="hidden">
+                    <div class="bg-emerald-50 border-l-4 border-l-emerald-500 border border-emerald-200 shadow-sm rounded-xl p-5">
+                        <div><span class="text-xs font-black text-emerald-700 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span><p class="text-xs text-emerald-600 font-medium leading-tight">Generates NCEA-style options with shared Achieved/Merit/Excellence matrix.</p></div>
+                        <div id="assess-ncea-standard-container" class="border-t border-emerald-200 pt-2 mt-2"><label for="assess-ncea-standard" class="text-[10px] font-bold text-emerald-700 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-[9px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full ml-1">Required</span></label><input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-emerald-300 text-sm outline-none"></div>
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 border-l-4 border-l-emerald-500 border border-emerald-200 shadow-sm rounded-xl p-5">
+                    <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-emerald-700 uppercase tracking-widest block">What are you assessing? <span class="text-[9px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full ml-1">Required</span></label></div>
+                    <input type="text" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-emerald-300 font-medium text-slate-800 bg-white outline-none mb-2">
                     <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
                 </div>
 
-                <div class="mt-4 p-4 bg-slate-100 rounded-xl border border-slate-200">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Source Material (Google Docs / Slides Allowed)</label>
-                    <input type="text" id="assess-source-material" placeholder="Paste Google Docs, Slides, or other URLs (separate multiple links with commas)..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                <div class="mt-4 bg-sky-50 border-l-4 border-l-sky-400 border border-sky-200 shadow-sm rounded-xl p-4">
+                    <label class="text-[10px] font-bold text-sky-700 uppercase tracking-widest block mb-2">Source Material (Google Docs / Slides Allowed) <span class="text-[9px] font-black text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
+                    <input type="text" id="assess-source-material" placeholder="Paste Google Docs, Slides, or other URLs (separate multiple links with commas)..." class="w-full p-2.5 rounded-lg border border-sky-300 text-sm outline-none">
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-slate-200">
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Scope & Duration</span>
+                <div class="mt-4 bg-sky-50 border-l-4 border-l-sky-400 border border-sky-200 shadow-sm rounded-xl p-4">
+                    <label class="text-[10px] font-bold text-sky-700 uppercase tracking-widest block mb-2">Link to a Unit Plan <span class="text-[9px] font-black text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
+                    <div class="grid md:grid-cols-3 gap-2">
+                        <input type="text" id="assess-unit-link" placeholder="Paste the unit plan doc/text..." class="md:col-span-2 w-full p-2.5 rounded-lg border border-sky-300 text-sm outline-none">
+                        <input type="text" id="assess-unit-number" placeholder="Which part? e.g. 'end of unit'" class="w-full p-2.5 rounded-lg border border-sky-300 text-sm outline-none">
+                    </div>
+                </div>
+
+                <details class="group bg-purple-50 rounded-xl border border-purple-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
+                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-purple-700 hover:bg-purple-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
+                        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations <span class="text-[9px] font-black text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                        <span class="transition-transform duration-300 group-open:rotate-180">
+                            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
+                        </span>
+                    </summary>
+                    <div class="p-5 pt-2 border-t border-purple-100">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
+                                <div class="flex flex-col gap-2">
+                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="context" data-val="none">Standard</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke">Waiheke Context</button>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span>
+                                <div class="flex flex-col gap-2">
+                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="maori" data-val="none">Standard</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="maori" data-val="integrate">Integrate</button>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span>
+                                <div class="flex flex-col gap-2">
+                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="lit" data-val="none">Standard</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="lit" data-val="integrate">Focus on Literacy</button>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy Integration</span>
+                                <div class="flex flex-col gap-2">
+                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="num" data-val="none">Standard</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="bg-sky-50 border-l-4 border-l-sky-400 border border-sky-200 shadow-sm rounded-xl p-4">
+                        <span class="text-[10px] font-bold text-sky-700 uppercase tracking-widest block mb-2">Scope & Duration <span class="text-[9px] font-black text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
                         <div class="flex flex-wrap gap-2">
                             <button class="builder-btn active" data-action="assessment-state" data-key="duration" data-val="1 Period Test">1 Period Test</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="2 Period Assessment">2 Period Assessment</button>
@@ -853,65 +931,110 @@
                         </div>
                         <div id="assess-custom-dur-container" class="hidden pt-2"><input type="text" id="assess-custom-dur" placeholder="Specify duration..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none"></div>
                     </div>
-                    <div><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span><div class="flex flex-col gap-2"><button class="builder-btn active text-left" data-action="assessment-state" data-key="context" data-val="none">Standard</button><button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke Context">Waiheke Context</button></div></div>
                 </div>
 
-                <div class="mt-4 pt-4 border-t border-slate-200">
-                    <span class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Question Volume / Specific Instructions (Optional)</span>
-                    <input type="text" id="assess-custom-volume" placeholder="e.g. Exactly 10 multiple choice questions, or 5 short answer questions..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none text-slate-800 bg-white">
-                </div>
-
-                <div id="junior-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
-                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
-                        <span class="text-xs font-black text-blue-800 uppercase tracking-widest block mb-1">Junior Assessment (Years 7-10)</span>
-                        <div class="grid md:grid-cols-2 gap-4 mb-2">
-                            <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="assess-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
-                            <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="assess-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
+                <div id="junior-formats-container" class="hidden mt-4 pt-4 border-t border-slate-200">
+                    <div class="bg-sky-50 border-l-4 border-l-sky-400 border border-sky-200 shadow-sm rounded-xl p-4">
+                        <span class="text-[10px] font-bold text-sky-700 uppercase tracking-widest block mb-2">Assessment Formats (Years 7-10) <span class="text-[9px] font-black text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button>
+                            <button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button>
+                            <button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button>
+                            <button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button>
+                            <button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button>
+                            <button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button>
+                            <button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button>
+                            <button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button>
+                            <button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button>
+                            <button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button>
                         </div>
-                        <div>
-                            <span class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-2">Assessment Formats</span>
-                            <div class="flex flex-wrap gap-2">
-                                <button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button>
-                                <button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button>
-                                <button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button>
-                                <button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button>
-                                <button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button>
-                                <button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button>
-                                <button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button>
-                                <button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button>
-                                <button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button>
-                                <button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button>
-                            </div>
-                            <div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="ncea-assessment-container" class="hidden mt-4 pt-4 border-t border-slate-200">
-                    <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-4">
-                        <div><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span><p class="text-xs text-purple-600 font-medium leading-tight">Generates NCEA-style options with shared Achieved/Merit/Excellence matrix.</p></div>
-                        <div id="assess-ncea-standard-container" class="border-t border-purple-200 pt-2 mt-2"><label for="assess-ncea-standard" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-red-500 text-xs">*</span></label><input type="text" id="assess-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none"></div>
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-6 border-t border-slate-200">
-                    <span class="text-xs font-bold text-[#002066] uppercase tracking-widest block mb-2">Differentiation & Inclusion</span>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="builder-btn active" data-action="assessment-state" data-key="extra" data-val="None">None (Standard)</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="3-Tier Assessment">3-Tiered Assessment</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ADHD Friendly">ADHD Friendly</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="Dyslexia Friendly">Dyslexia Friendly</button>
-                        <button class="builder-btn" data-action="assessment-state" data-key="extra" data-val="ESOL Scaffold">ESOL Scaffold</button>
+                        <div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-sky-300 text-sm outline-none"></div>
                     </div>
                 </div>
 
                 <div class="mt-4 pt-4 border-t border-slate-200">
-                    <span class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Additional Outputs</span>
-                    <div class="flex flex-wrap gap-2">
-                        <button class="builder-btn" data-action="assessment-output" data-val="Student Exemplars">+ Student Exemplars</button>
-                        <button class="builder-btn" data-action="assessment-output" data-val="Marking Schedule">+ Teacher Marking Schedule</button>
-                        <button class="builder-btn" data-action="assessment-output" data-val="Peer Check-bric">+ Peer Check-bric</button>
+                    <div class="bg-sky-50 border-l-4 border-l-sky-400 border border-sky-200 shadow-sm rounded-xl p-4">
+                        <span class="text-[10px] font-bold text-sky-700 uppercase tracking-widest block mb-2">Question Volume / Specific Instructions <span class="text-[9px] font-black text-sky-600 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                        <input type="text" id="assess-custom-volume" placeholder="e.g. Exactly 10 multiple choice questions, or 5 short answer questions..." class="w-full p-2.5 rounded-lg border border-sky-300 text-sm outline-none text-slate-800 bg-white">
+                        <p class="text-[10px] text-sky-600 mt-2 mb-1">Or specify an exact mix by question type (leave blank to let the AI decide):</p>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div><label class="text-[9px] font-bold text-sky-500 uppercase tracking-widest block mb-1">Multiple Choice</label><input type="number" min="0" id="assess-mcq-count" placeholder="0" class="w-full p-2 rounded-lg border border-sky-300 text-sm outline-none text-center"></div>
+                            <div><label class="text-[9px] font-bold text-sky-500 uppercase tracking-widest block mb-1">Short Answer</label><input type="number" min="0" id="assess-short-count" placeholder="0" class="w-full p-2 rounded-lg border border-sky-300 text-sm outline-none text-center"></div>
+                            <div><label class="text-[9px] font-bold text-sky-500 uppercase tracking-widest block mb-1">Extended Response</label><input type="number" min="0" id="assess-extended-count" placeholder="0" class="w-full p-2 rounded-lg border border-sky-300 text-sm outline-none text-center"></div>
+                        </div>
                     </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <button id="assess-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered questions of equal difficulty, to reduce copying risk in class" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button>
+                </div>
+
+                <div class="mt-4 pt-6 border-t border-slate-200 grid md:grid-cols-3 gap-4 items-start">
+                    <details class="group bg-sky-50 rounded-xl border border-sky-200">
+                        <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-sky-700 uppercase tracking-widest">
+                            <span id="assess-differentiation-summary">Differentiation & Inclusion — None</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </summary>
+                        <div class="p-3 pt-1 border-t border-sky-100 space-y-1">
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="radio" name="assess-differentiation" checked onchange="setAssessmentExtra('None')"> None (Standard)
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('3-Tier Assessment')"> 3-Tiered Assessment
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('ADHD Friendly')"> ADHD Friendly
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('Dyslexia Friendly')"> Dyslexia Friendly
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('ESOL Scaffold')"> ESOL Scaffold
+                            </label>
+                        </div>
+                    </details>
+
+                    <details class="group bg-sky-50 rounded-xl border border-sky-200">
+                        <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-sky-700 uppercase tracking-widest">
+                            <span id="assess-accommodations-summary">Formal Accommodations — None selected</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </summary>
+                        <div class="p-3 pt-1 border-t border-sky-100 space-y-1">
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Rewrite instructions and a copy of the questions in simple, unambiguous language for a reader/writer to read aloud">
+                                <input type="checkbox" onchange="setAccommodation('Reader/Writer Support', this.checked)"> Reader/Writer Support
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Produce a second, fully plain-language version of the whole assessment (short sentences, common words, no idioms)">
+                                <input type="checkbox" onchange="setAccommodation('Plain-Language Version', this.checked)"> Plain-Language Version
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Add formatting notes for large print/dyslexia-friendly presentation (font, spacing, layout guidance)">
+                                <input type="checkbox" onchange="setAccommodation('Large Print / Dyslexia-Friendly Formatting', this.checked)"> Large Print / Dyslexia-Friendly Formatting
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Note where extra time would typically apply and any tasks that could be split across sessions">
+                                <input type="checkbox" onchange="setAccommodation('Extended Time Notes', this.checked)"> Extended Time Notes
+                            </label>
+                        </div>
+                    </details>
+
+                    <details class="group bg-yellow-50 rounded-xl border border-yellow-300">
+                        <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-yellow-700 uppercase tracking-widest">
+                            <span id="assess-outputs-summary">Additional Outputs — None selected</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </summary>
+                        <div class="p-3 pt-1 border-t border-yellow-200 space-y-1">
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="checkbox" onchange="setAssessmentOutput('Student Exemplars', this.checked)"> Student Exemplars
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="checkbox" onchange="setAssessmentOutput('Marking Schedule', this.checked)"> Teacher Marking Schedule
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="A literal answer key for closed-response questions (multiple choice, calculations, short factual answers) — distinct from the judgement-based Marking Schedule">
+                                <input type="checkbox" onchange="setAssessmentOutput('Answer Key', this.checked)"> Answer Key
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="checkbox" onchange="setAssessmentOutput('Peer Check-bric', this.checked)"> Peer Check-bric
+                            </label>
+                        </div>
+                    </details>
                 </div>
             </div>
 
@@ -1381,7 +1504,7 @@
             dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true };
+        var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'' };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
 
         function getDesc(name) { return cpmTaskDB[name] && cpmTaskDB[name].desc ? cpmTaskDB[name].desc : "Click to generate a specific AI prompt."; }
@@ -1445,10 +1568,12 @@
             var yr = assessmentState.year || "";
             var isSen = yr.includes("Level");
             var isJun = !isSen;
-            var nCon = document.getElementById('ncea-assessment-container');
-            var jCon = document.getElementById('junior-assessment-container');
-            if(nCon) isSen ? nCon.classList.remove('hidden') : nCon.classList.add('hidden');
-            if(jCon) isJun ? jCon.classList.remove('hidden') : jCon.classList.add('hidden');
+            var nCon1 = document.getElementById('ncea-standard-container-outer');
+            var jCon1 = document.getElementById('junior-scope-container');
+            var jCon2 = document.getElementById('junior-formats-container');
+            if(nCon1) isSen ? nCon1.classList.remove('hidden') : nCon1.classList.add('hidden');
+            if(jCon1) isJun ? jCon1.classList.remove('hidden') : jCon1.classList.add('hidden');
+            if(jCon2) isJun ? jCon2.classList.remove('hidden') : jCon2.classList.add('hidden');
             if(isSen) assessmentState.nceaMode = true; 
         }
 
@@ -1956,7 +2081,14 @@
                     }
                     
                     setActiveBtn('assessment-state', assessmentState.context, 'context');
-                    setActiveBtn('assessment-state', assessmentState.extra, 'extra');
+                    setActiveBtn('assessment-state', assessmentState.maori, 'maori');
+                    setActiveBtn('assessment-state', assessmentState.lit, 'lit');
+                    setActiveBtn('assessment-state', assessmentState.num, 'num');
+                    document.querySelectorAll('input[name="assess-differentiation"]').forEach(function(r) {
+                        var m = (r.getAttribute('onchange') || '').match(/setAssessmentExtra\('([^']*)'\)/);
+                        r.checked = m && m[1] === (assessmentState.extra || 'None');
+                    });
+                    updateDifferentiationSummary();
                     
                     if (unitState.dur === 'Other') {
                         var ud = document.getElementById('unit-custom-dur-container');
@@ -1974,11 +2106,25 @@
                         if (fc) fc.classList.remove('hidden');
                     }
                     
-                    document.querySelectorAll('[data-action="assessment-output"]').forEach(function(b) { b.classList.remove('active'); });
-                    assessmentState.outputs.forEach(function(o) {
-                        var b = document.querySelector('[data-action="assessment-output"][data-val="' + o + '"]');
-                        if (b) b.classList.add('active');
+                    if (!assessmentState.outputs) assessmentState.outputs = [];
+                    document.querySelectorAll('[onchange^="setAssessmentOutput"]').forEach(function(cb) {
+                        var m = cb.getAttribute('onchange').match(/setAssessmentOutput\('([^']+)'/);
+                        if (m) cb.checked = assessmentState.outputs.includes(m[1]);
                     });
+                    updateOutputsSummary();
+                    
+                    if (!assessmentState.accommodations) assessmentState.accommodations = [];
+                    document.querySelectorAll('[onchange^="setAccommodation"]').forEach(function(cb) {
+                        var m = cb.getAttribute('onchange').match(/setAccommodation\('([^']+)'/);
+                        if (m) cb.checked = assessmentState.accommodations.includes(m[1]);
+                    });
+                    updateAccommodationsSummary();
+                    applyAssessmentDualVersion(!!assessmentState.dualVersion);
+                    var aul = document.getElementById('assess-unit-link'); if (aul) aul.value = assessmentState.unitLink || "";
+                    var aun = document.getElementById('assess-unit-number'); if (aun) aun.value = assessmentState.unitNum || "";
+                    var amc = document.getElementById('assess-mcq-count'); if (amc) amc.value = assessmentState.mcqCount || "";
+                    var asc = document.getElementById('assess-short-count'); if (asc) asc.value = assessmentState.shortCount || "";
+                    var aec = document.getElementById('assess-extended-count'); if (aec) aec.value = assessmentState.extendedCount || "";
                     
                     document.querySelectorAll('[data-action="lesson-output"]').forEach(function(b) { b.classList.remove('active'); });
                     var wc = document.getElementById('les-worksheet-format-container');
@@ -2403,13 +2549,57 @@
             saveAppState();
         }
 
-        function toggleAssessmentOutput(v) {
+        function updateDifferentiationSummary() {
+            var el = document.getElementById('assess-differentiation-summary');
+            if (el) el.textContent = 'Differentiation & Inclusion — ' + (assessmentState.extra === 'None' ? 'None' : assessmentState.extra);
+        }
+        function setAssessmentExtra(v) {
+            assessmentState.extra = v;
+            updateDifferentiationSummary();
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+
+        function updateOutputsSummary() {
+            var n = (assessmentState.outputs || []).length;
+            var el = document.getElementById('assess-outputs-summary');
+            if (el) el.textContent = 'Additional Outputs' + (n ? ' — ' + n + ' selected' : ' — None selected');
+        }
+        function setAssessmentOutput(v, checked) {
             if (!assessmentState.outputs) assessmentState.outputs = [];
             var i = assessmentState.outputs.indexOf(v);
-            if (i > -1) assessmentState.outputs.splice(i, 1); else assessmentState.outputs.push(v);
-            document.querySelectorAll('[data-action="assessment-output"]').forEach(function(b) {
-                assessmentState.outputs.includes(b.getAttribute('data-val')) ? b.classList.add('active') : b.classList.remove('active');
-            });
+            if (checked && i === -1) assessmentState.outputs.push(v);
+            if (!checked && i > -1) assessmentState.outputs.splice(i, 1);
+            updateOutputsSummary();
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+
+        function updateAccommodationsSummary() {
+            var n = (assessmentState.accommodations || []).length;
+            var el = document.getElementById('assess-accommodations-summary');
+            if (el) el.textContent = 'Formal Accommodations' + (n ? ' — ' + n + ' selected' : ' — None selected');
+        }
+        function setAccommodation(v, checked) {
+            if (!assessmentState.accommodations) assessmentState.accommodations = [];
+            var i = assessmentState.accommodations.indexOf(v);
+            if (checked && i === -1) assessmentState.accommodations.push(v);
+            if (!checked && i > -1) assessmentState.accommodations.splice(i, 1);
+            updateAccommodationsSummary();
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+
+        function applyAssessmentDualVersion(on) {
+            assessmentState.dualVersion = !!on;
+            var btn = document.getElementById('assess-dual-version-btn');
+            if (btn) {
+                btn.classList.toggle('active', assessmentState.dualVersion);
+                btn.setAttribute('aria-pressed', assessmentState.dualVersion ? 'true' : 'false');
+            }
+        }
+        function toggleAssessmentDualVersion(btn) {
+            applyAssessmentDualVersion(!assessmentState.dualVersion);
             updateAssessmentBuilderPrompt();
             saveAppState();
         }
@@ -3034,17 +3224,34 @@
             var vol = (document.getElementById('assess-custom-volume') || {}).value || "";
             assessmentState.sourceMaterial = sm;
             var jk = (document.getElementById('assess-junior-knowledge') || {}).value || "", jp = (document.getElementById('assess-junior-practices') || {}).value || "";
+            var ul = (document.getElementById('assess-unit-link') || {}).value || "", un = (document.getElementById('assess-unit-number') || {}).value || "";
+            assessmentState.unitLink = ul; assessmentState.unitNum = un;
+            var mcqN = (document.getElementById('assess-mcq-count') || {}).value || "";
+            var shortN = (document.getElementById('assess-short-count') || {}).value || "";
+            var extN = (document.getElementById('assess-extended-count') || {}).value || "";
+            assessmentState.mcqCount = mcqN; assessmentState.shortCount = shortN; assessmentState.extendedCount = extN;
             var yr = assessmentState.year || "";
             var cUrl = getCurriculumLink(assessmentState.dept, yr), isSen = yr.includes("Level"), isLeg = isSen, isJun = !isSen;
             var af = assessmentState.formats || ['Short Answer'];
             if (af.length === 0 && !af.includes('Surprise Me')) af = ['Short Answer'];
             var fStr = af.join(', '), hasRes = af.includes('Resource Based'), hasSurp = af.includes('Surprise Me');
             
-            var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n\n### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
+            var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n';
+            if (ul) {
+                txt += 'UNIT LINK: Base the scope of this assessment on the following unit' + (un ? ' (' + un + ')' : '') + ': "' + ul + '". If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
+            }
+            txt += '\n### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
             
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
             txt += 'Scale matches duration: ' + durText + '. ';
-            if (vol) {
+            var hasMix = (mcqN && parseInt(mcqN) > 0) || (shortN && parseInt(shortN) > 0) || (extN && parseInt(extN) > 0);
+            if (hasMix) {
+                var mixParts = [];
+                if (mcqN && parseInt(mcqN) > 0) mixParts.push(mcqN + ' multiple choice question(s)');
+                if (shortN && parseInt(shortN) > 0) mixParts.push(shortN + ' short answer question(s)');
+                if (extN && parseInt(extN) > 0) mixParts.push(extN + ' extended response question(s)');
+                txt += 'CRITICAL VOLUME REQUIREMENT: Use EXACTLY this question mix — ' + mixParts.join(', ') + '. Do not add, remove, or substitute question types beyond this mix.\n';
+            } else if (vol) {
                 txt += 'CRITICAL VOLUME REQUIREMENT: ' + vol + '.\n';
             } else {
                 if (assessmentState.duration === '1 Period Test') txt += 'Important: Ensure the volume of work is realistic for a 45-50 minute class (e.g., exactly 3-4 structured short answer questions, or equivalent length).\n';
@@ -3055,32 +3262,58 @@
 
             txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\n' + nzSpellingRule + '\n';
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
+            if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic.\n';
+            if (assessmentState.lit === 'integrate') txt += 'Focus on disciplinary literacy — ensure at least one question explicitly assesses reading/writing skill in this subject, not just content recall.\n';
+            if (assessmentState.num === 'integrate') txt += 'Focus on disciplinary numeracy — ensure at least one question requires a numeracy skill (calculation, data interpretation, graphing) relevant to this subject.\n';
             if (sm) {
                 txt += 'Base the assessment STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
             }
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
+            
+            var acc = assessmentState.accommodations || [];
+            if (acc.length) {
+                txt += 'CRITICAL ACCOMMODATIONS: This assessment requires the following formal accommodations:\n';
+                if (acc.includes('Reader/Writer Support')) txt += '- Reader/Writer Support: write all instructions and questions in simple, unambiguous language suitable for being read aloud by a reader/writer.\n';
+                if (acc.includes('Plain-Language Version')) txt += '- Plain-Language Version: after the main assessment, produce a SECOND, fully plain-language version of the same assessment (short sentences, common words, no idioms, no double-barrelled questions), covering identical content and difficulty.\n';
+                if (acc.includes('Large Print / Dyslexia-Friendly Formatting')) txt += '- Large Print / Dyslexia-Friendly Formatting: add a short formatting note (font, spacing, layout) suitable for large-print or dyslexia-friendly presentation.\n';
+                if (acc.includes('Extended Time Notes')) txt += '- Extended Time Notes: add a brief note on which sections could reasonably be split across two sessions for a student with extended time.\n';
+            }
+
+            if (assessmentState.dualVersion) {
+                txt += 'CRITICAL: Produce TWO parallel versions of the entire assessment — "Version A" and "Version B" — with reordered and/or varied questions of equal difficulty and identical coverage, to reduce copying risk. Clearly label each version with its own heading.\n';
+            }
+            
             if (hasRes) txt += 'CRITICAL: Provide exact search queries for real-world resources; do NOT hallucinate URLs or invent source texts/authors — this applies at every year level.\n';
             if (isJun && jk) txt += 'Test this knowledge: ' + jk + '.\n';
             if (isJun && jp) txt += 'Test these practices: ' + jp + '.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema for task instructions. Define complex task words.\n\n### Output Format\n';
             
+            var partNum = 1;
             if (isJun) {
-                if (hasSurp) txt += 'PART 1: TWO out-of-the-box assessment options.\n'; else txt += 'PART 1: Assessment Task (' + fStr + ').\n';
-                txt += 'PART 2: Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n';
+                if (hasSurp) txt += 'PART ' + partNum + ': TWO out-of-the-box assessment options.\n'; else txt += 'PART ' + partNum + ': Assessment Task (' + fStr + ').\n';
+                partNum++;
+                txt += 'PART ' + partNum + ': Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n';
+                partNum++;
             } else if (isSen) {
                 if (ns === '[Standard]' || !ns.trim()) {
-                    txt += 'PART 1: CRITICAL — No specific Achievement Standard number was provided. Do NOT invent, guess, or substitute a plausible-sounding standard code or title under any circumstances. Instead, before writing anything else, ask me to confirm the exact Achievement Standard number and title, then wait for my reply before generating the assessment.\nPART 2: Shared NCEA Grading Matrix (Achieved/Merit/Excellence), to follow once the standard is confirmed.\n';
+                    txt += 'PART ' + partNum + ': CRITICAL — No specific Achievement Standard number was provided. Do NOT invent, guess, or substitute a plausible-sounding standard code or title under any circumstances. Instead, before writing anything else, ask me to confirm the exact Achievement Standard number and title, then wait for my reply before generating the assessment.\n';
                 } else {
-                    txt += 'PART 1: TWO NCEA-style options based on standard ' + ns + '. CRITICAL: Use only this exact standard number/title as given — do not invent or substitute a different one.\nPART 2: Shared NCEA Grading Matrix (Achieved/Merit/Excellence).\n';
+                    txt += 'PART ' + partNum + ': TWO NCEA-style options based on standard ' + ns + '. CRITICAL: Use only this exact standard number/title as given — do not invent or substitute a different one.\n';
                 }
-                txt += 'Add disclaimer regarding NZQA validity.\n';
+                partNum++;
+                txt += 'PART ' + partNum + ': Shared NCEA Grading Matrix (Achieved/Merit/Excellence). Add disclaimer regarding NZQA validity.\n';
+                partNum++;
             } else {
-                txt += 'PART 1: Assessment Task.\nPART 2: Success Criteria / Rubric.\n';
+                txt += 'PART ' + partNum + ': Assessment Task.\n';
+                partNum++;
+                txt += 'PART ' + partNum + ': Success Criteria / Rubric.\n';
+                partNum++;
             }
             var outs = assessmentState.outputs || [];
-            if (outs.includes('Student Exemplars')) txt += 'PART 3: Student Exemplars (Top grade and Mid grade).\n';
-            if (outs.includes('Marking Schedule')) txt += 'PART 4: Strict Teacher Marking Schedule.\n';
-            if (outs.includes('Peer Check-bric')) txt += 'PART 5: Student-friendly Peer Check-bric.\n';
+            if (outs.includes('Student Exemplars')) { txt += 'PART ' + partNum + ': Student Exemplars (Top grade and Mid grade).\n'; partNum++; }
+            if (outs.includes('Marking Schedule')) { txt += 'PART ' + partNum + ': Strict Teacher Marking Schedule.\n'; partNum++; }
+            if (outs.includes('Answer Key')) { txt += 'PART ' + partNum + ': Answer Key — literal correct answers for all closed-response questions (multiple choice, calculations, short factual answers). This is distinct from the Marking Schedule and should list answers only, no judgement criteria.\n'; partNum++; }
+            if (outs.includes('Peer Check-bric')) { txt += 'PART ' + partNum + ': Student-friendly Peer Check-bric.\n'; partNum++; }
             
             var box = document.getElementById('prompt-assessment-text');
             if (box) box.innerText = txt;
@@ -3244,7 +3477,7 @@
                 else if (action === 'assessment-state') setAssessmentState(key, val, target);
                 else if (action === 'assessment-format') toggleAssessmentFormat(val);
                 else if (action === 'clear-assessment-formats') clearAssessmentFormats();
-                else if (action === 'assessment-output') toggleAssessmentOutput(val);
+                else if (action === 'toggle-assessment-dual-version') toggleAssessmentDualVersion(target);
                 else if (action === 'theory-stage') loadTheoryStage(parseInt(val));
                 else if (action === 'theory-detail') renderTheoryTaskDetail(val, target);
                 else if (action === 'use-recent-topic') syncTopics(val);
@@ -3329,7 +3562,7 @@
                     });
                     updateLessonBuilderPrompt();
                 }
-                else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume'].includes(e.target.id)) updateAssessmentBuilderPrompt();
+                else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume', 'assess-unit-link', 'assess-unit-number', 'assess-mcq-count', 'assess-short-count', 'assess-extended-count'].includes(e.target.id)) updateAssessmentBuilderPrompt();
             });
         }
 
