@@ -118,6 +118,7 @@
         html.dark #view-assessment [class*="bg-emerald-100"], html.dark #view-assessment [class*="bg-sky-50"],
         html.dark #view-assessment [class*="bg-yellow-50"] { background-color: #1e293b !important; border-color: #334155 !important; }
         html.dark #view-assessment [class*="border-emerald-200"], html.dark #view-assessment [class*="border-emerald-300"],
+        html.dark #whs-template-help-modal [class*="border-emerald-200"],
         html.dark #view-assessment [class*="border-sky-200"], html.dark #view-assessment [class*="border-sky-300"],
         html.dark #view-assessment [class*="border-yellow-200"], html.dark #view-assessment [class*="border-yellow-300"] { border-color: #334155 !important; }
         html.dark #view-assessment [class*="text-emerald-700"], html.dark #view-assessment [class*="text-emerald-600"] { color: #6ee7b7 !important; }
@@ -1254,9 +1255,12 @@
     </div>
 
     <div id="whs-template-help-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl max-h-[85vh] overflow-y-auto">
             <h3 class="text-xl font-black text-slate-900 mb-1">🏫 Turning the AI's output into a Doc</h3>
-            <p class="text-sm text-slate-500 mb-5">The AI will return a block of HTML code. Here's the quickest way to turn it into a real, formatted Google Doc.</p>
+            <p class="text-sm text-slate-500 mb-4">The AI will return a block of HTML code. Here's the quickest way to turn it into a real, formatted Google Doc.</p>
+            <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 mb-5 text-sm text-emerald-800">
+                <strong>Quickest option:</strong> if your AI's response shows a download button or icon near the code block, click that first — it'll save the HTML file directly, skipping steps 1 and 2 below (you'll still need step 3 to open it). Not every AI shows this, so if you don't see one, just follow all the steps manually instead:
+            </div>
             <ol class="space-y-4 text-sm text-slate-700">
                 <li class="flex gap-3">
                     <span class="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">1</span>
