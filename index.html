@@ -615,7 +615,7 @@
 
                         <div class="bg-[#ecfdf5] p-5 rounded-xl border-l-4 border-l-[#10b981] shadow-sm border border-slate-200">
                             <div class="flex justify-between items-center mb-2">
-                                <label for="unit-plan-title-input" class="text-xs font-black text-[#002066] uppercase tracking-widest block">Unit Plan Title</label>
+                                <label for="unit-plan-title-input" class="text-xs font-black text-[#002066] uppercase tracking-widest block">Unit Plan Title <span id="unit-title-required-badge" class="text-[9px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
                             </div>
                             <input type="text" id="unit-plan-title-input" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-slate-300 font-medium text-slate-800 bg-white outline-none mb-2">
                             <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
@@ -635,14 +635,14 @@
                         <!-- SENIOR NCEA STANDARD (Hidden for juniors) -->
                         <div id="unit-ncea-standard-container" class="hidden pt-2">
                             <div class="bg-purple-50 p-4 rounded-xl border border-purple-200 shadow-sm flex flex-col gap-2">
-                                <label for="unit-ncea-standard" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-slate-400 normal-case font-medium">(Optional)</span></label>
+                                <label for="unit-ncea-standard" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Target NZQA Standard Number <span class="text-[9px] font-black text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full ml-1">Required</span></label>
                                 <input type="text" id="unit-ncea-standard" placeholder="e.g. AS91908" class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none">
-                                <p class="text-[10px] text-purple-600 leading-tight">If provided, the unit sequence will be explicitly built to prepare students for this standard.</p>
+                                <p class="text-[10px] text-purple-600 leading-tight">The unit sequence will be explicitly built to prepare students for this standard.</p>
                             </div>
                         </div>
 
                         <div class="pt-2">
-                            <label for="unit-custom-task" class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span class="text-slate-400 normal-case font-medium">(Optional — but the more detail, the better the result!)</span></label>
+                            <label for="unit-custom-task" class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span id="unit-activities-required-badge" class="text-[9px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
                             <textarea id="unit-custom-task" rows="1" placeholder="e.g. Include a debate in week 2, make sure lesson 4 covers the marae visit, avoid worksheets for the differentiated group..." class="autosize-textarea w-full p-3 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
                             <p class="text-[10px] text-slate-400 mt-1.5 leading-tight">Write as much as you want here — specific requests, things to avoid, key dates, resources to use. This box will grow as you type.</p>
                         </div>
@@ -1585,6 +1585,16 @@
             var nCon = document.getElementById('unit-ncea-standard-container');
             if(jCon) isJun ? jCon.classList.remove('hidden') : jCon.classList.add('hidden');
             if(nCon) isSen ? nCon.classList.remove('hidden') : nCon.classList.add('hidden');
+            
+            var titleBadge = document.getElementById('unit-title-required-badge');
+            var activitiesBadge = document.getElementById('unit-activities-required-badge');
+            [titleBadge, activitiesBadge].forEach(function(b) {
+                if (!b) return;
+                b.textContent = isSen ? 'Required' : 'Optional';
+                b.className = isSen
+                    ? 'text-[9px] font-black text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full ml-1'
+                    : 'text-[9px] font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full ml-1';
+            });
         }
 
         function toggleUnitGeminiNotebook(btn) {
@@ -2777,10 +2787,21 @@
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
             if (unitState.assessmentIncluded === 'yes') txt += 'Important: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
-            if (ct) txt += 'Specific Instructions: "' + ct + '".\n';
+            if (ct) {
+                txt += 'Specific Instructions: "' + ct + '".\n';
+            } else if (isLeg) {
+                txt += 'CRITICAL: No Specific Activities, Tasks, or Focus Areas were provided for this senior unit. Before writing anything else, ask me if there are any specific activities, tasks, exclusions, or focus areas I want built into this unit, then wait for my reply before generating the unit.\n';
+            }
             if (isJun && uk) txt += 'Important: Explicitly cover this specific Knowledge throughout the unit sequence: ' + uk + '.\n';
             if (isJun && up) txt += 'Important: Explicitly cover these specific Practices throughout the unit sequence: ' + up + '.\n';
-            if (isLeg && ns) txt += 'Target NZQA Standard: ' + ns + '. CRITICAL: Use only this exact standard number as given — do not invent or substitute a different one. Design the unit sequence so it explicitly builds toward and prepares students for the specific knowledge, skills, and assessment demands of this standard, and note where in the sequence students would be ready for a related summative assessment.\n';
+            if (isLeg && t === '[Insert Specific Topic Here]') {
+                txt += 'CRITICAL: No Unit Plan Title/Topic was provided for this senior unit. Before writing anything else, ask me to confirm the specific unit topic, then wait for my reply before generating the unit.\n';
+            }
+            if (isLeg && ns) {
+                txt += 'Target NZQA Standard: ' + ns + '. CRITICAL: Use only this exact standard number as given — do not invent or substitute a different one. Design the unit sequence so it explicitly builds toward and prepares students for the specific knowledge, skills, and assessment demands of this standard, and note where in the sequence students would be ready for a related summative assessment.\n';
+            } else if (isLeg && !ns) {
+                txt += 'CRITICAL: No Target NZQA Standard Number was provided for this senior unit. Do NOT invent, guess, or substitute a plausible-sounding standard code or title under any circumstances. Before writing anything else, ask me to confirm the exact Achievement Standard number and title, then wait for my reply before generating the unit.\n';
+            }
             if (sm) {
                 txt += 'Source Strictness: Base the unit STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the unit.\n';
