@@ -466,16 +466,17 @@
                                 <h3 class="text-xl font-bold text-slate-900 mb-1 mt-2">Stage Strategy Selection</h3>
                                 <p class="text-[11px] text-slate-600 mb-4">Select specific strategies for each stage. The AI Engine will auto-select its <span class="inline-block bg-[#10b981] text-white text-[9px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
 
-                                <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-inner">
-                                    <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-2">Include Stages in Plan</span>
+                                <div class="mb-4 bg-slate-50 p-3 rounded-xl border border-slate-200 shadow-inner" id="stage-toggles-container">
+                                    <span class="text-[10px] font-black text-[#002066] uppercase tracking-widest block mb-2">Include Stages in Plan <span class="text-[9px] font-black text-purple-600 bg-purple-100 px-2 py-0.5 rounded-full ml-1">Required</span></span>
                                     <div class="flex flex-wrap gap-1.5" id="les-stage-toggles">
-                                        <button class="builder-btn active text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="all">All</button>
-                                        <button class="builder-btn active text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="1">1 Connect</button>
-                                        <button class="builder-btn active text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="2">2 I Do</button>
-                                        <button class="builder-btn active text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="3">3 We Do</button>
-                                        <button class="builder-btn active text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="4">4 You Do</button>
-                                        <button class="builder-btn active text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="5">5 Review</button>
+                                        <button class="builder-btn text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="all">All</button>
+                                        <button class="builder-btn text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="1">1 Connect</button>
+                                        <button class="builder-btn text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="2">2 I Do</button>
+                                        <button class="builder-btn text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="3">3 We Do</button>
+                                        <button class="builder-btn text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="4">4 You Do</button>
+                                        <button class="builder-btn text-[10px] px-2.5 py-1" data-action="toggle-lesson-stage" data-val="5">5 Review</button>
                                     </div>
+                                    <p id="stage-toggles-warning" class="text-[10px] text-amber-600 font-bold mt-2">⚠ Select at least one stage to include in the plan.</p>
                                 </div>
 
                                 <div class="space-y-2">
@@ -1501,7 +1502,7 @@
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[1,2,3,4,5], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
+            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
         var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'' };
@@ -1756,6 +1757,12 @@
                 showWhsCopyWarningModal();
                 return;
             }
+            if (targetId === 'prompt-lesson-text' && lessonState.mode === 'standard' && lessonState.framework === 'cpm' && (!lessonState.activeStages || lessonState.activeStages.length === 0)) {
+                showGlobalToast('⚠️ Select at least one stage in "Include Stages in Plan" before copying');
+                var stEl = document.getElementById('stage-toggles-container');
+                if (stEl) stEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
             if (targetId === 'prompt-unit-text') maybeShowTaskFieldTip();
             copyText(targetId, btn);
         }
@@ -1990,6 +1997,8 @@
         }
 
         function loadAppState() {
+            var isFirstLoadSinceStagesMigration = !localStorage.getItem('whs_stages_default_migration');
+            try { localStorage.setItem('whs_stages_default_migration', '1'); } catch (e) {}
             var s = localStorage.getItem('whs_app_state');
             if (s) {
                 try {
@@ -2007,6 +2016,7 @@
                     if (st.lessonState) {
                         Object.assign(lessonState, st.lessonState);
                         if (!lessonState.activeStages) lessonState.activeStages = [1, 2, 3, 4, 5];
+                        if (isFirstLoadSinceStagesMigration) lessonState.activeStages = [];
                         if (!lessonState.outputs) lessonState.outputs = ['plan'];
                         if (!lessonState.worksheetFormat) lessonState.worksheetFormat = 'Standard Task';
                         if (!lessonState.quizFormats) lessonState.quizFormats = ['Google Forms'];
@@ -2400,11 +2410,11 @@
 
         function toggleLessonStage(v) {
             if (v === 'all') {
-                lessonState.activeStages = [1, 2, 3, 4, 5];
+                lessonState.activeStages = (lessonState.activeStages.length === 5) ? [] : [1, 2, 3, 4, 5];
             } else {
                 var s = parseInt(v), i = lessonState.activeStages.indexOf(s);
                 if (i > -1) {
-                    if (lessonState.activeStages.length > 1) lessonState.activeStages.splice(i, 1);
+                    lessonState.activeStages.splice(i, 1);
                 } else {
                     lessonState.activeStages.push(s);
                 }
@@ -2426,6 +2436,12 @@
                 if (b) isAct ? b.classList.add('active') : b.classList.remove('active');
                 if (bl) isAct ? bl.classList.remove('opacity-40', 'pointer-events-none', 'grayscale') : bl.classList.add('opacity-40', 'pointer-events-none', 'grayscale');
             }
+            var warn = document.getElementById('stage-toggles-warning');
+            var container = document.getElementById('stage-toggles-container');
+            var isEmpty = lessonState.activeStages.length === 0;
+            if (warn) warn.classList.toggle('hidden', !isEmpty);
+            if (container) container.classList.toggle('ring-2', isEmpty);
+            if (container) container.classList.toggle('ring-amber-400', isEmpty);
         }
 
         function setLessonState(k, v, b) {
@@ -2955,6 +2971,7 @@
             var tb = String.fromCharCode(96, 96, 96);
             var b = document.getElementById('prompt-lesson-text');
             if (outs.length === 0 && lessonState.mode === 'standard') { if (b) b.innerText = "Select an Output option."; return; }
+            if (stg.length === 0 && lessonState.mode === 'standard' && lessonState.framework === 'cpm') { if (b) b.innerText = "Select at least one stage in \"Include Stages in Plan\" above."; return; }
             
             var txt = '';
 
