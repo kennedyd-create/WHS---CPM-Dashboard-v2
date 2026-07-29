@@ -259,7 +259,7 @@
                     <div>
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
                         <div class="flex flex-wrap gap-2" id="les-dept-opts">
-                            <button class="builder-btn dept-color-btn active" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="lesson-state" data-key="dept" data-val="Science">Science</button>
+                            <button class="builder-btn dept-color-btn" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="lesson-state" data-key="dept" data-val="Science">Science</button>
                             <button class="builder-btn dept-color-btn" style="--dept-dark: #9F1559; --dept-light: #F8E7EE;" data-action="lesson-state" data-key="dept" data-val="Maths">Maths</button>
                             <button class="builder-btn dept-color-btn" style="--dept-dark: #7900CC; --dept-light: #F5EFFF;" data-action="lesson-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
                             <button class="builder-btn dept-color-btn" style="--dept-dark: #22229D; --dept-light: #EBF5FA;" data-action="lesson-state" data-key="dept" data-val="English">English</button>
@@ -276,12 +276,18 @@
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 8">Year 8</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 9">Year 9</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 10">Year 10</button>
-                            <button class="builder-btn active" data-action="lesson-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                            <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
                             <button class="builder-btn" data-action="lesson-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
                         </div>
                     </div>
                 </div>
+
+                <div id="lesson-select-prompt" class="text-center py-10 px-4 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
+                    <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
+                </div>
+
+                <div id="lesson-config-rest" class="hidden">
 
                 <div id="les-curriculum-link" class="flex justify-start mb-6"></div>
 
@@ -387,11 +393,13 @@
                     </details>
                 </div>
 
+                </div>
+
                 <!-- MAIN SPLIT LAYOUT -->
                 <div class="grid lg:grid-cols-12 gap-8 pt-6 border-t border-slate-200">
                     
                     <!-- LEFT COLUMN: Dynamic Tools -->
-                    <div class="lg:col-span-7 flex flex-col gap-6">
+                    <div id="lesson-left-column" class="hidden lg:col-span-7 flex flex-col gap-6">
                         
                         <!-- RELIEF TOOLS (Hidden by default) -->
                         <div id="relief-tasks-container" class="hidden bg-red-50 p-6 rounded-xl border border-red-200 shadow-sm animate-in fade-in duration-300">
@@ -598,7 +606,7 @@
                         <div>
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Department</span>
                             <div class="flex flex-wrap gap-2" id="unit-dept-opts">
-                                <button class="builder-btn dept-color-btn active" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="unit-state" data-key="dept" data-val="Science">Science</button>
+                                <button class="builder-btn dept-color-btn" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="unit-state" data-key="dept" data-val="Science">Science</button>
                                 <button class="builder-btn dept-color-btn" style="--dept-dark: #9F1559; --dept-light: #F8E7EE;" data-action="unit-state" data-key="dept" data-val="Maths">Maths</button>
                                 <button class="builder-btn dept-color-btn" style="--dept-dark: #7900CC; --dept-light: #F5EFFF;" data-action="unit-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
                                 <button class="builder-btn dept-color-btn" style="--dept-dark: #22229D; --dept-light: #EBF5FA;" data-action="unit-state" data-key="dept" data-val="English">English</button>
@@ -615,11 +623,17 @@
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 8">Year 8</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 9">Year 9</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 10">Year 10</button>
-                                <button class="builder-btn active" data-action="unit-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
                                 <button class="builder-btn" data-action="unit-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
                             </div>
                         </div>
+
+                        <div id="unit-select-prompt" class="text-center py-10 px-4 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
+                            <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
+                        </div>
+
+                        <div id="unit-config-rest" class="hidden space-y-6">
 
                         <div id="unit-curriculum-link" class="flex justify-start"></div>
 
@@ -778,6 +792,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        </div>
                     </div>
 
                     <div class="bg-amber-50 rounded-2xl border border-amber-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
@@ -828,7 +844,7 @@
                     <div>
                         <span class="text-xs font-bold text-purple-800 uppercase tracking-widest block mb-2">Department <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
                         <div class="flex flex-wrap gap-2" id="assess-dept-opts">
-                            <button class="builder-btn dept-color-btn active" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="assessment-state" data-key="dept" data-val="Science">Science</button>
+                            <button class="builder-btn dept-color-btn" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="assessment-state" data-key="dept" data-val="Science">Science</button>
                             <button class="builder-btn dept-color-btn" style="--dept-dark: #9F1559; --dept-light: #F8E7EE;" data-action="assessment-state" data-key="dept" data-val="Maths">Maths</button>
                             <button class="builder-btn dept-color-btn" style="--dept-dark: #7900CC; --dept-light: #F5EFFF;" data-action="assessment-state" data-key="dept" data-val="Social Sciences">Social Sciences</button>
                             <button class="builder-btn dept-color-btn" style="--dept-dark: #22229D; --dept-light: #EBF5FA;" data-action="assessment-state" data-key="dept" data-val="English">English</button>
@@ -845,13 +861,19 @@
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 8">Year 8</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 9">Year 9</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 10">Year 10</button>
-                            <button class="builder-btn active" data-action="assessment-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
+                            <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 11 (NCEA Level 1)">Y11 (NCEA L1)</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 12 (NCEA Level 2)">Y12 (NCEA L2)</button>
                             <button class="builder-btn" data-action="assessment-state" data-key="year" data-val="Year 13 (NCEA Level 3)">Y13 (NCEA L3)</button>
                         </div>
                     </div>
                 </div>
                 </div>
+
+                <div id="assess-select-prompt" class="text-center py-10 px-4 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
+                    <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
+                </div>
+
+                <div id="assess-config-rest" class="hidden space-y-6">
 
                 <div id="assess-curriculum-link" class="flex justify-start"></div>
 
@@ -1049,6 +1071,8 @@
                         </div>
                     </details>
                 </div>
+
+                </div>
             </div>
 
             <div class="glass-card p-8 border-t-4 border-t-purple-600 max-w-5xl mx-auto">
@@ -1087,8 +1111,8 @@
                 </div>
             </div>
             <div class="space-y-4">
-                <div class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
-                    <button class="dept-btn dept-color-btn active" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="discipline" data-val="Science">Science</button>
+                <div id="inst-discipline-opts" class="flex flex-wrap justify-center gap-3 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                    <button class="dept-btn dept-color-btn" style="--dept-dark: #007040; --dept-light: #E4F4E5;" data-action="discipline" data-val="Science">Science</button>
                     <button class="dept-btn dept-color-btn" style="--dept-dark: #9F1559; --dept-light: #F8E7EE;" data-action="discipline" data-val="Maths">Maths</button>
                     <button class="dept-btn dept-color-btn" style="--dept-dark: #7900CC; --dept-light: #F5EFFF;" data-action="discipline" data-val="Social Sciences">Social Sciences</button>
                     <button class="dept-btn dept-color-btn" style="--dept-dark: #22229D; --dept-light: #EBF5FA;" data-action="discipline" data-val="English">English</button>
@@ -1102,12 +1126,18 @@
                     <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 8">Year 8</button>
                     <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 9">Year 9</button>
                     <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 10">Year 10</button>
-                    <button class="inst-year-btn dept-btn active" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
+                    <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 11 (NCEA Level 1)">Year 11</button>
                     <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 12 (NCEA Level 2)">Year 12</button>
                     <button class="inst-year-btn dept-btn" data-action="inst-year" data-val="Year 13 (NCEA Level 3)">Year 13</button>
                 </div>
                 <div id="inst-curriculum-link" class="flex justify-center mt-2"></div>
             </div>
+
+            <div id="inst-select-prompt" class="text-center py-10 px-4 max-w-4xl mx-auto bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
+                <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
+            </div>
+
+            <div id="inst-config-rest" class="hidden space-y-8">
             
             <div class="glass-card p-6 border-l-4 border-l-[#10b981] max-w-4xl mx-auto flex items-center gap-4 my-8">
                 <div class="flex-grow">
@@ -1165,6 +1195,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
             </div>
             
             <div class="glass-card p-8 md:p-10 border-t-8 border-t-[#10b981] mt-8">
@@ -1501,9 +1533,9 @@
             'Default': { 1: generateStrategies(1), 2: generateStrategies(2), 3: generateStrategies(3), 4: generateStrategies(4), 5: generateStrategies(5) }
         };
 
-        var currentDiscipline = 'Science';
+        var currentDiscipline = '';
         var currentStage = 1;
-        var currentInstructionalYear = 'Year 11 (NCEA Level 1)';
+        var currentInstructionalYear = '';
         var currentStrategy = null;
         var currentInstContext = 'none';
         var currentInstMaori = 'none';
@@ -1513,17 +1545,17 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'Science', year:'Year 11 (NCEA Level 1)', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'Science', year:'Year 11 (NCEA Level 1)', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
+            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'Science', year:'Year 11 (NCEA Level 1)', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'' };
+        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'' };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
 
         function getDesc(name) { return cpmTaskDB[name] && cpmTaskDB[name].desc ? cpmTaskDB[name].desc : "Click to generate a specific AI prompt."; }
@@ -1583,6 +1615,24 @@
             if (viewId === 'theory') loadTheoryStage(1);
         }
 
+        function checkLessonBothSelected() {
+            var ready = !!(lessonState.dept && lessonState.year);
+            var prompt = document.getElementById('lesson-select-prompt');
+            var rest = document.getElementById('lesson-config-rest');
+            var leftCol = document.getElementById('lesson-left-column');
+            if (prompt) prompt.classList.toggle('hidden', ready);
+            if (rest) rest.classList.toggle('hidden', !ready);
+            if (leftCol) leftCol.classList.toggle('hidden', !ready);
+        }
+
+        function checkAssessBothSelected() {
+            var ready = !!(assessmentState.dept && assessmentState.year);
+            var prompt = document.getElementById('assess-select-prompt');
+            var rest = document.getElementById('assess-config-rest');
+            if (prompt) prompt.classList.toggle('hidden', ready);
+            if (rest) rest.classList.toggle('hidden', !ready);
+        }
+
         function checkSeniorStatus() {
             var yr = assessmentState.year || "";
             var isSen = yr.includes("Level");
@@ -1594,6 +1644,14 @@
             if(jCon1) isJun ? jCon1.classList.remove('hidden') : jCon1.classList.add('hidden');
             if(jCon2) isJun ? jCon2.classList.remove('hidden') : jCon2.classList.add('hidden');
             if(isSen) assessmentState.nceaMode = true; 
+        }
+
+        function checkUnitBothSelected() {
+            var ready = !!(unitState.dept && unitState.year);
+            var prompt = document.getElementById('unit-select-prompt');
+            var rest = document.getElementById('unit-config-rest');
+            if (prompt) prompt.classList.toggle('hidden', ready);
+            if (rest) rest.classList.toggle('hidden', !ready);
         }
 
         function checkUnitSeniorStatus() {
@@ -1762,12 +1820,14 @@
             var topicMissing = (topic === '[Insert Specific Topic Here]');
             var total = 0, done = 0;
             if (targetId === 'prompt-lesson-text') {
+                total++; if (lessonState.dept) done++;
                 total++; if (!topicMissing) done++;
                 total++; var lt = ((document.getElementById('les-lesson-topic') || {}).value || '').trim(); if (lt) done++;
                 if (lessonState.mode === 'standard' && lessonState.framework === 'cpm') {
                     total++; if (lessonState.activeStages && lessonState.activeStages.length > 0) done++;
                 }
             } else if (targetId === 'prompt-unit-text') {
+                total++; if (unitState.dept) done++;
                 total++; if (!topicMissing) done++;
                 if ((unitState.year || '').includes('Level')) {
                     total++; var uns = ((document.getElementById('unit-ncea-standard') || {}).value || '').trim(); if (uns) done++;
@@ -1777,6 +1837,7 @@
                 }
                 total++; var uct = ((document.getElementById('unit-custom-task') || {}).value || '').trim(); if (uct) done++;
             } else if (targetId === 'prompt-assessment-text') {
+                total++; if (assessmentState.dept) done++;
                 total++; if (!topicMissing) done++;
                 if ((assessmentState.year || '').includes('Level')) {
                     total++; var ans = ((document.getElementById('assess-ncea-standard') || {}).value || '').trim(); if (ans) done++;
@@ -1801,6 +1862,7 @@
             var topicMissing = (topic === '[Insert Specific Topic Here]');
             
             if (targetId === 'prompt-lesson-text') {
+                if (!lessonState.dept) return { msg: 'Select a Department before copying', id: 'les-dept-opts' };
                 if (topicMissing) return { msg: 'Fill in "What are you teaching?" before copying', id: 'les-main-topic-input' };
                 var lt = ((document.getElementById('les-lesson-topic') || {}).value || '').trim();
                 if (!lt) return { msg: 'Fill in "Lesson Plan Title" before copying', id: 'les-lesson-topic' };
@@ -1808,6 +1870,7 @@
                     return { msg: 'Select at least one stage in "Include Stages in Plan" before copying', id: 'stage-toggles-container' };
                 }
             } else if (targetId === 'prompt-unit-text') {
+                if (!unitState.dept) return { msg: 'Select a Department before copying', id: 'unit-dept-opts' };
                 if (topicMissing) return { msg: 'Fill in "Unit Plan Title" before copying', id: 'unit-plan-title-input' };
                 var uyr = unitState.year || '';
                 if (uyr.includes('Level')) {
@@ -1822,12 +1885,15 @@
                 var uct = ((document.getElementById('unit-custom-task') || {}).value || '').trim();
                 if (!uct) return { msg: 'Fill in "Specific Activities, Tasks, or Focus Areas" before copying', id: 'unit-custom-task' };
             } else if (targetId === 'prompt-assessment-text') {
+                if (!assessmentState.dept) return { msg: 'Select a Department before copying', id: 'assess-dept-opts' };
                 if (topicMissing) return { msg: 'Fill in "What are you assessing?" before copying', id: 'assess-main-topic-input' };
                 var ayr = assessmentState.year || '';
                 if (ayr.includes('Level')) {
                     var ans = ((document.getElementById('assess-ncea-standard') || {}).value || '').trim();
                     if (!ans) return { msg: 'Fill in "Target NZQA Standard Number" before copying', id: 'assess-ncea-standard' };
                 }
+            } else if (targetId === 'prompt-text-instructional') {
+                if (!currentDiscipline) return { msg: 'Select a Department before copying', id: 'inst-discipline-opts' };
             }
             return null;
         }
@@ -2309,6 +2375,10 @@
 
                     checkSeniorStatus();
                     checkUnitSeniorStatus();
+                    checkUnitBothSelected();
+                    checkAssessBothSelected();
+                    checkLessonBothSelected();
+                    checkInstBothSelected();
                     updateStageUI();
                 } catch (e) {}
             } else {
@@ -2416,8 +2486,15 @@
             updateAllPrompts();
         }
 
-        function setDiscipline(d) { currentDiscipline = d; setActiveBtn('discipline', d); renderCurriculumLink('inst-curriculum-link', d, currentInstructionalYear); forceAiPicks(); }
-        function setInstructionalYear(y) { currentInstructionalYear = y; setActiveBtn('inst-year', y); renderCurriculumLink('inst-curriculum-link', currentDiscipline, y); forceAiPicks(); }
+        function setDiscipline(d) { currentDiscipline = d; setActiveBtn('discipline', d); renderCurriculumLink('inst-curriculum-link', d, currentInstructionalYear); checkInstBothSelected(); forceAiPicks(); }
+        function setInstructionalYear(y) { currentInstructionalYear = y; setActiveBtn('inst-year', y); renderCurriculumLink('inst-curriculum-link', currentDiscipline, y); checkInstBothSelected(); forceAiPicks(); }
+        function checkInstBothSelected() {
+            var ready = !!(currentDiscipline && currentInstructionalYear);
+            var prompt = document.getElementById('inst-select-prompt');
+            var rest = document.getElementById('inst-config-rest');
+            if (prompt) prompt.classList.toggle('hidden', ready);
+            if (rest) rest.classList.toggle('hidden', !ready);
+        }
         function setStage(s) { currentStage = s; setActiveBtn('stage', s); forceAiPicks(); }
         function setInstState(k, v, b) {
             if (k === 'context') currentInstContext = v;
@@ -2436,7 +2513,7 @@
             document.getElementById('display-intent').innerText = stageInfo[currentStage].intent;
             var st = showExpandedStrategies
                 ? (ginnisWhiteheadStrategies[currentStage] || []).slice()
-                : (cpmMatrix[currentDiscipline][currentStage] || []).slice();
+                : ((cpmMatrix[currentDiscipline] || cpmMatrix['Default'])[currentStage] || []).slice();
             var con = document.getElementById('display-strategies');
             var tp = hP[currentStage];
             var html = "";
@@ -2518,7 +2595,7 @@
                 var bl = document.getElementById('stage-block-' + i);
                 var isAct = lessonState.activeStages.includes(i);
                 if (b) isAct ? b.classList.add('active') : b.classList.remove('active');
-                if (bl) isAct ? bl.classList.remove('opacity-40', 'pointer-events-none', 'grayscale') : bl.classList.add('opacity-40', 'pointer-events-none', 'grayscale');
+                if (bl) bl.classList.toggle('hidden', !isAct);
             }
             var warn = document.getElementById('stage-toggles-warning');
             var container = document.getElementById('stage-toggles-container');
@@ -2533,6 +2610,7 @@
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
             b.classList.add('active');
+            checkLessonBothSelected();
             
             if (k === 'sequence') {
                 var customContainer = document.getElementById('les-custom-sequence-container');
@@ -2625,6 +2703,7 @@
             if (k === 'dept' || k === 'year') {
                 renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
                 checkSeniorStatus();
+                checkAssessBothSelected();
             }
             if (k === 'duration') {
                 var cd = document.getElementById('assess-custom-dur-container');
@@ -2811,6 +2890,7 @@
             if (k === 'dept' || k === 'year') {
                 renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
                 checkUnitSeniorStatus();
+                checkUnitBothSelected();
             }
             if (k === 'dur') {
                 var cd = document.getElementById('unit-custom-dur-container');
@@ -2842,6 +2922,12 @@
 
         function updateUnitBuilderPrompt() {
             var tb = String.fromCharCode(96, 96, 96);
+            if (!unitState.dept) {
+                var earlyB = document.getElementById('prompt-unit-text');
+                if (earlyB) earlyB.innerText = "Select a Department above.";
+                updateRequiredChecklist('prompt-unit-text', 'unit-required-checklist');
+                return;
+            }
             var t = getGlobalTopic(), ct = (document.getElementById('unit-custom-task') || {}).value || "", cd = (document.getElementById('unit-custom-dur') || {}).value || "";
             var sm = (document.getElementById('unit-source-material') || {}).value || "";
             unitState.sourceMaterial = sm;
@@ -3068,6 +3154,7 @@
             
             var tb = String.fromCharCode(96, 96, 96);
             var b = document.getElementById('prompt-lesson-text');
+            if (!lessonState.dept) { if (b) b.innerText = "Select a Department above."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
             if (outs.length === 0 && lessonState.mode === 'standard') { if (b) b.innerText = "Select an Output option."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
             if (stg.length === 0 && lessonState.mode === 'standard' && lessonState.framework === 'cpm') { if (b) b.innerText = "Select at least one stage in \"Include Stages in Plan\" above."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
             
@@ -3357,6 +3444,12 @@
         }
 
         function updateAssessmentBuilderPrompt() {
+            if (!assessmentState.dept) {
+                var earlyBox = document.getElementById('prompt-assessment-text');
+                if (earlyBox) earlyBox.innerText = "Select a Department above.";
+                updateRequiredChecklist('prompt-assessment-text', 'assess-required-checklist');
+                return;
+            }
             var t = getGlobalTopic(), ns = (document.getElementById('assess-ncea-standard') || {}).value || "[Standard]", cf = (document.getElementById('assess-custom-format') || {}).value || "", cd = (document.getElementById('assess-custom-dur') || {}).value || "", sm = (document.getElementById('assess-source-material') || {}).value || "";
             var vol = (document.getElementById('assess-custom-volume') || {}).value || "";
             assessmentState.sourceMaterial = sm;
@@ -3712,6 +3805,13 @@
             var savedTopic = localStorage.getItem('whs_topic');
             if(savedTopic) { var inputs = document.querySelectorAll('.sync-topic'); for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic; }
             loadAppState();
+            checkSeniorStatus();
+            checkUnitSeniorStatus();
+            checkUnitBothSelected();
+            checkAssessBothSelected();
+            checkLessonBothSelected();
+            checkInstBothSelected();
+            updateStageUI();
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
