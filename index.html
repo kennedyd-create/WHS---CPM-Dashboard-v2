@@ -155,6 +155,8 @@
         html.dark [class*="text-amber-800"], html.dark [class*="text-amber-900"] { color: #fcd34d !important; }
         html.dark [class*="text-purple-600"], html.dark [class*="text-purple-700"], html.dark [class*="text-purple-800"], html.dark [class*="text-purple-900"] { color: #d8b4fe !important; }
         html.dark [class*="text-emerald-800"], html.dark [class*="text-emerald-900"] { color: #6ee7b7 !important; }
+        html.dark [class*="text-emerald-700"] { color: #6ee7b7 !important; }
+        html.dark [class*="border-emerald-300"] { border-color: #334155 !important; }
         html.dark [class*="text-green-600"], html.dark [class*="text-green-800"] { color: #86efac !important; }
         html.dark [class*="text-red-500"], html.dark [class*="text-red-600"], html.dark [class*="text-red-700"], html.dark [class*="text-red-800"] { color: #fca5a5 !important; }
         html.dark [class*="text-[#047857]"] { color: #6ee7b7 !important; }
@@ -653,9 +655,17 @@
                             <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 shadow-sm flex flex-col gap-4">
                                 <span class="text-xs font-black text-blue-800 uppercase tracking-widest block mb-1">Junior Focus (Years 7-10) <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
                                 <div class="grid md:grid-cols-2 gap-4">
-                                    <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="unit-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
-                                    <div><label class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="unit-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none"></div>
+                                    <div>
+                                        <label for="unit-junior-knowledge" class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Knowledge</label>
+                                        <textarea id="unit-junior-knowledge" rows="1" placeholder="e.g. Structure of a plant cell..." class="autosize-textarea w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="unit-junior-practices" class="text-[10px] font-bold text-blue-800 uppercase tracking-widest block mb-1">Specific Practices</label>
+                                        <textarea id="unit-junior-practices" rows="1" placeholder="e.g. Interpreting diagrams..." class="autosize-textarea w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
+                                    </div>
                                 </div>
+                                <p class="text-[10px] text-blue-700 text-center leading-tight">You can write or paste as much as you need in either box — it'll grow as you type.</p>
+                                <p class="text-[11px] text-red-600 font-bold text-center leading-tight">Copying and pasting these directly from the NZ Curriculum document works best.</p>
                             </div>
                         </div>
 
@@ -671,7 +681,7 @@
                         <div class="pt-2">
                             <label for="unit-custom-task" class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span id="unit-activities-required-badge" class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></label>
                             <textarea id="unit-custom-task" rows="1" placeholder="e.g. Include a debate in week 2, make sure lesson 4 covers the marae visit, avoid worksheets for the differentiated group..." class="autosize-textarea w-full p-3 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
-                            <p class="text-[10px] text-slate-400 mt-1.5 leading-tight">Write as much as you want here — specific requests, things to avoid, key dates, resources to use. This box will grow as you type.</p>
+                            <p class="text-[11px] text-red-600 font-bold mt-1.5 leading-tight">Write as much as you want here — specific requests, things to avoid, key dates, resources to use. This box will grow as you type.</p>
                         </div>
 
                         <div>
@@ -783,6 +793,45 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-4">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Practical / Hands-On Sessions <span class="text-[9px] font-black text-sky-800 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                            <p class="text-[10px] text-slate-500 mb-2 font-medium">Does this unit need dedicated practical, lab, workshop, fieldwork, or other hands-on sessions?</p>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <button class="builder-btn active" data-action="unit-state" data-key="practicalIncluded" data-val="no">No</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="practicalIncluded" data-val="yes">Yes</button>
+                            </div>
+
+                            <div id="unit-practical-sub-options" class="hidden bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                                <div class="text-[10px] font-bold text-amber-800 bg-amber-50 p-2 rounded border border-amber-200 inline-flex items-center gap-1.5 shadow-sm">
+                                    💡 These sessions will be distributed across the sequence and clearly marked as practical/hands-on — details below help the AI plan equipment, safety, and structure correctly.
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">How Many Sessions</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button class="builder-btn active" data-action="unit-state" data-key="practicalCount" data-val="1">1</button>
+                                        <button class="builder-btn" data-action="unit-state" data-key="practicalCount" data-val="2">2</button>
+                                        <button class="builder-btn" data-action="unit-state" data-key="practicalCount" data-val="3">3</button>
+                                        <button class="builder-btn" data-action="unit-state" data-key="practicalCount" data-val="4+">4+</button>
+                                        <button class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="E.g. for PE — a practical component every lesson rather than a fixed number of named sessions" data-action="unit-state" data-key="practicalCount" data-val="every">Every Lesson</button>
+                                    </div>
+                                    <div id="unit-practical-custom-count-container" class="hidden pt-2">
+                                        <label for="unit-practical-custom-count" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">How many exactly?</label>
+                                        <input type="number" min="4" id="unit-practical-custom-count" value="4" class="w-24 p-2 rounded-lg border border-slate-300 text-sm outline-none text-center">
+                                    </div>
+                                </div>
+                                <div id="unit-practical-titles-container" class="space-y-2"></div>
+                                <div>
+                                    <label for="unit-practical-details" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Details <span class="text-slate-400 normal-case font-medium">(equipment, safety considerations, what students will do)</span></label>
+                                    <textarea id="unit-practical-details" rows="1" placeholder="e.g. Dissection of a sheep heart, requires PPE and a risk assessment briefing; students work in pairs..." class="autosize-textarea w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 mt-4 bg-emerald-50 border border-emerald-300 rounded-xl p-4">
+                            <p class="text-sm font-bold text-emerald-800">✅ Ready to go? Click <span class="underline">Copy Prompt</span> on the right and paste it into Gemini, ChatGPT, or Claude to generate your unit plan.</p>
+                            <p class="text-[11px] text-emerald-700 mt-1">The Add-Ons below are optional extras — only use them if you already know what they do.</p>
                         </div>
 
                         <div class="pt-4 border-t border-slate-200 mt-2">
@@ -1548,7 +1597,7 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson' };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -1647,6 +1696,51 @@
             if(jCon1) isJun ? jCon1.classList.remove('hidden') : jCon1.classList.add('hidden');
             if(jCon2) isJun ? jCon2.classList.remove('hidden') : jCon2.classList.add('hidden');
             if(isSen) assessmentState.nceaMode = true; 
+        }
+
+        function getResolvedPracticalCount() {
+            if (unitState.practicalCount === 'every') return 0;
+            if (unitState.practicalCount === '4+') {
+                var n = parseInt((document.getElementById('unit-practical-custom-count') || {}).value) || 4;
+                return Math.max(4, n);
+            }
+            return parseInt(unitState.practicalCount) || 1;
+        }
+
+        function renderPracticalTitleBoxes() {
+            var customContainer = document.getElementById('unit-practical-custom-count-container');
+            if (customContainer) unitState.practicalCount === '4+' ? customContainer.classList.remove('hidden') : customContainer.classList.add('hidden');
+
+            var container = document.getElementById('unit-practical-titles-container');
+            if (!container) return;
+
+            if (unitState.practicalCount === 'every') {
+                container.innerHTML = '';
+                return;
+            }
+
+            var n = getResolvedPracticalCount();
+            if (!unitState.practicalTitles) unitState.practicalTitles = [];
+            var aiChoice = !!unitState.practicalAiChoice;
+
+            var html = '<div class="flex items-center justify-between flex-wrap gap-2 mb-2">';
+            html += '<span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Practical Titles</span>';
+            html += '<label class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-600 cursor-pointer"><input type="checkbox" id="unit-practical-ai-choice" onchange="toggleUnitPracticalAiChoice(this.checked)"' + (aiChoice ? ' checked' : '') + '> You Choose <span class="font-normal normal-case text-slate-400">(let the AI decide)</span></label>';
+            html += '</div>';
+            if (!aiChoice) {
+                for (var i = 1; i <= n; i++) {
+                    var val = escapeHtml(unitState.practicalTitles[i - 1] || '');
+                    html += '<input type="text" id="unit-practical-title-' + i + '" data-idx="' + i + '" value="' + val + '" placeholder="Practical ' + i + ' Title (e.g. Sheep Heart Dissection)" class="unit-practical-title-input w-full p-2 rounded-lg border border-slate-300 text-sm outline-none mb-2">';
+                }
+            }
+            container.innerHTML = html;
+        }
+
+        function toggleUnitPracticalAiChoice(checked) {
+            unitState.practicalAiChoice = checked;
+            renderPracticalTitleBoxes();
+            updateUnitBuilderPrompt();
+            saveAppState();
         }
 
         function checkUnitBothSelected() {
@@ -2219,6 +2313,20 @@
                     if (uao) {
                         unitState.assessmentIncluded === 'yes' ? uao.classList.remove('hidden') : uao.classList.add('hidden');
                     }
+                    
+                    if (!unitState.practicalIncluded) unitState.practicalIncluded = 'no';
+                    if (!unitState.practicalCount) unitState.practicalCount = '1';
+                    setActiveBtn('unit-state', unitState.practicalIncluded, 'practicalIncluded');
+                    setActiveBtn('unit-state', unitState.practicalCount, 'practicalCount');
+                    var upo = document.getElementById('unit-practical-sub-options');
+                    if (upo) {
+                        unitState.practicalIncluded === 'yes' ? upo.classList.remove('hidden') : upo.classList.add('hidden');
+                    }
+                    var upd = document.getElementById('unit-practical-details');
+                    if (upd) upd.value = unitState.practicalDetails || "";
+                    var upcc = document.getElementById('unit-practical-custom-count');
+                    if (upcc) upcc.value = unitState.practicalCustomCount || '4';
+                    renderPracticalTitleBoxes();
                     
                     if (unitState.assessmentType === 'Other') {
                         var cat = document.getElementById('unit-custom-assess-type-container');
@@ -2903,6 +3011,13 @@
                 var uao = document.getElementById('unit-assessment-sub-options');
                 if (uao) v === 'yes' ? uao.classList.remove('hidden') : uao.classList.add('hidden');
             }
+            if (k === 'practicalIncluded') {
+                var upo = document.getElementById('unit-practical-sub-options');
+                if (upo) v === 'yes' ? upo.classList.remove('hidden') : upo.classList.add('hidden');
+            }
+            if (k === 'practicalCount') {
+                renderPracticalTitleBoxes();
+            }
             if (k === 'assessmentType') {
                 var cat = document.getElementById('unit-custom-assess-type-container');
                 if (cat) v === 'Other' ? cat.classList.remove('hidden') : cat.classList.add('hidden');
@@ -2976,6 +3091,39 @@
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
             if (unitState.assessmentIncluded === 'yes') txt += 'Important: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
+            if (unitState.practicalIncluded === 'yes') {
+                var pd = ((document.getElementById('unit-practical-details') || {}).value || '').trim();
+                unitState.practicalDetails = pd;
+                if (unitState.practicalCount === 'every') {
+                    txt += 'Important: Include a practical/hands-on component in EVERY lesson of this unit (not just discussion/worksheet-based lessons), unless the details below say otherwise. Clearly label the practical component in each lesson.';
+                    if (pd) {
+                        txt += ' Details to incorporate: "' + pd + '". Explicitly note any equipment, preparation, or safety/H&S considerations mentioned in the Resources/Preparation column.\n';
+                    } else {
+                        txt += ' No further details were given — use your judgement for what a suitable hands-on component looks like for this topic each lesson, and note general equipment/preparation needs in the Resources/Preparation column.\n';
+                    }
+                } else {
+                    var n = getResolvedPracticalCount();
+                    var namedTitles = [];
+                    if (!unitState.practicalAiChoice) {
+                        var titles = unitState.practicalTitles || [];
+                        for (var pti = 0; pti < n; pti++) {
+                            if (titles[pti] && titles[pti].trim()) namedTitles.push((pti + 1) + ') ' + titles[pti].trim());
+                        }
+                    }
+                    txt += 'Important: Include ' + n + ' dedicated practical/hands-on session(s) within this unit sequence (lab work, workshop time, fieldwork, performance, or similar — not just discussion/worksheet-based lessons). Distribute them sensibly across the sequence rather than clustering them all at once, unless the details below say otherwise. Clearly label these lessons as practical/hands-on in the sequence.';
+                    if (unitState.practicalAiChoice) {
+                        txt += ' You have full discretion to choose engaging, curriculum-appropriate titles/focuses for all ' + n + ' practical sessions.';
+                    } else if (namedTitles.length) {
+                        txt += ' Use these specific titles/focuses for the practicals (in this order, distributed across the sequence): ' + namedTitles.join('; ') + '.';
+                        if (namedTitles.length < n) txt += ' For any remaining practicals without a given title, use your judgement for a suitable focus.';
+                    }
+                    if (pd) {
+                        txt += ' Details to incorporate: "' + pd + '". Explicitly note any equipment, preparation, or safety/H&S considerations mentioned in the Resources/Preparation column for these lessons.\n';
+                    } else {
+                        txt += ' No further details were given — use your judgement for what a suitable hands-on session looks like for this topic, and note general equipment/preparation needs in the Resources/Preparation column.\n';
+                    }
+                }
+            }
             if (ct) {
                 txt += 'Specific Instructions: "' + ct + '".\n';
             } else {
@@ -3757,7 +3905,15 @@
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('autosize-textarea')) autosizeTextarea(e.target);
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
-                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time', 'unit-ncea-standard'].includes(e.target.id)) updateUnitBuilderPrompt();
+                else if (e.target.id === 'unit-practical-custom-count') { unitState.practicalCustomCount = e.target.value; renderPracticalTitleBoxes(); updateUnitBuilderPrompt(); saveAppState(); }
+                else if (e.target.classList.contains('unit-practical-title-input')) {
+                    var idx = parseInt(e.target.getAttribute('data-idx')) - 1;
+                    if (!unitState.practicalTitles) unitState.practicalTitles = [];
+                    unitState.practicalTitles[idx] = e.target.value;
+                    updateUnitBuilderPrompt();
+                    saveAppState();
+                }
+                else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time', 'unit-ncea-standard', 'unit-practical-details'].includes(e.target.id)) updateUnitBuilderPrompt();
                 else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration', 'les-lesson-topic'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
@@ -3815,6 +3971,7 @@
             checkLessonBothSelected();
             checkInstBothSelected();
             updateStageUI();
+            renderPracticalTitleBoxes();
             renderCurriculumLink('inst-curriculum-link', currentDiscipline, currentInstructionalYear);
             renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
