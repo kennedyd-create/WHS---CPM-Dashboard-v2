@@ -1609,6 +1609,7 @@
         
         var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'' };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
+        var noLatexRule = "CRITICAL: Do NOT use LaTeX or mathematical markup syntax (no $...$, \\text{}, \\frac{}, ^{}, _{}, or similar). Write all formulas, equations, chemical compounds, and quantities in plain, directly readable text — use Unicode subscript/superscript characters where needed (e.g. write 'CaCl₂' not '\\text{CaCl}_2', write 'x²' not 'x^2', write '0.1 mol/L' or '0.1M NaCl' not '$0.1\\text{M}$'). This output will be pasted directly into a Google Doc or Word document, which cannot render LaTeX.";
 
         function getDesc(name) { return cpmTaskDB[name] && cpmTaskDB[name].desc ? cpmTaskDB[name].desc : "Click to generate a specific AI prompt."; }
         
@@ -2670,7 +2671,7 @@
             var yr = currentInstructionalYear || "";
             var isL = yr.includes("Level");
             
-            var txt = '### System Role\nAct as an expert pedagogical coach.\n\n### Context\nTeaching a lesson on "' + t + '" to ' + yr + ' ' + currentDiscipline + '. CPM Stage ' + currentStage + '.\n\n### Task\nUse the strategy: \'' + s + '\'. Generate script/materials to execute it effectively, adapted for ' + yr + ' level.\n\n### Strict Rules\nGOLD STANDARD FORMATTING: Write actual content in full for immediate classroom use.\n' + (isL ? 'Align to CURRENT NCEA requirements.' : 'Use the new Knowledge & Practices framework.') + '\n' + nzSpellingRule + '\n';
+            var txt = '### System Role\nAct as an expert pedagogical coach.\n\n### Context\nTeaching a lesson on "' + t + '" to ' + yr + ' ' + currentDiscipline + '. CPM Stage ' + currentStage + '.\n\n### Task\nUse the strategy: \'' + s + '\'. Generate script/materials to execute it effectively, adapted for ' + yr + ' level.\n\n### Strict Rules\nGOLD STANDARD FORMATTING: Write actual content in full for immediate classroom use.\n' + (isL ? 'Align to CURRENT NCEA requirements.' : 'Use the new Knowledge & Practices framework.') + '\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             if (currentInstContext === 'waiheke') txt += 'Include local Waiheke Island contexts.\n';
             if (currentInstMaori === 'integrate') txt += 'Integrate Mātauranga Māori/pūrākau.\n';
             if (currentInstLit === 'integrate') txt += 'Focus on disciplinary literacy.\n';
@@ -3084,7 +3085,7 @@
                 }
             }
 
-            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n';
+            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             
             if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
@@ -3264,7 +3265,7 @@
             }
             
             if (unitState.geminiNotebook) {
-                txt += '\n---\n\n### Follow-Up: Gemini Notebook Knowledge Document\nCRITICAL INSTRUCTION: Generate ONLY the unit plan above in this response. Do NOT generate the knowledge document yet — this is to avoid the output becoming too large and losing quality in a single pass.\nOnce you have finished the unit plan above, stop and ask me exactly this: "Would you like me to now generate a detailed Knowledge Document for this unit, suitable for uploading into a Gemini Notebook?" Then wait for my reply before continuing.\nIf I confirm, generate a single dense, factual knowledge document covering everything a student would need to know for this unit (aim for 1500+ words, structured with clear headings matching the lesson sequence above). CRITICAL: This document must be pure subject-matter content — do NOT include any pedagogical instructions, lesson staging, activities, or teaching strategy language; it exists purely as source material for Gemini Notebook to generate summaries, quizzes, and audio overviews from. ' + nzSpellingRule + ' CRITICAL: Do not hallucinate facts, dates, figures, or sources — where you are not certain of a specific fact, state it in general terms rather than inventing specifics.\n';
+                txt += '\n---\n\n### Follow-Up: Gemini Notebook Knowledge Document\nCRITICAL INSTRUCTION: Generate ONLY the unit plan above in this response. Do NOT generate the knowledge document yet — this is to avoid the output becoming too large and losing quality in a single pass.\nOnce you have finished the unit plan above, stop and ask me exactly this: "Would you like me to now generate a detailed Knowledge Document for this unit, suitable for uploading into a Gemini Notebook?" Then wait for my reply before continuing.\nIf I confirm, generate a single dense, factual knowledge document covering everything a student would need to know for this unit (aim for 1500+ words, structured with clear headings matching the lesson sequence above). CRITICAL: This document must be pure subject-matter content — do NOT include any pedagogical instructions, lesson staging, activities, or teaching strategy language; it exists purely as source material for Gemini Notebook to generate summaries, quizzes, and audio overviews from. ' + nzSpellingRule + ' ' + noLatexRule + ' CRITICAL: Do not hallucinate facts, dates, figures, or sources — where you are not certain of a specific fact, state it in general terms rather than inventing specifics.\n';
             }
             
             var b = document.getElementById('prompt-unit-text');
@@ -3340,7 +3341,7 @@
                     }
                     txt += '### Task\n' + fwTaskStr + '\n\n';
                 }
-                txt += '### Strict Rules\nNo meta-commentary. Use Markdown/HTML.\n' + nzSpellingRule + '\n';
+                txt += '### Strict Rules\nNo meta-commentary. Use Markdown/HTML.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             }
             
             // 2. RULES (SHARED & SPECIFIC)
@@ -3641,7 +3642,7 @@
                 else txt += '\n';
             }
 
-            txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\n' + nzSpellingRule + '\n';
+            txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
             if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic.\n';
             if (assessmentState.lit === 'integrate') txt += 'Focus on disciplinary literacy — ensure at least one question explicitly assesses reading/writing skill in this subject, not just content recall.\n';
