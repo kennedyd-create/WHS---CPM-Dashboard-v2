@@ -72,6 +72,7 @@
         
         @keyframes globe-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes star-pulse { 0%, 100% { transform: scale(0.85); filter: drop-shadow(0 0 5px rgba(197,160,89,0.5)); opacity: 0.9; } 50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(253,224,71,0.9)); opacity: 1; } }
+        @keyframes breathe { 0% { transform: scale(0.72); } 40%, 60% { transform: scale(1); } 100% { transform: scale(0.72); } }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -135,6 +136,9 @@
         html.dark .border-slate-200, html.dark .border-slate-300, html.dark .border-blue-100, html.dark .border-amber-100,
         html.dark .border-purple-100, html.dark [class*="border-purple-200"], html.dark [class*="border-purple-300"], html.dark [class*="border-indigo-200"], html.dark [class*="border-orange-200"] { border-color: #334155 !important; }
         html.dark [class*="bg-purple-100"], html.dark [class*="bg-purple-200"], html.dark [class*="bg-emerald-200"] { background-color: #1e293b !important; }
+        html.dark [class*="bg-teal-50"], html.dark [class*="bg-teal-100"] { background-color: #1e293b !important; }
+        html.dark [class*="border-teal-200"], html.dark [class*="border-teal-300"] { border-color: #334155 !important; }
+        html.dark [class*="text-teal-800"] { color: #5eead4 !important; }
         html.dark [class*="hover:bg-indigo-100"]:hover, html.dark [class*="hover:bg-orange-100"]:hover { background-color: #29354a !important; }
         html.dark [class*="text-indigo-600"] { color: #a5b4fc !important; }
         html.dark [class*="text-orange-600"] { color: #fdba74 !important; }
@@ -217,8 +221,8 @@
 
         <nav class="sticky top-0 z-50 bg-[#e2e8f0]/95 backdrop-blur-md flex flex-wrap items-center justify-center border-b-2 border-slate-300 mb-6 gap-1 md:gap-2 pb-2 pt-2 px-2 md:px-4 shadow-sm transition-all duration-300 overflow-visible">
             <button id="nav-lesson" class="nav-btn nav-active tooltip-wrapper tooltip-bottom" data-tooltip="Create a single highly detailed lesson plan" data-action="view" data-target="lesson">⭐ Lesson Builder</button>
-            <button id="nav-planning" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Sequence a multi-week unit structure" data-action="view" data-target="planning">Unit Planner</button>
-            <button id="nav-assessment" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generate tests, tasks, and rubrics" data-action="view" data-target="assessment">Assessment Generator</button>
+            <button id="nav-planning" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Sequence a multi-week unit structure" data-action="view" data-target="planning"><span style="color:#B4B4BC">★</span> Unit Planner</button>
+            <button id="nav-assessment" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generate tests, tasks, and rubrics" data-action="view" data-target="assessment"><span style="color:#CD7F32">★</span> Assessment Generator</button>
             <button id="nav-instructional" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Explore pedagogical strategies by stage" data-action="view" data-target="instructional">Strategy Hub</button>
             <button id="nav-theory" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Read the research behind the CPM" data-action="view" data-target="theory">CPM Theory</button>
             
@@ -233,6 +237,7 @@
                 </div>
 
                 <button class="w-full justify-center px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Not sure which tool to use? Reopen the quick guide" data-action="show-onboarding">❓ New Here? Guide Me</button>
+                <button class="w-full justify-center px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="A minute to breathe, plus a book recommendation" data-action="show-wellbeing">🧘 Teacher Well-being</button>
             </div>
         </nav>
 
@@ -1338,6 +1343,53 @@
         </div>
     </div>
 
+    <div id="wellbeing-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-xl w-full shadow-2xl max-h-[85vh] overflow-y-auto text-center">
+            <h3 class="text-xl font-black text-slate-900 mb-1">🧘 A Moment for You</h3>
+            <p class="text-sm text-slate-500 mb-6">Take a minute before you get back to it.</p>
+
+            <div class="flex flex-col items-center justify-center mb-8">
+                <div class="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
+                    <div class="absolute inset-0 rounded-full bg-teal-100"></div>
+                    <div id="breathing-circle" class="absolute inset-0 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 shadow-lg" style="animation: breathe 10s ease-in-out infinite;"></div>
+                    <span id="breathing-text" class="relative z-10 text-white font-bold text-sm md:text-base drop-shadow">Breathe In</span>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-3 tracking-wide">4 secs in · hold · 4 secs out</p>
+            </div>
+
+            <div class="text-left space-y-4 text-sm text-slate-700 border-t border-slate-200 pt-6">
+                <div>
+                    <p class="font-black text-[#002066] text-base">📖 Eat Your Ice Cream: Six Simple Rules for a Long & Healthy Life</p>
+                    <p class="text-xs text-slate-500 mt-0.5">Dr. Ezekiel J. Emanuel — oncologist, bioethicist, and health policy expert</p>
+                </div>
+                <p>The book is a grounded, evidence-based antidote to what the author calls the "wellness industrial complex" — the billion-dollar industry of biohacks, rigid diets, unproven longevity fads, and obsessive tracking. Emanuel's core argument: health should be an invisible, effortless background habit, not a stressful full-time job, and a long life is only valuable if it's joyful and meaningful.</p>
+
+                <div>
+                    <p class="font-bold text-slate-800 mb-1">Key Themes & Takeaways</p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-600">
+                        <li><strong>Wellness is a means, not the end.</strong> Living longer isn't a competition — the goal of health is simply to give you the vitality to enjoy your life, foster relationships, and engage with your community.</li>
+                        <li><strong>The metaphor behind the title.</strong> "Eat your ice cream" is a call for balance over extreme deprivation. Joy, social connection, and mental satisfaction play a massive role in longevity — sometimes even more than hyper-strict physical habits.</li>
+                        <li><strong>6 evidence-based pillars</strong>, distilled from decades of medical research:
+                            <ol class="list-decimal pl-5 mt-1.5 space-y-1">
+                                <li><strong>Nutrition</strong> — real food, less processed sugar, shared meals</li>
+                                <li><strong>Exercise</strong> — consistency through enjoyable movement over extreme workouts</li>
+                                <li><strong>Sleep</strong> — regular rest without obsessive gadget tracking</li>
+                                <li><strong>Alcohol</strong> — sensible limits rather than panic</li>
+                                <li><strong>Mental Acuity</strong> — lifelong curiosity and learning</li>
+                                <li><strong>Social Connection</strong> — one of the strongest indicators of long-term health</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </div>
+
+                <p class="italic text-slate-500 border-l-4 border-teal-300 pl-3">"Life is not a competition to live the longest, and wellness should not be a full-time job."</p>
+                <p class="text-slate-600">A practical, common-sense roadmap to living well — without letting the pursuit of perfect health consume your happiness.</p>
+            </div>
+
+            <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-wellbeing">Close</button>
+        </div>
+    </div>
+
     <div id="whs-copy-warning-modal" class="hidden fixed inset-0 z-[110] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl border-t-4 border-red-500">
             <div class="flex items-center gap-3 mb-3">
@@ -2029,6 +2081,33 @@
         function closeChangelogModal() {
             var m = document.getElementById('changelog-modal');
             if (m) m.classList.add('hidden');
+        }
+
+        var breathingTimeout = null;
+        function showWellbeingModal() {
+            var m = document.getElementById('wellbeing-modal');
+            if (m) m.classList.remove('hidden');
+            var txt = document.getElementById('breathing-text');
+            if (breathingTimeout) clearTimeout(breathingTimeout);
+            var phases = [
+                { label: 'Breathe In', duration: 4000 },
+                { label: 'Hold', duration: 2000 },
+                { label: 'Breathe Out', duration: 4000 }
+            ];
+            var i = 0;
+            function nextPhase() {
+                if (txt) txt.textContent = phases[i].label;
+                breathingTimeout = setTimeout(function() {
+                    i = (i + 1) % phases.length;
+                    nextPhase();
+                }, phases[i].duration);
+            }
+            nextPhase();
+        }
+        function closeWellbeingModal() {
+            var m = document.getElementById('wellbeing-modal');
+            if (m) m.classList.add('hidden');
+            if (breathingTimeout) { clearTimeout(breathingTimeout); breathingTimeout = null; }
         }
 
         function showWhsCopyWarningModal() {
@@ -3879,6 +3958,8 @@
                 else if (action === 'whs-copy-confirm') confirmWhsCopy();
                 else if (action === 'show-changelog') showChangelogModal();
                 else if (action === 'close-changelog') closeChangelogModal();
+                else if (action === 'show-wellbeing') showWellbeingModal();
+                else if (action === 'close-wellbeing') closeWellbeingModal();
                 
                 // Reset Functionality
                 else if (action === 'reset-app') { 
