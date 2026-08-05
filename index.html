@@ -37,6 +37,8 @@
         .builder-btn.amber-shaded.active { background-color: #b45309; border-color: #b45309; }
         .builder-btn.moe-shaded:not(.active) { background-color: #faf5ff; border-color: #e9d5ff; color: #7e22ce; }
         .builder-btn.moe-shaded.active { background-color: #7e22ce; border-color: #7e22ce; }
+        .builder-btn.maths-shaded:not(.active) { background-color: #d4edef; border-color: #70cdb2; color: #0f5c52; }
+        .builder-btn.maths-shaded.active { background-color: #0f5c52; border-color: #0f5c52; }
         
         .builder-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
         .builder-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
@@ -138,13 +140,13 @@
         html.dark [class*="bg-purple-100"], html.dark [class*="bg-purple-200"], html.dark [class*="bg-emerald-200"] { background-color: #1e293b !important; }
         html.dark [class*="bg-teal-50"], html.dark [class*="bg-teal-100"] { background-color: #1e293b !important; }
         html.dark [class*="border-teal-200"], html.dark [class*="border-teal-300"] { border-color: #334155 !important; }
-        html.dark [class*="text-teal-800"] { color: #5eead4 !important; }
+        html.dark [class*="text-teal-800"], html.dark [class*="text-teal-700"] { color: #5eead4 !important; }
         html.dark [class*="hover:bg-indigo-100"]:hover, html.dark [class*="hover:bg-orange-100"]:hover { background-color: #29354a !important; }
         html.dark [class*="text-indigo-600"] { color: #a5b4fc !important; }
         html.dark [class*="text-orange-600"] { color: #fdba74 !important; }
         html.dark input, html.dark textarea, html.dark select { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
         html.dark input::placeholder { color: #64748b !important; }
-        html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.maths-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
         html.dark .fw-btn, html.dark .stage-btn, html.dark .dept-btn { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
         html.dark .font-mono, html.dark [id^="prompt-"] { color: #e2e8f0 !important; }
         html.dark #global-toast { background: #f1f5f9; color: #0f172a; }
@@ -752,6 +754,7 @@
                                 <button class="builder-btn teal-shaded" data-action="unit-state" data-key="planType" data-val="short">Short Summaries</button>
                                 <button class="builder-btn amber-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed lesson overviews without full CPM tables" data-action="unit-state" data-key="planType" data-val="outlines">Lesson Outlines Only</button>
                                 <button class="builder-btn moe-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Detailed MoE tables for every lesson" data-action="unit-state" data-key="planType" data-val="moe">MoE Lesson Plans</button>
+                                <button id="unit-maths-strategy-btn" class="hidden builder-btn maths-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Maths-only: structures each lesson around Warmup, Explicit Teaching, Rich Tasks, Intentional Practice, Acceleration, and Enrichment instead of the CPM 5 stages" data-action="unit-state" data-key="planType" data-val="maths-strategy">🧮 Maths Strategy Sequence</button>
                             </div>
                             <p class="text-[10px] text-slate-400 mt-2 flex items-center gap-2 flex-wrap">
                                 <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full inline-block" style="background:#e11d48"></span>Full detail</span>
@@ -846,6 +849,10 @@
                                 <div class="flex gap-2">
                                     <button id="unit-whs-template-btn" class="flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom" data-tooltip="Experimental: outputs the unit as a single HTML file matching the official WHS Doc template — save the AI's response as .html and upload to Google Drive to auto-convert it into a formatted Doc. Overrides the Lesson Plan Format above." data-action="toggle-unit-whs-template" aria-pressed="false">🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
                                     <button class="w-9 h-9 shrink-0 rounded-full bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-600 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
+                                </div>
+                                <div id="unit-maths-template-wrap" class="hidden flex gap-2 sm:col-span-2">
+                                    <button id="unit-maths-template-btn" class="flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 tooltip-wrapper tooltip-bottom" data-tooltip="Maths-only: outputs the unit as a single HTML file matching the official WHS Mathematics Unit Plan template (Mathematical Processes, Progression Scale, per-lesson differentiation) — save the AI's response as .html and upload to Google Drive to auto-convert it into a formatted Doc. Overrides the Lesson Plan Format above." data-action="toggle-unit-maths-template" aria-pressed="false">🧮 Maths Unit Plan Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
+                                    <button class="w-9 h-9 shrink-0 rounded-full bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-700 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
                                 </div>
                             </div>
                         </div>
@@ -1649,7 +1656,7 @@
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -1828,8 +1835,31 @@
             updateUnitAddonsBanner();
         }
 
+        function syncUnitMathsTemplateBtn() {
+            var btn = document.getElementById('unit-maths-template-btn');
+            if (!btn) return;
+            btn.setAttribute('aria-pressed', unitState.mathsTemplate ? 'true' : 'false');
+            btn.innerHTML = unitState.mathsTemplate
+                ? '🧮 Maths Unit Plan Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>'
+                : '🧮 Maths Unit Plan Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span>';
+            btn.className = unitState.mathsTemplate
+                ? "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-teal-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
+                : "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 tooltip-wrapper tooltip-bottom";
+        }
+        function syncUnitWhsTemplateBtn() {
+            var btn = document.getElementById('unit-whs-template-btn');
+            if (!btn) return;
+            btn.setAttribute('aria-pressed', unitState.whsTemplate ? 'true' : 'false');
+            btn.innerHTML = unitState.whsTemplate
+                ? '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>'
+                : '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span>';
+            btn.className = unitState.whsTemplate
+                ? "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
+                : "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom";
+        }
         function toggleUnitWhsTemplate(btn) {
             unitState.whsTemplate = !unitState.whsTemplate;
+            if (unitState.whsTemplate) unitState.mathsTemplate = false;
             if (btn) {
                 btn.setAttribute('aria-pressed', unitState.whsTemplate ? 'true' : 'false');
                 btn.innerHTML = unitState.whsTemplate
@@ -1839,12 +1869,50 @@
                     ? "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom"
                     : "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 tooltip-wrapper tooltip-bottom";
             }
+            syncUnitMathsTemplateBtn();
             updateUnitBuilderPrompt();
             saveAppState();
             updateUnitAddonsBanner();
             if (unitState.whsTemplate && !localStorage.getItem('whs_template_help_seen')) {
                 showWhsTemplateHelpModal();
                 try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
+            }
+        }
+
+        function toggleUnitMathsTemplate(btn) {
+            unitState.mathsTemplate = !unitState.mathsTemplate;
+            if (unitState.mathsTemplate) unitState.whsTemplate = false;
+            syncUnitMathsTemplateBtn();
+            syncUnitWhsTemplateBtn();
+            updateUnitBuilderPrompt();
+            saveAppState();
+            updateUnitAddonsBanner();
+            if (unitState.mathsTemplate && !localStorage.getItem('whs_template_help_seen')) {
+                showWhsTemplateHelpModal();
+                try { localStorage.setItem('whs_template_help_seen', '1'); } catch (e) {}
+            }
+        }
+
+        function checkUnitMathsTemplateVisibility() {
+            var wrap = document.getElementById('unit-maths-template-wrap');
+            var isMaths = (unitState.dept === 'Maths');
+            if (wrap) wrap.classList.toggle('hidden', !isMaths);
+            if (!isMaths && unitState.mathsTemplate) {
+                unitState.mathsTemplate = false;
+                syncUnitMathsTemplateBtn();
+                updateUnitBuilderPrompt();
+                updateUnitAddonsBanner();
+            }
+        }
+
+        function checkUnitMathsStrategyVisibility() {
+            var btn = document.getElementById('unit-maths-strategy-btn');
+            var isMaths = (unitState.dept === 'Maths');
+            if (btn) btn.classList.toggle('hidden', !isMaths);
+            if (!isMaths && unitState.planType === 'maths-strategy') {
+                unitState.planType = 'full';
+                setActiveBtn('unit-state', unitState.planType, 'planType');
+                updateUnitBuilderPrompt();
             }
         }
 
@@ -2049,7 +2117,7 @@
         }
 
         function attemptCopy(targetId, btn) {
-            var isWhs = (targetId === 'prompt-unit-text' && unitState.whsTemplate) ||
+            var isWhs = (targetId === 'prompt-unit-text' && (unitState.whsTemplate || unitState.mathsTemplate)) ||
                         (targetId === 'prompt-lesson-text' && lessonState.whsTemplate);
             if (isWhs) {
                 pendingWhsCopy = { id: targetId, btn: btn };
@@ -2161,6 +2229,7 @@
         function updateUnitAddonsBanner() {
             var active = [];
             if (unitState.whsTemplate) active.push('🏫 WHS Official Template (HTML)');
+            if (unitState.mathsTemplate) active.push('🧮 Maths Unit Plan Template (HTML)');
             if (unitState.geminiNotebook) active.push('📓 Gemini Notebook Knowledge');
             renderAddonsBanner('unit-addons-banner', active);
             updateAiLinkVisibility();
@@ -2176,7 +2245,7 @@
         function updateAiLinkVisibility() {
             var hideLesson = !!lessonState.whsTemplate;
             document.querySelectorAll('.other-ai-lesson').forEach(function(el) { el.classList.toggle('hidden', hideLesson); });
-            var hideUnit = !!(unitState.whsTemplate || unitState.geminiNotebook);
+            var hideUnit = !!(unitState.whsTemplate || unitState.mathsTemplate || unitState.geminiNotebook);
             document.querySelectorAll('.other-ai-unit').forEach(function(el) { el.classList.toggle('hidden', hideUnit); });
         }
 
@@ -2555,6 +2624,7 @@
                         uwtBtn.innerHTML = '🏫 WHS Official Template (HTML) <span class="text-[8px] font-normal opacity-70">ON</span>';
                         uwtBtn.className = "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom";
                     }
+                    syncUnitMathsTemplateBtn();
                     var lwtBtn = document.getElementById('les-whs-template-btn');
                     if (lwtBtn && lessonState.whsTemplate) {
                         lwtBtn.setAttribute('aria-pressed', 'true');
@@ -2567,6 +2637,8 @@
                     checkSeniorStatus();
                     checkUnitSeniorStatus();
                     checkUnitBothSelected();
+                    checkUnitMathsTemplateVisibility();
+                    checkUnitMathsStrategyVisibility();
                     checkAssessBothSelected();
                     checkLessonBothSelected();
                     checkInstBothSelected();
@@ -3082,6 +3154,8 @@
                 renderCurriculumLink('unit-curriculum-link', unitState.dept, unitState.year);
                 checkUnitSeniorStatus();
                 checkUnitBothSelected();
+                checkUnitMathsTemplateVisibility();
+                checkUnitMathsStrategyVisibility();
             }
             if (k === 'dur') {
                 var cd = document.getElementById('unit-custom-dur-container');
@@ -3246,6 +3320,22 @@
                 txt += '    <h2>Lesson Content - Unit Folder Link</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning number/s<br><span class="small-text">The sequence of lessons and groups of lessons.</span></td>\n            <td class="header-bg col-20">Knowledge<br><span class="small-text">What they will be learning</span></td>\n            <td class="header-bg col-20">Practice<br><span class="small-text">What they will do / How you know students have achieved success</span></td>\n            <td class="header-bg col-25">Student Learning Activities<br><span class="small-text">What strategies, activities and tasks do you want students to do?<br>Include explicit teaching where relevant</span></td>\n            <td class="header-bg col-20">Preparation/ Resources<br><span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td><strong>Strategies, activities, tasks:</strong> [Fill] <br><br><strong>Differentiation:</strong> [Fill]</td>\n            <td>[Fill]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
                 txt += '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n</body>\n</html>\n';
                 txt += tb + '\n';
+            } else if (unitState.mathsTemplate) {
+                txt += 'CRITICAL: Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n';
+                txt += '### OUTPUT FORMAT OVERRIDE: WHS MATHEMATICS UNIT PLAN TEMPLATE (HTML, LANDSCAPE)\n';
+                txt += 'CRITICAL: Ignore any other table-format instructions. Output your ENTIRE response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
+                txt += 'Fill in every [Fill] placeholder with real content (use exact search queries for any live URLs — do NOT hallucinate URLs). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table at the very end, which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. "Mathematical Processes" (Investigate/Represent/Connect/Generalise/Explain and justify) is a specific NZ Maths & Statistics curriculum construct — do NOT rename, merge, or omit any of these five. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
+                txt += tb + 'html\n';
+                txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 8px 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .top-banner { background-color: #007040; color: #ffffff; font-weight: 700; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        .knowledge-title { background-color: #70cdb2; font-weight: 700; }\n        .knowledge-section { background-color: #d4edef; }\n        .practices-title { background-color: #e1b846; font-weight: 700; }\n        .practices-section { background-color: #f4e5c2; }\n        .scale-header { background-color: #c9e4d8; font-weight: 700; font-size: 9pt; text-align: center; }\n        h2 { font-size: 14pt; font-weight: 700; color: #000000; margin-bottom: 6px; margin-top: 24px; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; }\n        strong { font-weight: 700; }\n        .col-15 { width: 15%; }\n        .col-20 { width: 20%; }\n        .col-25 { width: 25%; }\n        .col-50 { width: 50%; }\n    </style>\n</head>\n<body>\n';
+                txt += '    <table>\n        <tr><td colspan="6" class="top-banner" style="text-align: left; font-size: 26pt;">WHS Mathematics Unit Plan — ' + yr + ' - ' + t + '</td></tr>\n        <tr>\n            <td class="header-bg" style="width: 15%;">Year Level</td><td style="width: 20%;">' + yr + '</td>\n            <td class="header-bg" style="width: 10%;">Term</td><td style="width: 20%;">[Fill suggested term]</td>\n            <td class="header-bg" style="width: 15%;">Duration</td><td style="width: 20%;">' + totalDurText + '</td>\n        </tr>\n        <tr><td class="header-bg">Learning Area</td><td colspan="5">' + t + '</td></tr>\n        <tr><td class="header-bg">Overview <span class="small-text">(description)</span></td><td colspan="5">[Fill a 1-2 sentence overview]</td></tr>\n        <tr><td class="header-bg">Purpose <span class="small-text">(what is the point?)</span></td><td colspan="5">[Fill the purpose of this unit]</td></tr>\n    </table>\n\n';
+                txt += '    <h2>Knowledge and Practices</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-25">Focus sequence statements <span class="small-text">(We are learning to...)</span></td>\n            <td class="knowledge-title col-25">Knowledge <br><span class="small-text">(facts, concepts, principles, theories to teach)</span></td>\n            <td class="practices-title col-25">Practices <br><span class="small-text">(skills, strategies, applications to teach)</span></td>\n        </tr>\n        <tr>\n            <td>[Fill]</td>\n            <td class="knowledge-section">[Fill]</td>\n            <td class="practices-section">[Fill]</td>\n        </tr>\n        <tr>\n            <td class="header-bg">Connections <span class="small-text">(revisit and consolidate)</span></td>\n            <td class="knowledge-section">[Fill]</td>\n            <td class="practices-section">[Fill]</td>\n        </tr>\n        <tr>\n            <td class="header-bg">Mathematical Processes</td>\n            <td class="knowledge-section"><strong>Investigate:</strong> [Fill]<br><strong>Represent:</strong> [Fill]<br><strong>Connect:</strong> [Fill]<br><strong>Generalise:</strong> [Fill]<br><strong>Explain and justify:</strong> [Fill]</td>\n            <td class="practices-section"><strong>Investigate:</strong> [Fill]<br><strong>Represent:</strong> [Fill]<br><strong>Connect:</strong> [Fill]<br><strong>Generalise:</strong> [Fill]<br><strong>Explain and justify:</strong> [Fill]</td>\n        </tr>\n    </table>\n\n';
+                txt += '    <h2>Curriculum Integration</h2>\n    <table>\n        <tr><td class="header-bg col-50">Literacy will be incorporated into this unit by:</td><td class="header-bg col-50">Numeracy will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg">Mātauranga Māori will be incorporated into this unit by:</td><td class="header-bg">Localised Curriculum will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td><strong>Waiheke High School Cross Curricular</strong><br><strong>Waiheke community links</strong><br><br>[Fill]</td></tr>\n    </table>\n\n';
+                txt += '    <h2>The Language of Mathematics and Statistics</h2>\n    <table>\n        <tr><td class="header-bg">Vocabulary <span class="small-text">(new words students will be taught)</span></td></tr>\n        <tr><td>[Fill 6-10 key mathematical/statistical terms for this unit, each with a brief plain-language definition]</td></tr>\n    </table>\n\n';
+                txt += '    <h2>Assessment</h2>\n    <table>\n        <tr><td class="header-bg col-50">How will I determine my learners\u2019 prior knowledge? (before)</td><td class="header-bg col-50">How will I determine my students\u2019 progress in learning? (after)</td></tr>\n        <tr>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]<br><strong>Previous results or work:</strong> [Fill or N/A]</td>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]</td>\n        </tr>\n    </table>\n\n';
+                txt += '    <h2>Lesson Content</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning Intention <span class="small-text">(We are learning to...)<br>Curriculum Achievement Objective</span></td>\n            <td class="header-bg col-15">Success Criteria <span class="small-text">How do you know students have achieved success?</span></td>\n            <td class="header-bg col-20">Learning Experiences <span class="small-text">What strategies, activities and tasks do you want students to do?</span></td>\n            <td class="header-bg col-15">Preparation/Resources <span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n            <td class="scale-header col-15">Progression Scale <span class="small-text" style="display:block;font-style:normal;">(circle/bold the current level)</span>Emerging / Developing / Consolidating / Proficient / Exceeding</td>\n            <td class="header-bg col-20">Strategy Focus <span class="small-text">Introduction/warmup/recall, Explicit teaching, Rich tasks, Intentional practice, Acceleration, Enrichment</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1: [Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill target level for this lesson, e.g. Developing]</td>\n            <td>[Fill which of the 6 strategies this lesson uses and how]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
+                txt += '    <h2>Ākonga Information</h2>\n    <table>\n        <tr><td class="header-bg">Lesson</td><td class="header-bg">Links to class plans or class contracts</td><td class="header-bg">Specific ākonga who require additional support (and how)</td><td class="header-bg">Specific ākonga who require extension (and how)</td></tr>\n        <tr><td>Lesson 1</td><td>[Fill or N/A]</td><td>[Fill or N/A]</td><td>[Fill or N/A]</td></tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson, matching the Lesson Content table above. -->\n    </table>\n\n';
+                txt += '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n</body>\n</html>\n';
+                txt += tb + '\n';
             } else {
             
             if (unitState.planType === 'outlines') {
@@ -3319,6 +3409,11 @@
                     txt += '| **Lesson 1**<br>*Focus: [Main Topic]* | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary of what this lesson is about and why it matters. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n';
                     txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n\n';
                     txt += 'FINAL CHECK: Before outputting, re-read every "Brief Lesson Outline" cell and remove any wording that describes a task, activity, question, or instruction a student or teacher would carry out — only overall focus/purpose should remain.\n\n';
+                } else if (unitState.planType === 'maths-strategy') {
+                    txt += 'CRITICAL: Structure each lesson around these Mathematics-specific strategy elements instead of the generic CPM 5-stage model — Warmup, Explicit Teaching, Rich Tasks, Intentional Practice, Acceleration, and Enrichment. Not every lesson needs all six every time — use your judgement for which are pedagogically relevant for that specific lesson, but Warmup and Explicit Teaching or Intentional Practice should appear in most lessons, with Acceleration and Enrichment used where there is a genuine extension opportunity.\n\n';
+                    txt += '| Lesson & Learning Intention | Knowledge | Practice | Learning Activities (Warmup / Explicit Teaching / Rich Tasks / Intentional Practice / Acceleration / Enrichment) | Resources & Links |\n|---|---|---|---|---|\n';
+                    txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Warmup:** [Fill or omit]<br>**Explicit Teaching:** [Fill or omit]<br>**Rich Tasks:** [Fill or omit]<br>**Intentional Practice:** [Fill or omit]<br>**Acceleration:** [Fill or omit]<br>**Enrichment:** [Fill or omit]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs] |\n';
+                    txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Warmup:** [Fill or omit]<br>**Explicit Teaching:** [Fill or omit]<br>**Rich Tasks:** [Fill or omit]<br>**Intentional Practice:** [Fill or omit]<br>**Acceleration:** [Fill or omit]<br>**Enrichment:** [Fill or omit]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs] |\n\n';
                 } else {
                     var dM = cpmMatrix[unitState.dept] || cpmMatrix['Default'];
                     var stageNames = ['Connect', 'I Do', 'We Do', 'You Do', 'Review'];
@@ -3948,6 +4043,7 @@
                 else if (action === 'export-all') exportAllPrompts();
                 else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
                 else if (action === 'toggle-unit-whs-template') toggleUnitWhsTemplate(target);
+                else if (action === 'toggle-unit-maths-template') toggleUnitMathsTemplate(target);
                 else if (action === 'toggle-lesson-whs-template') toggleLessonWhsTemplate(target);
                 else if (action === 'show-onboarding') showOnboardingModal();
                 else if (action === 'onboarding-go') onboardingGoTo(copyTarget);
@@ -4049,6 +4145,8 @@
             checkSeniorStatus();
             checkUnitSeniorStatus();
             checkUnitBothSelected();
+            checkUnitMathsTemplateVisibility();
+            checkUnitMathsStrategyVisibility();
             checkAssessBothSelected();
             checkLessonBothSelected();
             checkInstBothSelected();
