@@ -3564,12 +3564,18 @@
             } else {
                 txt += '### System Role\nAct as an expert pedagogical coach and curriculum designer.\n\n### Context\nSubject: ' + lessonState.dept + '\nYear Level: ' + yr + '\n' + lessonTopicLine + '\n\n';
                 if (lessonState.mode === 'relief') {
-                    if (lessonState.reliefType === 'full-worksheet') {
+                    var reliefWantsTiered = (lessonState.extra === '3-Tiered Worksheet');
+                    var reliefHasPlatform = (lessonState.reliefType !== 'full-worksheet');
+                    var reliefPlatformMap = { 'ep': 'Education Perfect (EP)', 'wt': "Writer's Toolbox", 'gc': 'Google Classroom', 'other': 'Online Platform' };
+                    var reliefPlatformName = reliefPlatformMap[lessonState.reliefType] || 'Online Platform';
+                    if (reliefWantsTiered) {
+                        txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained, 3-TIERED differentiated Student Worksheet (Foundation / Core / Extension), covering the full range of ability levels without any teacher support needed.';
+                        if (reliefHasPlatform) txt += ' In addition, include brief instructions directing students to ' + reliefPlatformName + ' to be used alongside the worksheet.';
+                        txt += '\n\n';
+                    } else if (lessonState.reliefType === 'full-worksheet') {
                         txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON. Bypass teacher instruction and create a self-contained Student Worksheet.\n\n';
                     } else {
-                        var platformMap = { 'ep': 'Education Perfect (EP)', 'wt': "Writer's Toolbox", 'gc': 'Google Classroom', 'other': 'Online Platform' };
-                        var platformName = platformMap[lessonState.reliefType] || 'Online Platform';
-                        txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + platformName + '.\n\n';
+                        txt += '### Task\nGenerate an EMERGENCY RELIEF LESSON PLAN directing students to complete their core independent work on ' + reliefPlatformName + '.\n\n';
                     }
                 } else {
                     var fwTaskStr = "Design a comprehensive lesson based on the 5 stages of the Common Practice Model (CPM) with full, ready-to-use detail.";
@@ -3658,7 +3664,13 @@
             
             // 4. OUTPUT STRUCTURE
             if (lessonState.mode === 'relief') {
-                if (lessonState.reliefType === 'full-worksheet') {
+                if (reliefWantsTiered) {
+                    var readingMin = Math.max(10, Math.round(durMins * 0.3));
+                    var taskMin = Math.max(10, durMins - readingMin);
+                    txt += 'PART 1: Relief Overview (For Chat)\nPART 2: Full 3-Tiered Worksheet in plain text/Markdown (for easy copy-pasting into Google Docs). CRITICAL: Structure the independent task into THREE clearly labelled tiers — Foundation, Core, and Extension — covering the same content at increasing levels of challenge, so any student can find their appropriate level without teacher guidance.\nPART 3: HTML Worksheet content in a single beautifully CSS styled block (' + tb + 'html\n...\n' + tb + '), reproducing the same 3-tiered structure.\nUse WHS colors (#002066/#d1e6f6). Include pacing appropriate for a ' + durMins + '-minute lesson (e.g. roughly ' + readingMin + ' mins reading/vocab intro, visual placeholders, and roughly ' + taskMin + ' mins on the independent tiered task).';
+                    if (reliefHasPlatform) txt += ' At the end of the worksheet (both the Markdown and HTML versions), include a short, clearly marked section with instructions directing students to ' + reliefPlatformName + ', to be used alongside the worksheet — do NOT replace the worksheet content with a platform redirect.';
+                    txt += '\n';
+                } else if (lessonState.reliefType === 'full-worksheet') {
                     var readingMin = Math.max(10, Math.round(durMins * 0.3));
                     var taskMin = Math.max(10, durMins - readingMin);
                     txt += 'PART 1: Relief Overview (For Chat)\nPART 2: Full Worksheet in plain text/Markdown (for easy copy-pasting into Google Docs)\nPART 3: HTML Worksheet content in a single beautifully CSS styled block (' + tb + 'html\n...\n' + tb + ').\nUse WHS colors (#002066/#d1e6f6). Include pacing appropriate for a ' + durMins + '-minute lesson (e.g. roughly ' + readingMin + ' mins reading/vocab intro, visual placeholders, and roughly ' + taskMin + ' mins on the independent You Do task).\n';
