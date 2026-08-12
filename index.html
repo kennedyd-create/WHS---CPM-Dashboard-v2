@@ -1246,6 +1246,7 @@
         <select id="report-format" class="border-white/20 rounded-lg shadow-sm text-sm p-2 border bg-white/10 text-white cursor-pointer focus:ring-2 focus:ring-[var(--whs-gold)] focus:border-[var(--whs-gold)] [&>option]:text-slate-800">
             <option value="standard">Standard Matrix Output</option>
             <option value="simple">Simple Year Plan (Terms &amp; Topics Only)</option>
+            <option value="timeline">Timeline View (By Term, Colour-Coded)</option>
             <option value="waiheke">Year Plan (Context &amp; Tasks)</option>
         </select>
         <button onclick="generatePlan()" class="bg-[var(--whs-gold)] hover:bg-whsgold-600 text-[var(--whs-dark-blue)] px-5 py-2 rounded-lg text-sm font-bold transition-colors shadow-sm flex items-center gap-2 tooltip-wrapper tooltip-bottom" data-tooltip="Compile everything currently in the term grid into a finished, formatted plan">
@@ -1292,6 +1293,14 @@
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="stage-divider-label"><span class="stage-number-badge">1</span>Curriculum Strands</h2>
                 </div>
+                <button id="quick-add-toggle" onclick="toggleQuickAddMode()" aria-pressed="false"
+                        class="w-full mb-4 flex items-center justify-between px-3 py-2 rounded-lg border text-xs font-bold transition-all bg-white border-slate-200 text-slate-600 hover:border-[var(--whs-gold)]"
+                        title="When on: click a topic, then click empty weeks to drop it straight in (1 week per click). When off: clicking a topic opens the full configure box as usual.">
+                    <span>⚡ Quick Add</span>
+                    <span class="relative inline-block w-8 h-4 rounded-full bg-slate-300 transition-colors" id="quick-add-switch">
+                        <span class="absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform" id="quick-add-knob"></span>
+                    </span>
+                </button>
                 <div id="library-container" class="space-y-5">
                     <!-- Populated by JS -->
                 </div>
@@ -1306,8 +1315,22 @@
                         <h2 class="text-2xl font-extrabold text-[var(--whs-dark-blue)]">Annual Timeline</h2>
                         <p class="text-sm text-slate-500 mt-1">Assign topics to weeks. Plan flows around blocked weeks.</p>
                     </div>
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3 flex-wrap justify-end">
                         <div id="overall-progress" class="flex items-center gap-2 text-xs font-bold text-[var(--whs-dark-blue)] bg-[#d1e6f6]/50 border border-[var(--whs-light-blue)] px-3 py-2 rounded-lg"></div>
+                        <div class="flex items-center rounded-lg overflow-hidden border border-teal-200">
+                            <button onclick="printFullYearPlan('grid')" class="builder-btn teal-shaded !rounded-none !border-0 !px-4 !py-2.5 flex items-center gap-2 tooltip-wrapper tooltip-bottom" data-tooltip="Strands down the side, every week across the top — a one-page grid ready to print or paste into Google Docs">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                                Print Full Year Plan
+                            </button>
+                            <button onclick="printFullYearPlan('timeline')" class="builder-btn teal-shaded !rounded-none !border-0 !border-l !border-teal-200 !px-4 !py-2.5 flex items-center gap-2 tooltip-wrapper tooltip-bottom" data-tooltip="Term 1 across the page, Term 2 below it, and so on — each term as one coloured strip of topics">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="15" y2="12"></line><line x1="3" y1="18" x2="18" y2="18"></line></svg>
+                                Timeline View
+                            </button>
+                            <button onclick="exportYearPlanICS()" class="builder-btn teal-shaded !rounded-none !border-0 !border-l !border-teal-200 !px-4 !py-2.5 flex items-center gap-2 tooltip-wrapper tooltip-bottom" data-tooltip="Downloads a .ics file — one event per topic block — to import into Google Calendar, Outlook, or Apple Calendar. Needs term start dates set in Edit Term Lengths.">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
+                                Add to Calendar
+                            </button>
+                        </div>
                         <button onclick="openBlockedWeeksModal()" class="builder-btn amber-shaded !px-4 !py-2.5 flex items-center gap-2 tooltip-wrapper tooltip-bottom" data-tooltip="Mark specific weeks as unavailable (e.g. camps, exams) — the plan flows around them">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                             Block Unavailable Weeks
@@ -1324,16 +1347,20 @@
                     <button id="tab-2" onclick="switchTab(2)" class="pb-3 text-sm tab-inactive font-medium transition-all">Term 2</button>
                     <button id="tab-3" onclick="switchTab(3)" class="pb-3 text-sm tab-inactive font-medium transition-all">Term 3</button>
                     <button id="tab-4" onclick="switchTab(4)" class="pb-3 text-sm tab-inactive font-medium transition-all">Term 4</button>
+                    <button id="tab-coverage" onclick="switchToCoverage()" class="pb-3 text-sm tab-inactive font-medium transition-all ml-2 pl-4 border-l border-slate-300">📊 Full Year Coverage</button>
                 </div>
+                <div id="yp-armbar" class="hidden items-center justify-between gap-3 -mx-8 px-8 py-2 mt-3 bg-[var(--whs-gold)]/15 border-t border-[var(--whs-gold)]/40 text-xs font-bold text-[#7a5b1e]"></div>
             </div>
 
             <div class="p-8 flex-1 overflow-y-auto custom-scrollbar">
+                <div id="yp-warnings" class="hidden"></div>
                 <div id="panels-wrapper" class="h-full">
                     <!-- Panels populated dynamically to ensure proper grid sizing -->
                     <div id="panel-1" class="block h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 1 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-1">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-1"></div></div></div>
                     <div id="panel-2" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 2 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-2">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-2"></div></div></div>
                     <div id="panel-3" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 3 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-3">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-3"></div></div></div>
                     <div id="panel-4" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 4 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-4">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-4"></div></div></div>
+                    <div id="panel-coverage" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center flex-wrap gap-2"><h3 class="font-bold text-[var(--whs-dark-blue)]">Whole-Year Coverage</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="coverage-summary"></div></div><div class="p-4 flex-1 overflow-auto bg-white" id="coverage-grid"></div></div></div>
                 </div>
             </div>
         </section>
@@ -1442,19 +1469,24 @@
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Term 1 Weeks</label>
                     <input type="number" id="len-term-1" min="8" max="12" class="w-full border-slate-300 rounded-lg p-2 border focus:ring-2 focus:ring-whsblue-700/30" value="10">
+                    <input type="date" id="start-term-1" class="w-full border-slate-300 rounded-lg p-2 border mt-1.5 text-xs focus:ring-2 focus:ring-whsblue-700/30" title="Term 1 start date (Monday of week 1) — optional, only needed to Add to Calendar">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Term 2 Weeks</label>
                     <input type="number" id="len-term-2" min="8" max="12" class="w-full border-slate-300 rounded-lg p-2 border focus:ring-2 focus:ring-whsblue-700/30" value="10">
+                    <input type="date" id="start-term-2" class="w-full border-slate-300 rounded-lg p-2 border mt-1.5 text-xs focus:ring-2 focus:ring-whsblue-700/30" title="Term 2 start date (Monday of week 1) — optional, only needed to Add to Calendar">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Term 3 Weeks</label>
                     <input type="number" id="len-term-3" min="8" max="12" class="w-full border-slate-300 rounded-lg p-2 border focus:ring-2 focus:ring-whsblue-700/30" value="10">
+                    <input type="date" id="start-term-3" class="w-full border-slate-300 rounded-lg p-2 border mt-1.5 text-xs focus:ring-2 focus:ring-whsblue-700/30" title="Term 3 start date (Monday of week 1) — optional, only needed to Add to Calendar">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-slate-700 mb-1">Term 4 Weeks</label>
                     <input type="number" id="len-term-4" min="8" max="12" class="w-full border-slate-300 rounded-lg p-2 border focus:ring-2 focus:ring-whsblue-700/30" value="10">
+                    <input type="date" id="start-term-4" class="w-full border-slate-300 rounded-lg p-2 border mt-1.5 text-xs focus:ring-2 focus:ring-whsblue-700/30" title="Term 4 start date (Monday of week 1) — optional, only needed to Add to Calendar">
                 </div>
+                <p class="col-span-2 text-[11px] text-slate-400 -mt-1">The date under each term is optional — set it (the Monday of week 1) if you want to use "Add to Calendar" later. Everything else in the planner works fine without it.</p>
             </div>
             <div class="p-5 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
                 <button onclick="closeTermLengthsModal()" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-800">Cancel</button>
@@ -4253,7 +4285,13 @@
             subject: 'Social Sciences',
             year: '9',
             activeTab: 1,
+            viewMode: 'term',  // 'term' shows the Term 1-4 grids, 'coverage' shows the whole-year strand x week matrix
             termLengths: { 1: 10, 2: 10, 3: 10, 4: 10 },
+            // Optional — only needed for the .ics calendar export, which is the one
+            // feature that has to know real dates rather than just "week 3 of Term 2".
+            // Left blank by default; the Year Planner otherwise works in relative
+            // weeks throughout and never requires these to be set.
+            termStartDates: { 1: '', 2: '', 3: '', 4: '' },
             terms: {
                 1: Array(10).fill(null),
                 2: Array(10).fill(null),
@@ -4263,7 +4301,89 @@
         };
 
         let tempModalData = null;
+        // Quick Add: an alternative to the configure-topic modal. Armed by clicking a
+        // topic in the sidebar while the toggle is on; a click on any empty week then
+        // drops it straight in (1 week, no assessment). Deliberately kept out of
+        // yearPlannerState — it's transient UI state, not something worth persisting
+        // or restoring across a reload.
+        let quickAddMode = false;
+        let armedTopic = null; // { strand, subtopic, id } or null
         const WHS_STORAGE_KEY = 'whs_year_planner_state_v1';
+
+        // A saved plan stores topic names as plain strings. When the curriculum data
+        // gets renamed (as it has been this session), a plan saved beforehand points
+        // at a name that no longer exists and would otherwise just render blank/stale.
+        // This is a best-effort map from old name -> new name, scoped by subject and
+        // year since e.g. "Global History" renamed differently in every year level.
+        // Anything not covered here (mostly the 1-topic-splits-into-2 changes, which
+        // have no single correct answer) gets dropped rather than guessed at — see
+        // migrateYearPlannerState().
+        const LEGACY_TOPIC_RENAMES = {
+            'Social Sciences': {
+                '7': {
+                    'New Zealand History': 'Early Contact and Response',
+                    'Global History': 'Global Cultural Exchange (China and the West or Silk Roads to the Age of Exploration)',
+                    'International and Internal Migration in New Zealand': 'Migration in New Zealand',
+                    'Family, Community and Business Financial Planning': 'Family, Community, and Business Financial Planning'
+                },
+                '8': {
+                    'New Zealand History': 'Te Tiriti o Waitangi',
+                    'Global History': 'Westward Expansion / Civil Rights (US Westward Expansion or US Civil Rights Movement)'
+                },
+                '9': {
+                    'Global History': 'Self-Determination / Independence (Pacific Histories or Gandhi and Indian Independence)'
+                },
+                '10': {
+                    'Global History': 'Power, Belonging, and Exclusion (Nazi Germany or The Easter Rising and Irish Independence)'
+                }
+            },
+            'Science': {
+                '7':  { 'Body Systems': 'Life Processes', 'Earth Systems': 'Earth and Space' },
+                '8':  { 'Body Systems': 'Life Processes', 'Earth Systems': 'Earth and Space' },
+                '9':  { 'Body Systems': 'Life Processes', 'Chemical Reactions': 'Chemical Change' },
+                '10': { 'Body Systems': 'Life Processes', 'Earth Systems': 'Earth and Space', 'Chemical Reactions': 'Chemical Change',
+                        'Matter (Atomic Theory)': 'Matter', 'Organism Diversity (Disease)': 'Organism Diversity' }
+            }
+        };
+
+        // Repairs a just-restored plan against the current curriculum data: renames
+        // what moved, drops what has no reliable mapping, and quietly keeps the
+        // displayed strand label in sync for anything that was already fine.
+        // Returns counts so the caller can tell the teacher what happened rather
+        // than have topics silently vanish.
+        function migrateYearPlannerState() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) return { renamed: 0, dropped: 0 };
+            const renameMap = (LEGACY_TOPIC_RENAMES[yearPlannerState.subject] && LEGACY_TOPIC_RENAMES[yearPlannerState.subject][yearPlannerState.year]) || {};
+            let renamed = 0, dropped = 0;
+            for (let t = 1; t <= 4; t++) {
+                const slots = yearPlannerState.terms[t];
+                if (!slots) continue;
+                for (let i = 0; i < slots.length; i++) {
+                    const slot = slots[i];
+                    if (!slot || typeof slot !== 'object') continue;
+                    if (db.content[slot.subtopic]) {
+                        const correctStrand = strandForSubtopic(db, slot.subtopic);
+                        if (correctStrand && slot.strand !== correctStrand) slot.strand = correctStrand;
+                        continue;
+                    }
+                    const oldName = slot.subtopic;
+                    const newName = renameMap[oldName];
+                    if (newName && db.content[newName]) {
+                        const wasDefaultLabel = !slot.customText || slot.customText === oldName;
+                        slot.subtopic = newName;
+                        slot.strand = strandForSubtopic(db, newName) || slot.strand;
+                        if (wasDefaultLabel) slot.customText = newName;
+                        renamed++;
+                    } else {
+                        slots[i] = null;
+                        dropped++;
+                    }
+                }
+            }
+            return { renamed, dropped };
+        }
+
         let toastTimer = null;
 
         function showToast(message) {
@@ -6806,7 +6926,18 @@
         function renderLibrary() {
             const container = document.getElementById('library-container');
             container.innerHTML = '';
-            
+
+            const toggleBtn = document.getElementById('quick-add-toggle');
+            const toggleSwitch = document.getElementById('quick-add-switch');
+            const toggleKnob = document.getElementById('quick-add-knob');
+            if (toggleBtn) {
+                toggleBtn.setAttribute('aria-pressed', String(quickAddMode));
+                toggleBtn.className = 'w-full mb-4 flex items-center justify-between px-3 py-2 rounded-lg border text-xs font-bold transition-all ' +
+                    (quickAddMode ? 'bg-[var(--whs-gold)]/15 border-[var(--whs-gold)] text-[#7a5b1e]' : 'bg-white border-slate-200 text-slate-600 hover:border-[var(--whs-gold)]');
+            }
+            if (toggleSwitch) toggleSwitch.className = 'relative inline-block w-8 h-4 rounded-full transition-colors ' + (quickAddMode ? 'bg-[var(--whs-gold)]' : 'bg-slate-300');
+            if (toggleKnob) toggleKnob.className = 'absolute top-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform ' + (quickAddMode ? 'translate-x-4' : 'left-0.5');
+
             const db = curriculumData[yearPlannerState.year]?.[yearPlannerState.subject];
             if (!db) {
                 container.innerHTML = `<div class="p-4 text-sm text-slate-500 italic bg-slate-100 rounded-lg text-center">Curriculum data for ${yearPlannerState.subject} Year ${yearPlannerState.year} is not available in this demo subset.</div>`;
@@ -6827,20 +6958,28 @@
                     }
 
                     const isDraft = !!(db.content[subtopic] && db.content[subtopic]._draft);
+                    const isArmed = !!(armedTopic && armedTopic.strand === strand && armedTopic.subtopic === subtopic);
 
-                    const style = isUsed 
-                        ? 'bg-whsblue-50 border-whsblue-200 text-whsblue-800 shadow-[inset_0_0_0_1px_rgba(0,32,102,0.2)]' 
-                        : 'bg-white border-slate-200 text-slate-700 hover:border-whsblue-400 hover:shadow-sm';
+                    const style = isArmed
+                        ? 'bg-[var(--whs-gold)]/20 border-[var(--whs-gold)] text-[#7a5b1e] shadow-[inset_0_0_0_1px_rgba(197,160,89,0.5)]'
+                        : isUsed
+                            ? 'bg-whsblue-50 border-whsblue-200 text-whsblue-800 shadow-[inset_0_0_0_1px_rgba(0,32,102,0.2)]'
+                            : 'bg-white border-slate-200 text-slate-700 hover:border-whsblue-400 hover:shadow-sm';
 
                     const safeStrand = strand.replace(/'/g, "\\'").replace(/"/g, "&quot;");
                     const safeSubtopic = subtopic.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                    const clickAction = quickAddMode ? `armTopic('${safeStrand}', '${safeSubtopic}')` : `openConfigModal('${safeStrand}', '${safeSubtopic}')`;
+
+                    let icon = '<span class="text-slate-300 group-hover:text-whsblue-600 text-lg leading-none shrink-0 ml-2">+</span>';
+                    if (isArmed) icon = '<span class="text-base leading-none shrink-0 ml-2">⚡</span>';
+                    else if (isUsed) icon = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-whsblue-700 shrink-0 ml-2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
 
                     strandHtml += `
-                        <button onclick="openConfigModal('${safeStrand}', '${safeSubtopic}')" 
+                        <button onclick="${clickAction}" 
                                 class="text-left px-3 py-2.5 border rounded-lg text-sm font-medium transition-all ${style} group">
                             <div class="flex justify-between items-center">
                                 <span class="leading-snug">${subtopic}${isDraft ? ' <span class="inline-block align-middle ml-1 text-[9px] font-black uppercase tracking-wide text-amber-700 bg-amber-100 border border-amber-300 px-1.5 py-0.5 rounded" title="Placeholder content — not yet verified against an official curriculum document">Draft</span>' : ''}</span>
-                                ${isUsed ? '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-whsblue-700 shrink-0 ml-2"><polyline points="20 6 9 17 4 12"></polyline></svg>' : '<span class="text-slate-300 group-hover:text-whsblue-600 text-lg leading-none shrink-0 ml-2">+</span>'}
+                                ${icon}
                             </div>
                         </button>
                     `;
@@ -6848,6 +6987,60 @@
                 strandHtml += `</div></div>`;
                 container.innerHTML += strandHtml;
             });
+        }
+
+        function toggleQuickAddMode() {
+            quickAddMode = !quickAddMode;
+            if (!quickAddMode) armedTopic = null;
+            renderLibrary();
+            renderTermGrids();
+            renderQuickAddBanner();
+        }
+
+        function armTopic(strand, subtopic) {
+            if (armedTopic && armedTopic.strand === strand && armedTopic.subtopic === subtopic) {
+                armedTopic = null; // clicking the already-armed topic again cancels it
+            } else {
+                armedTopic = { strand, subtopic, id: Date.now().toString() + Math.random().toString(36).slice(2, 6) };
+            }
+            renderLibrary();
+            renderTermGrids();
+            renderQuickAddBanner();
+        }
+
+        function placeArmedTopic(termIndex, weekIndex) {
+            if (!armedTopic) return;
+            const slots = yearPlannerState.terms[termIndex];
+            if (!slots || slots[weekIndex] !== null) return; // only ever drop into a genuinely empty week
+            slots[weekIndex] = {
+                strand: armedTopic.strand,
+                subtopic: armedTopic.subtopic,
+                id: armedTopic.id, // shared across this arm session, so consecutive clicks merge into one span
+                customText: armedTopic.subtopic,
+                keyContent: '',
+                learningTasks: '',
+                duration: 1,
+                assessment: null,
+                unitWeek: 1
+            };
+            renderTermGrids();
+            renderLibrary();
+            saveState();
+        }
+
+        function renderQuickAddBanner() {
+            const el = document.getElementById('yp-armbar');
+            if (!el) return;
+            if (!quickAddMode) {
+                el.classList.add('hidden'); el.classList.remove('flex'); el.innerHTML = '';
+                return;
+            }
+            el.classList.remove('hidden'); el.classList.add('flex');
+            el.innerHTML = armedTopic
+                ? `<span>⚡ Click any empty week to place <strong>${armedTopic.subtopic}</strong> &mdash; click it again in the sidebar to stop.</span>
+                   <button onclick="armedTopic=null; renderLibrary(); renderQuickAddBanner();" class="underline hover:no-underline">Cancel</button>`
+                : `<span>⚡ Quick Add is on &mdash; click a topic in the sidebar, then click empty weeks to drop it straight in.</span>
+                   <button onclick="toggleQuickAddMode()" class="underline hover:no-underline">Turn off</button>`;
         }
 
         function renderTermGrids() {
@@ -6920,11 +7113,15 @@
                         i += span - 1; 
                     } 
                     else {
-                        grid.innerHTML += `
-                            <div class="border border-dashed border-slate-300 bg-white/60 hover:bg-white transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-slate-400 gap-1">
+                        grid.innerHTML += armedTopic
+                            ? `<button onclick="placeArmedTopic(${t}, ${i})" title="Place '${armedTopic.subtopic.replace(/"/g, '&quot;')}' here"
+                                    class="border-2 border-dashed border-[var(--whs-gold)] bg-[var(--whs-gold)]/10 hover:bg-[var(--whs-gold)]/25 transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-[#7a5b1e] gap-0.5 cursor-pointer">
                                 <span class="text-xs font-semibold">Wk ${i+1}</span>
-                            </div>
-                        `;
+                                <span class="text-base leading-none">+</span>
+                               </button>`
+                            : `<div class="border border-dashed border-slate-300 bg-white/60 hover:bg-white transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-slate-400 gap-1">
+                                <span class="text-xs font-semibold">Wk ${i+1}</span>
+                               </div>`;
                     }
                 }
                 
@@ -6941,10 +7138,14 @@
                 }
             }
             updateOverallProgress();
+            renderYearPlannerWarnings();
+            renderCoverageGrid();
+            renderQuickAddBanner();
         }
 
         function switchTab(term) {
             yearPlannerState.activeTab = term;
+            yearPlannerState.viewMode = 'term';
             for (let i = 1; i <= 4; i++) {
                 const btn = document.getElementById(`tab-${i}`);
                 const panel = document.getElementById(`panel-${i}`);
@@ -6960,6 +7161,377 @@
                     }
                 }
             }
+            const covBtn = document.getElementById('tab-coverage');
+            const covPanel = document.getElementById('panel-coverage');
+            if (covBtn) covBtn.className = "pb-3 text-sm tab-inactive font-medium transition-all ml-2 pl-4 border-l border-slate-300";
+            if (covPanel) { covPanel.classList.add('hidden'); covPanel.classList.remove('block'); }
+            saveState();
+        }
+
+        function switchToCoverage() {
+            yearPlannerState.viewMode = 'coverage';
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById(`tab-${i}`);
+                const panel = document.getElementById(`panel-${i}`);
+                if (btn) btn.className = "pb-3 text-sm tab-inactive font-medium transition-all";
+                if (panel) { panel.classList.add('hidden'); panel.classList.remove('block'); }
+            }
+            const covBtn = document.getElementById('tab-coverage');
+            const covPanel = document.getElementById('panel-coverage');
+            if (covBtn) covBtn.className = "pb-3 text-sm tab-active transition-all ml-2 pl-4 border-l border-slate-300";
+            if (covPanel) { covPanel.classList.remove('hidden'); covPanel.classList.add('block'); }
+            renderCoverageGrid();
+            saveState();
+        }
+
+        /* ---------- Realism / sanity warnings ----------
+           Cheap checks run off the same state the grids already use — no new
+           data model needed. Surfaced as small pills above the term panels,
+           same idea as a study planner flagging an unsustainable week. */
+        function computeYearPlannerWarnings() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) return [];
+            const notes = [];
+            let totalAvailable = 0, totalFilled = 0;
+            const emptyTerms = [], blockedOutTerms = [];
+
+            for (let t = 1; t <= 4; t++) {
+                const len = yearPlannerState.termLengths[t] || 0;
+                const slots = yearPlannerState.terms[t] || [];
+                let available = 0, filled = 0;
+                for (let i = 0; i < len; i++) {
+                    const slot = slots[i];
+                    if (slot === 'BLOCKED') continue;
+                    available++;
+                    if (slot && typeof slot === 'object') filled++;
+                }
+                totalAvailable += available; totalFilled += filled;
+                if (len > 0 && available === 0) blockedOutTerms.push(t);
+                else if (available > 0 && filled === 0) emptyTerms.push(t);
+            }
+
+            // Strands that don't appear anywhere in the plan yet.
+            const strandsNotUsed = [];
+            Object.keys(db.structure).forEach(strand => {
+                const topics = db.structure[strand];
+                let used = false;
+                for (let t = 1; t <= 4 && !used; t++) {
+                    const slots = yearPlannerState.terms[t] || [];
+                    for (let i = 0; i < (yearPlannerState.termLengths[t] || 0); i++) {
+                        const slot = slots[i];
+                        if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) { used = true; break; }
+                    }
+                }
+                if (!used) strandsNotUsed.push(strand);
+            });
+
+            // A term with zero available weeks is a data-integrity issue worth
+            // flagging immediately — it's actionable from the very first click.
+            if (blockedOutTerms.length) {
+                notes.push({ tone: 'bad', text: blockedOutTerms.length === 1
+                    ? `Term ${blockedOutTerms[0]} has no available weeks — every week is blocked. Check Block Unavailable Weeks.`
+                    : `Terms ${blockedOutTerms.join(', ')} have no available weeks — every week is blocked. Check Block Unavailable Weeks.` });
+            }
+
+            // "No strand is scheduled yet" and "every term is empty" are just
+            // describing a blank plan on day one — not worth a wall of pills
+            // until something has actually been placed. Collapsed into one
+            // pill each from then on, rather than one per strand/term.
+            if (totalFilled > 0) {
+                if (strandsNotUsed.length) {
+                    notes.push({ tone: 'warn', text: strandsNotUsed.length === 1
+                        ? `${strandsNotUsed[0]} hasn't been scheduled anywhere this year yet.`
+                        : `${strandsNotUsed.length} strands haven't been scheduled yet: ${strandsNotUsed.join(', ')}.` });
+                }
+                if (emptyTerms.length) {
+                    notes.push({ tone: 'warn', text: emptyTerms.length === 1
+                        ? `Term ${emptyTerms[0]} is completely empty — nothing has been planned into it yet.`
+                        : `Terms ${emptyTerms.join(', ')} are completely empty — nothing has been planned into them yet.` });
+                }
+
+                const unplanned = totalAvailable - totalFilled;
+                if (unplanned > 0) {
+                    notes.push({ tone: 'info', text: `${unplanned} of ${totalAvailable} available weeks across the year are still unplanned.` });
+                } else if (totalAvailable > 0) {
+                    notes.push({ tone: 'good', text: `Every available week this year has a topic assigned.` });
+                }
+            }
+
+            return notes;
+        }
+
+        function renderYearPlannerWarnings() {
+            const el = document.getElementById('yp-warnings');
+            if (!el) return;
+            const notes = computeYearPlannerWarnings();
+            if (!notes.length) { el.innerHTML = ''; el.classList.add('hidden'); return; }
+            const toneStyle = {
+                bad:  'bg-red-50 border-red-200 text-red-800',
+                warn: 'bg-amber-50 border-amber-200 text-amber-800',
+                info: 'bg-[#d1e6f6]/40 border-[var(--whs-light-blue)] text-[var(--whs-dark-blue)]',
+                good: 'bg-emerald-50 border-emerald-200 text-emerald-800'
+            };
+            const toneIcon = { bad: '⛔', warn: '⚠️', info: 'ℹ️', good: '✅' };
+            el.classList.remove('hidden');
+            el.innerHTML = `<div class="flex flex-wrap gap-2 mb-5">` +
+                notes.map(n => `<div class="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg border ${toneStyle[n.tone] || toneStyle.info}">
+                    <span>${toneIcon[n.tone] || 'ℹ️'}</span><span>${n.text}</span>
+                </div>`).join('') +
+                `</div>`;
+        }
+
+        /* ---------- Whole-year coverage matrix ----------
+           Strands down the side, every week of the year across the top,
+           grouped by term. A quick visual check for gaps or a strand that
+           has been left untouched, without having to click through all
+           four term tabs one at a time. */
+        const YP_STRAND_HUES = ['#002066', '#c5a059', '#0f766e', '#9f1239', '#4338ca', '#166534', '#b45309'];
+        // Light tints paired 1:1 with YP_STRAND_HUES — used as cell backgrounds so text stays
+        // dark and readable everywhere, while the strong hue does the identifying (borders,
+        // legend swatches, timeline blocks). Keeping this as plain hex (not color-mix) is
+        // deliberate: it's what survives a copy-paste into Google Docs and a real printer.
+        const YP_STRAND_TINTS = ['#dbe4f5', '#f6ecd9', '#d9f2ef', '#fbdfe6', '#e3e1fa', '#dcf0e2', '#fbe8d3'];
+        function hueForStrand(strand, strandList) {
+            const i = strandList.indexOf(strand);
+            return YP_STRAND_HUES[i % YP_STRAND_HUES.length];
+        }
+        function tintForStrand(strand, strandList) {
+            const i = strandList.indexOf(strand);
+            return YP_STRAND_TINTS[i % YP_STRAND_TINTS.length];
+        }
+        // Every topic's subtopic string is unique across a subject's whole structure,
+        // so this reverse lookup is unambiguous: given a placed topic, which strand is it?
+        function strandForSubtopic(db, subtopic) {
+            for (const strand of Object.keys(db.structure)) {
+                if (db.structure[strand].indexOf(subtopic) !== -1) return strand;
+            }
+            return null;
+        }
+
+        function renderCoverageGrid() {
+            const gridEl = document.getElementById('coverage-grid');
+            const summaryEl = document.getElementById('coverage-summary');
+            if (!gridEl) return;
+
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) { gridEl.innerHTML = `<p class="text-sm text-slate-500 italic p-4">Select a Learning Area and Year Level to see coverage.</p>`; if (summaryEl) summaryEl.innerText = ''; return; }
+
+            const strands = Object.keys(db.structure);
+            const terms = [1, 2, 3, 4];
+
+            let head1 = `<th class="yp-cov-strand-h sticky left-0 bg-white z-10 text-left px-2 py-1 border-b border-r border-slate-200">Strand</th>`;
+            let head2 = `<th class="sticky left-0 bg-white z-10 border-b border-r border-slate-200"></th>`;
+            terms.forEach(t => {
+                const len = yearPlannerState.termLengths[t] || 0;
+                head1 += `<th colspan="${Math.max(len,1)}" class="text-[10px] font-bold uppercase tracking-wide text-slate-500 border-b border-l border-slate-200 px-1 py-1 text-center">Term ${t}</th>`;
+                for (let i = 0; i < len; i++) {
+                    head2 += `<th class="text-[9px] font-semibold text-slate-400 border-b border-slate-100 w-[22px] text-center">${i+1}</th>`;
+                }
+                if (len === 0) head2 += `<th class="text-[9px] text-slate-300 border-b border-slate-100 w-[22px]">—</th>`;
+            });
+
+            let rows = '';
+            strands.forEach(strand => {
+                const topics = db.structure[strand];
+                const hue = hueForStrand(strand, strands);
+                let cells = '';
+                terms.forEach(t => {
+                    const len = yearPlannerState.termLengths[t] || 0;
+                    const slots = yearPlannerState.terms[t] || [];
+                    for (let i = 0; i < len; i++) {
+                        const slot = slots[i];
+                        if (slot === 'BLOCKED') {
+                            cells += `<td class="bg-stripes border border-white w-[22px] h-[22px]" title="Term ${t}, Wk ${i+1} — blocked"></td>`;
+                        } else if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) {
+                            cells += `<td class="border border-white w-[22px] h-[22px]" style="background:${hue}" title="Term ${t}, Wk ${i+1} — ${slot.customText || slot.subtopic}"></td>`;
+                        } else {
+                            cells += `<td class="bg-slate-100 border border-white w-[22px] h-[22px]" title="Term ${t}, Wk ${i+1} — unplanned"></td>`;
+                        }
+                    }
+                    if (len === 0) cells += `<td class="w-[22px]"></td>`;
+                });
+                rows += `<tr><td class="yp-cov-strand-h sticky left-0 bg-white z-10 text-xs font-semibold px-2 py-1 border-r border-b border-slate-100 whitespace-nowrap" style="border-left:4px solid ${hue}">${strand}</td>${cells}</tr>`;
+            });
+
+            gridEl.innerHTML = `<div class="overflow-x-auto"><table class="border-collapse"><thead><tr>${head1}</tr><tr>${head2}</tr></thead><tbody>${rows}</tbody></table></div>
+                <div class="flex flex-wrap gap-3 mt-4 text-[10px] font-semibold text-slate-500">
+                    <span class="flex items-center gap-1"><i class="inline-block w-3 h-3 rounded-sm bg-slate-100 border border-slate-200"></i>Unplanned week</span>
+                    <span class="flex items-center gap-1"><i class="inline-block w-3 h-3 rounded-sm bg-stripes border border-slate-200"></i>Blocked week</span>
+                    <span class="flex items-center gap-1"><i class="inline-block w-3 h-3 rounded-sm" style="background:${YP_STRAND_HUES[0]}"></i>A strand's colour = its weeks on the plan</span>
+                </div>`;
+
+            if (summaryEl) {
+                const untouched = strands.filter(strand => {
+                    const topics = db.structure[strand];
+                    for (let t = 1; t <= 4; t++) {
+                        const slots = yearPlannerState.terms[t] || [];
+                        for (let i = 0; i < (yearPlannerState.termLengths[t] || 0); i++) {
+                            const slot = slots[i];
+                            if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) return false;
+                        }
+                    }
+                    return true;
+                });
+                summaryEl.innerText = untouched.length
+                    ? `${untouched.length} of ${strands.length} strands not yet scheduled`
+                    : `All ${strands.length} strands scheduled somewhere this year`;
+            }
+        }
+
+        /* ---------- Printable / Google Docs–friendly full year plan ----------
+           A real <table> with inline styles (not Tailwind classes, not CSS
+           grid) — that's what survives a copy-paste into Google Docs intact.
+           Contiguous weeks of the same placed topic are merged with colspan,
+           same idea as the term grid's own span-detection, so a label reads
+           once across its run instead of repeating in every week cell. */
+        function buildFullYearPrintTable() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) return '<p>No curriculum data selected.</p>';
+            const strands = Object.keys(db.structure);
+            const terms = [1, 2, 3, 4];
+
+            const thTerm = 'style="border:1px solid #94a3b8;background:#002066;color:#fff;font-weight:bold;text-transform:uppercase;font-size:9px;text-align:center;padding:4px;"';
+            const thWeek = 'style="border:1px solid #94a3b8;background:#d1e6f6;color:#002066;font-weight:bold;text-align:center;font-size:8px;padding:2px;width:22px;"';
+            const corner = 'style="border:1px solid #94a3b8;background:#f8fafc;width:150px;"';
+
+            let head1 = `<th ${corner}></th>`;
+            let head2 = `<th ${corner}></th>`;
+            terms.forEach(t => {
+                const len = yearPlannerState.termLengths[t] || 0;
+                head1 += `<th colspan="${Math.max(len, 1)}" ${thTerm}>Term ${t}</th>`;
+                for (let i = 0; i < len; i++) head2 += `<th ${thWeek}>${i + 1}</th>`;
+                if (!len) head2 += `<th ${thWeek}>&mdash;</th>`;
+            });
+
+            let rows = '';
+            strands.forEach(strand => {
+                const topics = db.structure[strand];
+                const hue = hueForStrand(strand, strands);
+                const tint = tintForStrand(strand, strands);
+                let cells = `<td style="border:1px solid #94a3b8;border-left:4px solid ${hue};background:#f1f5f9;font-weight:bold;font-size:10px;padding:4px;white-space:nowrap;">${strand}</td>`;
+                terms.forEach(t => {
+                    const len = yearPlannerState.termLengths[t] || 0;
+                    const slots = yearPlannerState.terms[t] || [];
+                    let i = 0;
+                    while (i < len) {
+                        const slot = slots[i];
+                        if (slot === 'BLOCKED') {
+                            cells += `<td style="border:1px solid #94a3b8;background:#e2e8f0;"></td>`;
+                            i++;
+                        } else if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) {
+                            let span = 1;
+                            while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
+                            const label = (slot.customText || slot.subtopic || '').replace(/</g, '&lt;');
+                            cells += `<td colspan="${span}" style="border:1px solid #94a3b8;background:${tint};border-top:3px solid ${hue};text-align:center;font-weight:600;font-size:9px;padding:3px;">${label}</td>`;
+                            i += span;
+                        } else {
+                            cells += `<td style="border:1px solid #94a3b8;background:#ffffff;"></td>`;
+                            i++;
+                        }
+                    }
+                    if (!len) cells += `<td style="border:1px solid #94a3b8;background:#ffffff;">&mdash;</td>`;
+                });
+                rows += `<tr>${cells}</tr>`;
+            });
+
+            return `<table style="border-collapse:collapse;width:100%;table-layout:fixed;">
+                <thead><tr>${head1}</tr><tr>${head2}</tr></thead>
+                <tbody>${rows}</tbody>
+            </table>`;
+        }
+
+        // Shared by both print layouts: one swatch per strand (colour-keyed), plus the
+        // two fixed states every layout uses (blocked / unplanned).
+        function buildStrandLegend(db) {
+            const strands = Object.keys(db.structure);
+            const strandSwatches = strands.map(strand =>
+                `<span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border border-slate-400" style="background:${tintForStrand(strand, strands)};border-left:3px solid ${hueForStrand(strand, strands)};"></i>${strand}</span>`
+            ).join('');
+            return `<div class="flex flex-wrap gap-x-4 gap-y-1.5 mt-4 text-[11px] font-semibold text-slate-500">
+                ${strandSwatches}
+                <span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border border-slate-400" style="background:#e2e8f0;"></i>Blocked / unavailable week</span>
+                <span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border border-slate-400" style="background:#ffffff;"></i>Unplanned week</span>
+            </div>`;
+        }
+
+        /* Alternate layout: one lane per term, stacked top to bottom, instead of one row
+           per strand. This matches the underlying data directly — a term is already just
+           a single sequence of weeks with at most one topic in each — so unlike the grid
+           view there's no strand column at all; each scheduled block carries its own
+           "Strand - Topic" label and strand colour right there in the timeline. */
+        function buildFullYearPrintTimeline() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) return '<p>No curriculum data selected.</p>';
+            const strands = Object.keys(db.structure);
+            const terms = [1, 2, 3, 4];
+
+            const thTerm = 'style="border:1px solid #94a3b8;background:#002066;color:#fff;font-weight:bold;text-transform:uppercase;font-size:10px;text-align:left;padding:5px 8px;"';
+            const thWeek = 'style="border:1px solid #94a3b8;background:#d1e6f6;color:#002066;font-weight:bold;text-align:center;font-size:8px;padding:2px;"';
+
+            let out = '';
+            terms.forEach(t => {
+                const len = yearPlannerState.termLengths[t] || 0;
+                let head2 = '';
+                for (let i = 0; i < len; i++) head2 += `<th ${thWeek}>${i + 1}</th>`;
+
+                let row = '';
+                if (!len) {
+                    row = `<td style="border:1px solid #94a3b8;background:#fff;color:#94a3b8;font-size:10px;padding:6px;">No weeks configured for this term.</td>`;
+                } else {
+                    const slots = yearPlannerState.terms[t] || [];
+                    let i = 0;
+                    while (i < len) {
+                        const slot = slots[i];
+                        if (slot === 'BLOCKED') {
+                            row += `<td style="border:1px solid #94a3b8;background:#e2e8f0;"></td>`;
+                            i++;
+                        } else if (slot && typeof slot === 'object') {
+                            let span = 1;
+                            while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
+                            const strand = strandForSubtopic(db, slot.subtopic);
+                            const hue = strand ? hueForStrand(strand, strands) : '#64748b';
+                            const tint = strand ? tintForStrand(strand, strands) : '#f1f5f9';
+                            const label = ((strand ? strand + ' - ' : '') + (slot.customText || slot.subtopic || '')).replace(/</g, '&lt;');
+                            row += `<td colspan="${span}" style="border:1px solid #94a3b8;background:${tint};border-top:4px solid ${hue};text-align:center;font-weight:600;font-size:10px;padding:6px 4px;word-wrap:break-word;">${label}</td>`;
+                            i += span;
+                        } else {
+                            row += `<td style="border:1px solid #94a3b8;background:#ffffff;"></td>`;
+                            i++;
+                        }
+                    }
+                }
+
+                out += `<table style="border-collapse:collapse;width:100%;table-layout:fixed;margin-bottom:12px;">
+                    <thead><tr><th colspan="${Math.max(len, 1)}" ${thTerm}>Term ${t}</th></tr><tr>${head2 || `<th ${thWeek}>&mdash;</th>`}</tr></thead>
+                    <tbody><tr>${row}</tr></tbody>
+                </table>`;
+            });
+            return out;
+        }
+
+        function printFullYearPlan(mode) {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) { customAlert('Nothing to show yet', 'Select a Learning Area and Year Level first.'); return; }
+
+            const isTimeline = mode === 'timeline';
+            const bodyHtml = isTimeline ? buildFullYearPrintTimeline() : buildFullYearPrintTable();
+            const today = new Date().toLocaleDateString('en-NZ', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            // Reuses the same output-overlay modal the other Year Planner exports use
+            // (Copy for Google Docs / Print / Save PDF already work on it) rather than
+            // opening a new browser window — window.open() gets silently blocked by
+            // popup blockers on plenty of setups, especially for a file opened locally.
+            // The @page rule is injected with the content so this print run comes out
+            // landscape without affecting any other report printed from this same modal.
+            document.getElementById('output-title').innerText =
+                `${yearPlannerState.subject} — Year ${yearPlannerState.year} — Annual Plan${isTimeline ? ' (Timeline)' : ''}`;
+            document.getElementById('output-content').innerHTML = `
+                <style>@page { size: landscape; margin: 10mm; }</style>
+                <p class="text-xs text-slate-500 mb-3">Generated ${today}</p>
+                ${bodyHtml}
+                ${buildStrandLegend(db)}`;
+            document.getElementById('output-overlay').classList.remove('hidden');
+            document.getElementById('output-overlay').classList.add('flex');
         }
 
         function removeTopic(termIndex, topicId) {
@@ -7096,6 +7668,7 @@
         function openTermLengthsModal() {
             for(let t=1; t<=4; t++) {
                 document.getElementById(`len-term-${t}`).value = yearPlannerState.termLengths[t];
+                document.getElementById(`start-term-${t}`).value = (yearPlannerState.termStartDates && yearPlannerState.termStartDates[t]) || '';
             }
             document.getElementById('term-lengths-modal').classList.remove('hidden');
             document.getElementById('term-lengths-modal').classList.add('flex');
@@ -7107,11 +7680,13 @@
         }
 
         function saveTermLengths() {
+            if (!yearPlannerState.termStartDates) yearPlannerState.termStartDates = { 1: '', 2: '', 3: '', 4: '' };
             for(let t=1; t<=4; t++) {
                 let newLen = parseInt(document.getElementById(`len-term-${t}`).value);
                 if (isNaN(newLen) || newLen < 8) newLen = 8;
                 if (newLen > 12) newLen = 12;
                 yearPlannerState.termLengths[t] = newLen;
+                yearPlannerState.termStartDates[t] = document.getElementById(`start-term-${t}`).value || '';
 
                 let oldArray = yearPlannerState.terms[t];
                 let newArray = Array(newLen).fill(null);
@@ -7126,6 +7701,88 @@
             renderLibrary();
             saveState('Term lengths updated & saved');
         }
+
+        /* ---------- Calendar (.ics) export ----------
+           The Year Planner otherwise works entirely in relative "week 3 of Term 2"
+           terms and never needs a real date. This is the one feature that does, so
+           it's opt-in: only Edit Term Lengths asks for a start date, and only when
+           exporting does a missing one actually stop anything. */
+        function ypAddDays(iso, days) {
+            const [y, m, d] = iso.split('-').map(Number);
+            const dt = new Date(Date.UTC(y, m - 1, d));
+            dt.setUTCDate(dt.getUTCDate() + days);
+            return dt.toISOString().slice(0, 10);
+        }
+        function ypICSDate(iso) { return iso.replace(/-/g, ''); }
+        function ypTodayISO() {
+            const n = new Date();
+            return [n.getFullYear(), String(n.getMonth() + 1).padStart(2, '0'), String(n.getDate()).padStart(2, '0')].join('-');
+        }
+        function icsEscape(str) {
+            return String(str || '').replace(/\\/g, '\\\\').replace(/,/g, '\\,').replace(/;/g, '\\;').replace(/\n/g, '\\n');
+        }
+        function downloadFile(filename, content, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click(); a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportYearPlanICS() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) { customAlert('Nothing to export yet', 'Select a Learning Area and Year Level first.'); return; }
+
+            const dates = yearPlannerState.termStartDates || {};
+            const termsWithContent = [1, 2, 3, 4].filter(t => (yearPlannerState.terms[t] || []).some(s => s && typeof s === 'object'));
+            if (!termsWithContent.length) {
+                customAlert('Nothing to export yet', 'Add at least one topic to the plan before exporting a calendar.');
+                return;
+            }
+            const missingDates = termsWithContent.filter(t => !dates[t]);
+            if (missingDates.length) {
+                customAlert('Term start dates needed',
+                    `Set a start date for Term ${missingDates.join(' and Term ')} in "Edit Term Lengths" first — the calendar export needs real dates to work from. Everything else in the planner works fine without them.`);
+                return;
+            }
+
+            const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Waiheke High School//Year Planner//EN', 'CALSCALE:GREGORIAN'];
+            const stamp = ypICSDate(ypTodayISO()) + 'T000000Z';
+
+            termsWithContent.forEach(t => {
+                const slots = yearPlannerState.terms[t];
+                const len = yearPlannerState.termLengths[t] || 0;
+                const termStart = dates[t];
+                let i = 0;
+                while (i < len) {
+                    const slot = slots[i];
+                    if (slot && typeof slot === 'object') {
+                        let span = 1;
+                        while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
+                        const startDate = ypAddDays(termStart, 7 * i);
+                        // DTEND is exclusive per RFC 5545 — this lands the day after the
+                        // Friday of the block's last week, covering Mon-Fri each week.
+                        const endExclusive = ypAddDays(termStart, 7 * i + 7 * (span - 1) + 5);
+                        const uid = `ypc-${yearPlannerState.year}-${yearPlannerState.subject}-${t}-${i}-${slot.id}@whs-year-planner`.replace(/\s+/g, '_');
+                        lines.push('BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${stamp}`,
+                            `DTSTART;VALUE=DATE:${ypICSDate(startDate)}`, `DTEND;VALUE=DATE:${ypICSDate(endExclusive)}`,
+                            `SUMMARY:${icsEscape(slot.customText || slot.subtopic)}`,
+                            `DESCRIPTION:${icsEscape((slot.strand || '') + '\\n' + yearPlannerState.subject + ' - Year ' + yearPlannerState.year + ', Term ' + t)}`,
+                            'END:VEVENT');
+                        i += span;
+                    } else {
+                        i++;
+                    }
+                }
+            });
+            lines.push('END:VCALENDAR');
+
+            const filename = `${yearPlannerState.subject.replace(/[^a-z0-9]+/gi, '_')}_Year${yearPlannerState.year}_Plan.ics`;
+            downloadFile(filename, lines.join('\r\n'), 'text/calendar');
+            showToast('Calendar file downloaded — import it into Google Calendar, Outlook, or Apple Calendar.');
+        }
+
 
         function openBlockedWeeksModal() {
             const grid = document.getElementById('blocked-grid');
@@ -7199,6 +7856,13 @@
 
             if (format === 'simple') {
                 generateSimplePlan(out);
+                return;
+            }
+
+            if (format === 'timeline') {
+                // Reuses the exact same builder as the standalone "Timeline View" toolbar
+                // button — one lane per term, topics coloured and labelled by strand.
+                printFullYearPlan('timeline');
                 return;
             }
 
@@ -7643,11 +8307,20 @@
             const restored = loadState();
             syncContextUI();
             if (restored) {
+                const migration = migrateYearPlannerState();
+                if (migration.renamed || migration.dropped) {
+                    const parts = [];
+                    if (migration.renamed) parts.push(`${migration.renamed} topic${migration.renamed === 1 ? '' : 's'} updated to ${migration.renamed === 1 ? 'its' : 'their'} new name`);
+                    if (migration.dropped) parts.push(`${migration.dropped} outdated ${migration.dropped === 1 ? 'reference was' : 'references were'} removed`);
+                    showToast('Curriculum updated since your last visit — ' + parts.join(', ') + '.');
+                    saveState();
+                }
                 var hasContent = [1, 2, 3, 4].some(t => yearPlannerState.terms[t] && yearPlannerState.terms[t].some(s => s && typeof s === 'object'));
                 if (hasContent) { ypDeptChosen = true; ypYearChosen = true; checkYearPlannerBothSelected(); }
                 renderLibrary();
                 renderTermGrids();
                 switchTab(yearPlannerState.activeTab || 1);
+                if (yearPlannerState.viewMode === 'coverage') switchToCoverage();
             } else {
                 renderLibrary();
                 renderTermGrids();
