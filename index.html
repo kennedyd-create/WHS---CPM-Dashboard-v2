@@ -1232,7 +1232,7 @@
         <div id="view-yearplanner" class="hidden animate-in fade-in duration-500">
             <div class="max-w-6xl mx-auto mb-6 text-center">
                 <h3 class="text-2xl font-bold text-slate-900">📅 Te Mātaiaho Interactive Year Planner</h3>
-                <p class="text-slate-600 mt-1">Drag topics from the draft curriculum library into a full-year, term-by-term plan.</p>
+                <p class="text-slate-600 mt-1">Drag topics from the curriculum library into a full-year, term-by-term plan.</p>
             </div>
             <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-300" style="height: calc(100vh - 130px); min-height: 700px; display: flex; flex-direction: column;">
 
@@ -1290,7 +1290,7 @@
         <aside class="w-80 bg-slate-100 border-r-2 border-slate-300 flex flex-col h-full z-0 relative shadow-[4px_0_24px_rgba(0,0,0,0.04)]">
             <div class="p-5 flex-1 overflow-y-auto custom-scrollbar">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="stage-divider-label"><span class="stage-number-badge">1</span>Draft Curriculum Strands</h2>
+                    <h2 class="stage-divider-label"><span class="stage-number-badge">1</span>Curriculum Strands</h2>
                 </div>
                 <div id="library-container" class="space-y-5">
                     <!-- Populated by JS -->
@@ -1570,7 +1570,7 @@
                     <p class="font-bold text-[#002066]">Curriculum & Framework Sources</p>
                     <ul class="list-disc pl-5 mt-1 space-y-1.5 text-slate-600">
                         <li><strong>Common Practice Model (CPM)</strong> — New Zealand Ministry of Education, Te Mahau.</li>
-                        <li><strong>Te Mātaiaho</strong> — the New Zealand Curriculum refresh (draft), Ministry of Education. Curriculum area, strand, and topic structure in the Year Planner is drawn from Te Mātaiaho draft materials.</li>
+                        <li><strong>Te Mātaiaho</strong> — the New Zealand Curriculum refresh, Ministry of Education. <strong>Science</strong> and <strong>Social Sciences</strong> Years 0–10 content was finalised and published on Tāhūrangi on 12 August 2026, and the Year Planner is drawn from those final documents. Other learning areas (Maths, English, PE &amp; Health, etc.) are still drawn from Te Mātaiaho draft materials pending their final release.</li>
                         <li><strong>NCEA Achievement Standards</strong> — New Zealand Qualifications Authority (NZQA). This tool never invents or guesses standard numbers/titles; teachers supply these directly.</li>
                     </ul>
                 </div>
@@ -1734,9 +1734,9 @@
 
     <script>
         var tahurangiLinks = {
-            'Science': { 'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---science-phase-3-years-7-8/5637290856.p', 'Year 8': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---science-phase-3-years-7-8/5637290856.p', 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz' },
+            'Science': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---science-phases-1-4-years-0-10/5637290855.p' },
             'Maths': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/mathematics-and-statistics-curriculum/5637165587.c' },
-            'Social Sciences': { 'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---social-sciences-phase-3-years-7-8/5637290853.p', 'Year 8': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---social-sciences-phase-3-years-7-8/5637290853.p', 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/social-sciences-curriculum/5637165589.c' },
+            'Social Sciences': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/nzc---social-sciences-phases-1-4-years-0-10/5637290851.p' },
             'English': { 'Year 7': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---english-phase-3-years-7-8/5637290836.p', 'Year 8': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc---english-phase-3-years-7-8/5637290836.p', 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/english-curriculum/5637165583.c' },
             'Māori': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/nzc-te-reo-m-ori-overview/5637303582.p' },
             'Technology': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/technology-curriculum/5637165590.c' },
@@ -1744,6 +1744,14 @@
             'PE & Health': { 'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz/new-zealand-curriculum-online/new-zealand-curriculum/learning-areas/health-and-physical-education-curriculum/5637165585.c' },
             'default': 'https://newzealandcurriculum.tahurangi.education.govt.nz'
         };
+        // Learning areas whose Years 0-10 content was finalised (out of draft) by the Ministry on 12 August 2026.
+        // Other learning areas below (Maths, English, etc.) are still on Te Mātaiaho draft material.
+        var finalisedLearningAreas = ['Science', 'Social Sciences'];
+        function isFinalisedArea(d, y) {
+            var yr = y || '';
+            var isSenior = yr.indexOf('Level') !== -1;
+            return !isSenior && finalisedLearningAreas.indexOf(d) !== -1;
+        }
         var stageInfo = {
             1: { title: "Stage 1: Connect", intent: "Activates schemas." },
             2: { title: "Stage 2: I Do", intent: "Explicit instruction." },
@@ -1919,7 +1927,8 @@
             var parts = yr.split(' ');
             var c = parts.length > 1 ? parts[0] + ' ' + parts[1] : yr;
             var el = document.getElementById(id);
-            if(el) el.innerHTML = '<a href="' + getCurriculumLink(d,y) + '" target="_blank" class="inline-flex items-center gap-1.5 bg-yellow-100 text-[#002066] border border-[#002066] hover:bg-[#002066] hover:text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest transition-colors shadow-sm">Open Tāhūrangi Draft for ' + d + ' (' + c + ') ↗</a>';
+            var linkLabel = isFinalisedArea(d, y) ? 'Open Official Curriculum for ' : 'Open Tāhūrangi Draft for ';
+            if(el) el.innerHTML = '<a href="' + getCurriculumLink(d,y) + '" target="_blank" class="inline-flex items-center gap-1.5 bg-yellow-100 text-[#002066] border border-[#002066] hover:bg-[#002066] hover:text-white px-3 py-1.5 rounded text-[10px] font-bold uppercase tracking-widest transition-colors shadow-sm">' + linkLabel + d + ' (' + c + ') ↗</a>';
         }
 
         function getGlobalTopic() {
@@ -3348,7 +3357,7 @@
                 }
             }
 
-            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
+            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(unitState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             
             if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
@@ -3636,7 +3645,7 @@
             }
             
             // 2. RULES (SHARED & SPECIFIC)
-            if (lessonState.mode !== 'relief') txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')') + '.\n';
+            if (lessonState.mode !== 'relief') txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(lessonState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + getCurriculumLink(lessonState.dept, yr) + ')' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')')) + '.\n';
             if (ul && un) txt += 'UNIT LINK: Extract goals for "' + un + '" from: "' + ul + '" to build this lesson. If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             
             if (lessonState.framework === 'cpm' && seq === 1) {
@@ -3939,7 +3948,7 @@
                 else txt += '\n';
             }
 
-            txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : 'new Knowledge & Practices drafts (' + cUrl + ')') + '.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
+            txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(assessmentState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
             if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic.\n';
             if (assessmentState.lit === 'integrate') txt += 'Focus on disciplinary literacy — ensure at least one question explicitly assesses reading/writing skill in this subject, not just content recall.\n';
@@ -4299,112 +4308,92 @@
             el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg><span>${filled}/${total} Weeks Planned Across the Year</span>`;
         }
 
-        // Comprehensive Draft Curriculum Database (Years 7-10)
+        // Curriculum Database (Years 7-10). Science & Social Sciences content is sourced from the finalised
+        // 12 August 2026 NZC documents; other learning areas remain draft pending release.
         const curriculumData = {
             "7": {
                 "Social Sciences": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "History": ["New Zealand History", "Global History"],
-                        "Civics and Society": ["Democracy and Government"],
-                        "Geography": ["Rivers and Glaciation", "Geology, Tectonics, and Extreme Environments"],
-                        "Economic Activity": ["Financial Education", "New Zealand's Economy"]
+                        "History": ["Early Contact and Response", "Global Cultural Exchange (China and the West or Silk Roads to the Age of Exploration)"],
+                        "Civics and Society": ["Local Government and Community Engagement"],
+                        "Geography": ["Migration in New Zealand"],
+                        "Financial and Economic Activity": ["Family, Community, and Business Financial Planning"]
                     },
                     content: {
-                        "New Zealand History": {
+                        "Early Contact and Response": {
                             "Knowledge": [
-                                "Reasons for te Tiriti o Waitangi: Māori efforts to secure peace post-Musket War.",
-                                "Declaration of Independence 1835.",
-                                "Expansion of British trade and settlers; French threat.",
-                                "Role of missionaries in the Treaty process.",
-                                "Main articles of the 1840 Treaty of Waitangi | te Tiriti o Waitangi.",
-                                "Roles of Governors Hobson, FitzRoy, and Grey (1840-1846).",
-                                "The 1852 Constitution Act and establishment of representative government.",
-                                "Exclusion of most Māori men from the political system due to property-based franchise."
+                                "Māori society was organised around mana, whakapapa, tikanga, utu, and a deep, collective connection to whenua as taonga.",
+                                "From the 1790s, sealers, whalers, traders, and missionaries arrived; exchanging goods, technology, and resources often strengthened the mana of hapū and iwi.",
+                                "Missionaries introduced new farming tools, basic healthcare, and schooling; Māori (e.g. Hongi Hika) and missionaries (e.g. Thomas Kendall) worked together to write te reo Māori and establish a printing press.",
+                                "Between 1769 and 1814 many Māori actively explored and adapted aspects of te ao Pākehā, including travel to Britain, while working to maintain their own identity, customs, and beliefs.",
+                                "The Musket Wars (1820s-1830s) intensified existing rivalries between iwi and, alongside disease, caused widespread displacement and loss of Rangatira leadership.",
+                                "Hōne Heke's flagstaff protests led to the Northern War (1845-46), the first major conflict between the Crown and a Māori force; other Ngāpuhi leaders, notably Tāmati Wāka Nene, sided with the Crown."
                             ],
                             "Practices": [
-                                "Consider differing interpretations historians have of the role of the separate Māori translation.",
-                                "Consider the consequences of the Treaty on Māori mana and rangatiratanga.",
-                                "Consider the causes and consequences of the New Zealand Wars 1845-1872."
+                                "Use historical sources with differing perspectives to identify the exchange of ideas, resources, and technologies associated with early cultural contact.",
+                                "Explain the consequences of cultural exchange for people and society, recognising these may be interpreted differently by different groups.",
+                                "Critically evaluate the responses and decisions of groups and communities to new cultural contact."
                             ]
                         },
-                        "Democracy and Government": {
+                        "Global Cultural Exchange (China and the West or Silk Roads to the Age of Exploration)": {
                             "Knowledge": [
-                                "Foundations of modern democracy, including influences from Ancient Greece.",
-                                "Universal adult suffrage and secret ballot.",
-                                "Mixed Member Proportional (MMP) voting system.",
-                                "Separate electorate seats in Parliament for electors registered on the Māori roll.",
-                                "Citizen participation beyond voting: petitions, protests, hui, volunteering."
+                                "Choose one case study to teach: China and the West (1644-1949), or the Silk Roads to the Age of Exploration.",
+                                "Option A - China and the West: The Qing dynasty largely closed China to foreign trade, restricting it to Canton, until rising European demand for tea, silk, and porcelain created a severe trade imbalance.",
+                                "Option A: British merchants smuggled opium into China to correct the imbalance; the resulting addiction crisis and Chinese suppression efforts led to the First Opium War (1839-1842).",
+                                "Option A: The 1842 Treaty of Nanjing, the first of many 'unequal treaties', forced China to open ports, pay indemnities, and cede Hong Kong; poverty and instability increased dramatically, driving migration that later included the New Zealand goldfields from the 1860s.",
+                                "Option B - Silk Roads to the Age of Exploration: The Silk Roads (from China's Han Dynasty, 202 BC-AD 220) were trade routes linking China to Europe, along which merchants, monks, and travellers exchanged goods (silk, spices), religions (e.g. Buddhism), and technologies (paper, printing, the compass, gunpowder).",
+                                "Option B: Rising European demand for Asian spices, whose supply through Muslim-controlled land routes was limited, drove Spain, Portugal, and later England, France, and the Netherlands to seek new sea routes to Asia - the Age of Exploration (15th-17th centuries).",
+                                "Option B: Navigational advances (e.g. the magnetic compass, developed in China) made long-distance ocean voyaging possible; exploration led to European conquest, colonisation, and the transatlantic slave trade, which enslaved and transported millions of people."
                             ],
                             "Practices": [
-                                "Explain what makes New Zealand a representative democracy.",
-                                "Debate the pros and cons of MMP.",
-                                "Participate in a simulated electoral process."
+                                "Use historical sources with differing perspectives to identify opportunities, conflicts, and challenges arising from cultural contact.",
+                                "Analyse evidence to explain cause-and-consequence relationships associated with cultural contact.",
+                                "Sequence events associated with cultural contact to show how interactions developed over time."
                             ]
                         },
-                        "Global History": {
-                            "_draft": true,
+                        "Local Government and Community Engagement": {
                             "Knowledge": [
-                                "World history events have shaped movements of people, ideas, and power across different regions and time periods.",
-                                "Historical narratives can differ depending on whose perspective is being told.",
-                                "Significant global events often have long-term causes and consequences that connect to present-day issues."
+                                "Local councils are elected by the community and are responsible for parks, water, libraries, rubbish/recycling, and planning of roads and housing, funded through rates and taxes.",
+                                "Community members get involved in local decision-making and volunteering to support their neighbourhoods, towns, and environments.",
+                                "Civic responsibility includes noticing, listening, attending hui or meetings, joining school boards, volunteering, fundraising, making submissions, and respectful protest.",
+                                "Informed citizenship includes thinking critically about sources of information, telling fact from opinion, and sharing information ethically."
                             ],
                             "Practices": [
-                                "Investigating a significant global historical event using multiple sources.",
-                                "Comparing different perspectives on the same historical event.",
-                                "Sequencing key events on a timeline to understand cause and effect."
+                                "Use sources (e.g. newspaper articles) to collect and classify information about the roles individuals and groups have played in addressing a community challenge.",
+                                "Listen to people involved in local organisations or local government to find out about their roles, responsibilities, and perspectives.",
+                                "Describe, using local examples, the forms of active citizen participation and how they can bring about change.",
+                                "Identify a local civic action or opportunity and work collaboratively to plan, organise, carry out, and evaluate it."
                             ]
                         },
-                        "Rivers and Glaciation": {
-                            "_draft": true,
+                        "Migration in New Zealand": {
                             "Knowledge": [
-                                "Rivers shape landscapes through erosion, transportation, and deposition.",
-                                "Glaciers carve distinctive landforms such as valleys, moraines, and fiords.",
-                                "New Zealand's landscape has been significantly shaped by past and present glacial and river processes."
+                                "Migration can be international (immigration/emigration) or internal (e.g. rural-urban); the decision to migrate weighs push factors at the place of origin against pull factors at the destination.",
+                                "Migration can be forced: asylum seekers and refugees are people forced to migrate because it is unsafe to stay in their home country; flow maps show the direction and scale of migration.",
+                                "The origin of international migrants to New Zealand has changed since World War Two, from mainly Britain/Northern Europe to the Pacific and Asia; migrant groups often settle in geographic clusters that offer support networks.",
+                                "Migrant groups contribute culturally, economically, and politically, but have also faced barriers to participation such as discrimination and non-recognition of qualifications.",
+                                "Māori migration to cities occurred at unprecedented pace and scale after World War Two, driven by a lack of rural work and more opportunities in cities.",
+                                "New Zealand's internal migration is uneven: some places grow while others decline, shown using flow maps and choropleth maps; growth brings economic benefits but can pressure housing, services, and the environment."
                             ],
                             "Practices": [
-                                "Mapping and labelling river and glacial landforms.",
-                                "Using field sketches or photographs to identify evidence of glacial and river processes.",
-                                "Explaining how a specific landform was created using geographic vocabulary."
+                                "Use flow maps to show patterns of international immigration to New Zealand, and maps/visualisations to show internal population change.",
+                                "Use articles, interviews, or personal accounts to describe the experience of new migrants, or of living in a place of rapid population growth or decline.",
+                                "Describe the impact of migration on a migrant community and on the character of the place of destination."
                             ]
                         },
-                        "Geology, Tectonics, and Extreme Environments": {
-                            "_draft": true,
+                        "Family, Community, and Business Financial Planning": {
                             "Knowledge": [
-                                "New Zealand sits on the boundary of the Pacific and Australian tectonic plates, making it prone to earthquakes and volcanic activity.",
-                                "Extreme environments (e.g. volcanic, alpine, or coastal) present unique risks and opportunities for people.",
-                                "Understanding plate tectonics helps explain the distribution of natural hazards."
+                                "Countries have their own currencies; the value of the New Zealand dollar changes relative to other currencies, and banks and other providers can exchange currency for a fee.",
+                                "A business is when a person or group provides a good or service to generate a profit; a business can be local, national, or international.",
+                                "Groups that make financial decisions include family, hapū or iwi, community organisations, and small/large businesses, guided by shared priorities and values; groups cannot afford everything and must make trade-offs.",
+                                "A budget sets out how a group plans to spend its money within its income; financial sustainability is the ability to manage money to meet current needs and respond to future change.",
+                                "People and groups pool or share money and resources (e.g. papakāinga, flatting, retirement villages, intergenerational living) for cultural reasons, personal values, or to ease financial pressure."
                             ],
                             "Practices": [
-                                "Modelling tectonic plate movement using simple diagrams or simulations.",
-                                "Researching a New Zealand natural hazard and its impact on communities.",
-                                "Evaluating how communities prepare for and respond to geological hazards."
-                            ]
-                        },
-                        "Financial Education": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Budgeting involves balancing income and expenses to meet needs and wants.",
-                                "Saving and spending decisions are influenced by financial goals, needs, and available resources.",
-                                "Understanding the difference between needs and wants supports informed financial decision-making."
-                            ],
-                            "Practices": [
-                                "Creating a simple personal budget based on a scenario.",
-                                "Comparing the costs and benefits of different spending or saving choices.",
-                                "Discussing how advertising can influence spending decisions."
-                            ]
-                        },
-                        "New Zealand's Economy": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "New Zealand's economy relies on primary industries (e.g. agriculture, forestry, fishing) as well as services and trade.",
-                                "Supply and demand influence prices and production decisions.",
-                                "Government and businesses both play roles in the economy."
-                            ],
-                            "Practices": [
-                                "Investigating a key New Zealand industry and its contribution to the economy.",
-                                "Explaining how supply and demand affect the price of a good.",
-                                "Comparing the roles of government and private businesses in the economy."
+                                "Collect information about different types of groups in the community that may need to make financial decisions.",
+                                "Collect information about a community organisation or group and what it needs to do to stay within budget.",
+                                "Fully cost a group activity (e.g. a school trip) and consider what could be done to bring down the cost.",
+                                "Explain why people might take a collective approach to money and resource management."
                             ]
                         }
                     }
@@ -4412,98 +4401,89 @@
                 "Science": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "Physical Science": ["Materials", "Matter Interactions and Energy", "Motion and Forces", "Earth Systems"],
-                        "Biological Science": ["Organism Diversity", "Body Systems", "Ecosystems"]
+                        "Physical Science": ["Materials", "Matter Interactions and Energy", "Motion and Forces", "Earth and Space"],
+                        "Biological Science": ["Organism Diversity", "Life Processes", "Ecosystems"]
                     },
                     content: {
                         "Materials": {
                             "Knowledge": [
-                                "Plasticity is a property that leads to permanent changes in shape.",
-                                "Elasticity enables temporary changes in shape.",
-                                "Most matter exists in solids, liquids, and gases.",
-                                "All matter is made of sub-microscopic particles."
+                                "All matter is made of sub-microscopic particles; in solids and liquids particles are held close together by attractive forces, in gases they are far apart with weak attraction.",
+                                "Changes of state (melting, freezing, evaporation, condensation, sublimation, deposition) occur when thermal energy is added to or removed from a substance.",
+                                "Materials typically expand when heated and contract when cooled; most substances are denser as solids than as liquids, but water is an exception - ice is less dense than liquid water.",
+                                "Mass is conserved during a change of state."
                             ],
                             "Practices": [
-                                "Investigate how materials change shape in response to forces.",
-                                "Classify materials into states of matter using properties.",
-                                "Use particle model representations to explain properties."
-                            ]
-                        },
-                        "Body Systems": {
-                            "Knowledge": [
-                                "Diffusion is when particles spread from higher to lower concentration.",
-                                "Oxygen and carbon dioxide move into and out of cells by diffusion.",
-                                "Respiration breaks down glucose using oxygen to release chemical energy.",
-                                "Photosynthesis is used by plants to make fuel (glucose) using light, water, and CO2."
-                            ],
-                            "Practices": [
-                                "Interpret the relationship between diffusion, photosynthesis, and respiration.",
-                                "Design and carry out investigations into the requirements for photosynthesis."
+                                "Plan and conduct an experiment to test how thermal energy affects changes of state.",
+                                "Use models and representations of particles to explain the changes of state observed.",
+                                "Identify everyday situations where changes of state can cause problems (e.g. condensation on windows, icy roads)."
                             ]
                         },
                         "Matter Interactions and Energy": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Matter can change yearPlannerState (solid, liquid, gas) through the addition or removal of energy.",
-                                "Energy can be transferred and transformed, but is not created or destroyed.",
-                                "Physical and chemical changes affect matter differently."
+                                "Temperature is a measure of the average kinetic energy of the particles in a substance; thermal energy is transferred by conduction, convection, and radiation.",
+                                "Conduction is the transfer of thermal energy through a material by interactions between particles, without the material itself moving.",
+                                "Thermal conductivity measures how effectively a substance transfers thermal energy by conduction; insulating materials have low thermal conductivity."
                             ],
                             "Practices": [
-                                "Investigating how heating and cooling change the yearPlannerState of a substance.",
-                                "Identifying examples of energy transfer and transformation in everyday situations.",
-                                "Comparing physical and chemical changes through simple experiments."
+                                "Design and conduct a fair test to determine the thermal conductivity of different materials for a specific application (e.g. insulation).",
+                                "Use evidence of thermal conductivity to decide which materials to use for insulation (e.g. food, shelter, clothing)."
                             ]
                         },
                         "Motion and Forces": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Forces can change the speed, direction, or shape of an object.",
-                                "Balanced and unbalanced forces produce different effects on motion.",
-                                "Friction, gravity, and applied force all influence how objects move."
+                                "Speed describes how fast an object moves; it is calculated by dividing distance travelled by time, and reported in units such as metres per second (m/s) or kilometres per hour (km/h).",
+                                "Speed can remain constant or it can change; motion can be compared using measured speeds."
                             ],
                             "Practices": [
-                                "Investigating the effect of force on the motion of an object.",
-                                "Measuring and recording speed or distance in a simple experiment.",
-                                "Explaining everyday examples of balanced and unbalanced forces."
+                                "Measure distance and time values from everyday phenomena (e.g. walking, falling objects) and calculate speed.",
+                                "Critique the accuracy and reliability of how distance and time are measured (e.g. repeated tests, choice of timer).",
+                                "Represent motion using graphs."
                             ]
                         },
-                        "Earth Systems": {
-                            "_draft": true,
+                        "Earth and Space": {
                             "Knowledge": [
-                                "Earth's systems (atmosphere, hydrosphere, lithosphere, biosphere) interact to shape the planet.",
-                                "Natural processes such as the water cycle connect different Earth systems.",
-                                "Human activity can impact the balance of Earth's systems."
+                                "The Moon is a roughly spherical natural satellite that orbits Earth and goes through a complete cycle of phases approximately every 29.5 days.",
+                                "The Moon appears to change shape when viewed from Earth because different portions of its sunlit surface are visible as it orbits; it rises and sets at different times each day.",
+                                "Maramataka is the Māori lunar calendar, which uses Moon phases and key stars to guide daily practices and seasonal activities in different regions of New Zealand.",
+                                "A lunar eclipse occurs when the Moon passes into Earth's shadow; a solar eclipse occurs when the Moon passes between Earth and the Sun."
                             ],
                             "Practices": [
-                                "Modelling or diagramming the interactions between Earth's systems.",
-                                "Investigating a natural cycle (e.g. water cycle) and its stages.",
-                                "Explaining how a human activity affects one or more Earth systems."
+                                "Use pattern-seeking to gather and analyse lunar cycle data (rise/set times, phases, position in the sky) over several months.",
+                                "Use models to explain changes in the appearance of the Moon through the lunar cycle.",
+                                "Use Maramataka, or another lunar calendar, to predict an appropriate time to carry out a task in the local area (e.g. fishing, planting)."
                             ]
                         },
                         "Organism Diversity": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Living things can be classified into groups based on shared characteristics.",
-                                "Biodiversity supports the resilience and health of ecosystems.",
-                                "Adaptations help organisms survive in their specific environments."
+                                "Organisms have structural, behavioural, or physiological adaptations for obtaining resources, avoiding hazards, and reproducing in their environment.",
+                                "Individuals of the same species show variation in their traits; some variations may make an individual better suited to its environment than others.",
+                                "An adaptation increases, but does not guarantee, an organism's chances of survival and reproduction; how effective an adaptation is depends on environmental conditions."
                             ],
                             "Practices": [
-                                "Classifying a range of organisms based on observable features.",
-                                "Investigating the adaptations of a chosen organism to its environment.",
-                                "Comparing biodiversity in two different environments."
+                                "Observe and compare adaptations in organisms from different environments (e.g. beak shapes, body coverings, behaviours).",
+                                "Construct and label a model or diagram that shows how an adaptation is suited to an environment.",
+                                "Use evidence to explain how particular adaptations increase survival and reproductive success in specific environments."
+                            ]
+                        },
+                        "Life Processes": {
+                            "Knowledge": [
+                                "Major advances in biology resulted from the invention of the microscope and the first observations of cells by Robert Hooke, later developed by Antonie van Leeuwenhoek and others.",
+                                "Cells are the fundamental unit of organisms and contain organelles that carry out specific functions; cells of multicellular organisms can be specialised for different functions."
+                            ],
+                            "Practices": [
+                                "Find patterns in cell structures and shapes using microscope images.",
+                                "Label diagrams or models of different types of cells."
                             ]
                         },
                         "Ecosystems": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Ecosystems consist of living and non-living components that interact with each other.",
-                                "Energy flows through ecosystems via food chains and food webs.",
-                                "Changes to one part of an ecosystem can affect the whole system."
+                                "A population is a group of the same organism living in one place; a community is many populations interacting; an ecosystem is a community interacting with the biotic and abiotic parts of its environment.",
+                                "Producers make glucose through photosynthesis; consumers obtain energy and nutrients by feeding on producers or other consumers; decomposers break down dead organisms and waste, releasing nutrients.",
+                                "Relationships between organisms include predator/prey, mutualism (both organisms benefit, e.g. bees and flowers), and parasitism (one organism benefits while the other is harmed)."
                             ],
                             "Practices": [
-                                "Constructing a food chain or food web for a local ecosystem.",
-                                "Investigating the impact of a change (e.g. removing a species) on an ecosystem.",
-                                "Observing and recording living and non-living components of a local ecosystem."
+                                "Use pattern-seeking across a number of food webs to analyse the abundance of different organism roles.",
+                                "Identify interdependence between species within a local ecosystem (e.g. food webs, pollinators, shelter)."
                             ]
                         }
                     }
@@ -4921,101 +4901,80 @@
                 "Social Sciences": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "History": ["New Zealand History", "Global History"],
-                        "Civics and Society": ["Government Structures"],
-                        "Geography": ["Population Growth", "Hazard Management"],
-                        "Economic Activity": ["Financial Education", "New Zealand's Economy"]
+                        "History": ["Te Tiriti o Waitangi", "Westward Expansion / Civil Rights (US Westward Expansion or US Civil Rights Movement)"],
+                        "Civics and Society": ["Healthy Democracies"],
+                        "Geography": ["Natural Hazards in New Zealand"],
+                        "Financial and Economic Activity": ["Personal Financial Awareness"]
                     },
                     content: {
-                        "New Zealand History": {
+                        "Te Tiriti o Waitangi": {
                             "Knowledge": [
-                                "The Significance of the Liberal Era.",
-                                "Women's suffrage: NZ first self-governing nation to grant women the vote (1893).",
-                                "Role of Kate Sheppard and Meri Te Tai Mangakāhia.",
-                                "Social and industrial reforms: Industrial Conciliation Act, Old-age Pensions Act."
+                                "From 1830, growing concern about settler numbers, lawlessness, and foreign interference led to two agreements between Māori and the Crown.",
+                                "He Whakaputanga o te Rangatiratanga o Nu Tireni (1835) was signed by a collective of northern Māori chiefs, witnessed by British Resident James Busby; it declared New Zealand's independence and affirmed the rangatiratanga (authority) of the chiefs.",
+                                "Te Tiriti o Waitangi / the Treaty of Waitangi (1840) has two texts (English and Māori); key words - kāwanatanga, tino rangatiratanga, sovereignty, taonga - were understood differently, leading to different views of who held authority.",
+                                "Around 500 rangatira, including women, signed te Tiriti; some refused or never had the opportunity, and there is ongoing debate today about what was agreed.",
+                                "Disillusionment over broken promises grew quickly; the loss of Māori land (raupatu) led to responses including the Kīngitanga movement, Parihaka resistance, the 1975 Land March, and Treaty settlement processes.",
+                                "Concerns about the loss of te reo Māori led to advocacy such as Ngā Tamatoa, the 1972 Māori Language Petition, kōhanga reo, and kura kaupapa Māori."
                             ],
                             "Practices": [
-                                "Consider the significance and consequences of the suffrage movement.",
-                                "Consider how different groups supported or opposed the suffrage movement.",
-                                "Evaluate how societal and industrial reforms changed the period."
+                                "Use historical sources with differing perspectives to explain how He Whakaputanga and te Tiriti o Waitangi were formed in response to cultural contact.",
+                                "Compare the consequences of these agreements for different groups, explaining why interpretations may differ or change over time.",
+                                "Create an awareness campaign to educate others about an agreement (nationally or locally) and its significance."
                             ]
                         },
-                        "Hazard Management": {
+                        "Westward Expansion / Civil Rights (US Westward Expansion or US Civil Rights Movement)": {
                             "Knowledge": [
-                                "Characteristics of hazards: events become hazards when they pose a risk to life/property.",
-                                "Direct vs indirect impacts of a hazard.",
-                                "Tropical storms: formation over warm oceans, strong winds, surges.",
-                                "Earthquakes: formation through tectonic plate movement."
+                                "Choose one case study to teach: Expansion West in America (1803-1890s), or the Civil Rights Movement in the United States (1954-1968).",
+                                "Option A - Westward Expansion: Starting with the 1803 Louisiana Purchase, settlers moved west across America for new land, driven by the belief in 'Manifest Destiny'; ranching and the 1849 California Gold Rush were major economic drivers.",
+                                "Option A: Settlers and Native American peoples came into conflict over land and resources; treaties were often broken, and Native Americans were forcibly removed from their land (e.g. the Trail of Tears) and confined to reservations, with events such as the 1890 Wounded Knee Massacre.",
+                                "Option A: Native American peoples used resistance, economic adaptation, political negotiation, and cultural preservation to challenge westward expansion, and continue reclaiming language, culture, and land today (e.g. Standing Rock).",
+                                "Option B - Civil Rights Movement: After slavery was abolished in 1865, Jim Crow laws in the Southern states legally enforced racial segregation and restricted the rights of African Americans, including their right to vote.",
+                                "Option B: Groups such as the NAACP and the Southern Christian Leadership Conference (SCLC) formed to challenge these laws; activists used non-violent strategies including sit-ins, boycotts (e.g. the Montgomery Bus Boycott), and legal challenges (e.g. Brown v. Board of Education).",
+                                "Option B: Dr Martin Luther King Jr. was a pivotal leader, but change resulted from the collective advocacy of thousands of ordinary men, women, and children; the 1964 Civil Rights Act and 1965 Voting Rights Act were the movement's high points."
                             ],
                             "Practices": [
-                                "Interpret weather maps showing formation of tropical storms.",
-                                "Interpret and evaluate hazard management maps.",
-                                "Conduct a case study of hazard management evaluation."
+                                "Use historical sources with differing perspectives to explain how a group advanced its interests through cultural contact and how this affected the rights of others.",
+                                "Explain how resistance and advocacy for rights resulted in different consequences for different groups, and why interpretations may differ over time."
                             ]
                         },
-                        "Global History": {
-                            "_draft": true,
+                        "Healthy Democracies": {
                             "Knowledge": [
-                                "Global historical events are often interconnected, with actions in one region influencing others.",
-                                "Examining cause and effect helps explain why significant historical events occurred.",
-                                "Different groups can experience and remember the same historical event differently."
+                                "Modern democracies are shaped by Enlightenment thinking, including the idea that a government is lawful only if the people have consented to it through fair elections.",
+                                "Core democratic values include freedom of expression and respectful discussion, peaceful non-violent methods to resolve conflict, equality and protection of minority rights, critical thinking, and voting.",
+                                "People can influence public attitudes and government decisions by engaging with MPs, writing submissions, signing petitions, and participating in respectful protest (e.g. the NZCTU, business associations, the Polynesian Panthers).",
+                                "Democracies resolve disputes peacefully through courts and tribunals, the Waitangi Tribunal, the Human Rights and Race Relations Commissioners, the Office of the Ombudsman, and citizens' assemblies."
                             ],
                             "Practices": [
-                                "Researching the causes and consequences of a significant global event.",
-                                "Constructing an argument about the significance of a historical event using evidence.",
-                                "Comparing primary and secondary sources on a global historical topic."
+                                "Use text and timelines to trace how democratic ideas have developed over time.",
+                                "Collect information to compare how different interest groups have used democratic processes to influence change.",
+                                "Explain why listening to and discussing different views respectfully is essential for a healthy democracy."
                             ]
                         },
-                        "Government Structures": {
-                            "_draft": true,
+                        "Natural Hazards in New Zealand": {
                             "Knowledge": [
-                                "New Zealand operates under a parliamentary democracy with elected representatives.",
-                                "Government structures include central and local government, each with different responsibilities.",
-                                "Laws are created, debated, and passed through a formal legislative process."
+                                "Natural processes affect landforms and become hazards when they pose a risk to life or property; the 'four R's' (Reduction, Readiness, Response, Recovery) underpin New Zealand's emergency management system.",
+                                "Flooding: river systems have a source, tributaries, channel, and mouth; many New Zealand towns are built on river floodplains; flooding is driven by rainfall and storms, and made worse by land use (e.g. deforestation, farming on flood-prone land) and impermeable urban surfaces.",
+                                "Earthquakes: New Zealand's location on the Pacific Ring of Fire makes it vulnerable to earthquakes caused by tectonic plate movement, which can cause ground rupture, liquefaction, and tsunami.",
+                                "Hazards are managed through forecasting/monitoring, engineering (e.g. stop banks, building codes), and personal safety plans (e.g. 'Drop, Cover, Hold', evacuation routes, emergency kits).",
+                                "Short-term hazard response includes search and rescue and marae as a focal point for support; longer-term responses include reconstruction, mitigation, or relocation."
                             ],
                             "Practices": [
-                                "Mapping the structure and roles of central and local government in New Zealand.",
-                                "Investigating how a law is made from idea to enactment.",
-                                "Comparing New Zealand's government structure with another country's."
+                                "Use topographic maps and diagrams to investigate the shape of the land in flood-prone areas and the natural processes that create hazards.",
+                                "Use quantitative data and qualitative sources (e.g. eyewitness accounts) to describe the impact of a hazard event on people and communities.",
+                                "Describe a natural hazards response plan and evaluate how communities prepare for and respond to hazards."
                             ]
                         },
-                        "Population Growth": {
-                            "_draft": true,
+                        "Personal Financial Awareness": {
                             "Knowledge": [
-                                "Population growth is influenced by birth rates, death rates, and migration.",
-                                "Population change affects the demand for housing, services, and infrastructure.",
-                                "Population distribution varies across urban and rural areas for social and economic reasons."
+                                "Consumer rights include accurate information, goods that are fit for purpose, and remedies if something goes wrong; consumer responsibilities include reading agreements, using products as intended, and checking a seller's reliability.",
+                                "Different ways of paying (cash, online transactions, debt, credit) each have advantages and disadvantages; when borrowing money interest is usually charged, meaning more is repaid than was borrowed.",
+                                "The design of an app, website, or platform can influence people's spending decisions; some businesses use tactics such as fake urgency, hidden costs, or pre-ticked add-ons.",
+                                "Scams are deceptive schemes designed to steal money or personal information; people protect themselves by not sharing personal details, questioning legitimacy, and reporting suspicious activity."
                             ],
                             "Practices": [
-                                "Interpreting population data and graphs to identify trends.",
-                                "Investigating the causes and effects of population growth in a chosen region.",
-                                "Explaining how population change impacts a community's services and infrastructure."
-                            ]
-                        },
-                        "Financial Education": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Interest can work for or against a person depending on whether they are saving or borrowing.",
-                                "Financial decisions involve weighing up risk, opportunity cost, and long-term consequences.",
-                                "Different financial products (savings accounts, loans, insurance) serve different purposes."
-                            ],
-                            "Practices": [
-                                "Comparing different savings or borrowing options using simple interest calculations.",
-                                "Evaluating the risks and benefits of a financial decision in a given scenario.",
-                                "Explaining the concept of opportunity cost using a real-life example."
-                            ]
-                        },
-                        "New Zealand's Economy": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "New Zealand's economy is connected to global markets through trade and exchange rates.",
-                                "Economic sectors (primary, secondary, tertiary) each contribute differently to the economy.",
-                                "Economic decisions made by government can affect employment, prices, and growth."
-                            ],
-                            "Practices": [
-                                "Investigating how a change in exchange rates could affect New Zealand exporters.",
-                                "Classifying different jobs or industries into economic sectors.",
-                                "Discussing the impact of a government economic decision on different groups in society."
+                                "Use everyday scenarios regarding consumer rights and responsibilities (e.g. faulty products, misleading advertising, refund requests) to identify appropriate actions.",
+                                "Compare the advantages and disadvantages of using different types of payment (cash, online, debit, credit).",
+                                "Produce a student-friendly resource on financial scams."
                             ]
                         }
                     }
@@ -5023,98 +4982,86 @@
                 "Science": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "Physical Science": ["Materials", "Matter Interactions and Energy", "Motion and Forces", "Earth Systems"],
-                        "Biological Science": ["Organism Diversity", "Body Systems", "Ecosystems"]
+                        "Physical Science": ["Materials", "Matter Interactions and Energy", "Motion and Forces", "Earth and Space"],
+                        "Biological Science": ["Organism Diversity", "Life Processes", "Ecosystems"]
                     },
                     content: {
-                        "Matter Interactions and Energy": {
+                        "Materials": {
                             "Knowledge": [
-                                "Thermal energy is transferred by conduction, convection, and radiation.",
-                                "Materials typically expand when heated and contract when cooled.",
-                                "Water is unusually less dense as a solid than as a liquid."
+                                "Mixtures are physical combinations of two or more substances that are not chemically joined and keep their individual properties; they can be separated by settling/decanting, sieving, filtration, or evaporation.",
+                                "A solution forms when a soluble substance (solute) dissolves in a solvent; concentration is the amount of solute in a given volume of solvent, and a saturated solution holds the maximum solute possible at a given temperature.",
+                                "Suspensions are mixtures with insoluble solid particles dispersed in a liquid; chromatography separates substances in a mixture based on differences in solubility."
                             ],
                             "Practices": [
-                                "Classify examples of thermal energy transfer.",
-                                "Investigate and compare the density of water in solid and liquid states.",
-                                "Use the particle model to explain expansion/contraction."
+                                "Plan and conduct a method to separate a mixture.",
+                                "Systematically make solutions of different concentrations and observe differences (e.g. colour, viscosity, opacity).",
+                                "Use chromatography to separate substances in a mixture and analyse how effective the method was."
+                            ]
+                        },
+                        "Matter Interactions and Energy": {
+                            "Knowledge": [
+                                "Everything we see is either a light source or reflected light; for an object to be visible, light must travel from a source to it, and then to the eyes, either directly or after reflecting.",
+                                "Ibn al-Haytham contested earlier (Platonic) ideas about how light and vision work.",
+                                "Refraction occurs when light changes direction as it passes from one medium into another (e.g. from air into water)."
+                            ],
+                            "Practices": [
+                                "Design and carry out investigations to explore how light travels and changes direction through reflection and refraction.",
+                                "Use scientific conventions to draw the path of light as it interacts with different surfaces and materials."
+                            ]
+                        },
+                        "Motion and Forces": {
+                            "Knowledge": [
+                                "Forces acting on an object are balanced when they cancel each other out (net force is zero), and the object's motion does not change; when forces are unbalanced, the object's motion changes.",
+                                "A seesaw is a type of lever with forces acting on both sides of a pivot; it balances when the turning effect (force x distance from the pivot) is equal on each side."
+                            ],
+                            "Practices": [
+                                "Use free body diagrams to predict the motion of an object.",
+                                "Design a fair test to analyse how an unbalanced force affects the motion of an object (e.g. mass and distance from a pivot on a seesaw), gathering data systematically.",
+                                "Identify how unbalanced forces change the motion of objects in everyday activities (e.g. kicking a ball)."
+                            ]
+                        },
+                        "Earth and Space": {
+                            "Knowledge": [
+                                "The geosphere is the solid part of Earth - rocks, minerals, soil, and landforms; Earth's interior has four layers: inner core, outer core, mantle, and crust.",
+                                "Rocks are composed of one or more minerals; there are three main types (sedimentary, igneous, metamorphic), which continuously change from one type to another over time through the rock cycle.",
+                                "Fossils form when organisms are buried in sediment and, over time, minerals replace the organic material.",
+                                "Earth materials are used by humans based on their properties (e.g. pounamu, hāngī rocks, limestone for farming and landscaping)."
+                            ],
+                            "Practices": [
+                                "Classify and compare Earth materials (e.g. soils and rocks) based on their observable features (grain size, hardness, crystals, fossils).",
+                                "Use models to show how rocks change over time, and how the presence of fossils connects to Earth's past.",
+                                "Explain the relationship between the properties of minerals and rocks and their uses by humans."
                             ]
                         },
                         "Organism Diversity": {
                             "Knowledge": [
-                                "Sexual reproduction involves fusion of gametes (fertilisation).",
-                                "Chromosomes are structures that carry DNA.",
-                                "Offspring inherit a unique combination of genetic material.",
-                                "Adaptation and evolution: individuals have genetic differences."
+                                "Fossils provide evidence that organisms have appeared in many different forms throughout Earth's history - some are similar to organisms alive today, others belong to extinct groups (e.g. trilobites).",
+                                "Natural selection is a process in which heritable differences between individuals influence their chances of surviving and reproducing in the presence of selection pressures (e.g. limited food, cold extremes).",
+                                "Charles Darwin and Alfred Russel Wallace presented their theories on natural selection together; over many generations, accumulated trait changes can result in new species forming from a shared ancestor."
                             ],
                             "Practices": [
-                                "Recognise and interpret patterns in inherited traits.",
-                                "Compare how specific traits influence survival in environments.",
-                                "Evaluate evidence to infer how adaptation contributes to evolution."
+                                "Analyse evidence from evolutionary contexts (fossil records, trait variation, environmental change) to show how theories develop over time.",
+                                "Interpret a set of fossil images to infer an organism's structure and likely environment."
                             ]
                         },
-                        "Materials": {
-                            "_draft": true,
+                        "Life Processes": {
                             "Knowledge": [
-                                "Materials have properties (e.g. strength, flexibility, conductivity) that determine their uses.",
-                                "Materials can be classified as natural or synthetic.",
-                                "Chemical and physical properties influence how a material behaves and is used."
+                                "Sexual reproduction involves two parents and produces offspring with a mix of both parents' traits; asexual reproduction involves one parent and produces genetically identical offspring.",
+                                "Human reproduction and development involves gamete formation, fertilisation, and development through the zygote, embryo, and foetus stages; puberty, the menstrual cycle, and hormones regulate reproduction.",
+                                "Flowering plants reproduce through pollination, fertilisation, seed formation, dispersal, and germination; most fungi reproduce by forming spores."
                             ],
                             "Practices": [
-                                "Testing and comparing the properties of different materials.",
-                                "Investigating why a particular material is suited to a specific use.",
-                                "Classifying materials based on their properties and origins."
-                            ]
-                        },
-                        "Motion and Forces": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Newton's laws provide a foundation for understanding how forces affect motion.",
-                                "Speed, velocity, and acceleration describe different aspects of movement.",
-                                "Forces act in pairs, as described by the concept of action and reaction."
-                            ],
-                            "Practices": [
-                                "Investigating acceleration using simple experiments.",
-                                "Applying the concept of action-reaction forces to real-world examples.",
-                                "Calculating speed using distance and time data."
-                            ]
-                        },
-                        "Earth Systems": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Plate tectonics explain the movement of Earth's crust and associated geological events.",
-                                "Earth's systems are influenced by both natural processes and human activity.",
-                                "Rock types (igneous, sedimentary, metamorphic) form through different Earth processes."
-                            ],
-                            "Practices": [
-                                "Investigating evidence for plate tectonic theory.",
-                                "Classifying rock samples or images based on how they were formed.",
-                                "Explaining how a natural process has shaped a local landform."
-                            ]
-                        },
-                        "Body Systems": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "The human body is made up of interconnected systems (e.g. circulatory, respiratory, digestive) that work together.",
-                                "Each body system has specific structures and functions that support survival.",
-                                "Lifestyle choices can affect the health and function of body systems."
-                            ],
-                            "Practices": [
-                                "Investigating the structure and function of a chosen body system.",
-                                "Modelling how two body systems work together (e.g. respiratory and circulatory).",
-                                "Evaluating how a lifestyle factor affects a body system's health."
+                                "Organise information (e.g. table, flow chart) to identify similarities and differences in the reproduction processes of flowering plants, animals, and fungi."
                             ]
                         },
                         "Ecosystems": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Ecosystems have carrying capacities that limit population sizes.",
-                                "Introduced species can disrupt the balance of native ecosystems.",
-                                "Human impact on ecosystems can be measured and monitored over time."
+                                "A community is made up of many different populations of organisms that live in the same place and interact with each other; soils are composed of decaying matter, living organisms, rock particles, air, and water, supporting nutrient cycling.",
+                                "Habitats differ in observable and measurable physical features (e.g. water availability, sun exposure, temperature), and similar physical conditions tend to support similar organisms."
                             ],
                             "Practices": [
-                                "Investigating the impact of an introduced species on a New Zealand ecosystem.",
-                                "Collecting and analysing data on a local ecosystem's health.",
-                                "Proposing an action to protect or restore a local ecosystem."
+                                "Measure the abiotic conditions of an ecosystem using appropriate methods (e.g. quadrats, transects) such as light intensity, temperature, and soil composition.",
+                                "Use recorded data on organisms and environmental features to recognise patterns and changes in ecosystems over time."
                             ]
                         }
                     }
@@ -5566,127 +5513,108 @@
                 "Social Sciences": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "History": ["Change in New Zealand 1840-1914", "World War One 1914-1920", "Change in New Zealand 1920s-2000"],
-                        "Civics and Society": ["Government in New Zealand"],
-                        "Geography": ["Impact of Migration", "Coasts", "Urban Challenges"],
-                        "Economic Activity": ["Understanding the Global Economy", "Financial Education"]
+                        "History": ["The New Zealand Wars", "Self-Determination / Independence (Pacific Histories or Gandhi and Indian Independence)"],
+                        "Civics and Society": ["New Zealand System of Government"],
+                        "Geography": ["Tourism", "New Zealand Coasts"],
+                        "Financial and Economic Activity": ["The Economy", "Personal Financial Decision-Making"]
                     },
                     content: {
-                        "Change in New Zealand 1840-1914": {
+                        "The New Zealand Wars": {
                             "Knowledge": [
-                                "Immigration: Push/pull factors for British/Irish migration (1840s-1870s).",
-                                "Wakefield and Vogel schemes; views of NZ as a 'Better Britain'.",
-                                "Changing land use: Widespread transformation of land into farms.",
-                                "Causes, events, and outcomes of the New Zealand Wars (1845-1872)."
+                                "Conflict grew because Māori and European settlers had different ideas about land, authority, and te Tiriti o Waitangi; as settlers demanded more land and gained power through colonial government, tensions increased.",
+                                "The Kīngitanga movement formed to unite iwi and maintain authority over land and people as colonial pressure increased; Māori responded to increasing pressure in a range of ways, including resistance, adaptation, and engagement with colonial systems.",
+                                "The New Zealand Wars (1845-1872) took place in different regions and involved Crown forces and various Māori groups; Māori and Crown groups used different strategies (e.g. fortified pā, redoubts).",
+                                "Some Māori communities adopted non-violent resistance: at Parihaka, Te Whiti-o-Rongomai and Tohu Kākahi opposed land confiscation through peaceful action rather than armed warfare.",
+                                "The wars led to major Crown confiscations of Māori land (raupatu) and strengthened Crown control, leading to policies that increasingly limited Māori authority (e.g. the Native Land Court 1865, Native Schools Act 1867).",
+                                "Māori continued to respond through resistance, adaptation, and seeking recognition and redress, including the establishment of the Waitangi Tribunal in 1975."
                             ],
                             "Practices": [
-                                "Consider how NZ changed and stayed the same during the 20th century.",
-                                "Consider the kinds of sources that best reveal ordinary experiences.",
-                                "Evaluate differing historical interpretations of events."
+                                "Use historical sources with differing and contrary perspectives to identify the multiple interrelated causes of the New Zealand Wars.",
+                                "Analyse and compare evidence from multiple sources to explain the short- and long-term consequences of the wars.",
+                                "Construct a historical argument explaining how differing perspectives influence interpretations of the causes and consequences of conflict."
                             ]
                         },
-                        "Impact of Migration": {
+                        "Self-Determination / Independence (Pacific Histories or Gandhi and Indian Independence)": {
                             "Knowledge": [
-                                "Lee's Model of Migration: push and pull factors.",
-                                "Migration can be voluntary or forced (refugees, asylum seekers).",
-                                "Impacts on source regions (loss of skilled workers) and destination regions.",
-                                "Climate change influences current and future migration patterns."
+                                "Choose one case study to teach: Pacific Histories, or Gandhi and the Campaign for Indian Independence (1915-1947).",
+                                "Option A - Pacific Histories: Polynesian navigators settled islands across the Pacific using stars, ocean currents, winds, and bird migrations; Pacific societies developed their own cultures while remaining connected through shared ancestry, trade, and travel.",
+                                "Option A: During the nineteenth century, Britain, Germany, France, and the United States competed for ports, resources, and political influence in the Pacific; New Zealand administered the Cook Islands and Niue from 1901 and occupied, then governed, Sāmoa from 1914.",
+                                "Option A: Colonisation introduced Christianity, formal education, and new systems of government while reducing traditional political authority; the Cook Islands, Niue, and Sāmoa gained self-government or independence between 1962 and 1974 while maintaining strong ties with New Zealand.",
+                                "Option B - Gandhi and Indian Independence: India was under British rule from 1757 (direct rule from 1858); Britain exploited India's resources and excluded Indian people from positions of power, though the effects of colonial rule varied by social position, religion, gender, and region.",
+                                "Option B: Mahatma Gandhi led the Indian National Congress and introduced Satyagraha (peaceful resistance), using civil disobedience and non-cooperation, including the 1930 Salt March and boycotts of British goods.",
+                                "Option B: India gained independence in 1947 after decades of protest and negotiation; the country was partitioned into India and Pakistan, causing large-scale migration, violence, and displacement that still shapes identities and relations today."
                             ],
                             "Practices": [
-                                "Apply Lee's Model of Migration recognising push/pull factors.",
-                                "Interpret maps and flow diagrams showing migration patterns.",
-                                "Analyse quantitative data (e.g., census data) to identify trends."
+                                "Use historical sources with differing and contrary perspectives to identify the causes and consequences of interaction between societies.",
+                                "Construct a historical argument explaining how differing perspectives about identity, authority, and independence contributed to movements for self-government."
                             ]
                         },
-                        "World War One 1914-1920": {
-                            "_draft": true,
+                        "New Zealand System of Government": {
                             "Knowledge": [
-                                "World War One arose from a complex mix of alliances, nationalism, and imperial tensions in Europe.",
-                                "New Zealand's involvement, including Gallipoli and the Western Front, had significant social and demographic impacts.",
-                                "The aftermath of the war reshaped international relationships and borders."
+                                "New Zealand is a constitutional monarchy with a parliamentary system of government; the King is represented in New Zealand by the Governor-General.",
+                                "New Zealand's constitution is not written in one law - it is made up of many laws and customs, including te Tiriti o Waitangi / the Treaty of Waitangi, the Constitution Act, and the Bill of Rights, and can be changed by MPs simply voting (unlike more rigid constitutions, e.g. the USA).",
+                                "Every three years people 18 and older get two votes under MMP: one for a local electorate MP, one for a party; people of Māori descent can choose to be on the Māori roll instead.",
+                                "New Zealand has three branches of government - Legislative (MPs and the Governor-General), Executive (Cabinet and the public service), and Judiciary (Judges) - so that no one branch has too much power; the media is sometimes called the 'fourth estate'.",
+                                "Citizens can be involved in law-making by talking to local MPs, petitioning for law changes, or writing submissions; not all campaigns succeed (e.g. the 2015-16 New Zealand flag referendum)."
                             ],
                             "Practices": [
-                                "Investigating the causes of World War One using multiple sources.",
-                                "Analysing the impact of the war on New Zealand society and identity.",
-                                "Evaluating the significance of a key event or campaign (e.g. Gallipoli) using primary sources."
+                                "Use government websites and electoral data to collect information about the roles of Parliament, Cabinet, and the Governor-General, and how MMP elections shape the composition of Parliament.",
+                                "Use quantitative data from past elections to describe how governments have been formed in New Zealand (e.g. coalitions).",
+                                "Compare views on lowering the voting age, and identify values that motivate people to call for law changes."
                             ]
                         },
-                        "Change in New Zealand 1920s-2000": {
-                            "_draft": true,
+                        "Tourism": {
                             "Knowledge": [
-                                "New Zealand underwent significant social, economic, and political change across the 20th century, including the Depression, World War Two, and social reform movements.",
-                                "Migration and urbanisation reshaped New Zealand communities over this period.",
-                                "Key social movements (e.g. women's rights, Māori rights) drove significant legislative and cultural change."
+                                "Tourism can be domestic or international, and inbound or outbound; people travel as tourists for recreation, adventure, cultural experiences, health, education, or to visit friends and family.",
+                                "New Zealand is an attractive tourist destination because of its unique natural environments and Māori cultural tourism (guiding, ecotourism); tourism is a large export earner that generates employment and revenue.",
+                                "Tourism can place pressure on sensitive ecosystems, infrastructure, housing costs, and local communities; these pressures are managed through restricting sensitive sites, controlling short-term rentals, and visitor levies.",
+                                "Tourism sustainability initiatives need to balance economic growth, environmental protection, and cultural preservation."
                             ],
                             "Practices": [
-                                "Investigating a significant period of change in 20th century New Zealand.",
-                                "Comparing New Zealand society at two different points in the 20th century.",
-                                "Evaluating the impact of a social movement on New Zealand law or culture."
+                                "Use an atlas, maps, and other tools to locate major tourist destinations and flow maps to show tourist movements.",
+                                "Use quantitative data and graphs to identify the scale of tourism to top destinations and changes in tourism over time.",
+                                "Explain how the sustainability of tourism is under pressure in some places, and describe the responses to those pressures."
                             ]
                         },
-                        "Government in New Zealand": {
-                            "_draft": true,
+                        "New Zealand Coasts": {
                             "Knowledge": [
-                                "New Zealand's political system includes MMP (Mixed Member Proportional) representation, giving voice to a range of parties and views.",
-                                "Citizens participate in democracy through voting, petitioning, and civic engagement.",
-                                "The Treaty of Waitangi underpins New Zealand's constitutional arrangements."
+                                "Coastal erosion occurs through wave action (attrition, abrasion, hydraulic action, corrosion); transportation moves material along the coast by longshore drift; deposition occurs when wave energy is too low to carry material.",
+                                "Erosional landforms include headlands, bays, caves, arches, stacks, stumps, and wave-cut platforms; depositional landforms include beaches, spits, and sand dunes.",
+                                "Human activity (e.g. building on the coast, sand mining, seawalls, dams) can disrupt natural coastal processes; sea-level rise is increasing coastal erosion and flooding (inundation), causing dune erosion and cliff collapse.",
+                                "Coastal risks are managed using hard engineering (e.g. sea walls, groynes) or soft engineering (e.g. beach nourishment, dune regeneration); managed retreat allows natural processes to continue but is complex and contested.",
+                                "Decisions about managing coastal change involve multiple, sometimes competing perspectives (e.g. property owners, ratepayers, insurers, councils, hapū and iwi)."
                             ],
                             "Practices": [
-                                "Explaining how MMP affects the formation of government.",
-                                "Investigating ways citizens can participate in and influence government decisions.",
-                                "Evaluating the role of the Treaty of Waitangi in New Zealand's governance today."
+                                "Use diagrams to show how coastal processes create distinctive landforms.",
+                                "Use quantitative data (e.g. rates of erosion, costs) and visual sources (e.g. historical photographs, aerial or satellite imagery) to show changes at the coast and the impacts of management.",
+                                "Explain how managed retreat creates disagreement, and how a coastal management plan seeks to balance natural processes and human activity."
                             ]
                         },
-                        "Coasts": {
-                            "_draft": true,
+                        "The Economy": {
                             "Knowledge": [
-                                "Coastal landforms are shaped by erosion, deposition, and human activity.",
-                                "Coastal environments are important for ecological, cultural, and economic reasons.",
-                                "Coastal management involves balancing development with environmental protection."
+                                "The economy is the system of how money, goods, and services move between people, businesses, and governments; it includes primary (raw materials), secondary (manufacturing), and tertiary (services) sectors, plus volunteering.",
+                                "The Māori economy is closely linked to rangatiratanga and plays a growing role in New Zealand's prosperity; Treaty settlements have enabled some iwi to build asset bases for commercial and social investment.",
+                                "Global and local prices are shaped by supply (how much of something is available) and demand (how much people want or need it); inflation is a general increase in prices over time, meaning money buys less than it did before.",
+                                "Global markets are the systems through which countries buy and sell goods, services, and resources; the price of everyday goods (e.g. petrol, food) is often shaped by global markets, not just local conditions.",
+                                "People, groups, and businesses can invest in global markets, meaning their savings and investments can be affected by events happening economically overseas."
                             ],
                             "Practices": [
-                                "Mapping and identifying coastal landforms and processes in a chosen location.",
-                                "Investigating a coastal management issue and the different perspectives involved.",
-                                "Evaluating strategies used to manage or protect coastal environments."
+                                "Use quantitative data to track the contribution of different sectors to the New Zealand economy.",
+                                "Track the change of prices over time, and identify examples of how changes in global supply affect price (e.g. oil, cocoa)."
                             ]
                         },
-                        "Urban Challenges": {
-                            "_draft": true,
+                        "Personal Financial Decision-Making": {
                             "Knowledge": [
-                                "Urban areas face challenges such as housing affordability, transport congestion, and infrastructure strain.",
-                                "Urban growth can create both opportunities and pressures for communities.",
-                                "Planning and policy decisions shape how cities grow and change."
+                                "Changes in the economy (growth and downturns) affect prices, wages, and employment, which in turn affect personal and household financial decisions.",
+                                "Different types of employment contracts (casual, part-time, full-time, fixed term) affect entitlements and income security; important clauses to understand include wages, hours, leave, and notice periods.",
+                                "Informed financial decision-making also involves understanding personal values, priorities, responsibilities, and life experiences that influence feelings about money.",
+                                "Being financially prepared includes putting money aside for unexpected events (e.g. an emergency fund), choosing appropriate insurance, and understanding ACC, New Zealand's no-fault personal injury insurance scheme.",
+                                "Superannuation provides income during retirement; KiwiSaver is a voluntary savings scheme, and starting contributions early increases returns through compounding."
                             ],
                             "Practices": [
-                                "Investigating a challenge facing a New Zealand city and its underlying causes.",
-                                "Evaluating possible solutions to an urban challenge from multiple perspectives.",
-                                "Using maps and data to analyse patterns of urban growth."
-                            ]
-                        },
-                        "Understanding the Global Economy": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Countries trade goods and services based on comparative advantage.",
-                                "Global economic events (e.g. recessions, trade agreements) can have flow-on effects for New Zealand.",
-                                "Globalisation connects economies but can also create inequality between and within countries."
-                            ],
-                            "Practices": [
-                                "Investigating how a global economic event has affected New Zealand.",
-                                "Explaining the concept of comparative advantage using a real example.",
-                                "Evaluating the benefits and drawbacks of globalisation for different groups."
-                            ]
-                        },
-                        "Financial Education": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Long-term financial planning involves setting goals and understanding compound growth.",
-                                "Debt can be useful or harmful depending on how it is managed.",
-                                "Consumer rights and responsibilities protect people in financial transactions."
-                            ],
-                            "Practices": [
-                                "Modelling the effect of compound interest on savings or debt over time.",
-                                "Evaluating a financial scenario involving borrowing and its long-term impact.",
-                                "Investigating consumer rights in a real or simulated financial transaction."
+                                "Identify key information on examples of employment contracts and pay slips.",
+                                "Collect information about different types of insurance and the costs and benefits of ACC.",
+                                "Develop a money plan that includes short-, medium-, and long-term goals, estimate costs, and develop a savings plan to achieve them."
                             ]
                         }
                     }
@@ -5694,112 +5622,106 @@
                 "Science": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "Physical Science": ["Matter", "Chemical Reactions", "Motion and Forces", "Earth Systems", "Earth and Space"],
-                        "Biological Science": ["Organism Diversity", "Body Systems", "Ecosystems"]
+                        "Physical Science": ["Matter", "Chemical Change", "Matter Interactions and Energy", "Motion and Forces", "Earth and Space"],
+                        "Biological Science": ["Organism Diversity", "Life Processes", "Ecosystems"]
                     },
                     content: {
                         "Matter": {
                             "Knowledge": [
-                                "All matter is composed of atoms.",
-                                "Elements are different types of atoms; each has a symbol.",
-                                "Compounds are substances made of more than one element.",
-                                "The periodic table is arranged by physical and chemical properties."
+                                "The periodic table, developed by Dmitri Mendeleev and others, organises elements by atomic number into groups (columns) and periods (rows), which allowed the properties of undiscovered elements to be predicted.",
+                                "An atom is the smallest unit of matter that retains an element's chemical properties; the Bohr model describes an atom as a nucleus (protons and neutrons) surrounded by electrons arranged in shells.",
+                                "Atoms react by transferring or sharing valence (outer-shell) electrons to become more stable; this forms ionic bonds (metal + non-metal) or covalent bonds (non-metal + non-metal).",
+                                "Balanced chemical equations represent reactions and show that atoms - and mass - are conserved during a reaction."
                             ],
                             "Practices": [
-                                "Distinguish between pure substances and compounds from a chemical formula.",
-                                "Use the periodic table to locate metallic and non-metallic elements.",
-                                "Predict reactivity of group 1-2 metals using the periodic table."
+                                "Use periodic table position to predict the properties of a chosen element, then check the prediction against data.",
+                                "Use pattern-seeking to find relationships between the structure of atoms and their position on the periodic table.",
+                                "Use modelling to examine the difference between elements and compounds, and test claims that mass is constant in a reaction."
+                            ]
+                        },
+                        "Chemical Change": {
+                            "Knowledge": [
+                                "Acids (e.g. hydrochloric, sulfuric, nitric) and bases (e.g. metal oxides, hydroxides, carbonates) have opposite properties; pH measures how acidic or alkaline a solution is (below 7 acidic, 7 neutral, above 7 alkaline), tested using indicators.",
+                                "Hydrogen, oxygen, carbon dioxide, and liquid water can each be identified using a standard test (the pop test, the glowing splint test, the limewater test, and the cobalt chloride paper test).",
+                                "Combination reactions occur when two or more substances react to form a single product; reactions between a metal and a non-metal typically form an ionic compound, and between two non-metals typically form a covalent compound."
+                            ],
+                            "Practices": [
+                                "Use indicators to determine the pH of substances and distinguish acidic, neutral, and alkaline solutions.",
+                                "Use standardised tests to identify a common substance, and select appropriate safety procedures when handling corrosive substances."
+                            ]
+                        },
+                        "Matter Interactions and Energy": {
+                            "Knowledge": [
+                                "Electric current is the rate of charge flow (amperes); voltage is the potential difference driving it (volts); resistance limits current (ohms).",
+                                "Series circuits have one path for current (a break stops the whole circuit); parallel circuits have multiple paths (voltage is equal across branches).",
+                                "Conductors (e.g. metals) allow charge to move; insulators (e.g. plastic) restrict it; resistors add resistance.",
+                                "Electricity can be generated by several methods, e.g. turbines and solar panels."
+                            ],
+                            "Practices": [
+                                "Construct and test series and parallel circuits, measuring current and voltage with appropriate instruments.",
+                                "Predict and test how adding or removing components changes current in series vs parallel circuits.",
+                                "Classify materials as conductors or insulators using simple circuits.",
+                                "Research and evaluate methods of electricity generation and their relevance to New Zealand."
                             ]
                         },
                         "Motion and Forces": {
                             "Knowledge": [
-                                "Newton's First Law: objects resist changes in motion (inertia).",
-                                "Newton's Second Law: F = ma.",
-                                "Newton's Third Law: forces are always paired as action/reaction.",
-                                "Atmospheric pressure decreases with altitude."
+                                "Force is measured in newtons (N), named for Isaac Newton; net force is the overall force acting on an object once all individual forces and directions are combined.",
+                                "When the net force on an object is zero, the object stays at rest or continues moving at a constant speed in a straight line; when the net force is not zero, the object's motion changes.",
+                                "A position-time graph shows how an object's position changes over time: a steeper straight line shows a higher speed, a curved line shows changing speed, and a horizontal line shows the object is stationary."
                             ],
                             "Practices": [
-                                "Measure and compare forces in practical contexts.",
-                                "Calculate force, mass, or acceleration using F=ma.",
-                                "Identify independent, dependent, and control variables in a motion experiment."
-                            ]
-                        },
-                        "Chemical Reactions": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Chemical reactions involve the rearrangement of atoms to form new substances.",
-                                "Signs of a chemical reaction include colour change, gas production, and temperature change.",
-                                "Chemical reactions can be represented using word and symbol equations."
-                            ],
-                            "Practices": [
-                                "Investigating signs of a chemical reaction through simple experiments.",
-                                "Writing word equations for common chemical reactions.",
-                                "Comparing reactants and products in a chemical reaction."
-                            ]
-                        },
-                        "Earth Systems": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Earth's climate system is influenced by interactions between the atmosphere, oceans, and land.",
-                                "Natural and human factors both contribute to changes in Earth's climate over time.",
-                                "Earth systems operate on different timescales, from rapid events to gradual change."
-                            ],
-                            "Practices": [
-                                "Investigating a natural or human factor that influences Earth's climate.",
-                                "Analysing data or graphs showing changes in an Earth system over time.",
-                                "Explaining the interactions between two or more Earth systems."
+                                "Define the independent, dependent, and controlled variables for a motion experiment.",
+                                "Use position-time graphs to represent motion, and predict and test factors impacting the reliability of results."
                             ]
                         },
                         "Earth and Space": {
-                            "_draft": true,
                             "Knowledge": [
-                                "The solar system consists of the sun, planets, and other celestial bodies in predictable motion.",
-                                "Earth's rotation and orbit explain phenomena such as day/night and seasons.",
-                                "Space exploration has expanded scientific understanding of the universe."
+                                "The Solar System is part of the Milky Way galaxy; it consists of the Sun and all objects gravitationally bound to it, including planets, moons, asteroids, and comets.",
+                                "An astronomical unit (AU) is the average distance from Earth to the Sun, used to measure distances within the Solar System; the amount of solar radiation a planet receives depends on its distance from the Sun.",
+                                "The planets in order from the Sun are the four rocky planets (Mercury, Venus, Earth, Mars), the gas giants (Jupiter, Saturn), and the ice giants (Uranus, Neptune); dwarf planets have not cleared their orbital path.",
+                                "Improvements in technology (telescopes, autonomous and human space exploration) have allowed humans to learn about the Solar System over time, including by analysing emitted electromagnetic radiation and collecting samples."
                             ],
                             "Practices": [
-                                "Modelling the motion of Earth and the moon to explain day/night or phases.",
-                                "Investigating a celestial phenomenon (e.g. eclipses, seasons) using models or data.",
-                                "Researching a significant space exploration mission and its scientific findings."
+                                "Use pattern-seeking (e.g. size, distance from the Sun, motion) to explain why objects in the Solar System are grouped into categories (e.g. planet, dwarf planet, asteroid).",
+                                "Model objects in the Solar System to scale in terms of distance, size, and timing of movement.",
+                                "Discuss how different technologies have advanced our understanding of the Solar System."
                             ]
                         },
                         "Organism Diversity": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Classification systems reflect evolutionary relationships between organisms.",
-                                "Genetic variation within species contributes to diversity and adaptation.",
-                                "Biodiversity loss can have cascading effects on ecosystems."
+                                "Cells are classified as prokaryotic (no nucleus, e.g. bacteria) or eukaryotic (nucleus present, e.g. animals, plants, fungi); eukaryotic cells contain organelles including mitochondria (cellular respiration) and, in plants, chloroplasts and a cell wall.",
+                                "Pathogens (bacteria, viruses, protists, fungi) cause infectious disease, spread via bodily fluids, contaminated items, or airborne particles; the immune system uses white blood cells, including some that produce antibodies, and vaccines train this response safely.",
+                                "DNA is a double-helix molecule (its structure built on the work of Rosalind Franklin, Maurice Wilkins, and James Watson and Francis Crick) organised into chromosomes; a gene is a section of DNA with instructions for making a protein, and proteins determine an organism's traits.",
+                                "Most traits are influenced by many genes as well as the environment (e.g. nutrition and height in humans; nest temperature and sex in tuatara); variation describes differences in traits across a population."
                             ],
                             "Practices": [
-                                "Constructing a classification key for a group of organisms.",
-                                "Investigating genetic variation within a population.",
-                                "Evaluating the causes and consequences of biodiversity loss in a chosen context."
+                                "Use visual data (e.g. microscope images) to compare the size, scale, and structures of cells.",
+                                "Analyse data and identify patterns in the spread of infectious disease, and compare disease prevention strategies using evidence.",
+                                "Construct annotated diagrams or models that explain the structural relationship between DNA, genes, and chromosomes."
                             ]
                         },
-                        "Body Systems": {
-                            "_draft": true,
+                        "Life Processes": {
                             "Knowledge": [
-                                "Body systems maintain homeostasis (internal balance) through coordinated regulation.",
-                                "The nervous and endocrine systems both play roles in communication within the body.",
-                                "Disease and injury can disrupt the normal function of body systems."
+                                "Diffusion is the movement of particles from an area of higher to lower concentration, and is vital to processes such as gas exchange in respiration.",
+                                "Photosynthesis (in plants, algae, and some bacteria) uses light, water, and carbon dioxide to make glucose and release oxygen; respiration breaks down glucose using oxygen to release energy, producing carbon dioxide and water.",
+                                "The central nervous system (brain and spinal cord) and peripheral nervous system produce voluntary actions and automatic responses; receptors detect stimuli, sensory and motor neurons carry signals, and effectors (muscles or glands) produce a response.",
+                                "Thermoregulation (e.g. sweating and vasodilation to cool down, shivering and vasoconstriction to warm up) is an example of homeostasis - keeping body temperature within a narrow range."
                             ],
                             "Practices": [
-                                "Investigating how the body regulates a specific internal condition (e.g. temperature).",
-                                "Comparing the roles of the nervous and endocrine systems in communication.",
-                                "Researching how a disease or injury affects a chosen body system."
+                                "Formulate testable questions and systematically observe and record the effects of diffusion, photosynthesis, or respiration (e.g. starch tests, light vs dark comparisons).",
+                                "Design and conduct safe, ethically suitable experiments on reaction time or thermoregulation, and analyse factors affecting the reliability of data from human subjects."
                             ]
                         },
                         "Ecosystems": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Ecosystem stability depends on the balance of producers, consumers, and decomposers.",
-                                "Human activities such as land use change and pollution can disrupt ecosystem stability.",
-                                "Conservation strategies aim to protect and restore ecosystem health."
+                                "Ecosystems depend on the continuous movement of water and nutrients between organisms and the physical environment; mātauranga Māori (including ngā tohu o te taiao) is based on long-term observation of these patterns.",
+                                "The availability of fresh water influences where and how organisms live; microorganisms in soil and water recycle nutrients by breaking down dead organisms and waste.",
+                                "Disruption to water availability (e.g. drought, drainage, pollution) can reduce ecosystem stability and biodiversity; forests, wetlands, and soils help regulate water movement."
                             ],
                             "Practices": [
-                                "Investigating the roles of producers, consumers, and decomposers in an ecosystem.",
-                                "Evaluating the impact of a human activity on ecosystem stability.",
-                                "Researching a conservation strategy used to protect a New Zealand ecosystem."
+                                "Investigate the abiotic conditions of an ecosystem using quadrats or transects, and evaluate how these factors influence the organisms present.",
+                                "Describe how human activities have positively or negatively impacted an ecosystem (e.g. kina barrens, predator-free sanctuaries), and give examples of kaitiakitanga."
                             ]
                         }
                     }
@@ -6200,126 +6122,129 @@
                 "Social Sciences": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "History": ["The Asia-Pacific and NZ", "The Road to War: Germany 1918-1939", "World War Two 1939-1945"],
-                        "Civics and Society": ["Political Ideologies, Parties, and Human Rights"],
-                        "Geography": ["Nature of Place", "Disease", "Future Planning"],
-                        "Economic Activity": ["International Development", "Financial Education"]
+                        "History": ["World War One", "World War Two", "Power, Belonging, and Exclusion (Nazi Germany or The Easter Rising and Irish Independence)"],
+                        "Civics and Society": ["International Cooperation", "Global Citizenship"],
+                        "Geography": ["Urbanisation and Megacities", "Global Inequalities"],
+                        "Financial and Economic Activity": ["Government Policy", "Long-Term Financial Planning"]
                     },
                     content: {
-                        "World War Two 1939-1945": {
+                        "World War One": {
                             "Knowledge": [
-                                "Outbreak: German invasion of Poland (1939).",
-                                "NZ participation: Declaration of war, conscription, 28th (Māori) Battalion.",
-                                "Turning points: Battle of Britain, Barbarossa, Pearl Harbor, Stalingrad, D-Day.",
-                                "Life on the home front: Rationing, Women's roles, industrial reorientation."
+                                "The shifting balance of European power and the 1914 assassination of Archduke Franz Ferdinand triggered World War One; as a loyal Dominion, New Zealand rapidly joined Britain against the Central Powers.",
+                                "Conflict spread across Europe, the Middle East, Africa, and the Pacific; the Western Front was defined by static trench warfare.",
+                                "Over 100,000 New Zealanders served overseas; Sir Āpirana Ngata helped recruit for the Māori Pioneer Battalion, while Te Puea Hērangi opposed conscription among Waikato Māori because of the legacy of land confiscations.",
+                                "Conscription was introduced in 1916 as volunteer numbers declined; Pacific Islanders (especially from the Cook Islands and Niue) also served, and women and children played vital roles at home and overseas (nursing, essential work, fundraising).",
+                                "Key New Zealand campaigns included Gallipoli (1915-16, ending in withdrawal after heavy casualties) and the Western Front, including the Battle of Passchendaele - New Zealand's darkest day, with over 800 soldiers killed in a single day.",
+                                "The war claimed over 18,000 New Zealand lives and ended in November 1918 with Germany's surrender, following the collapse of four major empires."
                             ],
                             "Practices": [
-                                "Consider why New Zealand joined the war in 1939.",
-                                "Consider the consequences of WWII on New Zealand.",
-                                "Assess the importance of women's contribution to the home front."
+                                "Use historical sources with differing perspectives to investigate how different groups in New Zealand participated in and responded to World War One.",
+                                "Explain the immediate and long-term impacts of World War One on New Zealand society, and why it remains significant today."
                             ]
                         },
-                        "Political Ideologies, Parties, and Human Rights": {
+                        "World War Two": {
                             "Knowledge": [
-                                "Political ideologies: set of ideas about how society should be organised.",
-                                "Human rights as protections of dignity (UDHR, NZ Bill of Rights Act).",
-                                "Te Tiriti o Waitangi constitutional significance and ongoing debate."
+                                "Resentment in Germany over the Treaty of Versailles and the economic hardship of the Great Depression contributed to the rise of Adolf Hitler; the invasion of Poland in 1939 began the war in Europe.",
+                                "New Zealand forces fought in Greece, Crete, North Africa, and Italy, with notable service by the 28th Māori Battalion, which strengthened Māori leadership, identity, and recognition within New Zealand society.",
+                                "New Zealand made a significant contribution in the Pacific (around 20,000 personnel), including Air Force patrols, the Army's 3rd Division, Navy convoy protection, and Pacific Island coastwatchers who provided vital intelligence.",
+                                "On the Home Front, the government introduced conscription, rationing, and censorship; over 100,000 American troops rotated through New Zealand, and women significantly increased their participation in the workforce.",
+                                "World War Two resulted in up to 80 million deaths, including nearly 12,000 New Zealanders; it weakened European empires (leading to decolonisation) and led to the formation of the United Nations in 1945, with New Zealand as a founding member."
                             ],
                             "Practices": [
-                                "Identify political ideologies encountered across the curriculum.",
-                                "Analyse sources to investigate a human rights agreement.",
-                                "Explain the constitutional significance of Te Tiriti o Waitangi."
+                                "Use historical sources with differing perspectives to investigate how different groups in New Zealand participated in and responded to World War Two.",
+                                "Communicate how perspectives on participation and national identity have changed over time, and why World War Two remains significant for New Zealand today."
                             ]
                         },
-                        "The Asia-Pacific and NZ": {
-                            "_draft": true,
+                        "Power, Belonging, and Exclusion (Nazi Germany or The Easter Rising and Irish Independence)": {
                             "Knowledge": [
-                                "New Zealand's history and identity are shaped by its geographic and cultural connections to the Asia-Pacific region.",
-                                "Migration from Pacific and Asian nations has significantly influenced New Zealand society.",
-                                "Trade and diplomatic relationships link New Zealand closely to Asia-Pacific nations."
+                                "Choose one case study to teach: Nazi Germany - ideology, control, and the Holocaust, or the Easter Rising and Irish Independence (1916-1922).",
+                                "Option A - Nazi Germany: After World War One, Germany faced political chaos, economic crisis, and resentment at the Treaty of Versailles, making many Germans more willing to support strong, authoritarian leadership.",
+                                "Option A: The Nazis used propaganda, censorship, and the cult of personality for social control, and antisemitic laws (e.g. the Nuremberg Laws) to exclude Jewish people from society; discrimination developed into persecution and then genocide, killing six million Jewish people in the Holocaust.",
+                                "Option A: New Zealand expressed sympathy for Jewish refugees at the Evian Conference (1938) but remained reluctant to accept them; healthy democracies strive to preserve safeguards against authoritarianism (e.g. separation of powers, free elections, rule of law, free media).",
+                                "Option B - The Easter Rising and Irish Independence: Many Irish people wanted greater self-government while retaining their language and culture; nationalist movements (the Fenians, Irish Volunteers, Sinn Féin) grew from centuries of periodic rebellion against British rule.",
+                                "Option B: The 1916 Easter Rising was defeated, but Britain's harsh response (including executing its leaders) increased support for Irish independence; Sinn Féin won the 1918 election and declared independence via Dáil Éireann in 1919, which Britain rejected.",
+                                "Option B: The Irish War of Independence (1919-1921) led to a negotiated settlement: most of Ireland became the Irish Free State with self-government, while six northern counties remained part of the UK as Northern Ireland."
                             ],
                             "Practices": [
-                                "Investigating New Zealand's historical relationship with a Pacific or Asian nation.",
-                                "Analysing the impact of migration on New Zealand's cultural identity.",
-                                "Evaluating the significance of a key Asia-Pacific event or relationship for New Zealand."
+                                "Use historical sources with differing and contrary perspectives to investigate how power influenced experiences of belonging and exclusion.",
+                                "Construct a historical argument explaining how power was used to define who belonged and who was excluded, and the consequences for excluded groups."
                             ]
                         },
-                        "The Road to War: Germany 1918-1939": {
-                            "_draft": true,
+                        "International Cooperation": {
                             "Knowledge": [
-                                "The Treaty of Versailles created economic and political instability in post-war Germany.",
-                                "Economic hardship and political extremism contributed to the rise of totalitarian leadership in Germany.",
-                                "A series of escalating actions and failed diplomacy led to the outbreak of World War Two."
+                                "Political ideas and values shape how countries relate to each other, from multilateralism (working together through shared rules) to countries acting unilaterally and retaining their own decision rights.",
+                                "After World War Two, the United Nations was established to maintain international peace and security and to promote international cooperation, including treaties on human rights and fundamental freedoms.",
+                                "International treaties and agreements establish expectations of how countries cooperate across borders, such as the UN Charter, the UDHR, the Antarctic Treaty, the Paris Agreement, and the Sustainable Development Goals.",
+                                "International mediation can peacefully resolve serious disputes between nations (e.g. the UN Secretary-General's 1986 ruling settling the dispute between New Zealand and France over the bombing of the Rainbow Warrior).",
+                                "New Zealand has been a prominent voice at the UN and has worked with others to drive key treaties and initiatives, including nuclear disarmament treaties, the International Convention for the Regulation of Whaling, and the Christchurch Call."
                             ],
                             "Practices": [
-                                "Investigating the causes of instability in Germany after World War One.",
-                                "Analysing how economic and political conditions enabled the rise of an extremist government.",
-                                "Evaluating the effectiveness of international responses to escalating aggression in the 1930s."
+                                "Compare the purpose and provisions of at least two international treaties or agreements.",
+                                "Analyse the steps New Zealand took to help bring about a specific treaty or agreement, and consider why some countries reject multilateral agreements in favour of acting alone."
                             ]
                         },
-                        "Nature of Place": {
-                            "_draft": true,
+                        "Global Citizenship": {
                             "Knowledge": [
-                                "Places have physical and human characteristics that give them a distinct identity.",
-                                "People's perceptions and experiences of place can differ based on culture, history, and personal connection.",
-                                "Place identity can change over time due to natural and human processes."
+                                "Global citizenship does not mean people are all the same - it challenges people to accept shared moral responsibilities while valuing differences between cultures and communities.",
+                                "The UN Declaration on the Rights of Indigenous Peoples (UNDRIP) recognises the rights of Indigenous Peoples worldwide, including rights to land, resources, language, culture, and self-determination; there is debate about how far its provisions correspond to what te Tiriti o Waitangi recognises.",
+                                "Global citizens take an active interest in international institutions and agreements (e.g. the Sustainable Development Goals), practise ethical consumerism (e.g. fair trade, slow fashion), and use digital technologies such as AI responsibly, protecting others' safety and privacy.",
+                                "Global citizens learn to navigate complex issues and critically evaluate information, recognising how false or misleading material can spread through media or online platforms internationally, undermining trust between citizens, governments, and countries.",
+                                "Social media and AI can operate across national borders; how they should be regulated, monitored, or deregulated is an ongoing debate for governments and global citizens."
                             ],
                             "Practices": [
-                                "Investigating what gives a chosen place its distinct identity.",
-                                "Comparing different perspectives on the same place.",
-                                "Evaluating how a place has changed over time and why."
+                                "Analyse the idea of global citizenship and consider how shared responsibilities and respect for cultural differences can influence cooperation between countries.",
+                                "Compare the universal rights in the UDHR with the specific rights recognised in UNDRIP, and evaluate different perspectives on why both matter.",
+                                "Compare regulatory and free-speech responses to a global issue (e.g. misinformation crossing borders through social media or AI) and decide on the most appropriate response."
                             ]
                         },
-                        "Disease": {
-                            "_draft": true,
+                        "Urbanisation and Megacities": {
                             "Knowledge": [
-                                "The spread of disease is influenced by environmental, social, and economic factors.",
-                                "Geographic patterns can reveal how diseases spread and are managed across regions.",
-                                "Global connectivity increases the risk and speed of disease transmission."
+                                "Urbanisation is the process of more people living in cities and towns, driven by rural-urban migration and higher rates of natural increase; it has grown rapidly in low- and middle-income countries since the mid-twentieth century.",
+                                "Megacities (over 10 million people) grow due to site and situation advantages, rural-urban migration, a younger population, and economic investment.",
+                                "Rapid growth changes the environment and creates challenges, including housing shortages, informal settlements, traffic congestion, strained infrastructure, and environmental problems.",
+                                "Megacities develop strategies to mitigate these challenges, such as planning, community-led initiatives, and upgrading infrastructure; people hold different views about the appropriateness and impact of these strategies."
                             ],
                             "Practices": [
-                                "Mapping the spread of a disease and identifying contributing factors.",
-                                "Investigating how geography influences access to healthcare in different regions.",
-                                "Evaluating strategies used to manage or prevent the spread of disease."
+                                "Use an atlas, maps, and other tools to locate global megacities, and quantitative data to describe their growth.",
+                                "Use maps, aerial photographs, and satellite imagery to describe the growth of a megacity and its ecological footprint.",
+                                "Explain how communities and governments can work together to enhance sustainability and living conditions in a megacity."
                             ]
                         },
-                        "Future Planning": {
-                            "_draft": true,
+                        "Global Inequalities": {
                             "Knowledge": [
-                                "Future planning involves balancing environmental, social, and economic needs for sustainable outcomes.",
-                                "Population, climate, and resource trends inform long-term planning decisions.",
-                                "Different stakeholders often have competing priorities in future planning decisions."
+                                "Inequality is the uneven distribution of wealth, income, and access to services (e.g. health, education) between individuals, households, or countries; the Human Development Index (HDI) measures wellbeing, and GIS/remote sensing (e.g. night-time light emissions) shows patterns of inequality.",
+                                "Causes of inequality include unfavourable physical environments, exposure to natural hazards on marginal land, the impacts of colonialism, political instability and conflict, differences in education and skills, and technological differences.",
+                                "Since about 1990 extreme poverty has fallen due to growth in East and South Asia (e.g. China, India), but remains heavily concentrated in sub-Saharan Africa and conflict-affected nations.",
+                                "Inequality affects health, education, crime rates, social mobility, and future growth, and can have long-term intergenerational effects; it can be mitigated through aid, international/regional organisations (e.g. UN SDGs, World Bank), charities, trade, and fair-trade schemes that pay higher prices for commodities."
                             ],
                             "Practices": [
-                                "Investigating a future planning issue facing a New Zealand community.",
-                                "Evaluating a proposed plan or policy from multiple stakeholder perspectives.",
-                                "Proposing a sustainable solution to a local future planning challenge."
+                                "Use visual tools (e.g. graphs, diagrams, maps) to show levels of income and wealth inequality across the globe.",
+                                "Use the HDI to compare levels of human development between countries.",
+                                "Use personal accounts or websites (e.g. Dollar Street) to compile accounts of the lived experience of inequality, and explain interventions designed to mitigate its effects."
                             ]
                         },
-                        "International Development": {
-                            "_draft": true,
+                        "Government Policy": {
                             "Knowledge": [
-                                "International development aims to reduce poverty and inequality through economic, social, and environmental support.",
-                                "Aid, trade, and investment are all mechanisms used to support development.",
-                                "Development outcomes can be measured using indicators such as income, health, and education."
+                                "Governments, like people and groups, have budgets that determine how money is collected and spent across the country; government income comes from taxation, state-owned enterprises, and investment.",
+                                "Taxation funds public services (e.g. schools, hospitals), infrastructure (e.g. roads), and social support (e.g. pensions, benefits); it is collected from income (e.g. PAYE) and spending (e.g. GST), and people pay different amounts based on what they earn.",
+                                "Rates are local taxes paid by property owners, used by local councils to fund services such as water, libraries, and local infrastructure; avoiding or evading tax reduces funding available for public services.",
+                                "Different political parties have different values and beliefs which shape their economic policies; government money is limited, so budget decisions involve trade-offs, and governments aim to reduce inequality by redistributing wealth through taxation and benefits."
                             ],
                             "Practices": [
-                                "Investigating a development issue facing a particular country or region.",
-                                "Evaluating the effectiveness of an aid or development programme.",
-                                "Comparing development indicators between two countries."
+                                "Show where government income comes from and where it goes, using a visual representation.",
+                                "Use quantitative data (tables and graphs) to identify the proportions of the government's budget spent on different things, and compare views about examples of public spending."
                             ]
                         },
-                        "Financial Education": {
-                            "_draft": true,
+                        "Long-Term Financial Planning": {
                             "Knowledge": [
-                                "Investment involves balancing risk and potential return over time.",
-                                "Taxation funds public services and redistributes resources within an economy.",
-                                "Financial literacy supports informed decision-making around major life choices (e.g. buying a home, starting a business)."
+                                "Financial tools and advice from reliable, impartial providers can help with budgeting, saving, debt, borrowing, KiwiSaver, investing, insurance, and planning for the future; advice can come from advisers, banks, budgeting services, and community organisations.",
+                                "Saving, investing, and borrowing carry different levels of risk and return; credit cards and loans both charge interest, but compound interest means the amount owed can grow quickly over time.",
+                                "Investment decisions are influenced by values and beliefs (e.g. sustainable or local investment), attitude towards risk, and personal circumstances, including when the money will be needed.",
+                                "KiwiSaver is a voluntary savings scheme to help New Zealand residents prepare for retirement; starting contributions early increases returns through compounding, and different fund types offer different risk and return."
                             ],
                             "Practices": [
-                                "Comparing the risk and return of different investment options.",
-                                "Explaining how taxation supports public services using a New Zealand example.",
-                                "Evaluating a major financial decision using a cost-benefit approach."
+                                "Compare total interest paid on different types of debt, and the returns on a fictional investment in different types of funds (e.g. savings account, term deposit, shares).",
+                                "Calculate what five years of missed KiwiSaver contributions and compound growth would cost someone at retirement age, and design a communication encouraging people to start contributions early."
                             ]
                         }
                     }
@@ -6327,111 +6252,100 @@
                 "Science": {
                     categories: ["Knowledge", "Practices"],
                     structure: {
-                        "Physical Science": ["Matter (Atomic Theory)", "Chemical Reactions", "Matter Interactions and Energy", "Motion and Forces", "Earth Systems"],
-                        "Biological Science": ["Organism Diversity (Disease)", "Body Systems", "Ecosystems"]
+                        "Physical Science": ["Matter", "Chemical Change", "Matter Interactions and Energy", "Motion and Forces", "Earth and Space"],
+                        "Biological Science": ["Organism Diversity", "Life Processes", "Ecosystems"]
                     },
                     content: {
-                        "Matter (Atomic Theory)": {
+                        "Matter": {
                             "Knowledge": [
-                                "Bohr model: nucleus (protons, neutrons) surrounded by electron shells.",
-                                "Atomic number = number of protons.",
-                                "Valence shell is the outermost shell involved in bonding.",
-                                "Ions form when metals transfer electrons to non-metals."
+                                "Compounds form when atoms of different elements bond; chemical formulas (e.g. H2O, CO2) show the type and number of atoms in a substance.",
+                                "Ionic compounds (metal + non-metal) are named from their ions (e.g. sodium chloride, magnesium oxide); molecular/covalent compounds may use prefixes to show the number of atoms (e.g. carbon monoxide vs carbon dioxide).",
+                                "Word and chemical equations represent reactions; balanced equations show that no atoms are gained or lost, so mass is conserved during a chemical reaction.",
+                                "Alan MacDiarmid applied knowledge of chemical bonding in his discoveries about plastics and their application to electronics."
                             ],
                             "Practices": [
-                                "Represent elements 1-20 using a diagram of the Bohr model.",
-                                "Identify the total charge on atoms given protons, neutrons, electrons.",
-                                "Determine molecular formulas for simple molecules (H2O, CO2)."
+                                "Write chemical word and symbol equations using correct conventions, and represent substances and reactions using accepted chemical formulas.",
+                                "Examine how atomic theory has developed through scientific exploration, discovery, evidence consolidation, and contestation."
                             ]
                         },
-                        "Organism Diversity (Disease)": {
+                        "Chemical Change": {
                             "Knowledge": [
-                                "Infectious diseases are caused by pathogens (bacteria, viruses).",
-                                "Non-infectious diseases are caused by environment or genetics.",
-                                "Microbiome is a community of microorganisms living inside/on the body.",
-                                "Vaccines prevent disease by stimulating the immune system."
+                                "Combustion reactions occur when a hydrocarbon (e.g. methane) reacts with oxygen, transferring energy as thermal energy and often light; complete combustion produces carbon dioxide and water, incomplete combustion also produces soot and carbon monoxide.",
+                                "Decomposition reactions occur when a compound breaks down into two or more simpler substances (e.g. heating a metal carbonate produces a metal oxide and carbon dioxide).",
+                                "Neutralisation reactions occur when an acid reacts with a base to form water and an ionic salt; a metal carbonate reacting with an acid also produces carbon dioxide."
                             ],
                             "Practices": [
-                                "Model and categorise defence mechanisms (physical, chemical, microbiome).",
-                                "Measure and interpret data related to disease spread using graphs."
-                            ]
-                        },
-                        "Chemical Reactions": {
-                            "_draft": true,
-                            "Knowledge": [
-                                "Reaction rates are influenced by factors such as temperature, concentration, and surface area.",
-                                "Acids and bases have distinct properties and react in predictable ways.",
-                                "Chemical reactions conserve mass, as described by the law of conservation of mass."
-                            ],
-                            "Practices": [
-                                "Investigating how a variable (e.g. temperature) affects reaction rate.",
-                                "Testing the properties of acids and bases using indicators.",
-                                "Applying the law of conservation of mass to balance simple equations."
+                                "Plan and conduct controlled testing for combination, combustion, decomposition, and neutralisation reaction types.",
+                                "Predict reaction products and classify reaction types using patterns in reactants, and identify examples of reaction types in everyday contexts."
                             ]
                         },
                         "Matter Interactions and Energy": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Energy conservation principles apply across physical and chemical processes.",
-                                "Renewable and non-renewable energy sources have different environmental impacts.",
-                                "Energy efficiency involves minimising energy loss during transfer or transformation."
+                                "An oscillation is a repeated back-and-forth motion; waves are oscillations that transfer energy through matter or fields without transferring matter overall, described by frequency (Hz), wavelength, and amplitude.",
+                                "Sound is a longitudinal mechanical wave produced by vibrations and requires a medium to travel; frequency determines pitch and amplitude determines volume (decibels), and sound travels fastest in solids, slower in liquids, and slowest in gases.",
+                                "Electromagnetic waves (including light) transfer energy through oscillating electric and magnetic fields and do not require a medium; all electromagnetic waves travel at the same speed in a vacuum and are organised by wavelength/frequency into the electromagnetic spectrum.",
+                                "Sir Paul Callaghan used electromagnetic radiation and magnetic fields to study the properties of materials, contributing to advances in medicine (e.g. MRI)."
                             ],
                             "Practices": [
-                                "Investigating energy transfer and loss in a simple system.",
-                                "Comparing the environmental impact of renewable and non-renewable energy sources.",
-                                "Evaluating ways to improve energy efficiency in a real-world context."
+                                "Investigate interactions between waves and matter using observable evidence from practical experimentation (e.g. ripple tanks, tuning forks, reflection and refraction of light).",
+                                "Organise electromagnetic waves based on their use by humans, and analyse the validity of public claims about energy transfer through waves (e.g. microwave safety)."
                             ]
                         },
                         "Motion and Forces": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Momentum and energy are conserved in collisions and interactions between objects.",
-                                "Circular motion involves a continuously changing direction of force.",
-                                "Understanding forces underpins technologies such as vehicles and machinery."
+                                "Newton's laws: an object's motion stays the same unless acted on by an unbalanced force; the relationship between force, mass, and acceleration is given by F = ma; forces occur in equal-and-opposite action-reaction pairs that act on different objects.",
+                                "Objects resist changes in motion (inertia), which depends on mass; for the same net force, an object with greater mass accelerates less than one with smaller mass.",
+                                "Pressure is force acting perpendicular to a surface divided by the area it acts on; for the same force, a smaller contact area produces greater pressure.",
+                                "Buoyancy is the upward force a fluid exerts on an object; an object floats when the buoyant force equals its weight, and sinks when the buoyant force is less than its weight."
                             ],
                             "Practices": [
-                                "Investigating momentum conservation using simple collision experiments.",
-                                "Explaining examples of circular motion in everyday contexts.",
-                                "Evaluating how force and motion principles apply to a chosen technology."
+                                "Calculate force, mass, and acceleration using F = ma, and use Newton's laws to predict and explain changes in an object's motion.",
+                                "Calculate pressure from force applied and surface area, and justify the relationship between an object's design and the ratio of contact area to force.",
+                                "Design and conduct a fair test to investigate air resistance or buoyancy, and analyse the accuracy and reliability of the method."
                             ]
                         },
-                        "Earth Systems": {
-                            "_draft": true,
+                        "Earth and Space": {
                             "Knowledge": [
-                                "Human-induced climate change is linked to increased greenhouse gas concentrations in the atmosphere.",
-                                "Earth systems respond to change through feedback loops that can amplify or reduce impacts.",
-                                "Scientific evidence and data are used to monitor and predict Earth system changes."
+                                "Water cycles through the atmosphere, geosphere, hydrosphere, and biosphere via evaporation, condensation, precipitation, freezing, and melting, driven by thermal energy from the Sun.",
+                                "Earth's lithosphere is divided into tectonic plates that move due to convection currents in the mantle; most earthquakes and volcanoes occur at convergent, divergent, and transform plate boundaries.",
+                                "Alfred Wegener proposed the theory of continental drift, later developed by other scientists into the theory of plate tectonics."
                             ],
                             "Practices": [
-                                "Analysing data related to a global Earth system change (e.g. temperature, sea level).",
-                                "Investigating a feedback loop within an Earth system.",
-                                "Evaluating scientific evidence used to support claims about Earth system change."
+                                "Select data from secondary sources to examine how water storage (e.g. glaciers, groundwater, the atmosphere) affects the movement of water through the water cycle, and model its dynamic nature.",
+                                "Interpret maps and data of earthquakes and volcano locations to identify patterns at tectonic plate boundaries (e.g. the Pacific Ring of Fire), and model plate tectonic boundaries."
                             ]
                         },
-                        "Body Systems": {
-                            "_draft": true,
+                        "Organism Diversity": {
                             "Knowledge": [
-                                "Body systems can be affected by genetic and environmental factors.",
-                                "Understanding body systems supports informed decisions about health and wellbeing.",
-                                "Advances in medical science have improved understanding and treatment of body system disorders."
+                                "A phenotype is the set of observable characteristics of an organism, resulting from the interaction between its genotype and the environment; when a gene is active its protein is made, and when inactive the protein is not made.",
+                                "Some traits are recorded as distinct categories with limited options (e.g. blood type, flower colour), while others are recorded across a continuous range of values (e.g. height); variation refers to differences in traits among individuals in a population.",
+                                "Disease prevention strategies (hygiene, quarantine, vaccination) can be compared for effectiveness using evidence from scientific research."
                             ],
                             "Practices": [
-                                "Investigating a genetic or environmental factor affecting a body system.",
-                                "Evaluating a health decision based on scientific understanding of a body system.",
-                                "Researching a medical advance related to a chosen body system."
+                                "Analyse variation in a population by classifying data into continuous (e.g. height) or discrete (e.g. blood type) traits.",
+                                "Compare different models and representations of DNA structure, and examine how current understanding of DNA has developed through scientific exploration, discovery, and contestation."
+                            ]
+                        },
+                        "Life Processes": {
+                            "Knowledge": [
+                                "The brain is organised into three main regions: the cerebrum (conscious thought and voluntary actions), the cerebellum (coordination of movement and balance), and the brainstem (automatic functions such as breathing and heart rate).",
+                                "Sensory neurons carry information from receptors to the brain and spinal cord, which process it and coordinate a response carried by motor neurons to effectors (muscles or glands), producing both voluntary actions and automatic reflexes.",
+                                "Thermoregulation - keeping body temperature within a narrow range - is an example of homeostasis, coordinated by temperature receptors and the brain through responses such as sweating/vasodilation and shivering/vasoconstriction."
+                            ],
+                            "Practices": [
+                                "Design and conduct safe, ethically suitable experiments on reaction time or thermoregulation, and analyse factors affecting the reliability of data collected from human subjects.",
+                                "Show how the components of a feedback loop (e.g. thermoregulation) work together to continually respond to change, using a diagram or flow chart."
                             ]
                         },
                         "Ecosystems": {
-                            "_draft": true,
                             "Knowledge": [
-                                "Ecosystem services (e.g. pollination, water filtration) provide essential benefits to people.",
-                                "Climate change and habitat loss are significant threats to global ecosystems.",
-                                "Sustainable practices can help maintain healthy ecosystems for future generations."
+                                "Ecosystems include biotic and abiotic factors; environments with similar physical conditions tend to support similar organisms, and mātauranga Māori (including ngā tohu o te taiao) reflects long-term observation of these patterns.",
+                                "Resilient ecosystems depend on the continuous cycling of water and nutrients between organisms and the environment; disruption (e.g. drought, pollution, drainage) reduces ecosystem stability and biodiversity.",
+                                "Humans can support ecosystem regeneration through conservation, restoration, and long-term management of resources, upholding the principles of kaitiakitanga."
                             ],
                             "Practices": [
-                                "Investigating an ecosystem service and its importance to people.",
-                                "Evaluating the impact of climate change or habitat loss on a chosen ecosystem.",
-                                "Proposing sustainable practices to support ecosystem health."
+                                "Investigate and analyse the abiotic conditions of an ecosystem using appropriate sampling techniques, and use recorded data to identify patterns and changes over time.",
+                                "Describe how human activities have positively or negatively impacted ecosystems in local or global contexts, and give examples of humans protecting ecosystems and upholding kaitiakitanga."
                             ]
                         }
                     }
@@ -6895,7 +6809,7 @@
             
             const db = curriculumData[yearPlannerState.year]?.[yearPlannerState.subject];
             if (!db) {
-                container.innerHTML = `<div class="p-4 text-sm text-slate-500 italic bg-slate-100 rounded-lg text-center">Draft curriculum data for ${yearPlannerState.subject} Year ${yearPlannerState.year} is not available in this demo subset.</div>`;
+                container.innerHTML = `<div class="p-4 text-sm text-slate-500 italic bg-slate-100 rounded-lg text-center">Curriculum data for ${yearPlannerState.subject} Year ${yearPlannerState.year} is not available in this demo subset.</div>`;
                 return;
             }
             
