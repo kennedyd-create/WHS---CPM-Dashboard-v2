@@ -1234,7 +1234,7 @@
                 <h3 class="text-2xl font-bold text-slate-900">📅 Te Mātaiaho Interactive Year Planner</h3>
                 <p class="text-slate-600 mt-1">Drag topics from the curriculum library into a full-year, term-by-term plan.</p>
             </div>
-            <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-300" style="height: calc(100vh - 130px); min-height: 700px; display: flex; flex-direction: column;">
+            <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-300" style="display: flex; flex-direction: column;">
 
     <!-- Toolbar: Reset / Output Format / Generate -->
     <div id="yp-toolbar" class="hidden bg-[#002066] text-white px-6 py-3 flex-wrap items-center justify-end gap-4 shrink-0 shadow-md relative z-10">
@@ -1286,10 +1286,10 @@
         </div>
     </div>
 
-    <main id="yp-main-content" class="hidden flex-1 flex overflow-hidden">
+    <main id="yp-main-content" class="hidden flex-1 flex">
         <!-- Sidebar -->
-        <aside class="w-80 bg-slate-100 border-r-2 border-slate-300 flex flex-col h-full z-0 relative shadow-[4px_0_24px_rgba(0,0,0,0.04)]">
-            <div class="p-5 flex-1 overflow-y-auto custom-scrollbar">
+        <aside class="w-80 bg-slate-100 border-r-2 border-slate-300 flex flex-col z-0 relative shadow-[4px_0_24px_rgba(0,0,0,0.04)]">
+            <div class="p-5 flex-1">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="stage-divider-label"><span class="stage-number-badge">1</span>Curriculum Strands</h2>
                 </div>
@@ -1301,6 +1301,9 @@
                         <span class="absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform" id="quick-add-knob"></span>
                     </span>
                 </button>
+                <button onclick="openCustomTopicModal()" class="w-full mb-4 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg border-2 border-dashed border-slate-300 text-xs font-bold text-slate-500 hover:border-[var(--whs-dark-blue)] hover:text-[var(--whs-dark-blue)] hover:bg-white transition-all" title="Add something that isn't in the curriculum library — e.g. a camp, an assembly, a school-specific unit">
+                    <span class="text-base leading-none">✏️</span> Add Your Own Topic
+                </button>
                 <div id="library-container" class="space-y-5">
                     <!-- Populated by JS -->
                 </div>
@@ -1308,7 +1311,7 @@
         </aside>
 
         <!-- Main Content -->
-        <section class="flex-1 flex flex-col h-full bg-slate-200 relative">
+        <section class="flex-1 flex flex-col bg-slate-200 relative">
             <div class="bg-slate-100 border-b-2 border-slate-300 px-8 pt-6">
                 <div class="flex justify-between items-end mb-6">
                     <div>
@@ -1352,9 +1355,9 @@
                 <div id="yp-armbar" class="hidden items-center justify-between gap-3 -mx-8 px-8 py-2 mt-3 bg-[var(--whs-gold)]/15 border-t border-[var(--whs-gold)]/40 text-xs font-bold text-[#7a5b1e]"></div>
             </div>
 
-            <div class="p-8 flex-1 overflow-y-auto custom-scrollbar">
+            <div class="p-8 flex-1">
                 <div id="yp-warnings" class="hidden"></div>
-                <div id="panels-wrapper" class="h-full">
+                <div id="panels-wrapper">
                     <!-- Panels populated dynamically to ensure proper grid sizing -->
                     <div id="panel-1" class="block h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 1 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-1">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-1"></div></div></div>
                     <div id="panel-2" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 2 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-2">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-2"></div></div></div>
@@ -1376,8 +1379,13 @@
             </div>
             <div class="p-6 space-y-5 overflow-y-auto custom-scrollbar">
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Specific Content / Unit Title</label>
+                    <label class="block text-sm font-medium text-slate-700 mb-1" id="modal-custom-text-label">Specific Content / Unit Title</label>
                     <input type="text" id="modal-custom-text" placeholder="e.g. Novel Study: The Outsiders" class="w-full border-slate-300 rounded-lg p-2.5 border focus:ring-2 focus:ring-whsblue-700/30 focus:border-[var(--whs-dark-blue)] transition-shadow">
+                    <div id="modal-custom-strand-wrap" class="hidden mt-3">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">File Under Strand (optional)</label>
+                        <select id="modal-custom-strand" class="w-full border-slate-300 rounded-lg p-2.5 border focus:ring-2 focus:ring-whsblue-700/30 focus:border-[var(--whs-dark-blue)] bg-slate-50"></select>
+                        <p class="text-xs text-slate-400 mt-1">Only affects grouping and colour in the coverage/print views — pick "Custom / Other" if it doesn't fit anywhere.</p>
+                    </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
@@ -7308,6 +7316,31 @@
             return null;
         }
 
+        const CUSTOM_STRAND_LABEL = 'Custom / Other';
+        // Which strand a placed topic should be treated as belonging to for colouring
+        // and row placement: its real curriculum strand if it's an official topic, the
+        // strand the teacher explicitly filed a custom topic under (if that's a real
+        // strand), or null if it's genuinely unfiled — "Custom / Other" or left blank.
+        function effectiveStrandOf(db, slot) {
+            return strandForSubtopic(db, slot.subtopic) || (db.structure[slot.strand] ? slot.strand : null);
+        }
+        // Curriculum strands, plus a synthetic row at the end if any placed topic is
+        // genuinely unfiled — otherwise it would silently never appear in the coverage
+        // grid or print grid at all. Appending rather than inserting keeps every real
+        // strand's colour exactly where it already was. A custom topic filed under a
+        // real strand doesn't need this — it already has a row.
+        function getEffectiveStrands(db) {
+            const strands = Object.keys(db.structure);
+            const hasUnfiled = [1, 2, 3, 4].some(t => (yearPlannerState.terms[t] || []).some(s =>
+                s && typeof s === 'object' && effectiveStrandOf(db, s) === null));
+            return hasUnfiled ? strands.concat(CUSTOM_STRAND_LABEL) : strands;
+        }
+        // Whether a placed topic belongs in this row.
+        function topicMatchesRow(db, strand, slot) {
+            const eff = effectiveStrandOf(db, slot);
+            return eff === null ? strand === CUSTOM_STRAND_LABEL : eff === strand;
+        }
+
         function renderCoverageGrid() {
             const gridEl = document.getElementById('coverage-grid');
             const summaryEl = document.getElementById('coverage-summary');
@@ -7316,7 +7349,7 @@
             const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
             if (!db) { gridEl.innerHTML = `<p class="text-sm text-slate-500 italic p-4">Select a Learning Area and Year Level to see coverage.</p>`; if (summaryEl) summaryEl.innerText = ''; return; }
 
-            const strands = Object.keys(db.structure);
+            const strands = getEffectiveStrands(db);
             const terms = [1, 2, 3, 4];
 
             let head1 = `<th class="yp-cov-strand-h sticky left-0 bg-white z-10 text-left px-2 py-1 border-b border-r border-slate-200">Strand</th>`;
@@ -7332,7 +7365,6 @@
 
             let rows = '';
             strands.forEach(strand => {
-                const topics = db.structure[strand];
                 const hue = hueForStrand(strand, strands);
                 let cells = '';
                 terms.forEach(t => {
@@ -7342,7 +7374,7 @@
                         const slot = slots[i];
                         if (slot === 'BLOCKED') {
                             cells += `<td class="bg-stripes border border-white w-[22px] h-[22px]" title="Term ${t}, Wk ${i+1} — blocked"></td>`;
-                        } else if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) {
+                        } else if (slot && typeof slot === 'object' && topicMatchesRow(db, strand, slot)) {
                             cells += `<td class="border border-white w-[22px] h-[22px]" style="background:${hue}" title="Term ${t}, Wk ${i+1} — ${slot.customText || slot.subtopic}"></td>`;
                         } else {
                             cells += `<td class="bg-slate-100 border border-white w-[22px] h-[22px]" title="Term ${t}, Wk ${i+1} — unplanned"></td>`;
@@ -7362,12 +7394,11 @@
 
             if (summaryEl) {
                 const untouched = strands.filter(strand => {
-                    const topics = db.structure[strand];
                     for (let t = 1; t <= 4; t++) {
                         const slots = yearPlannerState.terms[t] || [];
                         for (let i = 0; i < (yearPlannerState.termLengths[t] || 0); i++) {
                             const slot = slots[i];
-                            if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) return false;
+                            if (slot && typeof slot === 'object' && topicMatchesRow(db, strand, slot)) return false;
                         }
                     }
                     return true;
@@ -7387,7 +7418,7 @@
         function buildFullYearPrintTable() {
             const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
             if (!db) return '<p>No curriculum data selected.</p>';
-            const strands = Object.keys(db.structure);
+            const strands = getEffectiveStrands(db);
             const terms = [1, 2, 3, 4];
 
             const thTerm = 'style="border:1px solid #94a3b8;background:#002066;color:#fff;font-weight:bold;text-transform:uppercase;font-size:9px;text-align:center;padding:4px;"';
@@ -7405,7 +7436,6 @@
 
             let rows = '';
             strands.forEach(strand => {
-                const topics = db.structure[strand];
                 const hue = hueForStrand(strand, strands);
                 const tint = tintForStrand(strand, strands);
                 let cells = `<td style="border:1px solid #94a3b8;border-left:4px solid ${hue};background:#f1f5f9;font-weight:bold;font-size:10px;padding:4px;white-space:nowrap;">${strand}</td>`;
@@ -7418,7 +7448,7 @@
                         if (slot === 'BLOCKED') {
                             cells += `<td style="border:1px solid #94a3b8;background:#e2e8f0;"></td>`;
                             i++;
-                        } else if (slot && typeof slot === 'object' && topics.indexOf(slot.subtopic) !== -1) {
+                        } else if (slot && typeof slot === 'object' && topicMatchesRow(db, strand, slot)) {
                             let span = 1;
                             while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
                             const label = (slot.customText || slot.subtopic || '').replace(/</g, '&lt;');
@@ -7443,7 +7473,7 @@
         // Shared by both print layouts: one swatch per strand (colour-keyed), plus the
         // two fixed states every layout uses (blocked / unplanned).
         function buildStrandLegend(db) {
-            const strands = Object.keys(db.structure);
+            const strands = getEffectiveStrands(db);
             const strandSwatches = strands.map(strand =>
                 `<span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border border-slate-400" style="background:${tintForStrand(strand, strands)};border-left:3px solid ${hueForStrand(strand, strands)};"></i>${strand}</span>`
             ).join('');
@@ -7488,7 +7518,7 @@
                         } else if (slot && typeof slot === 'object') {
                             let span = 1;
                             while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
-                            const strand = strandForSubtopic(db, slot.subtopic);
+                            const strand = effectiveStrandOf(db, slot);
                             const hue = strand ? hueForStrand(strand, strands) : '#64748b';
                             const tint = strand ? tintForStrand(strand, strands) : '#f1f5f9';
                             const label = ((strand ? strand + ' - ' : '') + (slot.customText || slot.subtopic || '')).replace(/</g, '&lt;');
@@ -7547,10 +7577,13 @@
         }
 
         function openConfigModal(strand, subtopic) {
-            tempModalData = { strand, subtopic, id: Date.now().toString() };
+            tempModalData = { strand, subtopic, id: Date.now().toString(), isCustom: false };
             document.getElementById('modal-title').innerText = 'Configure Topic';
             document.getElementById('modal-subtitle').innerText = `${strand} › ${subtopic}`;
+            document.getElementById('modal-custom-text-label').innerText = 'Specific Content / Unit Title';
+            document.getElementById('modal-custom-text').placeholder = 'e.g. Novel Study: The Outsiders';
             document.getElementById('modal-custom-text').value = subtopic;
+            document.getElementById('modal-custom-strand-wrap').classList.add('hidden');
             document.getElementById('modal-term').value = yearPlannerState.activeTab;
             document.getElementById('modal-weeks').value = 2;
             document.getElementById('modal-key-content').value = '';
@@ -7560,6 +7593,38 @@
             updateAssessmentUI();
             updateModalAvailability();
             
+            document.getElementById('config-modal').classList.remove('hidden');
+            document.getElementById('config-modal').classList.add('flex');
+        }
+
+        // For anything that doesn't fit the curriculum library as written — a camp, an
+        // assembly, a locally-specific unit. Reuses the exact same modal and the exact
+        // same slot shape as a curriculum topic; the only difference is the topic name
+        // is typed rather than picked, and the strand is a free choice (or none at all).
+        function openCustomTopicModal() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            tempModalData = { strand: null, subtopic: null, id: Date.now().toString(), isCustom: true };
+            document.getElementById('modal-title').innerText = 'Add Your Own Topic';
+            document.getElementById('modal-subtitle').innerText = "Doesn't need to match the curriculum library — use this for anything specific to your class or school.";
+            document.getElementById('modal-custom-text-label').innerText = 'Topic Name';
+            document.getElementById('modal-custom-text').placeholder = 'e.g. School Camp Preparation';
+            document.getElementById('modal-custom-text').value = '';
+
+            const strandSelect = document.getElementById('modal-custom-strand');
+            const strandNames = db ? Object.keys(db.structure) : [];
+            strandSelect.innerHTML = '<option value="">Custom / Other (no strand)</option>' +
+                strandNames.map(s => `<option value="${s.replace(/"/g, '&quot;')}">${s}</option>`).join('');
+            document.getElementById('modal-custom-strand-wrap').classList.remove('hidden');
+
+            document.getElementById('modal-term').value = (typeof yearPlannerState.activeTab === 'number') ? yearPlannerState.activeTab : 1;
+            document.getElementById('modal-weeks').value = 1;
+            document.getElementById('modal-key-content').value = '';
+            document.getElementById('modal-learning-tasks').value = '';
+            document.getElementById('modal-assessment-check').checked = false;
+
+            updateAssessmentUI();
+            updateModalAvailability();
+
             document.getElementById('config-modal').classList.remove('hidden');
             document.getElementById('config-modal').classList.add('flex');
         }
@@ -7613,6 +7678,16 @@
 
         function confirmAddToTerm() {
             if(!tempModalData) return;
+
+            if (tempModalData.isCustom) {
+                const typedName = document.getElementById('modal-custom-text').value.trim();
+                if (!typedName) {
+                    customAlert('Topic Name Needed', 'Give your custom topic a name before adding it to the plan.');
+                    return;
+                }
+                tempModalData.subtopic = typedName;
+                tempModalData.strand = document.getElementById('modal-custom-strand').value || 'Custom / Other';
+            }
             
             const term = parseInt(document.getElementById('modal-term').value);
             const duration = parseInt(document.getElementById('modal-weeks').value);
