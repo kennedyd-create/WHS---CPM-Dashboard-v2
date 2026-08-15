@@ -526,6 +526,15 @@
 
                             <!-- CPM Specific Builder -->
                             <div id="cpm-specific-builder" class="transition-opacity duration-300">
+                                <div class="mb-4 bg-emerald-50 border border-emerald-200 rounded-xl p-3">
+                                    <label class="flex items-start gap-2 cursor-pointer">
+                                        <input type="checkbox" id="les-has-existing-outline" onchange="toggleExistingOutlineUI()" class="rounded text-emerald-700 focus:ring-emerald-600 w-4 h-4 mt-0.5">
+                                        <span class="text-xs font-bold text-emerald-900">I already have a lesson plan outline — paste it in and use it instead of generating the stages from scratch</span>
+                                    </label>
+                                    <div id="les-existing-outline-wrap" class="hidden mt-2">
+                                        <textarea id="les-existing-outline-text" rows="5" placeholder="Paste your outline here (e.g. your own notes for Connect / I Do / We Do / You Do / Review). If it covers all 5 stages, the AI will use your content instead of writing its own; if it's only partial, the AI will just fill in whatever's missing." class="w-full border-emerald-300 rounded-lg p-2.5 border text-xs focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-600"></textarea>
+                                    </div>
+                                </div>
                                 <h3 class="text-xl font-bold text-slate-900 mb-1 mt-2">Stage Strategy Selection</h3>
                                 <p class="text-[11px] text-slate-600 mb-4">Select specific strategies for each stage. The AI Engine will auto-select its <span class="inline-block bg-[#10b981] text-white text-[9px] px-1 rounded font-bold shadow-sm">🏆 TOP PICK</span> based on your context.</p>
 
@@ -3403,6 +3412,12 @@
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
             if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
             if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
+            var unitOffAreas = [];
+            if (unitState.context !== 'waiheke') unitOffAreas.push('local Waiheke/Hauraki Gulf context');
+            if (unitState.maori !== 'integrate') unitOffAreas.push('Mātauranga Māori');
+            if (unitState.lit !== 'integrate') unitOffAreas.push('explicit literacy integration');
+            if (unitState.num !== 'integrate') unitOffAreas.push('explicit numeracy integration');
+            if (unitOffAreas.length) txt += 'CRITICAL: The following were NOT selected for this unit — ' + unitOffAreas.join(', ') + '. Do not add dedicated content, headings, or call-outs for them anywhere in the sequence. Leave them out entirely rather than writing a generic or token mention; it is fine, and preferred, for a unit to have none of these highlighted at all.\n';
             if (unitState.assessmentIncluded === 'yes') txt += 'Important: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
             if (unitState.practicalIncluded === 'yes') {
                 var pd = ((document.getElementById('unit-practical-details') || {}).value || '').trim();
@@ -3607,6 +3622,13 @@
             updateRequiredChecklist('prompt-unit-text', 'unit-required-checklist');
         }
 
+        function toggleExistingOutlineUI() {
+            var cb = document.getElementById('les-has-existing-outline');
+            var wrap = document.getElementById('les-existing-outline-wrap');
+            if (wrap) wrap.classList.toggle('hidden', !(cb && cb.checked));
+            updateLessonBuilderPrompt();
+        }
+
         function updateLessonBuilderPrompt() {
             var t = getGlobalTopic(), ct = (document.getElementById('les-custom-task') || {}).value || "", sm = (document.getElementById('les-source-material') || {}).value || "";
             lessonState.sourceMaterial = sm;
@@ -3683,6 +3705,13 @@
                 }
                 txt += '### Strict Rules\nNo meta-commentary. Use Markdown/HTML.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             }
+
+            var hasOwnOutline = !!(document.getElementById('les-has-existing-outline') || {}).checked;
+            var ownOutlineText = ((document.getElementById('les-existing-outline-text') || {}).value || '').trim();
+            if (lessonState.mode === 'standard' && hasOwnOutline && ownOutlineText) {
+                txt += '### Existing Lesson Outline (Provided by the Teacher)\n' + tb + '\n' + ownOutlineText + '\n' + tb + '\n';
+                txt += 'CRITICAL: The teacher has already drafted their own outline above, and it takes priority over anything you would otherwise plan. Where it already covers a stage, use the teacher\'s own content for that stage — reformat/expand it to match the requested output style if needed, but do NOT replace, override, contradict, or ignore what they have written. Only generate original content for stages the teacher\'s outline does not already cover.\n\n';
+            }
             
             // 2. RULES (SHARED & SPECIFIC)
             if (lessonState.mode !== 'relief') txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(lessonState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + getCurriculumLink(lessonState.dept, yr) + ')' : 'new Knowledge & Practices drafts (' + getCurriculumLink(lessonState.dept, yr) + ')')) + '.\n';
@@ -3711,6 +3740,12 @@
             if (lessonState.maori === 'integrate') txt += 'Integrate Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]**.\n';
             if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. Important: Literacy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[LITERACY]**.\n';
             if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. Important: Numeracy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
+            var lessonOffAreas = [];
+            if (lessonState.context !== 'waiheke') lessonOffAreas.push('local Waiheke/Hauraki Gulf context');
+            if (lessonState.maori !== 'integrate') lessonOffAreas.push('Mātauranga Māori');
+            if (lessonState.lit !== 'integrate') lessonOffAreas.push('explicit literacy integration');
+            if (lessonState.num !== 'integrate') lessonOffAreas.push('explicit numeracy integration');
+            if (lessonOffAreas.length) txt += 'CRITICAL: The following were NOT selected for this lesson — ' + lessonOffAreas.join(', ') + '. Do not add dedicated content, headings, or call-outs for them. Leave them out entirely rather than writing a generic or token mention; it is fine, and preferred, for a lesson to have none of these highlighted at all.\n';
             
             if (sm) {
                 txt += 'Source Strictness: Base content entirely on these source materials: "' + sm + '". CRITICAL: Do not hallucinate. If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the lesson.\n';
@@ -4238,7 +4273,7 @@
                     saveAppState();
                 }
                 else if (['unit-custom-task', 'unit-custom-dur', 'unit-source-material', 'unit-junior-knowledge', 'unit-junior-practices', 'unit-custom-assess-type', 'unit-custom-assess-time', 'unit-ncea-standard', 'unit-practical-details'].includes(e.target.id)) updateUnitBuilderPrompt();
-                else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration', 'les-lesson-topic'].includes(e.target.id)) updateLessonBuilderPrompt();
+                else if (['les-custom-task', 'les-source-material', 'les-unit-link', 'les-unit-number', 'les-relief-custom', 'les-lesson-duration', 'les-lesson-topic', 'les-existing-outline-text'].includes(e.target.id)) updateLessonBuilderPrompt();
                 else if (e.target.id === 'les-custom-sequence') {
                     var val = parseInt(e.target.value || 0);
                     var warn = document.getElementById('les-sequence-warning');
