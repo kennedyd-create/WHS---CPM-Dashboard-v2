@@ -185,6 +185,30 @@
         html.dark input, html.dark textarea, html.dark select { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0 !important; }
         html.dark input::placeholder { color: #64748b !important; }
         html.dark #report-format, #report-format { background-color: rgba(255,255,255,0.1) !important; color: #ffffff !important; }
+        /* ---- Year Planner: dark-mode contrast fixes ----
+           These two arbitrary-value Tailwind classes (CSS var / literal hex) aren't
+           plain utility classes, so none of the [class*="bg-x-50"]-style rules above
+           touch them — they were rendering as dark navy / dark brown text sitting on
+           backgrounds that also turn dark in dark mode, which is what made them hard
+           to read. */
+        html.dark #view-yearplanner [class*="text-[var(--whs-dark-blue)]"] { color: #93c5fd !important; }
+        html.dark #view-yearplanner [class*="text-[#7a5b1e]"] { color: #fde68a !important; }
+        /* The generated report preview (inside the shared output modal) is deliberately
+           a fixed light "document" regardless of app theme — printable/paste-ready —
+           so undo the two overrides above there, and keep its background pinned light. */
+        html.dark #output-overlay .bg-slate-100 { background-color: #f1f5f9 !important; }
+        html.dark #output-overlay [class*="text-[var(--whs-dark-blue)]"] { color: var(--whs-dark-blue) !important; }
+        /* The capacity badges ("X/Y Weeks Filled") and the coverage-tab summary badge default
+           to bg-slate-200 / bg-red-100 — neither is covered by the broader bg-*-50/100 rules
+           above, so combined with text-slate-700/text-red-800 (which DO get forced light by
+           the rules further down), these were rendering as light-grey text on a light-grey
+           chip: essentially invisible. Same fix for the progress-badge's translucent light-blue
+           background, which left its (already-fixed) light-blue text sitting on a background
+           that was only a medium blend rather than a real dark chip. */
+        html.dark #view-yearplanner [class*="bg-slate-200"] { background-color: #1e293b !important; }
+        html.dark #view-yearplanner [class*="bg-red-100"] { background-color: #1e293b !important; }
+        html.dark #view-yearplanner [class*="bg-[#d1e6f6]"] { background-color: #1e293b !important; }
+        html.dark #view-yearplanner [class*="border-red-200"] { border-color: #334155 !important; }
         #report-format option { color: #1e293b !important; background-color: #ffffff !important; }
         html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.maths-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
         html.dark .fw-btn, html.dark .stage-btn, html.dark .dept-btn { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
@@ -1651,6 +1675,32 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <button class="builder-btn" data-val="10" onclick="selectYearLevel('10')">Year 10</button>
                 </div>
             </div>
+            <div>
+                <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-2">Term Lengths <span class="text-[9px] font-black text-slate-600 bg-slate-200 px-2 py-0.5 rounded-full ml-1 tooltip-wrapper tooltip-bottom" data-tooltip="Defaults to 10 weeks a term — check these match your school's actual calendar before you start placing topics">Check before you start</span></span>
+                <div class="flex flex-wrap gap-2 items-center" id="top-term-lengths">
+                    <label class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg pl-2.5 pr-1.5 py-1.5 text-xs font-bold text-slate-700 shadow-sm">
+                        T1
+                        <input type="number" id="top-len-term-1" min="8" max="12" value="10" onchange="quickSetTermLength(1, this.value)" class="w-12 border border-slate-200 rounded p-1 text-center focus:ring-2 focus:ring-whsblue-700/30">
+                        wks
+                    </label>
+                    <label class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg pl-2.5 pr-1.5 py-1.5 text-xs font-bold text-slate-700 shadow-sm">
+                        T2
+                        <input type="number" id="top-len-term-2" min="8" max="12" value="10" onchange="quickSetTermLength(2, this.value)" class="w-12 border border-slate-200 rounded p-1 text-center focus:ring-2 focus:ring-whsblue-700/30">
+                        wks
+                    </label>
+                    <label class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg pl-2.5 pr-1.5 py-1.5 text-xs font-bold text-slate-700 shadow-sm">
+                        T3
+                        <input type="number" id="top-len-term-3" min="8" max="12" value="10" onchange="quickSetTermLength(3, this.value)" class="w-12 border border-slate-200 rounded p-1 text-center focus:ring-2 focus:ring-whsblue-700/30">
+                        wks
+                    </label>
+                    <label class="flex items-center gap-1.5 bg-white border border-slate-300 rounded-lg pl-2.5 pr-1.5 py-1.5 text-xs font-bold text-slate-700 shadow-sm">
+                        T4
+                        <input type="number" id="top-len-term-4" min="8" max="12" value="10" onchange="quickSetTermLength(4, this.value)" class="w-12 border border-slate-200 rounded p-1 text-center focus:ring-2 focus:ring-whsblue-700/30">
+                        wks
+                    </label>
+                    <button onclick="openTermLengthsModal()" class="text-[11px] font-bold text-whsblue-700 hover:text-whsblue-800 underline hover:no-underline ml-1 tooltip-wrapper tooltip-bottom" data-tooltip="Also set each term's start date, if you want to use Add to Calendar later">+ Dates</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2697,7 +2747,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 total++; if (lessonState.dept) done++;
                 total++; if (!topicMissing) done++;
                 total++; var lt = ((document.getElementById('les-lesson-topic') || {}).value || '').trim(); if (lt) done++;
-                if (lessonState.mode === 'standard' && lessonState.framework === 'cpm') {
+                if (lessonState.mode === 'standard' && lessonState.framework === 'cpm' && !lessonHasOwnOutline()) {
                     total++; if (lessonState.activeStages && lessonState.activeStages.length > 0) done++;
                 }
             } else if (targetId === 'prompt-unit-text') {
@@ -2740,7 +2790,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (topicMissing) return { msg: 'Fill in "What are you teaching?" before copying', id: 'les-main-topic-input' };
                 var lt = ((document.getElementById('les-lesson-topic') || {}).value || '').trim();
                 if (!lt) return { msg: 'Fill in "Lesson Plan Title" before copying', id: 'les-lesson-topic' };
-                if (lessonState.mode === 'standard' && lessonState.framework === 'cpm' && (!lessonState.activeStages || lessonState.activeStages.length === 0)) {
+                if (lessonState.mode === 'standard' && lessonState.framework === 'cpm' && !lessonHasOwnOutline() && (!lessonState.activeStages || lessonState.activeStages.length === 0)) {
                     return { msg: 'Select at least one stage in "Include Stages in Plan" before copying', id: 'stage-toggles-container' };
                 }
             } else if (targetId === 'prompt-unit-text') {
@@ -3994,6 +4044,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             updateLessonBuilderPrompt();
         }
 
+        // True only when the teacher has both ticked "I already have a lesson plan
+        // outline" AND actually pasted something in — used to waive the "select a
+        // stage" requirement everywhere it's enforced, since the stages are already
+        // theirs to provide rather than something the AI needs to be told to plan.
+        function lessonHasOwnOutline() {
+            var cb = document.getElementById('les-has-existing-outline');
+            var ta = document.getElementById('les-existing-outline-text');
+            return !!(cb && cb.checked && ta && ta.value.trim());
+        }
+
         function updateLessonBuilderPrompt() {
             var t = getGlobalTopic(), ct = (document.getElementById('les-custom-task') || {}).value || "", sm = (document.getElementById('les-source-material') || {}).value || "";
             lessonState.sourceMaterial = sm;
@@ -4029,7 +4089,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var b = document.getElementById('prompt-lesson-text');
             if (!lessonState.dept) { if (b) b.innerText = "Select a Department above."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
             if (outs.length === 0 && lessonState.mode === 'standard') { if (b) b.innerText = "Select an Output option."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
-            if (stg.length === 0 && lessonState.mode === 'standard' && lessonState.framework === 'cpm') { if (b) b.innerText = "Select at least one stage in \"Include Stages in Plan\" above."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
+            if (stg.length === 0 && lessonState.mode === 'standard' && lessonState.framework === 'cpm' && !lessonHasOwnOutline()) { if (b) b.innerText = "Select at least one stage in \"Include Stages in Plan\" above."; updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist'); return; }
             
             var txt = '';
 
@@ -4203,7 +4263,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (outs.includes('plan')) {
                   if (lessonState.whsTemplate && lessonState.framework === 'cpm' && lessonState.mode === 'standard') {
                     txt += '### OUTPUT FORMAT OVERRIDE: WHS OFFICIAL TEMPLATE (HTML, LANDSCAPE)\n';
-                    txt += 'CRITICAL: Ignore the Markdown table instructions elsewhere for the Full Lesson Plan. Output the lesson plan as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
+                    txt += 'CRITICAL: Ignore the Markdown table instructions elsewhere for the Full Lesson Plan specifically. Output the Full Lesson Plan portion of your response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown immediately before/after/within this one HTML code block for the lesson plan itself.\n\n';
                     txt += 'Fill in every [Fill] placeholder with real content (use exact search queries for any live URLs — do NOT hallucinate URLs). Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything.\n\n';
                     if (seq > 1) {
                         txt += 'CRITICAL: This is a ' + seq + '-lesson sequence. Repeat the ENTIRE structure below (from <h1> through the final Resources & Links table) once per lesson, all inside this SAME html/body — do not produce separate code blocks. Change the <h1> heading for each to "Lesson N: [Lesson Title]".\n\n';
@@ -4239,6 +4299,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     if (seq > 1) txt += '    <!-- CRITICAL: Repeat the full structure above (h1 through Resources & Links table) for Lesson 2, Lesson 3, etc. through all ' + seq + ' lessons, each with its own real, distinct content. -->\n\n';
                     txt += '</body>\n</html>\n';
                     txt += tb + '\n';
+                    var otherReqOutputs = outs.filter(function(o) { return o !== 'plan' && o !== 'plan-short' && o !== 'moe-plan'; });
+                    if (otherReqOutputs.length) {
+                        txt += 'CRITICAL: The instruction above to keep everything inside that one HTML code block applies ONLY to the Full Lesson Plan. The following additional outputs were ALSO requested for this lesson and MUST still be produced — write them normally in Markdown, immediately after the HTML code block closes, exactly as instructed below for each:\n\n';
+                    }
                   } else {
                     txt += partALabel + '\n';
                     if (seq > 1) {
@@ -7329,6 +7393,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 btn.classList.toggle('active', isActive);
                 btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
             });
+            syncTopTermLengthInputs();
         }
 
         function renderLibrary() {
@@ -8149,6 +8214,37 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.getElementById('term-lengths-modal').classList.add('flex');
         }
 
+        // Keeps the quick term-length inputs at the top of the page (Learning Area / Year
+        // Level / Term Lengths) in sync with state, regardless of which of the (now two)
+        // places actually changed it — this quick editor, or the fuller modal below (which
+        // also handles the optional calendar-export start dates).
+        function syncTopTermLengthInputs() {
+            for (let t = 1; t <= 4; t++) {
+                const el = document.getElementById(`top-len-term-${t}`);
+                if (el) el.value = yearPlannerState.termLengths[t];
+            }
+        }
+
+        // The quick, no-modal way to adjust a single term's length — resizes that term's
+        // week array the same way the full modal does (truncating/padding, preserving any
+        // topics already placed within the new range).
+        function quickSetTermLength(t, value) {
+            let newLen = parseInt(value);
+            if (isNaN(newLen) || newLen < 8) newLen = 8;
+            if (newLen > 12) newLen = 12;
+            yearPlannerState.termLengths[t] = newLen;
+
+            const oldArray = yearPlannerState.terms[t] || [];
+            const newArray = Array(newLen).fill(null);
+            for (let i = 0; i < Math.min(oldArray.length, newLen); i++) newArray[i] = oldArray[i];
+            yearPlannerState.terms[t] = newArray;
+
+            syncTopTermLengthInputs();
+            renderTermGrids();
+            renderLibrary();
+            saveState('Term ' + t + ' length updated & saved');
+        }
+
         function closeTermLengthsModal() {
             document.getElementById('term-lengths-modal').classList.add('hidden');
             document.getElementById('term-lengths-modal').classList.remove('flex');
@@ -8172,6 +8268,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 yearPlannerState.terms[t] = newArray;
             }
             closeTermLengthsModal();
+            syncTopTermLengthInputs();
             renderTermGrids();
             renderLibrary();
             saveState('Term lengths updated & saved');
