@@ -53,6 +53,18 @@
         .builder-btn.moe-shaded.active { background-color: #7e22ce; border-color: #7e22ce; }
         .builder-btn.maths-shaded:not(.active) { background-color: #d4edef; border-color: #70cdb2; color: #0f5c52; }
         .builder-btn.maths-shaded.active { background-color: #0f5c52; border-color: #0f5c52; }
+        /* Storytelling-format buttons (inspired by "Storytelling With Purpose") — a distinct
+           indigo tint so they visually group apart from the plain assessment formats. */
+        .builder-btn.story-shaded:not(.active) { background-color: #eef2ff; border-color: #c7d2fe; color: #4338ca; }
+        .builder-btn.story-shaded.active { background-color: #4338ca; border-color: #4338ca; }
+        /* "Surprise Me" — a slow, gentle pulse (well under WCAG's 3-flashes-per-second
+           seizure-safety threshold) rather than a hard on/off flash. */
+        @keyframes surprise-pulse-border {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55); border-color: #dc2626; }
+            50% { box-shadow: 0 0 0 5px rgba(220, 38, 38, 0); border-color: #dc2626; }
+        }
+        .builder-btn.surprise-btn { border-width: 2px; animation: surprise-pulse-border 1.8s ease-in-out infinite; }
+        .builder-btn.surprise-btn.active { animation: none; box-shadow: none; }
         
         .builder-btn:hover { border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
         .builder-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
@@ -210,7 +222,7 @@
         html.dark #view-yearplanner [class*="bg-[#d1e6f6]"] { background-color: #1e293b !important; }
         html.dark #view-yearplanner [class*="border-red-200"] { border-color: #334155 !important; }
         #report-format option { color: #1e293b !important; background-color: #ffffff !important; }
-        html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.maths-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .builder-btn:not(.shaded):not(.teal-shaded):not(.amber-shaded):not(.moe-shaded):not(.maths-shaded):not(.story-shaded):not(.active) { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
         html.dark .fw-btn, html.dark .stage-btn, html.dark .dept-btn { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
         html.dark .font-mono, html.dark [id^="prompt-"] { color: #e2e8f0 !important; }
         html.dark #global-toast { background: #f1f5f9; color: #0f172a; }
@@ -1478,11 +1490,28 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             <button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button>
                             <button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button>
                             <button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button>
+                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Podcast Script">Podcast Script</button>
+                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Explainer Video">Explainer Video</button>
+                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Infographic / Data Story">Infographic / Data Story</button>
+                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Digital Documentary">Digital Documentary</button>
+                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Photo Essay">Photo Essay</button>
                             <button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button>
                             <button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button>
                             <button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button>
                         </div>
                         <div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none"></div>
+                        <p class="text-[10px] text-indigo-700 mt-2">
+                            <span class="inline-block w-2 h-2 rounded-full bg-indigo-400 mr-1 align-middle"></span>
+                            The indigo formats above are inspired by <a href="https://iste.org/products/a1w8Z000005oLjYQAU/storytelling-with-purpose" target="_blank" rel="noopener" class="font-bold underline hover:no-underline">Storytelling With Purpose</a> by Michael Hernandez (ISTE) — using digital story projects as authentic assessment, not just an add-on.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-t border-slate-200">
+                    <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
+                        <span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Real Audience <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                        <p class="text-[10px] text-slate-500 mb-2 font-medium">Who's this actually for, beyond the teacher marking it? Story-based formats especially land better with a genuine audience in mind — the brief and criteria will reflect it.</p>
+                        <input type="text" id="assess-real-audience" placeholder="e.g. younger students, the school newsletter, a local council submission, families at assembly..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none text-slate-800 bg-white">
                     </div>
                 </div>
 
@@ -2386,7 +2415,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'' };
+        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
         var noLatexRule = "CRITICAL: Do NOT use LaTeX or mathematical markup syntax (no $...$, \\text{}, \\frac{}, ^{}, _{}, or similar). Write all formulas, equations, chemical compounds, and quantities in plain, directly readable text — use Unicode subscript/superscript characters where needed (e.g. write 'CaCl₂' not '\\text{CaCl}_2', write 'x²' not 'x^2', write '0.1 mol/L' or '0.1M NaCl' not '$0.1\\text{M}$'). This output will be pasted directly into a Google Doc or Word document, which cannot render LaTeX.";
 
@@ -3292,6 +3321,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     var un = document.getElementById('les-unit-number'); if (un) un.value = lessonState.unitNum || "";
                     var lt = document.getElementById('les-lesson-topic'); if (lt) lt.value = lessonState.lessonTopic || "";
                     var as = document.getElementById('assess-source-material'); if (as) as.value = assessmentState.sourceMaterial || "";
+                    var ara = document.getElementById('assess-real-audience'); if (ara) ara.value = assessmentState.realAudience || "";
                     var usm = document.getElementById('unit-source-material'); if (usm) usm.value = unitState.sourceMaterial || "";
                     
                     var uk = document.getElementById('unit-junior-knowledge'); if (uk) uk.value = unitState.juniorKnowledge || "";
@@ -4441,6 +4471,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var af = assessmentState.formats || ['Short Answer'];
             if (af.length === 0 && !af.includes('Surprise Me')) af = ['Short Answer'];
             var fStr = af.join(', '), hasRes = af.includes('Resource Based'), hasSurp = af.includes('Surprise Me');
+            var STORYTELLING_FORMATS = ['Podcast Script', 'Explainer Video', 'Infographic / Data Story', 'Digital Documentary', 'Photo Essay'];
+            var hasStory = af.some(function(f) { return STORYTELLING_FORMATS.indexOf(f) !== -1; });
+            var audience = (document.getElementById('assess-real-audience') || {}).value || "";
+            assessmentState.realAudience = audience;
             
             var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n';
             if (ul) {
@@ -4476,6 +4510,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
             }
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
+            if (audience) txt += 'Real audience: frame this task as genuinely for ' + audience + ', not just for the teacher marking it — write the task brief, and any criteria, with that audience in mind.\n';
             
             var acc = assessmentState.accommodations || [];
             if (acc.length) {
@@ -4497,8 +4532,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var partNum = 1;
             if (isJun) {
                 if (hasSurp) txt += 'PART ' + partNum + ': TWO out-of-the-box assessment options.\n'; else txt += 'PART ' + partNum + ': Assessment Task (' + fStr + ').\n';
+                if (hasStory) txt += 'Note on storytelling formats: since this produces a written brief, not actual audio/video/images, the student-facing task should ask for the WRITTEN deliverable — a full script with speaker/scene notes for a podcast or video, or a written plan/copy for an infographic or photo essay (all text, data points, and captions specified, with a description of the intended visual layout).\n';
                 partNum++;
                 txt += 'PART ' + partNum + ': Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n';
+                if (hasStory) {
+                    txt += 'Because this includes a digital storytelling format, ALSO weave in criteria for: a clear focus/angle (what this story is actually about, and why it matters), effective use of evidence (visual, audio, or data, as fits the format), and engagement with the intended audience' + (audience ? ' (' + audience + ')' : '') + '. If real people, images, audio, or data are used, include a criterion for ethical, appropriately credited use of sources.\n';
+                }
                 partNum++;
             } else if (isSen) {
                 if (ns === '[Standard]' || !ns.trim()) {
@@ -4754,7 +4793,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     });
                     updateLessonBuilderPrompt();
                 }
-                else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume', 'assess-unit-link', 'assess-unit-number', 'assess-mcq-count', 'assess-short-count', 'assess-extended-count'].includes(e.target.id)) updateAssessmentBuilderPrompt();
+                else if (['assess-ncea-standard', 'assess-custom-format', 'assess-custom-dur', 'assess-source-material', 'assess-junior-knowledge', 'assess-junior-practices', 'assess-custom-volume', 'assess-unit-link', 'assess-unit-number', 'assess-mcq-count', 'assess-short-count', 'assess-extended-count', 'assess-real-audience'].includes(e.target.id)) updateAssessmentBuilderPrompt();
             });
         }
 
