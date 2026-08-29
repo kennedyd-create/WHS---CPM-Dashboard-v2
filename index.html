@@ -236,6 +236,7 @@
         html.dark [class*="text-[#002066]"] { color: #7fb2f0 !important; }
         html.dark [class*="text-blue-800"], html.dark [class*="text-blue-900"] { color: #93c5fd !important; }
         html.dark [class*="text-amber-800"], html.dark [class*="text-amber-900"] { color: #fcd34d !important; }
+        html.dark [class*="text-orange-800"], html.dark [class*="text-orange-700"] { color: #fdba74 !important; }
         html.dark [class*="text-purple-600"], html.dark [class*="text-purple-700"], html.dark [class*="text-purple-800"], html.dark [class*="text-purple-900"] { color: #d8b4fe !important; }
         html.dark [class*="text-emerald-800"], html.dark [class*="text-emerald-900"] { color: #6ee7b7 !important; }
         html.dark [class*="text-emerald-700"] { color: #6ee7b7 !important; }
@@ -696,6 +697,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div class="flex items-center">
                     <a href="https://kennedyd-create.github.io/WHS---Student-/" target="_blank" class="px-2 py-1 bg-red-50 text-red-800 hover:bg-red-100 border border-red-200 rounded-l font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Open the student-facing portal">Student Dashboard ↗</a>
                     <button class="px-2 py-1 bg-red-50 hover:bg-red-100 border border-l-0 border-red-200 text-red-700 rounded-r transition tooltip-wrapper tooltip-bottom shadow-sm flex items-center justify-center" data-tooltip="Copy link for students" data-action="copy-dashboard">
+                        <svg class="w-3 h-3 md:w-3.5 md:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </button>
+                </div>
+
+                <div class="flex items-center">
+                    <a href="https://kennedyd-create.github.io/ArcadeAI/" target="_blank" class="px-2 py-1 bg-orange-50 text-orange-800 hover:bg-orange-100 border border-orange-200 rounded-l font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Turn a topic into a playable review game for students">Arcade AI ↗</a>
+                    <button class="px-2 py-1 bg-orange-50 hover:bg-orange-100 border border-l-0 border-orange-200 text-orange-700 rounded-r transition tooltip-wrapper tooltip-bottom shadow-sm flex items-center justify-center" data-tooltip="Copy link for students" data-action="copy-arcade">
                         <svg class="w-3 h-3 md:w-3.5 md:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                     </button>
                 </div>
@@ -4814,6 +4822,31 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.body.removeChild(textArea);
         }
 
+        function copyArcadeLink(btn) {
+            var url = "https://kennedyd-create.github.io/ArcadeAI/";
+            var textArea = document.createElement("textarea");
+            textArea.value = url;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-99999px";
+            textArea.style.top = "-99999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                var oHTML = btn.getAttribute('data-original') || btn.innerHTML;
+                btn.setAttribute('data-original', oHTML);
+                btn.innerHTML = '✓ COPIED';
+                btn.classList.add('bg-green-100', 'text-green-800');
+                setTimeout(function() {
+                    btn.innerHTML = oHTML;
+                    btn.classList.remove('bg-green-100', 'text-green-800');
+                }, 2000);
+            } catch (err) {}
+            document.body.removeChild(textArea);
+        }
+
         function loadTheoryStage(sn) {
             document.querySelectorAll('.theory-stage-btn').forEach(function(b) {
                 b.className = "theory-stage-btn px-6 py-3 rounded-full text-sm font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 whitespace-nowrap transition";
@@ -4855,6 +4888,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 
                 if (action === 'view') showView(copyTarget);
                 else if (action === 'copy-dashboard') copyStudentDashboard(target);
+                else if (action === 'copy-arcade') copyArcadeLink(target);
                 else if (action === 'copy') attemptCopy(copyTarget, target);
                 else if (action === 'download') downloadPrompt(copyTarget);
                 else if (action === 'unit-state') setUnitState(key, val, target);
