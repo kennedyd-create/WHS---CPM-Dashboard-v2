@@ -105,7 +105,7 @@
         html.dark .bg-stripes { background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #1e293b 10px, #1e293b 20px); }
         html.dark .tab-inactive:hover { border-bottom: 3px solid #334155; }
         @media print {
-            header, nav, aside, #global-toast, .no-print { display: none !important; }
+            header, nav, aside, #global-toast, #teaching-profile-pill, #teaching-profile-panel, .no-print { display: none !important; }
         }
 
         @keyframes ai-pulse { 0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(16,185,129,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
@@ -203,8 +203,8 @@
            touch them — they were rendering as dark navy / dark brown text sitting on
            backgrounds that also turn dark in dark mode, which is what made them hard
            to read. */
-        html.dark #view-yearplanner [class*="text-[var(--whs-dark-blue)]"] { color: #93c5fd !important; }
-        html.dark #view-yearplanner [class*="text-[#7a5b1e]"] { color: #fde68a !important; }
+        html.dark [class*="text-[var(--whs-dark-blue)]"] { color: #93c5fd !important; }
+        html.dark [class*="text-[#7a5b1e]"] { color: #fde68a !important; }
         /* The generated report preview (inside the shared output modal) is deliberately
            a fixed light "document" regardless of app theme — printable/paste-ready —
            so undo the two overrides above there, and keep its background pinned light. */
@@ -218,7 +218,8 @@
            background, which left its (already-fixed) light-blue text sitting on a background
            that was only a medium blend rather than a real dark chip. */
         html.dark #view-yearplanner [class*="bg-slate-200"] { background-color: #1e293b !important; }
-        html.dark #view-yearplanner [class*="bg-red-100"] { background-color: #1e293b !important; }
+        html.dark [class*="bg-red-100"] { background-color: #1e293b !important; }
+        html.dark [class*="bg-green-100"] { background-color: #1e293b !important; }
         html.dark #view-yearplanner [class*="bg-[#d1e6f6]"] { background-color: #1e293b !important; }
         html.dark #view-yearplanner [class*="border-red-200"] { border-color: #334155 !important; }
         #report-format option { color: #1e293b !important; background-color: #ffffff !important; }
@@ -252,6 +253,29 @@
 <body class="p-4 md:p-8">
 
     <div id="global-toast" role="status" aria-live="polite"></div>
+
+    <!-- My Teaching Profile: a persistent corner widget, independent of whichever builder is
+         open. Collapsed pill by default; expands to the picker; collapses again once you're
+         done setting it up, but stays visible so the on/off switch is always reachable.
+         Sits well above the toast notifications (also bottom-right) so the two never overlap.
+         z-[110] is deliberately higher than every modal in the app (they top out at z-[100],
+         e.g. the onboarding "what are you trying to do today" modal) so this never gets
+         hidden behind one. -->
+    <div id="teaching-profile-pill" class="fixed bottom-32 right-5 z-[110] flex items-center gap-2 bg-amber-50 border border-amber-300 shadow-lg rounded-full pl-3 pr-1.5 py-1.5">
+        <button onclick="toggleTeachingProfilePanel(true)" class="flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[var(--whs-dark-blue)] transition-colors">
+            <span>🎯</span> My Teaching Profile
+        </button>
+        <button onclick="toggleTeachingProfileEnabled()" class="relative inline-block w-8 h-4 rounded-full bg-slate-300 transition-colors" id="teaching-profile-switch" title="Turn your teaching profile on/off for new prompts">
+            <span class="absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform" id="teaching-profile-knob"></span>
+        </button>
+    </div>
+    <div id="teaching-profile-panel" class="hidden fixed bottom-32 right-5 z-[110] w-72 max-h-[75vh] overflow-y-auto bg-amber-50 border border-amber-300 shadow-2xl rounded-2xl p-4">
+        <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-black text-[var(--whs-dark-blue)] uppercase tracking-widest">🎯 My Teaching Profile</span>
+            <button onclick="toggleTeachingProfilePanel(false)" class="text-slate-400 hover:text-slate-700 text-lg leading-none">&times;</button>
+        </div>
+        <div id="teaching-profile-body"></div>
+    </div>
 
     <div class="max-w-7xl mx-auto">
         <header class="whs-gradient-bg rounded-lg p-5 md:p-8 text-white mb-8 shadow-md relative overflow-hidden flex justify-between items-center">
@@ -2224,6 +2248,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <span class="block font-bold text-[#002066] text-sm">📖 Understand the CPM itself</span>
                     <span class="block text-xs text-slate-500 mt-1">Read the research and theory behind the Common Practice Model → <strong>CPM Theory</strong></span>
                 </button>
+                <button class="text-left p-4 rounded-xl border-2 border-amber-300 bg-amber-50 hover:border-amber-500 transition sm:col-span-2" onclick="onboardingGoToTeachingProfile()">
+                    <span class="block font-bold text-[#7a5b1e] text-sm">🎯 Set up My Teaching Profile</span>
+                    <span class="block text-xs text-slate-600 mt-1">Tell it your preferred teaching style — practical, group work, discussion, and more — so it gets woven into everything you generate, without you having to say it every time</span>
+                </button>
             </div>
             <button class="w-full mt-5 text-center text-xs text-slate-400 hover:text-slate-600 font-semibold" data-action="onboarding-dismiss">Just let me explore →</button>
         </div>
@@ -2416,6 +2444,30 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         };
         
         var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
+
+        // ---------- My Teaching Profile ----------
+        // A teacher's personal preferred approaches, not a class setting — one profile for
+        // Junior (Years 7-10), one for Senior/NCEA (Levels 1-3), matching the isJun/isSen
+        // split already used everywhere else in the tool. A single on/off switch applies
+        // whichever one matches the Year Level already selected in the builder in use.
+        // Deliberately built on the SAME curated strategy names already used by the CPM
+        // Theory tab and the Lesson Builder's stage pickers (see generateStrategies /
+        // cpmMatrix above), rather than inventing a separate vocabulary.
+        var TEACHING_FLAVOURS = {
+            practical:  { label: 'Practical / Hands-on',        strategies: ['Physical Demonstration', 'Independent Studio Task', 'Live Drawing / Construction'] },
+            group:      { label: 'Group & Peer Work',           strategies: ['Think-Pair-Share', 'Jigsaw Text Decoding', 'Peer Critique', 'A/B Peer Teaching'] },
+            discussion: { label: 'Discussion & Debate',         strategies: ['Hot-Seating', 'Debate Prep Note', 'The Value Continuum'] },
+            visual:     { label: 'Visual & Diagram-Based',      strategies: ['Concept Mapping', 'Hexagonal Mapping', 'Dual-Coding Diagram'] },
+            games:      { label: 'Games & Competition',         strategies: ['Pick a Stick (Randomised Call)', 'Quick on the Draw', 'Cold Call Follow-On'] },
+            writing:    { label: 'Writing-Heavy Tasks',         strategies: ['Extended Writing', 'Sentence Scaffolds'] },
+            reflective: { label: 'Reflective / Metacognitive',  strategies: ['Two Stars and a Wish', 'Metacognitive Journaling', '3-2-1 Summary'] },
+            tech:       { label: 'Technology-Integrated',       strategies: ['Education Perfect (EP)'] },
+            narrative:  { label: 'Narrative / Storytelling',    strategies: ['Episodic Hook / Pūrākau', 'Mantle of the Expert', 'MTW: Mental Time Travel and Empathy Charts'] },
+            inquiry:    { label: 'Open-Ended Inquiry',          strategies: ['Think-Puzzle-Explore', 'I-Chart (Inquiry Chart)', 'The Murder Hunt / Broken Information Synthesis'] },
+            energetic:  { label: 'Energetic & Movement-Based',  strategies: ['The Marketplace', 'Choral Response', 'Mini-Whiteboards'] },
+            realworld:  { label: 'Real-World Connections',      strategies: ['T-Chart / SEEC Analysis', 'Fishbone Diagram', 'The Value Continuum'] }
+        };
+        var teachingProfile = { enabled: false, setupDone: false, junior: [], senior: [] };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
         var noLatexRule = "CRITICAL: Do NOT use LaTeX or mathematical markup syntax (no $...$, \\text{}, \\frac{}, ^{}, _{}, or similar). Write all formulas, equations, chemical compounds, and quantities in plain, directly readable text — use Unicode subscript/superscript characters where needed (e.g. write 'CaCl₂' not '\\text{CaCl}_2', write 'x²' not 'x^2', write '0.1 mol/L' or '0.1M NaCl' not '$0.1\\text{M}$'). This output will be pasted directly into a Google Doc or Word document, which cannot render LaTeX.";
 
@@ -2779,6 +2831,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             showView(target);
         }
 
+        function onboardingGoToTeachingProfile() {
+            dismissOnboardingModal();
+            toggleTeachingProfilePanel(true);
+        }
+
         /* ---------- WHS Template help modal ---------- */
         var pendingWhsCopy = null;
 
@@ -3106,6 +3163,123 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 notifyDraftSaved();
             } catch (e) {}
         }
+
+        function saveTeachingProfile() {
+            try { localStorage.setItem('whs_teaching_profile', JSON.stringify(teachingProfile)); } catch (e) {}
+        }
+
+        function loadTeachingProfile() {
+            try {
+                var raw = localStorage.getItem('whs_teaching_profile');
+                if (raw) Object.assign(teachingProfile, JSON.parse(raw));
+            } catch (e) {}
+        }
+
+        // Which of the two slots applies to a given Year Level string, reusing the exact
+        // same isJun/isSen check ('Level' in the string = senior/NCEA) already used
+        // throughout the rest of the tool.
+        function teachingProfileSlotFor(yr) {
+            return (yr || '').indexOf('Level') !== -1 ? 'senior' : 'junior';
+        }
+
+        function toggleTeachingProfilePanel(forceOpen) {
+            var panel = document.getElementById('teaching-profile-panel');
+            var pill = document.getElementById('teaching-profile-pill');
+            if (!panel || !pill) return;
+            var opening = forceOpen !== undefined ? forceOpen : panel.classList.contains('hidden');
+            panel.classList.toggle('hidden', !opening);
+            pill.classList.toggle('hidden', opening);
+            if (opening) renderTeachingProfilePanel();
+        }
+
+        function toggleTeachingProfileEnabled() {
+            teachingProfile.enabled = !teachingProfile.enabled;
+            renderTeachingProfilePill();
+            saveTeachingProfile();
+            updateAllPrompts();
+        }
+
+        function toggleTeachingFlavour(slot, key) {
+            var arr = teachingProfile[slot];
+            var i = arr.indexOf(key);
+            if (i > -1) arr.splice(i, 1); else arr.push(key);
+            renderTeachingProfilePanel();
+            saveTeachingProfile();
+            updateAllPrompts();
+        }
+
+        function finishTeachingProfileSetup() {
+            teachingProfile.setupDone = true;
+            teachingProfile.enabled = true;
+            saveTeachingProfile();
+            toggleTeachingProfilePanel(false);
+            renderTeachingProfilePill();
+            updateAllPrompts();
+        }
+
+        function renderTeachingProfilePill() {
+            var pill = document.getElementById('teaching-profile-pill');
+            if (!pill) return;
+            var sw = document.getElementById('teaching-profile-switch');
+            var knob = document.getElementById('teaching-profile-knob');
+            if (sw) sw.classList.toggle('bg-[var(--whs-gold)]', teachingProfile.enabled);
+            if (sw) sw.classList.toggle('bg-slate-300', !teachingProfile.enabled);
+            if (knob) knob.classList.toggle('translate-x-4', teachingProfile.enabled);
+        }
+
+        function renderTeachingProfilePanel() {
+            var body = document.getElementById('teaching-profile-body');
+            if (!body) return;
+            var tabs = ['junior', 'senior'];
+            var labels = { junior: 'Junior (Years 7-10)', senior: 'Senior (NCEA Levels 1-3)' };
+            // Junior = red, Senior = green — a deliberately simple, unambiguous pairing so
+            // it's obvious at a glance which set of ticks you're looking at. Selected chips
+            // within each tab pick up the same colour, one shade lighter.
+            var tabActive = { junior: 'bg-red-600 text-white border-red-600', senior: 'bg-green-600 text-white border-green-600' };
+            var tabInactive = { junior: 'bg-white text-red-600 border-slate-200 hover:border-red-400', senior: 'bg-white text-green-600 border-slate-200 hover:border-green-400' };
+            var chipSelected = { junior: 'bg-red-100 border-red-400 text-red-800', senior: 'bg-green-100 border-green-400 text-green-800' };
+            var activeTab = teachingProfile._activeTab || 'junior';
+            var tabsHtml = '<div class="flex gap-1 mb-3">' + tabs.map(function(t) {
+                var isActive = t === activeTab;
+                return '<button onclick="teachingProfile._activeTab=\'' + t + '\'; renderTeachingProfilePanel();" class="flex-1 text-[10px] font-bold py-1.5 rounded-lg border transition-all ' +
+                    (isActive ? tabActive[t] : tabInactive[t]) + '">' + labels[t] + '</button>';
+            }).join('') + '</div>';
+
+            var picks = teachingProfile[activeTab];
+            var chipsHtml = '<div class="grid grid-cols-2 gap-1.5">' + Object.keys(TEACHING_FLAVOURS).map(function(k) {
+                var f = TEACHING_FLAVOURS[k];
+                var isOn = picks.indexOf(k) !== -1;
+                return '<button onclick="toggleTeachingFlavour(\'' + activeTab + '\', \'' + k + '\')" class="text-left text-[10px] font-semibold px-2 py-1.5 rounded-lg border transition-all ' +
+                    (isOn ? chipSelected[activeTab] : 'bg-white border-slate-200 text-slate-600 hover:border-slate-400') + '">' +
+                    (isOn ? '✓ ' : '') + f.label + '</button>';
+            }).join('') + '</div>';
+
+            body.innerHTML = tabsHtml + chipsHtml +
+                '<p class="text-[9px] text-slate-400 mt-2">Pick a few for each — these get woven in where they genuinely fit, not forced into everything.</p>' +
+                '<button onclick="finishTeachingProfileSetup()" class="w-full mt-3 text-xs font-bold bg-[var(--whs-dark-blue)] text-white rounded-lg py-2 hover:opacity-90 transition">Done</button>';
+        }
+
+        // Builds the shared instruction text for whichever builder/year is currently active.
+        // isMultiLesson relaxes the placement to "a few times across the unit" instead of
+        // "wherever it fits in this one lesson" — same idea as the Māori/Waiheke/Literacy/
+        // Numeracy toggles already use for units versus single lessons.
+        function teachingProfileInstruction(yr, isMultiLesson, isAssessment) {
+            if (!teachingProfile.enabled) return '';
+            var slot = teachingProfileSlotFor(yr);
+            var picks = teachingProfile[slot] || [];
+            if (!picks.length) return '';
+            var flavourLabels = picks.map(function(k) { return TEACHING_FLAVOURS[k] ? TEACHING_FLAVOURS[k].label : k; });
+            var stratNames = [];
+            picks.forEach(function(k) {
+                if (TEACHING_FLAVOURS[k]) TEACHING_FLAVOURS[k].strategies.forEach(function(s) { if (stratNames.indexOf(s) === -1) stratNames.push(s); });
+            });
+            if (isAssessment) {
+                return 'Teacher\'s preferred approach: this teacher favours ' + flavourLabels.join(', ') + '. Where genuinely appropriate, favour task formats that reflect this (e.g. ' + stratNames.slice(0, 3).join(', ') + '), without forcing it if it does not fit the format already chosen.\n';
+            }
+            return 'Teacher\'s preferred approach: this teacher favours ' + flavourLabels.join(', ') + ' — where it fits naturally, draw on strategies such as ' + stratNames.slice(0, 4).join(', ') + '. ' +
+                (isMultiLesson ? 'This does not need to appear in every lesson — a few times across the unit is enough.' : 'This does not need to be forced into every stage — just where it genuinely fits.') + '\n';
+        }
+
 
         function setActiveBtn(action, val, key) {
             if (val === undefined || val === null) return;
@@ -3877,6 +4051,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (unitState.lit !== 'integrate') unitOffAreas.push('explicit literacy integration');
             if (unitState.num !== 'integrate') unitOffAreas.push('explicit numeracy integration');
             if (unitOffAreas.length) txt += 'CRITICAL: The following were NOT selected for this unit — ' + unitOffAreas.join(', ') + '. Do not add dedicated content, headings, or call-outs for them anywhere in the sequence. Leave them out entirely rather than writing a generic or token mention; it is fine, and preferred, for a unit to have none of these highlighted at all.\n';
+            txt += teachingProfileInstruction(yr, true, false);
             if (unitState.assessmentIncluded === 'yes') txt += 'Important: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment content or questions; simply reserve the lesson time and label it clearly in the sequence.\n';
             if (unitState.practicalIncluded === 'yes') {
                 var pd = ((document.getElementById('unit-practical-details') || {}).value || '').trim();
@@ -4215,6 +4390,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (lessonState.lit !== 'integrate') lessonOffAreas.push('explicit literacy integration');
             if (lessonState.num !== 'integrate') lessonOffAreas.push('explicit numeracy integration');
             if (lessonOffAreas.length) txt += 'CRITICAL: The following were NOT selected for this lesson — ' + lessonOffAreas.join(', ') + '. Do not add dedicated content, headings, or call-outs for them. Leave them out entirely rather than writing a generic or token mention; it is fine, and preferred, for a lesson to have none of these highlighted at all.\n';
+            txt += teachingProfileInstruction(yr, seq > 1, false);
             
             if (sm) {
                 txt += 'Source Strictness: Base content entirely on these source materials: "' + sm + '". CRITICAL: Do not hallucinate. If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the lesson.\n';
@@ -4511,6 +4687,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
             if (audience) txt += 'Real audience: frame this task as genuinely for ' + audience + ', not just for the teacher marking it — write the task brief, and any criteria, with that audience in mind.\n';
+            txt += teachingProfileInstruction(yr, false, true);
             
             var acc = assessmentState.accommodations || [];
             if (acc.length) {
@@ -8961,6 +9138,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var savedTopic = localStorage.getItem('whs_topic');
             if(savedTopic) { var inputs = document.querySelectorAll('.sync-topic'); for(var i=0; i<inputs.length; i++) inputs[i].value = savedTopic; }
             loadAppState();
+            loadTeachingProfile();
+            renderTeachingProfilePill();
+            if (!teachingProfile.setupDone) toggleTeachingProfilePanel(true);
             checkSeniorStatus();
             checkUnitSeniorStatus();
             checkUnitBothSelected();
