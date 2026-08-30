@@ -1380,6 +1380,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 </div>
             </div>
 
+            <div id="assessment-addons-banner" class="hidden max-w-5xl mx-auto -mb-4"></div>
+
             <!-- Tab Color Theme: Purple -->
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-purple-600 max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
                 <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
@@ -2473,7 +2475,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             narrative:  { label: 'Narrative / Storytelling',    strategies: ['Episodic Hook / Pūrākau', 'Mantle of the Expert', 'MTW: Mental Time Travel and Empathy Charts'] },
             inquiry:    { label: 'Open-Ended Inquiry',          strategies: ['Think-Puzzle-Explore', 'I-Chart (Inquiry Chart)', 'The Murder Hunt / Broken Information Synthesis'] },
             energetic:  { label: 'Energetic & Movement-Based',  strategies: ['The Marketplace', 'Choral Response', 'Mini-Whiteboards'] },
-            realworld:  { label: 'Real-World Connections',      strategies: ['T-Chart / SEEC Analysis', 'Fishbone Diagram', 'The Value Continuum'] }
+            realworld:  { label: 'Real-World Connections',      strategies: ['T-Chart / SEEC Analysis', 'Fishbone Diagram', 'The Value Continuum'] },
+            analytical: { label: 'Analytical / Data-Driven',    strategies: ['Distractor Analysis', 'SOLO Taxonomy Check', 'Sequencing and Logical Ranking'] },
+            mastery:    { label: 'Drill-and-Practice / Mastery', strategies: ['Spaced Retrieval Worksheet', 'Interleaved Practice Set', 'Speed Fluency Drills'] }
         };
         var teachingProfile = { enabled: false, setupDone: false, junior: [], senior: [] };
         var nzSpellingRule = "You MUST use New Zealand English spelling (e.g. 'analyse', 'colour', 'programme') throughout ALL output.";
@@ -3046,19 +3050,44 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 b.innerHTML = '';
             }
         }
+        // Shared by all three addons banners below — only shows Teaching Profile when it's
+        // both switched on AND the slot actually relevant to this builder's own selected
+        // Year Level (Junior/Senior) has something ticked, so the banner never implies an
+        // effect on the prompt that isn't really happening.
+        function teachingProfileBadgeLabel(yr) {
+            if (!teachingProfile.enabled) return null;
+            var slot = teachingProfileSlotFor(yr);
+            if (!teachingProfile[slot] || !teachingProfile[slot].length) return null;
+            return '🎯 My Teaching Profile (' + (slot === 'junior' ? 'Junior' : 'Senior') + ')';
+        }
         function updateUnitAddonsBanner() {
             var active = [];
             if (unitState.whsTemplate) active.push('🏫 WHS Official Template (HTML)');
             if (unitState.mathsTemplate) active.push('🧮 Maths Unit Plan Template (HTML)');
             if (unitState.geminiNotebook) active.push('📓 Gemini Notebook Knowledge');
+            var tpLabel = teachingProfileBadgeLabel(unitState.year);
+            if (tpLabel) active.push(tpLabel);
             renderAddonsBanner('unit-addons-banner', active);
             updateAiLinkVisibility();
         }
         function updateLessonAddonsBanner() {
             var active = [];
             if (lessonState.whsTemplate) active.push('🏫 WHS Official Template (HTML)');
+            var tpLabel = teachingProfileBadgeLabel(lessonState.year);
+            if (tpLabel) active.push(tpLabel);
             renderAddonsBanner('lesson-addons-banner', active);
             updateAiLinkVisibility();
+        }
+        function updateAssessmentAddonsBanner() {
+            var active = [];
+            var tpLabel = teachingProfileBadgeLabel(assessmentState.year);
+            if (tpLabel) active.push(tpLabel);
+            renderAddonsBanner('assessment-addons-banner', active);
+        }
+        function updateAllAddonsBanners() {
+            updateUnitAddonsBanner();
+            updateLessonAddonsBanner();
+            updateAssessmentAddonsBanner();
         }
 
         /* When a Gemini-specific add-on (WHS Template or Gemini Notebook) is active, the output only really makes sense pasted into Gemini — so hide the ChatGPT/Claude shortcuts and just show Gemini. */
@@ -3205,6 +3234,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             renderTeachingProfilePill();
             saveTeachingProfile();
             updateAllPrompts();
+            updateAllAddonsBanners();
         }
 
         function toggleTeachingFlavour(slot, key) {
@@ -3214,6 +3244,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             renderTeachingProfilePanel();
             saveTeachingProfile();
             updateAllPrompts();
+            updateAllAddonsBanners();
         }
 
         function finishTeachingProfileSetup() {
@@ -3223,6 +3254,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             toggleTeachingProfilePanel(false);
             renderTeachingProfilePill();
             updateAllPrompts();
+            updateAllAddonsBanners();
         }
 
         function renderTeachingProfilePill() {
@@ -4002,6 +4034,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function updateUnitBuilderPrompt() {
+            updateUnitAddonsBanner();
             var tb = String.fromCharCode(96, 96, 96);
             if (!unitState.dept) {
                 var earlyB = document.getElementById('prompt-unit-text');
@@ -4282,6 +4315,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function updateLessonBuilderPrompt() {
+            updateLessonAddonsBanner();
             var t = getGlobalTopic(), ct = (document.getElementById('les-custom-task') || {}).value || "", sm = (document.getElementById('les-source-material') || {}).value || "";
             lessonState.sourceMaterial = sm;
             var ul = (document.getElementById('les-unit-link') || {}).value || "", un = (document.getElementById('les-unit-number') || {}).value || "";
@@ -4634,6 +4668,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function updateAssessmentBuilderPrompt() {
+            updateAssessmentAddonsBanner();
             if (!assessmentState.dept) {
                 var earlyBox = document.getElementById('prompt-assessment-text');
                 if (earlyBox) earlyBox.innerText = "Select a Department above.";
@@ -9174,6 +9209,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             loadAppState();
             loadTeachingProfile();
             renderTeachingProfilePill();
+            updateAllAddonsBanners();
             if (!teachingProfile.setupDone) toggleTeachingProfilePanel(true);
             checkSeniorStatus();
             checkUnitSeniorStatus();
