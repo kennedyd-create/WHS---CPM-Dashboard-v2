@@ -246,6 +246,14 @@
         html.dark [class*="text-emerald-800"], html.dark [class*="text-emerald-900"] { color: #6ee7b7 !important; }
         html.dark [class*="text-emerald-700"] { color: #6ee7b7 !important; }
         html.dark [class*="border-emerald-300"] { border-color: #334155 !important; }
+        /* Prompt health badges specifically (Lesson/Unit/Assessment) — scoped to their own
+           IDs rather than widening the emerald/red rules above, since those are deliberately
+           scoped elsewhere to avoid clashing with other, differently-intentioned usage. */
+        html.dark #lesson-prompt-health, html.dark #unit-prompt-health, html.dark #assess-prompt-health {
+            background-color: #1e293b !important; border-color: #334155 !important;
+        }
+        html.dark #lesson-prompt-health.text-emerald-800, html.dark #unit-prompt-health.text-emerald-800, html.dark #assess-prompt-health.text-emerald-800 { color: #6ee7b7 !important; }
+        html.dark #lesson-prompt-health.text-red-800, html.dark #unit-prompt-health.text-red-800, html.dark #assess-prompt-health.text-red-800 { color: #fca5a5 !important; }
         html.dark [class*="text-green-600"], html.dark [class*="text-green-800"] { color: #86efac !important; }
         html.dark [class*="text-red-500"], html.dark [class*="text-red-600"], html.dark [class*="text-red-700"], html.dark [class*="text-red-800"] { color: #fca5a5 !important; }
         html.dark [class*="text-[#047857]"] { color: #6ee7b7 !important; }
@@ -1052,6 +1060,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                                     <span id="lesson-required-checklist" class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-amber-300">⚠️ 0 of 3 required fields set</span>
+                                    <span id="lesson-prompt-health" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300"></span>
                                 </div>
                                 <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
                                     <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
@@ -1350,6 +1359,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             <div class="flex items-center gap-2 flex-wrap">
                                 <h4 class="text-xs font-bold uppercase text-amber-800 tracking-widest">Generated AI Prompt</h4>
                                 <span id="unit-required-checklist" class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-amber-300">⚠️ 0 of 1 required fields set</span>
+                                <span id="unit-prompt-health" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300"></span>
                             </div>
                             <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
                                 <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
@@ -1649,6 +1659,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <div class="flex items-center gap-2 flex-wrap">
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                             <span id="assess-required-checklist" class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-amber-300">⚠️ 0 of 1 required fields set</span>
+                            <span id="assess-prompt-health" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300"></span>
                         </div>
                         <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
                             <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
@@ -1795,6 +1806,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <span class="absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white shadow transition-transform" id="quick-add-knob"></span>
                     </span>
                 </button>
+                <div id="tip-quickadd" class="hidden mb-3"></div>
                 <button onclick="openCustomTopicModal()" class="w-full mb-4 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg border-2 border-dashed border-slate-300 text-xs font-bold text-slate-500 hover:border-[var(--whs-dark-blue)] hover:text-[var(--whs-dark-blue)] hover:bg-white transition-all" title="Add something that isn't in the curriculum library — e.g. a camp, an assembly, a school-specific unit">
                     <span class="text-base leading-none">✏️</span> Add Your Own Topic
                 </button>
@@ -1861,7 +1873,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <div id="panel-2" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 2 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-2">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-2"></div></div></div>
                     <div id="panel-3" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 3 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-3">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-3"></div></div></div>
                     <div id="panel-4" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center"><h3 class="font-bold text-[var(--whs-dark-blue)]">Term 4 Allocations</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="capacity-badge-4">0/10 Weeks Filled</div></div><div class="p-4 grid gap-2 flex-1 bg-slate-200/80" id="grid-4"></div></div></div>
-                    <div id="panel-coverage" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center flex-wrap gap-2"><h3 class="font-bold text-[var(--whs-dark-blue)]">Whole-Year Coverage</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="coverage-summary"></div></div><div class="p-4 flex-1 overflow-auto bg-white" id="coverage-grid"></div></div></div>
+                    <div id="panel-coverage" class="hidden h-full"><div class="glass-card overflow-hidden flex flex-col h-full min-h-[400px]"><div class="p-4 border-b border-[var(--whs-light-blue)] bg-[#e2e8f0]/30 flex justify-between items-center flex-wrap gap-2"><h3 class="font-bold text-[var(--whs-dark-blue)]">Whole-Year Coverage</h3><div class="text-xs font-semibold px-2 py-1 rounded bg-slate-200 text-slate-700" id="coverage-summary"></div></div><div id="tip-coverage" class="hidden px-4 pt-4"></div><div class="p-4 flex-1 overflow-auto bg-white" id="coverage-grid"></div></div></div>
                 </div>
             </div>
         </section>
@@ -2086,6 +2098,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>Year Planner: the Term 1–4 / Full Year Coverage tabs are now a proper segmented control (solid colour when active, bordered pill when not) instead of plain underlined text, so they're much easier to notice</li>
                         <li>Behind the scenes: the three separate places the app saved its data (Lesson/Unit/Assessment, Year Planner, and My Teaching Profile) are now one unified system, loaded once — existing saved plans migrate across automatically and nothing is deleted in the process</li>
                         <li>The main tool navigation (Lesson Builder / Unit Planner / Assessment Generator / Year Planner / CPM Theory) is now a proper segmented control too, for the same reason and matching the same fix as the Year Planner tabs</li>
+                        <li>Added two small one-time tips — Quick Add (Year Planner) explains itself the first time you switch it on, and Full Year Coverage explains its colour-coding the first time you open it</li>
+                        <li>Lesson Builder, Unit Planner, and Assessment Generator now show a "Prompt Health" check next to the required-fields badge, flagging things like a stray "undefined" or an unclosed code block that field-completeness alone can't catch</li>
                     </ul>
                 </div>
                 <div>
@@ -2932,6 +2946,49 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 }
             }
             return { total: total, done: done };
+        }
+
+        // ---------- Prompt health ----------
+        // The required-fields checklist only confirms the FORM is filled in — it can't
+        // tell you whether the resulting PROMPT TEXT is actually coherent. These are the
+        // few checks that are genuinely reliable regardless of which builder or format is
+        // in use: literal "undefined"/"NaN"/"[object Object]" appearing in the output
+        // always means a value didn't get read or converted correctly somewhere, and an
+        // odd number of ``` code-fence markers always means a code block was left open,
+        // which will render badly wherever this gets pasted. Deliberately NOT trying to
+        // guess at "too short" — expected length varies far too much between a one-topic
+        // lesson and a full WHS Template multi-lesson sequence to make that reliable.
+        function assessPromptHealth(text) {
+            var issues = [];
+            if (!text) return issues;
+            if (/\bundefined\b/.test(text)) issues.push('Contains the word "undefined" — a field may not have been read correctly.');
+            if (/\bNaN\b/.test(text)) issues.push('Contains "NaN" — a number field may not be valid.');
+            if (text.indexOf('[object Object]') !== -1) issues.push('Contains "[object Object]" — something didn\'t convert to text correctly.');
+            var fenceCount = (text.match(/```/g) || []).length;
+            if (fenceCount % 2 !== 0) issues.push('A code block looks like it was left open — check for a missing closing ``` fence.');
+            return issues;
+        }
+
+        function updatePromptHealthBadge(text, elId) {
+            var el = document.getElementById(elId);
+            if (!el) return;
+            var placeholderTexts = ['Select options...', '...'];
+            if (!text || placeholderTexts.indexOf(text.trim()) !== -1) {
+                el.classList.add('hidden');
+                el.innerHTML = '';
+                return;
+            }
+            var issues = assessPromptHealth(text);
+            el.classList.remove('hidden');
+            if (issues.length === 0) {
+                el.innerHTML = '✓ Looks good';
+                el.className = 'text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300';
+                el.removeAttribute('title');
+            } else {
+                el.innerHTML = '⚠ ' + issues.length + ' issue' + (issues.length > 1 ? 's' : '') + ' found';
+                el.className = 'text-[10px] font-bold text-red-800 bg-red-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-red-300 cursor-help';
+                el.setAttribute('title', issues.join(' '));
+            }
         }
 
         function updateRequiredChecklist(targetId, elId) {
@@ -4404,6 +4461,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var b = document.getElementById('prompt-unit-text');
             if (b) b.innerText = txt;
             updateRequiredChecklist('prompt-unit-text', 'unit-required-checklist');
+            updatePromptHealthBadge(txt, 'unit-prompt-health');
         }
 
         function toggleExistingOutlineUI() {
@@ -4774,6 +4832,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var b = document.getElementById('prompt-lesson-text');
             if (b) b.innerText = txt;
             updateRequiredChecklist('prompt-lesson-text', 'lesson-required-checklist');
+            updatePromptHealthBadge(txt, 'lesson-prompt-health');
         }
 
         function updateAssessmentBuilderPrompt() {
@@ -4892,6 +4951,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var box = document.getElementById('prompt-assessment-text');
             if (box) box.innerText = txt;
             updateRequiredChecklist('prompt-assessment-text', 'assess-required-checklist');
+            updatePromptHealthBadge(txt, 'assess-prompt-health');
         }
 
         function copyText(id, btn) {
@@ -7868,12 +7928,31 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             });
         }
 
+        // ---------- Contextual first-time tips ----------
+        // Lighter-weight than the WHS Template help modal (which covers something with
+        // real document-format implications worth a full explanation) — these are small,
+        // dismissible, shown once ever per feature the first time it's actually used,
+        // rather than trying to front-load everything into the one-time welcome modal.
+        function showFirstTimeTip(key, elId, message) {
+            if (localStorage.getItem('whs_tip_' + key + '_seen')) return;
+            var el = document.getElementById(elId);
+            if (!el) return;
+            el.innerHTML = '<div class="flex items-start justify-between gap-3 bg-sky-50 border border-sky-300 text-sky-800 text-xs font-semibold rounded-lg px-3 py-2"><span>💡 ' + message + '</span><button onclick="dismissFirstTimeTip(\'' + key + '\', \'' + elId + '\')" class="shrink-0 text-sky-600 hover:text-sky-900 font-bold leading-none">✕</button></div>';
+            el.classList.remove('hidden');
+        }
+        function dismissFirstTimeTip(key, elId) {
+            try { localStorage.setItem('whs_tip_' + key + '_seen', '1'); } catch (e) {}
+            var el = document.getElementById(elId);
+            if (el) { el.innerHTML = ''; el.classList.add('hidden'); }
+        }
+
         function toggleQuickAddMode() {
             quickAddMode = !quickAddMode;
             if (!quickAddMode) armedTopic = null;
             renderLibrary();
             renderTermGrids();
             renderQuickAddBanner();
+            if (quickAddMode) showFirstTimeTip('quickadd', 'tip-quickadd', 'Click a topic below, then click any empty week to drop it straight in — no need to open the full form.');
         }
 
         function armTopic(strand, subtopic) {
@@ -8061,6 +8140,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (covPanel) { covPanel.classList.remove('hidden'); covPanel.classList.add('block'); }
             renderCoverageGrid();
             saveState();
+            showFirstTimeTip('coverage', 'tip-coverage', "Each strand's own colour shows where it's scheduled across the year — striped cells are blocked weeks, plain grey is still unplanned.");
         }
 
         /* ---------- Realism / sanity warnings ----------
