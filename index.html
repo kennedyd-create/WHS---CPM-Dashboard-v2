@@ -28,10 +28,11 @@
         .contour-banner-bg { opacity: 0.16; }
         html.dark .contour-banner-bg { opacity: 0.10; }
         .glass-card { background: white; border: 1px solid var(--whs-light-blue); border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); }
-        .nav-btn { padding: 0.75rem 1.25rem; font-size: 1.1rem; color: #64748b; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
-        @media (max-width: 1024px) { .nav-btn { padding: 0.5rem 0.75rem; font-size: 0.95rem; } }
-        .nav-btn:hover { color: var(--whs-dark-blue); }
-        .nav-active { border-bottom-color: var(--whs-dark-blue); color: var(--whs-dark-blue); font-weight: 800; }
+        .nav-btn { padding: 0.65rem 1.1rem; font-size: 1.05rem; color: #475569; font-weight: 600; border-radius: 0.6rem; background-color: #ffffff; border: 1px solid #cbd5e1; transition: all 0.2s; white-space: nowrap; }
+        @media (max-width: 1024px) { .nav-btn { padding: 0.5rem 0.75rem; font-size: 0.9rem; } }
+        .nav-btn:hover { background-color: #eff6ff; border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
+        .nav-active { background-color: var(--whs-dark-blue); border-color: var(--whs-dark-blue); color: #ffffff; font-weight: 800; box-shadow: 0 2px 8px rgba(0,32,102,0.3); }
+        .nav-active:hover { background-color: var(--whs-dark-blue); color: #ffffff; }
         .dept-btn { padding: 0.5rem 1rem; border-radius: 0.25rem; font-size: 0.875rem; font-weight: 600; background: white; border: 1px solid #cbd5e1; color: #475569; transition: all 0.2s; }
         .dept-btn:hover { background: #f1f5f9; }
         .dept-btn.active { background: var(--whs-dark-blue); color: white; border-color: var(--whs-dark-blue); }
@@ -96,14 +97,16 @@
         .stage-number-badge { background-color: var(--whs-dark-blue); color: white; border-radius: 9999px; width: 1.75rem; height: 1.75rem; display: inline-flex; align-items: center; justify-content: center; font-size: 0.875rem; }
         /* Year Planner-specific additions */
         .stage-divider-label { font-size: 0.68rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 0.5rem; }
-        .tab-active { border-bottom: 3px solid var(--whs-gold); color: var(--whs-dark-blue); font-weight: 800; }
-        .tab-inactive { border-bottom: 3px solid transparent; color: #64748b; }
-        .tab-inactive:hover { color: var(--whs-dark-blue); border-bottom: 3px solid #b8c9eb; }
+        .tab-active { background-color: var(--whs-dark-blue); color: #ffffff; font-weight: 800; box-shadow: 0 2px 8px rgba(0,32,102,0.3); }
+        .tab-inactive { background-color: #ffffff; color: #475569; font-weight: 600; border: 1px solid #cbd5e1; }
+        .tab-inactive:hover { background-color: #eff6ff; border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
         @keyframes modal-in { 0% { opacity: 0; transform: translateY(8px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         .modal-panel { animation: modal-in 0.18s ease-out; }
         .bg-stripes { background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #eef2fb 10px, #eef2fb 20px); }
         html.dark .bg-stripes { background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #1e293b 10px, #1e293b 20px); }
-        html.dark .tab-inactive:hover { border-bottom: 3px solid #334155; }
+        html.dark .tab-inactive { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .tab-inactive:hover { background-color: #263449; border-color: #5c7dc4; color: #93c5fd; }
+        html.dark #term-tabs.tab-bar-container, html.dark #term-tabs { background-color: rgba(15,23,42,0.5); }
         @media print {
             header, nav, aside, #global-toast, #teaching-profile-pill, #teaching-profile-panel, .no-print { display: none !important; }
         }
@@ -143,7 +146,9 @@
         html.dark nav.sticky { background-color: rgba(15,23,42,0.95) !important; border-color: #334155 !important; }
         html.dark .nav-btn { color: #94a3b8; }
         html.dark .nav-btn:hover { color: #93c5fd; }
-        html.dark .nav-active { color: #93c5fd !important; border-bottom-color: #93c5fd !important; }
+        html.dark .nav-btn { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .nav-btn:hover { background-color: #263449; border-color: #5c7dc4; color: #93c5fd; }
+        html.dark .nav-active { background-color: var(--whs-dark-blue) !important; border-color: var(--whs-dark-blue) !important; color: #ffffff !important; }
         html.dark .nav-btn:hover { color: #93c5fd; }
         html.dark .stage-header { color: #7fb2f0 !important; }
         html.dark .builder-btn:hover { border-color: #7fb2f0; color: #7fb2f0; }
@@ -1058,6 +1063,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 </div>
                             </div>
                             <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
+                                <p class="text-[11px] font-semibold text-slate-500 mb-3">✅ Click <span class="font-bold text-[#002066]">Copy Prompt</span> above, then paste it into Gemini, ChatGPT, or Claude to generate your lesson plan.</p>
                                 <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-lesson-text">Select options...</span></div>
                             </div>
                             <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
@@ -1652,6 +1658,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         </div>
                     </div>
                     <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
+                        <p class="text-[11px] font-semibold text-slate-500 mb-3">✅ Click <span class="font-bold text-[#002066]">Copy Prompt</span> above, then paste it into Gemini, ChatGPT, or Claude to generate your assessment.</p>
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-assessment-text">...</span></div>
                     </div>
                     <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
@@ -1836,12 +1843,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                 </div>
 
-                <div class="flex gap-8" id="term-tabs">
-                    <button id="tab-1" onclick="switchTab(1)" class="pb-3 text-sm tab-active transition-all">Term 1</button>
-                    <button id="tab-2" onclick="switchTab(2)" class="pb-3 text-sm tab-inactive font-medium transition-all">Term 2</button>
-                    <button id="tab-3" onclick="switchTab(3)" class="pb-3 text-sm tab-inactive font-medium transition-all">Term 3</button>
-                    <button id="tab-4" onclick="switchTab(4)" class="pb-3 text-sm tab-inactive font-medium transition-all">Term 4</button>
-                    <button id="tab-coverage" onclick="switchToCoverage()" class="pb-3 text-sm tab-inactive font-medium transition-all ml-2 pl-4 border-l border-slate-300">📊 Full Year Coverage</button>
+                <div class="flex gap-1.5 bg-slate-200/70 p-1.5 rounded-xl w-fit" id="term-tabs">
+                    <button id="tab-1" onclick="switchTab(1)" class="px-4 py-2 rounded-lg text-sm tab-active transition-all">Term 1</button>
+                    <button id="tab-2" onclick="switchTab(2)" class="px-4 py-2 rounded-lg text-sm tab-inactive transition-all">Term 2</button>
+                    <button id="tab-3" onclick="switchTab(3)" class="px-4 py-2 rounded-lg text-sm tab-inactive transition-all">Term 3</button>
+                    <button id="tab-4" onclick="switchTab(4)" class="px-4 py-2 rounded-lg text-sm tab-inactive transition-all">Term 4</button>
+                    <button id="tab-coverage" onclick="switchToCoverage()" class="px-4 py-2 rounded-lg text-sm tab-inactive transition-all">📊 Full Year Coverage</button>
                 </div>
                 <div id="yp-armbar" class="hidden items-center justify-between gap-3 -mx-8 px-8 py-2 mt-3 bg-[var(--whs-gold)]/15 border-t border-[var(--whs-gold)]/40 text-xs font-bold text-[#7a5b1e]"></div>
             </div>
@@ -2074,6 +2081,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>Several more dark mode contrast fixes across the Year Planner and elsewhere</li>
                         <li>Year Planner: added "Export as CSV" — one row per topic block, ready to open in Google Sheets or Excel</li>
                         <li>Added the WHS crest to every generated output — Lesson Plan, Unit Plan, and Year Plan — and applied the WHS blues to the Lesson Plan HTML template for a more polished, on-brand look</li>
+                        <li>Lesson Builder and Assessment Generator now explicitly say to paste the copied prompt into Gemini, ChatGPT, or Claude, matching the guidance Unit Planner already had</li>
+                        <li>"New Here? Guide Me" now mentions Quick Add / Add Your Own Topic (Year Planner) and the story-based assessment formats</li>
+                        <li>Year Planner: the Term 1–4 / Full Year Coverage tabs are now a proper segmented control (solid colour when active, bordered pill when not) instead of plain underlined text, so they're much easier to notice</li>
+                        <li>Behind the scenes: the three separate places the app saved its data (Lesson/Unit/Assessment, Year Planner, and My Teaching Profile) are now one unified system, loaded once — existing saved plans migrate across automatically and nothing is deleted in the process</li>
+                        <li>The main tool navigation (Lesson Builder / Unit Planner / Assessment Generator / Year Planner / CPM Theory) is now a proper segmented control too, for the same reason and matching the same fix as the Year Planner tabs</li>
                     </ul>
                 </div>
                 <div>
@@ -2269,11 +2281,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 </button>
                 <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="assessment">
                     <span class="block font-bold text-[#002066] text-sm">📝 Create a test or task</span>
-                    <span class="block text-xs text-slate-500 mt-1">Generate assessments, tasks, and rubrics → <strong>Assessment Generator</strong></span>
+                    <span class="block text-xs text-slate-500 mt-1">Generate assessments, tasks, and rubrics — including story-based formats like podcasts and explainer videos → <strong>Assessment Generator</strong></span>
                 </button>
                 <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="yearplanner">
                     <span class="block font-bold text-[#002066] text-sm">📅 Plan a whole year</span>
-                    <span class="block text-xs text-slate-500 mt-1">Build a full-year, term-by-term curriculum plan → <strong>Year Planner</strong></span>
+                    <span class="block text-xs text-slate-500 mt-1">Build a full-year, term-by-term curriculum plan — click topics straight into place, or add your own beyond the curriculum library → <strong>Year Planner</strong></span>
                 </button>
                 <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition sm:col-span-2" data-action="onboarding-go" data-target="theory">
                     <span class="block font-bold text-[#002066] text-sm">📖 Understand the CPM itself</span>
@@ -3229,26 +3241,83 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             showGlobalToast('Downloaded all generated prompts ✓');
         }
 
+        // ---------- Unified storage layer ----------
+        // Previously the app saved to three completely separate localStorage keys
+        // (unit/lesson/assessment bundled together, Year Planner on its own, Teaching
+        // Profile on its own), loaded independently, in a specific order that had to be
+        // guessed at correctly every time a new feature needed to read across them —
+        // which is exactly how the Teaching Profile addons-banner bug happened. This
+        // collapses all three into one key, loaded once, so "did the thing I need exist
+        // yet" is no longer a question every new feature has to answer for itself.
+        //
+        // Existing save/load function NAMES and call sites are all left exactly as they
+        // were (saveAppState, saveState, saveTeachingProfile, loadAppState, loadState,
+        // loadTeachingProfile) — only what they do internally has changed — so none of
+        // the many call sites throughout the file needed to change.
+        //
+        // Migration is one-way and non-destructive: the first time a returning user is
+        // seen after this shipped, their three old keys are read, merged into the new
+        // unified shape, and saved under the new key. The old keys are never deleted, so
+        // if anything about this needs to be undone, the original data is still there.
+        const WHS_UNIFIED_KEY = 'whs_unified_state_v1';
+        var _unifiedState = null;
+
+        function loadUnifiedState() {
+            if (_unifiedState) return _unifiedState;
+            try {
+                var raw = localStorage.getItem(WHS_UNIFIED_KEY);
+                if (raw) {
+                    _unifiedState = JSON.parse(raw) || {};
+                    return _unifiedState;
+                }
+            } catch (e) {}
+
+            var migrated = {};
+            try {
+                var legacyApp = localStorage.getItem('whs_app_state');
+                if (legacyApp) {
+                    var parsedApp = JSON.parse(legacyApp);
+                    if (parsedApp.unitState) migrated.unitState = parsedApp.unitState;
+                    if (parsedApp.lessonState) migrated.lessonState = parsedApp.lessonState;
+                    if (parsedApp.assessmentState) migrated.assessmentState = parsedApp.assessmentState;
+                }
+            } catch (e) {}
+            try {
+                var legacyYP = localStorage.getItem(WHS_STORAGE_KEY);
+                if (legacyYP) migrated.yearPlannerState = JSON.parse(legacyYP);
+            } catch (e) {}
+            try {
+                var legacyTP = localStorage.getItem('whs_teaching_profile');
+                if (legacyTP) migrated.teachingProfile = JSON.parse(legacyTP);
+            } catch (e) {}
+
+            _unifiedState = migrated;
+            try { localStorage.setItem(WHS_UNIFIED_KEY, JSON.stringify(_unifiedState)); } catch (e) {}
+            return _unifiedState;
+        }
+
+        function saveUnifiedState(partial) {
+            if (!_unifiedState) _unifiedState = {};
+            Object.assign(_unifiedState, partial);
+            try { localStorage.setItem(WHS_UNIFIED_KEY, JSON.stringify(_unifiedState)); } catch (e) {}
+        }
+
         function saveAppState() {
             if (!isAppReady) return;
             try {
-                localStorage.setItem('whs_app_state', JSON.stringify({
-                    unitState: unitState,
-                    lessonState: lessonState,
-                    assessmentState: assessmentState
-                }));
+                saveUnifiedState({ unitState: unitState, lessonState: lessonState, assessmentState: assessmentState });
                 notifyDraftSaved();
             } catch (e) {}
         }
 
         function saveTeachingProfile() {
-            try { localStorage.setItem('whs_teaching_profile', JSON.stringify(teachingProfile)); } catch (e) {}
+            try { saveUnifiedState({ teachingProfile: teachingProfile }); } catch (e) {}
         }
 
         function loadTeachingProfile() {
             try {
-                var raw = localStorage.getItem('whs_teaching_profile');
-                if (raw) Object.assign(teachingProfile, JSON.parse(raw));
+                var data = loadUnifiedState();
+                if (data.teachingProfile) Object.assign(teachingProfile, data.teachingProfile);
             } catch (e) {}
         }
 
@@ -3379,10 +3448,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function loadAppState() {
             var isFirstLoadSinceStagesMigration = !localStorage.getItem('whs_stages_default_migration');
             try { localStorage.setItem('whs_stages_default_migration', '1'); } catch (e) {}
-            var s = localStorage.getItem('whs_app_state');
-            if (s) {
+            var unified = loadUnifiedState();
+            if (unified.unitState || unified.lessonState || unified.assessmentState) {
                 try {
-                    var st = JSON.parse(s);
+                    var st = unified;
                     
                     if (st.unitState) Object.assign(unitState, st.unitState);
                     if (st.lessonState) {
@@ -5203,7 +5272,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function saveState(message) {
             try {
-                localStorage.setItem(WHS_STORAGE_KEY, JSON.stringify(yearPlannerState));
+                saveUnifiedState({ yearPlannerState: yearPlannerState });
                 if (message) showToast(message);
             } catch (e) {
                 console.warn('Could not save draft to this browser.', e);
@@ -5212,9 +5281,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function loadState() {
             try {
-                const raw = localStorage.getItem(WHS_STORAGE_KEY);
-                if (!raw) return false;
-                const parsed = JSON.parse(raw);
+                const parsed = loadUnifiedState().yearPlannerState;
                 if (!parsed || !parsed.terms) return false;
                 yearPlannerState = Object.assign(yearPlannerState, parsed);
                 return true;
@@ -7963,11 +8030,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 const panel = document.getElementById(`panel-${i}`);
                 if(btn && panel) {
                     if (i === term) {
-                        btn.className = "pb-3 text-sm tab-active transition-all";
+                        btn.className = "px-4 py-2 rounded-lg text-sm tab-active transition-all";
                         panel.classList.remove('hidden');
                         panel.classList.add('block');
                     } else {
-                        btn.className = "pb-3 text-sm tab-inactive font-medium transition-all";
+                        btn.className = "px-4 py-2 rounded-lg text-sm tab-inactive transition-all";
                         panel.classList.add('hidden');
                         panel.classList.remove('block');
                     }
@@ -7975,7 +8042,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             const covBtn = document.getElementById('tab-coverage');
             const covPanel = document.getElementById('panel-coverage');
-            if (covBtn) covBtn.className = "pb-3 text-sm tab-inactive font-medium transition-all ml-2 pl-4 border-l border-slate-300";
+            if (covBtn) covBtn.className = "px-4 py-2 rounded-lg text-sm tab-inactive transition-all";
             if (covPanel) { covPanel.classList.add('hidden'); covPanel.classList.remove('block'); }
             saveState();
         }
@@ -7985,12 +8052,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             for (let i = 1; i <= 4; i++) {
                 const btn = document.getElementById(`tab-${i}`);
                 const panel = document.getElementById(`panel-${i}`);
-                if (btn) btn.className = "pb-3 text-sm tab-inactive font-medium transition-all";
+                if (btn) btn.className = "px-4 py-2 rounded-lg text-sm tab-inactive transition-all";
                 if (panel) { panel.classList.add('hidden'); panel.classList.remove('block'); }
             }
             const covBtn = document.getElementById('tab-coverage');
             const covPanel = document.getElementById('panel-coverage');
-            if (covBtn) covBtn.className = "pb-3 text-sm tab-active transition-all ml-2 pl-4 border-l border-slate-300";
+            if (covBtn) covBtn.className = "px-4 py-2 rounded-lg text-sm tab-active transition-all";
             if (covPanel) { covPanel.classList.remove('hidden'); covPanel.classList.add('block'); }
             renderCoverageGrid();
             saveState();
