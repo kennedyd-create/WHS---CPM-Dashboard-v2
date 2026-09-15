@@ -702,6 +702,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <button id="nav-assessment" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generate tests, tasks, and rubrics" data-action="view" data-target="assessment"><span style="color:#CD7F32">★</span> Assessment Generator</button>
                 <button id="nav-yearplanner" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Build a full-year term-by-term curriculum plan" data-action="view" data-target="yearplanner">📅 Year Planner <span class="text-[8px] font-normal opacity-70">NEW</span></button>
                 <button id="nav-theory" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Read the research behind the CPM" data-action="view" data-target="theory">CPM Theory</button>
+                <button id="nav-notebook" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="How to use Gemini Notebook's own source-grounding to build a full course, step by step" data-action="view" data-target="notebook">📓 Gemini Notebook</button>
             </div>
 
             <div class="flex flex-wrap items-center justify-center gap-1.5">
@@ -1708,6 +1709,109 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
         </div>
 
+        <div id="view-notebook" class="hidden space-y-8 animate-in fade-in duration-500 max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-black text-slate-900 mb-4">📓 Using Gemini Notebook to Build a Course</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">This tab doesn't generate anything itself — it explains a technique. Upload your own material (a textbook chapter, a PDF, past resources, research) into a Gemini Notebook, then work through these prompts in order to turn it into a fully-staged course.</p>
+            </div>
+
+            <div class="bg-orange-50 border border-orange-200 rounded-2xl p-6">
+                <h3 class="text-sm font-bold text-orange-800 uppercase tracking-widest mb-2">Why staged prompting, not one giant prompt</h3>
+                <p class="text-sm text-slate-700 leading-relaxed">Asking an AI for "a whole course" in one shot tends to produce something shallow — it has to spread its attention across eight different jobs at once. Working in stages, and explicitly pausing between each one, keeps every step grounded in what actually came before it, and keeps the output dense rather than thin. This is the exact same principle behind two things already built into this tool: Lesson Builder's Gemini Notebook mode generates its source document and its slide prompt as separate, sequential pieces rather than one pass, and Unit Planner's Gemini Notebook add-on deliberately stops and asks before it writes the follow-up knowledge document. The sequence below is that same idea, taken all the way through a full course.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <button onclick="goToLessonNotebookMode()" class="text-left p-4 rounded-xl border-2 border-orange-200 bg-white hover:border-orange-400 hover:bg-orange-50 transition">
+                    <span class="block font-bold text-orange-700 text-sm">⭐ Already in this tool: Lesson Builder</span>
+                    <span class="block text-xs text-slate-500 mt-1">Switch to "Gemini Notebook Builder" mode → generates a persona prompt, a dense source document, and a slide-generation prompt for one lesson</span>
+                </button>
+                <button onclick="goToUnitNotebookAddon()" class="text-left p-4 rounded-xl border-2 border-orange-200 bg-white hover:border-orange-400 hover:bg-orange-50 transition">
+                    <span class="block font-bold text-orange-700 text-sm">📅 Already in this tool: Unit Planner</span>
+                    <span class="block text-xs text-slate-500 mt-1">Switches on the "Gemini Notebook Knowledge" add-on → after your unit plan, offers a dense factual knowledge document for the whole unit</span>
+                </button>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-black text-slate-900 mb-1">The 8-Step Sequence</h3>
+                <p class="text-sm text-slate-500 mb-6">Work through these in order, inside the same Gemini Notebook chat. Replace <code class="bg-slate-100 px-1.5 py-0.5 rounded text-orange-700 font-bold">[TOPIC]</code>, <code class="bg-slate-100 px-1.5 py-0.5 rounded text-orange-700 font-bold">[AUDIENCE]</code>, and <code class="bg-slate-100 px-1.5 py-0.5 rounded text-orange-700 font-bold">[X]</code> each time — Gemini will have already told you the module/lesson numbers from Step 1's output.</p>
+
+                <div class="space-y-4" id="notebook-steps">
+                    <!-- Step 1 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 1 — Create the Course Blueprint</h4>
+                            <button onclick="copyText('nb-step-1', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-1">Using the sources in this notebook, create a complete course on [TOPIC] for [AUDIENCE]. Build a logical beginner-to-advanced curriculum with 6–10 modules, learning objectives, lessons and practical outcomes for each module.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">Run this first, once, before anything else — everything downstream refers back to the module/lesson structure it produces.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 2 — Build Each Module</h4>
+                            <button onclick="copyText('nb-step-2', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-2">Expand Module [X] into a complete learning module. Include the module objective, key concepts, 3–5 lessons, examples, exercises and expected outcomes. Base everything on the notebook sources.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">Repeat once per module, one at a time — not all at once — so each one gets full attention.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 3 — Create the Lessons</h4>
+                            <button onclick="copyText('nb-step-3', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-3">Turn Lesson [X] into a detailed lesson. Include what students need to know, a clear explanation, step-by-step teaching points, examples, common mistakes and an actionable exercise.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">Repeat per lesson within the module you're working on.</p>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 4 — Create Teaching Scripts</h4>
+                            <button onclick="copyText('nb-step-4', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-4">Write a conversational teaching script for Lesson [X] that I can use for a video or live class. Start with a strong hook, explain each concept simply, use examples and finish with an action step.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">Optional — only worth doing for lessons you're actually recording or presenting live.</p>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 5 — Create Study Materials</h4>
+                            <button onclick="copyText('nb-step-5', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-5">Create supporting materials for Module [X]. Include a concise summary, key takeaways, important terminology, cheat sheet, reflection questions and practical exercises students can use after the lesson.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">One per module, once that module's lessons are done.</p>
+                    </div>
+                    <!-- Step 6 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 6 — Create Quizzes</h4>
+                            <button onclick="copyText('nb-step-6', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-6">Create a 10-question quiz for Module [X] based only on the notebook sources. Mix multiple-choice, true/false and scenario-based questions. Include the correct answers and short explanations.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">"Based only on the notebook sources" matters — it's what stops Gemini inventing facts that aren't actually in your material.</p>
+                    </div>
+                    <!-- Step 7 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 7 — Create Assignments</h4>
+                            <button onclick="copyText('nb-step-7', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-7">Create a practical assignment for Module [X] that requires students to apply what they learned. Include the objective, instructions, deliverables, assessment criteria and an example of a strong submission.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">One per module — this is the "prove you can actually use it" check, not just the recall check the quiz already covers.</p>
+                    </div>
+                    <!-- Step 8 -->
+                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex justify-between items-center">
+                            <h4 class="font-bold text-slate-800 text-sm">Step 8 — Create the Final Project</h4>
+                            <button onclick="copyText('nb-step-8', this)" class="text-xs font-bold text-[#002066] hover:underline">Copy</button>
+                        </div>
+                        <p class="px-5 pt-4 text-sm text-slate-600 whitespace-pre-wrap" id="nb-step-8">Design a final project that combines everything taught throughout the course. Give students a realistic outcome to produce, step-by-step instructions, deliverables, grading criteria and a checklist for successful completion.</p>
+                        <p class="px-5 pb-4 pt-2 text-xs text-slate-400">Last step, once — after every module is built, not before.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="view-yearplanner" class="hidden animate-in fade-in duration-500">
             <div class="max-w-6xl mx-auto mb-6 text-center">
                 <h3 class="text-2xl font-bold text-slate-900">📅 Te Mātaiaho Interactive Year Planner</h3>
@@ -2096,6 +2200,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>Lesson Builder and Assessment Generator now explicitly say to paste the copied prompt into Gemini, ChatGPT, or Claude, matching the guidance Unit Planner already had</li>
                         <li>"New Here? Guide Me" now mentions Quick Add / Add Your Own Topic (Year Planner) and the story-based assessment formats</li>
                         <li>Year Planner: the Term 1–4 / Full Year Coverage tabs are now a proper segmented control (solid colour when active, bordered pill when not) instead of plain underlined text, so they're much easier to notice</li>
+                        <li>New tab: "📓 Gemini Notebook" — explains the staged-prompting technique for turning your own uploaded sources into a full course (blueprint → modules → lessons → scripts → materials → quizzes → assignments → final project), with copy-ready prompts and links to the two related features already in Lesson Builder and Unit Planner</li>
                         <li>Behind the scenes: the three separate places the app saved its data (Lesson/Unit/Assessment, Year Planner, and My Teaching Profile) are now one unified system, loaded once — existing saved plans migrate across automatically and nothing is deleted in the process</li>
                         <li>The main tool navigation (Lesson Builder / Unit Planner / Assessment Generator / Year Planner / CPM Theory) is now a proper segmented control too, for the same reason and matching the same fix as the Year Planner tabs</li>
                         <li>Added two small one-time tips — Quick Add (Year Planner) explains itself the first time you switch it on, and Full Year Coverage explains its colour-coding the first time you open it</li>
@@ -2593,7 +2698,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function showView(viewId) {
             sessionStorage.setItem('whs_active_view', viewId);
-            ['planning', 'lesson', 'assessment', 'theory', 'yearplanner'].forEach(function(v) {
+            ['planning', 'lesson', 'assessment', 'theory', 'yearplanner', 'notebook'].forEach(function(v) {
                 var el = document.getElementById('view-' + v);
                 var btn = document.getElementById('nav-' + v);
                 if (el) el.classList.add('hidden');
@@ -2712,6 +2817,19 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             updateUnitBuilderPrompt();
             saveAppState();
             updateUnitAddonsBanner();
+        }
+
+        // Quick links from the Gemini Notebook explainer tab to the two features that
+        // already exist elsewhere in the app, rather than duplicating them.
+        function goToLessonNotebookMode() {
+            showView('lesson');
+            var btn = document.getElementById('mode-btn-notebooklm');
+            if (btn) setLessonMode('notebooklm', btn);
+        }
+        function goToUnitNotebookAddon() {
+            showView('planning');
+            var btn = document.getElementById('unit-gemini-notebook-btn');
+            if (btn && !unitState.geminiNotebook) toggleUnitGeminiNotebook(btn);
         }
 
         function syncUnitMathsTemplateBtn() {
