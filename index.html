@@ -2226,6 +2226,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>Fixed one of those research links to point directly at the actual peer-reviewed study (published in <em>Scientific Reports</em>) rather than a different paper that only cited it</li>
                         <li>Credits & Sources now states the tool's IP ownership and that copying/redistribution isn't permitted without permission</li>
                         <li>Renamed the site from "Common Practice Model (CPM) - AI Prompt Generator" to "Teaching & Planning AI Prompt Generator" — CPM is now one part of the tool (Lesson Builder, Unit Planner, CPM Theory), not the whole of it, and the old name no longer matched what's here (Year Planner, Gemini Notebook, My Teaching Profile, and more). CPM stays visible in the badge under the header</li>
+                        <li>Fixed "Reset Data" wiping out your My Teaching Profile selections — it now just switches the profile back off, the same as a first-time default, without losing the Junior/Senior preferences you'd already picked</li>
                         <li>The main tool navigation (Lesson Builder / Unit Planner / Assessment Generator / Year Planner / CPM Theory) is now a proper segmented control too, for the same reason and matching the same fix as the Year Planner tabs</li>
                         <li>Added two small one-time tips — Quick Add (Year Planner) explains itself the first time you switch it on, and Full Year Coverage explains its colour-coding the first time you open it</li>
                         <li>Lesson Builder, Unit Planner, and Assessment Generator now show a "Prompt Health" check next to the required-fields badge, flagging things like a stray "undefined" or an unclosed code block that field-completeness alone can't catch</li>
@@ -5342,8 +5343,23 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     if (c) c.classList.add('hidden'); 
                 }
                 else if (action === 'confirm-reset') { 
+                    // Reset is meant to give a clean slate for whatever's currently being
+                    // planned, not force a teacher to rebuild a personal preference set
+                    // they already set up — so My Teaching Profile's actual selections
+                    // survive a reset, it just switches back off, same as a first-time
+                    // default, rather than being wiped along with everything else.
+                    var preservedProfile = null;
+                    try {
+                        var unified = JSON.parse(localStorage.getItem(WHS_UNIFIED_KEY) || '{}');
+                        if (unified.teachingProfile) {
+                            preservedProfile = Object.assign({}, unified.teachingProfile, { enabled: false });
+                        }
+                    } catch (e) {}
                     localStorage.clear(); 
                     sessionStorage.clear(); 
+                    if (preservedProfile) {
+                        try { localStorage.setItem(WHS_UNIFIED_KEY, JSON.stringify({ teachingProfile: preservedProfile })); } catch (e) {}
+                    }
                     window.location.reload(); 
                 }
             });
