@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waiheke High School: Common Practice Model (CPM) - AI Prompt Generator</title>
+    <title>Waiheke High School: Teaching &amp; Planning AI Prompt Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -660,8 +660,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                     <div>
                         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-1">Waiheke High School</h1>
-                        <h2 class="text-xl md:text-2xl font-normal opacity-90">Common Practice Model (CPM) - AI Prompt Generator</h2>
-                        <div class="mt-3 inline-block bg-white text-[#002066] px-4 py-1.5 border border-transparent text-xs font-bold uppercase tracking-widest shadow-sm rounded">Knowledge & Practices Hub</div>
+                        <h2 class="text-xl md:text-2xl font-normal opacity-90">Teaching &amp; Planning AI Prompt Generator</h2>
+                        <div class="mt-3 inline-block bg-white text-[#002066] px-4 py-1.5 border border-transparent text-xs font-bold uppercase tracking-widest shadow-sm rounded">Common Practice Model (CPM) · Knowledge &amp; Practices Hub</div>
                     </div>
                 </div>
             </div>
@@ -1034,9 +1034,27 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 <div id="les-worksheet-format-container" class="hidden mt-3 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                                     <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Worksheet Activity Style</span>
                                     <div class="flex flex-wrap gap-2" id="les-worksheet-opts">
+                                        <button class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="A proper practice set with real volume — teach, model, then enough repetition to actually build fluency, not just 2-3 sample questions" data-action="lesson-ws-format" data-val="Standard Practice Worksheet">📄 Standard Practice Worksheet <span id="les-ws-maths-badge" class="hidden text-[8px] font-black uppercase tracking-wide text-amber-700 bg-amber-100 border border-amber-300 px-1.5 py-0.5 rounded ml-1">⭐ Recommended for Maths</span></button>
                                         <button class="builder-btn active" data-action="lesson-ws-format" data-val="Standard Task">Standard Task</button>
                                         <button class="builder-btn" data-action="lesson-ws-format" data-val="Gap Fill / Cloze">Gap Fill / Cloze</button>
                                         <button class="builder-btn" data-action="lesson-ws-format" data-val="Matching / Sorting">Matching / Sorting</button>
+                                    </div>
+                                    <div id="les-practice-worksheet-options" class="hidden mt-3 pt-3 border-t border-blue-200 space-y-3">
+                                        <div>
+                                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Amount of Practice</span>
+                                            <div class="flex flex-wrap gap-2">
+                                                <button class="builder-btn" data-action="lesson-practice-amount" data-val="10" onclick="setLessonPracticeAmount('10', this)">Short — 10 questions</button>
+                                                <button class="builder-btn active" data-action="lesson-practice-amount" data-val="15" onclick="setLessonPracticeAmount('15', this)">Standard — 15 questions ⭐</button>
+                                                <button class="builder-btn" data-action="lesson-practice-amount" data-val="20" onclick="setLessonPracticeAmount('20', this)">Extended — 20 questions</button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Answer Sheet</span>
+                                            <div class="flex flex-wrap gap-2">
+                                                <button class="builder-btn active" data-action="lesson-practice-answers" data-val="include" onclick="setLessonPracticeAnswers('include', this)">✓ Include teacher answers</button>
+                                                <button class="builder-btn" data-action="lesson-practice-answers" data-val="none" onclick="setLessonPracticeAnswers('none', this)">○ Student worksheet only</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -2202,6 +2220,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>Year Planner: the Term 1–4 / Full Year Coverage tabs are now a proper segmented control (solid colour when active, bordered pill when not) instead of plain underlined text, so they're much easier to notice</li>
                         <li>New tab: "📓 Gemini Notebook" — explains the staged-prompting technique for turning your own uploaded sources into a full course (blueprint → modules → lessons → scripts → materials → quizzes → assignments → final project), with copy-ready prompts and links to the two related features already in Lesson Builder and Unit Planner</li>
                         <li>Behind the scenes: the three separate places the app saved its data (Lesson/Unit/Assessment, Year Planner, and My Teaching Profile) are now one unified system, loaded once — existing saved plans migrate across automatically and nothing is deleted in the process</li>
+                        <li>Lesson Builder: new "📄 Standard Practice Worksheet" format — a substantial, fluency-building practice set (10/15/20 questions, your choice) built around teach → model → repeat → increase difficulty, with a teacher answer sheet. Recommended by default for Maths, available for every subject</li>
+                        <li>Unit Planner: if the AI structures an early lesson as a broad overview rather than teaching one thing in depth, it's now required to clearly flag that in the output — so it's obvious upfront that some terms are introduced lightly and covered properly later in the unit</li>
+                        <li>Credits & Sources now includes the research behind treating AI as a learning support, not just a curriculum/strategy source list</li>
+                        <li>Fixed one of those research links to point directly at the actual peer-reviewed study (published in <em>Scientific Reports</em>) rather than a different paper that only cited it</li>
+                        <li>Credits & Sources now states the tool's IP ownership and that copying/redistribution isn't permitted without permission</li>
+                        <li>Renamed the site from "Common Practice Model (CPM) - AI Prompt Generator" to "Teaching & Planning AI Prompt Generator" — CPM is now one part of the tool (Lesson Builder, Unit Planner, CPM Theory), not the whole of it, and the old name no longer matched what's here (Year Planner, Gemini Notebook, My Teaching Profile, and more). CPM stays visible in the badge under the header</li>
                         <li>The main tool navigation (Lesson Builder / Unit Planner / Assessment Generator / Year Planner / CPM Theory) is now a proper segmented control too, for the same reason and matching the same fix as the Year Planner tabs</li>
                         <li>Added two small one-time tips — Quick Add (Year Planner) explains itself the first time you switch it on, and Full Year Coverage explains its colour-coding the first time you open it</li>
                         <li>Lesson Builder, Unit Planner, and Assessment Generator now show a "Prompt Health" check next to the required-fields badge, flagging things like a stray "undefined" or an unclosed code block that field-completeness alone can't catch</li>
@@ -2281,7 +2305,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>Waiheke High School subject colour palette, logo, and WHS Official Templates — used with permission for internal school use.</li>
                     </ul>
                 </div>
-                <p class="text-xs text-slate-400 pt-2 border-t border-slate-100">Built for internal professional development use at Waiheke High School. Not for external redistribution without checking source permissions above.</p>
+                <div>
+                    <p class="font-bold text-[#002066]">Evidence for AI as a Learning Support</p>
+                    <ul class="list-disc pl-5 mt-1 space-y-1.5 text-slate-600">
+                        <li><strong>Fischer, M., Rau, H. A., &amp; Rilke, R. M. (2025)</strong> — <a href="https://docs.iza.org/dp18338.pdf" target="_blank" rel="noopener" class="text-[#002066] underline hover:no-underline">"AI Tutoring Enhances Student Learning Without Crowding Out Reading Effort"</a>, IZA Discussion Paper No. 18338. A randomised trial found AI tutor access raised test performance without reducing how much students actually read the source material — evidence that, used well, AI adds to student effort rather than replacing it.</li>
+                        <li><strong>Kestin, G., Miller, K., Klales, A., Milbourne, T., &amp; Ponti, G. (2025)</strong> — <a href="https://www.nature.com/articles/s41598-025-97652-6" target="_blank" rel="noopener" class="text-[#002066] underline hover:no-underline">"AI Tutoring Outperforms In-Class Active Learning"</a>, <em>Scientific Reports</em> 15, 17458. This Harvard-led randomised trial found students learned significantly more, in less time, with a well-designed AI tutor than in an active-learning classroom — itself already considered best practice, not a passive lecture — while also reporting higher engagement and motivation.</li>
+                    </ul>
+                </div>
+                <p class="text-xs text-slate-600 mt-4 pt-3 border-t border-slate-200 bg-slate-50 -mx-6 md:-mx-8 px-6 md:px-8 py-3 rounded-b-2xl"><strong>© 2026 David Kennedy.</strong> This tool — including its design, prompt engineering, and underlying code — is the intellectual property of David Kennedy, built for use at Waiheke High School. Copying, redistributing, or reproducing it, in whole or in part, is not permitted without express written permission.</p>
             </div>
             <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-credits">Close</button>
         </div>
@@ -2387,7 +2418,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
     <div id="onboarding-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl">
-            <h3 class="text-xl md:text-2xl font-black text-center text-slate-900 mb-1">👋 Welcome to the CPM AI Prompt Generator</h3>
+            <h3 class="text-xl md:text-2xl font-black text-center text-slate-900 mb-1">👋 Welcome to the Teaching &amp; Planning AI Prompt Generator</h3>
             <p class="text-center text-slate-500 text-sm mb-6">What are you trying to do today?</p>
             <div class="grid sm:grid-cols-2 gap-3">
                 <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="lesson">
@@ -2602,7 +2633,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
+            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
         var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
@@ -3787,6 +3818,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     }
                     
                     setActiveBtn('lesson-ws-format', lessonState.worksheetFormat);
+                    setActiveBtn('lesson-practice-amount', lessonState.practiceAmount);
+                    setActiveBtn('lesson-practice-answers', lessonState.practiceAnswers);
+                    var practicePanel = document.getElementById('les-practice-worksheet-options');
+                    if (practicePanel) practicePanel.classList.toggle('hidden', lessonState.worksheetFormat !== 'Standard Practice Worksheet');
+                    updateWorksheetMathsBadge();
                     
                     document.querySelectorAll('[data-action="lesson-quiz-format"]').forEach(function(b) { b.classList.remove('active'); });
                     lessonState.quizFormats.forEach(function(q) {
@@ -4000,6 +4036,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
             b.classList.add('active');
             checkLessonBothSelected();
+
+            if (k === 'dept') updateWorksheetMathsBadge();
             
             if (k === 'sequence') {
                 var customContainer = document.getElementById('les-custom-sequence-container');
@@ -4056,8 +4094,34 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             lessonState.worksheetFormat = v;
             document.querySelectorAll('[data-action="lesson-ws-format"]').forEach(function(el) { el.classList.remove('active'); });
             b.classList.add('active');
+            var practicePanel = document.getElementById('les-practice-worksheet-options');
+            if (practicePanel) practicePanel.classList.toggle('hidden', v !== 'Standard Practice Worksheet');
             updateLessonBuilderPrompt();
             saveAppState();
+        }
+
+        function setLessonPracticeAmount(v, b) {
+            lessonState.practiceAmount = v;
+            document.querySelectorAll('[data-action="lesson-practice-amount"]').forEach(function(el) { el.classList.remove('active'); });
+            b.classList.add('active');
+            updateLessonBuilderPrompt();
+            saveAppState();
+        }
+
+        function setLessonPracticeAnswers(v, b) {
+            lessonState.practiceAnswers = v;
+            document.querySelectorAll('[data-action="lesson-practice-answers"]').forEach(function(el) { el.classList.remove('active'); });
+            b.classList.add('active');
+            updateLessonBuilderPrompt();
+            saveAppState();
+        }
+
+        // Standard Practice Worksheet is available for every subject, but only actively
+        // recommended for Maths — this just shows/hides that badge, it doesn't reorder
+        // anything (the option already sits first in the list for everyone).
+        function updateWorksheetMathsBadge() {
+            var badge = document.getElementById('les-ws-maths-badge');
+            if (badge) badge.classList.toggle('hidden', lessonState.dept !== 'Maths');
         }
         
         function toggleLessonQuizFormat(v) {
@@ -4364,7 +4428,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 }
             }
 
-            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(unitState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
+            var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(unitState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\nIMPORTANT: If you choose to make the first lesson (or any early lesson in the sequence) a broad overview or introduction to the topic, rather than teaching a single concept in full depth, you MUST flag this clearly — add a short, bolded note at the top of that lesson, e.g. "**Overview lesson — key terms introduced here are covered in full depth in later lessons (see Lesson X).**" This matters because a teacher may only read that one lesson before teaching it, and needs to know upfront that some vocabulary or concepts are being introduced at a surface level, not yet requiring full understanding.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             
             if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
             if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
@@ -4940,7 +5004,22 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (outs.includes('slides')) txt += 'PART B: Slideshow Content & Speaker Notes (8+ slides). Format clearly as text. If the user is using Google Gemini, remind them they can type @GoogleSlides to auto-generate this.\n';
                 if (outs.includes('worksheet')) {
                     var wF = lessonState.worksheetFormat || 'Standard Task';
-                    txt += 'PART C: Differentiated Student Worksheet (' + wF + '). You MUST provide this in TWO formats: 1) Plain Markdown text (for easy copy-pasting to Google Docs) AND 2) A beautifully CSS styled HTML code block (\\`\\`\\`html\n...\n\\`\\`\\`). Use WHS colors (#002066/#d1e6f6).\n';
+                    if (wF === 'Standard Practice Worksheet') {
+                        var practiceN = lessonState.practiceAmount || '15';
+                        var includeAnswers = lessonState.practiceAnswers !== 'none';
+                        txt += 'PART C: Standard Practice Worksheet.\n';
+                        txt += 'CRITICAL: This is a substantial fluency-building practice worksheet, not a short activity. Generate approximately ' + practiceN + ' practice questions in total. Do NOT generate a token worksheet with only 2-4 questions — that defeats the purpose of this format. Students need enough repetition to become genuinely fluent, not just briefly exposed to the skill.\n';
+                        txt += 'Structure it as: A) What You Need to Know — a short teaching section with the rule/concept/formula, key vocabulary, the steps to follow, and one common mistake to avoid (concise, not a textbook chapter). B) Worked Example — at least one fully worked example showing the thinking step-by-step, not just the answer (use two worked examples, a straightforward one and a slightly harder one, if the skill genuinely warrants it). C) Your Turn / Foundation Practice — around 5 questions closely resembling the worked example, deliberately repetitive, practising the same procedure before anything changes. D) Building Fluency — around 5-7 questions using the same core skill with increasing variation appropriate to the topic. E) Challenge / Apply It — around 3-5 harder questions requiring the skill to be applied with less scaffolding (multi-step, word problems, unfamiliar contexts, or combined with prior learning) — do not introduce new content here, only require more independent application of what was already taught. F) Check Your Understanding — 1-3 final questions students should be able to complete fully independently, as a genuine check of mastery.\n';
+                        txt += 'Repetition in sections C and D is intentional, not something to "improve" away — provide multiple questions requiring the same procedure before introducing variation, and do not replace that repetition with discussion activities, projects, games, or open-ended tasks instead.\n';
+                        txt += 'Adapt what "practice" means to the subject: in Mathematics and other procedural subjects, emphasise repeated procedural practice. In English and humanities subjects, use repeated practice of a clearly defined disciplinary skill instead (e.g. progressively harder sentences, extracts, or sources applying the same skill) — do not force numerical-style repetition onto a subject where it does not fit.\n';
+                        txt += 'This worksheet should support the lesson\'s own I Do / We Do / You Do structure: the teaching section and worked example are the "I Do", the first couple of foundation questions suit "We Do" if completed together as a class, and the remaining questions are the "You Do" independent practice.\n';
+                        txt += includeAnswers
+                            ? 'Include a clearly separated Teacher Answer Sheet at the end (not mixed into the student-facing worksheet) — answers for the straightforward questions, working shown for the more difficult questions, and full solutions for the hardest/application questions.\n'
+                            : 'Student-facing worksheet only — do not include an answer sheet.\n';
+                        txt += 'You MUST provide this in TWO formats: 1) Plain Markdown text (for easy copy-pasting to Google Docs) AND 2) A beautifully CSS styled HTML code block (\\`\\`\\`html\n...\n\\`\\`\\`). Use WHS colors (#002066/#d1e6f6).\n';
+                    } else {
+                        txt += 'PART C: Differentiated Student Worksheet (' + wF + '). You MUST provide this in TWO formats: 1) Plain Markdown text (for easy copy-pasting to Google Docs) AND 2) A beautifully CSS styled HTML code block (\\`\\`\\`html\n...\n\\`\\`\\`). Use WHS colors (#002066/#d1e6f6).\n';
+                    }
                 }
                 if (outs.includes('content')) txt += 'PART D: Teacher Content Reference Sheet.\n';
                 if (outs.includes('quiz')) txt += 'PART E: Quiz formats: ' + (lessonState.quizFormats ? lessonState.quizFormats.join(', ') : 'Google Forms') + '.\n';
