@@ -191,17 +191,25 @@
         html.dark .kp-info strong { color: #93c5fd; }
         html.dark .kp-source { color: #7d8fa8; }
 
-        .kp-banner-row { display: flex; justify-content: flex-end; }
-        .kp-banner-row.hidden { display: none !important; }
-        .kp-banner { display: flex; align-items: flex-start; gap: .75rem; max-width: 27rem; padding: .7rem .8rem .7rem .9rem; border-radius: .9rem; color: #fff; background: linear-gradient(135deg, #002066 0%, #0f3488 100%); border: 1px solid #002066; box-shadow: 0 6px 18px rgba(0,32,102,.28); }
-        .kp-banner-new { flex: none; margin-top: .1rem; padding: .2rem .55rem; border-radius: 999px; background: var(--whs-gold); color: #002066; font-size: .62rem; font-weight: 900; letter-spacing: .1em; }
-        .kp-banner-text { flex: 1; min-width: 0; line-height: 1.3; }
-        .kp-banner-text strong { display: block; font-size: .92rem; font-weight: 900; }
-        .kp-banner-text span { display: block; margin-top: .2rem; font-size: .72rem; color: #cfe0fb; }
-        .kp-banner-x { flex: none; font-size: 1.35rem; line-height: 1; padding: 0 .35rem; border-radius: .4rem; color: #cfe0fb; }
-        .kp-banner-x:hover { color: #fff; background: rgba(255,255,255,.16); }
-        @media (max-width: 640px) { .kp-banner-row { justify-content: stretch; } .kp-banner { max-width: none; width: 100%; } }
-        html.dark .kp-banner { background: linear-gradient(135deg, #1e3a8a 0%, #2f56a8 100%); border-color: #5c7dc4; box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+        .kp-notice { position: fixed; inset: 0; z-index: 130; align-items: center; justify-content: center; padding: 1rem; background: rgba(15,23,42,.62); backdrop-filter: blur(3px); }
+        .kp-notice.hidden { display: none !important; }
+        .kp-notice-card { width: 100%; max-width: 30rem; overflow: hidden; border-radius: 1.2rem; background: #fff; text-align: center; box-shadow: 0 25px 60px rgba(0,16,51,.45); animation: kp-pop .2s ease-out; }
+        .kp-notice-head { padding: 1.4rem 1.5rem 1.1rem; color: #fff; background: linear-gradient(135deg, #002066 0%, #0f3488 100%); }
+        .kp-notice-new { display: inline-block; margin-bottom: .55rem; padding: .22rem .65rem; border-radius: 999px; background: var(--whs-gold); color: #002066; font-size: .66rem; font-weight: 900; letter-spacing: .1em; }
+        .kp-notice-title { font-size: 1.35rem; font-weight: 900; line-height: 1.2; }
+        .kp-notice-body { padding: 1.25rem 1.5rem 1.5rem; }
+        .kp-notice-text { font-size: .88rem; line-height: 1.55; color: #334155; }
+        .kp-notice-subjects { margin: .9rem 0 1.2rem; font-size: .74rem; font-weight: 800; letter-spacing: .02em; color: #002066; }
+        .kp-ok { padding: .55rem 2.2rem; border-radius: 999px; font-size: .95rem; font-weight: 900; color: #002066; background: var(--whs-gold); border: 0; cursor: pointer; animation: kp-flash 1.7s ease-in-out infinite; }
+        .kp-ok:hover { filter: brightness(1.08); }
+        .kp-ok:focus-visible { outline: 3px solid #002066; outline-offset: 3px; }
+        /* a slow pulse (about one beat every 1.7s, well under the flash rate that matters for accessibility) */
+        @keyframes kp-flash { 0%, 100% { box-shadow: 0 0 0 0 rgba(197,160,89,.9); transform: scale(1); } 50% { box-shadow: 0 0 0 11px rgba(197,160,89,0); transform: scale(1.06); } }
+        @media (prefers-reduced-motion: reduce) { .kp-ok { animation: none; } .kp-notice-card { animation: none; } }
+        html.dark .kp-notice-card { background: #111a2c; box-shadow: 0 25px 60px rgba(0,0,0,.6); }
+        html.dark .kp-notice-head { background: linear-gradient(135deg, #0b1a3d 0%, #173a86 100%); }
+        html.dark .kp-notice-text { color: #cbd5e1; }
+        html.dark .kp-notice-subjects { color: #93c5fd; }
         html.dark #term-tabs.tab-bar-container, html.dark #term-tabs { background-color: rgba(15,23,42,0.5); }
         @media print {
             header, nav, aside, #global-toast, #teaching-profile-pill, #teaching-profile-panel, .no-print { display: none !important; }
@@ -1207,17 +1215,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         <!-- VIEW 2: UNIT PLANNER -->
         <div id="view-planning" class="hidden space-y-8 animate-in fade-in duration-500">
-            <div id="kp-banner" class="kp-banner-row -mb-4">
-                <div class="kp-banner" role="status">
-                    <span class="kp-banner-new">NEW</span>
-                    <div class="kp-banner-text">
-                        <strong>Now with inbuilt curriculum content</strong>
-                        <span>Pick a strand and topic and we'll fill in Specific Knowledge &amp; Practices for you — English, Maths, Science, Social Sciences, Arts and PE &amp; Health, Years 7–10.</span>
-                    </div>
-                    <button type="button" class="kp-banner-x" onclick="dismissKPBanner()" aria-label="Dismiss this notice">&times;</button>
-                </div>
-            </div>
-
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2>
                 <p class="text-slate-600">Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.</p>
@@ -1304,7 +1301,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                     </div>
                                 </div>
                                 <p class="text-[10px] text-blue-700 text-center leading-tight">You can write or paste as much as you need in either box — it'll grow as you type.</p>
-                                <p class="text-[11px] text-red-600 font-bold text-center leading-tight">Copying and pasting these directly from the NZ Curriculum document works best.</p>
                             </div>
                         </div>
 
@@ -1986,6 +1982,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <button class="builder-btn dept-color-btn" style="--dept-dark: #22229D; --dept-light: #EBF5FA;" data-val="English" onclick="selectDepartment('English')">English</button>
                     <button class="builder-btn dept-color-btn" style="--dept-dark: #9F1559; --dept-light: #F8E7EE;" data-val="Mathematics and Statistics" onclick="selectDepartment('Mathematics and Statistics')">Mathematics &amp; Statistics</button>
                     <button class="builder-btn dept-color-btn" style="--dept-dark: #BF0000; --dept-light: #FFEDED;" data-val="PE & Health" onclick="selectDepartment('PE & Health')">PE &amp; Health</button>
+                    <button class="builder-btn dept-color-btn" style="--dept-dark: #BF0000; --dept-light: #FFEDED;" data-val="Health" onclick="selectDepartment('Health')">Health only</button>
+                    <button class="builder-btn dept-color-btn" style="--dept-dark: #BF0000; --dept-light: #FFEDED;" data-val="Physical Education" onclick="selectDepartment('Physical Education')">Physical Education only</button>
                     <button class="builder-btn dept-color-btn" style="--dept-dark: #9A6300; --dept-light: #FFF7EE;" data-val="Arts" onclick="selectDepartment('Arts')">The Arts</button>
                 </div>
             </div>
@@ -2324,11 +2322,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="font-bold text-[#002066]">28 September 2026 — v2.6</p>
                     <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
                         <li><strong>Inbuilt curriculum content in the Unit Planner.</strong> For English, Maths, Science, Social Sciences, The Arts and PE &amp; Health (Years 7–10), choose your subject and year, click <em>Pick a strand and topic from the curriculum</em>, and the Specific Knowledge and Specific Practices boxes fill in for you straight from the curriculum — no more looking it up and copying it across. Māori and Technology work exactly as before.</li>
-                        <li>New "Now with inbuilt curriculum content" banner at the top of the Unit Planner tab (you can dismiss it).</li>
+                        <li>A short "Now with inbuilt curriculum content" notice appears the first two times you open the Unit Planner; click OK to carry on.</li>
                         <li>Social Sciences fill-ins now also include the curriculum's conceptual statements (matching what the curriculum reference pages copy), and every fill-in names the document it came from.</li>
                         <li>Maths notation (fractions, powers, subscripts) is converted to plain text like 3/4 and 5^2 so it pastes cleanly into an AI, and curriculum text no longer shows raw symbols.</li>
                         <li>Where a strand has a context requirement (e.g. The Arts: "students must participate in…"), it's included with the Knowledge so it isn't missed.</li>
                         <li><strong>Year Planner rebuilt from the same curriculum data.</strong> Science, English, Maths and PE &amp; Health now use the curriculum's own strands, topics and statements (so the Year Planner and Unit Planner always agree), and <strong>The Arts</strong> is now available in the Year Planner. Fixed Science statements that had been placed in the wrong year (some Year 10 content was showing under Year 9). Topics from plans you've already saved are carried across automatically, and PE &amp; Health entries keep your own wording (e.g. "Invasion Games – Hockey"). Social Sciences keeps its WHS teaching units.</li>
+                        <li>The Year Planner can now plan <strong>Health</strong> and <strong>Physical Education</strong> as separate year plans (choose "Health only" or "Physical Education only"), or keep using the combined "PE &amp; Health" plan. You can add your own topics under either strand (e.g. Hockey, Nutrition) with <em>Add Your Own Topic</em>.</li>
                         <li>Removed the star icons from the Lesson Builder, Unit Planner and Assessment Generator tabs.</li>
                     </ul>
                 </div>
@@ -2428,6 +2427,20 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
             <div class="kp-crumbs" id="kp-picker-crumb"></div>
             <div class="kp-body" id="kp-picker-body"></div>
+        </div>
+    </div>
+
+    <div id="kp-notice" class="kp-notice hidden" role="dialog" aria-modal="true" aria-labelledby="kp-notice-title">
+        <div class="kp-notice-card">
+            <div class="kp-notice-head">
+                <span class="kp-notice-new">NEW</span>
+                <h3 id="kp-notice-title" class="kp-notice-title">Now with inbuilt curriculum content</h3>
+            </div>
+            <div class="kp-notice-body">
+                <p class="kp-notice-text">The Unit Planner can now fill in <strong>Specific Knowledge</strong> and <strong>Specific Practices</strong> for you, straight from the curriculum. Choose a subject and a Year 7–10, then click the gold <strong>Click here</strong> button to pick your strand and topic.</p>
+                <p class="kp-notice-subjects">English · Maths · Science · Social Sciences · Arts · PE &amp; Health</p>
+                <button type="button" id="kp-notice-ok" class="kp-ok" onclick="dismissKPNotice()">OK</button>
+            </div>
         </div>
     </div>
 
@@ -2923,6 +2936,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (aV) aV.classList.remove('hidden');
             if (aB) aB.classList.add('nav-active');
             if (viewId === 'theory') loadTheoryStage(1);
+            if (viewId === 'planning') showKPNoticeIfNeeded();
         }
 
         function checkLessonBothSelected() {
@@ -3496,19 +3510,32 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (cleared) showToast('Cleared the Knowledge & Practices boxes — they were filled in for ' + f.dept + ' ' + f.year + '.');
         }
 
-        // The "Now with inbuilt curriculum content" notice at the top of the Unit Planner tab.
-        // Dismissible, and stays dismissed until saved data is reset.
-        function initKPBanner() {
-            var b = document.getElementById('kp-banner');
-            if (!b) return;
-            var dismissed = false;
-            try { dismissed = localStorage.getItem('whs_kp_banner_dismissed') === '1'; } catch (e) {}
-            b.classList.toggle('hidden', dismissed);
+        // The "Now with inbuilt curriculum content" notice. Shown in the middle of the page on the first two visits to the
+        // Unit Planner, and the teacher clicks OK to carry on. A "visit" is a browsing session, not every switch of tab, so
+        // flicking between tabs can't use both showings up in a minute. Someone who already dismissed the earlier
+        // once-only version (whs_kp_notice_ok) has that counted as one of the two.
+        var KP_NOTICE_MAX_SHOWS = 2;
+        var kpNoticeShownThisPage = false;   // also guards the case where browser storage isn't available
+        function kpNoticeShows() {
+            var n = 0, legacy = false;
+            try { n = parseInt(localStorage.getItem('whs_kp_notice_shows') || '0', 10) || 0; legacy = localStorage.getItem('whs_kp_notice_ok') === '1'; } catch (e) {}
+            return Math.max(n, legacy ? 1 : 0);
         }
-        function dismissKPBanner() {
-            try { localStorage.setItem('whs_kp_banner_dismissed', '1'); } catch (e) {}
-            var b = document.getElementById('kp-banner');
-            if (b) b.classList.add('hidden');
+        function showKPNoticeIfNeeded() {
+            var n = document.getElementById('kp-notice');
+            if (!n || kpNoticeShownThisPage) return;
+            var inThisSession = false;
+            try { inThisSession = sessionStorage.getItem('whs_kp_notice_session') === '1'; } catch (e) {}
+            if (inThisSession || kpNoticeShows() >= KP_NOTICE_MAX_SHOWS) return;
+            kpNoticeShownThisPage = true;
+            try { sessionStorage.setItem('whs_kp_notice_session', '1'); localStorage.setItem('whs_kp_notice_shows', String(kpNoticeShows() + 1)); } catch (e) {}
+            n.classList.remove('hidden'); n.classList.add('flex');
+            var ok = document.getElementById('kp-notice-ok');
+            if (ok && ok.focus) { try { ok.focus({ preventScroll: true }); } catch (e) {} }
+        }
+        function dismissKPNotice() {
+            var n = document.getElementById('kp-notice');
+            if (n) { n.classList.add('hidden'); n.classList.remove('flex'); }
         }
 
         function toggleUnitGeminiNotebook(btn) {
@@ -6708,7 +6735,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // time the Year Planner asks for them) from the picker's data, so the two tools can never disagree. Social
         // Sciences keeps its hand-built WHS teaching units above, because they split the curriculum into finer,
         // unit-sized topics (e.g. World War One / World War Two) that the curriculum's own grouping doesn't.
-        var YP_FROM_PICKER = { 'Science': 'Science', 'English': 'English', 'Mathematics and Statistics': 'Maths', 'PE & Health': 'PE & Health', 'Arts': 'Arts' };
+        var YP_FROM_PICKER = {
+            'Science': { dept: 'Science' }, 'English': { dept: 'English' }, 'Mathematics and Statistics': { dept: 'Maths' }, 'Arts': { dept: 'Arts' },
+            'PE & Health': { dept: 'PE & Health' },
+            // PE and Health can also be planned as two separate year plans, each just its own strand
+            'Health': { dept: 'PE & Health', strand: 'Health' }, 'Physical Education': { dept: 'PE & Health', strand: 'Physical Education' }
+        };
         function ypEsc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
         // Blocks -> list items for the planner. Each top-level bullet is one statement (sub-bullets nest inside it).
         // Headings are left out: the planner's compact view shows only the first two items, which should be real statements.
@@ -6723,10 +6755,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return items.map(function(it) { return it.html + (it.subs.length ? '<ul class="list-disc pl-4 mt-1">' + it.subs.map(function(s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' : ''); });
         }
         function ypBuild(subject, year) {
-            var dept = YP_FROM_PICKER[subject], data = dept ? kpData(dept) : null, band = kpYearBand(year), yi = kpYearIndexInBand(year);
+            var spec = YP_FROM_PICKER[subject], dept = spec && spec.dept, data = dept ? kpData(dept) : null, band = kpYearBand(year), yi = kpYearIndexInBand(year);
             if (!data || !band || !data.bands[band]) return null;
             var bd = data.bands[band], structure = {}, content = {}, used = {};
             bd.order.forEach(function(strandName) {
+                if (spec.strand && strandName !== spec.strand) return;
                 var st = bd.strands[strandName], topics = [];
                 st.sections.forEach(function(sec) {
                     var units = sec.units.filter(function(u) { return kpVisible(u, yi); });
@@ -8441,7 +8474,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             updateStageUI();
             renderPracticalTitleBoxes();
             updateKPPickerAvailability();
-            initKPBanner();
             renderCurriculumLink('les-curriculum-link', lessonState.dept, lessonState.year);
             renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
             initYearPlanner();
