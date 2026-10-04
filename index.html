@@ -90,6 +90,11 @@
         
         .tooltip-bottom::after { bottom: auto; top: calc(100% + 8px); }
         .tooltip-bottom::before { bottom: auto; top: 100%; border-color: transparent transparent #1e293b transparent; }
+        /* The "Specific AI lesson/s" explanation is a panel as wide as the Student AI Use section, opening downward from the badge (clear of the sticky header), so it can never run off a narrow screen. */
+        #unit-ai-container { position: relative; }
+        .tooltip-wrapper.ai-tip { position: static; }
+        .tooltip-wrapper.ai-tip::after { white-space: normal; left: 0; right: 0; width: auto; max-width: none; top: 1.9rem; bottom: auto; transform: none; text-align: left; line-height: 1.45; font-weight: 600; z-index: 30; }
+        .tooltip-wrapper.ai-tip::before { display: none; }
 
         .stage-divider { position: relative; padding-top: 1.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; }
         .stage-divider::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, #cbd5e1, transparent); }
@@ -932,7 +937,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </span>
                         </summary>
                         <div class="p-5 pt-2 border-t border-slate-100">
-                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
                                 <div>
                                     <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
                                     <div class="flex flex-col gap-2" id="les-context-opts">
@@ -961,6 +966,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                         <button class="builder-btn text-left" data-action="lesson-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
                                     </div>
                                 </div>
+                                <div id="les-ai-container">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
+                                    <div class="flex flex-col gap-2" id="les-ai-opts">
+                                        <button class="builder-btn active text-left" data-action="lesson-state" data-key="ai" data-val="none">Standard</button>
+                                        <button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="plan">AI to plan</button>
+                                        <button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="collaborate">AI to collaborate</button>
+                                        <button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="critique">Critique the AI</button>
+                                    </div>
+                                </div>
+                                <p id="les-ai-hint" class="hidden col-span-2 lg:col-span-5 text-[11px] text-slate-500 leading-snug"></p>
                             </div>
                         </div>
                     </details>
@@ -1342,6 +1357,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 </span>
                             </summary>
                             <div class="p-5 pt-2 border-t border-slate-100">
+                                <p class="text-[11px] text-slate-500 leading-snug mb-3">Each option you choose here is built into the unit <strong>once or twice</strong>, not into every lesson.</p>
                                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                     <div>
                                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
@@ -1371,6 +1387,19 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                             <button class="builder-btn text-left" data-action="unit-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-slate-200" id="unit-ai-container">
+                                    <div class="flex flex-wrap items-center gap-2 mb-2">
+                                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Student AI Use</span>
+                                        <span class="tooltip-wrapper ai-tip inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-amber-300 bg-amber-50 text-amber-800 text-[10px] font-bold cursor-help" tabindex="0" data-tooltip="Lessons labelled &quot;Specific AI lesson/s&quot; in your plan have an emphasis on AI use. Students do one planned AI task in them (Brain first, AI step, Check it, Own it), and the plan marks each one so you can see it at a glance. Every other lesson in the unit stays AI-free.">Specific AI lesson/s <span aria-hidden="true">ⓘ</span></span>
+                                    </div>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="unit-ai-opts">
+                                        <button class="builder-btn active text-left" data-action="unit-state" data-key="ai" data-val="none">Standard</button>
+                                        <button class="builder-btn text-left" data-action="unit-state" data-key="ai" data-val="plan">AI to plan</button>
+                                        <button class="builder-btn text-left" data-action="unit-state" data-key="ai" data-val="collaborate">AI to collaborate</button>
+                                        <button class="builder-btn text-left" data-action="unit-state" data-key="ai" data-val="critique">Critique the AI</button>
+                                    </div>
+                                    <p id="unit-ai-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
                                 </div>
                             </div>
                         </details>
@@ -1616,7 +1645,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         </span>
                     </summary>
                     <div class="p-5 pt-2 border-t border-purple-200">
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
                             <div>
                                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
                                 <div class="flex flex-col gap-2">
@@ -1645,6 +1674,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                     <button class="builder-btn text-left" data-action="assessment-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
                                 </div>
                             </div>
+                            <div id="assess-ai-container">
+                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
+                                <div class="flex flex-col gap-2" id="assess-ai-opts">
+                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="ai" data-val="none">Standard</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="plan">AI to plan</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="collaborate">AI to collaborate</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="critique">Critique the AI</button>
+                                </div>
+                            </div>
+                            <p id="assess-ai-hint" class="hidden col-span-2 lg:col-span-5 text-[11px] text-slate-500 leading-snug"></p>
                         </div>
                     </div>
                 </details>
@@ -2301,9 +2340,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         <footer class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-400 text-sm pb-8">
             <p>© 2026 Waiheke High School Professional Learning Programme</p>
             <p class="mt-2 text-xs flex items-center justify-center gap-2 flex-wrap">
-                <span>Version 2.6</span>
+                <span>Version 2.7</span>
                 <span class="text-slate-300">·</span>
-                <span>Last updated: 28 September 2026</span>
+                <span>Last updated: 4 October 2026</span>
                 <span class="text-slate-300">·</span>
                 <button class="text-[#002066] hover:underline font-semibold" data-action="show-changelog">What's New?</button>
                 <span class="text-slate-300">·</span>
@@ -2318,6 +2357,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         <div class="bg-white rounded-2xl p-6 md:p-8 max-w-xl w-full shadow-2xl max-h-[80vh] overflow-y-auto">
             <h3 class="text-xl font-black text-slate-900 mb-4">📋 What's New</h3>
             <div class="space-y-5 text-sm text-slate-700">
+                <div>
+                    <p class="font-bold text-[#002066]">4 October 2026 — v2.7</p>
+                    <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
+                        <li><strong>Student AI Use</strong> is now an option in the Lesson Builder, Unit Planner and Assessment Generator, in the Curriculum Integrations box alongside Local Context, Mātauranga Māori, Literacy and Numeracy. It is off ("Standard") unless you choose it, and then your plan adds <em>one</em> deliberate AI task, built as Brain first, AI step, Check it, Own it, with at least half the lesson AI-free.</li>
+                        <li>Three options: <strong>AI to plan</strong>, <strong>AI to collaborate</strong> and <strong>Critique the AI</strong> (students find what an AI answer got wrong or left out, then close it and write their own — they never rewrite the AI's text).</li>
+                        <li>In a Unit Planner sequence, AI is built into <strong>one or two lessons</strong>. Each is highlighted with a <strong>[SPECIFIC AI LESSON]</strong> tag next to its title, like the other options, with a one-line key under the unit title. Hover over "Specific AI lesson/s" beside the switch for an explanation. The unit's final task carries the AI use statement.</li>
+                        <li>The Unit Planner now says that every Curriculum Integrations option (Local Context, Mātauranga Māori, Literacy, Numeracy and Student AI Use) is built into the unit <strong>once or twice</strong>, not every lesson, and the instruction sent to the AI for those options says the same.</li>
+                        <li>In the Lesson Builder and Assessment Generator, Student AI Use is now a fifth column alongside the other four options.</li>
+                        <li>In the Assessment Generator, choosing an AI option adds the school's AI use statement and the teacher's authenticity-check questions to the task. For Years 11–13 it also states the WHS AI Traffic Light status. Wording is taken word for word from the Brain Before AI site.</li>
+                    </ul>
+                </div>
                 <div>
                     <p class="font-bold text-[#002066]">28 September 2026 — v2.6</p>
                     <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
@@ -2455,6 +2505,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><strong>Common Practice Model (CPM)</strong> — New Zealand Ministry of Education, Te Mahau.</li>
                         <li><strong>Te Mātaiaho</strong> — the New Zealand Curriculum refresh, Ministry of Education. <strong>Science</strong> and <strong>Social Sciences</strong> Years 0–10 content was finalised and published on Tāhūrangi on 12 August 2026, and the Year Planner is drawn from those final documents. Since v2.6 the Year Planner's Science, English, Maths, PE &amp; Health and The Arts libraries are generated from the same curriculum data as the Unit Planner picker. Other learning areas (Maths, English, PE &amp; Health, etc.) are still drawn from Te Mātaiaho draft materials pending their final release.</li>
                         <li><strong>Inbuilt curriculum content (Unit Planner)</strong> — English, Maths, Science, Social Sciences, The Arts and Health &amp; PE, Years 7–10, taken from the Ministry's teaching sequences as reproduced in the WHS Curriculum 7–10 reference pages (English and Maths 2025; Science August 2026; Social Sciences, The Arts and Health &amp; PE September 2026). Every fill-in names its source document.</li>
+                        <li><strong>Student AI use options</strong> — the AI levels, AI use statement and teacher check questions are from the WHS <em>Brain Before AI</em> site, and the traffic-light status from the WHS AI Traffic Light for NCEA internal assessments.</li>
                         <li><strong>NCEA Achievement Standards</strong> — New Zealand Qualifications Authority (NZQA). This tool never invents or guesses standard numbers/titles; teachers supply these directly.</li>
                     </ul>
                 </div>
@@ -2799,17 +2850,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
+            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
+        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
 
         // ---------- My Teaching Profile ----------
         // A teacher's personal preferred approaches, not a class setting — one profile for
@@ -4396,6 +4447,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     setActiveBtn('unit-state', unitState.maori, 'maori');
                     setActiveBtn('unit-state', unitState.lit, 'lit');
                     setActiveBtn('unit-state', unitState.num, 'num');
+                    setActiveBtn('unit-state', unitState.ai, 'ai'); updateAIHint('unit', unitState.ai);
                     
                     if (!unitState.assessmentIncluded) unitState.assessmentIncluded = 'no';
                     if (!unitState.assessmentType) unitState.assessmentType = 'Test';
@@ -4437,6 +4489,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     setActiveBtn('lesson-state', lessonState.maori, 'maori');
                     setActiveBtn('lesson-state', lessonState.lit, 'lit');
                     setActiveBtn('lesson-state', lessonState.num, 'num');
+                    setActiveBtn('lesson-state', lessonState.ai, 'ai'); updateAIHint('les', lessonState.ai);
                     setActiveBtn('lesson-state', lessonState.extra, 'extra');
                     setActiveBtn('lesson-state', lessonState.sequence, 'sequence');
                     
@@ -4459,6 +4512,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     setActiveBtn('assessment-state', assessmentState.maori, 'maori');
                     setActiveBtn('assessment-state', assessmentState.lit, 'lit');
                     setActiveBtn('assessment-state', assessmentState.num, 'num');
+                    setActiveBtn('assessment-state', assessmentState.ai, 'ai'); updateAIHint('assess', assessmentState.ai);
                     document.querySelectorAll('input[name="assess-differentiation"]').forEach(function(r) {
                         var m = (r.getAttribute('onchange') || '').match(/setAssessmentExtra\('([^']*)'\)/);
                         r.checked = m && m[1] === (assessmentState.extra || 'None');
@@ -4733,6 +4787,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function setLessonState(k, v, b) {
+            if (k === 'ai') updateAIHint('les', v);
             lessonState[k] = v;
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -4851,6 +4906,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function setAssessmentState(k, v, b) {
+            if (k === 'ai') updateAIHint('assess', v);
             assessmentState[k] = v;
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -5038,6 +5094,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function setUnitState(k, v, b) {
+            if (k === 'ai') updateAIHint('unit', v);
             unitState[k] = v;
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -5075,6 +5132,106 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             updateUnitBuilderPrompt();
             saveAppState();
+        }
+
+        // ---------- Student AI use (v2.7) ----------
+        // An optional switch in the Curriculum Integrations box of the Lesson Builder, Unit Planner and Assessment
+        // Generator. "Standard" (the default) adds nothing to the prompt at all. The levels, the AI use statement and the
+        // teacher check questions come from the WHS "Brain Before AI" site, and the traffic-light status from the WHS AI
+        // Traffic Light for NCEA internal assessments. Keep the statement and questions word for word: school wording
+        // must not drift. Critique tasks have students critique the AI's answer and then write their own, because the
+        // traffic light lists "student rewrites AI-generated content" as Not OK.
+        var AI_USE = {
+            plan: {
+                label: 'AI level 2 · AI to plan', traffic: 'OK', trafficNote: '',
+                rule: 'Students may use AI for ideas, planning or research only. Everything they hand in is written and made by them.',
+                hint: 'Students use AI for ideas, planning or research only. Everything they hand in is written by them.',
+                steps: [
+                    'Brain first: before any AI is used, students attempt, predict or plan on their own with no device, for about three minutes. They keep this and hand it in.',
+                    'AI step: one short, specific use of AI for ideas, planning or research. Write the exact instruction students type into Gemini.',
+                    'Check it: students find one thing the AI got wrong, left out or could not know, and write how they checked.',
+                    'Own it: with the AI closed, students finish the task in their own words and answer one question about what they decided or changed themselves.'
+                ]
+            },
+            collaborate: {
+                label: 'AI level 3 · AI to collaborate', traffic: 'Ask teacher', trafficNote: '',
+                rule: 'Students write their own draft first. They may then ask AI for questions or feedback on that draft. They judge and change everything it says.',
+                hint: 'Students write their own draft first, then ask AI for questions or feedback. They judge and change everything it says.',
+                steps: [
+                    'Brain first: students write their own draft first, with no device. The draft is theirs, and they keep it and hand it in.',
+                    'AI step: students ask AI for questions or feedback on that draft only. The AI does not write or rewrite any of it. Write the exact instruction students type into Gemini.',
+                    'Check it: students find one thing the AI got wrong, left out or could not know, and write how they checked.',
+                    'Own it: with the AI closed, students improve their own draft in their own words and answer one question about what they decided or changed themselves. They finish with: "What do you think differently after using AI, and why?"'
+                ]
+            },
+            critique: {
+                label: 'AI level 3 · Critique the AI', traffic: 'Ask teacher', trafficNote: ' (critiquing an AI answer is not listed in the traffic light, so its golden rule applies: when in doubt, ask your teacher)',
+                rule: 'Students are given an AI answer and critique it: what it got wrong, left out or could not know. They never edit or rewrite the AI text. They close it and write their own answer.',
+                hint: 'Students critique an AI answer (what it got wrong, left out or could not know), then close it and write their own. They never rewrite the AI text.',
+                steps: [
+                    'Brain first: before seeing any AI answer, students write their own answer to the question, on their own with no device, for about three minutes. They keep this and hand it in.',
+                    'AI answer: students are given an AI answer to the same question. Write the exact question that is put to the AI, which students type into Gemini themselves or the teacher prepares before the lesson. Do not write the AI answer yourself.',
+                    'Critique it: students mark up the AI answer: what is correct, what is wrong or missing, and what the AI could not know. They check at least one claim against class notes or a reliable source and record how. They critique the answer; they do not edit or rewrite the AI text.',
+                    'Own it: with the AI closed, students write their own final answer in their own words, then say what changed from their first attempt and why.'
+                ]
+            }
+        };
+        var AI_STMT_ONE = 'I used ____________ (AI tool) to ____________. I checked it by ____________.';
+        var AI_STMT_THREE = ['What I used AI for:', 'What I checked, and how:', 'What is entirely my own work:'];
+        var AI_STMT_FULL = ['AI USE STATEMENT', 'Name:', 'Task:', '1. What I did first, without AI:', '2. The AI tool I used:', '3. What I used it for:', '4. What I checked, and how:', '5. What I changed or rejected:', '6. The parts that are entirely my own work:', '7. What I think differently after using AI, and why:'];
+        var AI_TEACHER_QUESTIONS = ['Please tell me about your work.', 'Can you explain what these words or ideas mean?', 'Can you show me where you researched this information?', 'What are the three key points you made in this answer or piece of writing?', 'Can you take me through your process?', 'If I gave you …, how might this change your answer?'];
+
+        function aiYearNumber(yr) { var m = String(yr || '').match(/\d+/); return m ? parseInt(m[0], 10) : 0; }
+        function aiIsSenior(yr) { return aiYearNumber(yr) >= 11; }
+        function aiTag(o) { return '**[STUDENT AI USE: ' + o.label + ']**'; }
+        function aiLessonTag(o) { return '**[SPECIFIC AI LESSON: ' + o.label + ']**'; }
+        function aiStepLines(o) { return o.steps.map(function(s, i) { return '   ' + (i + 1) + '. ' + s; }).join('\n') + '\n'; }
+        // Years 7-10 use the three-line statement; Years 11-13 the full statement (the AI site: "always for NCEA internal assessments").
+        function aiStatementLines(yr) { return (aiIsSenior(yr) ? AI_STMT_FULL : AI_STMT_THREE).join('\n') + '\n'; }
+        var AI_SENIOR_NOTE = '- This is a Year 11-13 class. If a task is an NCEA internal assessment, or preparation that will be submitted for one, do not add AI to it. Say that the WHS AI Traffic Light applies and that the teacher needs to check the conditions of assessment.\n';
+        var AI_PRIVACY_NOTE = '- Students must never type names or personal details into any AI tool.\n';
+
+        function aiLessonInstruction(key, yr) {
+            var o = AI_USE[key]; if (!o) return '';
+            var t = 'STUDENT AI USE — ' + o.label + '. ' + o.rule + '\n';
+            t += '- Use AI in ONE task only, in one lesson only. Every other part of the lesson is AI-free, and at least half of the lesson time has no AI in it.\n';
+            t += '- Choose the task where a simple AI step makes students think harder, not skip the thinking. Stay inside the level above and do not go beyond it.\n';
+            t += '- Build that task in this order:\n' + aiStepLines(o);
+            t += '- Highlight that task with ' + aiTag(o) + '.\n';
+            t += '- End the task with this declaration for students to complete: "' + AI_STMT_ONE + '"\n';
+            if (aiIsSenior(yr)) t += AI_SENIOR_NOTE;
+            return t + AI_PRIVACY_NOTE;
+        }
+        function aiUnitInstruction(key, yr) {
+            var o = AI_USE[key]; if (!o) return '';
+            var t = 'STUDENT AI USE — ' + o.label + '. ' + o.rule + '\n';
+            t += '- Include AI in only one or two lessons across the whole unit (once is enough if it suits). Every other lesson is AI-free.\n';
+            t += '- In each of those lessons add AI to ONE task only, and keep at least half of that lesson\'s time free of AI. Stay inside the level above and do not go beyond it.\n';
+            t += '- Build each AI task in this order:\n' + aiStepLines(o);
+            t += '- Highlight every lesson that includes AI by putting ' + aiLessonTag(o) + ' next to that lesson\'s title in the sequence, so it can be seen at a glance.\n';
+            t += '- Directly under the unit title add this one-line key: "**[SPECIFIC AI LESSON]** = a lesson with an emphasis on AI use. Students do one planned AI task in it; every other lesson in the unit is AI-free."\n';
+            t += '- On the unit\'s final task (the summative assessment, if one is included), state that students may use AI no further than ' + o.label + ', mark it with ' + aiTag(o) + ', and attach this AI use statement for students to complete, word for word:\n' + aiStatementLines(yr);
+            if (aiIsSenior(yr)) t += AI_SENIOR_NOTE;
+            return t + AI_PRIVACY_NOTE;
+        }
+        function aiAssessmentInstruction(key, yr) {
+            var o = AI_USE[key]; if (!o) return '';
+            var t = 'STUDENT AI USE — ' + o.label + '. ' + o.rule + '\n';
+            t += '- At the top of the task sheet add ' + aiTag(o) + ' followed by one plain sentence telling students exactly what they may and may not do with AI in this task. Do not allow more than the level above.\n';
+            if (key === 'critique') t += '- Build the task so students critique an AI answer: the task sheet gives the exact question put to the AI, and the teacher generates the answer before issuing the task and pastes it in. Do not write the AI answer yourself. The marking criteria must assess the quality of the critique (errors and gaps found, claims checked against class notes or a reliable source) and the student\'s own final answer. Students must not edit or rewrite the AI text.\n';
+            t += '- At the end of the task sheet add this AI use statement for students to complete, exactly as written and word for word, with room to write after each line:\n' + aiStatementLines(yr);
+            t += '- Under the marking guide add a short "Authenticity check" for the teacher: these questions to ask the student about their work after it is handed in, word for word:\n' + AI_TEACHER_QUESTIONS.map(function(q, i) { return '   ' + (i + 1) + '. ' + q; }).join('\n') + '\n';
+            if (aiIsSenior(yr)) t += '- This is a Year 11-13 assessment, so the WHS AI Traffic Light for NCEA internal assessments applies. For this use of AI the traffic light says "' + o.traffic + '"' + o.trafficNote + '. Add one line to the task sheet saying so, and tell the teacher to check the conditions of assessment for the standard before issuing the task.\n';
+            return t + AI_PRIVACY_NOTE;
+        }
+
+        // The short line under the switch that explains the chosen option.
+        function updateAIHint(prefix, key) {
+            var el = document.getElementById(prefix + '-ai-hint'); if (!el) return;
+            var o = AI_USE[key];
+            if (!o) { el.textContent = ''; el.classList.add('hidden'); return; }
+            el.textContent = o.hint + (prefix === 'assess' ? ' An AI use statement and teacher check questions are added to the task.' : prefix === 'unit' ? ' In the plan, 1 or 2 lessons are labelled "Specific AI lesson/s": lessons with an emphasis on AI use. Every other lesson stays AI-free.' : '');
+            el.classList.remove('hidden');
         }
 
         function updateAllPrompts() {
@@ -5133,10 +5290,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
             var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(unitState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\nIMPORTANT: If you choose to make the first lesson (or any early lesson in the sequence) a broad overview or introduction to the topic, rather than teaching a single concept in full depth, you MUST flag this clearly — add a short, bolded note at the top of that lesson, e.g. "**Overview lesson — key terms introduced here are covered in full depth in later lessons (see Lesson X).**" This matters because a teacher may only read that one lesson before teaching it, and needs to know upfront that some vocabulary or concepts are being introduced at a surface level, not yet requiring full understanding.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             
-            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
-            if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
-            if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
-            if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
+            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
+            if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
+            if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
+            if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
+            if (unitState.ai && unitState.ai !== 'none') txt += aiUnitInstruction(unitState.ai, yr);
             var unitOffAreas = [];
             if (unitState.context !== 'waiheke') unitOffAreas.push('local Waiheke/Hauraki Gulf context');
             if (unitState.maori !== 'integrate') unitOffAreas.push('Mātauranga Māori');
@@ -5478,6 +5636,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (lessonState.maori === 'integrate') txt += 'Integrate Mātauranga Māori. Highlight with **[MĀTAURANGA MĀORI]**.\n';
             if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. Important: Literacy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[LITERACY]**.\n';
             if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. Important: Numeracy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
+            if (lessonState.ai && lessonState.ai !== 'none') txt += aiLessonInstruction(lessonState.ai, yr);
             var lessonOffAreas = [];
             if (lessonState.context !== 'waiheke') lessonOffAreas.push('local Waiheke/Hauraki Gulf context');
             if (lessonState.maori !== 'integrate') lessonOffAreas.push('Mātauranga Māori');
@@ -5792,6 +5951,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic.\n';
             if (assessmentState.lit === 'integrate') txt += 'Focus on disciplinary literacy — ensure at least one question explicitly assesses reading/writing skill in this subject, not just content recall.\n';
             if (assessmentState.num === 'integrate') txt += 'Focus on disciplinary numeracy — ensure at least one question requires a numeracy skill (calculation, data interpretation, graphing) relevant to this subject.\n';
+            if (assessmentState.ai && assessmentState.ai !== 'none') txt += aiAssessmentInstruction(assessmentState.ai, yr);
             if (sm) {
                 txt += 'Base the assessment STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
