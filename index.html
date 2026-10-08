@@ -973,13 +973,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <!-- Curriculum Integrations Accordion -->
                     <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300">
                         <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-[#002066] hover:bg-slate-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
-                            <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations (Optional)</span>
+                            <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations &amp; Device Use (Optional)</span>
                             <span class="transition-transform duration-300 group-open:rotate-180">
                                 <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
                             </span>
                         </summary>
                         <div class="p-5 pt-2 border-t border-slate-100">
-                            <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                 <div>
                                     <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
                                     <div class="flex flex-col gap-2" id="les-context-opts">
@@ -1008,17 +1008,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                         <button class="builder-btn text-left" data-action="lesson-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
                                     </div>
                                 </div>
-                                <div id="les-ai-container">
-                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
-                                    <div class="flex flex-col gap-2" id="les-ai-opts">
-                                        <button class="builder-btn active text-left" data-action="lesson-state" data-key="ai" data-val="none">Standard</button>
-                                        <button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="plan">AI to plan</button>
-                                        <button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="collaborate">AI to collaborate</button>
-                                        <button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="critique">Critique the AI</button>
-                                    </div>
-                                </div>
-                                <p id="les-ai-hint" class="hidden col-span-2 lg:col-span-5 text-[11px] text-slate-500 leading-snug"></p>
-                            </div>
+</div>
+                    <div class="mt-4 pt-4 border-t border-slate-200" id="les-devices-container">
+                        <div class="flex flex-wrap items-center gap-2 mb-2"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Device Use</span></div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="les-devices-opts"><button class="builder-btn active text-left" data-action="lesson-state" data-key="devices" data-val="none">Standard</button><button class="builder-btn text-left" data-action="lesson-state" data-key="devices" data-val="book">No devices</button><button class="builder-btn text-left" data-action="lesson-state" data-key="devices" data-val="some">Some devices</button><button class="builder-btn text-left" data-action="lesson-state" data-key="devices" data-val="all">All devices</button></div>
+                        <p id="les-device-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200" id="les-ai-container">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="les-ai-opts"><button class="builder-btn active text-left" data-action="lesson-state" data-key="ai" data-val="none">Standard</button><button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="plan">AI to plan</button><button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="collaborate">AI to collaborate</button><button class="builder-btn text-left" data-action="lesson-state" data-key="ai" data-val="critique">Critique the AI</button></div>
+                        <p id="les-ai-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
+                    </div>
                         </div>
                     </details>
 
@@ -1393,19 +1393,24 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         
                         <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
                             <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-[#002066] hover:bg-slate-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
-                                <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations (Optional)</span>
+                                <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations &amp; Device Use (Optional)</span>
                                 <span class="transition-transform duration-300 group-open:rotate-180">
                                     <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
                                 </span>
                             </summary>
                             <div class="p-5 pt-2 border-t border-slate-100">
-                                <p class="text-[11px] text-slate-500 leading-snug mb-3">Each option you choose here is built into the unit <strong>once or twice</strong>, not into every lesson.</p>
+                                <p class="text-[11px] text-slate-500 leading-snug mb-3">Each option you choose here is built into only some lessons, not every lesson. When you choose one, you can say how many periods it should be in, or leave it to the AI (once or twice).</p>
                                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                                     <div>
                                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
                                         <div class="flex flex-col gap-2" id="unit-context-opts">
                                             <button class="builder-btn active text-left" data-action="unit-state" data-key="context" data-val="none">Standard</button>
                                             <button class="builder-btn text-left" data-action="unit-state" data-key="context" data-val="waiheke">Waiheke Context</button>
+                                        </div>
+                                        <div class="hidden mt-3 pt-3 border-t border-slate-200" id="unit-ctx-periods">
+                                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5">How many periods?</span>
+                                            <div class="flex flex-wrap gap-1.5"><button class="builder-btn active" data-action="unit-state" data-key="contextPeriods" data-val="ai">AI decides</button><button class="builder-btn" data-action="unit-state" data-key="contextPeriods" data-val="1">1</button><button class="builder-btn" data-action="unit-state" data-key="contextPeriods" data-val="2">2</button><button class="builder-btn" data-action="unit-state" data-key="contextPeriods" data-val="other">Other</button></div>
+                                            <div class="hidden mt-2" id="unit-ctx-periods-other"><input type="number" min="1" max="40" value="3" data-key="contextPeriodsOther" class="unit-periods-other w-20 p-1.5 rounded-lg border border-slate-300 text-sm text-center outline-none" aria-label="Number of periods"> <span class="text-[11px] text-slate-500">periods</span></div>
                                         </div>
                                     </div>
                                     <div>
@@ -1414,12 +1419,22 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                             <button class="builder-btn active text-left" data-action="unit-state" data-key="maori" data-val="none">Standard</button>
                                             <button class="builder-btn text-left" data-action="unit-state" data-key="maori" data-val="integrate">Integrate</button>
                                         </div>
+                                        <div class="hidden mt-3 pt-3 border-t border-slate-200" id="unit-maori-periods">
+                                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5">How many periods?</span>
+                                            <div class="flex flex-wrap gap-1.5"><button class="builder-btn active" data-action="unit-state" data-key="maoriPeriods" data-val="ai">AI decides</button><button class="builder-btn" data-action="unit-state" data-key="maoriPeriods" data-val="1">1</button><button class="builder-btn" data-action="unit-state" data-key="maoriPeriods" data-val="2">2</button><button class="builder-btn" data-action="unit-state" data-key="maoriPeriods" data-val="other">Other</button></div>
+                                            <div class="hidden mt-2" id="unit-maori-periods-other"><input type="number" min="1" max="40" value="3" data-key="maoriPeriodsOther" class="unit-periods-other w-20 p-1.5 rounded-lg border border-slate-300 text-sm text-center outline-none" aria-label="Number of periods"> <span class="text-[11px] text-slate-500">periods</span></div>
+                                        </div>
                                     </div>
                                     <div id="unit-lit-container">
                                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span>
                                         <div class="flex flex-col gap-2" id="unit-lit-opts">
                                             <button class="builder-btn active text-left" data-action="unit-state" data-key="lit" data-val="none">Standard</button>
                                             <button class="builder-btn text-left" data-action="unit-state" data-key="lit" data-val="integrate">Focus on Literacy</button>
+                                        </div>
+                                        <div class="hidden mt-3 pt-3 border-t border-slate-200" id="unit-lit-periods">
+                                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5">How many periods?</span>
+                                            <div class="flex flex-wrap gap-1.5"><button class="builder-btn active" data-action="unit-state" data-key="litPeriods" data-val="ai">AI decides</button><button class="builder-btn" data-action="unit-state" data-key="litPeriods" data-val="1">1</button><button class="builder-btn" data-action="unit-state" data-key="litPeriods" data-val="2">2</button><button class="builder-btn" data-action="unit-state" data-key="litPeriods" data-val="other">Other</button></div>
+                                            <div class="hidden mt-2" id="unit-lit-periods-other"><input type="number" min="1" max="40" value="3" data-key="litPeriodsOther" class="unit-periods-other w-20 p-1.5 rounded-lg border border-slate-300 text-sm text-center outline-none" aria-label="Number of periods"> <span class="text-[11px] text-slate-500">periods</span></div>
                                         </div>
                                     </div>
                                     <div id="unit-num-container">
@@ -1428,8 +1443,19 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                             <button class="builder-btn active text-left" data-action="unit-state" data-key="num" data-val="none">Standard</button>
                                             <button class="builder-btn text-left" data-action="unit-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
                                         </div>
+                                        <div class="hidden mt-3 pt-3 border-t border-slate-200" id="unit-num-periods">
+                                            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1.5">How many periods?</span>
+                                            <div class="flex flex-wrap gap-1.5"><button class="builder-btn active" data-action="unit-state" data-key="numPeriods" data-val="ai">AI decides</button><button class="builder-btn" data-action="unit-state" data-key="numPeriods" data-val="1">1</button><button class="builder-btn" data-action="unit-state" data-key="numPeriods" data-val="2">2</button><button class="builder-btn" data-action="unit-state" data-key="numPeriods" data-val="other">Other</button></div>
+                                            <div class="hidden mt-2" id="unit-num-periods-other"><input type="number" min="1" max="40" value="3" data-key="numPeriodsOther" class="unit-periods-other w-20 p-1.5 rounded-lg border border-slate-300 text-sm text-center outline-none" aria-label="Number of periods"> <span class="text-[11px] text-slate-500">periods</span></div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="mt-4 pt-4 border-t border-slate-200" id="unit-devices-container">
+                        <div class="flex flex-wrap items-center gap-2 mb-2"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Device Use</span></div>
+                        <div class="grid grid-cols-3 gap-2" id="unit-devices-opts"><button class="builder-btn active text-left" data-action="unit-state" data-key="devices" data-val="none">Standard</button><button class="builder-btn text-left" data-action="unit-state" data-key="devices" data-val="0">0% (no devices)</button><button class="builder-btn text-left" data-action="unit-state" data-key="devices" data-val="25">25% devices</button><button class="builder-btn text-left" data-action="unit-state" data-key="devices" data-val="50">50% devices</button><button class="builder-btn text-left" data-action="unit-state" data-key="devices" data-val="75">75% devices</button><button class="builder-btn text-left" data-action="unit-state" data-key="devices" data-val="100">100% devices</button><button class="builder-btn text-left" data-action="unit-state" data-key="devices" data-val="other">Other %</button></div>
+                        <div class="hidden mt-2" id="unit-devices-other"><label for="unit-devices-other-input" class="text-[11px] text-slate-500">Percentage of working time on devices:</label> <input type="number" min="0" max="100" step="5" value="60" id="unit-devices-other-input" class="w-20 p-1.5 rounded-lg border border-slate-300 text-sm text-center outline-none"> <span class="text-[11px] text-slate-500">%</span></div>
+                        <p id="unit-device-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
+                    </div>
                                 <div class="mt-4 pt-4 border-t border-slate-200" id="unit-ai-container">
                                     <div class="flex flex-wrap items-center gap-2 mb-2">
                                         <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Student AI Use</span>
@@ -1681,13 +1707,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
                 <details class="group bg-purple-50 rounded-xl border border-purple-300 open:bg-white open:shadow-md transition-all duration-300 mt-4">
                     <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-purple-800 hover:bg-purple-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
-                        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations &amp; Device Use <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
                         <span class="transition-transform duration-300 group-open:rotate-180">
                             <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
                         </span>
                     </summary>
                     <div class="p-5 pt-2 border-t border-purple-200">
-                        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                             <div>
                                 <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
                                 <div class="flex flex-col gap-2">
@@ -1716,17 +1742,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                     <button class="builder-btn text-left" data-action="assessment-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
                                 </div>
                             </div>
-                            <div id="assess-ai-container">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
-                                <div class="flex flex-col gap-2" id="assess-ai-opts">
-                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="ai" data-val="none">Standard</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="plan">AI to plan</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="collaborate">AI to collaborate</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="critique">Critique the AI</button>
-                                </div>
-                            </div>
-                            <p id="assess-ai-hint" class="hidden col-span-2 lg:col-span-5 text-[11px] text-slate-500 leading-snug"></p>
-                        </div>
+</div>
+                    <div class="mt-4 pt-4 border-t border-slate-200" id="assess-devices-container">
+                        <div class="flex flex-wrap items-center gap-2 mb-2"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Device Use</span></div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="assess-devices-opts"><button class="builder-btn active text-left" data-action="assessment-state" data-key="devices" data-val="none">Standard</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="book">No devices (paper)</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="some">Some devices</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="all">All devices</button></div>
+                        <p id="assess-device-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-200" id="assess-ai-container">
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="assess-ai-opts"><button class="builder-btn active text-left" data-action="assessment-state" data-key="ai" data-val="none">Standard</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="plan">AI to plan</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="collaborate">AI to collaborate</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="critique">Critique the AI</button></div>
+                        <p id="assess-ai-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
+                    </div>
                     </div>
                 </details>
 
@@ -2422,6 +2448,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li>The small tabs in the banner are tidied: <strong>Make a Explore Board, Make a Quiz, Arcade Mode and Gemini Gem Prompt Maker</strong> now share one colour and sit together, then a divider, <strong>New Here? and Teacher Well-being</strong>, another divider, then the <strong>Student Dashboard</strong>. <em>Arcade AI</em> is now called <strong>Arcade Mode</strong>.</li>
                         <li>Make a Quiz: the four steps are now dropdowns, and opening the next one closes the one before. After you load the AI's questions you see the quality checks first, with a <em>See and edit the questions</em> button to open the list.</li>
                         <li>Make a Quiz: step 1 now says there are <strong>two ways to start</strong> (choose curriculum content for Years 7–10, or paste your own). The platform you choose in step 1 is the only one shown in step 4, so the all-platforms option and the links under the platform buttons are gone.</li>
+                        <li><strong>Device use</strong> is a new option in the Lesson Builder, Unit Planner and Assessment Generator (open <em>Curriculum Integrations &amp; Device Use</em>). Lessons and assessments can be <em>no devices</em>, <em>some devices</em> or <em>all devices</em>. <em>Student AI Use</em> now sits under Device Use, and is hidden when there is no device use (No devices, or 0%). In the Unit Planner you choose the share of working time on devices (0%, 25%, 50%, 75%, 100%, or any other percentage you type in) and the AI varies it from lesson to lesson. Every lesson in the plan is clearly labelled <strong>[ON DEVICE]</strong>, <strong>[BOOKWORK]</strong> or <strong>[MIX]</strong>, and a single lesson plan shows <strong>Device use: BOOKWORK</strong>, <strong>MIX</strong> or <strong>ON DEVICE</strong> under its title.</li>
+                        <li>In the Unit Planner, when you choose Waiheke Context, Mātauranga Māori, Literacy or Numeracy you can now say <strong>how many periods</strong> it is built into: 1, 2, another number, or leave it to the AI (once or twice).</li>
                         <li>Make a Quiz: <strong>Gemini, Claude and ChatGPT</strong> links now sit beside <em>Copy the prompt</em>, and the platform links were checked and updated.</li>
                         <li>Make a Quiz: when you choose from the curriculum you can now keep the <strong>whole topic</strong> or <strong>choose parts</strong>, ticking just the Knowledge and Practices points the quiz should cover.</li>
                     </ul>
@@ -2930,17 +2958,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
             sequence: '1',
             framework: 'cpm', 
             altFramework: 'none',
-            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
+            dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
+        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
 
         // ---------- My Teaching Profile ----------
         // A teacher's personal preferred approaches, not a class setting — one profile for
@@ -4672,6 +4700,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     setActiveBtn('unit-state', unitState.lit, 'lit');
                     setActiveBtn('unit-state', unitState.num, 'num');
                     setActiveBtn('unit-state', unitState.ai, 'ai'); updateAIHint('unit', unitState.ai);
+                    var dio = document.getElementById('unit-devices-other-input'); if (dio) dio.value = unitState.devicesOther || '60';
+                    setActiveBtn('unit-state', unitState.devices, 'devices'); updateDeviceHint('unit', unitState.devices);
+                    ['context', 'maori', 'lit', 'num'].forEach(function(k) {
+                        if (!unitState[k + 'Periods']) unitState[k + 'Periods'] = 'ai';
+                        setActiveBtn('unit-state', unitState[k + 'Periods'], k + 'Periods');
+                        var oi = document.querySelector('.unit-periods-other[data-key="' + k + 'PeriodsOther"]'); if (oi) oi.value = unitState[k + 'PeriodsOther'] || '3';
+                    });
+                    updatePeriodsUI();
                     
                     if (!unitState.assessmentIncluded) unitState.assessmentIncluded = 'no';
                     if (!unitState.assessmentType) unitState.assessmentType = 'Test';
@@ -4714,6 +4750,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     setActiveBtn('lesson-state', lessonState.lit, 'lit');
                     setActiveBtn('lesson-state', lessonState.num, 'num');
                     setActiveBtn('lesson-state', lessonState.ai, 'ai'); updateAIHint('les', lessonState.ai);
+                    setActiveBtn('lesson-state', lessonState.devices, 'devices'); updateDeviceHint('les', lessonState.devices);
                     setActiveBtn('lesson-state', lessonState.extra, 'extra');
                     setActiveBtn('lesson-state', lessonState.sequence, 'sequence');
                     
@@ -4737,6 +4774,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     setActiveBtn('assessment-state', assessmentState.lit, 'lit');
                     setActiveBtn('assessment-state', assessmentState.num, 'num');
                     setActiveBtn('assessment-state', assessmentState.ai, 'ai'); updateAIHint('assess', assessmentState.ai);
+                    setActiveBtn('assessment-state', assessmentState.devices, 'devices'); updateDeviceHint('assess', assessmentState.devices);
                     document.querySelectorAll('input[name="assess-differentiation"]').forEach(function(r) {
                         var m = (r.getAttribute('onchange') || '').match(/setAssessmentExtra\('([^']*)'\)/);
                         r.checked = m && m[1] === (assessmentState.extra || 'None');
@@ -5012,6 +5050,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function setLessonState(k, v, b) {
             if (k === 'ai') updateAIHint('les', v);
+            if (k === 'devices') updateDeviceHint('les', v);
             lessonState[k] = v;
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -5131,6 +5170,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function setAssessmentState(k, v, b) {
             if (k === 'ai') updateAIHint('assess', v);
+            if (k === 'devices') updateDeviceHint('assess', v);
             assessmentState[k] = v;
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -5319,6 +5359,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function setUnitState(k, v, b) {
             if (k === 'ai') updateAIHint('unit', v);
+            if (k === 'devices') updateDeviceHint('unit', v);
             unitState[k] = v;
             var p = b.parentElement;
             p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
@@ -5346,6 +5387,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (k === 'practicalCount') {
                 renderPracticalTitleBoxes();
             }
+            if (k === 'context' || k === 'maori' || k === 'lit' || k === 'num' || /Periods$/.test(k)) updatePeriodsUI();
             if (k === 'assessmentType') {
                 var cat = document.getElementById('unit-custom-assess-type-container');
                 if (cat) v === 'Other' ? cat.classList.remove('hidden') : cat.classList.add('hidden');
@@ -5450,6 +5492,84 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         // The short line under the switch that explains the chosen option.
+        // ---------- Device use vs book work (v2.9) ----------
+        // "Standard" adds nothing to the prompt. The Lesson Builder and Assessment Generator take No devices / Some / All;
+        // the Unit Planner takes the share of student working time on devices and asks the AI to vary it lesson by lesson.
+        var DEVICE_HINTS = {
+            les: { book: 'Every student task is in books, on paper or physical. No screens. The plan shows "Device use: BOOKWORK" under the lesson title.', some: 'A planned mix. The plan shows "Device use: MIX" under the title and labels each stage [BOOKWORK] or [ON DEVICE].', all: 'Student tasks are done on devices, with digital versions of any worksheet. The plan shows "Device use: ON DEVICE" under the title.' },
+            assess: { book: 'Completed on paper in class. No task needs a device, the internet or a screen. The task sheet says "Bookwork" at the top.', some: 'Part of the task is on paper and part on a device. The task sheet marks each part [BOOKWORK] or [ON DEVICE], with the time for each.', all: 'Completed entirely on a device. The task sheet says "On device" at the top, with all material digital.' }
+        };
+        function updateDeviceHint(prefix, key) {
+            var el = document.getElementById(prefix + '-device-hint'); if (!el) return;
+            var orig = key, txt = '';
+            if (prefix === 'unit') {
+                var oth = document.getElementById('unit-devices-other'); if (oth) oth.classList.toggle('hidden', key !== 'other');
+                if (key === 'other') key = String(unitDevicePct('other'));
+                if (key === '0') txt = 'No student device use anywhere in the unit. Every lesson is books, paper, physical activity and discussion.';
+                else if (key === '100') txt = 'Students use devices in every lesson.';
+                else if (key && key !== 'none') txt = 'About ' + key + '% of student working time is on devices. The AI varies it from lesson to lesson: some lessons all on device, some with none, some a mix inside the lesson. Every lesson in the plan is labelled [ON DEVICE], [BOOKWORK] or [MIX].';
+            } else if (DEVICE_HINTS[prefix] && DEVICE_HINTS[prefix][key]) txt = DEVICE_HINTS[prefix][key];
+            el.textContent = txt; el.classList.toggle('hidden', !txt);
+            syncAiForDevices(prefix, orig);
+        }
+        // With no device use at all there is no Student AI Use option: it is hidden and set back to Standard.
+        function syncAiForDevices(prefix, key) {
+            var noDev = prefix === 'unit' ? String(unitDevicePct(key)) === '0' : key === 'book';
+            var box = document.getElementById(prefix + '-ai-container'); if (box) box.classList.toggle('hidden', noDev);
+            if (!noDev) return;
+            var st = prefix === 'unit' ? unitState : prefix === 'les' ? lessonState : assessmentState;
+            if (st.ai && st.ai !== 'none') {
+                st.ai = 'none';
+                setActiveBtn(prefix === 'unit' ? 'unit-state' : prefix === 'les' ? 'lesson-state' : 'assessment-state', 'none', 'ai');
+                updateAIHint(prefix, 'none');
+            }
+        }
+        function deviceNoteForAi(key) { return (key && key !== 'none') ? ' The one exception is the Student AI Use activity described below, which may use a device.' : ''; }
+        function deviceLessonInstruction(v, aiKey) {
+            var ex = deviceNoteForAi(aiKey);
+            var top = ' Show this clearly at the top of every lesson, directly under the lesson title, as its own bold line: ';
+            if (v === 'book') return 'DEVICE USE — BOOKWORK, NO DEVICES. Plan the whole lesson around books, paper, whiteboards, printed handouts, talk and physical activity. Students do not use laptops, tablets or phones at any point: do not include online research, websites, digital tools or any screen-based student task, and make any worksheet a printed, handwritten one.' + top + '**Device use: BOOKWORK (no devices)**.' + ex + '\n';
+            if (v === 'some') return 'DEVICE USE — A MIX OF BOOKWORK AND DEVICES. Plan a deliberate mix. Use devices only where they add real value (for example research, creating or sharing something digital, or an online practice task), and keep the rest on paper, in books, or as discussion and physical activity.' + top + '**Device use: MIX of bookwork and on device**. Then label every stage heading **[BOOKWORK]** or **[ON DEVICE]**, and for each ON DEVICE stage give a one-line reason and roughly how long it lasts.' + ex + '\n';
+            if (v === 'all') return 'DEVICE USE — ON DEVICE. Students use a laptop, Chromebook or tablet for their learning tasks throughout the lesson. Make any worksheet or task a digital version (for example Google Docs, Slides or Forms) and have students submit or share work digitally. Do not include handwriting or printing tasks unless they are essential.' + top + '**Device use: ON DEVICE**.' + ex + '\n';
+            return '';
+        }
+        function deviceAssessmentInstruction(v, aiKey) {
+            var ex = deviceNoteForAi(aiKey);
+            if (v === 'book') return 'DEVICE USE — NO DEVICES. This assessment is completed on paper, by hand, in class, with no laptops, tablets or phones. Do not include any task that needs the internet, a digital tool or a screen, and supply every resource students need (texts, data, diagrams) as printed material. Add a clear bold line at the top of the task sheet: **Bookwork: paper only, no devices**.' + ex + '\n';
+            if (v === 'some') return 'DEVICE USE — SOME DEVICES. Part of this assessment is on paper and part is on a device (for example a digital data set, research or a digital product). On the task sheet, mark each part **[BOOKWORK]** or **[ON DEVICE]**, say how long students should spend on each, and make sure the parts do not depend on each other in a way that stops students working in either order.' + ex + '\n';
+            if (v === 'all') return 'DEVICE USE — ALL DEVICES. This assessment is completed entirely on a device (for example in Google Docs or Forms). Supply all stimulus material digitally, provide digital answer space, and do not require printing or handwriting. Add a clear bold line at the top: **On device**.' + ex + '\n';
+            return '';
+        }
+        function unitDevicePct(v) {
+            if (v === 'other') { var n = parseInt(unitState.devicesOther); return isNaN(n) ? 60 : Math.max(0, Math.min(100, n)); }
+            return v;
+        }
+        function deviceUnitInstruction(v, aiKey) {
+            if (!v || v === 'none') return '';
+            v = String(unitDevicePct(v));
+            var ex = deviceNoteForAi(aiKey);
+            var show = ' Show this clearly for EVERY lesson in the sequence: put the label next to the lesson title and also as its own "Device use:" line in that lesson\'s row, so a teacher can see it at a glance. ';
+            if (v === '0') return 'DEVICE USE — BOOKWORK, NO DEVICES. Plan every lesson in this unit around books, paper, whiteboards, printed resources, talk and physical activity. Students do not use laptops, tablets or phones in any lesson of the unit.' + show + 'Every lesson is labelled **[BOOKWORK]**.' + ex + '\n';
+            if (v === '100') return 'DEVICE USE — ON DEVICE IN EVERY LESSON. Students use a laptop, Chromebook or tablet in every lesson of this unit, with digital versions of tasks and work shared or submitted digitally.' + show + 'Every lesson is labelled **[ON DEVICE]**.' + ex + '\n';
+            var b = 100 - parseInt(v);
+            return 'DEVICE USE — ABOUT ' + v + '% ON DEVICE. Across the whole unit, about ' + v + '% of student working time is on devices and about ' + b + '% is bookwork (books, paper or physical activity). Do NOT make every lesson the same. Vary it from lesson to lesson: some lessons fully on device, some fully bookwork with no devices, and some that mix both inside the lesson, so that the overall balance across the unit lands close to ' + v + '%.' + show + 'Label each lesson **[ON DEVICE]**, **[BOOKWORK]** or **[MIX]**; for a mixed lesson add the rough split and which part is which, e.g. **[MIX: bookwork first 30 min, then on device 30 min]**. End the sequence with one line stating the approximate overall balance.' + ex + '\n';
+        }
+        // How many lessons (periods) each Curriculum Integration is built into. "AI decides" keeps the earlier wording.
+        function unitPeriodsPhrase(key) {
+            var v = unitState[key + 'Periods'] || 'ai', n = 0;
+            if (v === '1') n = 1; else if (v === '2') n = 2;
+            else if (v === 'other') n = Math.max(1, Math.min(40, parseInt(unitState[key + 'PeriodsOther']) || 3));
+            if (!n) return 'once or twice across the unit is enough';
+            return 'include it in exactly ' + n + ' lesson' + (n === 1 ? '' : 's') + ' (' + (n === 1 ? 'period' : 'periods') + ') across the unit';
+        }
+        function updatePeriodsUI() {
+            [['ctx', 'context', 'waiheke'], ['maori', 'maori', 'integrate'], ['lit', 'lit', 'integrate'], ['num', 'num', 'integrate']].forEach(function(c) {
+                var box = document.getElementById('unit-' + c[0] + '-periods'), other = document.getElementById('unit-' + c[0] + '-periods-other');
+                if (box) box.classList.toggle('hidden', unitState[c[1]] !== c[2]);
+                if (other) other.classList.toggle('hidden', unitState[c[1] + 'Periods'] !== 'other');
+            });
+        }
+
         function updateAIHint(prefix, key) {
             var el = document.getElementById(prefix + '-ai-hint'); if (!el) return;
             var o = AI_USE[key];
@@ -5514,11 +5634,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
             var txt = '### System Role\nAct as an expert curriculum designer.\n\n### Context\nPlanning a ' + totalDurText + ' unit on "' + t + '" for ' + yr + ' ' + unitState.dept + ' based on the NZ Curriculum.\n\n### Task\nDesign a structured multi-week unit sequence outlining ' + (isLeg ? 'curriculum concepts and learning outcomes' : 'Disciplinary Knowledge and Practices') + ' to be taught. Break down lesson-by-lesson.\n\n### Strict Rules\nAlign to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(unitState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\nCRITICAL: DO NOT use the old \'Understand, Know, Do\' framework. You MUST use \'Knowledge and Practices\'.\nUse the 5 stages of the Common Practice Model (CPM) for lessons: Connect, I Do, We Do, You Do, and Review. Format via Markdown.\nIMPORTANT: If you choose to make the first lesson (or any early lesson in the sequence) a broad overview or introduction to the topic, rather than teaching a single concept in full depth, you MUST flag this clearly — add a short, bolded note at the top of that lesson, e.g. "**Overview lesson — key terms introduced here are covered in full depth in later lessons (see Lesson X).**" This matters because a teacher may only read that one lesson before teaching it, and needs to know upfront that some vocabulary or concepts are being introduced at a surface level, not yet requiring full understanding.\n' + nzSpellingRule + '\n' + noLatexRule + '\n';
             
-            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
-            if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
-            if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
-            if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — once or twice across the unit is enough. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
+            if (unitState.context === 'waiheke') txt += 'Include local Waiheke Island/Hauraki Gulf contexts (e.g., Ngāti Pāoa, local geography/history). Note: this does not need to appear in every lesson — ' + unitPeriodsPhrase('context') + '. When it does appear, highlight it with **[WAIHEKE CONTEXT]** in the sequence.\n';
+            if (unitState.maori === 'integrate') txt += 'Weave in Mātauranga Māori. Note: this does not need to appear in every lesson — ' + unitPeriodsPhrase('maori') + '. When it does appear, highlight it with **[MĀTAURANGA MĀORI]** in the sequence.\n';
+            if (unitState.lit === 'integrate') txt += 'Focus on disciplinary literacy. Note: this does not need to appear in every lesson — ' + unitPeriodsPhrase('lit') + '. When it does appear, explicitly plan for the teaching of these literacy skills in the "I Do" stage of that lesson, and highlight it with **[LITERACY]**.\n';
+            if (unitState.num === 'integrate') txt += 'Focus on disciplinary numeracy. Note: this does not need to appear in every lesson — ' + unitPeriodsPhrase('num') + '. When it does appear, explicitly plan for the teaching of these numeracy skills in the "I Do" stage of that lesson, and highlight it with **[NUMERACY]**.\n';
             if (unitState.ai && unitState.ai !== 'none') txt += aiUnitInstruction(unitState.ai, yr);
+            txt += deviceUnitInstruction(unitState.devices, unitState.ai);
             var unitOffAreas = [];
             if (unitState.context !== 'waiheke') unitOffAreas.push('local Waiheke/Hauraki Gulf context');
             if (unitState.maori !== 'integrate') unitOffAreas.push('Mātauranga Māori');
@@ -5861,6 +5982,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (lessonState.lit === 'integrate') txt += 'Literacy Integration: Make explicit disciplinary literacy practice a core focus. Important: Literacy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[LITERACY]**.\n';
             if (lessonState.num === 'integrate') txt += 'Numeracy Integration: Make explicit disciplinary numeracy practice a core focus. Important: Numeracy skills should be explicitly taught/modelled in the teacher-led sections before independent practice. Highlight with **[NUMERACY]**.\n';
             if (lessonState.ai && lessonState.ai !== 'none') txt += aiLessonInstruction(lessonState.ai, yr);
+            txt += deviceLessonInstruction(lessonState.devices, lessonState.ai);
             var lessonOffAreas = [];
             if (lessonState.context !== 'waiheke') lessonOffAreas.push('local Waiheke/Hauraki Gulf context');
             if (lessonState.maori !== 'integrate') lessonOffAreas.push('Mātauranga Māori');
@@ -6176,6 +6298,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (assessmentState.lit === 'integrate') txt += 'Focus on disciplinary literacy — ensure at least one question explicitly assesses reading/writing skill in this subject, not just content recall.\n';
             if (assessmentState.num === 'integrate') txt += 'Focus on disciplinary numeracy — ensure at least one question requires a numeracy skill (calculation, data interpretation, graphing) relevant to this subject.\n';
             if (assessmentState.ai && assessmentState.ai !== 'none') txt += aiAssessmentInstruction(assessmentState.ai, yr);
+            txt += deviceAssessmentInstruction(assessmentState.devices, assessmentState.ai);
             if (sm) {
                 txt += 'Base the assessment STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
@@ -6460,6 +6583,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.body.addEventListener('input', function(e) {
                 if (e.target.classList.contains('autosize-textarea')) autosizeTextarea(e.target);
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
+                else if (e.target.id === 'unit-devices-other-input') { unitState.devicesOther = e.target.value; updateDeviceHint('unit', 'other'); updateUnitBuilderPrompt(); saveAppState(); }
+                else if (e.target.classList.contains('unit-periods-other')) { unitState[e.target.getAttribute('data-key')] = e.target.value; updateUnitBuilderPrompt(); saveAppState(); }
                 else if (e.target.id === 'unit-practical-custom-count') { unitState.practicalCustomCount = e.target.value; renderPracticalTitleBoxes(); updateUnitBuilderPrompt(); saveAppState(); }
                 else if (e.target.classList.contains('unit-practical-title-input')) {
                     var idx = parseInt(e.target.getAttribute('data-idx')) - 1;
