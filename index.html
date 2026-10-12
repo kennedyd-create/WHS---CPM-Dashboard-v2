@@ -108,6 +108,9 @@
         #unit-ai-container { position: relative; }
         /* In the IEP tab the My Teaching Profile pill and panel are hidden (the profile is not used for IEP units). */
         body.iep-mode #teaching-profile-pill, body.iep-mode #teaching-profile-panel { display: none !important; }
+        /* Homework schedule: not offered in the IEP tab. In "homework only" mode the boxes that only build a unit plan are hidden. */
+        body.iep-mode #unit-homework-block { display: none !important; }
+        body.hw-only #unit-title-block, body.hw-only #unit-duration-block, body.hw-only #unit-junior-focus-container, body.hw-only #unit-ncea-standard-container, body.hw-only #unit-custom-task-block, body.hw-only #unit-integrations-details, body.hw-only #unit-plan-format-block, body.hw-only #unit-assessment-block, body.hw-only #unit-practical-block, body.hw-only #unit-addons-block { display: none !important; }
         .tooltip-wrapper.ai-tip { position: static; }
         .tooltip-wrapper.ai-tip::after { white-space: normal; left: 0; right: 0; width: auto; max-width: none; top: 1.9rem; bottom: auto; transform: none; text-align: left; line-height: 1.45; font-weight: 600; z-index: 30; }
         .tooltip-wrapper.ai-tip::before { display: none; }
@@ -1275,9 +1278,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         <!-- VIEW 2: UNIT PLANNER -->
         <div id="view-planning" class="hidden space-y-8 animate-in fade-in duration-500">
             <div class="max-w-5xl mx-auto relative">
-                <div class="flex justify-end md:absolute md:right-0 md:top-0 mb-3 md:mb-0 z-10" role="tablist" aria-label="Unit planner mode">
-                    <button type="button" id="unit-tab-std" role="tab" aria-selected="true" onclick="iepSetMode(false)" class="px-3 py-2 rounded-l-lg text-xs font-bold border transition">Unit Planner</button>
-                    <button type="button" id="unit-tab-iep" role="tab" aria-selected="false" onclick="iepSetMode(true)" title="Plan a unit for one learner with learning needs (IEP), at the year level they are working at" class="px-3 py-2 rounded-r-lg text-xs font-bold border border-l-0 transition">🧩 IEP Unit</button>
+                <div class="flex justify-end mb-3 z-10" role="tablist" aria-label="Unit planner mode">
+                    <button type="button" id="unit-tab-std" role="tab" aria-selected="true" onclick="unitSetTab('std')" class="px-3 py-2 rounded-l-lg text-xs font-bold border transition">Unit Planner</button>
+                    <button type="button" id="unit-tab-iep" role="tab" aria-selected="false" onclick="unitSetTab('iep')" title="Plan a unit for one learner with learning needs (IEP), at the year level they are working at" class="px-3 py-2 text-xs font-bold border border-l-0 transition">🧩 IEP Unit</button>
+                    <button type="button" id="unit-tab-hw" role="tab" aria-selected="false" onclick="unitSetTab('hw')" title="Already have a unit plan? Make a once-a-week homework schedule for it, with a parent email for every week" class="px-2.5 py-2 rounded-r-lg text-[11px] font-bold border border-l-0 transition text-left leading-tight">📚 Homework Schedule<span class="block text-[9px] font-semibold opacity-80">(for existing units)</span></button>
                 </div>
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 id="unit-page-title" class="text-4xl font-black text-slate-900 mb-4">Unit Sequence Builder</h2>
@@ -1413,7 +1417,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
                         <div id="unit-curriculum-link" class="flex justify-start"></div>
 
-                        <div class="bg-purple-50 p-5 rounded-xl border-l-4 border-l-purple-500 shadow-sm border border-purple-300">
+                        <div id="unit-title-block" class="bg-purple-50 p-5 rounded-xl border-l-4 border-l-purple-500 shadow-sm border border-purple-300">
                             <div class="flex justify-between items-center mb-2">
                                 <label for="unit-plan-title-input" class="text-xs font-black text-purple-800 uppercase tracking-widest block">Unit Plan Title <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></label>
                             </div>
@@ -1460,13 +1464,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </div>
                         </div>
 
-                        <div class="pt-2">
+                        <div class="pt-2" id="unit-custom-task-block">
                             <label for="unit-custom-task" class="text-[10px] font-bold text-[#002066] uppercase tracking-widest block mb-2">Specific Activities, Tasks, or Focus Areas <span id="unit-activities-required-badge" class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></label>
                             <textarea id="unit-custom-task" rows="1" placeholder="e.g. Include a debate in week 2, make sure lesson 4 covers the marae visit, avoid worksheets for the differentiated group..." class="autosize-textarea w-full p-3 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
                             <p class="text-[11px] text-red-600 font-bold mt-1.5 leading-tight">Write as much as you want here — specific requests, things to avoid, key dates, resources to use. This box will grow as you type.</p>
                         </div>
 
-                        <div>
+                        <div id="unit-duration-block">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2">Duration</span>
                             <div class="flex flex-wrap gap-2" id="unit-dur-opts">
                                 <button class="builder-btn" data-action="unit-state" data-key="dur" data-val="4 lessons">4 Lessons</button>
@@ -1481,7 +1485,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </div>
                         </div>
                         
-                        <details class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
+                        <details id="unit-integrations-details" class="group bg-slate-50 rounded-xl border border-slate-200 open:bg-white open:shadow-md transition-all duration-300 mt-4">
                             <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-[#002066] hover:bg-slate-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
                                 <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations &amp; Device Use (Optional)</span>
                                 <span class="transition-transform duration-300 group-open:rotate-180">
@@ -1562,7 +1566,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </div>
                         </details>
 
-                        <div class="pt-4 border-t border-slate-200 mt-2">
+                        <div class="pt-4 border-t border-slate-200 mt-2" id="unit-plan-format-block">
                             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Lesson Plan Format</span>
                             <div class="flex flex-wrap gap-2" id="unit-plan-type-opts">
                                 <button class="builder-btn shaded active" data-action="unit-state" data-key="planType" data-val="full">Full CPM Sequence</button>
@@ -1579,7 +1583,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </p>
                         </div>
 
-                        <div class="pt-4 border-t border-slate-200 mt-4">
+                        <div class="pt-4 border-t border-slate-200 mt-4" id="unit-assessment-block">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Assessment Options</span>
                             <p class="text-[10px] text-slate-500 mb-2 font-medium">Do you want time built in for an assessment in this unit?</p>
                             <div class="flex flex-wrap gap-2 mb-3">
@@ -1618,7 +1622,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </div>
                         </div>
 
-                        <div class="pt-4 border-t border-slate-200 mt-4">
+                        <div class="pt-4 border-t border-slate-200 mt-4" id="unit-practical-block">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Practical / Hands-On Sessions <span class="text-[9px] font-black text-sky-800 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
                             <p class="text-[10px] text-slate-500 mb-2 font-medium">Does this unit need dedicated practical, lab, workshop, fieldwork, or other hands-on sessions?</p>
                             <div class="flex flex-wrap gap-2 mb-3">
@@ -1652,12 +1656,70 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </div>
                         </div>
 
+                        <div id="unit-homework-block" class="pt-4 border-t border-slate-200 mt-4">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-1">Homework Schedule <span id="hw-optional-badge" class="text-[9px] font-black text-sky-800 bg-sky-100 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
+                            <p id="hw-intro" class="text-[10px] text-slate-500 mb-2 font-medium">Build a once-a-week homework schedule into this unit plan. It is set in the first lesson of each week and kept within a weekly time limit.</p>
+                            <div id="hw-yesno" class="flex flex-wrap gap-2 mb-3">
+                                <button class="builder-btn active" data-action="unit-state" data-key="hwIncluded" data-val="no">No</button>
+                                <button class="builder-btn" data-action="unit-state" data-key="hwIncluded" data-val="yes">Yes</button>
+                            </div>
+
+                            <div id="unit-homework-sub-options" class="hidden bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                                <div id="hw-tip" class="text-[10px] font-bold text-amber-800 bg-amber-50 p-2 rounded border border-amber-200 leading-snug">
+                                    💡 The unit plan gets a <strong>HOMEWORK</strong> line in each lesson that starts a week, a short <strong>HOMEWORK</strong> outline, and a <strong>HOMEWORK SCHEDULE</strong> table at the bottom (also in the WHS HTML template). The AI knows where your test or assignment falls because it is writing the plan.
+                                </div>
+                                <div id="hw-plan-source-wrap" class="hidden">
+                                        <label for="hw-plan-source" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Your unit plan <span class="text-slate-400 normal-case font-medium">(paste a Google Doc link, or leave this empty and attach the file in your AI chat)</span></label>
+                                        <textarea id="hw-plan-source" rows="1" placeholder="e.g. https://docs.google.com/document/d/..." class="autosize-textarea w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
+                                        <p class="text-[10px] text-slate-500 mt-1">Do not paste anything that names a student.</p>
+                                    </div>
+                                <div id="hw-format-wrap" class="hidden">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">How should the AI give you the schedule?</span>
+                                    <div class="flex flex-wrap gap-2">
+                                        <button class="builder-btn active" data-action="unit-state" data-key="hwFormat" data-val="md">Tables in the chat</button>
+                                        <button class="builder-btn" data-action="unit-state" data-key="hwFormat" data-val="html">HTML page (WHS style)</button>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-1 leading-snug">The HTML page is one file of real tables: save it as a .html file, open it in your browser, then select a table and copy it into Google Docs or Google Sheets.</p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="hw-lpw" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Lessons per week <span id="hw-lpw-yr" class="text-slate-400 normal-case font-medium"></span></label>
+                                        <input type="number" id="hw-lpw" min="1" max="10" class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                                        <p class="text-[10px] text-slate-500 mt-1 leading-snug">Filled in for this year level and subject. Change it if your timetable is different; it is remembered for each subject and year level.</p>
+                                    </div>
+                                    <div>
+                                        <label for="hw-cap" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Most minutes per week</label>
+                                        <input type="number" id="hw-cap" min="5" max="180" step="5" class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none">
+                                        <p id="hw-cap-hint" class="text-[10px] text-slate-500 mt-1 leading-snug"></p>
+                                    </div>
+                                </div>
+                                <div id="hw-plan-preview" class="text-xs font-bold text-sky-900 bg-sky-50 border border-sky-200 rounded-lg p-3 leading-snug"></div>
+                                <div>
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Types of homework <span class="text-slate-400 normal-case font-medium">(tick as many as you like and the AI mixes them across the weeks; tick none and it chooses)</span></span>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-3 gap-y-1" id="hw-type-opts"></div>
+                                </div>
+                                <div id="hw-out-wrap">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Extras the AI adds <span class="text-slate-400 normal-case font-medium">(optional)</span></span>
+                                    <div class="space-y-1">
+                                        <label class="flex items-start gap-1.5 text-[11px] text-slate-700 cursor-pointer leading-tight"><input type="checkbox" class="mt-px w-3.5 h-3.5 accent-sky-600 shrink-0" data-hw-out="tracker"><span><strong>A completion tracker for Google Sheets</strong> <span class="text-[10px] text-slate-500">a table with a column for each week, to paste into a Sheet (the AI makes the Sheet and a link itself only if its tool can)</span></span></label>
+                                        <label class="flex items-start gap-1.5 text-[11px] text-slate-700 cursor-pointer leading-tight"><input type="checkbox" class="mt-px w-3.5 h-3.5 accent-sky-600 shrink-0" data-hw-out="doc"><span><strong>A schedule table that copies cleanly into a Google Doc</strong> <span class="text-[10px] text-slate-500">one plain table, nothing merged</span></span></label>
+                                        <label class="flex items-start gap-1.5 text-[11px] text-slate-700 cursor-pointer leading-tight"><input type="checkbox" class="mt-px w-3.5 h-3.5 accent-sky-600 shrink-0" data-hw-out="classroom"><span><strong>A Google Classroom post for each week</strong> <span class="text-[10px] text-slate-500">short, written to students, ready to paste</span></span></label>
+                                    </div>
+                                    <p class="text-[10px] text-slate-500 mt-1 leading-snug">In the WHS and Maths HTML templates the tables are real tables: open the downloaded page, select a table, copy it and paste it into Google Docs or Google Sheets. Check any link an AI gives you, because AI tools can make links up. The parent email for every week is always in the schedule table.</p>
+                                </div>
+                                <div>
+                                    <label for="hw-notes" class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Anything else about the homework <span class="text-slate-400 normal-case font-medium">(optional)</span></label>
+                                    <textarea id="hw-notes" rows="1" placeholder="e.g. Always include one vocabulary task. Keep video clips under 5 minutes. Use the Year 9 SciPad for workbook tasks. No homework in the week of the camp." class="autosize-textarea w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="pt-4 border-t border-slate-200 mt-4 bg-emerald-50 border border-emerald-300 rounded-xl p-4">
                             <p class="text-sm font-bold text-emerald-800">✅ Ready to go? Click <span class="underline">Copy Prompt</span> on the right and paste it into Gemini, ChatGPT, or Claude to generate your unit plan.</p>
                             <p class="text-[11px] text-emerald-700 mt-1">The Add-Ons below are optional extras — only use them if you already know what they do.</p>
                         </div>
 
-                        <div class="pt-4 border-t border-slate-200 mt-2">
+                        <div class="pt-4 border-t border-slate-200 mt-2" id="unit-addons-block">
                             <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Add-Ons</span>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 <button id="unit-gemini-notebook-btn" class="flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-orange-50 text-orange-600 hover:bg-orange-100 border border-orange-200 tooltip-wrapper tooltip-bottom" data-tooltip="After the unit plan, the AI will ask if you'd like a dense knowledge document for this unit, ready to paste into a Gemini Notebook" data-action="toggle-unit-gemini-notebook" aria-pressed="false">📓 Gemini Notebook Knowledge</button>
@@ -1705,6 +1767,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                 </div>
             </div>
+
         </div>
 
         <!-- VIEW: ASSESSMENT GENERATOR -->
@@ -2544,6 +2607,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><strong>New: IEP Unit tab</strong> (teal tab at the top right of the Unit Planner, beside <em>Unit Planner</em>). Use it to plan a unit for one learner with learning needs. Choose the year level the learner is working at (a <em>modification</em>, Years 0–10) separately from the <em>access supports</em> they need, add their strengths and interests, tick learner characteristics, and the supports are ticked for you (or let the AI choose). Then choose the subject and topic, and the curriculum picker offers content from the year the learner is working at. The AI writes a unit plan for that learner alone (not a class plan), with a title "IEP Unit Plan for ______" for the teacher to add the name, the learner's strengths, challenges and strategies at the top, and the strategies, specific tasks and resources in every lesson. It also writes a draft IEP summary that follows the school's IEP template (Meeting Details, Learning Strengths, Learning Challenges, Prioritised Goals). Nothing in this tab is saved in your browser, and goals are suggestions for the IEP team.</li>
                         <li><strong>Years 0–6 curriculum content</strong> is now built in for Science, Social Sciences, English, Mathematics and Statistics, and Health and PE, so the curriculum picker in the IEP Unit tab can offer content for a learner working below their class year level. The Arts has Years 7–10 only so far.</li>
                         <li>Make a Quiz: when you choose from the curriculum you can now keep the <strong>whole topic</strong> or <strong>choose parts</strong>, ticking just the Knowledge and Practices points the quiz should cover.</li>
+                        <li><strong>New: Homework schedule</strong> in the Unit Planner (an optional box after Practical / Hands-On Sessions). The weeks are worked out for you from the unit length and the <strong>lessons per week</strong> for the year level and subject (Years 7 to 9: 3, Maths and English 4; Year 10: 4 in English, Maths, Science and Social Studies; Years 11 and 12: 4; Year 13: 5; you can change it). Homework is set in the first lesson of each week and is due the next week, labelled like <em>Year 7 Civics Week 1</em> (no dates). Tick the <strong>types</strong> you want from 15 small options (revision, extension, pre-work such as a short video, reading, vocabulary, practice questions, <strong>maths question sheets, spelling or word lists, workbook or pad pages such as SciPad</strong>, research, reflection, create, real-world, online platform, spaced review). The most minutes per week is suggested by year level (Year 7 and 8 30, Year 9 40, Year 10 45, senior 60).</li>
+                        <li>The unit plan gets a <strong>HOMEWORK</strong> line in each lesson that starts a week, a short <strong>HOMEWORK</strong> outline, and a <strong>HOMEWORK SCHEDULE</strong> table at the bottom with a parent email for every week. This works in every lesson format and in the WHS and Maths HTML templates. The AI is told where the assessment lessons fall: a test means revision homework beforehand, an assignment means homework is time spent working on it, and an assessment-only week has no homework. Three optional extras can be ticked: a <strong>completion tracker table for Google Sheets</strong> (a column for each week; the AI also makes the Sheet and a link if its tool can), a <strong>schedule table that copies cleanly into a Google Doc</strong>, and a <strong>Google Classroom post for each week</strong>. In the HTML templates the tables are real tables, so open the downloaded page, select a table, copy it and paste it into Google Docs or Sheets.</li>
+                        <li><strong>New: Homework Schedule tab (for existing units)</strong> (small blue tab at the top right of the Unit Planner, beside <em>IEP Unit</em>). Use it when you already have a unit plan. Choose only the <strong>subject and year level</strong> (they set the lessons per week and the minutes limit), then add a link to your plan or attach it in your AI chat. There is no unit title or duration to fill in, because the AI reads them from your plan, finds any test or assignment, works out the weeks and labels them like <em>Year 7 Civics Week 1</em>. Choose <strong>tables in the chat</strong> or an <strong>HTML page</strong> (WHS style, with real tables you can copy into Google Docs or Sheets). The same tickable types and extras are there. The three tabs now sit on their own row above the page title.</li>
+                        <li><strong>Live links:</strong> unit plans and homework schedules now ask the AI to make every recommended website, data source and YouTube clip a <strong>clickable link</strong>, in the Markdown and HTML versions. If the AI is not sure of a direct link it gives a search link that always works, and clips are still marked TEACHER TO CHECK. <strong>ChatGPT and Claude</strong> buttons now always sit beside <em>Open Gemini</em>, even when the WHS or Maths HTML template is on.</li>
                     </ul>
                 </div>
                 <div>
@@ -2685,6 +2752,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             <div class="kp-notice-body">
                 <p class="kp-notice-text">The Unit Planner can now fill in <strong>Specific Knowledge</strong> and <strong>Specific Practices</strong> for you, straight from the curriculum. Choose a subject and a Year 7–10, then click the gold <strong>Click here</strong> button to pick your strand and topic.</p>
                 <p class="kp-notice-subjects">English · Maths · Science · Social Sciences · Arts · PE &amp; Health</p>
+                <p class="kp-notice-text" style="text-align:left;border-top:1px solid #e2e8f0;padding-top:.8rem;margin-bottom:1rem"><strong>Also new:</strong> a <strong>Homework schedule</strong> option in the unit plan (weekly homework, parent emails, and a tracker table for Google Sheets or a table for Google Docs), a <strong>🧩 IEP Unit</strong> tab, and a <strong>📚 Homework Schedule</strong> tab for a unit plan you already have. See <em>What's New?</em> at the bottom of the page.</p>
                 <button type="button" id="kp-notice-ok" class="kp-ok" onclick="dismissKPNotice()">OK</button>
             </div>
         </div>
@@ -3061,7 +3129,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false, hwIncluded:'no', hwFormat:'md', hwLpwMap:{}, hwCap:'', hwTypes:['revision','extension','prework'], hwOut:[], hwNotes:'', hwPlanSource:'' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -4207,6 +4275,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (lessonState.mode === 'standard' && lessonState.framework === 'cpm' && !lessonHasOwnOutline()) {
                     total++; if (lessonState.activeStages && lessonState.activeStages.length > 0) done++;
                 }
+            } else if (targetId === 'prompt-unit-text' && hwOnly()) {
+                total++; if (unitState.dept) done++;
+                total++; if (unitState.year) done++;
             } else if (targetId === 'prompt-unit-text') {
                 total++; if (unitState.dept) done++;
                 total++; if (!topicMissing) done++;
@@ -4293,6 +4364,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (lessonState.mode === 'standard' && lessonState.framework === 'cpm' && !lessonHasOwnOutline() && (!lessonState.activeStages || lessonState.activeStages.length === 0)) {
                     return { msg: 'Select at least one stage in "Include Stages in Plan" before copying', id: 'stage-toggles-container' };
                 }
+            } else if (targetId === 'prompt-unit-text' && hwOnly()) {
+                if (!unitState.dept) return { msg: 'Select a Department before copying', id: 'unit-dept-opts' };
             } else if (targetId === 'prompt-unit-text') {
                 if (!unitState.dept) return { msg: 'Select a Department before copying', id: 'unit-dept-opts' };
                 if (topicMissing) return { msg: 'Fill in "Unit Plan Title" before copying', id: 'unit-plan-title-input' };
@@ -4321,7 +4394,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function attemptCopy(targetId, btn) {
-            var isWhs = (targetId === 'prompt-unit-text' && (unitState.whsTemplate || unitState.mathsTemplate)) ||
+            var isWhs = (targetId === 'prompt-unit-text' && !hwOnly() && (unitState.whsTemplate || unitState.mathsTemplate)) ||
                         (targetId === 'prompt-lesson-text' && lessonState.whsTemplate);
             if (isWhs) {
                 pendingWhsCopy = { id: targetId, btn: btn };
@@ -4478,11 +4551,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             updateAssessmentAddonsBanner();
         }
 
-        /* When a Gemini-specific add-on (WHS Template or Gemini Notebook) is active, the output only really makes sense pasted into Gemini — so hide the ChatGPT/Claude shortcuts and just show Gemini. */
+        /* The ChatGPT and Claude shortcuts always sit beside Open Gemini, whatever add-ons are on. */
         function updateAiLinkVisibility() {
-            var hideLesson = !!lessonState.whsTemplate;
+            var hideLesson = false;
             document.querySelectorAll('.other-ai-lesson').forEach(function(el) { el.classList.toggle('hidden', hideLesson); });
-            var hideUnit = !!(unitState.whsTemplate || unitState.mathsTemplate || unitState.geminiNotebook);
+            var hideUnit = false;
             document.querySelectorAll('.other-ai-unit').forEach(function(el) { el.classList.toggle('hidden', hideUnit); });
         }
 
@@ -4858,6 +4931,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     var upcc = document.getElementById('unit-practical-custom-count');
                     if (upcc) upcc.value = unitState.practicalCustomCount || '4';
                     renderPracticalTitleBoxes();
+                    hwFillInputs();
                     
                     if (unitState.assessmentType === 'Other') {
                         var cat = document.getElementById('unit-custom-assess-type-container');
@@ -5521,6 +5595,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 var catime = document.getElementById('unit-custom-assess-time-container');
                 if (catime) v === 'More' ? catime.classList.remove('hidden') : catime.classList.add('hidden');
             }
+            if (k === 'hwIncluded') { hwFillInputs(); hwSyncUI(); }
             updateUnitBuilderPrompt();
             saveAppState();
         }
@@ -5713,6 +5788,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // ---------- Individual Education Plan (IEP) support in the Unit Planner (v2.9) ----------
         // Deliberately NOT part of unitState: saveAppState() only saves unitState / lessonState / assessmentState, so nothing
         // typed here is ever written to the browser. It lives in this variable until the page is reloaded or cleared.
+        var hwTab = { on: false };
         var iepState = { on: false, workYear: '', classYear: '', savedYear: '', sac: false, promptMode: 'both', strengths: '', evidence: '', voice: '', chars: [], otherChar: '', aiChooses: false, sel: [], desel: [], notes: '', device: 'class', assess: true, outUnit: true, outSummary: true };
 
         // [id, label, approaches ticked by default]
@@ -5856,15 +5932,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 yn.textContent = !iepState.workYear ? '' : (iepState.workYear.indexOf('Level') !== -1 ? 'This is an NCEA level, so enter the NZQA standard number in the box below. There is no built-in curriculum picker for NCEA.' : !unitState.dept ? (iepState.classYear ? 'Next, choose the subject and topic below. The curriculum picker will then offer ' : 'Also choose the class year level above. Then choose the subject and topic below. The curriculum picker will offer ') + iepState.workYear + ' content.' : (hasC ? 'The curriculum picker below will offer ' + iepState.workYear + ' content for ' + unitState.dept + '.' : 'There is no built-in curriculum content for ' + unitState.dept + ' at ' + iepState.workYear + ' yet. Type or paste the Specific Knowledge and Practices below, or use the official curriculum link.'));
             }
             var onTab = iepState.on;
-            var ts = document.getElementById('unit-tab-std'), ti = document.getElementById('unit-tab-iep');
-            if (ts) { ts.className = 'px-3 py-2 rounded-l-lg text-xs font-bold border transition ' + (onTab ? 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50' : 'bg-[#c5a059] text-white border-[#c5a059]'); ts.setAttribute('aria-selected', String(!onTab)); }
-            if (ti) { ti.className = 'px-3 py-2 rounded-r-lg text-xs font-bold border border-l-0 transition ' + (onTab ? 'bg-teal-600 text-white border-teal-600' : 'bg-teal-50 text-teal-800 border-teal-600 hover:bg-teal-100'); ti.setAttribute('aria-selected', String(onTab)); }
+            var tm = hwTab.on ? 'hw' : (onTab ? 'iep' : 'std');
+            var ts = document.getElementById('unit-tab-std'), ti = document.getElementById('unit-tab-iep'), th = document.getElementById('unit-tab-hw');
+            if (ts) { ts.className = 'px-3 py-2 rounded-l-lg text-xs font-bold border transition ' + (tm !== 'std' ? 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50' : 'bg-[#c5a059] text-white border-[#c5a059]'); ts.setAttribute('aria-selected', String(tm === 'std')); }
+            if (ti) { ti.className = 'px-3 py-2 text-xs font-bold border border-l-0 transition ' + (tm === 'iep' ? 'bg-teal-600 text-white border-teal-600' : 'bg-teal-50 text-teal-800 border-teal-600 hover:bg-teal-100'); ti.setAttribute('aria-selected', String(tm === 'iep')); }
+            if (th) { th.className = 'px-2.5 py-1.5 rounded-r-lg text-[11px] font-bold border border-l-0 transition text-left leading-tight ' + (tm === 'hw' ? 'bg-sky-600 text-white border-sky-600' : 'bg-sky-50 text-sky-800 border-sky-600 hover:bg-sky-100'); th.setAttribute('aria-selected', String(tm === 'hw')); }
             var card = document.getElementById('iep-card'); if (card) card.classList.toggle('hidden', !onTab);
             var yb = document.getElementById('unit-year-block'); if (yb) yb.classList.toggle('hidden', onTab);
             var spt = document.getElementById('unit-select-prompt-text'); if (spt) spt.textContent = onTab ? '👆 Select a Department above, and the learner\'s class year level and working year level in the box at the top, to continue' : '👆 Select a Department and Year Level above to continue';
             var pt = document.getElementById('unit-page-title'), ps = document.getElementById('unit-page-sub');
-            if (pt) pt.textContent = onTab ? 'IEP Unit Sequence Builder' : 'Unit Sequence Builder';
-            if (ps) ps.textContent = onTab ? 'Plan a unit for one learner with learning needs, at the year level they are working at, with the strategies, tasks and resources spelled out in every lesson.' : 'Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.';
+            if (pt) pt.textContent = hwTab.on ? 'Homework Schedule Builder' : (onTab ? 'IEP Unit Sequence Builder' : 'Unit Sequence Builder');
+            if (ps) ps.textContent = hwTab.on ? 'Choose the subject and year level, add a link to your unit plan (or attach it in your AI chat), and get a once-a-week homework schedule for your own unit plan, with a parent email for every week. Add a tracker, Classroom posts or an HTML page if you like.' : onTab ? 'Plan a unit for one learner with learning needs, at the year level they are working at, with the strategies, tasks and resources spelled out in every lesson.' : 'Use this dynamic builder to construct a structured multi-week plan outlining Knowledge and Practices.';
             var set = function(id, v) { var el = document.getElementById(id); if (el && el.value !== v) el.value = v; };
             set('iep-strengths', iepState.strengths); set('iep-evidence', iepState.evidence); set('iep-voice', iepState.voice); set('iep-other-char', iepState.otherChar); set('iep-notes', iepState.notes);
             var chk = function(id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; };
@@ -5890,11 +5968,27 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function iepSetMode(on) {
             on = !!on;
             if (on === iepState.on) return;
+            if (on) hwTab.on = false;
             if (on) { iepState.savedYear = unitState.year || ''; unitState.year = iepState.workYear || ''; }
             else { unitState.year = iepState.savedYear || ''; setActiveBtn('unit-state', unitState.year, 'year'); }
             iepState.on = on;
             iepRefresh();
             if (on) iepShowWarning();
+        }
+        // The three tabs at the top right of the Unit Planner: only one is on at a time.
+        function unitSetTab(m) {
+            if (m === 'iep') { iepSetMode(true); return; }
+            if (m === 'hw') { hwSetTab(true); return; }
+            if (hwTab.on) { hwTab.on = false; iepRefresh(); return; }
+            iepSetMode(false);
+        }
+        function hwSetTab(on) {
+            on = !!on;
+            if (on === hwTab.on) return;
+            if (on && iepState.on) iepSetMode(false);
+            hwTab.on = on;
+            hwFillInputs();
+            iepRefresh();
         }
         function iepSet(k, v) {
             iepState[k] = v;
@@ -6087,9 +6181,306 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var iepLastDept = '';
         (function() { function go() { iepRenderStatic(); iepRenderDynamic(); } if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go(); })();
 
+        // ---------- Homework schedule in the Unit Planner (v2.9) ----------
+        // An optional section. The weeks come from the unit length and the lessons per week for the year level and subject
+        // (hwDefaultLpw). The prompt tells the AI which lessons start each week, where the assessment lessons fall, and asks for:
+        // a HOMEWORK line in the lesson that starts each week, a short HOMEWORK outline, and a HOMEWORK SCHEDULE table at the very
+        // end (one row per week with a parent email). Weeks are labelled like "Year 7 Civics Week 1"; there are no calendar dates.
+        // The "Homework Schedule (for existing units)" tab builds the same schedule for a unit plan the teacher already has, as Markdown
+        // tables or one HTML page. Optional extras: a tracker table (for Google Sheets), a Google Docs friendly table, Classroom posts.
+        // Nothing here names a student.
+        var HW_CAPS = { 'Year 7': 30, 'Year 8': 30, 'Year 9': 40, 'Year 10': 45 };
+        var HW_INPUT_IDS = ['hw-lpw', 'hw-cap', 'hw-notes', 'hw-plan-source'];
+        var HW_COLS = ['Week', 'Set in', 'Due', 'Type', 'Homework (what students do)', 'Mins', 'Clip / resource', 'Parent email'];
+        // [key, label, what the AI is told, short hint shown to the teacher]
+        var HW_TYPES = [
+            ['revision', 'Revision', 'Revision: low-stakes retrieval practice of what has ALREADY been taught (quick recall questions, flashcards, a brain-dump from memory, a short self-marked quiz), spread over earlier weeks of the unit.', 'Recall what has been taught'],
+            ['extension', 'Extension', 'Extension: a short stretch task that goes beyond the lessons (a deeper question, a real-world connection, a challenge).', 'A stretch beyond the lessons'],
+            ['prework', 'Pre-work (e.g. a short video)', 'Pre-work: short preparation for coming lessons, for example a short YouTube clip with one question to think about while watching.', 'Prepare for coming lessons'],
+            ['reading', 'Reading', 'Reading: a short article or text with 3 to 5 questions or a one-line summary.', 'Short text and questions'],
+            ['vocab', 'Vocabulary practice', "Vocabulary practice: the unit's key words (Tier 2 and Tier 3) as flashcards, a matching task or using the words in sentences.", 'Key words'],
+            ['practice', 'Practice questions', 'Practice questions: a short set, self-marked with an answer key or worked solutions.', 'Self-marked practice'],
+            ['mathsq', 'Maths question sheet', 'Maths question sheet: a short set of questions on the unit\'s maths, in order of difficulty, with an answer sheet for self-marking and worked solutions for the hardest questions. Teacher prints or posts it.', 'Questions with answers'],
+            ['spelling', 'Spelling or word list', "Spelling or word list: 8 to 12 words from the unit (key words and common spelling patterns), with a look-say-cover-write-check task or a short word-use task. Give the word list in full.", 'Word lists'],
+            ['workbook', 'Workbook or pad pages (e.g. SciPad)', "Workbook or pad pages: students write in a resource they already have (for example a SciPad or a subject workbook). Name the resource and the section or topic. Do NOT invent page numbers or activity numbers; write [page numbers to be added by teacher] unless I have given them.", 'Write in SciPad etc.'],
+            ['research', 'Research task', 'Research task: find out one specific thing, using a named resource or a safe search.', 'Find out one thing'],
+            ['reflection', 'Reflection', 'Reflection: a short written or spoken reflection (what I learned, what is still unclear, one question I have).', 'What I learned'],
+            ['create', 'Create or make', 'Create or make: make something small (a labelled diagram, poster, model, short explanation or slide) that shows the learning.', 'Make something small'],
+            ['realworld', 'Real-world connection', 'Real-world connection: notice, collect or talk about an example from home, whānau or the community that links to the unit.', 'Link to home and community'],
+            ['online', 'Online platform task', 'Online platform task: a short task on a platform the school already uses (for example Education Perfect, Kahoot or Blooket).', 'Education Perfect, Kahoot...'],
+            ['spaced', 'Spaced review of earlier learning', 'Spaced review: revisit key ideas from an earlier unit or year that this unit builds on.', 'Earlier units']
+        ];
+
+        function hwActive() { return (hwTab.on || unitState.hwIncluded === 'yes') && !iepActive(); }
+        // "Homework only" is the third tab (a unit plan the teacher already has). It is never saved, so the page always opens on the Unit Planner tab.
+        function hwOnly() { return hwActive() && hwTab.on; }
+        function hwDefaultCap(yr) { if (!yr) return 30; if (String(yr).indexOf('Level') !== -1) return 60; return HW_CAPS[yr] || 30; }
+        function hwCap() { var c = parseInt(unitState.hwCap, 10); return c > 0 ? c : hwDefaultCap(unitState.year); }
+        function hwShortYear(yr) { return String(yr == null ? unitState.year : yr).replace(/\s*\(.*\)\s*$/, '').trim(); }
+        function hwTopic() { if (hwOnly()) return '[unit title from my plan]'; var t = getGlobalTopic(); return t === '[Insert Specific Topic Here]' ? (unitState.dept || '') : t; }
+        function hwLabel(n) { return [hwShortYear(), hwTopic()].filter(Boolean).join(' ') + ' Week ' + n; }
+        // Lessons per week at the school: Years 7 to 9 have 3 (Maths, English and Health and PE have 4); Year 10 has 4 in English, Maths,
+        // Science and Social Studies and 3 in Health and PE; Years 11 and 12 have 4; Year 13 has 5.
+        function hwDefaultLpw(dept, yr) {
+            var m = /Year\s*(\d+)/i.exec(String(yr || '')), y = m ? parseInt(m[1], 10) : 0, d = String(dept || '');
+            var pe = /health|\bp\.?e\b|physical/i.test(d), core = /^(maths|mathematics|english|science|social sciences?|social studies)$/i.test(d);
+            if (y >= 13) return 5;
+            if (y >= 11) return 4;
+            if (y === 10) return pe ? 3 : (core ? 4 : 3);
+            if (y >= 7) return (pe || /^(maths|mathematics|english)$/i.test(d)) ? 4 : 3;
+            return 3;
+        }
+        function hwLpwKey() { return (unitState.dept || '') + '|' + (unitState.year || ''); }
+        function hwLpw() {
+            var map = unitState.hwLpwMap || {}, n = parseInt(map[hwLpwKey()], 10);
+            return n > 0 ? Math.min(10, n) : hwDefaultLpw(unitState.dept, unitState.year);
+        }
+        function hwParseLessons(txt, lpw) {
+            var s = String(txt || ''), m = /(\d+(?:\.\d+)?)\s*weeks?/i.exec(s);
+            if (m) return Math.round(parseFloat(m[1]) * lpw);
+            m = /(\d+)/.exec(s);
+            return m ? parseInt(m[1], 10) : 0;
+        }
+        // The shape of the unit: lessons, weeks, which lessons start each week, and where the assessment lessons fall. null if the length can't be read.
+        function hwPlan() {
+            if (hwOnly()) return null;
+            var L = hwLpw(), g = function(id) { return ((document.getElementById(id) || {}).value || ''); };
+            var core = hwParseLessons(unitState.dur === 'Other' ? g('unit-custom-dur') : unitState.dur, L);
+            if (!core) return null;
+            var assess = 0;
+            if (unitState.assessmentIncluded === 'yes' && !hwOnly()) {
+                assess = hwParseLessons(unitState.assessmentTime === 'More' ? g('unit-custom-assess-time') : unitState.assessmentTime, L);
+                if (!assess) return null;
+            }
+            var total = core + assess, weeks = Math.ceil(total / L), map = [];
+            for (var n = 1; n <= weeks; n++) map.push({ n: n, from: (n - 1) * L + 1, to: Math.min(n * L, total) });
+            return { L: L, core: core, assess: assess, total: total, weeks: weeks, map: map, assessFrom: assess ? core + 1 : 0 };
+        }
+        function hwLessonRange(m) { return m.from === m.to ? 'Lesson ' + m.from : 'Lessons ' + m.from + '-' + m.to; }
+        function hwTypeList() { return (unitState.hwTypes || []).filter(function(k) { return HW_TYPES.some(function(t) { return t[0] === k; }); }); }
+        function hwTypeLines() {
+            var sel = hwTypeList();
+            if (!sel.length) return '  - No types were chosen, so use a sensible mix of revision, extension and pre-work.\n';
+            return HW_TYPES.filter(function(t) { return sel.indexOf(t[0]) !== -1; }).map(function(t) { return '  - ' + t[2]; }).join('\n') + '\n';
+        }
+        function hwAssessLines(pl) {
+            var s = '', n = (unitState.hwNotes || '').trim();
+            if (!hwOnly() && unitState.assessmentIncluded === 'yes') {
+                var at = unitState.assessmentType === 'Other' ? (((document.getElementById('unit-custom-assess-type') || {}).value || '').trim() || 'assessment') : unitState.assessmentType;
+                if (pl) {
+                    var aw = Math.ceil(pl.assessFrom / pl.L), whole = pl.map.filter(function(m) { return m.from >= pl.assessFrom; }).map(function(m) { return m.n; });
+                    s += '- The summative ' + at.toUpperCase() + ' takes the final ' + pl.assess + ' lesson' + (pl.assess === 1 ? '' : 's') + ' of the sequence (' + (pl.assess === 1 ? 'Lesson ' + pl.assessFrom : 'Lessons ' + pl.assessFrom + '-' + pl.total) + ', which ' + (pl.assess === 1 ? 'starts' : 'start') + ' in Week ' + aw + '). ';
+                    if (whole.length) s += 'Week' + (whole.length > 1 ? 's ' : ' ') + whole.join(', ') + (whole.length > 1 ? ' are' : ' is') + ' made up only of assessment lessons, so ' + (whole.length > 1 ? 'they have' : 'it has') + ' NO homework (write the row with Type "None" and "No homework this week: assessment week"). ';
+                } else s += '- The unit ends with a summative ' + at.toUpperCase() + ' (the assessment lessons are the last lessons of the sequence). A week made up only of assessment lessons has NO homework. ';
+                if (at === 'Test') s += 'Make the homework in the weeks leading up to the test REVISION for it (cumulative, mixing earlier lessons), with the last teaching week mostly revision to finish before the test. Give those weeks the Type "Test revision". Do not set new pre-work for content that comes after the test.\n';
+                else if (at === 'Assignment') s += 'The assignment is a longer piece of work. In the last 2 to 3 weeks that have teaching lessons before the assessment lessons, the homework is time spent WORKING ON THE ASSIGNMENT, in small time-boxed steps (for example plan and research, first draft, check against the criteria). Give those weeks the Type "Assignment work", and mention the assignment in the lesson where it is introduced. Use the other types in the earlier weeks.\n';
+                else s += 'Use your judgement: revise for it if it is test-style, or make the homework time spent working on it if it is a longer piece of work.\n';
+            }
+            if (hwOnly()) s += '- Find any test or assignment in my unit plan and the lesson it falls in. Before a test, set revision homework for it (Type "Test revision"). While a longer assignment is running, make the homework time spent working on it, in small time-boxed steps (Type "Assignment work"). A week made up only of assessment lessons has NO homework.\n';
+            else s += '- If the Specific Instructions above mention a test or assignment at any other point in the unit, plan the homework around that too.\n';
+            if (n) s += '- The teacher also says: "' + n + '". Follow this.\n';
+            return s;
+        }
+        function hwWeekMapLine(pl) {
+            if (pl) return '- There are ' + pl.L + ' lessons per week. The unit is ' + pl.core + ' lesson' + (pl.core === 1 ? '' : 's') + (pl.assess ? ' plus ' + pl.assess + ' assessment lesson' + (pl.assess === 1 ? '' : 's') : '') + ' = ' + pl.total + ' lessons = ' + pl.weeks + ' week' + (pl.weeks === 1 ? '' : 's') + ': ' + pl.map.map(function(m) { return 'Week ' + m.n + ' = ' + hwLessonRange(m); }).join('; ') + '. There is one row for each of Week 1 to Week ' + pl.weeks + '.\n';
+            var L = hwLpw();
+            if (hwOnly()) return '- There are ' + L + ' lessons per week. Count the lessons in my unit plan and work out the number of weeks (lessons divided by ' + L + ', rounded up). Week 1 is Lessons 1-' + L + ', Week 2 is Lessons ' + (L + 1) + '-' + (2 * L) + ', and so on. There is one row for every week. Use the real unit title from my plan in the week labels in place of [unit title from my plan].\n';
+            return '- There are ' + L + ' lessons per week. Work out the number of weeks from the duration (lessons divided by ' + L + ', rounded up). Week 1 is Lessons 1-' + L + ', Week 2 is Lessons ' + (L + 1) + '-' + (2 * L) + ', and so on. There is one row for every week.\n';
+        }
+        // Live links: every recommended site, data source or video should be a clickable link. A direct link only when the AI is sure it is real,
+        // otherwise a search link, which always works. Used by the unit prompts (Markdown and HTML) and the homework schedule.
+        function liveLinkRule(html) {
+            var how = html ? '<a href="URL" target="_blank">Title</a>' : '[Title](URL)';
+            return 'CRITICAL: Make every recommended website, data source, video or YouTube clip a LIVE clickable link, written as ' + how + '. Link straight to a page or video ONLY if you are sure it is real and working (for example a well-known site\'s home page, or a page you have checked with your search or browsing tool). If you are not sure of a deep link, use a live search link instead, which always works: https://www.youtube.com/results?search_query=exact+search+words for a clip, or https://www.google.com/search?q=exact+search+words for a page or data. Never invent a deep link, and write TEACHER TO CHECK after every video clip.\n\n';
+        }
+        function hwRules(yr, only, html) {
+            if (!hwActive()) return '';
+            var cap = hwCap(), pl = hwPlan();
+            var s = '### Homework Schedule' + (only ? '' : ' (also required)') + '\n';
+            s += 'Create a once-a-week homework schedule' + (only ? ' for this unit' : ' and build it into this unit plan') + '.\n';
+            s += hwWeekMapLine(pl);
+            s += '- Homework is set in the FIRST lesson of each week and is due in the first lesson of the next week. One homework per week, never more. Do not use calendar dates anywhere; label each week like "' + hwLabel(1) + '", "' + hwLabel(2) + '".\n';
+            s += '- HARD LIMIT: a maximum of ' + cap + ' minutes per week for this ' + unitState.dept + ' class (' + yr + '). Students have other subjects too, so this limit is not negotiable. Time-box every task (for example "spend up to 15 minutes") and count the running time of any video. Before you write each week, add up its minutes: the total must never go over ' + cap + '.\n';
+            s += '- Homework types to use:\n' + hwTypeLines();
+            if (hwTypeList().length !== 1) s += '  Mix the types across the weeks rather than repeating one.\n';
+            s += '- Revision may only draw on learning that has already been taught by the time it is set. Pre-work prepares students for lessons in the coming week or two. In Week 1 little has been taught yet, so use pre-work or prior knowledge.\n';
+            s += hwAssessLines(pl);
+            if (!only && html) s += '- Where each part of the homework goes is shown in the HTML template at the end of this prompt (the HOMEWORK line inside the lesson that starts each week, the HOMEWORK outline table, and the HOMEWORK SCHEDULE table). Copy that structure exactly. Do not invent any other sections, and do not put the parent emails in a section of their own: each week\'s parent email is the last column of the HOMEWORK SCHEDULE table. A week with no homework (an assessment-only week) gets no HOMEWORK line in its lesson.\n';
+            else if (!only) s += '- In the unit plan, in the lesson that STARTS each week (the first lesson of the week), add a clearly marked line **HOMEWORK (' + hwLabel(1) + '):** with a one-line summary of what is set that week and how long it should take. Do this in those lessons only, and do it in every lesson format, including a Lesson Outlines plan (this line is the one exception to the no-tasks rule there). A week with no homework (an assessment-only week) gets no HOMEWORK line.\n';
+            s += '- Every task must be doable at home, independently, and be quick for the teacher to check (self-marked, a short quiz at the start of the next lesson, or a Google Form). Give a no-device alternative for any task that needs a device.\n';
+            var lk = html ? '<a href="URL" target="_blank">Title</a>' : '[Title](URL)';
+            s += '- Videos and resources: where a video helps, choose a short, reliable, age-appropriate YouTube clip and say exactly what to watch for. Give the clip title, channel and length as a LIVE clickable link, written as ' + lk + '. Link straight to the video ONLY if you are certain it is real; otherwise link to a YouTube search that will find it: https://www.youtube.com/results?search_query=exact+search+words. Never invent a video link. Do the same for any website or data source you recommend. Write TEACHER TO CHECK after every clip so I can check it before I use it. The clip length counts towards the weekly minutes.\n';
+            s += '- Parent email: for each week write a short message (3 to 5 sentences) to parents and caregivers in plain, friendly NZ English. Start with "Kia ora whānau," and end with "Ngā mihi, [Teacher name]". Say which subject and year level it is, what homework is set this week, about how many minutes it should take, that it is due at the start of next week, and one simple way a parent or caregiver can help (for example asking their child to explain what they watched). No dates, no student names and no jargon.\n';
+            s += html ? hwOutRulesHtml() : hwOutRules();
+            s += 'CRITICAL: Do not include any student names anywhere in the homework.\n\n';
+            return s;
+        }
+        function hwTagMd() { return hwActive() && !hwOnly() ? '<br>**HOMEWORK (' + hwLabel(1) + '):** [Fill a one-line summary. Include this line ONLY in the first lesson of each week that has homework, otherwise leave it out]' : ''; }
+        function hwTagHtml() { return hwActive() && !hwOnly() ? '<br><br><strong>HOMEWORK (' + hwLabel(1) + '):</strong> [Fill a one-line summary. Include this line ONLY in the first lesson of each week that has homework, otherwise delete it]' : ''; }
+        function hwMoeBlock() { return hwActive() && !hwOnly() ? '**Homework (' + hwLabel(1) + ')** (include ONLY in the first lesson of each week that has homework, otherwise leave this section out)\n[Fill a one-line summary of the homework set this week and how long it should take]\n\n' : ''; }
+        function hwMdOutline(yr) {
+            if (!hwActive()) return '';
+            return '## HOMEWORK\n**Weekly limit:** ' + hwCap() + ' minutes (' + yr + ' ' + unitState.dept + ') · **Set:** the first lesson of each week · **Due:** the first lesson of the next week\n- [Outline point: the pattern of homework across the unit and the mix of types]\n- [Outline point: how the homework builds towards the test or assignment, if there is one]\n- [Outline point: the pre-work or video clips used, if any]\n*(Keep this to 3 or 4 short points. The week-by-week schedule and parent emails are in the HOMEWORK SCHEDULE table at the end of this response.)*\n\n';
+        }
+        function hwCellRules() {
+            var pl = hwPlan();
+            return 'Rules for the table: one row for every week (' + (pl ? 'Week 1 to Week ' + pl.weeks : 'every week') + '), no extra rows and no totals row. "Week" holds the label, for example "' + hwLabel(1) + '". "Set in" is the lesson it is set in (for example Lesson 1) and "Due" is the lesson it is due in (for example Lesson 4, or "Start of the next week" for the last one). Keep every cell to ONE line: no pipe characters and no line breaks (write <br> where a new line is needed inside a cell). "Type" is the type or types used (for example Revision, Extension, Pre-work, Assignment work, Test revision) or None. "Homework" is a numbered list of tasks written to the student ("You will..."), each ending with its time in brackets, for example (10 min), plus a no-device option. "Mins" is ONE whole number: the week\'s total, equal to the bracketed times added up and never over ' + hwCap() + '. "Clip / resource" is "None" or the clip or site as a live clickable link (written as [Title](URL) in Markdown or <a href="URL" target="_blank">Title</a> in HTML; use a YouTube search link if you are not certain of the video link) with the channel and length, then TEACHER TO CHECK. "Parent email" is the short email described above, with <br> between lines.\n';
+        }
+        function hwOutOn(k) { return hwActive() && (unitState.hwOut || []).indexOf(k) !== -1; }
+        function hwWeekLabels() { var pl = hwPlan(), n = pl ? pl.weeks : 0, a = []; for (var i = 1; i <= n; i++) a.push(hwLabel(i)); return a; }
+        function hwOutRules() {
+            var s = '';
+            if (hwOutOn('tracker')) s += '- Tracker: after the HOMEWORK SCHEDULE table add a second table headed HOMEWORK TRACKER that I can paste into Google Sheets. Its columns are: Student, then one column for each week labelled exactly like the schedule' + (hwWeekLabels().length ? ' (' + hwWeekLabels().join(', ') + ')' : '') + ', then Completion. Add 5 empty rows with "[add name]" in the Student column. Under the table say in one line that each week cell uses the values Done, Partly, Not done or Excused, and how to turn those cells into a dropdown in Google Sheets (Data > Data validation). If you can create a Google Sheet for me (for example with a Google Workspace extension), do that and give me the link; if you cannot, just give the table. Never invent a link.\n';
+            if (hwOutOn('doc')) s += '- Google Docs: make the HOMEWORK SCHEDULE table copy cleanly into a Google Doc. It must be ONE plain table with a single header row, no merged cells, no nested tables or lists inside cells (use <br> for line breaks), and nothing else between its rows. If your tool has an Export to Docs option, mention it in one line under the table.\n';
+            if (hwOutOn('classroom')) s += '- Google Classroom posts: add a section headed GOOGLE CLASSROOM POSTS' + (hwOutOn('tracker') ? ' after the tracker' : ' after the schedule table') + '. Write one short post for each week that has homework, addressed to students (2 to 4 sentences: what to do, how long it should take, and that it is due in the first lesson of next week). If a post mentions a clip or site, make it a live link following the same rule. No student names. Do not write a post for a week with no homework.\n';
+            return s;
+        }
+        // In the HTML templates the structure lives in the template itself, so these are one short line each (no competing layout instructions).
+        function hwOutRulesHtml() {
+            var s = '';
+            if (hwOutOn('tracker')) s += '- Tracker: fill in the HOMEWORK TRACKER table in the template (a column for each week, 5 empty rows with [add name], no real names). If you can create a Google Sheet for me, give me the link; if you cannot, never invent a link.\n';
+            if (hwOutOn('doc')) s += '- The HOMEWORK SCHEDULE table must stay one plain table with no merged cells, so it copies cleanly into a Google Doc.\n';
+            if (hwOutOn('classroom')) s += '- Fill in the GOOGLE CLASSROOM POSTS table in the template: one short post to students for each week that has homework.\n';
+            return s;
+        }
+        // A closing checklist for the HTML templates. The homework additions make the prompt long, so this repeats the section order at the very end.
+        function hwHtmlCheck(maths) {
+            if (!hwActive()) return '';
+            var h = maths
+                ? ['the banner table', 'Knowledge and Practices', 'Curriculum Integration', 'The Language of Mathematics and Statistics', 'Assessment', 'Lesson Content', 'Ākonga Information', 'HOMEWORK', 'Evaluation', 'HOMEWORK SCHEDULE']
+                : ['the banner table (title, Year Level, Term, Duration, Topic, Overview, Purpose)', 'Knowledge and Practices', 'Curriculum Integration', 'Assessment', 'Lesson Content - Unit Folder Link (one row for every lesson)', 'HOMEWORK', 'Evaluation', 'HOMEWORK SCHEDULE'];
+            if (hwOutOn('tracker')) h.push('HOMEWORK TRACKER');
+            if (hwOutOn('classroom')) h.push('GOOGLE CLASSROOM POSTS');
+            return '\nFINAL CHECK before you reply: your single HTML code block must contain these sections in this order, using the exact headings in capital letters as written in the template above, and nothing else: ' + h.join('; ') + '. Keep the same tables, columns and class names as the template. Do not invent other sections or tables (no separate "Lesson Sequence", "Parent Emails" or other extra sections), and do not rename or reorder any heading.\n';
+        }
+        function hwMdClassroom() {
+            if (!hwOutOn('classroom')) return '';
+            return '\n## GOOGLE CLASSROOM POSTS\n(Put these after the ' + (hwOutOn('tracker') ? 'HOMEWORK TRACKER' : 'HOMEWORK SCHEDULE') + ' table. One post for each week that has homework.)\n**' + hwLabel(1) + ': [Short post title]**\n[2 to 4 sentences to students: what to do, how long it should take, and that it is due in the first lesson of next week.]\n(The post above only shows the layout. Write one for every week that has homework.)\n';
+        }
+        function hwHtmlClassroom() {
+            if (!hwOutOn('classroom')) return '';
+            return '\n    <h2>GOOGLE CLASSROOM POSTS</h2>\n    <!-- Put this after the ' + (hwOutOn('tracker') ? 'HOMEWORK TRACKER' : 'HOMEWORK SCHEDULE') + ' table. One row for each week that has homework, written to students in 2 to 4 sentences. No student names. -->\n    <table id="homework-classroom-posts">\n        <tr><td class="header-bg" style="width: 20%;">Week</td><td class="header-bg">Post to students</td></tr>\n        <tr><td>' + hwLabel(1) + '</td><td>[2 to 4 sentences: what to do, how long it should take, and that it is due in the first lesson of next week.]</td></tr>\n    </table>\n';
+        }
+        function hwMdTracker() {
+            if (!hwOutOn('tracker')) return '';
+            var wk = hwWeekLabels(); if (!wk.length) wk = [hwLabel(1), hwLabel(2), '...'];
+            var cols = ['Student'].concat(wk, ['Completion']);
+            return '\n## HOMEWORK TRACKER\n(Put this table straight after the HOMEWORK SCHEDULE table. Do not put any real student names in it.)\n| ' + cols.join(' | ') + ' |\n|' + cols.map(function() { return '---'; }).join('|') + '|\n| [add name] |' + cols.slice(1).map(function() { return ' |'; }).join('') + '\n(The row above only shows the layout. Give 5 empty rows.)\n';
+        }
+        function hwHtmlTracker() {
+            if (!hwOutOn('tracker')) return '';
+            var wk = hwWeekLabels(); if (!wk.length) wk = [hwLabel(1), hwLabel(2), '...'];
+            var cols = ['Student'].concat(wk, ['Completion']), h = '', r = '';
+            cols.forEach(function(c) { h += '<td class="header-bg">' + c + '</td>'; r += '<td>&nbsp;</td>'; });
+            return '\n    <h2>HOMEWORK TRACKER</h2>\n    <!-- A table to paste into Google Sheets. Put it straight after the HOMEWORK SCHEDULE table, with 5 empty rows and no real student names. Each week cell will use Done, Partly, Not done or Excused. -->\n    <table id="homework-tracker">\n        <tr>' + h + '</tr>\n        <tr>' + r + '</tr>\n    </table>\n';
+        }
+        function hwMdSchedule() {
+            if (!hwActive()) return '';
+            return '\n## HOMEWORK SCHEDULE\n(Put this table at the very END of your response, after Evaluation.)\n' + hwCellRules() + '| ' + HW_COLS.join(' | ') + ' |\n|---|---|---|---|---|---|---|---|\n| ' + hwLabel(1) + ' | Lesson 1 | Lesson ' + (hwLpw() + 1) + ' | [Type] | [1. Task (10 min)<br>2. Task (10 min)] | [20] | [Clip details or None] | [Kia ora whānau,<br>...<br>Ngā mihi, [Teacher name]] |\n(The row above only shows the layout. Write a real row for every week.)\n' + hwMdTracker() + hwMdClassroom();
+        }
+        function hwHtmlOutline(yr) {
+            if (!hwActive()) return '';
+            return '    <h2>HOMEWORK</h2>\n    <table>\n        <tr><td class="header-bg col-25">Weekly limit</td><td>' + hwCap() + ' minutes (' + yr + ' ' + unitState.dept + '). Set in the first lesson of each week, due in the first lesson of the next week.</td></tr>\n        <tr><td class="header-bg">Outline</td><td><ul><li>[Outline point: the pattern of homework across the unit and the mix of types]</li><li>[Outline point: how it builds towards the test or assignment, if any]</li><li>[Outline point: the pre-work or clips used, if any]</li></ul><span class="small-text">Keep this to 3 or 4 short points. The week-by-week schedule and parent emails are in the HOMEWORK SCHEDULE table at the end.</span></td></tr>\n    </table>\n\n';
+        }
+        function hwHtmlSchedule() {
+            if (!hwActive()) return '';
+            var w = [12, 6, 7, 8, 23, 4, 15, 25], h = '';
+            HW_COLS.forEach(function(c, i) { h += '<td class="header-bg" style="width: ' + w[i] + '%;">' + c + '</td>'; });
+            return '\n    <h2>HOMEWORK SCHEDULE</h2>\n    <!-- ' + hwCellRules().replace(/<br>/g, 'a line break tag').replace(/\n/g, ' ') + ' (In this HTML table use a <br> tag inside a cell for a new line.) -->\n    <table id="homework-schedule">\n        <tr>' + h + '</tr>\n        <tr><td>' + hwLabel(1) + '</td><td>Lesson 1</td><td>Lesson ' + (hwLpw() + 1) + '</td><td>[Type]</td><td>[1. Task (10 min)<br>2. Task (10 min)]</td><td>[20]</td><td>[Clip details or None]</td><td>[Kia ora whānau,<br>...<br>Ngā mihi, [Teacher name]]</td></tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per week, each with its own real content. Put this whole table AFTER the Evaluation table. -->\n    </table>\n' + hwHtmlTracker() + hwHtmlClassroom();
+        }
+        function hwOnlyPrompt(yr) {
+            var sm = (unitState.hwPlanSource || '').trim(), html = unitState.hwFormat === 'html', tb = '```';
+            var s = '### System Role\nAct as an expert curriculum designer and teacher.\n\n';
+            s += '### Context\nI already have a ' + yr + ' ' + unitState.dept + ' unit plan based on the NZ Curriculum. Read it first and find its title, how many lessons it has and any test or assignment in it. Then create a homework schedule that fits it.\n\n';
+            s += '### My Unit Plan\n';
+            if (sm) s += sm + '\nIf this is a Google Doc, Google Slides or Drive link, use your @Google Docs or @Google Drive extension to read the whole file before writing anything.\n';
+            else s += 'I have attached my unit plan to this chat (or pasted it below). Read all of it before writing anything.\n[PASTE YOUR UNIT PLAN HERE IF YOU HAVE NOT ATTACHED IT]\n';
+            s += '\n### Task\nCreate the homework schedule for this unit plan. Do NOT rewrite, change or summarise the unit plan itself. Base every homework task on the lessons, Knowledge and Practices, vocabulary, resources and assessments that are actually in my plan.\n\n';
+            s += hwRules(yr, true, html);
+            s += nzSpellingRule + '\n' + noLatexRule + '\n\n';
+            if (!html) return s + '### Output Format\nOutput ONLY the parts below, in this order, using Markdown. No introduction and no rationale.\n\n' + hwMdOutline(yr) + hwMdSchedule();
+            s += '### Output Format: HTML page\nOutput your ENTIRE response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and opened in a browser. Fill in every [Fill] and [bracket] placeholder with real content and repeat the row structure for every week. Do not add anything outside the code block.\n\n';
+            s += tb + 'html\n<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: Arial, sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 8px 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .top-banner { background-color: #87499c; color: #ffffff; font-weight: 700; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        h2 { font-size: 14pt; font-weight: 700; color: #000000; margin-bottom: 6px; margin-top: 24px; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; }\n        .col-25 { width: 25%; }\n    </style>\n</head>\n<body>\n';
+            s += '    <table>\n        <tr><td class="top-banner" style="text-align: left; font-size: 20pt;">WHS ' + yr + ' ' + unitState.dept + ' - Homework: [unit title from my plan]</td></tr>\n    </table>\n\n';
+            s += hwHtmlOutline(yr) + hwHtmlSchedule() + '</body>\n</html>\n' + tb + '\n';
+            return s;
+        }
+
+        function hwRenderTypes() {
+            var box = document.getElementById('hw-type-opts'); if (!box) return;
+            if (!box.children.length) {
+                box.innerHTML = HW_TYPES.map(function(t) {
+                    return '<label class="flex items-start gap-1.5 text-[11px] text-slate-700 cursor-pointer leading-tight"><input type="checkbox" class="mt-px w-3.5 h-3.5 accent-sky-600 shrink-0" data-hw-type="' + t[0] + '"><span><strong>' + hwEsc(t[1]) + '</strong> <span class="text-[10px] text-slate-500">' + hwEsc(t[3]) + '</span></span></label>';
+                }).join('');
+            }
+            var sel = unitState.hwTypes || [];
+            box.querySelectorAll('input[data-hw-type]').forEach(function(i) { i.checked = sel.indexOf(i.getAttribute('data-hw-type')) !== -1; });
+        }
+        function hwFillInputs() {
+            var set = function(id, v) { var el = document.getElementById(id); if (el && document.activeElement !== el) { el.value = v == null ? '' : v; if (el.classList.contains('autosize-textarea')) { try { autosizeTextarea(el); } catch (e) {} } } };
+            set('hw-lpw', hwLpw()); set('hw-cap', unitState.hwCap); set('hw-notes', unitState.hwNotes); set('hw-plan-source', unitState.hwPlanSource);
+        }
+        function hwReadInputs() {
+            var g = function(id) { var el = document.getElementById(id); return el ? el.value : ''; };
+            var map = unitState.hwLpwMap || (unitState.hwLpwMap = {}), v = parseInt(g('hw-lpw'), 10);
+            if (v > 0) map[hwLpwKey()] = String(Math.min(10, v)); else delete map[hwLpwKey()];
+            unitState.hwCap = g('hw-cap'); unitState.hwNotes = g('hw-notes'); unitState.hwPlanSource = g('hw-plan-source');
+        }
+        function hwToggleType(k, on) {
+            var cur = (unitState.hwTypes || []).slice(), i = cur.indexOf(k);
+            if (on && i === -1) cur.push(k); else if (!on && i !== -1) cur.splice(i, 1);
+            unitState.hwTypes = cur;
+            updateUnitBuilderPrompt(); saveAppState();
+        }
+        function hwRenderOut() {
+            var sel = unitState.hwOut || [];
+            document.querySelectorAll('#hw-out-wrap input[data-hw-out]').forEach(function(i) { i.checked = sel.indexOf(i.getAttribute('data-hw-out')) !== -1; });
+        }
+        document.addEventListener('change', function(e) {
+            var t = e.target; if (!t || !t.getAttribute || !t.getAttribute('data-hw-out')) return;
+            var k = t.getAttribute('data-hw-out'), cur = (unitState.hwOut || []).filter(function(x) { return x !== k; });
+            if (t.checked) cur.push(k);
+            unitState.hwOut = cur; updateUnitBuilderPrompt(); saveAppState();
+        });
+        document.addEventListener('change', function(e) { var t = e.target; if (t && t.getAttribute && t.getAttribute('data-hw-type')) hwToggleType(t.getAttribute('data-hw-type'), t.checked); });
+        function hwSyncUI() {
+            var $ = function(id) { return document.getElementById(id); };
+            var on = hwActive(), only = hwOnly();
+            var sub = $('unit-homework-sub-options'); if (sub) sub.classList.toggle('hidden', !on);
+            var pw = $('hw-plan-source-wrap'); if (pw) pw.classList.toggle('hidden', !only);
+            var ob = $('hw-optional-badge'); if (ob) ob.classList.toggle('hidden', only);
+            var fw = $('hw-format-wrap'); if (fw) fw.classList.toggle('hidden', !only);
+            setActiveBtn('unit-state', unitState.hwFormat || 'md', 'hwFormat');
+            var yn = $('hw-yesno'); if (yn) yn.classList.toggle('hidden', only);
+            var tp = $('hw-tip'); if (tp) tp.classList.toggle('hidden', only);
+            var hi = $('hw-intro'); if (hi) hi.textContent = only ? 'This makes a once-a-week homework schedule for a unit plan you already have. The subject and year level above set the lessons per week and the time limit; the AI finds the unit title, the number of lessons and any test or assignment in your plan. Add a link to it below, or attach the file in your AI chat, then copy the prompt.' : 'Build a once-a-week homework schedule into this unit plan. It is set in the first lesson of each week and kept within a weekly time limit.';
+            document.body.classList.toggle('hw-only', only);
+            setActiveBtn('unit-state', unitState.hwIncluded || 'no', 'hwIncluded');
+            hwRenderTypes(); hwRenderOut();
+            var yr = unitState.year || '';
+            var lp = $('hw-lpw'); if (lp && document.activeElement !== lp) lp.value = hwLpw();
+            var ly = $('hw-lpw-yr'); if (ly) ly.textContent = unitState.dept && yr ? '(' + unitState.dept + ', ' + hwShortYear() + ')' : '';
+            var capEl = $('hw-cap'); if (capEl) capEl.placeholder = String(hwDefaultCap(yr));
+            var ch = $('hw-cap-hint'); if (ch) ch.textContent = yr ? 'Suggested for ' + hwShortYear() + ': ' + hwDefaultCap(yr) + ' minutes. This is the most for this subject only; other subjects set homework too.' : 'Choose a year level above for a suggested limit.';
+            var pv = $('hw-plan-preview');
+            if (pv) {
+                var pl = hwPlan(), L = hwLpw();
+                if (!on) pv.textContent = '';
+                else if (only) pv.textContent = (unitState.dept && yr ? hwShortYear() + ' ' + unitState.dept + ': ' : '') + L + ' lessons per week and up to ' + hwCap() + ' minutes of homework a week. The AI counts the lessons in your plan, works out the weeks and finds any test or assignment itself.';
+                else if (!pl) pv.textContent = 'Choose the unit length as a number of lessons (or weeks) above and the weeks will be worked out here. Until then the AI is told there are ' + L + ' lessons per week and works out the weeks itself.';
+                else {
+                    var starts = pl.map.map(function(m) { return m.from; }).join(', ');
+                    pv.textContent = hwShortYear() + ' ' + (unitState.dept || '') + ': ' + L + ' lessons per week. ' + (pl.assess ? pl.core + ' lessons + ' + pl.assess + ' assessment = ' : '') + pl.total + ' lessons = ' + pl.weeks + ' week' + (pl.weeks === 1 ? '' : 's') + '. Homework is set in Lesson ' + starts + '.' + (pl.assess ? ' The ' + (unitState.assessmentType === 'Other' ? 'assessment' : unitState.assessmentType.toLowerCase()) + ' is in Lesson' + (pl.assess === 1 ? ' ' + pl.assessFrom : 's ' + pl.assessFrom + '-' + pl.total) + ' and the AI plans the homework around it.' : (only ? ' The AI reads where any test or assignment is from your plan.' : ' No assessment time is added, so the AI only plans around any test or assignment you mention in the Specific Activities box.'));
+                }
+            }
+        }
+
+        function hwEsc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
         function updateUnitBuilderPrompt() {
             updateUnitAddonsBanner();
             iepCheckSubject();
+            hwSyncUI();
             var tb = String.fromCharCode(96, 96, 96);
             if (!unitState.dept) {
                 var earlyB = document.getElementById('prompt-unit-text');
@@ -6215,25 +6606,26 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             
             txt += iepUnitInstruction(yr);
+            txt += hwRules(yr, false, !!(unitState.whsTemplate || unitState.mathsTemplate));
             if (unitState.whsTemplate) {
-                txt += 'CRITICAL: Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n';
+                txt += liveLinkRule(true) + '### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n';
                 txt += '### OUTPUT FORMAT OVERRIDE: WHS OFFICIAL TEMPLATE (HTML, LANDSCAPE)\n';
                 txt += 'CRITICAL: Ignore any other table-format instructions. Output your ENTIRE response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
-                txt += 'Fill in every [Fill] placeholder with real content (use exact search queries for any live URLs — do NOT hallucinate URLs). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table at the very end, which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
+                txt += 'Fill in every [Fill] placeholder with real content (make every site, data source or clip a live <a href> link as described above, and never invent a deep link). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table' + (hwActive() ? '' : ' at the very end') + ', which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
                 txt += tb + 'html\n';
                 txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 8px 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .top-banner { background-color: #87499c; color: #ffffff; font-weight: 700; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        .shaded-2nd-table { background-color: #d6bbdf; font-weight: 700; }\n        .knowledge-title { background-color: #70cdb2; font-weight: 700; }\n        .knowledge-section { background-color: #d4edef; }\n        .practices-title { background-color: #e1b846; font-weight: 700; }\n        .practices-section { background-color: #f4e5c2; }\n        h2 { font-size: 14pt; font-weight: 700; color: #000000; margin-bottom: 6px; margin-top: 24px; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; }\n        strong { font-weight: 700; }\n        .col-15 { width: 15%; }\n        .col-20 { width: 20%; }\n        .col-25 { width: 25%; }\n        .col-50 { width: 50%; }\n    </style>\n</head>\n<body>\n';
                 txt += '    <table>\n        <tr><td colspan="6" class="top-banner" style="text-align: left; font-size: 26pt;"><div style="display:flex;align-items:center;gap:12px;">' + whsLogoSvg(34, '#ffffff') + '<span>WHS ' + yr + ' ' + unitState.dept + ' - ' + t + '</span></div></td></tr>\n        <tr>\n            <td class="header-bg" style="width: 15%;">Year Level</td><td style="width: 20%;">' + yr + '</td>\n            <td class="header-bg" style="width: 10%;">Term</td><td style="width: 20%;">[Fill suggested term]</td>\n            <td class="header-bg" style="width: 15%;">Duration</td><td style="width: 20%;">' + totalDurText + '</td>\n        </tr>\n        <tr><td class="header-bg">Topic/ Strand/ Concept/ Context</td><td colspan="5">' + t + '</td></tr>\n        <tr><td class="header-bg">Overview <span class="small-text">(description)</span></td><td colspan="5">[Fill a 1-2 sentence overview]</td></tr>\n        <tr><td class="header-bg">Purpose <span class="small-text">(what is the point?)</span></td><td colspan="5">[Fill the purpose of this unit]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Knowledge and Practices</h2>\n    <table>\n        <tr>\n            <td class="knowledge-title col-50">Knowledge <br><span class="small-text">(rich contexts for exploring big ideas)</span></td>\n            <td class="practices-title col-50">Practices <br><span class="small-text">(practices that bring rigour to learning)</span></td>\n        </tr>\n        <tr>\n            <td class="knowledge-section"><ul><li>[Fill knowledge point 1]</li><li>[Fill knowledge point 2]</li></ul></td>\n            <td class="practices-section"><ul><li>[Fill practice 1]</li><li>[Fill practice 2]</li></ul></td>\n        </tr>\n        <tr><td class="header-bg">Connections to prior learning</td><td class="header-bg">Connections to future learning</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Curriculum Integration</h2>\n    <table>\n        <tr><td class="header-bg col-50">Literacy will be incorporated into this unit by:</td><td class="header-bg col-50">Numeracy will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg">Mātauranga Māori will be incorporated into this unit by:</td><td class="header-bg">Localised Curriculum will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td><strong>Waiheke High School Cross Curricular</strong><br><strong>Waiheke community links</strong><br><br>[Fill]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Assessment</h2>\n    <table>\n        <tr><td class="header-bg col-50">How will I determine my learners prior knowledge? (before)</td><td class="header-bg col-50">How will I determine my student\u2019s progress in learning? (after)</td></tr>\n        <tr>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]<br><strong>Previous results or work:</strong> [Fill or N/A]</td>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]</td>\n        </tr>\n    </table>\n\n';
-                txt += '    <h2>Lesson Content - Unit Folder Link</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning number/s<br><span class="small-text">The sequence of lessons and groups of lessons.</span></td>\n            <td class="header-bg col-20">Knowledge<br><span class="small-text">What they will be learning</span></td>\n            <td class="header-bg col-20">Practice<br><span class="small-text">What they will do / How you know students have achieved success</span></td>\n            <td class="header-bg col-25">Student Learning Activities<br><span class="small-text">What strategies, activities and tasks do you want students to do?<br>Include explicit teaching where relevant</span></td>\n            <td class="header-bg col-20">Preparation/ Resources<br><span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td><strong>Strategies, activities, tasks:</strong> [Fill] <br><br><strong>Differentiation:</strong> [Fill]</td>\n            <td>[Fill]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
-                txt += '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n</body>\n</html>\n';
-                txt += tb + '\n';
+                txt += '    <h2>Lesson Content - Unit Folder Link</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning number/s<br><span class="small-text">The sequence of lessons and groups of lessons.</span></td>\n            <td class="header-bg col-20">Knowledge<br><span class="small-text">What they will be learning</span></td>\n            <td class="header-bg col-20">Practice<br><span class="small-text">What they will do / How you know students have achieved success</span></td>\n            <td class="header-bg col-25">Student Learning Activities<br><span class="small-text">What strategies, activities and tasks do you want students to do?<br>Include explicit teaching where relevant</span></td>\n            <td class="header-bg col-20">Preparation/ Resources<br><span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td><strong>Strategies, activities, tasks:</strong> [Fill] <br><br><strong>Differentiation:</strong> [Fill]' + hwTagHtml() + '</td>\n            <td>[Fill]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
+                txt += hwHtmlOutline(yr) + '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n' + hwHtmlSchedule() + '</body>\n</html>\n';
+                txt += tb + '\n' + hwHtmlCheck(false);
             } else if (unitState.mathsTemplate) {
-                txt += 'CRITICAL: Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n';
+                txt += liveLinkRule(true) + '### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n';
                 txt += '### OUTPUT FORMAT OVERRIDE: WHS MATHEMATICS UNIT PLAN TEMPLATE (HTML, LANDSCAPE)\n';
                 txt += 'CRITICAL: Ignore any other table-format instructions. Output your ENTIRE response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
-                txt += 'Fill in every [Fill] placeholder with real content (use exact search queries for any live URLs — do NOT hallucinate URLs). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table at the very end, which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. "Mathematical Processes" (Investigate/Represent/Connect/Generalise/Explain and justify) is a specific NZ Maths & Statistics curriculum construct — do NOT rename, merge, or omit any of these five. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
+                txt += 'Fill in every [Fill] placeholder with real content (make every site, data source or clip a live <a href> link as described above, and never invent a deep link). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table' + (hwActive() ? '' : ' at the very end') + ', which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. "Mathematical Processes" (Investigate/Represent/Connect/Generalise/Explain and justify) is a specific NZ Maths & Statistics curriculum construct — do NOT rename, merge, or omit any of these five. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
                 txt += tb + 'html\n';
                 txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 8px 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .top-banner { background-color: #007040; color: #ffffff; font-weight: 700; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        .knowledge-title { background-color: #70cdb2; font-weight: 700; }\n        .knowledge-section { background-color: #d4edef; }\n        .practices-title { background-color: #e1b846; font-weight: 700; }\n        .practices-section { background-color: #f4e5c2; }\n        .scale-header { background-color: #c9e4d8; font-weight: 700; font-size: 9pt; text-align: center; }\n        h2 { font-size: 14pt; font-weight: 700; color: #000000; margin-bottom: 6px; margin-top: 24px; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; }\n        strong { font-weight: 700; }\n        .col-15 { width: 15%; }\n        .col-20 { width: 20%; }\n        .col-25 { width: 25%; }\n        .col-50 { width: 50%; }\n    </style>\n</head>\n<body>\n';
                 txt += '    <table>\n        <tr><td colspan="6" class="top-banner" style="text-align: left; font-size: 26pt;"><div style="display:flex;align-items:center;gap:12px;">' + whsLogoSvg(34, '#ffffff') + '<span>WHS Mathematics Unit Plan — ' + yr + ' - ' + t + '</span></div></td></tr>\n        <tr>\n            <td class="header-bg" style="width: 15%;">Year Level</td><td style="width: 20%;">' + yr + '</td>\n            <td class="header-bg" style="width: 10%;">Term</td><td style="width: 20%;">[Fill suggested term]</td>\n            <td class="header-bg" style="width: 15%;">Duration</td><td style="width: 20%;">' + totalDurText + '</td>\n        </tr>\n        <tr><td class="header-bg">Learning Area</td><td colspan="5">' + t + '</td></tr>\n        <tr><td class="header-bg">Overview <span class="small-text">(description)</span></td><td colspan="5">[Fill a 1-2 sentence overview]</td></tr>\n        <tr><td class="header-bg">Purpose <span class="small-text">(what is the point?)</span></td><td colspan="5">[Fill the purpose of this unit]</td></tr>\n    </table>\n\n';
@@ -6241,10 +6633,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += '    <h2>Curriculum Integration</h2>\n    <table>\n        <tr><td class="header-bg col-50">Literacy will be incorporated into this unit by:</td><td class="header-bg col-50">Numeracy will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg">Mātauranga Māori will be incorporated into this unit by:</td><td class="header-bg">Localised Curriculum will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td><strong>Waiheke High School Cross Curricular</strong><br><strong>Waiheke community links</strong><br><br>[Fill]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>The Language of Mathematics and Statistics</h2>\n    <table>\n        <tr><td class="header-bg">Vocabulary <span class="small-text">(new words students will be taught)</span></td></tr>\n        <tr><td>[Fill 6-10 key mathematical/statistical terms for this unit, each with a brief plain-language definition]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Assessment</h2>\n    <table>\n        <tr><td class="header-bg col-50">How will I determine my learners\u2019 prior knowledge? (before)</td><td class="header-bg col-50">How will I determine my students\u2019 progress in learning? (after)</td></tr>\n        <tr>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]<br><strong>Previous results or work:</strong> [Fill or N/A]</td>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]</td>\n        </tr>\n    </table>\n\n';
-                txt += '    <h2>Lesson Content</h2>\n    <p style="font-size:9pt; font-style:italic; margin-bottom:10px;">CRITICAL PROGRESSION (from the official MoE lesson plan guidance): "It is assumed the first one or two lessons will front-foot Explicit teaching and Rich tasks and then evolve towards Intentional practice, Acceleration and Enrichment towards to last three or four lessons." Maths units at this school are most commonly 4 lessons long. For a 4-lesson unit specifically: Lessons 1-2 should read as I Do / We Do in the Strategy Focus column (Explicit teaching and Rich tasks as the dominant elements). Lessons 3-4 should read as You Do (Intentional practice, Acceleration, and Enrichment as the dominant elements). For units of a different length, apply this same early-to-late shift proportionally across the full sequence.</p>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning Intention <span class="small-text">(We are learning to...)<br>Curriculum Achievement Objective</span></td>\n            <td class="header-bg col-15">Success Criteria <span class="small-text">How do you know students have achieved success?</span></td>\n            <td class="header-bg col-20">Learning Experiences <span class="small-text">What strategies, activities and tasks do you want students to do?</span></td>\n            <td class="header-bg col-15">Preparation/Resources <span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n            <td class="scale-header col-15">Progression Scale <span class="small-text" style="display:block;font-style:normal;">(circle/bold the current level)</span>Emerging / Developing / Consolidating / Proficient / Exceeding</td>\n            <td class="header-bg col-20">Strategy Focus <span class="small-text">Introduction/warmup/recall, Explicit teaching, Rich tasks, Intentional practice, Acceleration, Enrichment</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1 (I Do / We Do): [Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill target level for this lesson, e.g. Developing]</td>\n            <td>[Fill — for a 4-lesson unit, Lessons 1-2 should emphasise Explicit teaching and Rich tasks]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. For a 4-lesson unit, label Lessons 1-2 "(I Do / We Do)" and Lessons 3-4 "(You Do)" in the same style as Lesson 1 above, and shift the Strategy Focus column accordingly (see progression note above). -->\n    </table>\n\n';
+                txt += '    <h2>Lesson Content</h2>\n    <p style="font-size:9pt; font-style:italic; margin-bottom:10px;">CRITICAL PROGRESSION (from the official MoE lesson plan guidance): "It is assumed the first one or two lessons will front-foot Explicit teaching and Rich tasks and then evolve towards Intentional practice, Acceleration and Enrichment towards to last three or four lessons." Maths units at this school are most commonly 4 lessons long. For a 4-lesson unit specifically: Lessons 1-2 should read as I Do / We Do in the Strategy Focus column (Explicit teaching and Rich tasks as the dominant elements). Lessons 3-4 should read as You Do (Intentional practice, Acceleration, and Enrichment as the dominant elements). For units of a different length, apply this same early-to-late shift proportionally across the full sequence.</p>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning Intention <span class="small-text">(We are learning to...)<br>Curriculum Achievement Objective</span></td>\n            <td class="header-bg col-15">Success Criteria <span class="small-text">How do you know students have achieved success?</span></td>\n            <td class="header-bg col-20">Learning Experiences <span class="small-text">What strategies, activities and tasks do you want students to do?</span></td>\n            <td class="header-bg col-15">Preparation/Resources <span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n            <td class="scale-header col-15">Progression Scale <span class="small-text" style="display:block;font-style:normal;">(circle/bold the current level)</span>Emerging / Developing / Consolidating / Proficient / Exceeding</td>\n            <td class="header-bg col-20">Strategy Focus <span class="small-text">Introduction/warmup/recall, Explicit teaching, Rich tasks, Intentional practice, Acceleration, Enrichment</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1 (I Do / We Do): [Fill]</td>\n            <td>[Fill]</td>\n            <td>[Fill]' + hwTagHtml() + '</td>\n            <td>[Fill]</td>\n            <td>[Fill target level for this lesson, e.g. Developing]</td>\n            <td>[Fill — for a 4-lesson unit, Lessons 1-2 should emphasise Explicit teaching and Rich tasks]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. For a 4-lesson unit, label Lessons 1-2 "(I Do / We Do)" and Lessons 3-4 "(You Do)" in the same style as Lesson 1 above, and shift the Strategy Focus column accordingly (see progression note above). -->\n    </table>\n\n';
                 txt += '    <h2>Ākonga Information</h2>\n    <table>\n        <tr><td class="header-bg">Lesson</td><td class="header-bg">Links to class plans or class contracts</td><td class="header-bg">Specific ākonga who require additional support (and how)</td><td class="header-bg">Specific ākonga who require extension (and how)</td></tr>\n        <tr><td>Lesson 1</td><td>[Fill or N/A]</td><td>[Fill or N/A]</td><td>[Fill or N/A]</td></tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson, matching the Lesson Content table above. -->\n    </table>\n\n';
-                txt += '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n</body>\n</html>\n';
-                txt += tb + '\n';
+                txt += hwHtmlOutline(yr) + '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n' + hwHtmlSchedule() + '</body>\n</html>\n';
+                txt += tb + '\n' + hwHtmlCheck(true);
             } else {
             
             if (unitState.planType === 'outlines') {
@@ -6252,7 +6644,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             } else {
                 txt += 'For ALL lesson plan formats, ensure the "Resources & Links" column explicitly provides suggested resources and/or live URLs, particularly for the I Do, We Do, and You Do stages.\n';
             }
-            txt += 'CRITICAL: Provide exact search queries for resources, do NOT hallucinate URLs.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
+            txt += liveLinkRule(false) + '### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema. Define Tier 3 vocab simply.\n\n### Output Format\nYou MUST output the entire unit plan using EXACTLY the Markdown structure provided below. Do NOT provide a pedagogical rationale. Just output the tables:\n\n';
             
             txt += iepActive() ? '# IEP Unit Plan for ______________ — ' + unitState.dept + ' — Topic: ' + t + '\n(Leave the blank for the teacher to write the learner\'s name.)\n\n' : '# WHS ' + yr + ' ' + unitState.dept + ' - Topic: ' + t + '\n\n';
             
@@ -6301,29 +6693,30 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += '| Common gaps teachers may encounter | How to respond in the lesson |\n';
                 txt += '|---|---|\n';
                 txt += '| - [Gap 1] | - [Response 1] |\n\n';
+                txt += hwMoeBlock();
                 txt += '---\n\n';
             } else {
                 txt += '## Lesson Content - Unit Sequence\n';
                 
                 if (unitState.planType === 'short') {
                     txt += '| Lesson & Learning Intention | Significant learning covered | Condensed Outline | Resources & Links |\n|---|---|---|---|\n';
-                    txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n';
-                    txt += '| **[Continue rows for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet] | [Suggested resources & live URLs] |\n\n';
+                    txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet]' + hwTagMd() + ' | [Suggested resources & live URLs] |\n';
+                    txt += '| **[Continue rows for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Intro:** [1 bullet]<br>**Develop:** [1 bullet]<br>**Apply:** [1 bullet]<br>**Review:** [1 bullet]' + hwTagMd() + ' | [Suggested resources & live URLs] |\n\n';
                 } else if (unitState.planType === 'outlines') {
                     txt += 'CRITICAL INSTRUCTION: Generate BRIEF OUTLINES only for each lesson — a short narrative summary of its overall focus and purpose. Absolutely DO NOT generate full 5-stage CPM lesson plans, and DO NOT describe, list, or imply any specific tasks, activities, questions, or step-by-step instructions for any part of the lesson (including Connect, I Do, We Do, You Do, or Review). These outlines exist purely so a teacher can later generate the detailed daily lesson plan separately — treat each outline as a one-paragraph "what this lesson is about", not a "what students will do".\n\n';
                     txt += '### Sequence Contents List\n';
                     txt += 'First, provide a simple numbered list of all lessons (' + totalDurText + ') in this sequence with their titles (e.g., "Lesson 1 - [Lesson Title]").\n\n';
                     txt += '### Lesson Outlines Table\n';
                     txt += '| Lesson & Target | Core Concepts | Brief Lesson Outline | Preparation / Resources |\n|---|---|---|---|\n';
-                    txt += '| **Lesson 1**<br>*Focus: [Main Topic]* | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary of what this lesson is about and why it matters. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n';
-                    txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. Do NOT mention specific tasks, activities, or a sequence of steps.] | [General resources/materials needed, not tied to any task] |\n\n';
+                    txt += '| **Lesson 1**<br>*Focus: [Main Topic]* | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary of what this lesson is about and why it matters. Do NOT mention specific tasks, activities, or a sequence of steps.]' + hwTagMd() + ' | [General resources/materials needed, not tied to any task] |\n';
+                    txt += '| **[Continue for all ' + totalDurText + ']** | **Knowledge:** [Specific facts]<br>**Practices:** [Specific skills] | [A short 1-2 sentence summary. Do NOT mention specific tasks, activities, or a sequence of steps.]' + hwTagMd() + ' | [General resources/materials needed, not tied to any task] |\n\n';
                     txt += 'FINAL CHECK: Before outputting, re-read every "Brief Lesson Outline" cell and remove any wording that describes a task, activity, question, or instruction a student or teacher would carry out — only overall focus/purpose should remain.\n\n';
                 } else if (unitState.planType === 'maths-strategy') {
                     txt += 'CRITICAL: Structure each lesson around these Mathematics-specific strategy elements instead of the generic CPM 5-stage model — Warmup, Explicit Teaching, Rich Tasks, Intentional Practice, Acceleration, and Enrichment. Not every lesson needs all six every time — use your judgement for which are pedagogically relevant for that specific lesson.\n\n';
                     txt += 'CRITICAL PROGRESSION (from the official MoE lesson plan guidance): "It is assumed the first one or two lessons will front-foot Explicit teaching and Rich tasks and then evolve towards Intentional practice, Acceleration and Enrichment towards to last three or four lessons." Maths units at this school are most commonly 4 lessons long. For a 4-lesson unit specifically: Lessons 1-2 should read as I Do / We Do — teacher-led, with Explicit Teaching and Rich Tasks as the dominant elements. Lessons 3-4 should read as You Do — student-led independent work, with Intentional Practice, Acceleration, and Enrichment as the dominant elements. For units of a different length, apply this same early-to-late shift proportionally across the full sequence — front-load Explicit Teaching and Rich Tasks (I Do/We Do) in roughly the first quarter of lessons, then progressively shift towards Intentional Practice, Acceleration, and Enrichment (You Do) across the remainder.\n\n';
                     txt += '| Lesson & Learning Intention | Knowledge | Practice | Learning Activities (Warmup / Explicit Teaching / Rich Tasks / Intentional Practice / Acceleration / Enrichment) | Resources & Links |\n|---|---|---|---|---|\n';
-                    txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Warmup:** [Fill or omit]<br>**Explicit Teaching:** [Fill or omit]<br>**Rich Tasks:** [Fill or omit]<br>**Intentional Practice:** [Fill or omit]<br>**Acceleration:** [Fill or omit]<br>**Enrichment:** [Fill or omit]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs] |\n';
-                    txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Warmup:** [Fill or omit]<br>**Explicit Teaching:** [Fill or omit]<br>**Rich Tasks:** [Fill or omit]<br>**Intentional Practice:** [Fill or omit]<br>**Acceleration:** [Fill or omit]<br>**Enrichment:** [Fill or omit]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs] |\n\n';
+                    txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Warmup:** [Fill or omit]<br>**Explicit Teaching:** [Fill or omit]<br>**Rich Tasks:** [Fill or omit]<br>**Intentional Practice:** [Fill or omit]<br>**Acceleration:** [Fill or omit]<br>**Enrichment:** [Fill or omit]<br><br>**Differentiation:** [Fill]' + hwTagMd() + ' | [Suggested resources & live URLs] |\n';
+                    txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Warmup:** [Fill or omit]<br>**Explicit Teaching:** [Fill or omit]<br>**Rich Tasks:** [Fill or omit]<br>**Intentional Practice:** [Fill or omit]<br>**Acceleration:** [Fill or omit]<br>**Enrichment:** [Fill or omit]<br><br>**Differentiation:** [Fill]' + hwTagMd() + ' | [Suggested resources & live URLs] |\n\n';
                 } else {
                     var dM = cpmMatrix[unitState.dept] || cpmMatrix['Default'];
                     var stageNames = ['Connect', 'I Do', 'We Do', 'You Do', 'Review'];
@@ -6335,17 +6728,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     txt += '\n';
                     if (isJun || !isLeg) {
                         txt += '| Lesson & Learning Intention | Knowledge | Practice | Student Learning Activities (CPM) | Resources & Links |\n|---|---|---|---|---|\n';
-                        txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
-                        txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
+                        txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill]' + hwTagMd() + ' | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
+                        txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | [Fill] | [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill]' + hwTagMd() + ' | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
                     } else {
                         txt += '| Lesson & Learning Intention | Significant learning covered | Learning Experiences (CPM) / Differentiation | Resources & Links |\n|---|---|---|---|\n';
-                        txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
-                        txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill] | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
+                        txt += '| **Lesson 1**<br>*LI: [Fill Learning Intention]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill]' + hwTagMd() + ' | [Suggested resources & live URLs for I Do, We Do, You Do] |\n';
+                        txt += '| **[Continue for all ' + totalDurText + ']**<br>*LI: [Fill]* | **Success Criteria:** [Fill] | **Connect:** [Fill]<br>**I Do:** [Fill]<br>**We Do:** [Fill]<br>**You Do:** [Fill]<br>**Review:** [Fill]<br><br>**Differentiation:** [Fill]' + hwTagMd() + ' | [Suggested resources & live URLs for I Do, We Do, You Do] |\n\n';
                     }
                 }
             }
             
-            txt += '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n';
+            txt += hwMdOutline(yr) + '## Evaluation\n| What worked well? | What would you do differently next time? |\n|---|---|\n| *(To be completed after unit)* | *(To be completed after unit)* |\n' + hwMdSchedule();
             }
             
             txt += iepSummaryInstruction(yr);
@@ -6354,6 +6747,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             
             if (iepActive() && iepState.outSummary && iepState.promptMode === 'summary') txt = iepSummaryOnlyPrompt(yr, t, totalDurText, uk, up);
+            if (hwOnly()) txt = hwOnlyPrompt(yr);
             var b = document.getElementById('prompt-unit-text');
             if (b) b.innerText = txt;
             updateRequiredChecklist('prompt-unit-text', 'unit-required-checklist');
@@ -7092,6 +7486,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (e.target.classList.contains('autosize-textarea')) autosizeTextarea(e.target);
                 if (e.target.classList.contains('sync-topic')) syncTopics(e.target.value);
                 else if (e.target.id === 'unit-devices-other-input') { unitState.devicesOther = e.target.value; updateDeviceHint('unit', 'other'); updateUnitBuilderPrompt(); saveAppState(); }
+                else if (HW_INPUT_IDS.indexOf(e.target.id) !== -1) { hwReadInputs(); updateUnitBuilderPrompt(); saveAppState(); }
                 else if (e.target.classList.contains('unit-periods-other')) { unitState[e.target.getAttribute('data-key')] = e.target.value; updateUnitBuilderPrompt(); saveAppState(); }
                 else if (e.target.id === 'unit-practical-custom-count') { unitState.practicalCustomCount = e.target.value; renderPracticalTitleBoxes(); updateUnitBuilderPrompt(); saveAppState(); }
                 else if (e.target.classList.contains('unit-practical-title-input')) {
