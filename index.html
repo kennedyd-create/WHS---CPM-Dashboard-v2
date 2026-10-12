@@ -2610,6 +2610,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><strong>New: Homework schedule</strong> in the Unit Planner (an optional box after Practical / Hands-On Sessions). The weeks are worked out for you from the unit length and the <strong>lessons per week</strong> for the year level and subject (Years 7 to 9: 3, Maths and English 4; Year 10: 4 in English, Maths, Science and Social Studies; Years 11 and 12: 4; Year 13: 5; you can change it). Homework is set in the first lesson of each week and is due the next week, labelled like <em>Year 7 Civics Week 1</em> (no dates). Tick the <strong>types</strong> you want from 15 small options (revision, extension, pre-work such as a short video, reading, vocabulary, practice questions, <strong>maths question sheets, spelling or word lists, workbook or pad pages such as SciPad</strong>, research, reflection, create, real-world, online platform, spaced review). The most minutes per week is suggested by year level (Year 7 and 8 30, Year 9 40, Year 10 45, senior 60).</li>
                         <li>The unit plan gets a <strong>HOMEWORK</strong> line in each lesson that starts a week, a short <strong>HOMEWORK</strong> outline, and a <strong>HOMEWORK SCHEDULE</strong> table at the bottom with a parent email for every week. This works in every lesson format and in the WHS and Maths HTML templates. The AI is told where the assessment lessons fall: a test means revision homework beforehand, an assignment means homework is time spent working on it, and an assessment-only week has no homework. Three optional extras can be ticked: a <strong>completion tracker table for Google Sheets</strong> (a column for each week; the AI also makes the Sheet and a link if its tool can), a <strong>schedule table that copies cleanly into a Google Doc</strong>, and a <strong>Google Classroom post for each week</strong>. In the HTML templates the tables are real tables, so open the downloaded page, select a table, copy it and paste it into Google Docs or Sheets.</li>
                         <li><strong>New: Homework Schedule tab (for existing units)</strong> (small blue tab at the top right of the Unit Planner, beside <em>IEP Unit</em>). Use it when you already have a unit plan. Choose only the <strong>subject and year level</strong> (they set the lessons per week and the minutes limit), then add a link to your plan or attach it in your AI chat. There is no unit title or duration to fill in, because the AI reads them from your plan, finds any test or assignment, works out the weeks and labels them like <em>Year 7 Civics Week 1</em>. Choose <strong>tables in the chat</strong> or an <strong>HTML page</strong> (WHS style, with real tables you can copy into Google Docs or Sheets). The same tickable types and extras are there. The three tabs now sit on their own row above the page title.</li>
+                        <li><strong>Homework detail boxes:</strong> tick <em>Online platform task</em> or <em>Workbook or pad pages</em> and a small box opens under it, so you can say which platform (for example Education Perfect) or which book or pad and pages (for example SciPad Year 9, pages 12 to 15). The AI is told to use exactly what you enter.</li>
                         <li><strong>Live links:</strong> unit plans and homework schedules now ask the AI to make every recommended website, data source and YouTube clip a <strong>clickable link</strong>, in the Markdown and HTML versions. If the AI is not sure of a direct link it gives a search link that always works, and clips are still marked TEACHER TO CHECK. <strong>ChatGPT and Claude</strong> buttons now always sit beside <em>Open Gemini</em>, even when the WHS or Maths HTML template is on.</li>
                     </ul>
                 </div>
@@ -3129,7 +3130,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false, hwIncluded:'no', hwFormat:'md', hwLpwMap:{}, hwCap:'', hwTypes:['revision','extension','prework'], hwOut:[], hwNotes:'', hwPlanSource:'' };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false, hwIncluded:'no', hwFormat:'md', hwLpwMap:{}, hwCap:'', hwTypes:['revision','extension','prework'], hwDetails:{}, hwOut:[], hwNotes:'', hwPlanSource:'' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -6258,10 +6259,20 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function hwLessonRange(m) { return m.from === m.to ? 'Lesson ' + m.from : 'Lessons ' + m.from + '-' + m.to; }
         function hwTypeList() { return (unitState.hwTypes || []).filter(function(k) { return HW_TYPES.some(function(t) { return t[0] === k; }); }); }
+        // Small detail boxes for two types: the platform for an online task, and the book or pad (and pages) for workbook tasks.
+        var HW_DETAIL_KEYS = { online: 'e.g. Education Perfect, Year 9 Science course', workbook: 'e.g. SciPad Year 9, pages 12 to 15' };
+        function hwDetail(k) { return String(((unitState.hwDetails || {})[k]) || '').replace(/\s+/g, ' ').replace(/"/g, "'").trim(); }
+        function hwDetailText(k) {
+            var d = hwDetail(k);
+            if (!d || (unitState.hwTypes || []).indexOf(k) === -1) return '';
+            if (k === 'online') return ' The platform and details I use: "' + d + '". Set tasks that fit this platform.';
+            if (k === 'workbook') return ' The book or pad and pages I use: "' + d + '". Refer to it by name and use only the pages or sections I have given; do not invent others.';
+            return '';
+        }
         function hwTypeLines() {
             var sel = hwTypeList();
             if (!sel.length) return '  - No types were chosen, so use a sensible mix of revision, extension and pre-work.\n';
-            return HW_TYPES.filter(function(t) { return sel.indexOf(t[0]) !== -1; }).map(function(t) { return '  - ' + t[2]; }).join('\n') + '\n';
+            return HW_TYPES.filter(function(t) { return sel.indexOf(t[0]) !== -1; }).map(function(t) { return '  - ' + t[2] + hwDetailText(t[0]); }).join('\n') + '\n';
         }
         function hwAssessLines(pl) {
             var s = '', n = (unitState.hwNotes || '').trim();
@@ -6410,12 +6421,24 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var box = document.getElementById('hw-type-opts'); if (!box) return;
             if (!box.children.length) {
                 box.innerHTML = HW_TYPES.map(function(t) {
-                    return '<label class="flex items-start gap-1.5 text-[11px] text-slate-700 cursor-pointer leading-tight"><input type="checkbox" class="mt-px w-3.5 h-3.5 accent-sky-600 shrink-0" data-hw-type="' + t[0] + '"><span><strong>' + hwEsc(t[1]) + '</strong> <span class="text-[10px] text-slate-500">' + hwEsc(t[3]) + '</span></span></label>';
+                    var det = HW_DETAIL_KEYS[t[0]] ? '<input type="text" maxlength="160" data-hw-detail="' + t[0] + '" placeholder="' + hwEsc(HW_DETAIL_KEYS[t[0]]) + '" aria-label="Details for ' + hwEsc(t[1]) + '" class="hidden mt-1 w-full box-border p-1.5 rounded border border-sky-300 bg-sky-50 text-[11px] outline-none focus:border-sky-600">' : '';
+                    return '<div><label class="flex items-start gap-1.5 text-[11px] text-slate-700 cursor-pointer leading-tight"><input type="checkbox" class="mt-px w-3.5 h-3.5 accent-sky-600 shrink-0" data-hw-type="' + t[0] + '"><span><strong>' + hwEsc(t[1]) + '</strong> <span class="text-[10px] text-slate-500">' + hwEsc(t[3]) + '</span></span></label>' + det + '</div>';
                 }).join('');
             }
             var sel = unitState.hwTypes || [];
             box.querySelectorAll('input[data-hw-type]').forEach(function(i) { i.checked = sel.indexOf(i.getAttribute('data-hw-type')) !== -1; });
+            box.querySelectorAll('input[data-hw-detail]').forEach(function(i) {
+                var k = i.getAttribute('data-hw-detail');
+                i.classList.toggle('hidden', sel.indexOf(k) === -1);
+                if (document.activeElement !== i) i.value = ((unitState.hwDetails || {})[k]) || '';
+            });
         }
+        document.addEventListener('input', function(e) {
+            var t = e.target; if (!t || !t.getAttribute || !t.getAttribute('data-hw-detail')) return;
+            if (!unitState.hwDetails) unitState.hwDetails = {};
+            unitState.hwDetails[t.getAttribute('data-hw-detail')] = t.value;
+            updateUnitBuilderPrompt(); saveAppState();
+        });
         function hwFillInputs() {
             var set = function(id, v) { var el = document.getElementById(id); if (el && document.activeElement !== el) { el.value = v == null ? '' : v; if (el.classList.contains('autosize-textarea')) { try { autosizeTextarea(el); } catch (e) {} } } };
             set('hw-lpw', hwLpw()); set('hw-cap', unitState.hwCap); set('hw-notes', unitState.hwNotes); set('hw-plan-source', unitState.hwPlanSource);
@@ -6442,7 +6465,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (t.checked) cur.push(k);
             unitState.hwOut = cur; updateUnitBuilderPrompt(); saveAppState();
         });
-        document.addEventListener('change', function(e) { var t = e.target; if (t && t.getAttribute && t.getAttribute('data-hw-type')) hwToggleType(t.getAttribute('data-hw-type'), t.checked); });
+        document.addEventListener('change', function(e) {
+            var t = e.target; if (!t || !t.getAttribute || !t.getAttribute('data-hw-type')) return;
+            var k = t.getAttribute('data-hw-type');
+            hwToggleType(k, t.checked);
+            if (t.checked && HW_DETAIL_KEYS[k]) { var d = document.querySelector('#hw-type-opts input[data-hw-detail="' + k + '"]'); if (d && d.focus) { try { d.focus({ preventScroll: true }); } catch (x) { d.focus(); } } }
+        });
         function hwSyncUI() {
             var $ = function(id) { return document.getElementById(id); };
             var on = hwActive(), only = hwOnly();
