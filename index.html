@@ -140,6 +140,7 @@
         #unit-ai-container { position: relative; }
         /* In the IEP tab the My Teaching Profile pill and panel are hidden (the profile is not used for IEP units). */
         body.iep-mode #teaching-profile-pill, body.iep-mode #teaching-profile-panel { display: none !important; }
+        body.yp-mode #teaching-profile-pill, body.yp-mode #teaching-profile-panel { display: none !important; }
         /* Homework schedule: not offered in the IEP tab. In "homework only" mode the boxes that only build a unit plan are hidden. */
         body.iep-mode #unit-homework-block { display: none !important; }
         body.hw-only #unit-title-block, body.hw-only #unit-duration-block, body.hw-only #unit-junior-focus-container, body.hw-only #unit-ncea-standard-container, body.hw-only #unit-custom-task-block, body.hw-only #unit-integrations-details, body.hw-only #unit-plan-format-block, body.hw-only #unit-assessment-block, body.hw-only #unit-practical-block, body.hw-only #unit-addons-block { display: none !important; }
@@ -2265,7 +2266,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
             <button id="yp-setup-toggle" onclick="ypToggleSetup()" aria-expanded="false" class="shrink-0 text-xs font-bold rounded-lg border border-white/30 px-3 py-1.5 hover:bg-white/10 transition-colors">Change &#9662;</button>
         </div>
-        <select id="report-format" class="border-white/20 rounded-lg shadow-sm text-sm p-2 border bg-white/10 text-white cursor-pointer focus:ring-2 focus:ring-[var(--whs-gold)] focus:border-[var(--whs-gold)] [&>option]:text-slate-800">
+        <select id="report-format" title="Which finished plan Generate Plan makes" class="max-w-[190px] border-white/20 rounded-lg shadow-sm text-sm p-2 border bg-white/10 text-white cursor-pointer focus:ring-2 focus:ring-[var(--whs-gold)] focus:border-[var(--whs-gold)] [&>option]:text-slate-800">
             <option value="standard">Standard Matrix Output</option>
             <option value="simple">Simple Year Plan (Terms &amp; Topics Only)</option>
             <option value="timeline">Timeline View (By Term, Colour-Coded) — Recommended</option>
@@ -2296,10 +2297,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <button data-mode="labels" onclick="ypSetCalMode('labels')">Labels</button>
                     <button data-mode="off" onclick="ypSetCalMode('off')">Hidden</button>
                 </div>
-                <div class="yp-menu-sep"></div>
-                <button role="menuitem" class="yp-menu-item danger" onclick="ypCloseMenus(); resetPlanner()">Reset plan<small>Clear every topic from the whole year (cannot be undone)</small></button>
             </div>
         </div>
+        <button id="yp-reset-btn" onclick="resetPlanner()" class="px-4 py-2 rounded-lg text-sm font-bold bg-red-600 hover:bg-red-700 text-white border border-red-400 shadow-sm flex items-center gap-1.5 transition-colors" title="Clear every topic from the whole year plan (asks first, cannot be undone)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            Reset Plan
+        </button>
     </div>
 
     <!-- Department & Year Level Tab Bar -->
@@ -2667,7 +2670,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><strong>Year Planner: 2027 school calendar built in.</strong> The planner now opens set up for 2027: Term 1 is 11 weeks, Terms 2 to 4 are 10, and the four term start dates are already filled in. Above every term each week now shows its date, with small coloured tags for public holidays, staff-only days, school events (Beach Sports, Athletics Day, Fun Run, prizegivings), CAA weeks, Senior Exam Week and NZQA exams. A week with fewer than five teaching days (for example the Easter weeks) is marked, so you do not plan a full week into it. A &ldquo;2027 school calendar&rdquo; box above the terms lists every date. The dates also show on hover in Full Year Coverage and the blocked-weeks list, in the printed plans, and as a new Dates column in the CSV. Plans you saved earlier are moved to the 2027 calendar once and keep their topics. You can still change any term length or start date.</li>
                         <li><strong>Year Planner: now covers Years 11 to 13 (NCEA).</strong> Pick <em>Year 11</em>, <em>12</em> or <em>13</em> and a second row appears so you can choose the NCEA subject inside your department (for example Science: Biology, Chemistry, Physics, Earth and Space Science). The library then lists that course's <strong>standards</strong>, split into <em>Internally assessed</em> and <em>Externally assessed (exam)</em>, each showing its credits. Adding a standard suggests a number of weeks, which you can change, and the planner adds up your credits and warns you if an external standard is still being taught after the NZQA exams start. <strong>Māori</strong> and <strong>Technology</strong> have been added as departments (Years 11 to 13). The standards come from the school NCEA data, so check credits and dates with NZQA before you finalise.</li>
                         <li><strong>Year Planner: The Arts is now planned one art form at a time</strong> at Years 7 to 10. After you pick The Arts and a year, choose <em>Dance</em>, <em>Drama</em>, <em>Music</em> or <em>Visual Arts</em> and you get a separate year plan for it. <strong>Calendar changes:</strong> Senior Exam Week, the NZQA exams and Senior Prizegiving only show for Years 11 to 13, and CAA week only shows for Year 10. In Years 11 to 13 the Senior Exam Week and the NZQA exam weeks are blocked out automatically and cannot be planned into. The <strong>Timeline View</strong> button is now gold with a <em>Recommended</em> label, and the Reset Plan hover tip can be read again.</li>
-                        <li><strong>Year Planner is tidier.</strong> Once you have chosen a Learning Area and Year Level, the pickers fold into a one-line summary with a <em>Change</em> button, and the term lengths sit behind a small <em>Term lengths and dates</em> fold-out. PE &amp; Health is one button with a <em>Focus</em> row (together, Health only, PE only), and Māori and Technology take you to Year 11 for you. The action buttons are now three: <strong>Generate Plan</strong>, an <strong>Export / Print</strong> menu (Timeline View first) and a <strong>Plan settings</strong> menu (block weeks, term lengths, calendar events as dots, labels or hidden, and Reset). The long list of warnings is one <strong>Plan check</strong> button that opens the details. There is a new <strong>Year View</strong> tab showing the Timeline on screen. The library has search, Internal / Exam filters for Years 11 to 13, and strands that fold up, and the generate bar and term tabs stay in view as you scroll.</li>
+                        <li><strong>Year Planner is tidier.</strong> Once you have chosen a Learning Area and Year Level, the pickers fold into a one-line summary with a <em>Change</em> button, and the term lengths sit behind a small <em>Term lengths and dates</em> fold-out. PE &amp; Health is one button with a <em>Focus</em> row (together, Health only, PE only), and Māori and Technology take you to Year 11 for you. The action buttons are now three: <strong>Generate Plan</strong>, an <strong>Export / Print</strong> menu (Timeline View first) and a <strong>Plan settings</strong> menu (block weeks, term lengths, calendar events as dots, labels or hidden), with a red <strong>Reset Plan</strong> button beside them. The floating <em>My Teaching Profile</em> button no longer shows while you are in the Year Planner. The long list of warnings is one <strong>Plan check</strong> button that opens the details. There is a new <strong>Year View</strong> tab showing the Timeline on screen. The library has search, Internal / Exam filters for Years 11 to 13, and strands that fold up, and the generate bar and term tabs stay in view as you scroll.</li>
                         <li><strong>Live links:</strong> unit plans and homework schedules now ask the AI to make every recommended website, data source and YouTube clip a <strong>clickable link</strong>, in the Markdown and HTML versions. If the AI is not sure of a direct link it gives a search link that always works, and clips are still marked TEACHER TO CHECK. <strong>ChatGPT and Claude</strong> buttons now always sit beside <em>Open Gemini</em>, even when the WHS or Maths HTML template is on.</li>
                     </ul>
                 </div>
@@ -3328,6 +3331,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (viewId === 'planning') showKPNoticeIfNeeded();
             var embedded = !!EMBED_PAGES[viewId];
             document.body.classList.toggle('eb-mode', embedded);
+            document.body.classList.toggle('yp-mode', viewId === 'yearplanner');
             if (typeof iepSyncChrome === 'function') iepSyncChrome();
             if (embedded) { loadEmbeddedPage(viewId); sizeEmbeddedPages(); setTimeout(sizeEmbeddedPages, 400); }
         }
