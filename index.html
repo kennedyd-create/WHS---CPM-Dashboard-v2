@@ -28,8 +28,8 @@
         .contour-banner-bg { opacity: 0.16; }
         html.dark .contour-banner-bg { opacity: 0.10; }
         .glass-card { background: white; border: 1px solid var(--whs-light-blue); border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06); }
-        .nav-btn { padding: 0.65rem 1.1rem; font-size: 1.05rem; color: #475569; font-weight: 600; border-radius: 0.6rem; background-color: #ffffff; border: 1px solid #cbd5e1; transition: all 0.2s; white-space: nowrap; }
-        @media (max-width: 1024px) { .nav-btn { padding: 0.5rem 0.75rem; font-size: 0.9rem; } }
+        .nav-btn { padding: 0.8rem 1.5rem; font-size: 1.15rem; color: #1e3a6e; font-weight: 700; border-radius: 0.7rem; background-color: #ffffff; border: 2px solid var(--whs-dark-blue); transition: all 0.2s; white-space: nowrap; }
+        @media (max-width: 1024px) { .nav-btn { padding: 0.55rem 0.9rem; font-size: 0.95rem; } }
         .nav-btn:hover { background-color: #eff6ff; border-color: var(--whs-dark-blue); color: var(--whs-dark-blue); }
         .nav-active { background-color: var(--whs-dark-blue); border-color: var(--whs-dark-blue); color: #ffffff; font-weight: 800; box-shadow: 0 2px 8px rgba(0,32,102,0.3); }
         .nav-active:hover { background-color: var(--whs-dark-blue); color: #ffffff; }
@@ -327,7 +327,7 @@
         html.dark nav.sticky { background-color: rgba(15,23,42,0.95) !important; border-color: #334155 !important; }
         html.dark .nav-btn { color: #94a3b8; }
         html.dark .nav-btn:hover { color: #93c5fd; }
-        html.dark .nav-btn { background-color: #1e293b; border-color: #334155; color: #cbd5e1; }
+        html.dark .nav-btn { background-color: #1e293b; border-color: #4a6cb3; color: #cbd5e1; }
         html.dark .nav-btn:hover { background-color: #263449; border-color: #5c7dc4; color: #93c5fd; }
         html.dark .nav-active { background-color: var(--whs-dark-blue) !important; border-color: var(--whs-dark-blue) !important; color: #ffffff !important; }
         html.dark .nav-btn:hover { color: #93c5fd; }
@@ -443,6 +443,41 @@
         html.dark [class*="text-[#92400e]"] { color: #fcd34d !important; }
         html.dark [class*="text-[#7e22ce]"] { color: #d8b4fe !important; }
 
+
+        /* What's New panel */
+        .wn-key { background: #fef08a; color: #422006; font-weight: 700; padding: 0 .25em; border-radius: 3px; }
+        html.dark .wn-key { background: #854d0e; color: #fef9c3; }
+        .wn-h { font-weight: 800; font-size: .95rem; color: #002066; margin: 1rem 0 .4rem; padding-bottom: .25rem; border-bottom: 2px solid #e2e8f0; scroll-margin-top: 8rem; }
+        html.dark .wn-h { color: #93c5fd; border-color: #334155; }
+        .wn-top { border-bottom: 1px solid #e2e8f0; }
+        html.dark .wn-top { border-color: #334155; }
+        .wn-chips-label { font-size: .7rem; font-weight: 700; color: #64748b; align-self: center; text-transform: uppercase; letter-spacing: .04em; }
+        .wn-chip { font-size: .75rem; font-weight: 700; padding: .2rem .65rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #f1f5f9; color: #002066; cursor: pointer; }
+        .wn-chip:hover { background: #002066; color: #fff; border-color: #002066; }
+        html.dark .wn-chip { background: #0f172a; color: #bfdbfe; border-color: #475569; }
+        html.dark .wn-chip:hover { background: #bfdbfe; color: #0f172a; }
+
+        /* Onboarding tabs and updates */
+        .ob-tabs { display: flex; gap: .4rem; justify-content: center; margin: .25rem 0 1rem; }
+        .ob-tab { font-size: .8rem; font-weight: 700; padding: .4rem 1rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #fff; color: #002066; cursor: pointer; }
+        .ob-tab.on { background: #002066; color: #fff; border-color: #002066; }
+        html.dark .ob-tab { background: #0f172a; color: #bfdbfe; border-color: #475569; }
+        html.dark .ob-tab.on { background: #bfdbfe; color: #0f172a; border-color: #bfdbfe; }
+        .ob-up { border: 1px solid #e2e8f0; border-radius: .75rem; padding: .75rem 1rem; margin-bottom: .75rem; background: #f8fafc; }
+        html.dark .ob-up { background: #0f172a; border-color: #334155; }
+        .ob-up-h { font-weight: 800; color: #002066; margin-bottom: .4rem; }
+        html.dark .ob-up-h { color: #93c5fd; }
+        .ob-go { margin-top: .5rem; font-size: .75rem; font-weight: 700; color: #002066; background: #fff; border: 1px solid #002066; border-radius: 999px; padding: .2rem .8rem; cursor: pointer; }
+        .ob-go:hover { background: #002066; color: #fff; }
+        html.dark .ob-go { background: transparent; color: #bfdbfe; border-color: #bfdbfe; }
+        html.dark .ob-go:hover { background: #bfdbfe; color: #0f172a; }
+
+        /* CPM Theory pill in the banner */
+        .cpm-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.35); backdrop-filter: blur(2px); }
+        .cpm-pill:hover { background: rgba(255,255,255,0.25); }
+        .cpm-pill.nav-active { background: #ffffff; color: var(--whs-dark-blue); border-color: #ffffff; font-weight: 800; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+        .cpm-pill.nav-active:hover { background: #ffffff; color: var(--whs-dark-blue); }
+        html.dark .cpm-pill.nav-active { background: #ffffff !important; color: var(--whs-dark-blue) !important; border-color: #ffffff !important; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -870,6 +905,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 </svg>
             </div>
 
+            <button id="nav-theory" type="button" class="cpm-pill absolute bottom-3 md:bottom-4 right-14 md:right-16 z-20 h-9 px-3 flex items-center gap-1 rounded-full text-xs font-bold text-white transition" title="CPM Theory: read the research behind the Common Practice Model" data-action="view" data-target="theory">📖 CPM Theory</button>
+
             <button id="dark-mode-toggle" class="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-20 w-9 h-9 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full transition shadow-sm tooltip-wrapper tooltip-bottom flex items-center justify-center backdrop-blur-sm" data-tooltip="Toggle dark mode" data-action="toggle-dark-mode" aria-pressed="false">
                 <svg class="moon-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                 <svg class="sun-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -878,12 +915,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         <nav class="sticky top-0 z-50 bg-[#e2e8f0]/95 backdrop-blur-md flex flex-col items-center border-b-2 border-slate-300 mb-6 gap-2 pb-2 pt-2 px-2 md:px-4 shadow-sm transition-all duration-300 overflow-visible">
             <div class="flex flex-wrap items-center justify-center gap-1 md:gap-2">
-                <button id="nav-lesson" class="nav-btn nav-active tooltip-wrapper tooltip-bottom" data-tooltip="Create a single highly detailed lesson plan" data-action="view" data-target="lesson">Lesson Builder</button>
-                <button id="nav-planning" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Sequence a multi-week unit structure" data-action="view" data-target="planning">Unit Planner</button>
-                <button id="nav-assessment" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generate tests, tasks, and rubrics" data-action="view" data-target="assessment">Assessment Generator</button>
-                <button id="nav-yearplanner" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Build a full-year term-by-term curriculum plan" data-action="view" data-target="yearplanner">📅 Year Planner <span class="text-[8px] font-normal opacity-70">NEW</span></button>
-                <button id="nav-theory" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Read the research behind the CPM" data-action="view" data-target="theory">CPM Theory</button>
-                <button id="nav-notebook" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="How to use Gemini Notebook's own source-grounding to build a full course, step by step" data-action="view" data-target="notebook">📓 Gemini Notebook</button>
+                <button id="nav-lesson" class="nav-btn nav-active tooltip-wrapper tooltip-bottom" data-tooltip="Create a single highly detailed lesson plan" data-action="view" data-target="lesson">📖 Lesson Builder</button>
+                <button id="nav-planning" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Sequence a multi-week unit structure" data-action="view" data-target="planning">🗂️ Unit Planner</button>
+                <button id="nav-assessment" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generate tests, tasks, and rubrics" data-action="view" data-target="assessment">✅ Assessment Generator</button>
+                <button id="nav-yearplanner" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Build a full-year term-by-term curriculum plan" data-action="view" data-target="yearplanner">📅 Year Planner</button>
             </div>
 
             <div class="flex flex-wrap items-center justify-center gap-1.5">
@@ -897,11 +932,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </button>
                 </div>
                 <a href="https://kennedyd-create.github.io/Gempromptmaker/" target="_blank" class="eb-pill rounded px-2 py-1 font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Helps you make a prompt that you put into a Gemini Gem">Gemini Gem Prompt Maker ↗</a>
+                <button id="nav-notebook" class="eb-pill px-2 py-1 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="How to use Gemini Notebook's own source-grounding to build a full course, step by step" data-action="view" data-target="notebook">📓 Gemini Notebook</button>
 
                 <span class="nav-sep" aria-hidden="true"></span>
 
                 <!-- Group 2: help -->
-                <button class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Not sure which tool to use? Reopen the quick guide" data-action="show-onboarding">❓ New Here? Guide Me</button>
+                <button class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Not sure where to start, or want to see what has changed? Open the quick guide and recent updates" data-action="show-onboarding">❓ New Here &amp; Recent Updates</button>
                 <button class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="A minute to breathe, plus a book recommendation" data-action="show-wellbeing">🧘 Teacher Well-being</button>
 
                 <span class="nav-sep" aria-hidden="true"></span>
@@ -2644,43 +2680,68 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         </footer>
     </div>
     
-    <div id="changelog-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-xl w-full shadow-2xl max-h-[80vh] overflow-y-auto">
-            <h3 class="text-xl font-black text-slate-900 mb-4">📋 What's New</h3>
+    <div id="changelog-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4" onclick="if(event.target===this)closeChangelogModal()">
+        <div id="changelog-card" class="bg-white rounded-2xl max-w-xl w-full shadow-2xl max-h-[85vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="changelog-title">
+            <div class="wn-top sticky top-0 z-10 bg-white rounded-t-2xl px-6 md:px-8 pt-5 pb-3">
+                <div class="flex items-center justify-between gap-3">
+                    <h3 id="changelog-title" class="text-xl font-black text-slate-900">📋 What's New</h3>
+                    <button type="button" id="changelog-done-top" class="px-5 py-1.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-changelog">Done</button>
+                </div>
+                <div class="wn-chips mt-3 flex flex-wrap gap-1.5" aria-label="Jump to a section">
+                    <span class="wn-chips-label">Jump to:</span>
+                    <button type="button" class="wn-chip" onclick="wnJump('wn-yp')">Year Planner</button>
+                    <button type="button" class="wn-chip" onclick="wnJump('wn-unit')">Unit Planner</button>
+                    <button type="button" class="wn-chip" onclick="wnJump('wn-quiz')">Make a Quiz</button>
+                    <button type="button" class="wn-chip" onclick="wnJump('wn-banner')">Banner</button>
+                    <button type="button" class="wn-chip" onclick="wnJump('wn-older')">Older</button>
+                </div>
+            </div>
+            <div class="px-6 md:px-8 pb-6 md:pb-8 pt-3">
             <div class="space-y-5 text-sm text-slate-700">
                 <div>
                     <p class="font-bold text-[#002066]">7 October 2026 — v2.9</p>
-                    <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
-                        <li><strong>New tab: Make a Quiz</strong> (small amber button in the banner, next to Make a Explore Board). Paste your content, copy the prompt it builds into your AI tool, then paste the questions back. It makes multiple-choice quiz files for <strong>Kahoot, Blooket, Gimkit, Quizizz and Quizlet</strong>, including Excel files.</li>
-                        <li>It checks the quiz before you download it: it warns if the correct answer is too often the first option or too often the longest option, and a <em>Rebalance answer positions</em> button spreads the correct answers evenly without changing any wording.</li>
-                        <li>It also flags questions over Kahoot's length limits, repeated options and "all of the above" style options, and lets you edit every question before you download.</li>
-                        <li>Make a Quiz uses the same <strong>learning area and year level buttons</strong> as the other tabs. For Years 7–10 a <strong>Choose from the curriculum</strong> button opens the Unit Planner's curriculum picker and fills the content box with the topic's Knowledge and Practices.</li>
-                        <li>Choose your <strong>platform</strong> first (Kahoot, Blooket, Gimkit, Quizizz, Quizlet flashcards, or all of them). Each platform has an Open link. Quizlet flashcards are made as terms and definitions instead of multiple choice.</li>
-                        <li>The Explore Board and Make a Quiz tabs hide the big banner so the page has more room.</li>
-                        <li>The small tabs in the banner are tidied: <strong>Make a Explore Board, Make a Quiz, Arcade Mode and Gemini Gem Prompt Maker</strong> now share one colour and sit together, then a divider, <strong>New Here? and Teacher Well-being</strong>, another divider, then the <strong>Student Dashboard</strong>. <em>Arcade AI</em> is now called <strong>Arcade Mode</strong>.</li>
-                        <li>Make a Quiz: the four steps are now dropdowns, and opening the next one closes the one before. After you load the AI's questions you see the quality checks first, with a <em>See and edit the questions</em> button to open the list.</li>
-                        <li>Make a Quiz: step 1 now says there are <strong>two ways to start</strong> (choose curriculum content for Years 7–10, or paste your own). The platform you choose in step 1 is the only one shown in step 4, so the all-platforms option and the links under the platform buttons are gone.</li>
-                        <li><strong>Device use</strong> is a new option in the Lesson Builder, Unit Planner and Assessment Generator (open <em>Curriculum Integrations &amp; Device Use</em>). Lessons and assessments can be <em>no devices</em>, <em>some devices</em> or <em>all devices</em>. <em>Student AI Use</em> now sits under Device Use, and is hidden when there is no device use (No devices, or 0%). In the Unit Planner you choose the share of working time on devices (0%, 25%, 50%, 75%, 100%, or any other percentage you type in) and the AI varies it from lesson to lesson. Every lesson in the plan is clearly labelled <strong>[ON DEVICE]</strong>, <strong>[BOOKWORK]</strong> or <strong>[MIX]</strong>, and a single lesson plan shows <strong>Device use: BOOKWORK</strong>, <strong>MIX</strong> or <strong>ON DEVICE</strong> under its title.</li>
-                        <li>In the Unit Planner, when you choose Waiheke Context, Mātauranga Māori, Literacy or Numeracy you can now say <strong>how many periods</strong> it is built into: 1, 2, another number, or leave it to the AI (once or twice).</li>
-                        <li>Make a Quiz: <strong>Gemini, Claude and ChatGPT</strong> links now sit beside <em>Copy the prompt</em>, and the platform links were checked and updated.</li>
-                        <li><strong>New: IEP Unit tab</strong> (teal tab at the top right of the Unit Planner, beside <em>Unit Planner</em>). Use it to plan a unit for one learner with learning needs. Choose the year level the learner is working at (a <em>modification</em>, Years 0–10) separately from the <em>access supports</em> they need, add their strengths and interests, tick learner characteristics, and the supports are ticked for you (or let the AI choose). Then choose the subject and topic, and the curriculum picker offers content from the year the learner is working at. The AI writes a unit plan for that learner alone (not a class plan), with a title "IEP Unit Plan for ______" for the teacher to add the name, the learner's strengths, challenges and strategies at the top, and the strategies, specific tasks and resources in every lesson. It also writes a draft IEP summary that follows the school's IEP template (Meeting Details, Learning Strengths, Learning Challenges, Prioritised Goals). Nothing in this tab is saved in your browser, and goals are suggestions for the IEP team.</li>
-                        <li><strong>Years 0–6 curriculum content</strong> is now built in for Science, Social Sciences, English, Mathematics and Statistics, and Health and PE, so the curriculum picker in the IEP Unit tab can offer content for a learner working below their class year level. The Arts has Years 7–10 only so far.</li>
-                        <li>Make a Quiz: when you choose from the curriculum you can now keep the <strong>whole topic</strong> or <strong>choose parts</strong>, ticking just the Knowledge and Practices points the quiz should cover.</li>
-                        <li><strong>New: Homework schedule</strong> in the Unit Planner (an optional box after Practical / Hands-On Sessions). The weeks are worked out for you from the unit length and the <strong>lessons per week</strong> for the year level and subject (Years 7 to 9: 3, Maths and English 4; Year 10: 4 in English, Maths, Science and Social Studies; Years 11 and 12: 4; Year 13: 5; you can change it). Homework is set in the first lesson of each week and is due the next week, labelled like <em>Year 7 Civics Week 1</em> (no dates). Tick the <strong>types</strong> you want from 15 small options (revision, extension, pre-work such as a short video, reading, vocabulary, practice questions, <strong>maths question sheets, spelling or word lists, workbook or pad pages such as SciPad</strong>, research, reflection, create, real-world, online platform, spaced review). The most minutes per week is suggested by year level (Year 7 and 8 30, Year 9 40, Year 10 45, senior 60).</li>
-                        <li>The unit plan gets a <strong>HOMEWORK</strong> line in each lesson that starts a week, a short <strong>HOMEWORK</strong> outline, and a <strong>HOMEWORK SCHEDULE</strong> table at the bottom with a parent email for every week. This works in every lesson format and in the WHS and Maths HTML templates. The AI is told where the assessment lessons fall: a test means revision homework beforehand, an assignment means homework is time spent working on it, and an assessment-only week has no homework. Three optional extras can be ticked: a <strong>completion tracker table for Google Sheets</strong> (a column for each week; the AI also makes the Sheet and a link if its tool can), a <strong>schedule table that copies cleanly into a Google Doc</strong>, and a <strong>Google Classroom post for each week</strong>. In the HTML templates the tables are real tables, so open the downloaded page, select a table, copy it and paste it into Google Docs or Sheets.</li>
-                        <li><strong>New: Homework Schedule tab (for existing units)</strong> (small blue tab at the top right of the Unit Planner, beside <em>IEP Unit</em>). Use it when you already have a unit plan. Choose only the <strong>subject and year level</strong> (they set the lessons per week and the minutes limit), then add a link to your plan or attach it in your AI chat. There is no unit title or duration to fill in, because the AI reads them from your plan, finds any test or assignment, works out the weeks and labels them like <em>Year 7 Civics Week 1</em>. Choose <strong>tables in the chat</strong> or an <strong>HTML page</strong> (WHS style, with real tables you can copy into Google Docs or Sheets). The same tickable types and extras are there. The three tabs now sit on their own row above the page title.</li>
-                        <li><strong>Homework detail boxes:</strong> tick <em>Online platform task</em> or <em>Workbook or pad pages</em> and a small box opens under it, so you can say which platform (for example Education Perfect) or which book or pad and pages (for example SciPad Year 9, pages 12 to 15). The AI is told to use exactly what you enter.</li>
-                        <li><strong>Flexible lesson stages:</strong> unit plans no longer give every lesson the same five equal stages. The AI looks at the content of each lesson and decides where the time should go, for example a short I Do then a long You Do, or a big writing or investigation task spread over two or three lessons (&ldquo;You Do continued from Lesson 4&rdquo;). It leaves out a stage that is not needed instead of padding it. Senior (NCEA) classes get a lot more extended You Do, with feedback built in. Each lesson shows a short <em>Lesson shape</em> line so you can see the pattern at a glance. This happens automatically, there is nothing to tick.</li>
-                        <li><strong>Year Planner: 2027 school calendar built in.</strong> The planner now opens set up for 2027: Term 1 is 11 weeks, Terms 2 to 4 are 10, and the four term start dates are already filled in. Above every term each week now shows its date, with small coloured tags for public holidays, staff-only days, school events (Beach Sports, Athletics Day, Fun Run, prizegivings), CAA weeks, Senior Exam Week and NZQA exams. A week with fewer than five teaching days (for example the Easter weeks) is marked, so you do not plan a full week into it. A &ldquo;2027 school calendar&rdquo; box above the terms lists every date. The dates also show on hover in Full Year Coverage and the blocked-weeks list, in the printed plans, and as a new Dates column in the CSV. Plans you saved earlier are moved to the 2027 calendar once and keep their topics. You can still change any term length or start date.</li>
-                        <li><strong>Year Planner: now covers Years 11 to 13 (NCEA).</strong> Pick <em>Year 11</em>, <em>12</em> or <em>13</em> and a second row appears so you can choose the NCEA subject inside your department (for example Science: Biology, Chemistry, Physics, Earth and Space Science). The library then lists that course's <strong>standards</strong>, split into <em>Internally assessed</em> and <em>Externally assessed (exam)</em>, each showing its credits. Adding a standard suggests a number of weeks, which you can change, and the planner adds up your credits and warns you if an external standard is still being taught after the NZQA exams start. <strong>Māori</strong> and <strong>Technology</strong> have been added as departments (Years 11 to 13). The standards come from the school NCEA data, so check credits and dates with NZQA before you finalise.</li>
-                        <li><strong>Year Planner: The Arts is now planned one art form at a time</strong> at Years 7 to 10. After you pick The Arts and a year, choose <em>Dance</em>, <em>Drama</em>, <em>Music</em> or <em>Visual Arts</em> and you get a separate year plan for it. <strong>Calendar changes:</strong> Senior Exam Week, the NZQA exams and Senior Prizegiving only show for Years 11 to 13, and CAA week only shows for Year 10. In Years 11 to 13 the Senior Exam Week and the NZQA exam weeks are blocked out automatically and cannot be planned into. The <strong>Timeline View</strong> button is now gold with a <em>Recommended</em> label, and the Reset Plan hover tip can be read again.</li>
-                        <li><strong>Year Planner is tidier.</strong> Once you have chosen a Learning Area and Year Level, the pickers fold into a one-line summary with a <em>Change</em> button, and the term lengths sit behind a small <em>Term lengths and dates</em> fold-out. PE &amp; Health is one button with a <em>Focus</em> row (together, Health only, PE only), and Māori and Technology take you to Year 11 for you. The action buttons are now three: <strong>Generate Plan</strong>, an <strong>Export / Print</strong> menu (Timeline View first) and a <strong>Plan settings</strong> menu (block weeks, term lengths, calendar events as dots, labels or hidden), with a red <strong>Reset Plan</strong> button beside them. The floating <em>My Teaching Profile</em> button no longer shows while you are in the Year Planner. The long list of warnings is one <strong>Plan check</strong> button that opens the details. There is a new <strong>Year View</strong> tab showing the Timeline on screen. The library has search, Internal / Exam filters for Years 11 to 13, and strands that fold up, and the generate bar and term tabs stay in view as you scroll.</li>
-                        <li><strong>Year Planner assessments can run over several weeks, and line up with their week.</strong> When you add a topic and tick <em>Include Assessment</em>, the length can now be <em>2, 3 or 4 weeks</em> as well as lessons or a full week, and it starts at the end of the topic unless you choose another week (lengths that do not fit are greyed out). On the term card a gold <em>Assess</em> bar sits under exactly the weeks the assessment runs in, so a Week 6 assessment in a 6-week topic is under Week 6. The same row appears in the Year View, the printed plans, the Standard and Simple plans, the full-year coverage (an <em>A</em> in those weeks) and the CSV.</li>
-                        <li><strong>Live links:</strong> unit plans and homework schedules now ask the AI to make every recommended website, data source and YouTube clip a <strong>clickable link</strong>, in the Markdown and HTML versions. If the AI is not sure of a direct link it gives a search link that always works, and clips are still marked TEACHER TO CHECK. <strong>ChatGPT and Claude</strong> buttons now always sit beside <em>Open Gemini</em>, even when the WHS or Maths HTML template is on.</li>
-                    </ul>
+                    
+<p class="wn-h" id="wn-yp">🗓 Year Planner</p>
+<ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+<li><mark class="wn-key">Assessments can run over several weeks</mark> and <strong>line up with their week</strong>. When you tick <em>Include Assessment</em> the length can be <em>1–3 lessons</em> or <em>1, 2, 3 or 4 weeks</em>. It starts at the <strong>end of the topic</strong> unless you pick another week (lengths that do not fit are greyed out). A gold <em>Assess</em> bar sits under exactly the weeks it runs in, so a Week 6 assessment in a 6-week topic is under Week 6. It also shows in the Year View, the printed plans, the Standard and Simple plans, the coverage grid (an <em>A</em>) and the CSV.</li>
+<li><mark class="wn-key">2027 school calendar built in</mark>. Term 1 is <strong>11 weeks</strong>, Terms 2 to 4 are <strong>10</strong>, and the four start dates are filled in. Every week shows its date with small tags for <strong>public holidays, staff-only days, school events, CAA weeks, Senior Exam Week and NZQA exams</strong>. Short weeks (for example Easter) are marked so you do not plan a full week into them. Dates also show in the prints, on hover, and as a <strong>Dates</strong> column in the CSV. Older plans move to 2027 once and keep their topics, and you can still change any term length or start date.</li>
+<li><mark class="wn-key">Years 11 to 13 (NCEA)</mark>. Pick Year 11, 12 or 13, then choose the <strong>NCEA subject</strong> inside your department. The library lists that course's <strong>standards</strong> as <em>Internally assessed</em> or <em>Externally assessed (exam)</em> with credits, suggests weeks, adds up your <strong>credits</strong> and warns if an external standard is taught after the <strong>NZQA exams</strong> start. <strong>Māori</strong> and <strong>Technology</strong> are added. Check credits and dates with NZQA before you finalise.</li>
+<li><mark class="wn-key">The Arts one art form at a time</mark> for Years 7 to 10: choose <em>Dance</em>, <em>Drama</em>, <em>Music</em> or <em>Visual Arts</em> and you get a separate year plan for each.</li>
+<li><mark class="wn-key">Calendar events match the year level</mark>. Senior Exam Week, NZQA exams and Senior Prizegiving only show for <strong>Years 11 to 13</strong>; CAA week only shows for <strong>Year 10</strong>. In Years 11 to 13 the senior exam weeks are <strong>blocked out automatically</strong> and cannot be planned into.</li>
+<li><mark class="wn-key">Tidier planner</mark>. Your choices fold into a <strong>one-line summary</strong> with a <em>Change</em> button, and term lengths sit in a fold-out. There are three action buttons: <strong>Generate Plan</strong>, <strong>Export / Print</strong> (Timeline View first) and <strong>Plan settings</strong>, plus a red <strong>Reset Plan</strong>. All the warnings are one <strong>Plan check</strong> button, there is a new <strong>Year View</strong> tab, and the library has <strong>search</strong>, Internal / Exam filters and strands that fold up. PE &amp; Health is one button with a <em>Focus</em> row, and Māori and Technology take you to Year 11. The generate bar and term tabs stay in view as you scroll, and <em>My Teaching Profile</em> no longer shows here.</li>
+<li>The <strong>Timeline View</strong> button is now <mark class="wn-key">gold with a Recommended label</mark>, and the Reset Plan hover tip can be read again.</li>
+</ul>
+<p class="wn-h" id="wn-unit">📘 Unit Planner</p>
+<ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+<li><mark class="wn-key">New: IEP Unit tab</mark> (teal tab, top right of the Unit Planner). Plan a unit for <strong>one learner</strong>. Choose the year level they are <strong>working at</strong> (a <em>modification</em>, Years 0 to 10) separately from the <em>access supports</em> they need, add strengths and interests and tick characteristics, and the supports are ticked for you. The AI writes a unit plan for that learner alone, with strengths, challenges and strategies at the top and in every lesson, plus a <strong>draft IEP summary</strong> that follows the school template. Nothing is saved in your browser, and goals are suggestions for the IEP team.</li>
+<li><mark class="wn-key">Years 0 to 6 curriculum content</mark> is built in for Science, Social Sciences, English, Maths and Statistics, and Health and PE, so the IEP picker can offer content below the class year. The Arts has Years 7 to 10 only.</li>
+<li><mark class="wn-key">New: Homework schedule</mark> (optional box after Practical / Hands-On Sessions). Weeks are worked out from the unit length and the <strong>lessons per week</strong> for the year and subject. Homework is set in the first lesson of each week and due the next, labelled like <em>Year 7 Civics Week 1</em>. Tick the <strong>types</strong> you want from 15 options, with a suggested <strong>maximum minutes per week</strong> by year level. The plan gets a <strong>HOMEWORK</strong> line in each lesson that starts a week and a <strong>HOMEWORK SCHEDULE</strong> table with a <strong>parent email</strong> for every week. The AI works around tests and assignments, and you can add a <strong>Sheets tracker</strong>, a <strong>Google Docs table</strong> and a <strong>Google Classroom post</strong> for each week.</li>
+<li><mark class="wn-key">New: Homework Schedule tab</mark> (small blue tab, beside <em>IEP Unit</em>) for a unit you <strong>already have</strong>. Choose only the subject and year level, link or attach your plan, and the AI reads the title and length, finds any test or assignment and works out the weeks. Choose <strong>tables in the chat</strong> or an <strong>HTML page</strong> with real tables you can copy into Google Docs or Sheets.</li>
+<li><mark class="wn-key">Homework detail boxes</mark>: tick <em>Online platform task</em> or <em>Workbook or pad pages</em> and say which platform (for example Education Perfect) or which book and pages (for example SciPad Year 9, pages 12 to 15). The AI uses exactly what you enter.</li>
+<li><mark class="wn-key">Flexible lesson stages</mark>. Lessons no longer get five equal stages. The AI decides where the time goes (a short I Do then a long You Do, or a big task over two or three lessons), leaves out a stage that is not needed, and adds a <em>Lesson shape</em> line. NCEA classes get more extended You Do with feedback built in. Nothing to tick.</li>
+<li><mark class="wn-key">Device use</mark> is a new option in the Lesson Builder, Unit Planner and Assessment Generator (<em>Curriculum Integrations &amp; Device Use</em>): <em>no devices</em>, <em>some devices</em> or <em>all devices</em>. In the Unit Planner choose the <strong>share of time on devices</strong> (0 to 100%) and every lesson is labelled <strong>[ON DEVICE]</strong>, <strong>[BOOKWORK]</strong> or <strong>[MIX]</strong>. <em>Student AI Use</em> now sits under Device Use and is hidden when there are no devices.</li>
+<li><mark class="wn-key">How many periods</mark>: for Waiheke Context, Mātauranga Māori, Literacy or Numeracy you can say how many periods it is built into (1, 2, another number, or leave it to the AI).</li>
+<li><mark class="wn-key">Live links</mark>: recommended websites, data sources and YouTube clips are now <strong>clickable links</strong>, with a search link if the AI is unsure, and clips are still marked TEACHER TO CHECK. <strong>ChatGPT and Claude</strong> buttons now always sit beside <em>Open Gemini</em>.</li>
+</ul>
+<p class="wn-h" id="wn-quiz">📝 Make a Quiz</p>
+<ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+<li><mark class="wn-key">New tab: Make a Quiz</mark> (amber button in the banner). Paste your content or choose it from the curriculum, copy the prompt into your AI tool, then paste the questions back. It makes quiz files for <strong>Kahoot, Blooket, Gimkit, Quizizz and Quizlet</strong>, including Excel files. Quizlet is made as terms and definitions.</li>
+<li><mark class="wn-key">Quality checks</mark> before you download: warns if the correct answer is too often first or longest, flags questions over Kahoot's limits, repeated options and "all of the above", and a <em>Rebalance answer positions</em> button spreads the answers without changing wording. You can edit every question.</li>
+<li><mark class="wn-key">Choose from the curriculum</mark> (Years 7 to 10) uses the same year buttons as the other tabs and the Unit Planner picker. Keep the <strong>whole topic</strong> or <strong>choose parts</strong> by ticking Knowledge and Practices points.</li>
+<li>Choose your <strong>platform</strong> first and only that platform is shown at the end. The four steps are <strong>dropdowns</strong>, and after you load the questions you see the checks first, with a <em>See and edit the questions</em> button. <strong>Gemini, Claude and ChatGPT</strong> links sit beside <em>Copy the prompt</em>.</li>
+</ul>
+<p class="wn-h" id="wn-banner">🧭 Banner &amp; tabs</p>
+<ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+<li><mark class="wn-key">Tidier banner tabs</mark>: <strong>Explore Board, Make a Quiz, Arcade Mode and Gemini Gem Prompt Maker</strong> share one colour, then a divider, <strong>New Here &amp; Recent Updates and Teacher Well-being</strong>, another divider, then the <strong>Student Dashboard</strong>. <em>Arcade AI</em> is now called <strong>Arcade Mode</strong>.</li>
+<li><mark class="wn-key">Main menu is now four tabs</mark> with an icon each and a dark blue border: <strong>Lesson Builder, Unit Planner, Assessment Generator and Year Planner</strong>. <strong>CPM Theory</strong> is now a small button in the banner, beside the night/day icon, and <strong>Gemini Notebook</strong> is now a small yellow tab with the others. The <em>New</em> label on the Year Planner is gone.</li>
+<li><mark class="wn-key">New Here &amp; Recent Updates</mark> (was <em>New Here? Guide Me</em>) now has two tabs: <strong>Where to start</strong> and <strong>Recent updates</strong>, a short list of what has changed in the Year Planner and Unit Planner with a button to open the full What&rsquo;s New. It opens on Recent updates once you have seen the welcome guide.</li>
+
+<li>The <strong>Explore Board</strong> and <strong>Make a Quiz</strong> tabs hide the big banner so the page has more room.</li>
+</ul>
+
                 </div>
                 <div>
-                    <p class="font-bold text-[#002066]">7 October 2026 — v2.8</p>
+                    <p class="font-bold text-[#002066]" id="wn-older">7 October 2026 — v2.8</p>
                     <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
                         <li><strong>New tab: Make a Explore Board</strong> (small amber button in the banner, just before Gemini Gem Prompt Maker). Pick a learning area and year level, add a topic or big question, and it builds a board of link, task, AI and tool squares around it. Years 7–10 can choose the topic from the curriculum.</li>
                         <li>Download the board as a web page for students, or copy it into Google Docs. It runs separately from the prompt builders and saves your board on this device.</li>
@@ -2791,7 +2852,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </ul>
                 </div>
             </div>
-            <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-changelog">Close</button>
+            <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-changelog">Done</button>
+            </div>
         </div>
     </div>
 
@@ -2967,8 +3029,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
     </div>
 
     <div id="onboarding-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl">
+        <div id="onboarding-card" class="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] overflow-y-auto relative">
+            <div class="flex justify-end -mt-2 mb-1">
+                <button type="button" id="onboarding-ok-top" class="px-5 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-bold rounded-lg shadow-sm transition" data-action="onboarding-dismiss">OK, take me to the main page ✓</button>
+            </div>
             <h3 class="text-xl md:text-2xl font-black text-center text-slate-900 mb-1">👋 Welcome to the Teaching &amp; Planning AI Prompt Generator</h3>
+            <div class="ob-tabs" role="tablist">
+                <button type="button" id="ob-tab-start" class="ob-tab" role="tab" onclick="obShowTab('start')">🧭 Where to start</button>
+                <button type="button" id="ob-tab-updates" class="ob-tab" role="tab" onclick="obShowTab('updates')">✨ Recent updates</button>
+            </div>
+            <div id="ob-panel-start">
             <p class="text-center text-slate-500 text-sm mb-6">What are you trying to do today?</p>
             <div class="grid sm:grid-cols-2 gap-3">
                 <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition" data-action="onboarding-go" data-target="lesson">
@@ -2996,7 +3066,41 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <span class="block text-xs text-slate-600 mt-1">Tell it your preferred teaching style — practical, group work, discussion, and more — so it gets woven into everything you generate, without you having to say it every time</span>
                 </button>
             </div>
-            <button class="w-full mt-5 text-center text-xs text-slate-400 hover:text-slate-600 font-semibold" data-action="onboarding-dismiss">Just let me explore →</button>
+            </div>
+            <div id="ob-panel-updates" class="hidden text-sm text-slate-700">
+                <p class="text-center text-slate-500 text-sm mb-4">The short version of what has changed recently.</p>
+                <div class="ob-up">
+                    <p class="ob-up-h">🗓 Year Planner</p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                        <li><mark class="wn-key">2027 calendar built in</mark>: term dates, holidays and key dates on every week.</li>
+                        <li><mark class="wn-key">Years 11 to 13 (NCEA)</mark> with standards, credits and the NZQA exam weeks blocked out for you.</li>
+                        <li><mark class="wn-key">Assessments over several weeks</mark>, lined up under the exact week they run in.</li>
+                        <li><mark class="wn-key">The Arts</mark> planned one art form at a time (Dance, Drama, Music, Visual Arts).</li>
+                        <li><mark class="wn-key">Tidier layout</mark>: one-line summary, Plan check, Year View, and a gold <strong>Timeline View</strong> (recommended).</li>
+                    </ul>
+                    <button type="button" class="ob-go" onclick="onboardingGoTo('yearplanner')">Open the Year Planner →</button>
+                </div>
+                <div class="ob-up">
+                    <p class="ob-up-h">📘 Unit Planner</p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                        <li><mark class="wn-key">Full curriculum integration</mark>: pick a strand and topic and the <strong>Knowledge and Practices</strong> fill in for you (Years 7 to 10, and Years 0 to 6 for IEP units).</li>
+                        <li><mark class="wn-key">Homework schedule</mark> with parent emails, plus a separate <strong>Homework Schedule tab</strong> for units you already have.</li>
+                        <li><mark class="wn-key">Device use</mark>: no devices, some or all, with each lesson labelled <strong>[ON DEVICE]</strong>, <strong>[BOOKWORK]</strong> or <strong>[MIX]</strong>.</li>
+                        <li><mark class="wn-key">IEP Unit tab</mark> for planning a unit around one learner.</li>
+                        <li><mark class="wn-key">Flexible lesson stages</mark> and <strong>live links</strong> to websites and clips.</li>
+                    </ul>
+                    <button type="button" class="ob-go" onclick="onboardingGoTo('planning')">Open the Unit Planner →</button>
+                </div>
+                <div class="ob-up">
+                    <p class="ob-up-h">🧩 Also new</p>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                        <li><mark class="wn-key">Make a Quiz</mark> for Kahoot, Blooket, Gimkit, Quizizz and Quizlet, and the <mark class="wn-key">Explore Board</mark> (both small amber buttons in the banner).</li>
+                    </ul>
+                </div>
+                <button type="button" class="w-full mt-1 py-2 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" onclick="obOpenFullUpdates()">See everything that's new →</button>
+            </div>
+            
+            <button class="w-full mt-4 text-center text-xs text-slate-400 hover:text-slate-600 font-semibold" data-action="onboarding-dismiss">Just let me explore →</button>
         </div>
     </div>
 
@@ -4310,9 +4414,28 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         /* ---------- Global toast ---------- */
         var toastTimeout;
         /* ---------- Onboarding guide ---------- */
+        function obShowTab(which) {
+            var s = document.getElementById('ob-panel-start'), u = document.getElementById('ob-panel-updates');
+            if (!s || !u) return;
+            s.classList.toggle('hidden', which !== 'start');
+            u.classList.toggle('hidden', which !== 'updates');
+            ['start', 'updates'].forEach(function (k) {
+                var t = document.getElementById('ob-tab-' + k);
+                if (t) { t.classList.toggle('on', k === which); t.setAttribute('aria-selected', k === which ? 'true' : 'false'); }
+            });
+            var c = document.getElementById('onboarding-card');
+            if (c) c.scrollTop = 0;
+        }
+        function obOpenFullUpdates() {
+            dismissOnboardingModal();
+            showChangelogModal();
+        }
         function showOnboardingModal() {
             var m = document.getElementById('onboarding-modal');
             if (m) m.classList.remove('hidden');
+            var seen = false;
+            try { seen = !!localStorage.getItem('whs_onboarding_seen'); } catch (e) {}
+            obShowTab(seen ? 'updates' : 'start');
         }
         function dismissOnboardingModal() {
             var m = document.getElementById('onboarding-modal');
@@ -4490,6 +4613,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function showChangelogModal() {
             var m = document.getElementById('changelog-modal');
             if (m) m.classList.remove('hidden');
+            var c = document.getElementById('changelog-card');
+            if (c) c.scrollTop = 0;
+        }
+        function wnJump(id) {
+            var el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         function closeChangelogModal() {
             var m = document.getElementById('changelog-modal');
@@ -10555,6 +10684,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function handleEscapeKey(e) {
             if (e.key !== 'Escape') return;
+            ['changelog-modal', 'credits-modal'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el && !el.classList.contains('hidden')) el.classList.add('hidden');
+            });
             ypCloseMenus();
             ['config-modal', 'blocked-modal', 'term-lengths-modal', 'alert-modal'].forEach(id => {
                 const el = document.getElementById(id);
