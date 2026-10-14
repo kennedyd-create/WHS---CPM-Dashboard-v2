@@ -297,7 +297,7 @@
         
         @keyframes globe-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes star-pulse { 0%, 100% { transform: scale(0.85); filter: drop-shadow(0 0 5px rgba(197,160,89,0.5)); opacity: 0.9; } 50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(253,224,71,0.9)); opacity: 1; } }
-        @keyframes breathe { 0% { transform: scale(0.72); } 40%, 60% { transform: scale(1); } 100% { transform: scale(0.72); } }
+        @keyframes breathe { 0% { transform: scale(0.72); } 25%, 50% { transform: scale(1); } 75%, 100% { transform: scale(0.72); } }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -478,6 +478,13 @@
         .cpm-pill.nav-active { background: #ffffff; color: var(--whs-dark-blue); border-color: #ffffff; font-weight: 800; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
         .cpm-pill.nav-active:hover { background: #ffffff; color: var(--whs-dark-blue); }
         html.dark .cpm-pill.nav-active { background: #ffffff !important; color: var(--whs-dark-blue) !important; border-color: #ffffff !important; }
+
+        /* Weeks with fewer than five teaching days: the missing days are shaded */
+        .yp-shade { position: absolute; inset: 0; display: grid; gap: 0.5rem; pointer-events: none; border-radius: inherit; overflow: hidden; }
+        .yp-off { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, rgba(100,116,139,0.34) 0 4px, rgba(148,163,184,0.16) 4px 8px); }
+        html.dark .yp-off { background: repeating-linear-gradient(135deg, rgba(148,163,184,0.32) 0 4px, rgba(100,116,139,0.14) 4px 8px); }
+        html.dark #view-yearplanner .bg-white\/60 { background-color: rgba(30,41,59,0.6) !important; }
+        html.dark #view-yearplanner .bg-white\/60:hover { background-color: rgba(38,52,73,0.9) !important; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -2706,6 +2713,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Assessments can run over several weeks</mark> and <strong>line up with their week</strong>. When you tick <em>Include Assessment</em> the length can be <em>1–3 lessons</em> or <em>1, 2, 3 or 4 weeks</em>. It starts at the <strong>end of the topic</strong> unless you pick another week (lengths that do not fit are greyed out). A gold <em>Assess</em> bar sits under exactly the weeks it runs in, so a Week 6 assessment in a 6-week topic is under Week 6. It also shows in the Year View, the printed plans, the Standard and Simple plans, the coverage grid (an <em>A</em>) and the CSV.</li>
 <li><mark class="wn-key">2027 school calendar built in</mark>. Term 1 is <strong>11 weeks</strong>, Terms 2 to 4 are <strong>10</strong>, and the four start dates are filled in. Every week shows its date with small tags for <strong>public holidays, staff-only days, school events, CAA weeks, Senior Exam Week and NZQA exams</strong>. Short weeks (for example Easter) are marked so you do not plan a full week into them. Dates also show in the prints, on hover, and as a <strong>Dates</strong> column in the CSV. Older plans move to 2027 once and keep their topics, and you can still change any term length or start date.</li>
 <li><mark class="wn-key">Years 11 to 13 (NCEA)</mark>. Pick Year 11, 12 or 13, then choose the <strong>NCEA subject</strong> inside your department. The library lists that course's <strong>standards</strong> as <em>Internally assessed</em> or <em>Externally assessed (exam)</em> with credits, suggests weeks, adds up your <strong>credits</strong> and warns if an external standard is taught after the <strong>NZQA exams</strong> start. <strong>Māori</strong> and <strong>Technology</strong> are added. Check credits and dates with NZQA before you finalise.</li>
+<li><mark class="wn-key">Short weeks are shaded</mark>. When a week has fewer than five teaching days (a holiday, a staff-only day, or before students start), the missing days are <strong>shaded in the week</strong> on the term cards, one fifth for each day. A Monday off shades the <strong>start</strong> of the week, a Friday off shades the <strong>end</strong>, and a day in the middle shades the middle. This follows the <em>Plan settings</em> calendar choice (hidden turns it off).</li>
 <li><mark class="wn-key">The Arts one art form at a time</mark> for Years 7 to 10: choose <em>Dance</em>, <em>Drama</em>, <em>Music</em> or <em>Visual Arts</em> and you get a separate year plan for each.</li>
 <li><mark class="wn-key">Calendar events match the year level</mark>. Senior Exam Week, NZQA exams and Senior Prizegiving only show for <strong>Years 11 to 13</strong>; CAA week only shows for <strong>Year 10</strong>. In Years 11 to 13 the senior exam weeks are <strong>blocked out automatically</strong> and cannot be planned into.</li>
 <li><mark class="wn-key">Tidier planner</mark>. Your choices fold into a <strong>one-line summary</strong> with a <em>Change</em> button, and term lengths sit in a fold-out. There are three action buttons: <strong>Generate Plan</strong>, <strong>Export / Print</strong> (Timeline View first) and <strong>Plan settings</strong>, plus a red <strong>Reset Plan</strong>. All the warnings are one <strong>Plan check</strong> button, there is a new <strong>Year View</strong> tab, and the library has <strong>search</strong>, Internal / Exam filters and strands that fold up. PE &amp; Health is one button with a <em>Focus</em> row, and Māori and Technology take you to Year 11. The generate bar and term tabs stay in view as you scroll, and <em>My Teaching Profile</em> no longer shows here.</li>
@@ -2734,6 +2742,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <ul class="list-disc pl-5 space-y-1.5 text-slate-600">
 <li><mark class="wn-key">Tidier banner tabs</mark>: <strong>Explore Board, Make a Quiz, Arcade Mode and Gemini Gem Prompt Maker</strong> share one colour, then a divider, <strong>New Here &amp; Recent Updates and Teacher Well-being</strong>, another divider, then the <strong>Student Dashboard</strong>. <em>Arcade AI</em> is now called <strong>Arcade Mode</strong>.</li>
 <li><mark class="wn-key">Main menu is now four tabs</mark> with an icon each and a dark blue border: <strong>Lesson Builder, Unit Planner, Assessment Generator and Year Planner</strong>. <strong>CPM Theory</strong> is now a small button in the banner, beside the night/day icon, and <strong>Gemini Notebook</strong> is now a small yellow tab with the others. The <em>New</em> label on the Year Planner is gone.</li>
+<li><mark class="wn-key">Teacher Well-being breathing circle</mark> now follows <strong>box breathing</strong>: breathe in for 4 seconds, hold for 4, breathe out for 4, hold for 4, then repeat. The circle grows and shrinks with a 4-3-2-1 count, and there is a small <strong>Close</strong> button at the top.</li>
 <li><mark class="wn-key">New Here &amp; Recent Updates</mark> (was <em>New Here? Guide Me</em>) now has two tabs: <strong>Where to start</strong> and <strong>Recent updates</strong>, a short list of what has changed in the Year Planner and Unit Planner with a button to open the full What&rsquo;s New. It opens on Recent updates once you have seen the welcome guide.</li>
 
 <li>The <strong>Explore Board</strong> and <strong>Make a Quiz</strong> tabs hide the big banner so the page has more room.</li>
@@ -2930,18 +2939,25 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         </div>
     </div>
 
-    <div id="wellbeing-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-xl w-full shadow-2xl max-h-[85vh] overflow-y-auto text-center">
-            <h3 class="text-xl font-black text-slate-900 mb-1">🧘 A Moment for You</h3>
+    <div id="wellbeing-modal" class="hidden fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4" onclick="if(event.target===this)closeWellbeingModal()">
+        <div id="wellbeing-card" class="bg-white rounded-2xl max-w-xl w-full shadow-2xl max-h-[85vh] overflow-y-auto text-center" role="dialog" aria-modal="true" aria-labelledby="wellbeing-title">
+            <div class="sticky top-0 z-10 bg-white rounded-t-2xl px-6 md:px-8 pt-4 pb-2 flex justify-end">
+                <button type="button" id="wellbeing-close-top" class="px-3 py-1 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-md transition" data-action="close-wellbeing">Close ✕</button>
+            </div>
+            <div class="px-6 md:px-8 pb-6 md:pb-8">
+            <h3 id="wellbeing-title" class="text-xl font-black text-slate-900 mb-1">🧘 A Moment for You</h3>
             <p class="text-sm text-slate-500 mb-6">Take a minute before you get back to it.</p>
 
             <div class="flex flex-col items-center justify-center mb-8">
                 <div class="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center">
                     <div class="absolute inset-0 rounded-full bg-teal-100"></div>
-                    <div id="breathing-circle" class="absolute inset-0 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 shadow-lg" style="animation: breathe 10s ease-in-out infinite;"></div>
-                    <span id="breathing-text" class="relative z-10 text-white font-bold text-sm md:text-base drop-shadow">Breathe In</span>
+                    <div id="breathing-circle" class="absolute inset-0 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 shadow-lg" style="animation: breathe 16s ease-in-out infinite;"></div>
+                    <span class="relative z-10 flex flex-col items-center leading-tight text-white drop-shadow">
+                        <span id="breathing-text" class="font-bold text-sm md:text-base">Breathe In</span>
+                        <span id="breathing-count" class="text-2xl md:text-3xl font-black">4</span>
+                    </span>
                 </div>
-                <p class="text-[10px] text-slate-400 mt-3 tracking-wide">4 secs in · hold · 4 secs out</p>
+                <p class="text-[10px] text-slate-400 mt-3 tracking-wide">Breathe in 4 · hold 4 · breathe out 4 · hold 4 · repeat</p>
             </div>
 
             <div class="text-left space-y-4 text-sm text-slate-700 border-t border-slate-200 pt-6">
@@ -2974,6 +2990,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
 
             <button class="w-full mt-6 py-2.5 bg-[#002066] hover:bg-[#001a52] text-white text-sm font-bold rounded-lg transition" data-action="close-wellbeing">Close</button>
+            </div>
         </div>
     </div>
 
@@ -3075,6 +3092,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><mark class="wn-key">2027 calendar built in</mark>: term dates, holidays and key dates on every week.</li>
                         <li><mark class="wn-key">Years 11 to 13 (NCEA)</mark> with standards, credits and the NZQA exam weeks blocked out for you.</li>
                         <li><mark class="wn-key">Assessments over several weeks</mark>, lined up under the exact week they run in.</li>
+                        <li><mark class="wn-key">Short weeks shaded</mark>: days with no teaching are hatched out at the start or end of the week.</li>
                         <li><mark class="wn-key">The Arts</mark> planned one art form at a time (Dance, Drama, Music, Visual Arts).</li>
                         <li><mark class="wn-key">Tidier layout</mark>: one-line summary, Plan check, Year View, and a gold <strong>Timeline View</strong> (recommended).</li>
                     </ul>
@@ -4637,22 +4655,22 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function showWellbeingModal() {
             var m = document.getElementById('wellbeing-modal');
             if (m) m.classList.remove('hidden');
-            var txt = document.getElementById('breathing-text');
+            var card = document.getElementById('wellbeing-card');
+            if (card) card.scrollTop = 0;
+            var txt = document.getElementById('breathing-text'), cnt = document.getElementById('breathing-count'), circ = document.getElementById('breathing-circle');
             if (breathingTimeout) clearTimeout(breathingTimeout);
-            var phases = [
-                { label: 'Breathe In', duration: 4000 },
-                { label: 'Hold', duration: 2000 },
-                { label: 'Breathe Out', duration: 4000 }
-            ];
-            var i = 0;
-            function nextPhase() {
-                if (txt) txt.textContent = phases[i].label;
-                breathingTimeout = setTimeout(function() {
-                    i = (i + 1) % phases.length;
-                    nextPhase();
-                }, phases[i].duration);
+            // Box breathing: in 4, hold 4, out 4, hold 4, then repeat. The circle animation (16s) is restarted so it starts in step with the words.
+            if (circ) { circ.style.animation = 'none'; void circ.offsetWidth; circ.style.animation = 'breathe 16s ease-in-out infinite'; }
+            var phases = ['Breathe In', 'Hold', 'Breathe Out', 'Hold'];
+            var step = 0; // 0..15, one per second
+            function tick() {
+                var p = Math.floor(step / 4), n = 4 - (step % 4);
+                if (txt) txt.textContent = phases[p];
+                if (cnt) cnt.textContent = n;
+                step = (step + 1) % 16;
+                breathingTimeout = setTimeout(tick, 1000);
             }
-            nextPhase();
+            tick();
         }
         function closeWellbeingModal() {
             var m = document.getElementById('wellbeing-modal');
@@ -7869,7 +7887,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (!start) return null;
             var mon = ypAddDays(start, 7 * i), fri = ypAddDays(mon, 4), by = calEventsByDate(), cfg = WHS_CAL.terms[t];
             var own = cfg && start === cfg.start;   // only apply term edges when the dates are the calendar's own
-            var events = [], idx = {}, lost = 0, reasons = [], blockLabel = '';
+            var events = [], idx = {}, lost = 0, reasons = [], blockLabel = '', offDays = [false, false, false, false, false];
             for (var d = 0; d < 5; d++) {
                 var day = ypAddDays(mon, d), off = false;
                 if (own && cfg.studentsFrom && day < cfg.studentsFrom) { off = true; reasons.push(calFmtLong(day) + ': before students start'); }
@@ -7882,9 +7900,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     else if (!e.range) events[idx[key]].n++;
                     if (e.kind === 'hol' || e.kind === 'staff') { off = true; reasons.push(calFmtLong(day) + ': ' + e.label); }
                 });
-                if (off) lost++;
+                if (off) { lost++; offDays[d] = true; }
             }
-            return { mon: mon, fri: fri, events: events, lost: lost, days: 5 - lost, reasons: reasons, blockLabel: blockLabel };
+            return { mon: mon, fri: fri, events: events, lost: lost, days: 5 - lost, reasons: reasons, blockLabel: blockLabel, offDays: offDays };
         }
         function calWeekText(t, i) { var w = calWeek(t, i); return w ? calFmt(w.mon) + ' – ' + calFmt(w.fri) : ''; }
         function calRangeText(t, i, span) {
@@ -7895,6 +7913,28 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function calEventLabel(e) { return (e.short || e.label) + (e.n > 1 && !e.range ? ' ×' + e.n : ''); }
         function calPill(e, extraTitle) {
             return '<div class="mt-0.5 truncate rounded px-1 text-[9px] font-semibold leading-[14px]" style="' + CAL_STYLE[e.kind] + '" title="' + (e.range ? '' : calFmtLong(e.day) + ': ') + ypEsc(e.label) + (e.n > 1 && !e.range ? ' (' + e.n + ' days)' : '') + '">' + ypEsc(calEventLabel(e)) + '</div>';
+        }
+        // Shades the part of a week that has no teaching (holiday, staff-only day, before students start, after term ends).
+        // Each day is a fifth of the week, so a Monday off shades the first fifth and a Friday off shades the last fifth.
+        function ypShadeOverlay(t, i, span) {
+            if ((yearPlannerState.calMode || 'dots') === 'off') return '';
+            var any = false, cols = '';
+            for (var k = 0; k < span; k++) {
+                var w = calWeek(t, i + k), bands = '';
+                if (w && w.lost > 0) {
+                    any = true;
+                    var d = 0;
+                    while (d < 5) {
+                        if (!w.offDays[d]) { d++; continue; }
+                        var s = d; while (d < 5 && w.offDays[d]) d++;
+                        var why = w.reasons.filter(function(r) { var dn = r.slice(0, 3); return w.offDays.some(function(o, x) { return o && x >= s && x < d && CAL_DOW[(x + 1) % 7] === dn; }); }).join('; ');
+                        bands += '<div class="yp-off" style="left:' + (s * 20) + '%;width:' + ((d - s) * 20) + '%;' + (s > 0 ? 'border-left:1px dashed rgba(100,116,139,.55);' : '') + (d < 5 ? 'border-right:1px dashed rgba(100,116,139,.55);' : '') + '" title="' + ypEsc(why || 'No teaching') + '"></div>';
+                    }
+                }
+                cols += '<div style="position:relative;min-width:0;">' + bands + '</div>';
+            }
+            if (!any) return '';
+            return '<div class="yp-shade" aria-hidden="true" style="grid-template-columns:repeat(' + span + ',minmax(0,1fr));">' + cols + '</div>';
         }
         // Weeks that are blocked automatically (for example Senior Exam Week and the NZQA exams when a Year 11 to 13 plan is open).
         function ypAutoBlockLabel(t, i) { var w = calWeek(t, i); return w && w.blockLabel ? w.blockLabel : ''; }
@@ -7930,7 +7970,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             el.innerHTML = h + '</div>';
             el.classList.remove('hidden');
         }
-        function ypSetCalMode(m) { yearPlannerState.calMode = m; ypRenderMenuState(); for (var t = 1; t <= 4; t++) renderCalStrip(t); saveState(); }
+        function ypSetCalMode(m) { yearPlannerState.calMode = m; ypRenderMenuState(); renderTermGrids(); saveState(); }
         function renderCalKey() {
             var body = document.getElementById('yp-cal-key-body'), box = document.getElementById('yp-cal-key');
             if (!body || !box) return;
@@ -9241,6 +9281,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
                         grid.innerHTML += `
                             <div style="grid-column: span ${span};" class="p-3 border border-whsblue-200 bg-white shadow-sm rounded-xl relative group border-t-4 border-t-[var(--whs-gold)] flex flex-col justify-between hover:shadow-md transition-all">
+                                ${ypShadeOverlay(t, i, span)}
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-sm mb-1 line-clamp-2" title="${titleText}">${titleText}</h4>
                                     ${ypDb && ypDb.meta && ypDb.meta[slot.subtopic] ? `<div class="mt-0.5">${ypSeniorPills(ypDb.meta[slot.subtopic]).replace('ml-1 ', '')}</div>` : `<p class="text-xs text-slate-500 truncate" title="${slot.subtopic}">${slot.subtopic}</p>`}
@@ -9259,12 +9300,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     else {
                         grid.innerHTML += armedTopic
                             ? `<button onclick="placeArmedTopic(${t}, ${i})" title="Place '${armedTopic.subtopic.replace(/"/g, '&quot;')}' here"
-                                    class="border-2 border-dashed border-[var(--whs-gold)] bg-[var(--whs-gold)]/10 hover:bg-[var(--whs-gold)]/25 transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-[#7a5b1e] gap-0.5 cursor-pointer">
-                                <span class="text-xs font-semibold">Wk ${i+1}</span>
-                                <span class="text-base leading-none">+</span>
+                                    class="border-2 border-dashed border-[var(--whs-gold)] bg-[var(--whs-gold)]/10 hover:bg-[var(--whs-gold)]/25 transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-[#7a5b1e] gap-0.5 cursor-pointer relative overflow-hidden">
+                                <span class="text-xs font-semibold relative">Wk ${i+1}</span>
+                                <span class="text-base leading-none relative">+</span>
+                                ${ypShadeOverlay(t, i, 1)}
                                </button>`
-                            : `<div class="border border-dashed border-slate-300 bg-white/60 hover:bg-white transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-slate-400 gap-1">
-                                <span class="text-xs font-semibold">Wk ${i+1}</span>
+                            : `<div class="border border-dashed border-slate-300 bg-white/60 hover:bg-white transition-colors rounded-xl flex flex-col items-center justify-center p-2 text-slate-400 gap-1 relative overflow-hidden">
+                                <span class="text-xs font-semibold relative">Wk ${i+1}</span>
+                                ${ypShadeOverlay(t, i, 1)}
                                </div>`;
                     }
                 }
@@ -10688,6 +10731,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 const el = document.getElementById(id);
                 if (el && !el.classList.contains('hidden')) el.classList.add('hidden');
             });
+            const wb = document.getElementById('wellbeing-modal');
+            if (wb && !wb.classList.contains('hidden')) closeWellbeingModal();
             ypCloseMenus();
             ['config-modal', 'blocked-modal', 'term-lengths-modal', 'alert-modal'].forEach(id => {
                 const el = document.getElementById(id);
