@@ -2503,17 +2503,21 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <div id="assessment-details" class="hidden mt-3 bg-[#c5a059]/10 p-4 rounded-lg border border-[#c5a059]/40 grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-medium text-slate-600 mb-1">Timing (Within Unit)</label>
-                            <select id="modal-ass-start" class="w-full border-slate-300 rounded-md p-2 text-sm border focus:ring-2 focus:ring-[#c5a059]/40"></select>
+                            <select id="modal-ass-start" onchange="this.dataset.touched='1'; updateAssessmentUI()" class="w-full border-slate-300 rounded-md p-2 text-sm border focus:ring-2 focus:ring-[#c5a059]/40"></select>
                         </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-600 mb-1">Duration</label>
-                            <select id="modal-ass-length" class="w-full border-slate-300 rounded-md p-2 text-sm border focus:ring-2 focus:ring-[#c5a059]/40">
+                            <select id="modal-ass-length" onchange="updateAssessmentUI()" class="w-full border-slate-300 rounded-md p-2 text-sm border focus:ring-2 focus:ring-[#c5a059]/40">
                                 <option value="1 Lesson">1 Lesson</option>
                                 <option value="2 Lessons">2 Lessons</option>
                                 <option value="3 Lessons">3 Lessons</option>
                                 <option value="1 Week">1 Full Week</option>
+                                <option value="2 Weeks">2 Weeks</option>
+                                <option value="3 Weeks">3 Weeks</option>
+                                <option value="4 Weeks">4 Weeks</option>
                             </select>
                         </div>
+                        <p id="modal-ass-hint" class="col-span-2 text-[11px] font-semibold text-[#7a5b1e] -mt-1"></p>
                     </div>
                 </div>
             </div>
@@ -2671,6 +2675,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><strong>Year Planner: now covers Years 11 to 13 (NCEA).</strong> Pick <em>Year 11</em>, <em>12</em> or <em>13</em> and a second row appears so you can choose the NCEA subject inside your department (for example Science: Biology, Chemistry, Physics, Earth and Space Science). The library then lists that course's <strong>standards</strong>, split into <em>Internally assessed</em> and <em>Externally assessed (exam)</em>, each showing its credits. Adding a standard suggests a number of weeks, which you can change, and the planner adds up your credits and warns you if an external standard is still being taught after the NZQA exams start. <strong>Māori</strong> and <strong>Technology</strong> have been added as departments (Years 11 to 13). The standards come from the school NCEA data, so check credits and dates with NZQA before you finalise.</li>
                         <li><strong>Year Planner: The Arts is now planned one art form at a time</strong> at Years 7 to 10. After you pick The Arts and a year, choose <em>Dance</em>, <em>Drama</em>, <em>Music</em> or <em>Visual Arts</em> and you get a separate year plan for it. <strong>Calendar changes:</strong> Senior Exam Week, the NZQA exams and Senior Prizegiving only show for Years 11 to 13, and CAA week only shows for Year 10. In Years 11 to 13 the Senior Exam Week and the NZQA exam weeks are blocked out automatically and cannot be planned into. The <strong>Timeline View</strong> button is now gold with a <em>Recommended</em> label, and the Reset Plan hover tip can be read again.</li>
                         <li><strong>Year Planner is tidier.</strong> Once you have chosen a Learning Area and Year Level, the pickers fold into a one-line summary with a <em>Change</em> button, and the term lengths sit behind a small <em>Term lengths and dates</em> fold-out. PE &amp; Health is one button with a <em>Focus</em> row (together, Health only, PE only), and Māori and Technology take you to Year 11 for you. The action buttons are now three: <strong>Generate Plan</strong>, an <strong>Export / Print</strong> menu (Timeline View first) and a <strong>Plan settings</strong> menu (block weeks, term lengths, calendar events as dots, labels or hidden), with a red <strong>Reset Plan</strong> button beside them. The floating <em>My Teaching Profile</em> button no longer shows while you are in the Year Planner. The long list of warnings is one <strong>Plan check</strong> button that opens the details. There is a new <strong>Year View</strong> tab showing the Timeline on screen. The library has search, Internal / Exam filters for Years 11 to 13, and strands that fold up, and the generate bar and term tabs stay in view as you scroll.</li>
+                        <li><strong>Year Planner assessments can run over several weeks, and line up with their week.</strong> When you add a topic and tick <em>Include Assessment</em>, the length can now be <em>2, 3 or 4 weeks</em> as well as lessons or a full week, and it starts at the end of the topic unless you choose another week (lengths that do not fit are greyed out). On the term card a gold <em>Assess</em> bar sits under exactly the weeks the assessment runs in, so a Week 6 assessment in a 6-week topic is under Week 6. The same row appears in the Year View, the printed plans, the Standard and Simple plans, the full-year coverage (an <em>A</em> in those weeks) and the CSV.</li>
                         <li><strong>Live links:</strong> unit plans and homework schedules now ask the AI to make every recommended website, data source and YouTube clip a <strong>clickable link</strong>, in the Markdown and HTML versions. If the AI is not sure of a direct link it gives a search link that always works, and clips are still marked TEACHER TO CHECK. <strong>ChatGPT and Claude</strong> buttons now always sit beside <em>Open Gemini</em>, even when the WHS or Maths HTML template is on.</li>
                     </ul>
                 </div>
@@ -9099,21 +9104,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         }
                         filledCount += span;
                         
-                        // Check for assessment inside this chunk
-                        let showAss = false;
-                        if(slot.assessment) {
-                            for(let k = i; k < i + span; k++) {
-                                if(slots[k].unitWeek === slot.assessment.startOffset) {
-                                    showAss = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        let assBadge = '';
-                        if(showAss) {
-                            assBadge = `<div class="mt-2 text-[10px] font-bold text-whsgold-800 bg-whsgold-50 inline-block px-2 py-1 rounded-md border border-whsgold-200 shadow-sm leading-tight">📝 Assess (Wk ${slot.assessment.startOffset} of Unit)<br><span class="opacity-75 font-medium">Duration: ${slot.assessment.length}</span></div>`;
-                        }
+                        const assStrip = ypAssessStrip(slot, span);
 
                         // Label as continuation if jumping over a block
                         const isContinuation = slot.unitWeek > 1 && (i === 0 || slots[i-1]?.id !== slot.id);
@@ -9124,13 +9115,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-sm mb-1 line-clamp-2" title="${titleText}">${titleText}</h4>
                                     ${ypDb && ypDb.meta && ypDb.meta[slot.subtopic] ? `<div class="mt-0.5">${ypSeniorPills(ypDb.meta[slot.subtopic]).replace('ml-1 ', '')}</div>` : `<p class="text-xs text-slate-500 truncate" title="${slot.subtopic}">${slot.subtopic}</p>`}
-                                    ${assBadge}
                                 </div>
-                                <div class="mt-3 flex justify-between items-end">
+                                <div>${assStrip}<div class="mt-3 flex justify-between items-end">
                                     <span class="text-[10px] font-bold text-whsblue-700 bg-whsblue-50 px-2 py-1 rounded-md uppercase tracking-wider border border-whsblue-100">${span} Wk${span>1?'s':''}</span>
                                     <button onclick="removeTopic(${t}, '${slot.id}')" class="text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors p-1.5 rounded-md" title="Remove Topic">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                     </button>
+                                </div>
                                 </div>
                             </div>
                         `;
@@ -9404,7 +9395,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         if (slot === 'BLOCKED') {
                             cells += `<td class="bg-stripes border border-white w-[22px] h-[22px]" title="Term ${t}, Wk ${i+1} — blocked"></td>`;
                         } else if (slot && typeof slot === 'object' && topicMatchesRow(db, strand, slot)) {
-                            cells += `<td class="border border-white w-[22px] h-[22px]" style="background:${hue}" title="Term ${t}, Wk ${i+1} — ${slot.customText || slot.subtopic}"></td>`;
+                            const isA = ypAssessHasWeek(slot);
+                            cells += `<td class="border border-white w-[22px] h-[22px] text-center" style="background:${hue};color:#fff;font-size:10px;font-weight:800;line-height:20px;" title="Term ${t}, Wk ${i+1} — ${slot.customText || slot.subtopic}${isA ? ' (assessment week)' : ''}">${isA ? 'A' : ''}</td>`;
                         } else {
                             cells += `<td class="bg-slate-100 border border-white w-[22px] h-[22px]" title="Term ${t}, Wk ${i+1} — unplanned"></td>`;
                         }
@@ -9418,6 +9410,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div class="flex flex-wrap gap-3 mt-4 text-[10px] font-semibold text-slate-500">
                     <span class="flex items-center gap-1"><i class="inline-block w-3 h-3 rounded-sm bg-slate-100 border border-slate-200"></i>Unplanned week</span>
                     <span class="flex items-center gap-1"><i class="inline-block w-3 h-3 rounded-sm bg-stripes border border-slate-200"></i>Blocked week</span>
+                    <span class="flex items-center gap-1"><b class="inline-block w-3 h-3 rounded-sm text-center text-[8px] leading-3 text-white" style="background:${YP_STRAND_HUES[0]}">A</b>Assessment week</span>
                     <span class="flex items-center gap-1"><i class="inline-block w-3 h-3 rounded-sm" style="background:${YP_STRAND_HUES[0]}"></i>A strand's colour = its weeks on the plan</span>
                 </div>`;
 
@@ -9493,6 +9486,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 rows += `<tr>${cells}</tr>`;
             });
 
+            let aCells = `<td style="border:1px solid #94a3b8;border-left:4px solid #f59e0b;background:#fef3c7;font-weight:bold;font-size:10px;padding:4px;white-space:nowrap;color:#92400e;">📝 Assessment</td>`, anyAss = false;
+            terms.forEach(t => {
+                const r = ypAssessCells(t, '#94a3b8');
+                anyAss = anyAss || r.any;
+                aCells += (yearPlannerState.termLengths[t] || 0) ? r.html : `<td style="border:1px solid #94a3b8;"></td>`;
+            });
+            if (anyAss) rows += `<tr>${aCells}</tr>`;
+
             return `<table style="border-collapse:collapse;width:100%;table-layout:fixed;">
                 <thead><tr>${head1}</tr><tr>${head2}</tr></thead>
                 <tbody>${rows}</tbody>
@@ -9508,6 +9509,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             ).join('');
             return `<div class="flex flex-wrap gap-x-4 gap-y-1.5 mt-4 text-[11px] font-semibold text-slate-500">
                 ${strandSwatches}
+                <span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border" style="background:#fef3c7;border-color:#f59e0b;"></i>Assessment</span>
                 <span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border border-slate-400" style="background:#e2e8f0;"></i>Blocked / unavailable week</span>
                 <span class="flex items-center gap-1.5"><i class="inline-block w-3 h-3 rounded-sm border border-slate-400" style="background:#ffffff;"></i>Unplanned week</span>
             </div>`;
@@ -9572,7 +9574,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
                 out += `<table style="border-collapse:collapse;width:100%;table-layout:fixed;margin-bottom:12px;">
                     <thead><tr><th colspan="${Math.max(len, 1)}" ${thTerm}>Term ${t}${calTermRangeText(t) ? ' <span style="font-weight:normal;font-size:9px;">· ' + calTermRangeText(t) + '</span>' : ''}</th></tr><tr>${head2 || `<th ${thWeek}>&mdash;</th>`}</tr></thead>
-                    <tbody>${anyEv ? `<tr>${evRow}</tr>` : ''}<tr>${row}</tr></tbody>
+                    <tbody>${anyEv ? `<tr>${evRow}</tr>` : ''}<tr>${row}</tr>${len ? ypAssessRowHtml(t, '', '#94a3b8') : ''}</tbody>
                 </table>`;
             });
             return out;
@@ -9631,6 +9633,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (sm) document.getElementById('modal-subtitle').innerText = `${strand} › ${subtopic}`;
             document.getElementById('modal-learning-tasks').value = '';
             document.getElementById('modal-assessment-check').checked = false;
+            document.getElementById('modal-ass-start').dataset.touched = '';
             
             updateAssessmentUI();
             updateModalAvailability();
@@ -9663,6 +9666,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.getElementById('modal-key-content').value = '';
             document.getElementById('modal-learning-tasks').value = '';
             document.getElementById('modal-assessment-check').checked = false;
+            document.getElementById('modal-ass-start').dataset.touched = '';
 
             updateAssessmentUI();
             updateModalAvailability();
@@ -9700,6 +9704,63 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
         }
 
+        // ---------- Assessments inside a topic ----------
+        // slot.assessment = { startOffset: week of the topic it starts, length: '2 Lessons' | '1 Week' | '3 Weeks' ..., weeks: whole weeks it covers }
+        function ypAssessWeeksOf(len) { var m = /(\d+)\s*week/i.exec(len || ''); return m ? +m[1] : 1; }
+        function ypAssess(slot) {
+            var a = slot && slot.assessment;
+            if (!a) return null;
+            var weeks = ypAssessWeeksOf(a.length), start = a.startOffset || 1;
+            return { start: start, weeks: weeks, end: start + weeks - 1, label: a.length || '1 Lesson', lessons: !/week/i.test(a.length || '') };
+        }
+        function ypAssessText(a) { return a.weeks > 1 ? a.weeks + ' weeks' : (a.lessons ? a.label.toLowerCase() : '1 week'); }
+        // Which of a block's weeks (1 = its first week) the assessment covers. A topic split by a blocked week is several blocks, each with its own unitWeek.
+        function ypAssessCols(slot, span) {
+            var a = ypAssess(slot);
+            if (!a) return null;
+            var first = slot.unitWeek || 1, last = first + span - 1, s = Math.max(a.start, first), e = Math.min(a.end, last);
+            if (s > e) return null;
+            return { c1: s - first + 1, c2: e - first + 1, a: a, fromPrev: a.start < first, toNext: a.end > last };
+        }
+        function ypAssessWeekRange(c, base) { var w1 = base + c.c1, w2 = base + c.c2; return w1 === w2 ? 'Wk ' + w1 : 'Wks ' + w1 + '-' + w2; }
+        function ypAssessHasWeek(slot) { var a = ypAssess(slot); return !!a && slot.unitWeek >= a.start && slot.unitWeek <= a.end; }
+        // On the term card: a gold bar that sits under exactly the weeks the assessment runs in.
+        function ypAssessStrip(slot, span) {
+            var c = ypAssessCols(slot, span);
+            if (!c) return '';
+            var a = c.a, tip = 'Assessment: ' + (c.fromPrev || c.toNext ? 'continues across blocks. ' : '') + 'Wk ' + a.start + (a.weeks > 1 ? ' to ' + a.end : '') + ' of the topic (' + ypAssessText(a) + ')';
+            return '<div style="display:grid;grid-template-columns:repeat(' + span + ',minmax(0,1fr));gap:0.5rem;margin:0.75rem -13px 0;" title="' + ypEsc(tip) + '">' +
+                '<div style="grid-column:' + c.c1 + ' / ' + (c.c2 + 1) + ';background:#fef3c7;color:#92400e;border-top:2px solid #f59e0b;border-bottom:2px solid #f59e0b;text-align:center;font-size:10px;font-weight:800;line-height:1.2;padding:3px 2px;">' +
+                (c.fromPrev ? '◂ ' : '') + '📝 Assess' + (c.toNext ? ' ▸' : '') + '<div style="font-weight:600;font-size:9px;">' + ypEsc(ypAssessText(a)) + '</div></div></div>';
+        }
+        // Cells for a table row, one per week of the term, so the assessment lines up under the same weeks as its topic.
+        function ypAssessCells(t, border) {
+            var slots = yearPlannerState.terms[t] || [], len = yearPlannerState.termLengths[t] || 0, marks = new Array(len).fill(null), any = false, i = 0;
+            while (i < len) {
+                var slot = slots[i];
+                if (slot && typeof slot === 'object') {
+                    var span = 1;
+                    while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
+                    var c = ypAssessCols(slot, span);
+                    if (c) { for (var j = c.c1; j <= c.c2; j++) marks[i + j - 1] = { id: slot.id, c: c }; any = true; }
+                    i += span;
+                } else i++;
+            }
+            var html = '', k = 0;
+            while (k < len) {
+                var m = marks[k];
+                if (!m) { html += '<td style="border:1px solid ' + border + ';"></td>'; k++; continue; }
+                var n = 1;
+                while (k + n < len && marks[k + n] && marks[k + n].id === m.id) n++;
+                html += '<td colspan="' + n + '" style="border:1px solid #f59e0b;background:#fef3c7;color:#92400e;text-align:center;font-weight:bold;font-size:9px;padding:2px;line-height:1.25;">📝 Assess<br><span style="font-weight:600;font-size:8px;">' + ypEsc(ypAssessText(m.c.a)) + '</span></td>';
+                k += n;
+            }
+            return { html: html, any: any };
+        }
+        function ypAssessRowHtml(t, labelCell, border) {
+            var r = ypAssessCells(t, border || '#cbd5e1');
+            return r.any ? '<tr>' + (labelCell || '') + r.html + '</tr>' : '';
+        }
         function updateAssessmentUI() {
             const check = document.getElementById('modal-assessment-check').checked;
             const det = document.getElementById('assessment-details');
@@ -9707,12 +9768,24 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if(check) {
                 det.classList.remove('hidden');
                 const weeks = parseInt(document.getElementById('modal-weeks').value) || 1;
-                const startSel = document.getElementById('modal-ass-start');
-                
+                const startSel = document.getElementById('modal-ass-start'), lenSel = document.getElementById('modal-ass-length');
+                // Lengths that cannot fit inside the topic are greyed out
+                Array.from(lenSel.options).forEach(o => { o.disabled = ypAssessWeeksOf(o.value) > weeks; });
+                if (lenSel.options[lenSel.selectedIndex].disabled) lenSel.value = '1 Week';
+                if (lenSel.options[lenSel.selectedIndex].disabled) lenSel.value = '1 Lesson';
+                const aw = ypAssessWeeksOf(lenSel.value);
+                const lastStart = Math.max(1, weeks - aw + 1);
+                const prev = parseInt(startSel.value);
+                const touched = startSel.dataset.touched === '1';
                 startSel.innerHTML = '';
-                for(let i=1; i<=weeks; i++) {
-                    startSel.innerHTML += `<option value="${i}">Week ${i} of Unit</option>`;
+                for(let i=1; i<=lastStart; i++) {
+                    startSel.innerHTML += `<option value="${i}">${aw > 1 ? `Weeks ${i} to ${i + aw - 1}` : `Week ${i}`} of Unit</option>`;
                 }
+                // Unless you choose a week yourself, the assessment goes at the end of the topic
+                startSel.value = String(touched && prev >= 1 && prev <= lastStart ? prev : lastStart);
+                const s0 = parseInt(startSel.value);
+                const hint = document.getElementById('modal-ass-hint');
+                if (hint) hint.textContent = `Runs in ${aw > 1 ? 'weeks ' + s0 + ' to ' + (s0 + aw - 1) : 'week ' + s0} of this ${weeks}-week topic.`;
             } else {
                 det.classList.add('hidden');
             }
@@ -9745,10 +9818,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
             let assessmentData = null;
             if(hasAss) {
-                assessmentData = {
-                    startOffset: parseInt(document.getElementById('modal-ass-start').value),
-                    length: document.getElementById('modal-ass-length').value
-                };
+                const aLen = document.getElementById('modal-ass-length').value, aStart = parseInt(document.getElementById('modal-ass-start').value) || 1;
+                if (aStart + ypAssessWeeksOf(aLen) - 1 > duration) {
+                    customAlert('Assessment Does Not Fit', `The assessment would run past the end of the ${duration}-week topic. Choose an earlier start week, a shorter assessment, or a longer topic.`);
+                    return;
+                }
+                assessmentData = { startOffset: aStart, length: aLen, weeks: ypAssessWeeksOf(aLen) };
             }
 
             const slotArray = yearPlannerState.terms[term];
@@ -9915,7 +9990,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         let span = 1;
                         while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
                         const weekLabel = span === 1 ? `Week ${i + 1}` : `Weeks ${i + 1}-${i + span}`;
-                        const assessmentLabel = slot.assessment ? ('Yes' + (slot.assessment.length ? ' (' + slot.assessment.length + ')' : '')) : '';
+                        const ac = ypAssessCols(slot, span);
+                        const assessmentLabel = ac ? ypAssessWeekRange(ac, i) + ' (' + ypAssessText(ac.a) + ')' : '';
                         rows.push([`Term ${t}`, weekLabel, slot.strand || '', slot.customText || slot.subtopic || '', assessmentLabel, calRangeText(t, i, span)]);
                         i += span;
                     } else {
@@ -10115,20 +10191,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         const isContinuation = slot.unitWeek > 1 && (i === 0 || slots[i-1]?.id !== slot.id);
                         const titleText = isContinuation ? `${slot.customText} (Cont.)` : slot.customText;
 
-                        let showAss = false;
-                        if(slot.assessment) {
-                            for(let k = i; k < i + span; k++) {
-                                if(slots[k].unitWeek === slot.assessment.startOffset) {
-                                    showAss = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                        let assNote = '';
-                        if(showAss) {
-                            assNote = `<div class="mt-3 text-xs font-bold text-whsgold-800 bg-whsgold-50 p-2 rounded-md border border-whsgold-200">📝 Assessment<br><span class="font-normal text-[10px]">Wk ${slot.assessment.startOffset} of unit (${slot.assessment.length})</span></div>`;
-                        }
+                        const assNote = '';
 
                         const isDraftTopic = !!(db.content[slot.subtopic] && db.content[slot.subtopic]._draft);
                         focusHtml += `<td colspan="${span}" class="border-b border-l border-slate-300 bg-whsblue-50/40 p-3 align-top">
@@ -10158,6 +10221,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 }
                 focusHtml += `</tr>`;
                 html += focusHtml;
+                html += ypAssessRowHtml(t, `<td class="border-b border-slate-300 bg-slate-50 p-3 font-bold text-slate-800 text-sm">Assessment</td>`, '#cbd5e1');
                 db.categories.forEach(cat => html += catRows[cat] + `</tr>`);
                 html += `</tbody></table></div>`;
             }
@@ -10204,13 +10268,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         let span = 1;
                         while (i + span < termLen && slots[i + span] && slots[i + span].id === slot.id) span++;
 
-                        let assNote = '';
-                        for (let k = i; k < i + span; k++) {
-                            if (slot.assessment && slots[k].unitWeek === slot.assessment.startOffset) {
-                                assNote = `<div class="mt-1.5 text-[10px] font-bold text-whsgold-800 bg-whsgold-50 inline-block px-1.5 py-0.5 rounded border border-whsgold-200">📝 Assessment</div>`;
-                                break;
-                            }
-                        }
+                        const assNote = '';
 
                         html += `<td colspan="${span}" class="border-b border-l border-slate-300 bg-white p-3 align-top">
                             <div class="font-bold text-slate-800 text-sm leading-snug">${slot.customText}</div>
@@ -10222,7 +10280,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         html += `<td class="border-b border-l border-slate-300 bg-slate-50/60 p-3 text-center text-xs text-slate-300">—</td>`;
                     }
                 }
-                html += `</tr></tbody></table></div>`;
+                html += `</tr>` + ypAssessRowHtml(t, '', '#cbd5e1') + `</tbody></table></div>`;
             }
 
             out.innerHTML = html;
@@ -10318,7 +10376,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
                         let assNote = '';
                         if(slot.assessment) {
-                            assNote = `<div class="mt-3 p-2 bg-slate-100 border border-slate-200 rounded text-xs"><strong class="text-slate-800">Assessment (Wk ${slot.assessment.startOffset} of unit):</strong><br>Duration: ${slot.assessment.length}</div>`;
+                            const aa = ypAssess(slot);
+                            assNote = `<div class="mt-3 p-2 bg-slate-100 border border-slate-200 rounded text-xs"><strong class="text-slate-800">Assessment (${aa.weeks > 1 ? 'Wks ' + aa.start + '-' + aa.end : 'Wk ' + aa.start} of unit):</strong><br>Duration: ${ypAssessText(aa)}</div>`;
                         }
 
                         const isDraftTopicWaiheke = !!(db.content[slot.subtopic] && db.content[slot.subtopic]._draft);
