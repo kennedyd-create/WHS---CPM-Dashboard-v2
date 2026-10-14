@@ -482,6 +482,8 @@
         /* Weeks with fewer than five teaching days: the missing days are shaded */
         .yp-shade { position: absolute; inset: 0; display: grid; gap: 0.5rem; pointer-events: none; border-radius: inherit; overflow: hidden; }
         .yp-off { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(135deg, rgba(100,116,139,0.34) 0 4px, rgba(148,163,184,0.16) 4px 8px); }
+        .yp-ev { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(45deg, rgba(37,99,235,0.30) 0 4px, rgba(96,165,250,0.12) 4px 8px); }
+        html.dark .yp-ev { background: repeating-linear-gradient(45deg, rgba(96,165,250,0.36) 0 4px, rgba(37,99,235,0.14) 4px 8px); }
         html.dark .yp-off { background: repeating-linear-gradient(135deg, rgba(148,163,184,0.32) 0 4px, rgba(100,116,139,0.14) 4px 8px); }
         html.dark #view-yearplanner .bg-white\/60 { background-color: rgba(30,41,59,0.6) !important; }
         html.dark #view-yearplanner .bg-white\/60:hover { background-color: rgba(38,52,73,0.9) !important; }
@@ -2713,7 +2715,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Assessments can run over several weeks</mark> and <strong>line up with their week</strong>. When you tick <em>Include Assessment</em> the length can be <em>1–3 lessons</em> or <em>1, 2, 3 or 4 weeks</em>. It starts at the <strong>end of the topic</strong> unless you pick another week (lengths that do not fit are greyed out). A gold <em>Assess</em> bar sits under exactly the weeks it runs in, so a Week 6 assessment in a 6-week topic is under Week 6. It also shows in the Year View, the printed plans, the Standard and Simple plans, the coverage grid (an <em>A</em>) and the CSV.</li>
 <li><mark class="wn-key">2027 school calendar built in</mark>. Term 1 is <strong>11 weeks</strong>, Terms 2 to 4 are <strong>10</strong>, and the four start dates are filled in. Every week shows its date with small tags for <strong>public holidays, staff-only days, school events, CAA weeks, Senior Exam Week and NZQA exams</strong>. Short weeks (for example Easter) are marked so you do not plan a full week into them. Dates also show in the prints, on hover, and as a <strong>Dates</strong> column in the CSV. Older plans move to 2027 once and keep their topics, and you can still change any term length or start date.</li>
 <li><mark class="wn-key">Years 11 to 13 (NCEA)</mark>. Pick Year 11, 12 or 13, then choose the <strong>NCEA subject</strong> inside your department. The library lists that course's <strong>standards</strong> as <em>Internally assessed</em> or <em>Externally assessed (exam)</em> with credits, suggests weeks, adds up your <strong>credits</strong> and warns if an external standard is taught after the <strong>NZQA exams</strong> start. <strong>Māori</strong> and <strong>Technology</strong> are added. Check credits and dates with NZQA before you finalise.</li>
-<li><mark class="wn-key">Short weeks are shaded</mark>. When a week has fewer than five teaching days (a holiday, a staff-only day, or before students start), the missing days are <strong>shaded in the week</strong> on the term cards, one fifth for each day. A Monday off shades the <strong>start</strong> of the week, a Friday off shades the <strong>end</strong>, and a day in the middle shades the middle. This follows the <em>Plan settings</em> calendar choice (hidden turns it off).</li>
+<li><mark class="wn-key">Social Sciences now uses the Unit Planner topics</mark> (Years 7 to 10). Each unit the Unit Planner picker offers is a topic in the Year Planner, and where the curriculum says <em>choose one</em> each case study is its own topic (for example Nazi Germany, or The Easter Rising and Irish Independence). Topics in plans you already saved are moved to the nearest new topic.</li>
+<li><mark class="wn-key">Short weeks are shaded</mark>. When a week has fewer than five teaching days (a holiday, a staff-only day, or before students start), the missing days are <strong>shaded in the week</strong> on the term cards, one fifth for each day. A Monday off shades the <strong>start</strong> of the week, a Friday off shades the <strong>end</strong>, and a day in the middle shades the middle. <strong>School event days</strong> (such as Beach Sports, Athletics Day, Fun Run and prizegivings) are shaded too, in <strong>blue</strong> instead of grey, because the day still counts as a teaching day but lessons are disrupted. This follows the <em>Plan settings</em> calendar choice (hidden turns it off).</li>
 <li><mark class="wn-key">The Arts one art form at a time</mark> for Years 7 to 10: choose <em>Dance</em>, <em>Drama</em>, <em>Music</em> or <em>Visual Arts</em> and you get a separate year plan for each.</li>
 <li><mark class="wn-key">Calendar events match the year level</mark>. Senior Exam Week, NZQA exams and Senior Prizegiving only show for <strong>Years 11 to 13</strong>; CAA week only shows for <strong>Year 10</strong>. In Years 11 to 13 the senior exam weeks are <strong>blocked out automatically</strong> and cannot be planned into.</li>
 <li><mark class="wn-key">Tidier planner</mark>. Your choices fold into a <strong>one-line summary</strong> with a <em>Change</em> button, and term lengths sit in a fold-out. There are three action buttons: <strong>Generate Plan</strong>, <strong>Export / Print</strong> (Timeline View first) and <strong>Plan settings</strong>, plus a red <strong>Reset Plan</strong>. All the warnings are one <strong>Plan check</strong> button, there is a new <strong>Year View</strong> tab, and the library has <strong>search</strong>, Internal / Exam filters and strands that fold up. PE &amp; Health is one button with a <em>Focus</em> row, and Māori and Technology take you to Year 11. The generate bar and term tabs stay in view as you scroll, and <em>My Teaching Profile</em> no longer shows here.</li>
@@ -3092,7 +3095,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><mark class="wn-key">2027 calendar built in</mark>: term dates, holidays and key dates on every week.</li>
                         <li><mark class="wn-key">Years 11 to 13 (NCEA)</mark> with standards, credits and the NZQA exam weeks blocked out for you.</li>
                         <li><mark class="wn-key">Assessments over several weeks</mark>, lined up under the exact week they run in.</li>
-                        <li><mark class="wn-key">Short weeks shaded</mark>: days with no teaching are hatched out at the start or end of the week.</li>
+                        <li><mark class="wn-key">Social Sciences</mark> now uses the same topics as the Unit Planner (including each case study).</li>
+                        <li><mark class="wn-key">Short weeks shaded</mark>: days with no teaching are hatched grey, and school event days are hatched blue, at the start, middle or end of the week.</li>
                         <li><mark class="wn-key">The Arts</mark> planned one art form at a time (Dance, Drama, Music, Visual Arts).</li>
                         <li><mark class="wn-key">Tidier layout</mark>: one-line summary, Plan check, Year View, and a gold <strong>Timeline View</strong> (recommended).</li>
                     </ul>
@@ -7887,11 +7891,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (!start) return null;
             var mon = ypAddDays(start, 7 * i), fri = ypAddDays(mon, 4), by = calEventsByDate(), cfg = WHS_CAL.terms[t];
             var own = cfg && start === cfg.start;   // only apply term edges when the dates are the calendar's own
-            var events = [], idx = {}, lost = 0, reasons = [], blockLabel = '', offDays = [false, false, false, false, false];
+            var events = [], idx = {}, lost = 0, reasons = [], blockLabel = '', offDays = [false, false, false, false, false], evDays = [false, false, false, false, false], dayWhy = [[], [], [], [], []];
             for (var d = 0; d < 5; d++) {
-                var day = ypAddDays(mon, d), off = false;
-                if (own && cfg.studentsFrom && day < cfg.studentsFrom) { off = true; reasons.push(calFmtLong(day) + ': before students start'); }
-                if (own && day > cfg.end) { off = true; reasons.push(calFmtLong(day) + ': after the end of term'); }
+                var day = ypAddDays(mon, d), off = false, sch = false;
+                if (own && cfg.studentsFrom && day < cfg.studentsFrom) { off = true; reasons.push(calFmtLong(day) + ': before students start'); dayWhy[d].push('Before students start'); }
+                if (own && day > cfg.end) { off = true; reasons.push(calFmtLong(day) + ': after the end of term'); dayWhy[d].push('After the end of term'); }
                 (by[day] || []).forEach(function(e) {
                     if (!calAudOk(e.aud)) return;
                     if (e.block) blockLabel = blockLabel || e.label;
@@ -7899,10 +7903,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     if (idx[key] === undefined) { idx[key] = events.length; events.push({ label: e.label, short: e.short, kind: e.kind, day: day, n: 1, range: e.range }); }
                     else if (!e.range) events[idx[key]].n++;
                     if (e.kind === 'hol' || e.kind === 'staff') { off = true; reasons.push(calFmtLong(day) + ': ' + e.label); }
+                    if (e.kind === 'school') sch = true;
+                    if (e.kind === 'hol' || e.kind === 'staff' || e.kind === 'school') dayWhy[d].push(e.label);
                 });
-                if (off) { lost++; offDays[d] = true; }
+                if (off) { lost++; offDays[d] = true; } else if (sch) evDays[d] = true;
             }
-            return { mon: mon, fri: fri, events: events, lost: lost, days: 5 - lost, reasons: reasons, blockLabel: blockLabel, offDays: offDays };
+            return { mon: mon, fri: fri, events: events, lost: lost, days: 5 - lost, reasons: reasons, blockLabel: blockLabel, offDays: offDays, evDays: evDays, dayWhy: dayWhy };
         }
         function calWeekText(t, i) { var w = calWeek(t, i); return w ? calFmt(w.mon) + ' – ' + calFmt(w.fri) : ''; }
         function calRangeText(t, i, span) {
@@ -7921,14 +7927,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var any = false, cols = '';
             for (var k = 0; k < span; k++) {
                 var w = calWeek(t, i + k), bands = '';
-                if (w && w.lost > 0) {
+                if (w && (w.lost > 0 || w.evDays.some(function(x) { return x; }))) {
                     any = true;
-                    var d = 0;
+                    var state = w.offDays.map(function(o, d) { return o ? 1 : (w.evDays[d] ? 2 : 0); }), d = 0;
                     while (d < 5) {
-                        if (!w.offDays[d]) { d++; continue; }
-                        var s = d; while (d < 5 && w.offDays[d]) d++;
-                        var why = w.reasons.filter(function(r) { var dn = r.slice(0, 3); return w.offDays.some(function(o, x) { return o && x >= s && x < d && CAL_DOW[(x + 1) % 7] === dn; }); }).join('; ');
-                        bands += '<div class="yp-off" style="left:' + (s * 20) + '%;width:' + ((d - s) * 20) + '%;' + (s > 0 ? 'border-left:1px dashed rgba(100,116,139,.55);' : '') + (d < 5 ? 'border-right:1px dashed rgba(100,116,139,.55);' : '') + '" title="' + ypEsc(why || 'No teaching') + '"></div>';
+                        if (!state[d]) { d++; continue; }
+                        var s = d, st = state[d]; while (d < 5 && state[d] === st) d++;
+                        var why = []; for (var x = s; x < d; x++) w.dayWhy[x].forEach(function(l) { if (why.indexOf(l) === -1) why.push(l); });
+                        bands += '<div class="' + (st === 1 ? 'yp-off' : 'yp-ev') + '" style="left:' + (s * 20) + '%;width:' + ((d - s) * 20) + '%;' + (s > 0 ? 'border-left:1px dashed rgba(100,116,139,.55);' : '') + (d < 5 ? 'border-right:1px dashed rgba(100,116,139,.55);' : '') + '" title="' + ypEsc((st === 2 ? 'School event: ' : 'No teaching: ') + (why.join('; ') || '')) + '"></div>';
                     }
                 }
                 cols += '<div style="position:relative;min-width:0;">' + bands + '</div>';
@@ -7978,6 +7984,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             box.classList.remove('hidden');
             var h = '<div class="flex flex-wrap gap-2 mb-3">';
             ['hol', 'staff', 'school', 'assess', 'short'].forEach(function(k) { h += '<span class="rounded px-1.5 text-[10px] font-semibold leading-[16px]" style="' + CAL_STYLE[k] + '">' + (k === 'short' ? '⚠ Week with fewer than 5 teaching days' : CAL_KIND_NAME[k]) + '</span>'; });
+            h += '<span class="rounded px-1.5 text-[10px] font-semibold leading-[16px] text-slate-700 relative overflow-hidden" style="border:1px solid #94a3b8;"><span class="yp-off" style="left:0;width:14px;"></span><span style="margin-left:16px;">Grey hatching: day with no teaching</span></span>';
+            h += '<span class="rounded px-1.5 text-[10px] font-semibold leading-[16px] text-slate-700 relative overflow-hidden" style="border:1px solid #93c5fd;"><span class="yp-ev" style="left:0;width:14px;"></span><span style="margin-left:16px;">Blue hatching: school event day</span></span>';
             h += '</div><div class="grid gap-3 md:grid-cols-2">';
             [1, 2, 3, 4].forEach(function(t) {
                 var cfg = WHS_CAL.terms[t], lines = '';
@@ -8063,20 +8071,29 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         const LEGACY_TOPIC_RENAMES = {
             'Social Sciences': {
                 '7': {
-                    'New Zealand History': 'Early Contact and Response',
-                    'Global History': 'Global Cultural Exchange (China and the West or Silk Roads to the Age of Exploration)',
-                    'International and Internal Migration in New Zealand': 'Migration in New Zealand',
-                    'Family, Community and Business Financial Planning': 'Family, Community, and Business Financial Planning'
+                    'New Zealand History': 'Early contact (1790–1830)', 'Early Contact and Response': 'Early contact (1790–1830)',
+                    'Global History': 'China and the West (1644–1949)', 'Global Cultural Exchange (China and the West or Silk Roads to the Age of Exploration)': 'China and the West (1644–1949)',
+                    'International and Internal Migration in New Zealand': 'International and internal migration in New Zealand', 'Migration in New Zealand': 'International and internal migration in New Zealand',
+                    'Family, Community and Business Financial Planning': 'Family community and business financial planning', 'Family, Community, and Business Financial Planning': 'Family community and business financial planning',
+                    'Local Government and Community Engagement': 'Local government and community engagement'
                 },
                 '8': {
-                    'New Zealand History': 'Te Tiriti o Waitangi',
-                    'Global History': 'Westward Expansion / Civil Rights (US Westward Expansion or US Civil Rights Movement)'
+                    'New Zealand History': 'Responses to increasing challenges (from 1830)', 'Te Tiriti o Waitangi': 'Responses to increasing challenges (from 1830)',
+                    'Global History': 'Expansion west in America (1803–1890s)', 'Westward Expansion / Civil Rights (US Westward Expansion or US Civil Rights Movement)': 'Expansion west in America (1803–1890s)',
+                    'Healthy Democracies': 'Healthy democracies', 'Natural Hazards in New Zealand': 'Natural hazards in New Zealand', 'Personal Financial Awareness': 'Personal financial awareness'
                 },
                 '9': {
-                    'Global History': 'Self-Determination / Independence (Pacific Histories or Gandhi and Indian Independence)'
+                    'The New Zealand Wars': 'The New Zealand Wars | Ngā Pakanga o Aotearoa (1845–1872)',
+                    'Global History': 'Pacific histories', 'Self-Determination / Independence (Pacific Histories or Gandhi and Indian Independence)': 'Pacific histories',
+                    'New Zealand System of Government': 'New Zealand system of government', 'Tourism': 'Tourism in Europe', 'New Zealand Coasts': 'New Zealand coasts',
+                    'The Economy': 'The economy and personal financial decision-making', 'Personal Financial Decision-Making': 'The economy and personal financial decision-making'
                 },
                 '10': {
-                    'Global History': 'Power, Belonging, and Exclusion (Nazi Germany or The Easter Rising and Irish Independence)'
+                    'Global History': 'Nazi Germany – Ideology, control, and the Holocaust', 'Power, Belonging, and Exclusion (Nazi Germany or The Easter Rising and Irish Independence)': 'Nazi Germany – Ideology, control, and the Holocaust',
+                    'World War One': 'World War One and World War Two, and New Zealand’s participation and response', 'World War Two': 'World War One and World War Two, and New Zealand’s participation and response',
+                    'International Cooperation': 'International cooperation and global citizenship', 'Global Citizenship': 'International cooperation and global citizenship',
+                    'Urbanisation and Megacities': 'Urbanisation and megacities', 'Global Inequalities': 'Global inequalities',
+                    'Government Policy': 'Government policy and long-term financial planning', 'Long-Term Financial Planning': 'Government policy and long-term financial planning'
                 }
             },
             'Science': {
@@ -8627,9 +8644,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // ---- Year Planner library: generated from the same embedded curriculum data as the Unit Planner picker ----
         // Science, English, Maths, PE & Health and The Arts are built (lazily, once per subject and year, the first
         // time the Year Planner asks for them) from the picker's data, so the two tools can never disagree. Social
-        // Sciences keeps its hand-built WHS teaching units above, because they split the curriculum into finer,
-        // unit-sized topics (e.g. World War One / World War Two) that the curriculum's own grouping doesn't.
+        // Sciences is built the same way (see ypBuildSS), so its topics are the Unit Planner's units and case studies.
         var YP_FROM_PICKER = {
+            'Social Sciences': { dept: 'Social Sciences' },
             'Science': { dept: 'Science' }, 'English': { dept: 'English' }, 'Mathematics and Statistics': { dept: 'Maths' }, 'Arts': { dept: 'Arts' },
             'PE & Health': { dept: 'PE & Health' },
             // PE and Health can also be planned as two separate year plans, each just its own strand
@@ -8648,7 +8665,36 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             });
             return items.map(function(it) { return it.html + (it.subs.length ? '<ul class="list-disc pl-4 mt-1">' + it.subs.map(function(s) { return '<li>' + s + '</li>'; }).join('') + '</ul>' : ''); });
         }
+        // Social Sciences: every topic the Unit Planner picker would end on is one topic here (each unit, and each case study
+        // where the curriculum says "choose one"), grouped under the same four strands.
+        function ypSSCaseName(label) { return kpPlain(label).replace(/\s+[\u2013-]\s+exemplified.*$/i, ''); }
+        function ypBuildSS(year) {
+            var data = kpData('Social Sciences'), band = kpYearBand(year);
+            if (!data || !band || !data.bands[band]) return null;
+            var bd = data.bands[band], yi = kpYearIdxIn(bd, year), structure = {}, content = {}, used = {};
+            if (yi === null) return null;
+            bd.order.forEach(function(sn) {
+                bd.strands[sn].sections.forEach(function(sec) {
+                    sec.units.forEach(function(u, ui) {
+                        if (!kpVisible(u, yi)) return;
+                        var cases = kpSplitCaseStudies(u.k[yi]);
+                        var items = cases ? cases.map(function(c) { return { name: ypSSCaseName(c.label), blocks: c.blocks }; }) : [{ name: kpPlain(kpUnitLabel(u, yi, ui)), blocks: u.k[yi] }];
+                        items.forEach(function(it) {
+                            var name = it.name;
+                            if (used[name]) name = name + ' (' + sn + ')';
+                            used[name] = true;
+                            var k = ypStatements(it.blocks), pr = ypStatements(u.p[yi]), concept = u.kc && u.kc[yi];
+                            if (concept) concept.split('\n').forEach(function(c) { var t = '<em>' + ypEsc(u.conceptK) + ':</em> ' + ypEsc(kpPlain(c)); k.push(t); pr.push(t); });
+                            structure[sn] = (structure[sn] || []).concat([name]);
+                            content[name] = { Knowledge: k, Practices: pr };
+                        });
+                    });
+                });
+            });
+            return { categories: ['Knowledge', 'Practices'], structure: structure, content: content };
+        }
         function ypBuild(subject, year, onlyStrand) {
+            if (subject === 'Social Sciences') return ypBuildSS(year);
             var spec = YP_FROM_PICKER[subject], dept = spec && spec.dept, data = dept ? kpData(dept) : null, band = kpYearBand(year), yi = kpYearIndexInBand(year);
             if (!data || !band || !data.bands[band]) return null;
             var bd = data.bands[band], structure = {}, content = {}, used = {};
