@@ -1853,6 +1853,18 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                     <button id="unit-maths-template-btn" class="flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all bg-teal-50 text-teal-700 hover:bg-teal-100 border border-teal-200 tooltip-wrapper tooltip-bottom" data-tooltip="Maths-only: outputs the unit as a single HTML file matching the official WHS Mathematics Unit Plan template (Mathematical Processes, Progression Scale, per-lesson differentiation) — save the AI's response as .html and upload to Google Drive to auto-convert it into a formatted Doc. Overrides the Lesson Plan Format above." data-action="toggle-unit-maths-template" aria-pressed="false">🧮 Maths Unit Plan Template (HTML) <span class="text-[8px] font-normal opacity-70">BETA</span></button>
                                     <button class="w-9 h-9 shrink-0 rounded-full bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-700 font-bold text-sm transition tooltip-wrapper tooltip-bottom" data-tooltip="How do I turn this into a Doc?" data-action="show-whs-template-help" aria-label="How do I turn this into a Doc?">?</button>
                                 </div>
+
+                                <div id="unit-reslinks-wrap" class="hidden sm:col-span-2 bg-indigo-50/60 border border-indigo-200 rounded-lg p-3 space-y-2">
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <button id="unit-reslinks-btn" class="px-4 py-2 rounded-lg text-sm font-bold transition-all bg-indigo-600 text-white shadow-md border border-transparent tooltip-wrapper tooltip-bottom" data-tooltip="Adds a Worksheet link and a Slides link to every lesson's Preparation/ Resources cell. Click one later and your site opens with a ready-made prompt for that lesson, to copy into your AI." data-action="toggle-unit-reslinks" aria-pressed="true">🔗 Worksheet &amp; Slides prompt links ON</button>
+                                        <span class="text-xs text-slate-600">Each lesson gets 📄 Worksheet and 🎞 Slides links. Click one (in the file or in your Doc) to open a ready-made AI prompt for that lesson.</span>
+                                    </div>
+                                    <div>
+                                        <label for="unit-res-base" class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Your site address (where this app is hosted)</label>
+                                        <input id="unit-res-base" type="url" placeholder="https://your-name.github.io/your-site/index.html" oninput="setUnitResBase(this.value)" class="w-full mt-1 p-2 rounded-lg border border-slate-300 text-sm bg-white">
+                                        <p id="unit-res-base-hint" class="text-[11px] text-slate-500 mt-1"></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -2810,6 +2822,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 </ul>
 <p class="wn-h" id="wn-unit">📘 Unit Planner</p>
 <ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+<li><mark class="wn-key">Worksheet and Slides prompt links in the school template</mark>. With the <strong>🏫 WHS Official Template</strong> on, every lesson gets a <strong>📄 Worksheet prompt</strong> and a <strong>🎞 Slides prompt</strong> link in its Preparation/ Resources cell. Click one (in the file, or in the Doc you pasted it into) and this site opens a popup with a <strong>ready-made AI prompt for that lesson</strong> (its Learning Intention, key knowledge and main activity, plus your Waiheke / Māori / literacy / numeracy / device choices). Change the style or number of slides, then <strong>Copy</strong> and paste it into Gemini, ChatGPT or Claude. A small box in Add-Ons turns the links off and sets your site address (needed if you run the app from your computer instead of a web address).</li>
 <li><mark class="wn-key">Flashing template button</mark>: when you pick <strong>Science</strong> or <strong>Maths</strong>, their own template button flashes orange until a template is chosen.</li>
 <li><mark class="wn-key">School template (all other subjects)</mark>: each lesson now shows its <strong>Learning Intention</strong> (small, bold) under the lesson number, and <strong>Connect, I Do, We Do, You Do, Review and Differentiation</strong> are in bold.</li>
 <li><mark class="wn-key">Science Unit Plan Template</mark>. Choose <strong>Science</strong>, then <strong>🔬 Science Unit Plan Template (HTML)</strong> in <em>Lesson Plan Format</em>. The AI replies with one HTML file in the Science department layout (Sections of lessons, differentiated success criteria, Connect / I Do / We Do / You Do / Review, sciPad lines, HITS) with its <strong>colours, bold and underlines</strong>. Save it as <strong>.html</strong>, or upload it to Google Drive to make a Doc. While a Science or Maths template is chosen, the <em>WHS Official Template</em> button at the bottom greys out and says <strong>Already Chosen</strong>; click it to swap to the school template.</li>
@@ -3415,7 +3428,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var aiTopPicks = {1:"",2:"",3:"",4:"",5:""};
         var isAppReady = false;
         
-        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false, hwIncluded:'no', hwFormat:'md', hwLpwMap:{}, hwCap:'', hwTypes:['revision','extension','prework'], hwDetails:{}, hwOut:[], hwNotes:'', hwPlanSource:'' };
+        var unitState = { dept:'', year:'', dur:'12 lessons', planType:'full', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', devicesOther:'60', contextPeriods:'ai', maoriPeriods:'ai', litPeriods:'ai', numPeriods:'ai', contextPeriodsOther:'3', maoriPeriodsOther:'3', litPeriodsOther:'3', numPeriodsOther:'3', sourceMaterial:'', juniorKnowledge:'', juniorPractices:'', ncea:'', geminiNotebook:false, whsTemplate:false, mathsTemplate:false, resLinks:true, resBase:'', assessmentIncluded:'no', assessmentType:'Test', assessmentTime:'1 Lesson', practicalIncluded:'no', practicalCount:'1', practicalCustomCount:'4', practicalTitles:[], practicalAiChoice:false, hwIncluded:'no', hwFormat:'md', hwLpwMap:{}, hwCap:'', hwTypes:['revision','extension','prework'], hwDetails:{}, hwOut:[], hwNotes:'', hwPlanSource:'' };
         
         var lessonState = { 
             mode: 'standard', // 'standard', 'relief', 'notebooklm'
@@ -4376,6 +4389,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function syncUnitWhsTemplateBtn() {
             syncTplFlash();
+            if (typeof syncUnitResLinksUI === 'function') syncUnitResLinksUI();
             var btn = document.getElementById('unit-whs-template-btn');
             if (!btn) return;
             var base = "flex-1 flex items-center justify-center text-center px-4 py-2 rounded-lg text-sm font-bold transition-all tooltip-wrapper tooltip-bottom ";
@@ -7019,13 +7033,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += '### OUTPUT FORMAT OVERRIDE: WHS OFFICIAL TEMPLATE (HTML, LANDSCAPE)\n';
                 txt += 'CRITICAL: Ignore any other table-format instructions. Output your ENTIRE response as a SINGLE HTML code block using EXACTLY the CSS and table structure below, so it can be saved as a .html file and pasted/uploaded into a Google Doc (set to Landscape orientation). Do NOT include any prose, explanation, or Markdown outside this one HTML code block.\n\n';
                 txt += 'Fill in every [Fill] placeholder with real content (make every site, data source or clip a live <a href> link as described above, and never invent a deep link). Small italic "instruction" notes (class="small-text") in the template are notes for a human editor, not content — replace or remove them with real content, EXCEPT in the Evaluation table' + (hwActive() ? '' : ' at the very end') + ', which must be left blank exactly as shown, since a teacher fills that in after teaching the unit. In the Lesson Content table, write each lesson\'s Learning Intention (starting "We are learning to...") in the first column straight under the lesson number, in the small bold text the template shows, and keep the words Connect, I Do, We Do, You Do, Review and Differentiation in bold (<strong>) every time they appear. Replicate the CSS and table structure/class names exactly — do not simplify, restyle, or omit anything, since fidelity to this structure is what allows it to convert cleanly into a Doc.\n\n';
+                if (resLinksOn()) txt += resInstruction();
                 txt += tb + 'html\n';
                 txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 20mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 11pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 8px 10px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        .top-banner { background-color: #87499c; color: #ffffff; font-weight: 700; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        .shaded-2nd-table { background-color: #d6bbdf; font-weight: 700; }\n        .knowledge-title { background-color: #70cdb2; font-weight: 700; }\n        .knowledge-section { background-color: #d4edef; }\n        .practices-title { background-color: #e1b846; font-weight: 700; }\n        .practices-section { background-color: #f4e5c2; }\n        h2 { font-size: 14pt; font-weight: 700; color: #000000; margin-bottom: 6px; margin-top: 24px; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; }\n        strong { font-weight: 700; }\n        .col-15 { width: 15%; }\n        .col-20 { width: 20%; }\n        .col-25 { width: 25%; }\n        .col-50 { width: 50%; }\n    </style>\n</head>\n<body>\n';
                 txt += '    <table>\n        <tr><td colspan="6" class="top-banner" style="text-align: left; font-size: 26pt;"><div style="display:flex;align-items:center;gap:12px;">' + whsLogoSvg(34, '#ffffff') + '<span>WHS ' + yr + ' ' + unitState.dept + ' - ' + t + '</span></div></td></tr>\n        <tr>\n            <td class="header-bg" style="width: 15%;">Year Level</td><td style="width: 20%;">' + yr + '</td>\n            <td class="header-bg" style="width: 10%;">Term</td><td style="width: 20%;">[Fill suggested term]</td>\n            <td class="header-bg" style="width: 15%;">Duration</td><td style="width: 20%;">' + totalDurText + '</td>\n        </tr>\n        <tr><td class="header-bg">Topic/ Strand/ Concept/ Context</td><td colspan="5">' + t + '</td></tr>\n        <tr><td class="header-bg">Overview <span class="small-text">(description)</span></td><td colspan="5">[Fill a 1-2 sentence overview]</td></tr>\n        <tr><td class="header-bg">Purpose <span class="small-text">(what is the point?)</span></td><td colspan="5">[Fill the purpose of this unit]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Knowledge and Practices</h2>\n    <table>\n        <tr>\n            <td class="knowledge-title col-50">Knowledge <br><span class="small-text">(rich contexts for exploring big ideas)</span></td>\n            <td class="practices-title col-50">Practices <br><span class="small-text">(practices that bring rigour to learning)</span></td>\n        </tr>\n        <tr>\n            <td class="knowledge-section"><ul><li>[Fill knowledge point 1]</li><li>[Fill knowledge point 2]</li></ul></td>\n            <td class="practices-section"><ul><li>[Fill practice 1]</li><li>[Fill practice 2]</li></ul></td>\n        </tr>\n        <tr><td class="header-bg">Connections to prior learning</td><td class="header-bg">Connections to future learning</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Curriculum Integration</h2>\n    <table>\n        <tr><td class="header-bg col-50">Literacy will be incorporated into this unit by:</td><td class="header-bg col-50">Numeracy will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg">Mātauranga Māori will be incorporated into this unit by:</td><td class="header-bg">Localised Curriculum will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td><strong>Waiheke High School Cross Curricular</strong><br><strong>Waiheke community links</strong><br><br>[Fill]</td></tr>\n    </table>\n\n';
                 txt += '    <h2>Assessment</h2>\n    <table>\n        <tr><td class="header-bg col-50">How will I determine my learners prior knowledge? (before)</td><td class="header-bg col-50">How will I determine my student\u2019s progress in learning? (after)</td></tr>\n        <tr>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]<br><strong>Previous results or work:</strong> [Fill or N/A]</td>\n            <td><span class="small-text">(delete those not being used and elaborate)</span><br><br><strong>Assessment:</strong> [Fill or N/A]<br><strong>Whole class activity:</strong> [Fill or N/A]<br><strong>Student voice collected:</strong> [Fill or N/A]<br><strong>Small group activity:</strong> [Fill or N/A]<br><strong>Individual activity:</strong> [Fill or N/A]</td>\n        </tr>\n    </table>\n\n';
-                txt += '    <h2>Lesson Content - Unit Folder Link</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning number/s<br><span class="small-text">The sequence of lessons and groups of lessons, with each lesson\'s Learning Intention.</span></td>\n            <td class="header-bg col-20">Knowledge<br><span class="small-text">What they will be learning</span></td>\n            <td class="header-bg col-20">Practice<br><span class="small-text">What they will do / How you know students have achieved success</span></td>\n            <td class="header-bg col-25">Student Learning Activities<br><span class="small-text">What strategies, activities and tasks do you want students to do?<br>Include explicit teaching where relevant</span></td>\n            <td class="header-bg col-20">Preparation/ Resources<br><span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1<br><strong style="font-size: 9pt;">LI: [Fill the Learning Intention: We are learning to...]</strong></td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td>' + shapeHtml() + (stageFlexOn() ? '<strong>Strategies, activities, tasks:</strong><br><strong>Connect:</strong> [Fill]<br><strong>I Do:</strong> [Fill or omit]<br><strong>We Do:</strong> [Fill or omit]<br><strong>You Do:</strong> [Fill or omit]<br><strong>Review:</strong> [Fill]<br><br><strong>Differentiation:</strong> [Fill]' : '<strong>Strategies, activities, tasks:</strong> [Fill] <br><br><strong>Differentiation:</strong> [Fill]') + hwTagHtml() + '</td>\n            <td>[Fill]</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
+                txt += '    <h2>Lesson Content - Unit Folder Link</h2>\n    <table>\n        <tr>\n            <td class="header-bg col-15">Learning number/s<br><span class="small-text">The sequence of lessons and groups of lessons, with each lesson\'s Learning Intention.</span></td>\n            <td class="header-bg col-20">Knowledge<br><span class="small-text">What they will be learning</span></td>\n            <td class="header-bg col-20">Practice<br><span class="small-text">What they will do / How you know students have achieved success</span></td>\n            <td class="header-bg col-25">Student Learning Activities<br><span class="small-text">What strategies, activities and tasks do you want students to do?<br>Include explicit teaching where relevant</span></td>\n            <td class="header-bg col-20">Preparation/ Resources<br><span class="small-text">H&S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr>\n            <td>Lesson 1<br><strong style="font-size: 9pt;">LI: [Fill the Learning Intention: We are learning to...]</strong></td>\n            <td>[Fill]</td>\n            <td>[Fill]</td>\n            <td>' + shapeHtml() + (stageFlexOn() ? '<strong>Strategies, activities, tasks:</strong><br><strong>Connect:</strong> [Fill]<br><strong>I Do:</strong> [Fill or omit]<br><strong>We Do:</strong> [Fill or omit]<br><strong>You Do:</strong> [Fill or omit]<br><strong>Review:</strong> [Fill]<br><br><strong>Differentiation:</strong> [Fill]' : '<strong>Strategies, activities, tasks:</strong> [Fill] <br><br><strong>Differentiation:</strong> [Fill]') + hwTagHtml() + '</td>\n            <td>[Fill]' + resCellHtml(yr, t) + '</td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row structure once per remaining lesson (Lesson 2, Lesson 3, ... through the full ' + totalDurText + '), each with its own real, distinct content. Do not skip or merge lessons. -->\n    </table>\n\n';
                 txt += hwHtmlOutline(yr) + '    <h2>Evaluation</h2>\n    <table>\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n' + hwHtmlSchedule() + '</body>\n</html>\n';
                 txt += tb + '\n' + hwHtmlCheck(false);
             } else if (unitState.mathsTemplate) {
@@ -7849,6 +7864,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 else if (action === 'export-all') exportAllPrompts();
                 else if (action === 'toggle-unit-gemini-notebook') toggleUnitGeminiNotebook(target);
                 else if (action === 'toggle-unit-whs-template') toggleUnitWhsTemplate(target);
+                else if (action === 'toggle-unit-reslinks') toggleUnitResLinks();
                 else if (action === 'toggle-unit-maths-template') toggleUnitMathsTemplate(target);
                 else if (action === 'toggle-lesson-whs-template') toggleLessonWhsTemplate(target);
                 else if (action === 'show-onboarding') showOnboardingModal();
@@ -11101,6 +11117,190 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         /* ========== END YEAR PLANNER SECTION ========== */
 
+
+        // ---------- Worksheet & Slides prompt links in the school Unit Plan (v2.9) ----------
+        var resState = null;
+        function resClean(s, max) { return String(s || '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max || 300); }
+        function resEnc(s) { return encodeURIComponent(String(s || '')).replace(/%20/g, '+'); }
+        function resAutoBase() {
+            try {
+                if (/^https?:$/.test(location.protocol) && !/^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname)) return location.href.split('#')[0].split('?')[0];
+            } catch (e) {}
+            return '';
+        }
+        function resBaseUrl() {
+            var typed = String(unitState.resBase || '').trim();
+            if (typed) return /^https?:\/\//i.test(typed) ? typed.split('#')[0].split('?')[0] : '';
+            return resAutoBase();
+        }
+        function resLinksOn() { return !!unitState.whsTemplate && unitState.resLinks !== false && !!resBaseUrl(); }
+        function resFlags() {
+            return (unitState.context === 'waiheke' ? 'w' : '') + (unitState.maori === 'integrate' ? 'm' : '') + (unitState.lit === 'integrate' ? 'l' : '') + (unitState.num === 'integrate' ? 'n' : '');
+        }
+        function resLinkA(kind, yr, t) {
+            var dv = (!unitState.devices || unitState.devices === 'none') ? 'none' : String(unitDevicePct(unitState.devices));
+            var href = resBaseUrl() + '?res=' + kind + '&amp;d=' + resEnc(unitState.dept) + '&amp;y=' + resEnc(yr) + '&amp;t=' + resEnc(t) + '&amp;f=' + resFlags() + '&amp;dv=' + dv + '&amp;n=1&amp;li=[LI+words]&amp;kn=[KN+words]&amp;a=[ACT+words]';
+            return '<a href="' + href + '" target="_blank">' + (kind === 'ws' ? '📄 Worksheet prompt' : '🎞 Slides prompt') + '</a>';
+        }
+        function resCellHtml(yr, t) {
+            if (!resLinksOn()) return '';
+            return '<br><br><strong>Make with AI:</strong> ' + resLinkA('ws', yr, t) + ' | ' + resLinkA('sl', yr, t);
+        }
+        function resInstruction() {
+            return 'PROMPT LINKS: In the Preparation/ Resources cell of every lesson there is a "Make with AI" line holding two links (a Worksheet prompt link and a Slides prompt link). Keep both links, their wording and everything in each href exactly as written, EXCEPT: change the n value to that lesson\'s number, and replace the three bracketed placeholders [LI+words], [KN+words] and [ACT+words] with short URL-safe text. LI = that lesson\'s Learning Intention, KN = its key knowledge or vocabulary, ACT = what students mainly do in the lesson (each 4 to 15 words). Write them as plain words joined with + signs, using only letters, numbers and + (no spaces, commas, apostrophes, brackets or other punctuation, and write macron vowels as plain letters, for example Maori). Keep each href on one line, and give both links in a lesson the same li, kn and a text. Do not invent any other part of the link.\n\n';
+        }
+        function setUnitResBase(v) { unitState.resBase = String(v || '').trim(); updateUnitBuilderPrompt(); saveAppState(); }
+        function toggleUnitResLinks() {
+            unitState.resLinks = (unitState.resLinks === false);
+            updateUnitBuilderPrompt(); saveAppState();
+        }
+        function syncUnitResLinksUI() {
+            var wrap = document.getElementById('unit-reslinks-wrap'); if (!wrap) return;
+            wrap.classList.toggle('hidden', !unitState.whsTemplate);
+            var on = unitState.resLinks !== false;
+            var btn = document.getElementById('unit-reslinks-btn');
+            if (btn) {
+                btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+                btn.innerHTML = '🔗 Worksheet &amp; Slides prompt links ' + (on ? 'ON' : 'OFF');
+                btn.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all border tooltip-wrapper tooltip-bottom ' + (on ? 'bg-indigo-600 text-white shadow-md border-transparent' : 'bg-white text-slate-500 border-slate-300 hover:bg-slate-50');
+            }
+            var inp = document.getElementById('unit-res-base');
+            if (inp) {
+                if (document.activeElement !== inp && inp.value !== (unitState.resBase || '')) inp.value = unitState.resBase || '';
+                inp.placeholder = resAutoBase() || 'https://your-name.github.io/your-site/index.html';
+            }
+            var hint = document.getElementById('unit-res-base-hint');
+            if (hint) {
+                var typed = String(unitState.resBase || '').trim();
+                if (!on) hint.textContent = 'Links are switched off, so the plan will not contain Worksheet or Slides links.';
+                else if (typed && !/^https?:\/\//i.test(typed)) hint.textContent = '⚠️ The address must start with https:// (or http://), so no links are added yet.';
+                else if (typed) hint.textContent = 'Links will open this address.';
+                else if (resAutoBase()) hint.textContent = 'Using this page\'s own address automatically. Type a different one only if your plan will be opened from somewhere else.';
+                else hint.textContent = '⚠️ This copy of the app is not on a web address, so type the address where you host it (for example your GitHub Pages link). Until then no links are added.';
+            }
+        }
+        function resDeviceLine(dv) {
+            if (dv === 'none') return '';
+            if (dv === '0') return 'DEVICE USE — BOOKWORK: students do this on paper with no devices, so make it printable and do not include any online or screen task.\n';
+            if (dv === '100') return 'DEVICE USE — ON DEVICE: students complete this on a laptop or Chromebook, so make it a digital version (for example Google Docs, Slides or Forms) with space to type answers.\n';
+            return 'DEVICE USE — ABOUT ' + dv + '% ON DEVICE across this unit: mark each part **[BOOKWORK]** or **[ON DEVICE]**, and use devices only where they add real value.\n';
+        }
+        function resBuildPrompt() {
+            var s = resState; if (!s) return '';
+            var tb = String.fromCharCode(96, 96, 96);
+            var isLeg = /Level/.test(s.y);
+            var p = '### System Role\nAct as an expert ' + s.d + ' teacher and resource designer at a New Zealand secondary school.\n\n';
+            p += '### Context\nSubject: ' + s.d + '\nYear Level: ' + s.y + '\nUnit topic: "' + s.t + '"\n';
+            if (s.n) p += 'Lesson ' + s.n + ' of the unit\n';
+            if (s.li) p += 'Learning Intention: ' + s.li + '\n';
+            if (s.kn) p += 'Key knowledge: ' + s.kn + '\n';
+            if (s.a) p += 'Main student activity planned: ' + s.a + '\n';
+            p += '\n### Task\n';
+            if (s.kind === 'sl') {
+                var n = s.slides || '8';
+                p += 'Write the content for a slideshow of exactly ' + n + ' slides for this ONE lesson, ready to paste into Google Slides or PowerPoint. Structure it as the lesson will run (Connect, I Do, We Do, You Do, Review): slide 1 is the title with the Learning Intention and 2 to 3 "I can" success criteria; slide 2 is a short Connect starter that retrieves earlier learning; the middle slides teach the key knowledge with clear worked examples and quick check-for-understanding questions (I Do and We Do); one or two slides set out the independent task (You Do); the last slide is a Review with an exit ticket question.\n';
+                p += 'For every slide give: the slide title, the exact on-slide text (no more than 5 short bullets, written for a projector), and a suggested visual.' + (s.notes ? ' Then add short speaker notes telling the teacher what to say and do.' : '') + ' Format it clearly as text. If you are using Google Gemini, you can type @GoogleSlides to build the slides from this.\n\n';
+            } else if (s.style === 'tiered') {
+                p += 'Create a self-contained 3-TIERED differentiated student worksheet for this ONE lesson (Foundation / Core / Extension). All three tiers practise the same Learning Intention, getting harder, so every student can start and be stretched. Open with a short "What you need to know" box and a worked example. Give each tier its own clearly labelled section with a sensible number of questions, and finish with one reflection question.\n';
+                p += s.answers ? 'Add a clearly separated Teacher Answer Sheet at the end (not mixed into the student pages).\n' : 'Student-facing worksheet only, with no answer sheet.\n';
+            } else if (s.style === 'task') {
+                p += 'Create a guided student task sheet for this ONE lesson that carries the main activity above. Give clear numbered steps, scaffolds (sentence starters, hints or a planning frame) and space for students to record their thinking, plus a short check-your-understanding section at the end.\n';
+                p += s.answers ? 'Add a clearly separated Teacher Notes / Answer section at the end (not mixed into the student pages).\n' : 'Student-facing task sheet only, with no answer section.\n';
+            } else {
+                p += 'Create a substantial fluency-building student practice worksheet for this ONE lesson with about 15 practice questions in total (do not make a token worksheet of 2 to 4 questions). Structure it as: A) What You Need to Know: a short teaching section with the rule or concept, key vocabulary, the steps to follow, and one common mistake to avoid. B) Worked Example: fully worked, showing the thinking step by step. C) Your Turn: about 5 questions closely matching the worked example. D) Building Fluency: about 5 to 7 questions with growing variation. E) Challenge: 3 to 5 harder questions needing more independent application, with no new content. F) Check Your Understanding: 1 to 3 questions students can finish on their own. Repetition in C and D is intentional. Adapt what "practice" means to the subject (repeated procedure in Maths, a repeated disciplinary skill in English or the humanities).\n';
+                p += s.answers ? 'Add a clearly separated Teacher Answer Sheet at the end (not mixed into the student pages), with working shown for harder questions.\n' : 'Student-facing worksheet only, with no answer sheet.\n';
+            }
+            if (s.kind !== 'sl') p += 'Provide the worksheet in TWO formats: 1) plain Markdown text (for easy copying into Google Docs) AND 2) a clean CSS-styled HTML code block (' + tb + 'html ... ' + tb + ') using the WHS colours #002066 and #d1e6f6.\n';
+            p += '\n### Rules\n';
+            p += (isLeg ? 'Pitch it at ' + s.y + ' (NCEA) level.' : 'Pitch it for ' + s.y + ' students working in the New Zealand Curriculum.') + '\n';
+            p += nzSpellingRule + '\n' + noLatexRule + '\n';
+            if (s.f.indexOf('w') > -1) p += 'Weave in a Waiheke Island / Hauraki Gulf context where it fits naturally.\n';
+            if (s.f.indexOf('m') > -1) p += 'Weave in Mātauranga Māori where it fits naturally.\n';
+            if (s.f.indexOf('l') > -1) p += 'Build in explicit disciplinary literacy (key vocabulary, reading or writing support).\n';
+            if (s.f.indexOf('n') > -1) p += 'Build in explicit disciplinary numeracy.\n';
+            p += resDeviceLine(s.dv);
+            p += 'Do NOT invent website addresses or deep links. If a clip or site is needed, give a search suggestion such as [Search YouTube: "exact words"] and write TEACHER TO CHECK after any clip.\n';
+            p += 'Where a picture or diagram is needed, insert a placeholder in this format: [📸 INSERT IMAGE: detailed description - Search query: "exact google image search terms"].\n';
+            p += 'Do not use real student names. No meta-commentary: output only the resource.\n';
+            if (s.extra) p += 'Teacher request: ' + s.extra + '\n';
+            return p;
+        }
+        function resRender() {
+            if (!resState) return;
+            var g = function(id) { return document.getElementById(id); };
+            resState.li = resClean((g('res-li') || {}).value, 300);
+            resState.kn = resClean((g('res-kn') || {}).value, 300);
+            resState.a = resClean((g('res-act') || {}).value, 300);
+            resState.extra = resClean((g('res-extra') || {}).value, 300);
+            resState.style = (g('res-ws-style') || {}).value || 'practice';
+            resState.answers = !!(g('res-ws-ans') || {}).checked;
+            resState.slides = (g('res-sl-n') || {}).value || '8';
+            resState.notes = !!(g('res-sl-notes') || {}).checked;
+            var ta = g('res-prompt'); if (ta) ta.value = resBuildPrompt();
+        }
+        function resSetKind(k) {
+            if (!resState) return;
+            resState.kind = (k === 'sl') ? 'sl' : 'ws';
+            var on = 'px-4 py-2 rounded-lg text-sm font-bold border bg-indigo-600 text-white border-transparent', off = 'px-4 py-2 rounded-lg text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:bg-slate-50';
+            var a = document.getElementById('res-tab-ws'), b = document.getElementById('res-tab-sl');
+            if (a) { a.className = resState.kind === 'ws' ? on : off; a.setAttribute('aria-pressed', resState.kind === 'ws' ? 'true' : 'false'); }
+            if (b) { b.className = resState.kind === 'sl' ? on : off; b.setAttribute('aria-pressed', resState.kind === 'sl' ? 'true' : 'false'); }
+            var ow = document.getElementById('res-opt-ws'), os = document.getElementById('res-opt-sl');
+            if (ow) ow.classList.toggle('hidden', resState.kind !== 'ws');
+            if (os) os.classList.toggle('hidden', resState.kind !== 'sl');
+            var ti = document.getElementById('res-title');
+            if (ti) ti.textContent = (resState.kind === 'sl' ? 'Slides prompt' : 'Worksheet prompt') + (resState.n ? ' — Lesson ' + resState.n : '');
+            resRender();
+        }
+        function resShow(st) {
+            resState = st;
+            var m = document.getElementById('res-modal'); if (!m) return;
+            var set = function(id, v) { var e = document.getElementById(id); if (e) e.value = v; };
+            set('res-li', st.li); set('res-kn', st.kn); set('res-act', st.a); set('res-extra', '');
+            var ctx = document.getElementById('res-context');
+            if (ctx) ctx.textContent = st.d + ' · ' + st.y + ' · ' + st.t;
+            m.classList.remove('hidden'); m.classList.add('flex');
+            resSetKind(st.kind);
+        }
+        function resClose() {
+            var m = document.getElementById('res-modal'); if (m) { m.classList.add('hidden'); m.classList.remove('flex'); }
+            try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
+        }
+        function resCopy(btn) {
+            var ta = document.getElementById('res-prompt'); if (!ta) return;
+            var done = function() {
+                if (!btn) return;
+                var o = btn.getAttribute('data-original') || btn.textContent; btn.setAttribute('data-original', o);
+                btn.textContent = 'COPIED! ✓';
+                setTimeout(function() { btn.textContent = o; }, 2000);
+            };
+            ta.focus(); ta.select();
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) {}
+            if (ok) { done(); return; }
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(done, function() { showGlobalToast('Select the text and press Ctrl+C to copy it'); });
+            else showGlobalToast('Select the text and press Ctrl+C to copy it');
+        }
+        function resOpenFromUrl() {
+            var q;
+            try { q = new URLSearchParams(location.search); } catch (e) { return false; }
+            var k = q.get('res');
+            if (k !== 'ws' && k !== 'sl') return false;
+            var f = resClean(q.get('f'), 8).toLowerCase().replace(/[^wmln]/g, '');
+            var dv = resClean(q.get('dv'), 8);
+            var n = resClean(q.get('n'), 3).replace(/[^0-9]/g, '');
+            resShow({
+                kind: k,
+                d: resClean(q.get('d'), 60) || 'the subject',
+                y: resClean(q.get('y'), 40) || 'secondary',
+                t: resClean(q.get('t'), 120) || 'this unit',
+                n: n, f: f, dv: /^[0-9]{1,3}$/.test(dv) ? String(Math.min(100, parseInt(dv, 10))) : 'none',
+                li: resClean(q.get('li'), 300), kn: resClean(q.get('kn'), 300), a: resClean(q.get('a'), 300),
+                style: 'practice', answers: true, slides: '8', notes: true, extra: ''
+            });
+            return true;
+        }
+
         window.onload = function() {
             setupEventListeners();
             applyDarkMode(localStorage.getItem('whs_dark_mode') === '1');
@@ -11111,7 +11311,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             loadTeachingProfile();
             renderTeachingProfilePill();
             updateAllAddonsBanners();
-            if (!teachingProfile.setupDone) toggleTeachingProfilePanel(true);
+            if (!teachingProfile.setupDone && !/[?&]res=(ws|sl)(&|$)/.test(location.search)) toggleTeachingProfilePanel(true);
             checkSeniorStatus();
             checkUnitSeniorStatus();
             checkUnitBothSelected();
@@ -11129,10 +11329,66 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             forceAiPicks(); 
             var initialView = sessionStorage.getItem('whs_active_view') || 'lesson';
             showView(initialView); 
-            if (!localStorage.getItem('whs_onboarding_seen')) {
+            var resOpened = false;
+            try { resOpened = resOpenFromUrl(); } catch (e) {}
+            if (!localStorage.getItem('whs_onboarding_seen') && !resOpened) {
                 setTimeout(showOnboardingModal, 400);
             }
         };
     </script>
+    <!-- Resource prompt popup (opened from a Worksheet / Slides link in a Unit Plan) -->
+    <div id="res-modal" class="fixed inset-0 bg-whsblue-700/60 backdrop-blur-sm z-[90] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="res-title">
+        <div class="modal-panel bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden flex flex-col">
+            <div class="whs-gradient-bg text-white px-5 py-4 flex items-start justify-between gap-3 shrink-0">
+                <div>
+                    <h3 class="font-bold text-lg" id="res-title">Resource prompt</h3>
+                    <p class="text-xs text-white/80 mt-0.5" id="res-context"></p>
+                </div>
+                <button type="button" onclick="resClose()" class="text-white/80 hover:text-white text-2xl leading-none px-2" aria-label="Close">&times;</button>
+            </div>
+            <div class="p-5 overflow-y-auto space-y-4">
+                <div class="flex gap-2" id="res-tabs">
+                    <button type="button" id="res-tab-ws" onclick="resSetKind('ws')" class="px-4 py-2 rounded-lg text-sm font-bold border border-slate-300">📄 Worksheet</button>
+                    <button type="button" id="res-tab-sl" onclick="resSetKind('sl')" class="px-4 py-2 rounded-lg text-sm font-bold border border-slate-300">🎞 Slides</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Learning Intention<input id="res-li" type="text" oninput="resRender()" class="w-full mt-1 p-2 rounded-lg border border-slate-300 text-sm font-normal normal-case tracking-normal text-slate-800"></label>
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Key knowledge<input id="res-kn" type="text" oninput="resRender()" class="w-full mt-1 p-2 rounded-lg border border-slate-300 text-sm font-normal normal-case tracking-normal text-slate-800"></label>
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Main activity<input id="res-act" type="text" oninput="resRender()" class="w-full mt-1 p-2 rounded-lg border border-slate-300 text-sm font-normal normal-case tracking-normal text-slate-800"></label>
+                </div>
+                <div id="res-opt-ws" class="flex flex-wrap items-center gap-3 text-sm">
+                    <label class="font-semibold text-slate-700">Worksheet style
+                        <select id="res-ws-style" onchange="resRender()" class="ml-1 p-1.5 rounded-lg border border-slate-300 text-sm font-normal">
+                            <option value="practice">Practice worksheet (about 15 questions)</option>
+                            <option value="tiered">3-tiered (Foundation / Core / Extension)</option>
+                            <option value="task">Guided task sheet (activity based)</option>
+                        </select></label>
+                    <label class="inline-flex items-center gap-1.5 font-semibold text-slate-700"><input id="res-ws-ans" type="checkbox" checked onchange="resRender()"> Teacher answer sheet</label>
+                </div>
+                <div id="res-opt-sl" class="hidden flex flex-wrap items-center gap-3 text-sm">
+                    <label class="font-semibold text-slate-700">Number of slides
+                        <select id="res-sl-n" onchange="resRender()" class="ml-1 p-1.5 rounded-lg border border-slate-300 text-sm font-normal">
+                            <option value="6">6</option><option value="8" selected>8</option><option value="10">10</option><option value="12">12</option>
+                        </select></label>
+                    <label class="inline-flex items-center gap-1.5 font-semibold text-slate-700"><input id="res-sl-notes" type="checkbox" checked onchange="resRender()"> Speaker notes</label>
+                </div>
+                <label class="block text-[10px] font-bold uppercase tracking-widest text-slate-500">Anything else you want (optional)<input id="res-extra" type="text" oninput="resRender()" placeholder="e.g. include a diagram to label, keep the reading level low" class="w-full mt-1 p-2 rounded-lg border border-slate-300 text-sm font-normal normal-case tracking-normal text-slate-800"></label>
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Your prompt (you can edit it)</span>
+                    </div>
+                    <textarea id="res-prompt" rows="12" class="w-full p-3 rounded-lg border border-slate-300 bg-amber-50 text-xs font-mono leading-relaxed"></textarea>
+                </div>
+            </div>
+            <div class="p-4 border-t border-slate-100 bg-slate-50 flex flex-wrap items-center justify-between gap-2 shrink-0">
+                <p class="text-xs text-slate-500">Copy the prompt, then paste it into Gemini, ChatGPT or Claude.</p>
+                <div class="flex gap-2">
+                    <button type="button" onclick="resClose()" class="px-4 py-2 rounded-lg text-sm font-semibold border border-slate-300 bg-white hover:bg-slate-100 text-slate-700">Close</button>
+                    <button type="button" id="res-copy" onclick="resCopy(this)" class="px-5 py-2 rounded-lg text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white">COPY PROMPT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
