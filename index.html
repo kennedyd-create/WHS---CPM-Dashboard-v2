@@ -2645,7 +2645,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             <div id="yp-menu-export" class="yp-menu-panel hidden" role="menu">
                 <button id="yp-timeline-btn" role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); printFullYearPlan('timeline')">Timeline View <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>The whole year at a glance: each term as one coloured strip, with dates, holidays and key events</small></button>
                 <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); printFullYearPlan('grid')">Print full-year grid<small>Strands down the side, every week across the top, one page</small></button>
-                <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); exportYearPlanICS()">Add to Calendar (.ics)<small>One event per topic block, for Google Calendar, Outlook or Apple Calendar</small></button>
+                <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); exportYearPlanICS()">Add to Calendar (.ics)<small>One event per topic block and each assessment, for Google Calendar, Outlook or Apple Calendar</small></button>
                 <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); exportYearPlanCSV()">Export as CSV<small>One row per topic block, for Google Sheets or Excel</small></button>
             </div>
         </div>
@@ -2820,6 +2820,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <button type="button" id="ass-choice-none" role="radio" onclick="setAssessChoice('none')" class="flex-1 px-3 py-2 rounded-lg border text-sm font-bold">✕ No assessment</button>
             </div>
             <div id="ass-modal-fields">
+            <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-title">Type or title <span class="font-normal text-slate-500">(optional, shown on the calendar)</span></label>
+            <input type="text" id="ass-modal-title" list="ass-type-list" maxlength="60" placeholder="e.g. Test, Quiz, Report, Poster" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3">
+            <datalist id="ass-type-list"><option value="Test"><option value="Quiz"><option value="Exam"><option value="Report"><option value="Project"><option value="Presentation"><option value="Practical"><option value="Essay"><option value="Poster"><option value="Portfolio"><option value="Investigation"></datalist>
             <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-length">How long is it?</label>
             <select id="ass-modal-length" onchange="updateAssessEditUI()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3">
                 <option value="1 Lesson">1 Lesson</option><option value="2 Lessons">2 Lessons</option><option value="3 Lessons">3 Lessons</option>
@@ -2893,6 +2896,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </label>
                     
                     <div id="assessment-details" class="hidden mt-3 bg-[#c5a059]/10 p-4 rounded-lg border border-[#c5a059]/40 grid grid-cols-2 gap-4">
+                        <div class="col-span-2">
+                            <label class="block text-xs font-medium text-slate-600 mb-1" for="modal-ass-title">Type or title (optional, shown on the calendar)</label>
+                            <input type="text" id="modal-ass-title" list="ass-type-list" maxlength="60" placeholder="e.g. Test, Quiz, Report, Poster" class="w-full border-slate-300 rounded-md p-2 text-sm border focus:ring-2 focus:ring-[#c5a059]/40">
+                        </div>
                         <div>
                             <label class="block text-xs font-medium text-slate-600 mb-1">Timing (Within Unit)</label>
                             <select id="modal-ass-start" onchange="this.dataset.touched='1'; updateAssessmentUI()" class="w-full border-slate-300 rounded-md p-2 text-sm border focus:ring-2 focus:ring-[#c5a059]/40"></select>
@@ -3096,6 +3103,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Practical lessons by percentage</mark>. In the Unit Planner practical section choose <strong>% of lessons</strong> (25, 50, 75, 100 or your own number) for PE, Drama, Music, Technology and other hands-on subjects. Those lessons are planned as whole practical lessons and labelled <strong>[PRACTICAL]</strong>.</li>
 <li><mark class="wn-key">Bigger topics, own devices, mixed lessons</mark>. A topic that needs several lessons can now be one row (for example <strong>Lessons 5-7</strong>) where not every stage runs every lesson and most time is You Do. Prompts now know we are a <strong>bring-your-own-device</strong> school (no booking Chromebooks), and lessons can be bookwork, on device or a <strong>mix of both</strong>.</li>
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
+<li><mark class="wn-key">Year Planner: short assessment labels</mark>. Assessments now have an optional <strong>Type or title</strong> (Test, Quiz, Report or your own). The year calendar shows that short label instead of the topic name, cut to fit so the row stays slim.</li>
+<li><mark class="wn-key">Year Planner: year level camps</mark>. The 2027 camps (Year 7 Feb, Year 8 Mar, Year 9 Aug, Year 10 Nov to Dec) appear on the calendar, but only when that year level is selected.</li>
 <li><mark class="wn-key">Year Planner: Buffer and closed strands</mark>. A new <strong>⏳ Buffer</strong> button next to Own topic lets you click empty weeks to add a spare buffer week. The Curriculum Strands now start <strong>closed</strong> (they still open when you search). Your own topics and buffers are also kept now when you reload.</li>
 <li><mark class="wn-key">Assessment lessons in the Unit Plan</mark>. When the unit includes an assessment, its lesson now starts with a clear <strong>Example Assessment - Teacher to refine/adapt</strong> label and a short outline, with a <strong>Make this assessment with AI</strong> link that opens the Assessment builder with the subject, year and topic already filled in.</li>
 <li><mark class="wn-key">“Make with AI” links in the Unit Plan</mark> (school, Science and Maths templates). Every lesson gets a <strong>🤖 link</strong> in its Preparation/ Resources cell. The AI that writes the plan picks the <strong>resource types that suit each lesson</strong>. Click the link (in the file, or in the Doc you pasted it into) and this site opens a popup with <strong>ready-made AI prompts for those types</strong>, built from that lesson's Learning Intention, key knowledge and main activity plus your Waiheke / Māori / literacy / numeracy / device choices, with a <em>More resource types</em> button for the rest. 22 types: 📄 worksheet (print-ready HTML), 🎞 slides (the AI builds a real PowerPoint, Google Slides or HTML slideshow), 🃏 flashcards, 🧩 mix &amp; match (pairs, dominoes, card sort), 🖼 find visuals (graphs, maps, photos with search links), 🎟 exit ticket / starter, ❓ quiz, 📖 reading + questions, ✍️ writing frame, 🔤 vocabulary pack, 🏷 labelling sheet, 🧪 practical sheet, ✅ rubric / checklist, 🧭 project brief, 🗣 discussion / debate, 🎭 role-play cards, 👩‍🏫 teacher notes, 🏠 homework task, 💌 whānau note, ➗ maths worked examples, 💬 dialogue cards and 🏅 performance checklist. Use the <strong>Gemini / ChatGPT / Claude</strong> buttons beside Copy. A switch in Add-Ons turns the links off.</li>
@@ -3492,6 +3501,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
+                        <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
+                        <li><mark class="wn-key">Year level camps</mark>: shown on the Year Planner calendar for Years 7 to 10 only.</li>
                         <li><mark class="wn-key">Year Planner</mark>: a Buffer button for spare weeks, strands start closed, and your own topics are kept after a reload.</li>
                         <li><mark class="wn-key">Assessment lessons</mark>: labelled Example Assessment - Teacher to refine/adapt, with a Make this assessment with AI link.</li>
                         <li><mark class="wn-key">Science Unit Plan Template</mark>: pick Science, then 🔬 Science Unit Plan Template (HTML) in Lesson Plan Format.</li>
@@ -8724,21 +8735,22 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 4: { start: '2027-10-11', end: '2027-12-17' }
             },
             // [first day, last day or null, label, kind, short label for the narrow week boxes (optional or null), audience (optional), blocks the week (optional)]
-            // audience: 'senior' = shown only for Years 11 to 13; 'y10' = Year 10 only; 'notsenior' = everything except Years 11 to 13; left out = every year.
+            // audience: 'senior' = shown only for Years 11 to 13; 'y7', 'y8', 'y9', 'y10' = that year level only (year camps and CAA weeks); 'notsenior' = everything except Years 11 to 13; left out = every year.
             // blocks: true = for that audience the whole week is blocked out of the planner (nothing can be planned into it).
             events: [
                 ['2027-01-26', null, 'Staff only day', 'staff', 'Staff day'], ['2027-01-27', null, 'Staff only day', 'staff', 'Staff day'],
                 ['2027-01-28', null, 'New students', 'school'], ['2027-01-29', null, 'Motu Day', 'school'],
                 ['2027-02-01', null, 'Auckland Anniversary', 'hol', 'Auckland Day'], ['2027-02-08', null, 'Waitangi Day (observed)', 'hol', 'Waitangi Day'],
-                ['2027-02-17', null, 'Beach Sports', 'school'], ['2027-03-05', null, 'Athletics Day', 'school'],
-                ['2027-03-26', null, 'Good Friday', 'hol'], ['2027-03-29', null, 'Easter Monday', 'hol', 'Easter Mon'], ['2027-03-30', null, 'Easter Tuesday', 'hol', 'Easter Tue'],
+                ['2027-02-11', '2027-02-12', 'Year 7 Camp', 'school', 'Y7 Camp', 'y7'], ['2027-02-17', null, 'Beach Sports', 'school'], ['2027-03-05', null, 'Athletics Day', 'school'],
+                ['2027-03-11', '2027-03-12', 'Year 8 Camp', 'school', 'Y8 Camp', 'y8'], ['2027-03-26', null, 'Good Friday', 'hol'], ['2027-03-29', null, 'Easter Monday', 'hol', 'Easter Mon'], ['2027-03-30', null, 'Easter Tuesday', 'hol', 'Easter Tue'],
                 ['2027-04-26', null, 'Anzac Day (observed)', 'hol', 'Anzac Day'],
                 ['2027-05-17', '2027-05-21', 'CAA week', 'assess', null, 'y10'], ['2027-05-28', null, 'Fun Run', 'school'],
                 ['2027-06-07', null, "King's Birthday", 'hol'], ['2027-06-24', null, 'Matariki event', 'school'], ['2027-06-25', null, 'Matariki', 'hol'],
-                ['2027-08-27', null, 'Staff only day', 'staff', 'Staff day'], ['2027-08-30', null, 'Spring Break', 'hol'],
+                ['2027-08-17', '2027-08-20', 'Year 9 Camp', 'school', 'Y9 Camp', 'y9'], ['2027-08-27', null, 'Staff only day', 'staff', 'Staff day'], ['2027-08-30', null, 'Spring Break', 'hol'],
                 ['2027-09-06', '2027-09-10', 'Senior Exam Week', 'assess', 'Snr Exam Week', 'senior', true], ['2027-09-13', '2027-09-17', 'CAA week', 'assess', null, 'y10'],
                 ['2027-10-25', null, 'Labour Day', 'hol'],
                 ['2027-11-04', null, 'Senior Prizegiving', 'school', 'Snr Prizegiving', 'senior'], ['2027-11-05', null, 'Staff only day', 'staff', 'Staff day'],
+                ['2027-11-29', '2027-12-02', 'Year 10 Camp', 'school', 'Y10 Camp', 'y10'],
                 ['2027-11-09', '2027-11-26', 'NZQA exams (start 9 Nov)', 'assess', 'NZQA exams', 'senior', true],
                 ['2027-12-13', null, 'Junior Prizegiving', 'school', 'Jnr Prizegiving', 'notsenior']
             ],
@@ -8765,7 +8777,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var senior = y === '11' || y === '12' || y === '13';
             if (aud === 'senior') return senior;
             if (aud === 'notsenior') return !senior;
-            if (aud === 'y10') return y === '10';
+            if (/^y(7|8|9|10)$/.test(aud)) return y === aud.slice(1);
             return true;
         }
         function calEventsByDate() {
@@ -10246,7 +10258,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (a) {
                     const w = ypAssessWeeksOf(a.length);
                     if (w > n) x.slot.assessment = null;
-                    else if ((a.startOffset || 1) + w - 1 > n) x.slot.assessment = { startOffset: n - w + 1, length: a.length, weeks: w };
+                    else if ((a.startOffset || 1) + w - 1 > n) x.slot.assessment = Object.assign({ startOffset: n - w + 1, length: a.length, weeks: w }, a.title ? { title: a.title } : {});
                 }
             });
         }
@@ -10847,6 +10859,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             const a = list[0].slot.assessment;
             document.getElementById('ass-modal-sub').textContent = list[0].slot.customText + ' (' + list.length + ' week' + (list.length === 1 ? '' : 's') + ')';
             document.getElementById('ass-modal-length').value = a ? a.length : '1 Lesson';
+            document.getElementById('ass-modal-title').value = a && a.title ? a.title : '';
             const st = document.getElementById('ass-modal-start');
             st.dataset.touched = a ? '1' : '';
             st.innerHTML = '';
@@ -10874,8 +10887,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             const list = ypTopicSlots(ypAssessEditId);
             if (!list.length) { closeAssessModal(); return; }
             if (ypAssessChoice === 'none') { list.forEach(x => { x.slot.assessment = null; x.slot.noAssessment = true; }); closeAssessModal(); renderTermGrids(); saveState('Marked: no assessment for this topic'); return; }
-            const len = document.getElementById('ass-modal-length').value, start = parseInt(document.getElementById('ass-modal-start').value) || 1;
-            list.forEach(x => { x.slot.assessment = { startOffset: start, length: len, weeks: ypAssessWeeksOf(len) }; delete x.slot.noAssessment; });
+            const len = document.getElementById('ass-modal-length').value, start = parseInt(document.getElementById('ass-modal-start').value) || 1, ttl = document.getElementById('ass-modal-title').value.trim().slice(0, 60);
+            list.forEach(x => { x.slot.assessment = Object.assign({ startOffset: start, length: len, weeks: ypAssessWeeksOf(len) }, ttl ? { title: ttl } : {}); delete x.slot.noAssessment; });
             closeAssessModal(); renderTermGrids(); saveState('Assessment saved');
         }
         function removeAssessEdit() {
@@ -10900,7 +10913,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.getElementById('modal-key-content').value = sm ? `AS ${sm.code} · ${sm.cr} credit${sm.cr === 1 ? '' : 's'} · ${sm.m === 'i' ? 'internally assessed' : 'external exam'}. ${sm.title}.` : '';
             if (sm) document.getElementById('modal-subtitle').innerText = `${strand} › ${subtopic}`;
             document.getElementById('modal-learning-tasks').value = '';
-            document.getElementById('modal-assessment-check').checked = false;
+            document.getElementById('modal-assessment-check').checked = false; document.getElementById('modal-ass-title').value = '';
             document.getElementById('modal-ass-start').dataset.touched = '';
             
             updateAssessmentUI();
@@ -10933,7 +10946,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.getElementById('modal-weeks').value = 1;
             document.getElementById('modal-key-content').value = '';
             document.getElementById('modal-learning-tasks').value = '';
-            document.getElementById('modal-assessment-check').checked = false;
+            document.getElementById('modal-assessment-check').checked = false; document.getElementById('modal-ass-title').value = '';
             document.getElementById('modal-ass-start').dataset.touched = '';
 
             updateAssessmentUI();
@@ -10979,7 +10992,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var a = slot && slot.assessment;
             if (!a) return null;
             var weeks = ypAssessWeeksOf(a.length), start = a.startOffset || 1;
-            return { start: start, weeks: weeks, end: start + weeks - 1, label: a.length || '1 Lesson', lessons: !/week/i.test(a.length || '') };
+            return { start: start, weeks: weeks, end: start + weeks - 1, title: a.title || '', label: a.length || '1 Lesson', lessons: !/week/i.test(a.length || '') };
+        }
+        // Short label for the calendar: the teacher's type or title, cut to fit so the assessment row never grows taller than the topic row.
+        function ypAssessLabel(a, max) {
+            var t = ((a && a.title) || '').replace(/\s+/g, ' ').trim();
+            if (!t) return 'Assessment';
+            max = max || 14;
+            return t.length > max ? t.slice(0, max - 1).trim() + '…' : t;
         }
         function ypAssessText(a) { return a.weeks > 1 ? a.weeks + ' weeks' : (a.lessons ? a.label.toLowerCase() : '1 week'); }
         // Which of a block's weeks (1 = its first week) the assessment covers. A topic split by a blocked week is several blocks, each with its own unitWeek.
@@ -10999,7 +11019,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var a = c.a, tip = 'Assessment: ' + (c.fromPrev || c.toNext ? 'continues across blocks. ' : '') + 'Wk ' + a.start + (a.weeks > 1 ? ' to ' + a.end : '') + ' of the topic (' + ypAssessText(a) + ')';
             return '<div style="display:grid;grid-template-columns:repeat(' + span + ',minmax(0,1fr));gap:0.5rem;margin:0.75rem -13px 0;" title="' + ypEsc(tip) + '">' +
                 '<div style="grid-column:' + c.c1 + ' / ' + (c.c2 + 1) + ';background:#fef3c7;color:#92400e;border-top:2px solid #f59e0b;border-bottom:2px solid #f59e0b;text-align:center;font-size:10px;font-weight:800;line-height:1.2;padding:3px 2px;">' +
-                (c.fromPrev ? '◂ ' : '') + '📝 Assess' + (c.toNext ? ' ▸' : '') + '<div style="font-weight:600;font-size:9px;">' + ypEsc(ypAssessText(a)) + '</div></div></div>';
+                '<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (c.fromPrev ? '◂ ' : '') + '📝 ' + (a.title ? ypEsc(ypAssessLabel(a, 16)) : 'Assess') + (c.toNext ? ' ▸' : '') + '</div><div style="font-weight:600;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ypEsc(ypAssessText(a)) + '</div></div></div>';
         }
         // Cells for a table row, one per week of the term, so the assessment lines up under the same weeks as its topic.
         function ypAssessCells(t, border) {
@@ -11010,7 +11030,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     var span = 1;
                     while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
                     var c = ypAssessCols(slot, span);
-                    if (c) { for (var j = c.c1; j <= c.c2; j++) marks[i + j - 1] = { id: slot.id, c: c }; any = true; }
+                    if (c) { for (var j = c.c1; j <= c.c2; j++) marks[i + j - 1] = { id: slot.id, c: c, name: slot.customText || slot.subtopic || '' }; any = true; }
                     i += span;
                 } else i++;
             }
@@ -11020,7 +11040,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (!m) { html += '<td style="border:1px solid ' + border + ';"></td>'; k++; continue; }
                 var n = 1;
                 while (k + n < len && marks[k + n] && marks[k + n].id === m.id) n++;
-                html += '<td colspan="' + n + '" style="border:1px solid #f59e0b;background:#fef3c7;color:#92400e;text-align:center;font-weight:bold;font-size:9px;padding:2px;line-height:1.25;">📝 Assess<br><span style="font-weight:600;font-size:8px;">' + ypEsc(ypAssessText(m.c.a)) + '</span></td>';
+                var ml = ypAssessLabel(m.c.a, Math.min(30, 11 * n));
+                html += '<td colspan="' + n + '" title="' + ypEsc((m.c.a.title ? m.c.a.title + ' - ' : '') + 'Assessment (' + ypAssessText(m.c.a) + ') in ' + (m.name || 'this topic')) + '" style="border:1px solid #f59e0b;background:#fef3c7;color:#92400e;text-align:center;font-weight:bold;font-size:10px;padding:3px 2px;line-height:1.25;max-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">📝 ' + ypEsc(ml) + '<span style="font-weight:600;font-size:9px;"> · ' + ypEsc(ypAssessText(m.c.a)) + '</span></td>';
                 k += n;
             }
             return { html: html, any: any };
@@ -11091,7 +11112,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     customAlert('Assessment Does Not Fit', `The assessment would run past the end of the ${duration}-week topic. Choose an earlier start week, a shorter assessment, or a longer topic.`);
                     return;
                 }
-                assessmentData = { startOffset: aStart, length: aLen, weeks: ypAssessWeeksOf(aLen) };
+                const aTtl = document.getElementById('modal-ass-title').value.trim().slice(0, 60);
+                assessmentData = Object.assign({ startOffset: aStart, length: aLen, weeks: ypAssessWeeksOf(aLen) }, aTtl ? { title: aTtl } : {});
             }
 
             const slotArray = yearPlannerState.terms[term];
@@ -11314,6 +11336,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             `SUMMARY:${icsEscape(slot.customText || slot.subtopic)}`,
                             `DESCRIPTION:${icsEscape((slot.strand || '') + '\\n' + ypCourseName() + ' - Year ' + yearPlannerState.year + ', Term ' + t)}`,
                             'END:VEVENT');
+                        // the assessment inside the topic gets its own calendar event, on the weeks it runs
+                        const ac = ypAssessCols(slot, span);
+                        if (ac) {
+                            const aStart = ypAddDays(termStart, 7 * (i + ac.c1 - 1)), aEnd = ypAddDays(termStart, 7 * (i + ac.c1 - 1) + 7 * (ac.c2 - ac.c1) + 5);
+                            lines.push('BEGIN:VEVENT', `UID:${uid.replace('@whs-year-planner', '-assessment@whs-year-planner')}`, `DTSTAMP:${stamp}`,
+                                `DTSTART;VALUE=DATE:${ypICSDate(aStart)}`, `DTEND;VALUE=DATE:${ypICSDate(aEnd)}`,
+                                `SUMMARY:${icsEscape('Assessment: ' + (slot.customText || slot.subtopic) + ' (' + ypAssessText(ac.a) + ')')}`,
+                                `DESCRIPTION:${icsEscape(ypCourseName() + ' - Year ' + yearPlannerState.year + ', Term ' + t)}`,
+                                'END:VEVENT');
+                        }
                         i += span;
                     } else {
                         i++;
