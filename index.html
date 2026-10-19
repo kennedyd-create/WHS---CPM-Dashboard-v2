@@ -538,6 +538,7 @@
         html.dark #lesson-prompt-health.text-emerald-800, html.dark #unit-prompt-health.text-emerald-800, html.dark #assess-prompt-health.text-emerald-800 { color: #6ee7b7 !important; }
         html.dark #lesson-prompt-health.text-red-800, html.dark #unit-prompt-health.text-red-800, html.dark #assess-prompt-health.text-red-800 { color: #fca5a5 !important; }
         #unit-prompt-length.plen-ok { color: #475569; background-color: #f1f5f9; border-color: #cbd5e1; }
+.yp-buffer-armed { background-color: rgba(197, 160, 89, 0.25) !important; border-style: solid !important; border-color: var(--whs-gold) !important; color: #7a5b1e !important; }
         #unit-prompt-length.plen-near { color: #92400e; background-color: #fef3c7; border-color: #fcd34d; }
         #unit-prompt-length.plen-over { color: #92400e; background-color: #fef3c7; border-color: #f59e0b; }
         html.dark #unit-prompt-length.plen-ok { color: #cbd5e1; background-color: #1e293b; border-color: #334155; }
@@ -600,6 +601,14 @@
         .yp-ass-btn { font-size: 10px; font-weight: 700; line-height: 1; padding: 5px 7px; border-radius: 6px; border: 1px dashed #f59e0b; color: #92400e; background: #fffbeb; white-space: nowrap; cursor: pointer; }
         .yp-ass-btn:hover { background: #fef3c7; border-style: solid; }
         .yp-ass-btn.has { border-style: solid; background: #fef3c7; }
+        .yp-ass-btn.none { border: 1px solid #cbd5e1; background: #f1f5f9; color: #64748b; font-weight: 600; }
+        .yp-ass-btn.none:hover { background: #e2e8f0; border-style: solid; }
+        html.dark .yp-ass-btn.none { background: #1e293b; color: #94a3b8; border-color: #475569; }
+        .yp-ass-grp { display: inline-flex; align-items: stretch; }
+        .yp-ass-grp .yp-ass-btn.need { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+        .yp-ass-x { font-size: 11px; font-weight: 900; line-height: 1; padding: 0 7px; border: 1px solid #991b1b; border-left: 1px solid rgba(255,255,255,.55); border-radius: 0 6px 6px 0; background: #991b1b; color: #fff; cursor: pointer; }
+        .yp-ass-x:hover { background: #7f1d1d; }
+        .yp-ass-x:focus-visible { outline: 3px solid #002066; outline-offset: 2px; }
         html.dark .yp-ass-btn { background: #422006; color: #fde68a; border-color: #b45309; }
         html.dark .yp-ass-btn:hover, html.dark .yp-ass-btn.has { background: #5a2d08; }
         .yp-ass-btn.need { background: #dc2626; color: #fff; border: 1px solid #991b1b; font-size: 11px; padding: 6px 9px; box-shadow: 0 0 0 0 rgba(220,38,38,.65); animation: ypAssFlash 1.1s ease-in-out infinite; }
@@ -2740,11 +2749,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="stage-divider-label"><span class="stage-number-badge">1</span>Curriculum Strands</h2>
                 </div>
-                <div class="flex gap-2 mb-3">
-                    <div id="quick-add-label" class="flex-1 flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--whs-gold)] bg-[var(--whs-gold)]/15 text-[#7a5b1e] text-xs font-bold" title="Click a topic, then click empty weeks to drop it into the plan.">
+                <div class="flex flex-wrap gap-2 mb-3">
+                    <div id="quick-add-label" style="flex:1 1 100%;" class="flex items-center gap-2 px-3 py-2 rounded-lg border border-[var(--whs-gold)] bg-[var(--whs-gold)]/15 text-[#7a5b1e] text-xs font-bold" title="Click a topic, then click empty weeks to drop it into the plan.">
                         <span>&#9889; Quick Add</span><span class="font-semibold text-[10px] opacity-80">click a topic, then weeks</span>
                     </div>
-                    <button onclick="openCustomTopicModal()" class="shrink-0 px-3 py-2 rounded-lg border border-dashed border-slate-400 text-xs font-bold text-slate-600 hover:border-[var(--whs-dark-blue)] hover:text-[var(--whs-dark-blue)] hover:bg-white transition-all" title="Add something that is not in the library">&#9998; Own topic</button>
+                    <button onclick="openCustomTopicModal()" style="flex:1 1 0;" class="px-3 py-2 rounded-lg border border-dashed border-slate-400 text-xs font-bold text-slate-600 hover:border-[var(--whs-dark-blue)] hover:text-[var(--whs-dark-blue)] hover:bg-white transition-all" title="Add something that is not in the library">&#9998; Own topic</button>
+                    <button id="yp-buffer-btn" type="button" onclick="armBuffer()" style="flex:1 1 0;" class="px-3 py-2 rounded-lg border border-dashed border-slate-400 text-xs font-bold text-slate-600 hover:border-[var(--whs-dark-blue)] hover:text-[var(--whs-dark-blue)] hover:bg-white transition-all" title="Click, then click an empty week to add a spare buffer week">&#9203; Buffer</button>
                 </div>
                 <input id="yp-lib-search" type="search" oninput="ypLibSearch(this.value)" placeholder="Search topics..." aria-label="Search topics" class="w-full mb-3 border border-slate-300 rounded-lg px-3 py-2 text-xs bg-white focus:ring-2 focus:ring-whsblue-700/30 focus:border-[var(--whs-dark-blue)]">
                 <div id="yp-lib-filter" class="hidden flex gap-1.5 mb-3"></div>
@@ -2805,6 +2815,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6">
             <h3 class="text-lg font-black text-slate-900">📝 Assessment</h3>
             <p id="ass-modal-sub" class="text-xs text-slate-500 mb-4"></p>
+            <div class="flex gap-2 mb-4" role="radiogroup" aria-label="Assessment choice">
+                <button type="button" id="ass-choice-yes" role="radio" onclick="setAssessChoice('yes')" class="flex-1 px-3 py-2 rounded-lg border text-sm font-bold">📝 Add an assessment</button>
+                <button type="button" id="ass-choice-none" role="radio" onclick="setAssessChoice('none')" class="flex-1 px-3 py-2 rounded-lg border text-sm font-bold">✕ No assessment</button>
+            </div>
+            <div id="ass-modal-fields">
             <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-length">How long is it?</label>
             <select id="ass-modal-length" onchange="updateAssessEditUI()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3">
                 <option value="1 Lesson">1 Lesson</option><option value="2 Lessons">2 Lessons</option><option value="3 Lessons">3 Lessons</option>
@@ -2813,6 +2828,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-start">When does it start?</label>
             <select id="ass-modal-start" onchange="this.dataset.touched='1'; updateAssessEditUI()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"></select>
             <p id="ass-modal-hint" class="text-[11px] text-slate-500 mt-2"></p>
+            </div>
             <div class="flex items-center justify-between gap-2 mt-5">
                 <button id="ass-modal-remove" onclick="removeAssessEdit()" class="text-xs font-bold text-red-600 hover:text-red-800 px-2 py-2">Remove assessment</button>
                 <span class="flex gap-2">
@@ -3080,6 +3096,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Practical lessons by percentage</mark>. In the Unit Planner practical section choose <strong>% of lessons</strong> (25, 50, 75, 100 or your own number) for PE, Drama, Music, Technology and other hands-on subjects. Those lessons are planned as whole practical lessons and labelled <strong>[PRACTICAL]</strong>.</li>
 <li><mark class="wn-key">Bigger topics, own devices, mixed lessons</mark>. A topic that needs several lessons can now be one row (for example <strong>Lessons 5-7</strong>) where not every stage runs every lesson and most time is You Do. Prompts now know we are a <strong>bring-your-own-device</strong> school (no booking Chromebooks), and lessons can be bookwork, on device or a <strong>mix of both</strong>.</li>
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
+<li><mark class="wn-key">Year Planner: Buffer and closed strands</mark>. A new <strong>⏳ Buffer</strong> button next to Own topic lets you click empty weeks to add a spare buffer week. The Curriculum Strands now start <strong>closed</strong> (they still open when you search). Your own topics and buffers are also kept now when you reload.</li>
 <li><mark class="wn-key">Assessment lessons in the Unit Plan</mark>. When the unit includes an assessment, its lesson now starts with a clear <strong>Example Assessment - Teacher to refine/adapt</strong> label and a short outline, with a <strong>Make this assessment with AI</strong> link that opens the Assessment builder with the subject, year and topic already filled in.</li>
 <li><mark class="wn-key">“Make with AI” links in the Unit Plan</mark> (school, Science and Maths templates). Every lesson gets a <strong>🤖 link</strong> in its Preparation/ Resources cell. The AI that writes the plan picks the <strong>resource types that suit each lesson</strong>. Click the link (in the file, or in the Doc you pasted it into) and this site opens a popup with <strong>ready-made AI prompts for those types</strong>, built from that lesson's Learning Intention, key knowledge and main activity plus your Waiheke / Māori / literacy / numeracy / device choices, with a <em>More resource types</em> button for the rest. 22 types: 📄 worksheet (print-ready HTML), 🎞 slides (the AI builds a real PowerPoint, Google Slides or HTML slideshow), 🃏 flashcards, 🧩 mix &amp; match (pairs, dominoes, card sort), 🖼 find visuals (graphs, maps, photos with search links), 🎟 exit ticket / starter, ❓ quiz, 📖 reading + questions, ✍️ writing frame, 🔤 vocabulary pack, 🏷 labelling sheet, 🧪 practical sheet, ✅ rubric / checklist, 🧭 project brief, 🗣 discussion / debate, 🎭 role-play cards, 👩‍🏫 teacher notes, 🏠 homework task, 💌 whānau note, ➗ maths worked examples, 💬 dialogue cards and 🏅 performance checklist. Use the <strong>Gemini / ChatGPT / Claude</strong> buttons beside Copy. A switch in Add-Ons turns the links off.</li>
 <li><mark class="wn-key">Unit Plan tidy-up</mark> (school template): the device label (<strong>[ON DEVICE]</strong>, <strong>[BOOKWORK]</strong> or <strong>[MIX…]</strong>) now appears once, beside the lesson number, instead of being repeated. <strong>Assessment lessons</strong> are shaded very light red across the whole row. The <strong>Strategies, activities, tasks</strong> column is wider and the table runs closer to the page edges. The graphic organiser option has been removed from the Make with AI popup, and every prompt now asks for New Zealand English spelling. The school-template HTML is now a fixed, more compact width, so it pastes into a landscape Google Doc the same way on any screen.</li>
@@ -3462,7 +3479,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <li><mark class="wn-key">Years 11 to 13 (NCEA)</mark> with standards, credits and the NZQA exam weeks blocked out for you.</li>
                         <li><mark class="wn-key">Assessments over several weeks</mark>, lined up under the exact week they run in.</li>
                         <li><mark class="wn-key">More room</mark>: the main menu is hidden while you are in the Year Planner. Use the small <strong>← Main menu</strong> button to go back. <strong>Plan check</strong> and the <strong>school calendar</strong> fold-out now sit side by side on one line. A flashing <strong>Start here</strong> on Term 1 and the help line disappear once the first topic is placed.</li>
-                        <li><mark class="wn-key">Quick Add only</mark>: click a topic, then click weeks. Add assessments with the flashing red 📝 button on a placed topic (it stops flashing once an assessment is set).</li>
+                        <li><mark class="wn-key">Quick Add only</mark>: click a topic, then click weeks. Add assessments with the flashing red 📝 button on a placed topic (it stops flashing once an assessment is set, or when you press the small ✕ beside it, or choose No assessment in its window).</li>
                         <li><mark class="wn-key">Choice topics shown</mark> in an OR box (for example Global history case studies).</li>
                         <li><mark class="wn-key">Social Sciences</mark> now uses the same topics as the Unit Planner (including each case study).</li>
                         <li><mark class="wn-key">Short weeks shaded</mark>: days with no teaching are hatched grey, and school event days are hatched blue, at the start, middle or end of the week.</li>
@@ -3475,6 +3492,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
+                        <li><mark class="wn-key">Year Planner</mark>: a Buffer button for spare weeks, strands start closed, and your own topics are kept after a reload.</li>
                         <li><mark class="wn-key">Assessment lessons</mark>: labelled Example Assessment - Teacher to refine/adapt, with a Make this assessment with AI link.</li>
                         <li><mark class="wn-key">Science Unit Plan Template</mark>: pick Science, then 🔬 Science Unit Plan Template (HTML) in Lesson Plan Format.</li>
 <li><mark class="wn-key">Full curriculum integration</mark>: pick a strand and topic and the <strong>Knowledge and Practices</strong> fill in for you (Years 7 to 10, and Years 0 to 6 for IEP units).</li>
@@ -9023,6 +9041,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 for (let i = 0; i < slots.length; i++) {
                     const slot = slots[i];
                     if (!slot || typeof slot !== 'object') continue;
+                    if (slot.isCustom || slot.buffer || slot.strand === CUSTOM_STRAND_LABEL) continue;   // the teacher's own topics and buffers are not in the curriculum library, so they must not be treated as outdated
                     if (db.content[slot.subtopic]) {
                         const correctStrand = strandForSubtopic(db, slot.subtopic);
                         if (correctStrand && slot.strand !== correctStrand) slot.strand = correctStrand;
@@ -10013,7 +10032,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 const plannedN = visibleTopics.filter(st => ypTopicUsed(st)).length;
                 let openState = ypStrandOpen[stKey];
                 if (ypLibQuery || ypLibFilter !== 'all') openState = true;
-                else if (openState === undefined) openState = db.structure[strand].length <= 6 || strandIdx === 0;
+                else if (openState === undefined) openState = false;   // every strand starts closed
                 let strandHtml = `<details class="mb-4 yp-strand" data-key="${ypEsc(stKey).replace(/"/g, '&quot;')}" ${openState ? 'open' : ''} ontoggle="ypStrandToggled(this)">
                     <summary class="cursor-pointer select-none text-xs font-bold text-slate-800 mb-2 border-b border-slate-200 pb-1 uppercase tracking-wide flex justify-between items-center gap-2"><span><span class="yp-chev inline-block transition-transform mr-1 text-[9px]">&#9654;</span>${strand}</span><span class="text-[10px] font-semibold text-slate-400 normal-case">${plannedN ? plannedN + ' planned / ' : ''}${visibleTopics.length}</span></summary>
                     <div class="flex flex-col gap-2">`;
@@ -10135,6 +10154,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             renderQuickAddBanner();
         }
 
+        // A "Buffer" is a spare week for catching up or extending. It is armed like a library topic, then dropped on empty weeks.
+        function armBuffer() {
+            if (armedTopic && armedTopic.buffer) armedTopic = null;
+            else armedTopic = { strand: 'Buffer', subtopic: 'Buffer', buffer: true, id: Date.now().toString() + Math.random().toString(36).slice(2, 6) };
+            renderLibrary();
+            renderTermGrids();
+            renderQuickAddBanner();
+        }
         function placeArmedTopic(termIndex, weekIndex) {
             if (!armedTopic) return;
             const slots = yearPlannerState.terms[termIndex];
@@ -10164,7 +10191,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 learningTasks: '',
                 duration: 1,
                 assessment: null,
-                unitWeek: 1
+                unitWeek: 1,
+                ...(armedTopic.buffer ? { buffer: true, isCustom: true } : {})
             };
             ypRenumber(armedTopic.id);
             renderTermGrids();
@@ -10190,6 +10218,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             const el = document.getElementById('yp-armbar');
             if (!el) return;
             // Once at least one topic is in the plan the idle help line goes away (the armed line still shows while a topic is picked up).
+            const bb = document.getElementById('yp-buffer-btn'); if (bb) bb.classList.toggle('yp-buffer-armed', !!(armedTopic && armedTopic.buffer));
             const started = ypHasAnyTopic();
             ypSyncStartHere(started);
             if (!armedTopic && started) { el.classList.add('hidden'); el.classList.remove('flex'); el.innerHTML = ''; return; }
@@ -10197,8 +10226,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             el.innerHTML = armedTopic
                 ? `<span>⚡ Click any empty week to place <strong>${ypEsc(armedTopic.subtopic)}</strong>. Click it again in the library, or Cancel, to stop.</span>
                    <button onclick="armedTopic=null; renderLibrary(); renderTermGrids(); renderQuickAddBanner();" class="underline hover:no-underline">Cancel</button>`
-                : `<span>⚡ Click a topic in the library, then click empty weeks to place it. Then press the flashing red <strong>📝 Add Assessment</strong> button on a placed topic to add its assessment.</span>`;
-            showFirstTimeTip('quickadd', 'tip-quickadd', 'Click a topic, then click empty weeks to drop it in (one week per click). To add an assessment, press the flashing red 📝 button on the topic once it is placed.');
+                : `<span>⚡ Click a topic in the library, then click empty weeks to place it. Then press the flashing red <strong>📝 Add Assessment</strong> button on a placed topic to add its assessment, or its small <strong>✕</strong> if there is none.</span>`;
+            showFirstTimeTip('quickadd', 'tip-quickadd', 'Click a topic, then click empty weeks to drop it in (one week per click). To add an assessment, press the flashing red 📝 button on the topic once it is placed (or its small ✕ if there is none).');
         }
 
         // Numbers the weeks of one topic in order (1, 2, 3 ...) across every term it sits in, and keeps its assessment inside the topic.
@@ -10209,7 +10238,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function ypRenumber(id) {
             const list = ypTopicSlots(id), n = list.length;
+            const none = list.some(x => x.slot.noAssessment) && !list.some(x => x.slot.assessment);   // "No assessment" is kept for every week of the topic
             list.forEach((x, k) => {
+                if (none) x.slot.noAssessment = true; else delete x.slot.noAssessment;
                 x.slot.unitWeek = k + 1; x.slot.duration = n;
                 const a = x.slot.assessment;
                 if (a) {
@@ -10265,12 +10296,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 ${ypShadeOverlay(t, i, span)}
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-sm mb-1 line-clamp-2" title="${titleText}">${titleText}</h4>
-                                    ${ypDb && ypDb.meta && ypDb.meta[slot.subtopic] ? `<div class="mt-0.5">${ypSeniorPills(ypDb.meta[slot.subtopic]).replace('ml-1 ', '')}</div>` : `<p class="text-xs text-slate-500 truncate" title="${slot.subtopic}">${slot.subtopic}</p>`}
+                                    ${ypDb && ypDb.meta && ypDb.meta[slot.subtopic] ? `<div class="mt-0.5">${ypSeniorPills(ypDb.meta[slot.subtopic]).replace('ml-1 ', '')}</div>` : (slot.buffer ? `<p class="text-xs text-slate-500 truncate">Spare week to catch up or extend</p>` : `<p class="text-xs text-slate-500 truncate" title="${slot.subtopic}">${slot.subtopic}</p>`)}
                                     ${ypChoiceNote(ypDb, slot.subtopic)}
                                 </div>
-                                <div>${assStrip}<div class="mt-3 flex ${span > 1 ? 'justify-between items-end' : 'flex-col items-start'} gap-1">
-                                    <span class="flex ${span > 1 ? 'items-center' : 'flex-col items-start'} gap-1 min-w-0"><span class="text-[10px] font-bold text-whsblue-700 bg-whsblue-50 px-2 py-1 rounded-md uppercase tracking-wider border border-whsblue-100 whitespace-nowrap">${span} Wk${span>1?'s':''}</span>
-                                    <button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn ${slot.assessment ? 'has' : 'need'}" title="${slot.assessment ? 'Change or remove the assessment' : 'Add an assessment to this topic'}">${span > 1 ? (slot.assessment ? '📝 Edit' : '📝 Add Assessment') : (slot.assessment ? '📝' : '📝 +')}</button></span>
+                                <div>${assStrip}<div class="mt-3 flex ${span > 1 ? 'justify-between items-end flex-wrap' : 'flex-col items-start'} gap-1">
+                                    <span class="flex ${span > 1 ? 'items-center flex-wrap' : 'flex-col items-start'} gap-1 min-w-0"><span class="text-[10px] font-bold text-whsblue-700 bg-whsblue-50 px-2 py-1 rounded-md uppercase tracking-wider border border-whsblue-100 whitespace-nowrap">${span} Wk${span>1?'s':''}</span>
+                                    ${slot.buffer ? '' : (slot.assessment
+                                        ? `<button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn has" title="Change or remove the assessment">${span > 1 ? '📝 Edit' : '📝'}</button>`
+                                        : slot.noAssessment
+                                            ? `<button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn none" title="No assessment for this topic. Click to add one.">${span >= 4 ? '📝 No assessment' : (span > 1 ? '📝 None' : '📝 ✕')}</button>`
+                                            : `<span class="yp-ass-grp"><button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn need" title="Add an assessment to this topic">${span >= 4 ? '📝 Add Assessment' : (span > 1 ? '📝 Add' : '📝 +')}</button><button onclick="ypNoAssess('${slot.id}')" class="yp-ass-x" title="No assessment for this topic" aria-label="No assessment for this topic">✕</button></span>`)}</span>
                                     <button onclick="removeTopic(${t}, '${slot.id}')" class="text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors p-1.5 rounded-md" title="Remove Topic">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                                     </button>
@@ -10788,6 +10823,23 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         // ---- Add, change or remove the assessment of a placed topic ----
         var ypAssessEditId = null;
+        var ypAssessChoice = 'yes';
+        function setAssessChoice(v) {
+            ypAssessChoice = v === 'none' ? 'none' : 'yes';
+            const on = 'bg-[#002066] text-white border-[#002066]', off = 'bg-white text-slate-600 border-slate-300 hover:bg-slate-50';
+            const y = document.getElementById('ass-choice-yes'), n = document.getElementById('ass-choice-none');
+            y.className = 'flex-1 px-3 py-2 rounded-lg border text-sm font-bold ' + (ypAssessChoice === 'yes' ? on : off);
+            n.className = 'flex-1 px-3 py-2 rounded-lg border text-sm font-bold ' + (ypAssessChoice === 'none' ? on : off);
+            y.setAttribute('aria-checked', ypAssessChoice === 'yes' ? 'true' : 'false'); n.setAttribute('aria-checked', ypAssessChoice === 'none' ? 'true' : 'false');
+            const f = document.getElementById('ass-modal-fields');
+            f.style.opacity = ypAssessChoice === 'none' ? '0.4' : ''; f.style.pointerEvents = ypAssessChoice === 'none' ? 'none' : '';
+            f.querySelectorAll('select').forEach(x => { x.disabled = ypAssessChoice === 'none'; });
+        }
+        // The small ✕ beside the flashing button: this topic has no assessment
+        function ypNoAssess(id) {
+            ypTopicSlots(id).forEach(x => { x.slot.assessment = null; x.slot.noAssessment = true; });
+            renderTermGrids(); saveState('Marked: no assessment for this topic');
+        }
         function openAssessModal(id) {
             const list = ypTopicSlots(id);
             if (!list.length) return;
@@ -10801,6 +10853,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (a) { st.innerHTML = '<option value="' + (a.startOffset || 1) + '"></option>'; st.value = String(a.startOffset || 1); }
             document.getElementById('ass-modal-remove').style.visibility = a ? 'visible' : 'hidden';
             updateAssessEditUI();
+            setAssessChoice(!a && list[0].slot.noAssessment ? 'none' : 'yes');
             const m = document.getElementById('ass-modal'); m.classList.remove('hidden'); m.classList.add('flex');
         }
         function updateAssessEditUI() {
@@ -10820,8 +10873,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function saveAssessEdit() {
             const list = ypTopicSlots(ypAssessEditId);
             if (!list.length) { closeAssessModal(); return; }
+            if (ypAssessChoice === 'none') { list.forEach(x => { x.slot.assessment = null; x.slot.noAssessment = true; }); closeAssessModal(); renderTermGrids(); saveState('Marked: no assessment for this topic'); return; }
             const len = document.getElementById('ass-modal-length').value, start = parseInt(document.getElementById('ass-modal-start').value) || 1;
-            list.forEach(x => { x.slot.assessment = { startOffset: start, length: len, weeks: ypAssessWeeksOf(len) }; });
+            list.forEach(x => { x.slot.assessment = { startOffset: start, length: len, weeks: ypAssessWeeksOf(len) }; delete x.slot.noAssessment; });
             closeAssessModal(); renderTermGrids(); saveState('Assessment saved');
         }
         function removeAssessEdit() {
