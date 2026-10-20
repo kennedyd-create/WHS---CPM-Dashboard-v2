@@ -2391,7 +2391,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
 
             <div id="df-from-plan" class="hidden max-w-5xl mx-auto bg-sky-50 border-2 border-sky-300 rounded-xl px-4 py-3 text-sm text-sky-900">
-                <strong>📋 Opened from your unit plan.</strong> <span id="df-from-plan-text"></span> The lesson details and the differentiation from the plan are already filled in below. Paste the actual task if you have it, or leave it empty and the AI will build the task from the plan details.
+                <strong>📋 Opened from your unit plan.</strong> <span id="df-from-plan-text"></span>
+                <div id="df-from-plan-list" class="mt-1 text-xs"></div>
+                The lesson details and the differentiation from the plan are already filled in below. Paste the actual task if you have it, or leave it empty and the AI will build the task from the plan details. Add your own specifics in the yellow box at the bottom.
             </div>
 
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-[#002066] max-w-5xl mx-auto bg-white shadow-sm space-y-7">
@@ -2422,6 +2424,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             <label class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Key knowledge<input id="df-kn" type="text" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-300 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
                             <label class="text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Main activity<input id="df-act" type="text" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-300 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
                         </div>
+                        <label class="block mt-3 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Success criteria (separate each with a semicolon)
+                            <input id="df-sc" type="text" placeholder="e.g. I can name the theme; I can find evidence in the text" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-300 bg-white text-sm font-normal normal-case tracking-normal text-slate-800">
+                        </label>
                         <label class="block mt-3 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Differentiation already planned (the AI builds on this)
                             <input id="df-plan" type="text" placeholder="e.g. Provide sentence starters for question framing for scaffolding" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-300 bg-white text-sm font-normal normal-case tracking-normal text-slate-800">
                         </label>
@@ -2475,8 +2480,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <label class="inline-flex items-center gap-1.5 font-bold text-[#002066]"><input id="df-keep" type="checkbox" checked> Same learning intention for everyone</label>
                         <label class="inline-flex items-center gap-1.5 font-bold text-[#002066]"><input id="df-note" type="checkbox" checked> Teacher note on what changed</label>
                     </div>
-                    <label class="block mt-3 text-[10px] font-extrabold uppercase tracking-widest text-slate-500">Anything else you want (optional)
-                        <input id="df-extra" type="text" placeholder="e.g. keep it to one page, include a worked example" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-300 bg-white text-sm font-normal normal-case tracking-normal text-slate-800">
+                    <label class="block mt-3 rounded-xl border-2 border-amber-400 bg-amber-50 px-4 py-3 text-[10px] font-extrabold uppercase tracking-widest text-amber-900">✏️ Your specifics or changes (optional)
+                        <textarea id="df-extra" rows="3" placeholder="e.g. my class has just finished fractions, keep it to one page, include a worked example, swap the group task for individual work" class="w-full mt-1 p-2 rounded-lg border-2 border-amber-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></textarea>
                     </label>
                 </div>
             </div>
@@ -3103,6 +3108,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Practical lessons by percentage</mark>. In the Unit Planner practical section choose <strong>% of lessons</strong> (25, 50, 75, 100 or your own number) for PE, Drama, Music, Technology and other hands-on subjects. Those lessons are planned as whole practical lessons and labelled <strong>[PRACTICAL]</strong>.</li>
 <li><mark class="wn-key">Bigger topics, own devices, mixed lessons</mark>. A topic that needs several lessons can now be one row (for example <strong>Lessons 5-7</strong>) where not every stage runs every lesson and most time is You Do. Prompts now know we are a <strong>bring-your-own-device</strong> school (no booking Chromebooks), and lessons can be bookwork, on device or a <strong>mix of both</strong>.</li>
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
+<li><mark class="wn-key">Success criteria and your own notes in the AI links</mark>. The "Make resources with AI" and "Differentiate this lesson" links now carry each lesson's success criteria. Both pages open with a short "From your unit plan" summary with a tick beside each line (pre-set for the type of resource, for example slides get everything and flashcards get the learning intention and key knowledge; shaded ticks are needed for that resource and stay on) and a yellow box for your own specifics or changes.</li>
 <li><mark class="wn-key">Year Planner: short assessment labels</mark>. Assessments now have an optional <strong>Type or title</strong> (Test, Quiz, Report or your own). The year calendar shows that short label instead of the topic name, cut to fit so the row stays slim.</li>
 <li><mark class="wn-key">Year Planner: year level camps</mark>. The 2027 camps (Year 7 Feb, Year 8 Mar, Year 9 Aug, Year 10 Nov to Dec) appear on the calendar, but only when that year level is selected.</li>
 <li><mark class="wn-key">Year Planner: Buffer and closed strands</mark>. A new <strong>⏳ Buffer</strong> button next to Own topic lets you click empty weeks to add a spare buffer week. The Curriculum Strands now start <strong>closed</strong> (they still open when you search). Your own topics and buffers are also kept now when you reload.</li>
@@ -3501,6 +3507,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
+                        <li><mark class="wn-key">AI links carry success criteria</mark>: resource and differentiate pages show a plan summary with ticks for what goes into the prompt, and a box for your own changes.</li>
                         <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
                         <li><mark class="wn-key">Year level camps</mark>: shown on the Year Planner calendar for Years 7 to 10 only.</li>
                         <li><mark class="wn-key">Year Planner</mark>: a Buffer button for spare weeks, strands start closed, and your own topics are kept after a reload.</li>
@@ -12162,8 +12169,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return resEnc([unitState.dept, yr, t, resFlags() || '-', dv].join('~'));
         }
         function resLinkHref(yr, t, vars) {
-            vars = vars || { n: '1', r: '[RES+codes]', li: '[LI+words]', kn: '[KN+words]', a: '[ACT+words]', dm: '[DM+words]', st: '[ST+words]' };
-            return resBaseUrl() + '?res=all&amp;u=' + resFixedToken(yr, t) + '&amp;n=' + vars.n + '&amp;r=' + vars.r + '&amp;li=' + vars.li + '&amp;kn=' + vars.kn + '&amp;a=' + vars.a + '&amp;dm=' + vars.dm + '&amp;st=' + vars.st;
+            vars = vars || { n: '1', r: '[RES+codes]', li: '[LI+words]', kn: '[KN+words]', a: '[ACT+words]', dm: '[DM+words]', st: '[ST+words]', sc: '[SC+words]' };
+            return resBaseUrl() + '?res=all&amp;u=' + resFixedToken(yr, t) + '&amp;n=' + vars.n + '&amp;r=' + vars.r + '&amp;li=' + vars.li + '&amp;kn=' + vars.kn + '&amp;a=' + vars.a + '&amp;dm=' + vars.dm + '&amp;st=' + vars.st + '&amp;sc=' + vars.sc;
         }
         function resLinkA(yr, t) {
             return '<a href="' + resLinkHref(yr, t) + '" target="_blank">🤖 Make resources with AI</a>';
@@ -12174,8 +12181,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return asPara ? '\n                <p>' + inner + '</p>' : '<br><br>' + inner;
         }
         function resInstruction(yr, t) {
-            var ex = '<a href="' + resLinkHref(yr, t, { n: '3', r: 'ex+vp+rd', li: 'We+are+learning+to+compare+two+texts', kn: 'theme+and+evidence', a: 'students+annotate+and+discuss', dm: 'MIX+bookwork+first+25+min+then+device', st: 'Connect+retrieval+quiz+I+Do+model+We+Do+annotate+You+Do+write+Review+exit+ticket' }) + '" target="_blank">🤖 Make resources with AI</a>';
-            return 'PROMPT LINKS: Every lesson\'s Preparation/ Resources cell has a "Make resources with AI" link. If a row covers several lessons (for example Lessons 5-7), give one link per lesson in that row, labelled "Lesson 5", "Lesson 6" and so on, each with its own n= number and its own ST. The address is FIXED: copy everything from the start of the href up to and including "&amp;n=" exactly, character for character, and never rename, reorder, add or drop a parameter (they are res, u, n, r, li, kn, a, dm and st, in that order). Only these change per lesson: the number after n=, and the placeholders [RES+codes], [LI+words], [KN+words], [ACT+words], [DM+words] and [ST+words]. LI = the lesson\'s Learning Intention, KN = its key knowledge or vocabulary, ACT = what students mainly do (each 4 to 15 words). DM = how THAT lesson is delivered, which MUST match its Device use: BOOK (no devices), DEVICE or MIX, then up to 10 words on the split (for example MIX+bookwork+first+30+min+then+on+device). ST = THAT lesson\'s stages in the order they run, 6 to 25 words naming what happens in each (for example Connect+retrieval+quiz+I+Do+model+We+Do+annotate+You+Do+write+Review+exit+ticket). Write every placeholder as plain words joined with + signs, using only letters, numbers and + (no spaces, punctuation or macrons: Maori, not Māori). For [RES+codes] choose the 3 to 6 codes below that suit THAT lesson (not the same set every time), joined with +, for example ex+vp+rd. Use only these codes: ws worksheet; sl slides; fc flashcards; mm mix-and-match or card sort; vis find graphs, maps and photos; ex exit ticket or starter; qz quiz; rd reading with questions; wf writing frame; vp vocabulary pack; lb labelling sheet; px practical or experiment sheet (only for practical lessons); rb rubric or checklist (only where something is assessed); pj project brief (only for project lessons); db discussion or debate; rp role-play or scenario cards; tn teacher notes (only for topics outside most teachers\' specialty); hw homework task' + (hwActive() ? ' (use it for lessons that have homework)' : '') + '; pn whānau note or Classroom post; mx maths worked examples and spot-the-mistake (Maths only); dg dialogue and speaking cards (languages and Māori only); pf performance checklist and peer feedback (Arts, PE and Health only). This link is IN ADDITION to the normal live links to websites, clips, documents and data: keep those in the same cell, written out in full above it. Keep each href on one line. Example for Lesson 3 (copy its layout exactly): ' + ex + '\n\n';
+            var ex = '<a href="' + resLinkHref(yr, t, { n: '3', r: 'ex+vp+rd', li: 'We+are+learning+to+compare+two+texts', kn: 'theme+and+evidence', a: 'students+annotate+and+discuss', dm: 'MIX+bookwork+first+25+min+then+device', st: 'Connect+retrieval+quiz+I+Do+model+We+Do+annotate+You+Do+write+Review+exit+ticket', sc: 'I+can+name+the+theme;I+can+find+evidence+in+the+text;I+can+compare+two+texts' }) + '" target="_blank">🤖 Make resources with AI</a>';
+            return 'PROMPT LINKS: Every lesson\'s Preparation/ Resources cell has a "Make resources with AI" link. If a row covers several lessons (for example Lessons 5-7), give one link per lesson in that row, labelled "Lesson 5", "Lesson 6" and so on, each with its own n= number and its own ST. The address is FIXED: copy everything from the start of the href up to and including "&amp;n=" exactly, character for character, and never rename, reorder, add or drop a parameter (they are res, u, n, r, li, kn, a, dm, st and sc, in that order). Only these change per lesson: the number after n=, and the placeholders [RES+codes], [LI+words], [KN+words], [ACT+words], [DM+words], [ST+words] and [SC+words]. LI = the lesson\'s Learning Intention, KN = its key knowledge or vocabulary, ACT = what students mainly do (each 4 to 15 words). DM = how THAT lesson is delivered, which MUST match its Device use: BOOK (no devices), DEVICE or MIX, then up to 10 words on the split (for example MIX+bookwork+first+30+min+then+on+device). ST = THAT lesson\'s stages in the order they run, 6 to 25 words naming what happens in each (for example Connect+retrieval+quiz+I+Do+model+We+Do+annotate+You+Do+write+Review+exit+ticket). SC = THAT lesson\'s success criteria, copied from the plan (2 to 4 criteria, 3 to 10 words each): join the words of each criterion with + and separate the criteria with a semicolon (;), the only punctuation allowed here (for example I+can+name+the+theme;I+can+find+evidence+in+the+text). Write every other placeholder as plain words joined with + signs, using only letters, numbers and + (no spaces, punctuation or macrons: Maori, not Māori). For [RES+codes] choose the 3 to 6 codes below that suit THAT lesson (not the same set every time), joined with +, for example ex+vp+rd. Use only these codes: ws worksheet; sl slides; fc flashcards; mm mix-and-match or card sort; vis find graphs, maps and photos; ex exit ticket or starter; qz quiz; rd reading with questions; wf writing frame; vp vocabulary pack; lb labelling sheet; px practical or experiment sheet (only for practical lessons); rb rubric or checklist (only where something is assessed); pj project brief (only for project lessons); db discussion or debate; rp role-play or scenario cards; tn teacher notes (only for topics outside most teachers\' specialty); hw homework task' + (hwActive() ? ' (use it for lessons that have homework)' : '') + '; pn whānau note or Classroom post; mx maths worked examples and spot-the-mistake (Maths only); dg dialogue and speaking cards (languages and Māori only); pf performance checklist and peer feedback (Arts, PE and Health only). This link is IN ADDITION to the normal live links to websites, clips, documents and data: keep those in the same cell, written out in full above it. Keep each href on one line. Example for Lesson 3 (copy its layout exactly): ' + ex + '\n\n';
         }
         // ---------- Unit plan enhancements: assessment map, coverage, materials and more (v2.9) ----------
         function unitPlusOn() { return resAnyTemplate() && unitState.plus !== false; }
@@ -12270,16 +12277,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function resBuildPrompt() {
             var s = resState; if (!s) return '';
-            var def = RES_DEF[s.kind];
+            var def = RES_DEF[s.kind], U = Object.assign({}, s.use || resUseFor(s.kind), resReqFor(s.kind));
             var isLeg = /Level/.test(s.y);
             var p = '### System Role\nAct as an expert ' + s.d + ' teacher and resource designer at a New Zealand secondary school.\n\n';
             p += '### Context\nSubject: ' + s.d + '\nYear Level: ' + s.y + '\nUnit topic: "' + s.t + '"\n';
             if (s.n) p += 'Lesson ' + s.n + ' of the unit\n';
-            if (s.li) p += 'Learning Intention: ' + s.li + '\n';
-            if (s.kn) p += 'Key knowledge: ' + s.kn + '\n';
-            if (s.a) p += 'Main student activity planned: ' + s.a + '\n';
-            if (s.st) p += 'Lesson stages in the plan, in order: ' + s.st + '\n';
-            if (s.dm) p += 'How this lesson is delivered (bookwork or device): ' + s.dm + '\n';
+            if (s.li && U.li) p += 'Learning Intention: ' + s.li + '\n';
+            if (s.sc && U.sc) p += 'Success criteria for this lesson (the resource should let students practise and show each one):\n' + resScList(s.sc).map(function(x) { return '- ' + x; }).join('\n') + '\n';
+            if (s.kn && U.kn) p += 'Key knowledge: ' + s.kn + '\n';
+            if (s.a && U.a) p += 'Main student activity planned: ' + s.a + '\n';
+            if (s.st && U.st) p += 'Lesson stages in the plan, in order: ' + s.st + '\n';
+            if (s.dm && U.dm) p += 'How this lesson is delivered (bookwork or device): ' + s.dm + '\n';
             if (s.lp) p += 'The teacher pasted this lesson row from the unit plan. Treat it as the source of truth and follow its stages, timings, activities and resources:\n"""\n' + s.lp + '\n"""\n';
             p += '\n### Task\n' + def.build(s, function(id) { return resOpt(s.kind, id); });
             if (resDocsOn && /print-ready HTML code block/.test(p)) p += DOCSFMT;
@@ -12290,13 +12298,48 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (s.f.indexOf('m') > -1) p += 'Weave in Mātauranga Māori where it fits naturally.\n';
             if (s.f.indexOf('l') > -1) p += 'Build in explicit disciplinary literacy (key vocabulary, reading or writing support).\n';
             if (s.f.indexOf('n') > -1) p += 'Build in explicit disciplinary numeracy.\n';
-            if (!def.noDev) p += (resLessonDeviceLine(s.dm) || resDeviceLine(s.dv));
+            if (!def.noDev) p += (resLessonDeviceLine(U.dm ? s.dm : '') || resDeviceLine(s.dv));
             if (def.ownLinks) p += 'Do NOT invent website addresses or deep links: the only links you give are the Google search links described above.\n';
             else p += 'Do NOT invent website addresses or deep links. If a clip or site is needed, give a search suggestion such as [Search YouTube: "exact words"] and write TEACHER TO CHECK after any clip.\n';
             if (def.img) p += 'Where a picture or diagram is needed, insert a placeholder in this format: [📸 INSERT IMAGE: detailed description - Search query: "exact google image search terms"].\n';
             p += 'Do not use real student names. ' + (def.shortChat ? 'Keep any chat message short: just the file or link and one line on how to open it.' : 'No meta-commentary: output only the resource.') + '\n';
-            if (s.extra) p += 'Teacher request: ' + s.extra + '\n';
+            if (s.extra) p += 'TEACHER SPECIFICS AND CHANGES (follow these first; if they differ from the plan details above, the teacher\'s words win): ' + s.extra + '\n';
             return p;
+        }
+        // Which lesson details go into the prompt for each kind of resource (the teacher can tick or untick them in the blue box)
+        var RES_USE_FIELDS = [['li', 'Learning Intention'], ['sc', 'Success criteria'], ['kn', 'Key knowledge'], ['a', 'Main activity'], ['dm', 'Delivery'], ['st', 'Stages']];
+        var RES_USE_DEF = {
+            sl: 'li sc kn a dm st', ws: 'li sc kn a dm', fc: 'kn', mm: 'kn', vp: 'kn', lb: 'li kn', vis: 'kn a', ex: 'li sc kn', qz: 'li sc kn',
+            rd: 'li sc kn a', wf: 'li sc kn a', rb: 'li sc', pf: 'li sc', tn: 'li kn a st', pn: 'li kn a st', hw: 'li sc kn',
+            px: 'li sc kn a dm', pj: 'li sc kn a dm', db: 'li sc kn a dm', rp: 'li sc kn a dm', mx: 'li sc kn a dm', dg: 'li sc kn a dm'
+        };
+        // Details the resource's own wording depends on: always ticked, shaded, and cannot be unticked
+        var RES_USE_REQ = {
+            sl: 'li sc kn', ws: 'li kn', fc: 'li kn', mm: 'li', vis: 'li', ex: 'li', qz: 'li kn', vp: 'kn', lb: 'kn', rb: 'li', db: 'kn', rp: 'li',
+            tn: 'kn', mx: 'kn', dg: 'kn', pf: 'li'
+        };
+        function resReqFor(kind) { var o = {}; (RES_USE_REQ[kind] || '').split(' ').forEach(function(k) { if (k) o[k] = true; }); return o; }
+        function resUseFor(kind) {
+            var o = {}; (RES_USE_DEF[kind] || 'li sc kn a').split(' ').forEach(function(k) { o[k] = true; });
+            Object.keys(resReqFor(kind)).forEach(function(k) { o[k] = true; });
+            return o;
+        }
+        function resUseSet(k, on) { if (!resState) return; if (resReqFor(resState.kind)[k]) on = true; resState.use = resState.use || {}; resState.use[k] = !!on; resRender(); }
+        // Success criteria travel in the link as one text, criteria separated by semicolons
+        function resScList(sc) { return String(sc || '').split(/\s*;\s*/).map(function(x) { return x.trim(); }).filter(Boolean); }
+        function resCut(x, n) { x = String(x || ''); return x.length > n ? x.slice(0, n - 1).trim() + '…' : x; }
+        // The short "what came from your unit plan" box at the top of the popup. Each line has a tick: only ticked lines go into the prompt.
+        function resSummaryHtml(s) {
+            var U = Object.assign({}, s.use || resUseFor(s.kind), resReqFor(s.kind)), REQ = resReqFor(s.kind), nReq = 0, rows = [];
+            RES_USE_FIELDS.forEach(function(f) {
+                var k = f[0], v = s[k]; if (!v) return;
+                var txt = k === 'sc' ? resScList(v).map(function(x) { return ypEsc(resCut(x, 70)); }).join(' &bull; ') : ypEsc(resCut(v, 110));
+                if (REQ[k]) { nReq++; rows.push('<li class="list-none -ml-5"><label class="cursor-not-allowed rounded bg-sky-200/70 px-1.5 py-0.5 inline-block" title="This resource needs this detail, so it is always included"><input type="checkbox" class="mr-1.5 align-middle cursor-not-allowed" checked disabled><strong>' + f[1] + ':</strong> ' + txt + ' <span class="text-[10px] font-bold text-sky-800">(needed)</span></label></li>'); return; }
+                rows.push('<li class="list-none -ml-5"><label class="cursor-pointer' + (U[k] ? '' : ' opacity-50') + '"><input type="checkbox" class="mr-1.5 align-middle" ' + (U[k] ? 'checked ' : '') + 'onchange="resUseSet(\'' + k + '\', this.checked)"><strong>' + f[1] + ':</strong> ' + txt + '</label></li>');
+            });
+            var kind = RES_DEF[s.kind] ? RES_DEF[s.kind].label.replace(/^\S+\s/, '') : 'resource';
+            var head = '<strong>📋 From your unit plan:</strong> ' + ypEsc([s.d, s.y, s.t].filter(Boolean).join(' · ')) + (s.n ? ' · <strong>Lesson ' + ypEsc(s.n) + '</strong>' : '');
+            return head + (rows.length ? '<ul class="mt-1.5 space-y-1 pl-5">' + rows.join('') + '</ul><div class="mt-1.5 text-[11px] text-sky-800">Ticked lines go into the prompt. They are set for <strong>' + ypEsc(kind.toLowerCase()) + '</strong>; tick or untick any you like' + (nReq ? ' (shaded ones are needed for this resource and stay on)' : '') + '. Edit the wording in the boxes below, and add your own specifics in the yellow box.</div>' : '<div class="mt-1">No lesson details came through the link. Fill them in below.</div>');
         }
         function resRender() {
             if (!resState) return;
@@ -12304,7 +12347,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             resState.li = resClean(g('res-li').value, 300);
             resState.kn = resClean(g('res-kn').value, 300);
             resState.a = resClean(g('res-act').value, 300);
-            resState.extra = resClean(g('res-extra').value, 300);
+            resState.extra = resClean(g('res-extra').value, 600);
+            resState.sc = resClean(g('res-sc').value, 500);
+            var sm = document.getElementById('res-summary'); if (sm) sm.innerHTML = resSummaryHtml(resState);
             resState.st = resClean(g('res-st').value, 400);
             resState.dm = resClean(g('res-dm').value, 200);
             resState.lp = String(g('res-lp').value || '').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, ' ').trim().slice(0, 2500);
@@ -12366,7 +12411,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function resToggleMore() { if (!resState) return; resState.moreOpen = !resState.moreOpen; resBuildTabs(); }
         function resSetKind(k) {
             if (!resState) return;
+            var prevKind = resState.kind;
             resState.kind = RES_DEF[k] ? k : 'ws';
+            if (!resState.use || prevKind !== resState.kind) resState.use = resUseFor(resState.kind);
             // a type picked from the "More" list joins the suggested row and the list closes again
             if (resState.show.indexOf(resState.kind) === -1) { resState.show.push(resState.kind); resState.moreOpen = false; }
             resBuildTabs();
@@ -12379,7 +12426,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             resState = st;
             var m = document.getElementById('res-modal'); if (!m) return;
             var set = function(id, v) { var e = document.getElementById(id); if (e) e.value = v; };
-            set('res-li', st.li); set('res-kn', st.kn); set('res-act', st.a); set('res-extra', ''); set('res-st', st.st || ''); set('res-dm', st.dm || ''); set('res-lp', '');
+            set('res-li', st.li); set('res-kn', st.kn); set('res-act', st.a); set('res-sc', st.sc || ''); set('res-extra', ''); set('res-st', st.st || ''); set('res-dm', st.dm || ''); set('res-lp', '');
             var lpb = document.getElementById('res-lp-box'); if (lpb) lpb.open = false;
             var ctx = document.getElementById('res-context');
             if (ctx) ctx.textContent = st.d + ' · ' + st.y + ' · ' + st.t;
@@ -12451,7 +12498,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var k = q.get('res');
             // Be forgiving: an AI sometimes rewrites the link. Open the popup when it has the lesson details even without res=
             if (k !== 'all' && !RES_DEF[k]) {
-                if (!(q.get('li') || q.get('kn') || q.get('r') || q.get('c'))) return false;
+                if (!(q.get('li') || q.get('kn') || q.get('r') || q.get('c') || q.get('sc'))) return false;
                 k = 'all';
             }
             var suggested = [];
@@ -12472,7 +12519,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 kind: start, show: show, suggested: suggested.length > 0, moreOpen: false, o: {},
                 d: d, y: y, t: t,
                 n: n, f: f, dv: /^[0-9]{1,3}$/.test(dv) ? String(Math.min(100, parseInt(dv, 10))) : 'none',
-                li: resClean(pick('li'), 300), kn: resClean(pick('kn'), 300), a: resClean(pick('a', 'act', 'activity'), 300), extra: '', st: resClean(pick('st', 'stages'), 400), dm: resClean(pick('dm', 'device'), 200), lp: ''
+                li: resClean(pick('li'), 300), kn: resClean(pick('kn'), 300), a: resClean(pick('a', 'act', 'activity'), 300), extra: '', st: resClean(pick('st', 'stages'), 400), dm: resClean(pick('dm', 'device'), 200), sc: resClean(pick('sc', 'success'), 500), lp: ''
             });
             return true;
         }
@@ -12575,7 +12622,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function dfBuildPrompt() {
             var v = function(id) { return String(dfById(id).value || '').trim(); };
             var dept = v('df-dept'), year = v('df-year'), topic = dfClean(v('df-topic'), 120), task = String(dfById('df-task').value || '').trim().slice(0, 30000);
-            var li = dfClean(v('df-li'), 300), kn = dfClean(v('df-kn'), 300), act = dfClean(v('df-act'), 300), plan = dfClean(v('df-plan'), 400), need = dfClean(v('df-need'), 300), extra = dfClean(v('df-extra'), 300);
+            var li = dfClean(v('df-li'), 300), kn = dfClean(v('df-kn'), 300), act = dfClean(v('df-act'), 300), plan = dfClean(v('df-plan'), 400), need = dfClean(v('df-need'), 300), extra = dfClean(v('df-extra'), 600), sc = dfClean(v('df-sc'), 500);
+            if (dfUse.li === false) li = ''; if (dfUse.kn === false) kn = ''; if (dfUse.a === false) act = ''; if (dfUse.sc === false) sc = ''; if (dfUse.df === false) plan = '';
             var out = v('df-out') || 'versions', html = !!dfById('df-html').checked, keep = !!dfById('df-keep').checked, note = !!dfById('df-note').checked;
             var codes = dfSel.length ? dfSel.slice() : ['sp'];
             var simAB = codes.indexOf('sp') > -1 && (v('df-simp') || 'ab') === 'ab';
@@ -12586,13 +12634,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (topic) ctx += 'Topic: "' + topic + '"\n';
             var n = dfState.n; if (n) ctx += 'Lesson ' + n + ' of the unit\n';
             if (li) ctx += 'Learning Intention: ' + li + '\n';
+            if (sc) ctx += 'Success criteria for this lesson:\n' + resScList(sc).map(function(x) { return '- ' + x; }).join('\n') + '\n';
             if (kn) ctx += 'Key knowledge: ' + kn + '\n';
             if (act) ctx += 'Main student activity planned: ' + act + '\n';
             if (plan) ctx += 'Differentiation already planned in the unit plan: ' + plan + '\n';
             if (ctx) p += '### Context\n' + ctx + '\n';
             p += '### The task to differentiate\n';
             if (task) p += '"""\n' + task + '\n"""\n\n';
-            else if (li || act || kn) p += '(No task was pasted in. Use the lesson details above: first write the student task for this lesson, then differentiate it as asked below.)\n\n';
+            else if (li || act || kn || sc) p += '(No task was pasted in. Use the lesson details above: first write the student task for this lesson, then differentiate it as asked below.)\n\n';
             else p += '[Paste your lesson, task or worksheet here]\n\n';
             p += '### What to do\nDifferentiate the task in ' + (codes.length === 1 ? 'this way' : 'these ' + codes.length + ' ways') + ':\n';
             codes.forEach(function(c, i) {
@@ -12608,7 +12657,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (out === 'list') p += 'Do NOT write new student resources. Give a short teacher list: for each kind above, 4 to 6 practical, specific adaptations to this task, written as things the teacher can say, add or change.\n';
             else if (out === 'combined') p += 'Give ONE task for the whole class that builds all of the chosen supports in (for example optional scaffolds that students can use, and a challenge extension at the end), so every student works from the same page.\n';
             else p += 'Give a SEPARATE, complete, ready-to-use version for each kind above. ' + (simAB ? 'The simplified content is called "Version A" and "Version B" as described above; name every other version neutrally by the support it gives (for example "Word bank version"). ' : 'Name the versions neutrally (for example "Version A", "Version B", or by the support it gives, such as "Word bank version"). ') + 'Never label a version with words such as low, weak, easy or hard on the student page.\n';
-            if (keep) p += 'Keep the same learning intention' + (li ? ' ("' + li + '")' : '') + ' and the same success criteria in every version, so all students work toward the same goal. Change how students access and show the learning, not the standard.\n';
+            if (keep) p += 'Keep the same learning intention' + (li ? ' ("' + li + '")' : '') + ' and the same success criteria' + (sc ? ' (listed above)' : '') + ' in every version, so all students work toward the same goal. Change how students access and show the learning, not the standard.\n';
             if (out !== 'list') {
                 if (note) p += 'At the end of each version add one short teacher line: "What changed and why".\n';
                 if (html) p += 'Provide each version as its own clean, print-ready HTML code block (CSS-styled with the WHS colours #002066 and #d1e6f6, with a Name and Date line at the top and space to write answers), so I can save it as a .html file or paste it into a Google Doc. Do not also give a Markdown version.\n';
@@ -12619,10 +12668,26 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (year) p += (/Level/.test(year) ? 'Pitch it at ' + year + ' (NCEA) level.' : 'Pitch it for ' + year + ' students working in the New Zealand Curriculum.') + '\n';
             p += nzSpellingRule + '\n' + BYOD_RULE + '\n' + noLatexRule + '\n';
             p += 'Do NOT invent website addresses or deep links. Do not use real student names. No meta-commentary: output only the differentiated material.\n';
-            if (extra) p += 'Teacher request: ' + extra + '\n';
+            if (extra) p += 'TEACHER SPECIFICS AND CHANGES (follow these first; if they differ from the plan details above, the teacher\'s words win): ' + extra + '\n';
             return p;
         }
+        // Differentiate: every plan detail starts ticked; untick any you do not want in the prompt
+        var dfUse = { li: true, sc: true, kn: true, a: true, df: true };
+        function dfUseSet(k, on) { dfUse[k] = !!on; dfRender(); }
+        function dfSummaryRender() {
+            var fl = document.getElementById('df-from-plan-list'), fp = document.getElementById('df-from-plan');
+            if (!fl || !fp || fp.classList.contains('hidden')) return;
+            var g = function(id) { var e = document.getElementById(id); return e ? dfClean(e.value, 500) : ''; };
+            var fields = [['li', 'Learning Intention', g('df-li')], ['sc', 'Success criteria', g('df-sc')], ['kn', 'Key knowledge', g('df-kn')], ['a', 'Main activity', g('df-act')], ['df', 'Differentiation planned', g('df-plan')]], rows = [];
+            fields.forEach(function(f) {
+                if (!f[2]) return;
+                var txt = f[0] === 'sc' ? resScList(f[2]).map(function(x) { return ypEsc(resCut(x, 70)); }).join(' &bull; ') : ypEsc(resCut(f[2], 110));
+                rows.push('<li class="list-none -ml-5"><label class="cursor-pointer' + (dfUse[f[0]] ? '' : ' opacity-50') + '"><input type="checkbox" class="mr-1.5 align-middle" ' + (dfUse[f[0]] ? 'checked ' : '') + 'onchange="dfUseSet(\'' + f[0] + '\', this.checked)"><strong>' + f[1] + ':</strong> ' + txt + '</label></li>');
+            });
+            fl.innerHTML = rows.length ? '<ul class="mt-1 space-y-1 pl-5">' + rows.join('') + '</ul><div class="mt-1 text-[11px]">Ticked lines go into the prompt. Untick any you do not want.</div>' : '';
+        }
         function dfRender() {
+            dfSummaryRender();
             var ta = document.getElementById('df-prompt'); if (ta) ta.value = dfBuildPrompt();
         }
         var dfState = { n: '' };
@@ -12637,8 +12702,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             popCopyText(ta, done);
         }
         function dfClear() {
-            ['df-task', 'df-li', 'df-kn', 'df-act', 'df-plan', 'df-need', 'df-extra', 'df-topic'].forEach(function(id) { var e = document.getElementById(id); if (e) e.value = ''; });
-            dfSel = []; dfState.n = '';
+            ['df-task', 'df-li', 'df-kn', 'df-act', 'df-sc', 'df-plan', 'df-need', 'df-extra', 'df-topic'].forEach(function(id) { var e = document.getElementById(id); if (e) e.value = ''; });
+            dfSel = []; dfState.n = ''; dfUse = { li: true, sc: true, kn: true, a: true, df: true };
             var fp = document.getElementById('df-from-plan'); if (fp) fp.classList.add('hidden');
             dfBuildChips(); dfRender();
         }
@@ -12669,18 +12734,21 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             dfSetSelect('df-dept', d); dfSetSelect('df-year', y, true);
             var set = function(id, val) { var e = document.getElementById(id); if (e) e.value = val; };
             set('df-topic', t); set('df-task', '');
-            set('df-li', dfClean(pick('li'), 300)); set('df-kn', dfClean(pick('kn'), 300)); set('df-act', dfClean(pick('a', 'act', 'activity'), 300));
+            set('df-sc', dfClean(pick('sc', 'success'), 500)); set('df-li', dfClean(pick('li'), 300)); set('df-kn', dfClean(pick('kn'), 300)); set('df-act', dfClean(pick('a', 'act', 'activity'), 300));
             set('df-plan', dfClean(pick('df', 'diff_note', 'note'), 400));
             var det = document.getElementById('df-details'); if (det) det.open = true;
             var fp = document.getElementById('df-from-plan'), ft = document.getElementById('df-from-plan-text');
-            if (fp) { fp.classList.remove('hidden'); if (ft) ft.textContent = (n ? 'Lesson ' + n + ' · ' : '') + [d, y, t].filter(Boolean).join(' · ') + '.'; }
+            if (fp) {
+                fp.classList.remove('hidden'); if (ft) ft.textContent = (n ? 'Lesson ' + n + ' · ' : '') + [d, y, t].filter(Boolean).join(' · ') + '.';
+                dfUse = { li: true, sc: true, kn: true, a: true, df: true };
+            }
             dfBuildChips(); dfRender();
             return true;
         }
         // Link put in the Differentiation part of each lesson in a Unit Plan template
         function diffLinkHref(yr, t, vars) {
-            vars = vars || { n: '1', dt: '[DT+codes]', df: '[DF+words]', li: '[LI+words]', kn: '[KN+words]', a: '[ACT+words]' };
-            return resBaseUrl() + '?diff=1&amp;u=' + resFixedToken(yr, t) + '&amp;n=' + vars.n + '&amp;dt=' + vars.dt + '&amp;df=' + vars.df + '&amp;li=' + vars.li + '&amp;kn=' + vars.kn + '&amp;a=' + vars.a;
+            vars = vars || { n: '1', dt: '[DT+codes]', df: '[DF+words]', li: '[LI+words]', kn: '[KN+words]', a: '[ACT+words]', sc: '[SC+words]' };
+            return resBaseUrl() + '?diff=1&amp;u=' + resFixedToken(yr, t) + '&amp;n=' + vars.n + '&amp;dt=' + vars.dt + '&amp;df=' + vars.df + '&amp;li=' + vars.li + '&amp;kn=' + vars.kn + '&amp;a=' + vars.a + '&amp;sc=' + vars.sc;
         }
         // Assessment lessons in a Unit Plan template: a clear "Example Assessment" label and a link that opens the Assessment builder
         function assessLinkHref(yr, t) { return resBaseUrl() + '?as=1&amp;u=' + resFixedToken(yr, t) + '&amp;kn=[KN+words]'; }
@@ -12713,14 +12781,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return '<br><br><a href="' + diffLinkHref(yr, t) + '" target="_blank">🎯 Differentiate this lesson</a>';
         }
         function diffInstruction(yr, t) {
-            var ex = '<a href="' + diffLinkHref(yr, t, { n: '3', dt: 'sc+rl+ex', df: 'sentence+starters+for+question+framing+and+an+extension+question', li: 'We+are+learning+to+compare+two+texts', kn: 'theme+and+evidence', a: 'students+annotate+and+discuss' }) + '" target="_blank">🎯 Differentiate this lesson</a>';
-            return 'DIFFERENTIATION LINKS: The Differentiation part of every lesson has a "Differentiate this lesson" link. Its address is FIXED in the same way: copy everything up to and including "&amp;n=" exactly, and never rename, reorder, add or drop a parameter (they are diff, u, n, dt, df, li, kn and a, in that order). Only these change per lesson: the number after n=, and [DT+codes], [DF+words], [LI+words], [KN+words] and [ACT+words]. DF = the words of THAT lesson\'s own Differentiation just above the link (4 to 25 words). LI, KN and ACT are its Learning Intention, key knowledge and main activity (4 to 15 words each). DT = 1 to 4 codes that match the differentiation you wrote, joined with +: sc scaffolding and sentence starters; ex extension and challenge; rl simpler reading level; el EAL language support; dy dyslexia-friendly layout; fo focus and chunking; vi visual or low-text; ch choice board; ti three tiers; or speak, record or draw; cu Māori and Pasifika connections; ef early finishers; pg peer and group roles; sp simplify the content; mi Gardner\'s intelligences; bl Bloom\'s Taxonomy; so SOLO Taxonomy; dk Webb\'s Depth of Knowledge; sh Six Thinking Hats. Write every placeholder as plain words joined with + signs, using only letters, numbers and + (no spaces, punctuation or macrons). Keep each href on one line. Example for Lesson 3 (copy its layout exactly): ' + ex + '\n\n';
+            var ex = '<a href="' + diffLinkHref(yr, t, { n: '3', dt: 'sc+rl+ex', df: 'sentence+starters+for+question+framing+and+an+extension+question', li: 'We+are+learning+to+compare+two+texts', kn: 'theme+and+evidence', a: 'students+annotate+and+discuss', sc: 'I+can+name+the+theme;I+can+find+evidence+in+the+text;I+can+compare+two+texts' }) + '" target="_blank">🎯 Differentiate this lesson</a>';
+            return 'DIFFERENTIATION LINKS: The Differentiation part of every lesson has a "Differentiate this lesson" link. Its address is FIXED in the same way: copy everything up to and including "&amp;n=" exactly, and never rename, reorder, add or drop a parameter (they are diff, u, n, dt, df, li, kn, a and sc, in that order). Only these change per lesson: the number after n=, and [DT+codes], [DF+words], [LI+words], [KN+words], [ACT+words] and [SC+words]. SC = THAT lesson\'s success criteria, copied from the plan (2 to 4 criteria, 3 to 10 words each): join the words of each criterion with + and separate the criteria with a semicolon (;), the only punctuation allowed here (for example I+can+name+the+theme;I+can+find+evidence+in+the+text). DF = the words of THAT lesson\'s own Differentiation just above the link (4 to 25 words). LI, KN and ACT are its Learning Intention, key knowledge and main activity (4 to 15 words each). DT = 1 to 4 codes that match the differentiation you wrote, joined with +: sc scaffolding and sentence starters; ex extension and challenge; rl simpler reading level; el EAL language support; dy dyslexia-friendly layout; fo focus and chunking; vi visual or low-text; ch choice board; ti three tiers; or speak, record or draw; cu Māori and Pasifika connections; ef early finishers; pg peer and group roles; sp simplify the content; mi Gardner\'s intelligences; bl Bloom\'s Taxonomy; so SOLO Taxonomy; dk Webb\'s Depth of Knowledge; sh Six Thinking Hats. Write every other placeholder as plain words joined with + signs, using only letters, numbers and + (no spaces, punctuation or macrons). Keep each href on one line. Example for Lesson 3 (copy its layout exactly): ' + ex + '\n\n';
         }
         (function() {
             function init() {
                 var bind = function(id, ev, fn) { var e = document.getElementById(id); if (e) e.addEventListener(ev, fn); };
                 ['df-dept', 'df-year'].forEach(function(id) { bind(id, 'change', dfRender); });
-                ['df-topic', 'df-task', 'df-li', 'df-kn', 'df-act', 'df-plan', 'df-need', 'df-extra'].forEach(function(id) { bind(id, 'input', dfRender); });
+                ['df-topic', 'df-task', 'df-li', 'df-kn', 'df-act', 'df-sc', 'df-plan', 'df-need', 'df-extra'].forEach(function(id) { bind(id, 'input', dfRender); });
                 ['df-out', 'df-html', 'df-keep', 'df-note', 'df-simp'].forEach(function(id) { bind(id, 'change', dfRender); });
                 bind('df-chip-sp', 'click', dfQuick);
                 bind('df-qcopy', 'click', function() { dfCopy(document.getElementById('df-qcopy')); });
@@ -12778,6 +12846,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <button type="button" onclick="resClose()" class="text-white/80 hover:text-white text-2xl leading-none px-2" aria-label="Close">&times;</button>
             </div>
             <div class="p-5 overflow-y-auto space-y-4 bg-[#dce8f7]">
+                <div id="res-summary" class="rounded-xl border-2 border-sky-300 bg-sky-50 px-4 py-3 text-xs text-sky-900"></div>
+                <label class="block rounded-xl border-2 border-amber-400 bg-amber-50 px-4 py-3 text-[10px] font-extrabold uppercase tracking-widest text-amber-900">✏️ Your specifics or changes for this lesson (optional)
+                    <textarea id="res-extra" rows="3" oninput="resRender()" placeholder="e.g. my class has just finished fractions, keep the reading level low, include a diagram to label, swap the group task for individual work" class="w-full mt-1 p-2 rounded-lg border-2 border-amber-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></textarea>
+                </label>
                 <div>
                     <p id="res-sugg-label" class="hidden text-[10px] font-extrabold uppercase tracking-widest text-[#002066] mb-1.5">Suggested for this lesson</p>
                     <div class="flex flex-wrap gap-2" id="res-tabs"></div>
@@ -12789,6 +12861,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <label class="text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Key knowledge<input id="res-kn" type="text" oninput="resRender()" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
                     <label class="text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Main activity<input id="res-act" type="text" oninput="resRender()" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
                 </div>
+                <label class="block text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Success criteria (separate each with a semicolon)<input id="res-sc" type="text" oninput="resRender()" placeholder="e.g. I can name the theme; I can find evidence in the text" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <label class="text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Lesson stages, in order<input id="res-st" type="text" oninput="resRender()" placeholder="e.g. Connect quiz, I Do model, We Do, You Do task, Review" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
                     <label class="text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Bookwork or device?<input id="res-dm" type="text" oninput="resRender()" placeholder="e.g. MIX: bookwork first 30 min, then on device" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
@@ -12799,7 +12872,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 </details>
                 <div id="res-opts" class="bg-white border-2 border-indigo-300 rounded-xl p-3 shadow-sm flex flex-wrap items-center gap-3 text-sm"></div>
                 <label class="inline-flex items-center gap-2 text-xs font-bold text-[#002066]"><input id="res-docs" type="checkbox" checked onchange="setResDocs(this.checked)"> Google Docs-friendly layout for HTML pages (untick if your AI will not give a download)</label>
-                <label class="block text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Anything else you want (optional)<input id="res-extra" type="text" oninput="resRender()" placeholder="e.g. include a diagram to label, keep the reading level low" class="w-full mt-1 p-2 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></label>
+                
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Your prompt (you can edit it)</span>
