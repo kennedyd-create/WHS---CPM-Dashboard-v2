@@ -2498,7 +2498,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                 </div>
                 <textarea id="df-prompt" rows="16" class="w-full p-4 bg-amber-50 text-slate-900 text-xs font-mono leading-relaxed border-0 outline-none"></textarea>
-                <p class="px-4 py-2 text-[11px] font-semibold text-slate-600 bg-slate-100 border-t border-slate-200">If the AI gives you an HTML block: save it as a .html file, open it in Chrome, select all, copy, and paste into a Google Doc.</p>
+                <p class="px-4 py-2 text-[11px] font-semibold text-slate-600 bg-slate-100 border-t border-slate-200">If the AI gives you an HTML block: save it as a .html file, open it in Chrome, select all, copy, and paste into a Google Doc (leave the Doc on Portrait, the pages are laid out for A4 portrait).</p>
             </div>
         </div>
 
@@ -3107,6 +3107,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Bigger topics, own devices, mixed lessons</mark>. A topic that needs several lessons can now be one row (for example <strong>Lessons 5-7</strong>) where not every stage runs every lesson and most time is You Do. Prompts now know we are a <strong>bring-your-own-device</strong> school (no booking Chromebooks), and lessons can be bookwork, on device or a <strong>mix of both</strong>.</li>
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
 <li><mark class="wn-key">Year Planner: more than one assessment per topic</mark>. Click the assessment button on a topic, then <strong>Add another assessment</strong>. Each has its own type or title, length and week, and they all show on the card, the year plans, the calendar (.ics) and the CSV.</li>
+<li><mark class="wn-key">Worksheets: Detailed or Questions only, in portrait</mark>. In the Make with AI pop-up the Worksheet prompt now has two buttons: <strong>Detailed worksheet</strong> (teaching section, worked example, then questions) and <strong>Questions only worksheet</strong> (just the questions with space to answer). A worksheet now covers only the <strong>I do and/or We do</strong> stages, with no starter, independent task or reflection section. Worksheets are laid out for <strong>A4 portrait</strong>, every section is tagged <strong>[BOOKWORK]</strong> or <strong>[ON DEVICE]</strong> with the device tasks written out (the Delivery detail is now always included), answer boxes keep their borders when pasted into Google Docs, and the AI is told to give only the code block.</li>
 <li><mark class="wn-key">Year Planner: one-page landscape plan</mark>. A new <strong>One page, landscape (best for Google Docs)</strong> output, in Generate Plan and the Export menu, puts the whole year on one landscape page with the subject, year level and year as the heading, a row of topics and a row of assessments for each term, and holiday or school event weeks shaded. Set your Google Doc to landscape with narrow margins before you paste it.</li>
 <li><mark class="wn-key">Year Planner: day-by-day grid</mark>. The new <strong>Recommended</strong> year plan output, <strong>Day-by-day grid (like the Excel plan)</strong>, is now the default in Generate Plan and sits at the top of the Export menu. <strong>Download it as a spreadsheet (.xlsx)</strong> that keeps the colours, merged cells and rotated text, or print / save it as a PDF. (Copy for Google Docs is hidden for this view because it does not keep the layout.) Assessments use a stronger gold so they stand out from the topic colours. Each week has five day columns with the month and dates, a Term bar, then a TOPIC row and an ASSESSMENT row. Public holidays, staff-only days, school events and camps are shaded as single days down both rows.</li>
 <li><mark class="wn-key">Science unit plan template</mark>: now has <strong>Connections to prior learning</strong> and <strong>Connections to future learning</strong> under Knowledge and Practices, like the school template.</li>
@@ -3510,7 +3511,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
-                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can download as a spreadsheet or print, and prior and future learning in the Science unit template.</li>
+                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can download as a spreadsheet or print, and Detailed or Questions only portrait worksheets, and prior and future learning in the Science unit template.</li>
                         <li><mark class="wn-key">AIMS Games buffer</mark>: Years 7 and 8 start with a buffer in Term 3, Week 8. Remove it if you like.</li>
                         <li><mark class="wn-key">AI links carry success criteria</mark>: resource and differentiate pages show a plan summary with ticks for what goes into the prompt, and a box for your own changes.</li>
                         <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
@@ -12334,22 +12335,27 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             ['bg-pink-100 border-pink-500 text-pink-900 hover:bg-pink-200', 'bg-pink-700 border-pink-900 text-white'],
             ['bg-cyan-100 border-cyan-500 text-cyan-900 hover:bg-cyan-200', 'bg-cyan-700 border-cyan-900 text-white']
         ];
-        var DOCSFMT = '\nGoogle Docs layout: use simple tags only (headings, p, ul, strong, a and tables), font-family Arial, and tables instead of divs, flexbox or grid for anything side by side. Put a border (style="border: 1px solid #000000;") and any background colour (style="background-color: #d1e6f6;" and bgcolor="#d1e6f6") directly on each cell. Use no scripts, web fonts or SVG drawings.\n';
+        var DOCSFMT = '\nGoogle Docs layout (A4 PORTRAIT, about 17 cm wide): use simple tags only (headings, p, ul, ol, strong, em, a and tables), font-family Arial at 11pt, and tables with width="100%" instead of divs, flexbox or grid for anything side by side. Put every border and background colour directly on each cell (style="border: 1px solid #000000; background-color: #d1e6f6;" and bgcolor="#d1e6f6"), never in a CSS class and never only on the table, because Google Docs drops borders and colours that come from classes. Make every answer box a one-cell table, for example <table width="100%" cellspacing="0" cellpadding="6" style="border-collapse: collapse;"><tr><td style="border: 1px solid #666666; height: 60px; vertical-align: top;">Answer:</td></tr></table> (use a taller height for longer answers). Show a label such as [BOOKWORK] as bold text in square brackets, not as a styled span. Use no scripts, web fonts or SVG drawings, and give only the code block, with no text or follow-up suggestions after it.\n';
         var resDocsOn = true;
         function setResDocs(v) { resDocsOn = !!v; ['res-docs', 'df-docs'].forEach(function(id) { var c = document.getElementById(id); if (c) c.checked = resDocsOn; }); if (typeof resRender === 'function') { try { resRender(); } catch (e) {} } if (typeof dfRender === 'function') { try { dfRender(); } catch (e) {} } }
-        var HTMLFMT = 'Provide it as ONE clean, print-ready HTML code block only (CSS-styled with the WHS colours #002066 and #d1e6f6, with a Name and Date line at the top), so I can save it as a .html file or paste it into a Google Doc. Do not also give a Markdown version.\n';
+        var HTMLFMT = 'Provide it as ONE clean, print-ready HTML code block only, laid out for A4 PORTRAIT (include @page { size: A4 portrait; margin: 15mm; } and keep everything inside a page about 17 cm wide; use the WHS colours #002066 and #d1e6f6, with a Name and Date line at the top), so I can save it as a .html file or paste it into a Google Doc. Give only the code block, with no text, questions or follow-up suggestions before or after it. Do not also give a Markdown version.\n';
         function resAns(on, what) { return on ? 'Add a clearly separated ' + what + ' at the end (not mixed into the student pages).\n' : 'Student-facing only, with no answer section.\n'; }
         // code: label, colour, options, rule flags, builder
         var RES_DEF = {
             ws: { label: '📄 Worksheet', opts: [
+                { id: 'detail', t: 'seg', l: 'Worksheet type', d: 'detailed', ch: [['detailed', 'Detailed worksheet', 'Teaching section, vocabulary, worked example, then the questions'], ['questions', 'Questions only worksheet', 'Just the questions with space to answer. No teaching text or worked example']] },
                 { id: 'style', t: 'sel', l: 'Worksheet style', d: 'practice', ch: [['practice', 'Practice worksheet (about 15 questions)'], ['tiered', '3-tiered (Foundation / Core / Extension)'], ['task', 'Guided task sheet (activity based)']] },
                 { id: 'ans', t: 'chk', l: 'Teacher answer sheet', d: true }], img: true,
                 build: function(s, o) {
                     var p;
-                    if (o('style') === 'tiered') p = 'Create a self-contained 3-TIERED differentiated student worksheet for this ONE lesson (Foundation / Core / Extension). All three tiers practise the same Learning Intention, getting harder, so every student can start and be stretched. Open with a short "What you need to know" box and a worked example. Give each tier its own clearly labelled section with a sensible number of questions, and finish with one reflection question.\n' + resAns(o('ans'), 'Teacher Answer Sheet');
-                    else if (o('style') === 'task') p = 'Create a guided student task sheet for this ONE lesson that carries the main activity above. Give clear numbered steps, scaffolds (sentence starters, hints or a planning frame) and space for students to record their thinking, plus a short check-your-understanding section at the end.\n' + resAns(o('ans'), 'Teacher Notes / Answer section');
-                    else p = 'Create a substantial fluency-building student practice worksheet for this ONE lesson with about 15 practice questions in total (do not make a token worksheet of 2 to 4 questions). Structure it as: A) What You Need to Know: a short teaching section with the rule or concept, key vocabulary, the steps to follow, and one common mistake to avoid. B) Worked Example: fully worked, showing the thinking step by step. C) Your Turn: about 5 questions closely matching the worked example. D) Building Fluency: about 5 to 7 questions with growing variation. E) Challenge: 3 to 5 harder questions needing more independent application, with no new content. F) Check Your Understanding: 1 to 3 questions students can finish on their own. Repetition in C and D is intentional. Adapt what "practice" means to the subject (repeated procedure in Maths, a repeated disciplinary skill in English or the humanities).\n' + resAns(o('ans'), 'Teacher Answer Sheet, with working shown for harder questions');
-                    return p + HTMLFMT;
+                    if (o('detail') === 'questions') {
+                        if (o('style') === 'tiered') p = 'Create a QUESTIONS-ONLY 3-TIERED student worksheet for this ONE lesson (Foundation / Core / Extension). Do not include any teaching text, vocabulary box or worked example (the teacher teaches that in the lesson). All three tiers practise the same Learning Intention, getting harder, so every student can start and be stretched. Give each tier its own clearly labelled section with a sensible number of numbered questions and space to answer.\n' + resAns(o('ans'), 'Teacher Answer Sheet');
+                        else if (o('style') === 'task') p = 'Create a QUESTIONS-ONLY student task sheet for this ONE lesson that carries the main activity above. Give numbered tasks and questions with one short instruction line each and space to answer. Do not include any teaching text, notes or worked example (the teacher teaches that in the lesson).\n' + resAns(o('ans'), 'Teacher Notes / Answer section');
+                        else p = 'Create a QUESTIONS-ONLY student practice worksheet for this ONE lesson with about 12 questions in total (do not make a token worksheet of 2 to 4 questions). Do not include any teaching text, vocabulary box, steps to follow or worked example (the teacher teaches that in the lesson): only one short instruction line per section, then numbered questions with space to answer. Use two sections: A) Your Turn: about 5 questions. B) Building Fluency: about 5 to 7 questions with growing variation. Adapt what "practice" means to the subject (repeated procedure in Maths, a repeated disciplinary skill in English or the humanities).\n' + resAns(o('ans'), 'Teacher Answer Sheet, with working shown for harder questions');
+                    } else if (o('style') === 'tiered') p = 'Create a self-contained 3-TIERED differentiated student worksheet for this ONE lesson (Foundation / Core / Extension). All three tiers practise the same Learning Intention, getting harder, so every student can start and be stretched. Open with a short "What you need to know" box and a worked example. Give each tier its own clearly labelled section with a sensible number of questions.\n' + resAns(o('ans'), 'Teacher Answer Sheet');
+                    else if (o('style') === 'task') p = 'Create a guided student task sheet for this ONE lesson that carries the main activity above. Give clear numbered steps, scaffolds (sentence starters, hints or a planning frame) and space for students to record their thinking.\n' + resAns(o('ans'), 'Teacher Notes / Answer section');
+                    else p = 'Create a substantial fluency-building student practice worksheet for this ONE lesson with about 12 practice questions in total (do not make a token worksheet of 2 to 4 questions). Structure it as: A) What You Need to Know: a short teaching section with the rule or concept, key vocabulary, the steps to follow, and one common mistake to avoid. B) Worked Example: fully worked, showing the thinking step by step. C) Your Turn (We do): about 5 questions closely matching the worked example. D) Building Fluency (We do): about 5 to 7 questions with growing variation. Repetition in C and D is intentional. Adapt what "practice" means to the subject (repeated procedure in Maths, a repeated disciplinary skill in English or the humanities).\n' + resAns(o('ans'), 'Teacher Answer Sheet, with working shown for harder questions');
+                    return p + RES_WS_STAGES + resWsDevice(s.dm) + HTMLFMT;
                 } },
             sl: { label: '🎞 Slides', shortChat: true, opts: [
                 { id: 'out', t: 'sel', l: 'Make the slides as', d: 'pptx', ch: [['pptx', 'PowerPoint file (.pptx)'], ['gslides', 'Google Slides (best in Gemini)'], ['html', 'HTML slideshow (opens in any browser)']] },
@@ -12648,6 +12654,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 btn.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all border tooltip-wrapper tooltip-bottom ' + (on ? 'bg-indigo-600 text-white shadow-md border-transparent' : 'bg-white text-slate-500 border-slate-300 hover:bg-slate-50');
             }
         }
+        // A worksheet only carries the teacher-led stages of the lesson, not the starter, the independent task or the reflection
+        var RES_WS_STAGES = 'LESSON STAGES TO USE: the worksheet covers ONLY the "I do" (teacher modelling) and/or "We do" (guided practice) stages of the lesson. Do NOT include a starter, connect or retrieval activity, a "You do" independent task, or a reflection, plenary or exit-ticket section; the teacher runs those separately. If lesson stages are given above, use only the I do and We do stages from them.\n';
+        // Worksheets show the device work as well as the bookwork: each section is tagged, and the on-device tasks are written out
+        function resWsDevice(dm) {
+            var m = resLessonMode(dm), tag = 'Tag every section heading as bold text in square brackets, [BOOKWORK] or [ON DEVICE], so students can see at a glance which parts they do in their books and which on their device. ';
+            if (m === 'book') return tag.replace('[BOOKWORK] or [ON DEVICE]', '[BOOKWORK]') + 'This lesson has no device work.\n';
+            if (m === 'device') return 'Tag every section heading as bold text in square brackets, [ON DEVICE]. Write out the device work students do: what they open or search (give the exact search words or link), what they type or submit, and a clear box to record each answer on the worksheet.\n';
+            if (m === 'mix') return tag + 'Write out the on-device work as its own clearly tagged section(s), following the split described: what students open or search (give the exact search words or link), what they type or submit, and a clear box to record each answer on the worksheet.\n';
+            return tag + 'Include at least one short [ON DEVICE] section (for example a quick research or typed response, with the exact search words or link and a box to record the answer), because devices add real value there.\n';
+        }
         function resDeviceLine(dv) {
             if (dv === 'none') return '';
             if (dv === '0') return 'DEVICE USE — BOOKWORK: students do this on paper with no devices, so make it printable and do not include any online or screen task.\n';
@@ -12714,7 +12730,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         };
         // Details the resource's own wording depends on: always ticked, shaded, and cannot be unticked
         var RES_USE_REQ = {
-            sl: 'li sc kn', ws: 'li kn', fc: 'li kn', mm: 'li', vis: 'li', ex: 'li', qz: 'li kn', vp: 'kn', lb: 'kn', rb: 'li', db: 'kn', rp: 'li',
+            sl: 'li sc kn', ws: 'li kn dm', fc: 'li kn', mm: 'li', vis: 'li', ex: 'li', qz: 'li kn', vp: 'kn', lb: 'kn', rb: 'li', db: 'kn', rp: 'li',
             tn: 'kn', mx: 'kn', dg: 'kn', pf: 'li'
         };
         function resReqFor(kind) { var o = {}; (RES_USE_REQ[kind] || '').split(' ').forEach(function(k) { if (k) o[k] = true; }); return o; }
@@ -12768,6 +12784,19 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 var lab = document.createElement('label');
                 lab.className = op.t === 'chk' ? 'inline-flex items-center gap-1.5 font-bold text-[#002066]' : 'font-bold text-[#002066]';
                 var el;
+                if (op.t === 'seg') {
+                    // two or more buttons side by side (one is always pressed), for choices the teacher should see at a glance
+                    lab = document.createElement('div'); lab.className = 'flex flex-wrap items-center gap-2 font-bold text-[#002066]';
+                    lab.appendChild(document.createTextNode(op.l));
+                    op.ch.forEach(function(c) {
+                        var b = document.createElement('button'); b.type = 'button'; var on = c[0] === val;
+                        b.textContent = c[1]; if (c[2]) b.title = c[2]; b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.setAttribute('data-k', key); b.setAttribute('data-v', c[0]); b.id = 'res-' + resState.kind + '-' + op.id + '-' + c[0];
+                        b.className = 'px-3 py-1.5 rounded-lg border-2 text-sm font-bold transition-colors ' + (on ? 'bg-[#002066] border-[#002066] text-white' : 'bg-white border-slate-400 text-[#002066] hover:bg-slate-100');
+                        b.addEventListener('click', function() { resState.o[key] = c[0]; resBuildOpts(); resRender(); });
+                        lab.appendChild(b);
+                    });
+                    box.appendChild(lab); return;
+                }
                 if (op.t === 'sel') {
                     el = document.createElement('select'); el.className = 'ml-1 p-1.5 rounded-lg border-2 border-slate-400 bg-white text-sm font-normal';
                     op.ch.forEach(function(c) { var oo = document.createElement('option'); oo.value = c[0]; oo.textContent = c[1]; if (c[0] === val) oo.selected = true; el.appendChild(oo); });
