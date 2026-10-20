@@ -2636,7 +2636,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             <button id="yp-setup-toggle" onclick="ypToggleSetup()" aria-expanded="false" class="shrink-0 text-xs font-bold rounded-lg border border-white/30 px-3 py-1.5 hover:bg-white/10 transition-colors">Change &#9662;</button>
         </div>
         <select id="report-format" title="Which finished plan Generate Plan makes" class="max-w-[190px] border-white/20 rounded-lg shadow-sm text-sm p-2 border bg-white/10 text-white cursor-pointer focus:ring-2 focus:ring-[var(--whs-gold)] focus:border-[var(--whs-gold)] [&>option]:text-slate-800">
-            <option value="timeline" selected>Timeline View (By Term, Colour-Coded) — Recommended</option>
+            <option value="daygrid" selected>Day-by-day grid, landscape (spreadsheet or Google Docs) — Recommended</option>
+            <option value="timeline">Timeline View (By Term, Colour-Coded)</option>
+            <option value="onepage">One page, landscape (best for Google Docs)</option>
             <option value="standard">Standard Matrix Output</option>
             <option value="simple">Simple Year Plan (Terms &amp; Topics Only)</option>
             <option value="waiheke">Year Plan (Context &amp; Tasks)</option>
@@ -2648,7 +2650,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         <div class="relative yp-menu-wrap">
             <button onclick="ypToggleMenu('yp-menu-export', event)" aria-haspopup="true" aria-expanded="false" id="yp-menu-export-btn" class="px-4 py-2 rounded-lg text-sm font-bold border border-white/30 text-white hover:bg-white/10 flex items-center gap-1.5 transition-colors">Export / Print <span class="text-[10px]">&#9662;</span></button>
             <div id="yp-menu-export" class="yp-menu-panel hidden" role="menu">
-                <button id="yp-timeline-btn" role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); printFullYearPlan('timeline')">Timeline View <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>The whole year at a glance: each term as one coloured strip, with dates, holidays and key events</small></button>
+                <button id="yp-daygrid-btn" role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); showDayGridPlan()">Day-by-day grid, landscape <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>Like the Excel Year Plan: every day shaded for holidays, SOD and events. Copy to Google Docs or print</small></button>
+                <button role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); downloadDayGridXlsx()">Day-by-day grid as a spreadsheet (.xlsx) <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>The same grid with its colours, for Excel or Google Sheets</small></button>
+                <button id="yp-timeline-btn" role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); printFullYearPlan('timeline')">Timeline View<small>The whole year at a glance: each term as one coloured strip, with dates, holidays and key events</small></button>
+                <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); showOnePagePlan()">One page, landscape (Google Docs)<small>The whole year in one compact table that fits a landscape page</small></button>
                 <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); printFullYearPlan('grid')">Print full-year grid<small>Strands down the side, every week across the top, one page</small></button>
                 <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); exportYearPlanICS()">Add to Calendar (.ics)<small>One event per topic block and each assessment, for Google Calendar, Outlook or Apple Calendar</small></button>
                 <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); exportYearPlanCSV()">Export as CSV<small>One row per topic block, for Google Sheets or Excel</small></button>
@@ -2825,17 +2830,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <button type="button" id="ass-choice-none" role="radio" onclick="setAssessChoice('none')" class="flex-1 px-3 py-2 rounded-lg border text-sm font-bold">✕ No assessment</button>
             </div>
             <div id="ass-modal-fields">
-            <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-title">Type or title <span class="font-normal text-slate-500">(optional, shown on the calendar)</span></label>
-            <input type="text" id="ass-modal-title" list="ass-type-list" maxlength="60" placeholder="e.g. Test, Quiz, Report, Poster" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3">
-            <datalist id="ass-type-list"><option value="Test"><option value="Quiz"><option value="Exam"><option value="Report"><option value="Project"><option value="Presentation"><option value="Practical"><option value="Essay"><option value="Poster"><option value="Portfolio"><option value="Investigation"></datalist>
-            <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-length">How long is it?</label>
-            <select id="ass-modal-length" onchange="updateAssessEditUI()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-3">
-                <option value="1 Lesson">1 Lesson</option><option value="2 Lessons">2 Lessons</option><option value="3 Lessons">3 Lessons</option>
-                <option value="1 Week">1 Week</option><option value="2 Weeks">2 Weeks</option><option value="3 Weeks">3 Weeks</option><option value="4 Weeks">4 Weeks</option>
-            </select>
-            <label class="block text-xs font-bold text-slate-700 mb-1" for="ass-modal-start">When does it start?</label>
-            <select id="ass-modal-start" onchange="this.dataset.touched='1'; updateAssessEditUI()" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm"></select>
-            <p id="ass-modal-hint" class="text-[11px] text-slate-500 mt-2"></p>
+                <datalist id="ass-type-list"><option value="Test"><option value="Quiz"><option value="Exam"><option value="Report"><option value="Project"><option value="Presentation"><option value="Practical"><option value="Essay"><option value="Poster"><option value="Portfolio"><option value="Investigation"></datalist>
+                <div id="ass-modal-rows" class="space-y-3 max-h-[46vh] overflow-y-auto pr-1"></div>
+                <button type="button" id="ass-add-another" onclick="ypDraftAdd()" class="mt-3 px-3 py-2 rounded-lg border-2 border-dashed border-amber-400 text-amber-800 text-xs font-bold hover:bg-amber-50">＋ Add another assessment</button>
+                <p id="ass-modal-hint" class="text-[11px] text-slate-500 mt-2"></p>
             </div>
             <div class="flex items-center justify-between gap-2 mt-5">
                 <button id="ass-modal-remove" onclick="removeAssessEdit()" class="text-xs font-bold text-red-600 hover:text-red-800 px-2 py-2">Remove assessment</button>
@@ -3033,7 +3031,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     Copy for Google Docs
                 </button>
-                <button onclick="window.print()" class="bg-[var(--whs-gold)] hover:bg-whsgold-600 text-[var(--whs-dark-blue)] px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                <button onclick="ypPrintOutput()" class="bg-[var(--whs-gold)] hover:bg-whsgold-600 text-[var(--whs-dark-blue)] px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
                     Print / Save PDF
                 </button>
@@ -3108,6 +3106,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Practical lessons by percentage</mark>. In the Unit Planner practical section choose <strong>% of lessons</strong> (25, 50, 75, 100 or your own number) for PE, Drama, Music, Technology and other hands-on subjects. Those lessons are planned as whole practical lessons and labelled <strong>[PRACTICAL]</strong>.</li>
 <li><mark class="wn-key">Bigger topics, own devices, mixed lessons</mark>. A topic that needs several lessons can now be one row (for example <strong>Lessons 5-7</strong>) where not every stage runs every lesson and most time is You Do. Prompts now know we are a <strong>bring-your-own-device</strong> school (no booking Chromebooks), and lessons can be bookwork, on device or a <strong>mix of both</strong>.</li>
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
+<li><mark class="wn-key">Year Planner: more than one assessment per topic</mark>. Click the assessment button on a topic, then <strong>Add another assessment</strong>. Each has its own type or title, length and week, and they all show on the card, the year plans, the calendar (.ics) and the CSV.</li>
+<li><mark class="wn-key">Year Planner: one-page landscape plan</mark>. A new <strong>One page, landscape (best for Google Docs)</strong> output, in Generate Plan and the Export menu, puts the whole year on one landscape page with the subject, year level and year as the heading, a row of topics and a row of assessments for each term, and holiday or school event weeks shaded. Set your Google Doc to landscape with narrow margins before you paste it.</li>
+<li><mark class="wn-key">Year Planner: day-by-day grid</mark>. The new <strong>Recommended</strong> year plan output, <strong>Day-by-day grid (like the Excel plan)</strong>, is now the default in Generate Plan and sits at the top of the Export menu. Copy it to Google Docs, print it, or <strong>download it as a spreadsheet (.xlsx)</strong> that keeps the colours, merged cells and rotated text. Each week has five day columns with the month and dates, a Term bar, then a TOPIC row and an ASSESSMENT row. Public holidays, staff-only days, school events and camps are shaded as single days down both rows.</li>
+<li><mark class="wn-key">Science unit plan template</mark>: now has <strong>Connections to prior learning</strong> and <strong>Connections to future learning</strong> under Knowledge and Practices, like the school template.</li>
 <li><mark class="wn-key">Year Planner: AIMS Games buffer</mark>. Year 7 and Year 8 plans start with a buffer week in Term 3, Week 8 (the school week inside 4 to 12 September) and an "AIMS Games" marker on the calendar. Remove the buffer if it does not apply to your classes.</li>
 <li><mark class="wn-key">Success criteria and your own notes in the AI links</mark>. The "Make resources with AI" and "Differentiate this lesson" links now carry each lesson's success criteria. Both pages open with a short "From your unit plan" summary with a tick beside each line (pre-set for the type of resource, for example slides get everything and flashcards get the learning intention and key knowledge; shaded ticks are needed for that resource and stay on) and a yellow box for your own specifics or changes.</li>
 <li><mark class="wn-key">Year Planner: short assessment labels</mark>. Assessments now have an optional <strong>Type or title</strong> (Test, Quiz, Report or your own). The year calendar shows that short label instead of the topic name, cut to fit so the row stays slim.</li>
@@ -3508,6 +3510,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
+                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can copy to Google Docs or download as a spreadsheet, and prior and future learning in the Science unit template.</li>
                         <li><mark class="wn-key">AIMS Games buffer</mark>: Years 7 and 8 start with a buffer in Term 3, Week 8. Remove it if you like.</li>
                         <li><mark class="wn-key">AI links carry success criteria</mark>: resource and differentiate pages show a plan summary with ticks for what goes into the prompt, and a box for your own changes.</li>
                         <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
@@ -7810,7 +7813,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += tb + 'html\n';
                 txt += '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <link href="https://fonts.googleapis.com/css2?family=Manrope:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n    <style>\n        @page { size: A4 landscape; margin: 15mm; }\n        body { font-family: \'Manrope\', sans-serif; font-size: 10pt; color: #000000; line-height: 1.4; max-width: 1400px; margin: auto; background-color: #efefef; padding: 20px; }\n        table { width: 100%; border-collapse: collapse; margin-bottom: 24px; table-layout: fixed; background-color: #ffffff; }\n        th, td { border: 1px solid #000000; padding: 6px 8px; text-align: left; vertical-align: top; word-wrap: break-word; }\n        p { margin: 0 0 8px 0; }\n        .logo { text-align: right; }\n        .doc-title { text-align: center; color: #ff0000; font-size: 18pt; font-weight: 700; text-decoration: underline; margin: 4px 0 14px 0; }\n        h2 { text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline; margin: 26px 0 10px 0; }\n        .header-bg { background-color: #dbe5f1; font-weight: 700; }\n        .small-text { font-size: 9pt; font-style: italic; font-weight: 400; color: #333333; }\n        .section-row { text-align: center; color: #9900ff; font-weight: 700; }\n        .lesson-label { color: #0000ff; font-weight: 700; text-decoration: underline; }\n        .sc-title, .kc-title { color: #0000ff; font-weight: 700; text-decoration: underline; text-align: center; }\n        .level-title { color: #ff00ff; font-weight: 700; text-decoration: underline; }\n        .strat-title { color: #ff9900; font-weight: 700; text-decoration: underline; text-align: center; }\n        .stage { font-weight: 700; text-decoration: underline; }\n        strong { font-weight: 700; }\n        .col-25 { width: 25%; }\n        .col-50 { width: 50%; }\n    </style>\n</head>\n<body>\n';
                 txt += '    <p class="doc-title" style="color: #ff0000; font-size: 18pt; font-weight: 700; text-decoration: underline; text-align: center;">Science Unit Plan 2027: ' + yr + ' - ' + t + '</p>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 15%;">Year Level</td><td style="width: 20%;">' + yr + '</td>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 10%;">Term</td><td style="width: 20%;">[Fill suggested term], 2027</td>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 15%;">Duration</td><td style="width: 20%;">' + totalDurText + '</td>\n        </tr>\n        <tr><td class="header-bg" style="background-color: #dbe5f1; font-weight: 700;">Learning Area</td><td colspan="5">' + t + '</td></tr>\n        <tr><td class="header-bg" style="background-color: #dbe5f1; font-weight: 700;">Overview <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(description)</span></td><td colspan="5">[Fill a 1-2 sentence overview]</td></tr>\n        <tr><td class="header-bg" style="background-color: #dbe5f1; font-weight: 700;">Purpose <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(what is the point?)</span></td><td colspan="5">[Fill the purpose of this unit]</td></tr>\n    </table>\n\n';
-                txt += '    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">Knowledge and Practices</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr>\n            <td class="header-bg col-50">Knowledge <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(The facts, concepts, principles and theories to teach)</span></td>\n            <td class="header-bg col-50">Practices <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(The skills, strategies and applications to teach)</span></td>\n        </tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n    </table>\n\n    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">High Impact Teaching Strategies (HITS) Integration</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td class="col-50"><strong>[Fill the name of a HITS strategy used in this unit]</strong></td><td class="col-50">[Fill how and in which lessons it is used]</td></tr>\n        <!-- CRITICAL: Repeat this exact <tr> row once for each HITS strategy that is genuinely used in this unit (normally 5 to 9 rows, one strategy per row). Choose only from the ten HITS: Setting goals, Structuring lessons, Explicit teaching, Worked examples, Collaborative learning, Multiple exposures, Questioning, Feedback, Metacognitive strategies, Differentiated teaching. -->\n    </table>\n\n';
+                txt += '    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">Knowledge and Practices</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr>\n            <td class="header-bg col-50">Knowledge <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(The facts, concepts, principles and theories to teach)</span></td>\n            <td class="header-bg col-50">Practices <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(The skills, strategies and applications to teach)</span></td>\n        </tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg col-50">Connections to prior learning</td><td class="header-bg col-50">Connections to future learning</td></tr>\n        <tr><td>[Fill: what students already know from earlier years or units that this unit builds on]</td><td>[Fill: where this learning is used next, in later units or year levels]</td></tr>\n    </table>\n\n    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">High Impact Teaching Strategies (HITS) Integration</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td class="col-50"><strong>[Fill the name of a HITS strategy used in this unit]</strong></td><td class="col-50">[Fill how and in which lessons it is used]</td></tr>\n        <!-- CRITICAL: Repeat this exact <tr> row once for each HITS strategy that is genuinely used in this unit (normally 5 to 9 rows, one strategy per row). Choose only from the ten HITS: Setting goals, Structuring lessons, Explicit teaching, Worked examples, Collaborative learning, Multiple exposures, Questioning, Feedback, Metacognitive strategies, Differentiated teaching. -->\n    </table>\n\n';
                 txt += '    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">Lesson Content/Sequence</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 24%;">Learning Intention<br><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">We are learning to&hellip;</span></td>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 27%;">Success Criteria<br><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">How do you know students have achieved success?</span></td>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 25%;">Learning Experiences<br><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">What strategies, activities and tasks do you want students to do?</span></td>\n            <td class="header-bg" style="background-color: #dbe5f1; font-weight: 700; width: 24%;">Preparation/ Resources<br><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">H&amp;S, purchasing, printing<br>Links to clips, docs, slides</span></td>\n        </tr>\n        <tr><td colspan="4" class="section-row" style="color: #9900ff; font-weight: 700; text-align: center;">Section A: [Fill a short title for this group of related lessons]</td></tr>\n        <tr>\n            <td>\n                <p><span class="lesson-label" style="color: #0000ff; font-weight: 700; text-decoration: underline;">Lesson 1: [Fill lesson title]</span></p>\n                <p>[Fill the Learning Intention: We are learning to&hellip;]</p>\n            </td>\n            <td>\n                <p class="sc-title" style="color: #0000ff; font-weight: 700; text-decoration: underline; text-align: center;">Success Criteria (differentiated)</p>\n                <p class="level-title" style="color: #ff00ff; font-weight: 700; text-decoration: underline;">All Students/Akonga</p>\n                <p>Akonga will be able to/can [Fill]<br>Akonga will be able to/can [Fill]</p>\n                <p class="level-title" style="color: #ff00ff; font-weight: 700; text-decoration: underline;">Most Students/Akonga</p>\n                <p>Akonga will be able to/can [Fill]<br>Akonga will be able to/can [Fill]</p>\n                <p class="level-title" style="color: #ff00ff; font-weight: 700; text-decoration: underline;">Some Students/Akonga</p>\n                <p>Akonga will be able to/can [Fill]<br>Akonga will be able to/can [Fill]<br>Akonga will be able to/can [Fill]</p>\n                <p class="kc-title" style="color: #0000ff; font-weight: 700; text-decoration: underline; text-align: center;">Key Capabilities</p>\n                <p style="text-align: center;">[Fill the 1-2 key capabilities this lesson develops]</p>\n            </td>\n            <td>\n                <p class="strat-title" style="color: #ff9900; font-weight: 700; text-decoration: underline; text-align: center;">Strategies, activities, tasks</p>\n                <p>-Scipad work book.</p>\n                <p><span class="stage" style="font-weight: 700; text-decoration: underline;">Connect:</span> [Fill]</p>\n                <p><span class="stage" style="font-weight: 700; text-decoration: underline;">I Do:</span> [Fill]</p>\n                <p><span class="stage" style="font-weight: 700; text-decoration: underline;">We Do:</span> [Fill]</p>\n                <p><span class="stage" style="font-weight: 700; text-decoration: underline;">You Do:</span> [Fill]</p>\n                <p><span class="stage" style="font-weight: 700; text-decoration: underline;">Review:</span> [Fill]</p>\n                <p class="strat-title" style="color: #ff9900; font-weight: 700; text-decoration: underline; text-align: center;">Differentiation</p>\n                <p>[Fill how this lesson is adjusted for ākonga who need support or extension]' + plusCellHtml() + diffCellHtml(yr, t) + hwTagHtml() + '</p>\n            </td>\n            <td>\n                <p><span style="background-color:#ffff00">sciPad pg. ???????</span></p>\n                <p><span style="background-color:#ffff00">sciPad online ????????</span></p>\n                <p>[Fill other resources, equipment and H&amp;S notes, with live links]</p>' + resCellHtml(yr, t, true) + '\n            </td>\n        </tr>\n        <!-- CRITICAL: Repeat this exact <tr> row (Lesson label and Learning Intention, Success Criteria, Strategies, Resources) once for every lesson, through the full ' + totalDurText + ', each with its own real, distinct content. Do not skip or merge lessons. Group the lessons into Sections by inserting a new section row (<tr><td colspan="4" class="section-row" style="color: #9900ff; font-weight: 700; text-align: center;">Section B: [title]</td></tr>, then Section C, and so on) wherever a new group of related lessons starts: usually 2 to 4 sections of about 2 to 4 lessons each. -->\n    </table>\n\n';
                 txt += '    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">Curriculum Integration</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td class="header-bg col-50">Literacy will be incorporated into this unit by:</td><td class="header-bg col-50">Numeracy will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n        <tr><td class="header-bg" style="background-color: #dbe5f1; font-weight: 700;">M\u0101tauranga M\u0101ori will be incorporated into this unit by:</td><td class="header-bg" style="background-color: #dbe5f1; font-weight: 700;">Localised Curriculum will be incorporated into this unit by:</td></tr>\n        <tr><td>[Fill]</td><td>[Fill]</td></tr>\n    </table>\n\n    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">The language/lingo of Science and Mathematics</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td class="header-bg" style="background-color: #dbe5f1; font-weight: 700;">Vocabulary <span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(Students will be taught the following new words)</span></td></tr>\n        <tr><td>[Fill 6-10 key scientific and mathematical terms for this unit, each with a brief plain-language definition]</td></tr>\n    </table>\n\n    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">\u0100konga Information</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(Teacher to complete: \u0101konga who need extra support or extension, and how. Leave this blank.)</span><br><br><br></td></tr>\n    </table>\n\n    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">Assessment</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td class="header-bg col-50">How will I determine my learner\'s prior knowledge? (before)</td><td class="header-bg col-50">How will I determine my students\u2019 progress in learning? (after)</td></tr>\n        <tr>\n            <td><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(delete those not being used and elaborate)</span><br>Assessment: [Fill or N/A]<br>Whole class activity: [Fill or N/A]<br>Student voice collected: [Fill or N/A]<br>Small group activity: [Fill or N/A]<br>Individual activity: [Fill or N/A]<br>Previous results or work: [Fill or N/A]</td>\n            <td><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">(delete those not being used and elaborate)</span><br>Assessment: [Fill or N/A]<br>Whole class activity: [Fill or N/A]<br>Student voice collected: [Fill or N/A]<br>Small group activity: [Fill or N/A]<br>Individual activity: [Fill or N/A]</td>\n        </tr>\n    </table>\n\n';
                 txt += '    <h2 style="text-align: center; color: #9900ff; font-size: 14pt; font-weight: 700; text-decoration: underline;">Evaluation</h2>\n    <table width="100%" border="1" cellspacing="0" cellpadding="6">\n        <tr><td class="header-bg col-50">What worked well?</td><td class="header-bg col-50">What would you do differently next time?</td></tr>\n        <tr>\n            <td><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n            <td><span class="small-text" style="font-size: 9pt; font-style: italic; font-weight: 400; color: #333333;">Consider: student voice, engagement, completion of work and assessment, progress and attainment</span><br><br><br><br></td>\n        </tr>\n    </table>\n\n' + hwHtmlSchedule() + '</body>\n</html>\n';
@@ -10281,15 +10284,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function ypRenumber(id) {
             const list = ypTopicSlots(id), n = list.length;
             const none = list.some(x => x.slot.noAssessment) && !list.some(x => x.slot.assessment);   // "No assessment" is kept for every week of the topic
+            // the assessments live on every week of the topic; use the slot holding the most, tidy them for the new length, and give them to all weeks
+            const src = list.map(x => x.slot).reduce((best, sl) => (ypAssessRaw(sl).length > ypAssessRaw(best).length ? sl : best), list.length ? list[0].slot : {});
+            const tidy = ypTidyAssess(ypAssessRaw(src), n);
             list.forEach((x, k) => {
                 if (none) x.slot.noAssessment = true; else delete x.slot.noAssessment;
                 x.slot.unitWeek = k + 1; x.slot.duration = n;
-                const a = x.slot.assessment;
-                if (a) {
-                    const w = ypAssessWeeksOf(a.length);
-                    if (w > n) x.slot.assessment = null;
-                    else if ((a.startOffset || 1) + w - 1 > n) x.slot.assessment = Object.assign({ startOffset: n - w + 1, length: a.length, weeks: w }, a.title ? { title: a.title } : {});
-                }
+                if (tidy.length || ypAssessRaw(x.slot).length) ypSetAssessRaw(x.slot, tidy.map(a => Object.assign({}, a)));
             });
         }
 
@@ -10344,7 +10345,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 <div>${assStrip}<div class="mt-3 flex ${span > 1 ? 'justify-between items-end flex-wrap' : 'flex-col items-start'} gap-1">
                                     <span class="flex ${span > 1 ? 'items-center flex-wrap' : 'flex-col items-start'} gap-1 min-w-0"><span class="text-[10px] font-bold text-whsblue-700 bg-whsblue-50 px-2 py-1 rounded-md uppercase tracking-wider border border-whsblue-100 whitespace-nowrap">${span} Wk${span>1?'s':''}</span>
                                     ${slot.buffer ? '' : (slot.assessment
-                                        ? `<button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn has" title="Change or remove the assessment">${span > 1 ? '📝 Edit' : '📝'}</button>`
+                                        ? `<button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn has" title="${ypAssessRaw(slot).length > 1 ? 'Change, add or remove the ' + ypAssessRaw(slot).length + ' assessments' : 'Change, add another or remove the assessment'}">${ypAssessRaw(slot).length > 1 ? (span > 1 ? '📝 Edit (' + ypAssessRaw(slot).length + ')' : '📝 ' + ypAssessRaw(slot).length) : (span > 1 ? '📝 Edit' : '📝')}</button>`
                                         : slot.noAssessment
                                             ? `<button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn none" title="No assessment for this topic. Click to add one.">${span >= 4 ? '📝 No assessment' : (span > 1 ? '📝 None' : '📝 ✕')}</button>`
                                             : `<span class="yp-ass-grp"><button onclick="openAssessModal('${slot.id}')" class="yp-ass-btn need" title="Add an assessment to this topic">${span >= 4 ? '📝 Add Assessment' : (span > 1 ? '📝 Add' : '📝 +')}</button><button onclick="ypNoAssess('${slot.id}')" class="yp-ass-x" title="No assessment for this topic" aria-label="No assessment for this topic">✕</button></span>`)}</span>
@@ -10825,6 +10826,305 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return out;
         }
 
+        /* One landscape page: a single table (Term | Weeks 1 to 11) built to fit one landscape A4 page, and to paste into a Google Doc
+           set to landscape. Rows per term: week numbers and dates (shaded for holidays and school events), topics, assessments. */
+        function buildOnePagePlan() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) return '<p>No curriculum data selected.</p>';
+            const strands = Object.keys(db.structure), terms = [1, 2, 3, 4];
+            const W = Math.max(1, ...terms.map(t => yearPlannerState.termLengths[t] || 0));
+            const labW = 7, colW = ((100 - labW) / W).toFixed(3);
+            const B = 'border:1px solid #94a3b8;';
+            const EV = { hol: '#475569', staff: '#9f1239', school: '#1e40af', assess: '#92400e' };
+            let rowsHtml = '';
+            terms.forEach(t => {
+                const len = yearPlannerState.termLengths[t] || 0, slots = yearPlannerState.terms[t] || [];
+                const pad = len < W ? `<td colspan="${W - len}" style="border:none;"></td>` : '';
+                let head = '';
+                for (let i = 0; i < len; i++) {
+                    const cw = calWeek(t, i);
+                    // like the planning page: a week with a holiday, staff-only day or no school is shaded grey, and a school event (camp, sports day, AIMS Games) light blue
+                    const hasEv = !!cw && cw.events.some(e => e.kind === 'school' || e.kind === 'assess');
+                    const bg = cw && cw.lost > 0 ? '#cbd5e1' : (hasEv ? '#bfdbfe' : '#ffffff');
+                    const why = cw ? cw.reasons.concat(cw.events.filter(e => e.kind === 'school' || e.kind === 'assess').map(e => e.label)).join('; ') : '';
+                    head += `<td title="${ypEsc(why)}" style="${B}background:${bg};color:#002066;font-weight:bold;font-size:9pt;text-align:center;padding:2pt 1pt;line-height:1.2;">${i + 1}${cw ? '<br><span style="font-weight:normal;font-size:7pt;">' + calFmt(cw.mon) + '</span>' : ''}</td>`;
+                }
+                let topics = '';
+                let i = 0;
+                while (i < len) {
+                    const slot = slots[i];
+                    if (slot === 'BLOCKED') { topics += `<td style="${B}background:#e2e8f0;"></td>`; i++; }
+                    else if (slot && typeof slot === 'object') {
+                        let span = 1;
+                        while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
+                        const strand = effectiveStrandOf(db, slot);
+                        const hue = strand ? hueForStrand(strand, strands) : '#64748b', tint = strand ? tintForStrand(strand, strands) : '#f1f5f9';
+                        topics += `<td colspan="${span}" style="${B}background:${tint};border-top:3px solid ${hue};text-align:center;font-weight:bold;font-size:10pt;padding:6pt 3pt;line-height:1.2;vertical-align:middle;">${ypEsc(slot.customText || slot.subtopic || '')}</td>`;
+                        i += span;
+                    } else { topics += `<td style="${B}background:#ffffff;"></td>`; i++; }
+                }
+                const ass = len ? ypAssessCells(t, '#94a3b8', true) : { any: false, html: '' };
+                const nRows = 2 + (ass.any ? 1 : 0);
+                const rng = calTermRangeText(t);
+                rowsHtml += `<tr><td rowspan="${nRows}" style="${B}background:#002066;color:#ffffff;font-weight:bold;font-size:10pt;text-align:center;vertical-align:middle;padding:2pt;line-height:1.25;">Term ${t}${rng ? '<br><span style="font-weight:normal;font-size:7pt;">' + rng + '</span>' : ''}</td>${head}${pad}</tr>`;
+                rowsHtml += `<tr>${len ? topics : `<td colspan="${W}" style="${B}color:#94a3b8;font-size:7pt;padding:3pt;">No weeks configured for this term.</td>`}${len ? pad : ''}</tr>`;
+                if (ass.any) rowsHtml += `<tr>${ass.html}${pad}</tr>`;
+                rowsHtml += `<tr><td colspan="${W + 1}" style="border:none;font-size:2pt;line-height:3pt;">&nbsp;</td></tr>`;
+            });
+            const cols = `<colgroup><col width="${labW}%">${Array(W).fill(`<col width="${colW}%">`).join('')}</colgroup>`;
+            const legendCells = strands.map(st => `<td style="${B}background:${tintForStrand(st, strands)};border-top:3px solid ${hueForStrand(st, strands)};font-size:8pt;text-align:center;padding:2pt;">${ypEsc(st)}</td>`).join('') +
+                `<td style="${B}background:#fef3c7;border-color:#f59e0b;font-size:8pt;text-align:center;padding:2pt;">Assessment</td><td style="${B}background:#e2e8f0;font-size:8pt;text-align:center;padding:2pt;">Blocked week</td><td style="${B}background:#cbd5e1;font-size:8pt;text-align:center;padding:2pt;">Holiday or day off (shaded)</td><td style="${B}background:#bfdbfe;font-size:8pt;text-align:center;padding:2pt;">School event, e.g. camp (shaded)</td>`;
+            return `<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;table-layout:fixed;width:100%;">${cols}<tbody>${rowsHtml}</tbody></table>
+                <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;margin-top:2pt;"><tbody><tr>${legendCells}</tr></tbody></table>`;
+        }
+        /* Day-by-day year plan, laid out like the school's Excel Year Plan: five narrow columns per week, so holidays, staff-only days and school
+           events are shaded as single days down both the TOPIC row and the ASSESSMENT row. Topics and assessments run across the weeks. */
+        function ypDayInfo(t, i) {
+            const start = calTermStart(t); if (!start) return null;
+            const cfg = WHS_CAL.terms[t], own = !!cfg && start === cfg.start, mon = ypAddDays(start, 7 * i), by = calEventsByDate(), out = [];
+            for (let d = 0; d < 5; d++) {
+                const iso = ypAddDays(mon, d), info = { iso: iso, dom: +iso.slice(8), edge: '', staff: null, hol: null, school: null, assess: null };
+                if (own && cfg.studentsFrom && iso < cfg.studentsFrom) info.edge = 'before';
+                if (own && iso > cfg.end) info.edge = 'after';
+                (by[iso] || []).forEach(e => {
+                    if (!calAudOk(e.aud)) return;
+                    if (e.kind === 'staff' && !info.staff) info.staff = e;
+                    else if (e.kind === 'hol' && !info.hol) info.hol = e;
+                    else if (e.kind === 'school' && !info.school) info.school = e;
+                    else if (e.kind === 'assess' && !info.assess) info.assess = e;
+                });
+                out.push(info);
+            }
+            return out;
+        }
+        const YP_GRID_SHORT = { 'New students': 'NEW STU', 'Motu Day': 'MOT DAY', 'Auckland Anniversary': 'AKL DAY', 'Waitangi Day (observed)': 'WAI DAY', 'Beach Sports': 'BCH SPT', 'Athletics Day': 'ATH DAY', 'Good Friday': 'GD FRI', 'Easter Monday': 'EAS MON', 'Easter Tuesday': 'EAS TUE', 'Anzac Day (observed)': 'ANZ DAY', 'Fun Run': 'FUN RUN', "King's Birthday": 'KNG BDY', 'Matariki event': 'MAT EVT', 'Matariki': 'MAT', 'Labour Day': 'LAB DAY', 'Spring Break': 'SPR BRK', 'Senior Prizegiving': 'SNR PRZ', 'Junior Prizegiving': 'JNR PRZ' };
+        function ypGridShort(label, short) { return (YP_GRID_SHORT[label] || short || label).toUpperCase(); }
+        // Topic colours for the day grid avoid blue, because the grid already uses a lot of it (term bars, school events, labels)
+        const YP_GRID_HUES = ['#15803d', '#c2410c', '#7e22ce', '#a21caf', '#4d7c0f', '#78716c'];
+        const YP_GRID_TINTS = ['#dcfce7', '#ffedd5', '#f3e8ff', '#fae8ff', '#ecfccb', '#e7e5e4'];
+        function gridHue(st, list) { return YP_GRID_HUES[Math.max(0, list.indexOf(st)) % YP_GRID_HUES.length]; }
+        function gridTint(st, list) { return YP_GRID_TINTS[Math.max(0, list.indexOf(st)) % YP_GRID_TINTS.length]; }
+        function buildDayGridPlan() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) return '<p>No curriculum data selected.</p>';
+            const strands = Object.keys(db.structure), terms = [1, 2, 3, 4];
+            const W = Math.max(1, ...terms.map(t => yearPlannerState.termLengths[t] || 0)), D = W * 5;
+            const labW = 6.5, dW = ((100 - labW) / D).toFixed(4);
+            const C = { staff: '#f4cccc', hol: '#f3f3f3', school: '#a4c2f4', assess: '#cfe2f3', edge: '#999999', blocked: '#b7b7b7', term: '#1c4587', label: '#cfe2f3', spacer: '#a5a5a5' };
+            const B = 'border:1px solid #000000;', MFULL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const merge = (cells) => {
+                const segs = [];
+                cells.forEach(c => { const last = segs[segs.length - 1]; if (last && last.g === c.g && c.g) { last.n++; } else segs.push(Object.assign({ n: 1 }, c)); });
+                return segs;
+            };
+            let rows = '';
+            const dayPx = 960 * (100 - labW) / 100 / D;
+            // shorten text that is too long for its cell: chars per line from the cell width, then a limited number of lines
+            const fit = (txt, px, charPx, lines) => {
+                txt = String(txt || '').trim(); const cap = Math.max(3, Math.floor((px - 4) / charPx) * lines - 1);
+                if (txt.length <= cap) return txt;
+                let cut = txt.slice(0, cap); const sp = cut.lastIndexOf(' ');
+                if (sp > cap * 0.55) cut = cut.slice(0, sp);
+                return cut.replace(/[ ,.\-–]+$/, '') + '…';
+            };
+            // split rotated text into at most two lines of 11 characters, so the row never grows taller
+            const wrapRot = (txt) => {
+                const words = String(txt || '').trim().split(/\s+/), lines = [''];
+                words.forEach(w => { if (w.length > 11) w = w.slice(0, 10) + '…'; const cur = lines[lines.length - 1]; if (!cur) lines[lines.length - 1] = w; else if ((cur + ' ' + w).length <= 11) lines[lines.length - 1] = cur + ' ' + w; else lines.push(w); });
+                const out = lines.slice(0, 2); if (lines.length > 2) out[1] = out[1].replace(/…?$/, '…');
+                return out.map(ypEsc).join('<br>');
+            };
+            const cell = (seg, extra) => {
+                // a single thin day: the full name is turned 90 degrees (reads bottom to top) and centred in the cell
+                if (seg.stripCell && seg.n === 1 && seg.long) {
+                    return `<td colspan="1" style="${B}background:${seg.bg};writing-mode:vertical-rl;text-align:center;vertical-align:middle;font-size:5pt;line-height:1;padding:0;overflow:hidden;"${seg.title ? ' title="' + ypEsc(seg.title) + '"' : ''}><span style="display:inline-block;white-space:nowrap;transform:rotate(180deg);">${wrapRot(seg.long)}</span></td>`;
+                }
+                const px = seg.n * dayPx, kind = seg.stripCell ? [3.6, 4] : (seg.fitKind === 'ass' ? [6.6, 2] : [7.4, 3]);
+                return `<td colspan="${seg.n}" style="${B}background:${seg.bg || '#ffffff'};${seg.top || ''}${extra || ''}${seg.style || ''}"${seg.title ? ' title="' + ypEsc(seg.title) + '"' : ''}>${ypEsc(seg.text ? fit(seg.text, px, kind[0], kind[1]) : '')}</td>`;
+            };
+            rows += `<tr><td colspan="${D + 1}" style="${B}background:#c9daf8;text-align:center;font-weight:bold;font-size:13pt;padding:2pt;color:#000000;">${ypEsc(ypCourseTitleAlt())} · ${WHS_CAL.year} Year Plan</td></tr>`;
+            terms.forEach(t => {
+                const len = yearPlannerState.termLengths[t] || 0, slots = yearPlannerState.terms[t] || [], padN = (W - len) * 5;
+                const info = []; for (let i = 0; i < len; i++) info.push(ypDayInfo(t, i));
+                // header rows: week, month, date
+                let wk = '', mo = '', dt = '';
+                for (let i = 0; i < len; i++) {
+                    const di = info[i];
+                    wk += `<td colspan="5" style="${B}text-align:center;font-weight:bold;font-size:7.5pt;padding:0;">Week ${i + 1}</td>`;
+                    if (di) {
+                        const m1 = +di[0].iso.slice(5, 7) - 1, m2 = +di[4].iso.slice(5, 7) - 1;
+                        mo += `<td colspan="5" style="${B}text-align:center;font-size:7pt;padding:0;">${m1 === m2 ? MFULL[m1] : MFULL[m1].slice(0, 3) + ' - ' + MFULL[m2].slice(0, 3)}</td>`;
+                        di.forEach(x => { const bg = x.edge ? C.edge : (x.staff ? C.staff : (x.hol ? C.hol : (x.school ? C.school : '#ffffff'))); dt += `<td style="${B}background:${bg};text-align:center;font-size:5.5pt;padding:0;">${x.dom}</td>`; });
+                    } else { mo += `<td colspan="5" style="${B}"></td>`; for (let k = 0; k < 5; k++) dt += `<td style="${B}"></td>`; }
+                }
+                // TOPIC and ASSESSMENT rows, one cell per day, then merged
+                const topicDays = [], assDays = [];
+                for (let i = 0; i < len; i++) {
+                    const slot = slots[i], di = info[i];
+                    // this week's own assessment, found through the topic's unit week
+                    let weekAss = null;
+                    if (slot && typeof slot === 'object') {
+                        ypAssessAll(slot).forEach(a => { if ((slot.unitWeek || 1) >= a.start && (slot.unitWeek || 1) <= a.end) weekAss = a; });
+                    }
+                    for (let d = 0; d < 5; d++) {
+                        const x = di ? di[d] : null;
+                        const strip = x ? (x.edge ? { bg: C.edge, g: 'edge' + x.edge + i, text: '' } : x.staff ? { bg: C.staff, g: 'st' + x.staff.label, text: 'SOD', long: 'STAFF DAY', title: x.staff.label } : x.hol ? { bg: C.hol, g: 'ho' + x.hol.label, text: ypGridShort(x.hol.label, x.hol.short), long: (x.hol.short || x.hol.label).toUpperCase(), title: x.hol.label } : x.school ? { bg: C.school, g: 'sc' + x.school.label + '', text: ypGridShort(x.school.label, x.school.short), long: (x.school.short || x.school.label).toUpperCase(), title: x.school.label } : null) : null;
+                        // topic row
+                        if (strip) topicDays.push(Object.assign({ stripCell: true, style: 'font-size:5pt;line-height:1;text-align:center;vertical-align:middle;padding:0;overflow:hidden;' }, strip));
+                        else if (slot === 'BLOCKED') topicDays.push({ bg: C.blocked, g: 'blk' + i, text: '' });
+                        else if (slot && typeof slot === 'object') {
+                            const strand = effectiveStrandOf(db, slot), hue = strand ? gridHue(strand, strands) : '#64748b', tint = strand ? gridTint(strand, strands) : '#f1f5f9';
+                            topicDays.push({ bg: tint, top: `border-top:3px solid ${hue};`, g: 'T' + slot.id, text: (slot.customText || slot.subtopic || ''), slotId: slot.id, style: 'text-align:center;font-weight:bold;font-size:8pt;line-height:1.15;vertical-align:middle;padding:2pt;' });
+                        } else topicDays.push({ bg: '#ffffff', g: 'E' + i, text: '' });
+                        // assessment row
+                        if (weekAss) assDays.push({ bg: '#fef3c7', top: 'border-color:#f59e0b;', g: 'A' + slot.id + '#' + weekAss.start, text: '📝 ' + ypAssessLabel(weekAss, 30), title: (weekAss.title ? weekAss.title + ' - ' : '') + ypAssessText(weekAss), style: 'text-align:center;font-weight:bold;font-size:7.5pt;color:#92400e;vertical-align:middle;padding:1pt;line-height:1.15;' });
+                        else if (x && x.edge) assDays.push({ bg: C.edge, g: 'edge' + x.edge + i, text: '' });
+                        else if (x && x.staff) assDays.push({ bg: C.staff, g: 'st' + x.staff.label, text: '' });
+                        else if (x && x.hol) assDays.push({ bg: C.hol, g: 'ho' + x.hol.label, text: '' });
+                        else if (x && x.school) assDays.push({ bg: C.school, g: 'sc' + x.school.label + '', text: '' });
+                        else if (x && x.assess) assDays.push({ bg: C.assess, g: 'ae' + x.assess.label, text: (x.assess.short || x.assess.label), style: 'text-align:center;font-weight:bold;font-size:7.5pt;vertical-align:middle;padding:1pt;line-height:1.15;' });
+                        else assDays.push({ bg: '#ffffff', g: 'E' + i, text: '' });
+                    }
+                }
+                const topicSegs = merge(topicDays), assSegs = merge(assDays); assSegs.forEach(sg => { sg.fitKind = 'ass'; });
+                // a topic that a holiday splits into pieces shows its name once, in the widest piece
+                const widest = {};
+                topicSegs.forEach((sg, k) => { if (sg.slotId && (!(sg.slotId in widest) || sg.n > topicSegs[widest[sg.slotId]].n)) widest[sg.slotId] = k; });
+                topicSegs.forEach((sg, k) => { if (sg.slotId && widest[sg.slotId] !== k) sg.text = ''; });
+                const pad = padN > 0 ? `<td colspan="${padN}" rowspan="6" style="${B}background:#a4c2f4;font-size:6.5pt;text-align:center;vertical-align:middle;padding:2pt;">${t === 2 && WHS_CAL.notes && WHS_CAL.notes[0] ? ypEsc(WHS_CAL.notes[0].replace(/^Staff call-back days fall in the holidays: /, 'Staff call-back days: ')) : ''}</td>` : '';
+                const rng = calTermRangeText(t);
+                rows += `<tr><td rowspan="3" style="${B}"></td>${wk}${pad}</tr><tr>${mo}</tr><tr>${dt}</tr>`;
+                rows += `<tr><td colspan="${len * 5 + 1}" style="${B}background:${C.term};color:#ffffff;text-align:center;font-weight:bold;font-size:9pt;padding:1pt;">Term ${t}${rng ? ' · ' + rng : ''}</td></tr>`;
+                rows += `<tr style="height:34pt;"><td style="${B}background:${C.label};color:${C.term};font-weight:bold;font-size:7.5pt;text-align:center;vertical-align:middle;padding:1pt;">TOPIC</td>${topicSegs.map(sg => cell(sg)).join('')}</tr>`;
+                rows += `<tr style="height:21pt;"><td style="${B}background:${C.label};color:${C.term};font-weight:bold;font-size:5.5pt;text-align:center;vertical-align:middle;padding:1pt;">ASSESSMENT</td>${assSegs.map(sg => cell(sg)).join('')}</tr>`;
+                rows += `<tr><td colspan="${D + 1}" style="border:none;background:${C.spacer};font-size:2pt;line-height:4pt;">&nbsp;</td></tr>`;
+            });
+            const cols = `<colgroup><col width="${labW}%">${Array(D).fill(`<col width="${dW}%">`).join('')}</colgroup>`;
+            const lg = (bg, txt) => `<td style="${B}background:${bg};font-size:7pt;text-align:center;vertical-align:middle;padding:1pt;">${txt}</td>`;
+            const legend = strands.map(st => `<td style="${B}background:${gridTint(st, strands)};border-top:3px solid ${gridHue(st, strands)};font-size:7pt;text-align:center;padding:1pt;">${ypEsc(st)}</td>`).join('') +
+                lg('#fef3c7', 'Assessment') + lg(C.assess, 'Exams / CAA') + lg(C.hol, 'Public holiday') + lg(C.staff, 'Staff only day (SOD)') + lg(C.school, 'School event') + lg(C.edge, 'Not a school day') + lg(C.blocked, 'Blocked week');
+            const centre = (h) => h.replace(/<td /g, '<td align="center" valign="middle" ').replace(/vertical-align:(top|bottom);/g, 'vertical-align:middle;');
+            return centre(`<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;table-layout:fixed;width:100%;">${cols}<tbody>${rows}</tbody></table>
+                <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;margin-top:3pt;"><tbody><tr>${legend}</tr></tbody></table>`);
+        }
+        function showDayGridPlan() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) { customAlert('Nothing to show yet', 'Select a Learning Area and Year Level first.'); return; }
+            document.getElementById('output-title').innerText = `${ypCourseTitleAlt()} — Year Plan (day-by-day grid, landscape)`;
+            document.getElementById('output-content').innerHTML = `
+                <style>@page { size: A4 landscape; margin: 8mm; }</style>
+                <div data-no-copy="1" class="no-print mb-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-xs text-amber-900"><strong>For a Google Doc:</strong> first set the Doc to landscape (File &gt; Page setup &gt; Landscape, margins about 1 cm), then click <strong>Copy for Google Docs</strong> and paste. Holidays, staff-only days and school events are shaded as single days. Print / Save PDF is set to landscape A4. <button type="button" onclick="downloadDayGridXlsx()" class="ml-2 rounded-md bg-emerald-600 px-3 py-1 text-xs font-bold text-white hover:bg-emerald-700">Download as spreadsheet (.xlsx)</button></div>
+                <div id="onepage-wrap" style="width:960px;max-width:100%;margin:0 auto;background:#fff;padding:6px;">${buildDayGridPlan()}</div>`;
+            document.getElementById('output-overlay').classList.remove('hidden');
+            document.getElementById('output-overlay').classList.add('flex');
+        }
+
+        /* Download the day-by-day grid as a real .xlsx with its colours, merged cells and rotated text.
+           ExcelJS is loaded from cdnjs only when the button is clicked, so the page stays one file and works offline until then. */
+        function ypLoadExcelJS() {
+            return new Promise((resolve, reject) => {
+                if (window.ExcelJS) return resolve();
+                const sc = document.createElement('script');
+                sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
+                sc.onload = () => (window.ExcelJS ? resolve() : reject(new Error('ExcelJS missing')));
+                sc.onerror = () => reject(new Error('ExcelJS did not load'));
+                document.head.appendChild(sc);
+            });
+        }
+        function ypRgbToArgb(c) {
+            const m = String(c || '').match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+            if (m) return 'FF' + [m[1], m[2], m[3]].map(n => (+n).toString(16).padStart(2, '0')).join('').toUpperCase();
+            const h = String(c || '').match(/^#([0-9a-f]{6})$/i);
+            return h ? 'FF' + h[1].toUpperCase() : '';
+        }
+        async function downloadDayGridXlsx() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) { customAlert('Nothing to show yet', 'Select a Learning Area and Year Level first.'); return; }
+            try { await ypLoadExcelJS(); } catch (e) { customAlert('The spreadsheet needs the internet', 'The spreadsheet maker could not be loaded. Check your connection and try again, or use Copy for Google Docs instead.'); return; }
+            const box = document.createElement('div'); box.innerHTML = buildDayGridPlan();
+            const tabs = box.querySelectorAll('table'), main = tabs[0], legend = tabs[1];
+            const nCols = main.querySelectorAll('colgroup col').length;
+            const wb = new ExcelJS.Workbook();
+            const ws = wb.addWorksheet('Year Plan', { views: [{ showGridLines: false }], pageSetup: { paperSize: 8, orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 1, margins: { left: 0.3, right: 0.3, top: 0.3, bottom: 0.3, header: 0.1, footer: 0.1 } } });
+            ws.getColumn(1).width = 13; for (let c = 2; c <= nCols; c++) ws.getColumn(c).width = 2.7;
+            const place = (table, r0, spans) => {
+                const occ = {}, trs = [...table.querySelectorAll('tr')];
+                trs.forEach((tr, ri) => {
+                    const R = r0 + ri; occ[R] = occ[R] || {};
+                    let c = 1, maxFont = 0, fixedH = 0;
+                    if (tr.style.height) fixedH = parseFloat(tr.style.height) * 1.4;
+                    [...tr.children].forEach((td, ti) => {
+                        while (occ[R][c]) c++;
+                        let cs = +td.getAttribute('colspan') || 1; const rs = +td.getAttribute('rowspan') || 1;
+                        if (spans) cs = spans[ti];
+                        for (let rr = R; rr < R + rs; rr++) { occ[rr] = occ[rr] || {}; for (let cc = c; cc < c + cs; cc++) occ[rr][cc] = true; }
+                        const st = td.style, fs = parseFloat(st.fontSize) || 8; maxFont = Math.max(maxFont, fs);
+                        const rot = /vertical/.test(st.writingMode || '');
+                        const cl = td.cloneNode(true); cl.querySelectorAll('br').forEach(b => b.replaceWith('\n'));
+                        const text = (cl.textContent || '').replace(/ /g, ' ').trim();
+                        const noBorder = /none/.test(st.borderStyle || '') || /^none/.test(st.border || '');
+                        const bc = ypRgbToArgb(st.borderColor) || 'FF000000', top3 = /^3px/.test(st.borderTop || '');
+                        const topC = top3 ? (ypRgbToArgb((st.borderTop || '').replace(/^3px solid /, '')) || bc) : bc;
+                        const fill = ypRgbToArgb(st.backgroundColor), font = { name: 'Arial', size: Math.max(6, Math.round(fs * 1.15 * 2) / 2), bold: /bold|[6-9]00/.test(st.fontWeight || ''), color: { argb: ypRgbToArgb(st.color) || 'FF000000' } };
+                        const align = { horizontal: 'center', vertical: 'middle', wrapText: true }; if (rot) align.textRotation = 90;
+                        for (let rr = R; rr < R + rs; rr++) for (let cc = c; cc < c + cs; cc++) {
+                            const cell = ws.getCell(rr, cc);
+                            if (fill) cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: fill } };
+                            cell.alignment = align; cell.font = font;
+                            if (!noBorder) cell.border = { top: { style: top3 ? 'medium' : 'thin', color: { argb: topC } }, left: { style: 'thin', color: { argb: bc } }, bottom: { style: 'thin', color: { argb: bc } }, right: { style: 'thin', color: { argb: bc } } };
+                        }
+                        ws.getCell(R, c).value = text;
+                        if (cs > 1 || rs > 1) ws.mergeCells(R, c, R + rs - 1, c + cs - 1);
+                        c += cs;
+                    });
+                    ws.getRow(R).height = fixedH || (maxFont <= 2.5 ? 4 : Math.max(11, maxFont * 1.7));
+                });
+                return r0 + trs.length;
+            };
+            let r = place(main, 1);
+            if (legend) {
+                const n = legend.querySelectorAll('tr:first-child > td').length, base = Math.floor(nCols / n), spans = Array(n).fill(base); spans[n - 1] += nCols - base * n;
+                place(legend, r + 1, spans);
+            }
+            const buf = await wb.xlsx.writeBuffer();
+            const name = (ypCourseTitleAlt() + ' Year Plan ' + WHS_CAL.year).replace(/[^\w\- ]+/g, '').replace(/\s+/g, '_') + '.xlsx';
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })); a.download = name;
+            document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+        }
+        // The document that is printed (or saved as a PDF) for the one-page plan: just the plan on one landscape A4 page, none of the app around it
+        function ypOnePagePrintHtml() {
+            const wrap = document.getElementById('onepage-wrap');
+            const inner = wrap ? wrap.outerHTML.replace('width:960px;max-width:100%;', 'width:100%;') : '';
+            return '<!DOCTYPE html><html lang="en-NZ"><head><meta charset="utf-8"><title>Annual Plan</title><style>@page { size: A4 landscape; margin: 8mm; } html, body { margin: 0; padding: 0; background: #fff; font-family: Arial, Helvetica, sans-serif; } * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }</style></head><body>' + inner + '</body></html>';
+        }
+        function ypPrintOutput() {
+            if (!document.getElementById('onepage-wrap')) { window.print(); return; }
+            const fr = document.createElement('iframe');
+            fr.setAttribute('aria-hidden', 'true');
+            fr.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
+            document.body.appendChild(fr);
+            const d = fr.contentWindow.document;
+            d.open(); d.write(ypOnePagePrintHtml()); d.close();
+            setTimeout(function() {
+                try { fr.contentWindow.focus(); fr.contentWindow.print(); } catch (e) { window.print(); }
+                setTimeout(function() { if (fr.parentNode) fr.parentNode.removeChild(fr); }, 2000);
+            }, 250);
+        }
+        function showOnePagePlan() {
+            const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
+            if (!db) { customAlert('Nothing to show yet', 'Select a Learning Area and Year Level first.'); return; }
+            document.getElementById('output-title').innerText = `${ypCourseTitleAlt()} — Annual Plan (one page, landscape)`;
+            document.getElementById('output-content').innerHTML = `
+                <style>@page { size: A4 landscape; margin: 8mm; }</style>
+                <div data-no-copy="1" class="no-print mb-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-xs text-amber-900"><strong>For a Google Doc:</strong> first set the Doc to landscape (File &gt; Page setup &gt; Landscape, margins about 1 cm), then click <strong>Copy for Google Docs</strong> and paste. It is built to fill one landscape page. Print / Save PDF is also set to landscape A4.</div>
+                <div id="onepage-wrap" style="width:960px;max-width:100%;margin:0 auto;background:#fff;padding:6px;">
+                    <p style="margin:0 0 4pt 0;font-size:14pt;font-weight:bold;color:#002066;">${ypEsc(ypCourseTitleAlt())} · ${WHS_CAL.year}</p>
+                    ${buildOnePagePlan()}
+                </div>`;
+            document.getElementById('output-overlay').classList.remove('hidden');
+            document.getElementById('output-overlay').classList.add('flex');
+        }
+
         function printFullYearPlan(mode) {
             const db = curriculumData[yearPlannerState.year] && curriculumData[yearPlannerState.year][yearPlannerState.subject];
             if (!db) { customAlert('Nothing to show yet', 'Select a Learning Area and Year Level first.'); return; }
@@ -10875,55 +11175,96 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             y.setAttribute('aria-checked', ypAssessChoice === 'yes' ? 'true' : 'false'); n.setAttribute('aria-checked', ypAssessChoice === 'none' ? 'true' : 'false');
             const f = document.getElementById('ass-modal-fields');
             f.style.opacity = ypAssessChoice === 'none' ? '0.4' : ''; f.style.pointerEvents = ypAssessChoice === 'none' ? 'none' : '';
-            f.querySelectorAll('select').forEach(x => { x.disabled = ypAssessChoice === 'none'; });
+            f.querySelectorAll('select, input, button').forEach(x => { x.disabled = ypAssessChoice === 'none' || (x.tagName === 'SELECT' && x.options.length === 1 && x.options[0].text === 'No free week'); });
         }
         // The small ✕ beside the flashing button: this topic has no assessment
         function ypNoAssess(id) {
-            ypTopicSlots(id).forEach(x => { x.slot.assessment = null; x.slot.noAssessment = true; });
+            ypTopicSlots(id).forEach(x => { ypSetAssessRaw(x.slot, []); x.slot.noAssessment = true; });
             renderTermGrids(); saveState('Marked: no assessment for this topic');
         }
+        // The popup edits a draft list of assessments for the topic; Save writes it to every week of the topic
+        var ypAssessDraft = [];
+        function ypDraftWeeks() { return (ypTopicSlots(ypAssessEditId).length) || 1; }
+        function ypDraftFree(idx, aw) {
+            // start weeks where an assessment of aw weeks fits without touching the other assessments
+            const weeks = ypDraftWeeks(), used = {};
+            ypAssessDraft.forEach((r, k) => { if (k === idx || r.bad) return; const w = ypAssessWeeksOf(r.length); for (let x = r.start; x < r.start + w; x++) used[x] = true; });
+            const out = [];
+            for (let st = 1; st + aw - 1 <= weeks; st++) { let ok = true; for (let x = st; x < st + aw; x++) if (used[x]) ok = false; if (ok) out.push(st); }
+            return out;
+        }
+        function ypDraftFix() {
+            const weeks = ypDraftWeeks();
+            ypAssessDraft.forEach((r, k) => {
+                if (ypAssessWeeksOf(r.length) > weeks) r.length = weeks >= 1 ? '1 Week' : '1 Lesson';
+                const aw = ypAssessWeeksOf(r.length), free = ypDraftFree(k, aw);
+                r.bad = false;
+                if (!free.length) { r.bad = true; return; }
+                if (!r.touched || free.indexOf(r.start) === -1) r.start = free[free.length - 1];
+            });
+        }
+        function ypDraftRender() {
+            const box = document.getElementById('ass-modal-rows'); if (!box) return;
+            const weeks = ypDraftWeeks(), lens = ['1 Lesson', '2 Lessons', '3 Lessons', '1 Week', '2 Weeks', '3 Weeks', '4 Weeks'];
+            box.innerHTML = ypAssessDraft.map((r, k) => {
+                const aw = ypAssessWeeksOf(r.length), free = ypDraftFree(k, aw);
+                if (free.indexOf(r.start) === -1 && !r.bad) free.push(r.start);
+                free.sort((a, b) => a - b);
+                const lenOpts = lens.map(l => `<option value="${l}"${l === r.length ? ' selected' : ''}${ypAssessWeeksOf(l) > weeks ? ' disabled' : ''}>${l}</option>`).join('');
+                const stOpts = r.bad ? '<option>No free week</option>' : free.map(st => `<option value="${st}"${st === r.start ? ' selected' : ''}>${aw > 1 ? `Weeks ${st} to ${st + aw - 1}` : `Week ${st}`} of the topic</option>`).join('');
+                return `<div class="rounded-xl border ${r.bad ? 'border-red-400 bg-red-50' : 'border-amber-300 bg-amber-50/60'} p-3" data-row="${k}">
+                    <div class="flex items-center justify-between gap-2 mb-1.5"><span class="text-[11px] font-black text-amber-900">${ypAssessDraft.length > 1 ? 'Assessment ' + (k + 1) : 'Assessment'}</span>${ypAssessDraft.length > 1 ? `<button type="button" onclick="ypDraftRemove(${k})" class="text-[11px] font-bold text-red-600 hover:text-red-800" aria-label="Remove assessment ${k + 1}">✕ Remove</button>` : ''}</div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Type or title <span class="font-normal text-slate-500">(optional, shown on the calendar)</span></label>
+                    <input type="text" id="ass-r${k}-title" list="ass-type-list" maxlength="60" value="${ypEsc(r.title).replace(/"/g, '&quot;')}" oninput="ypAssessDraft[${k}].title=this.value" placeholder="e.g. Test, Quiz, Report, Poster" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm mb-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="text-xs font-bold text-slate-700">How long?<select id="ass-r${k}-length" onchange="ypDraftSet(${k},'length',this.value)" class="w-full mt-1 border border-slate-300 rounded-lg px-2 py-2 text-sm font-normal">${lenOpts}</select></label>
+                        <label class="text-xs font-bold text-slate-700">When?<select id="ass-r${k}-start" onchange="ypDraftSet(${k},'start',this.value)" class="w-full mt-1 border border-slate-300 rounded-lg px-2 py-2 text-sm font-normal"${r.bad ? ' disabled' : ''}>${stOpts}</select></label>
+                    </div>
+                    ${r.bad ? '<p class="text-[11px] font-bold text-red-700 mt-1.5">There is no free week left for this one. Make it shorter, remove another assessment, or lengthen the topic.</p>' : ''}
+                </div>`;
+            }).join('');
+            const add = document.getElementById('ass-add-another');
+            const anyRoom = ypAssessDraft.every(r => !r.bad) && (function() { const save = ypAssessDraft; ypAssessDraft = save.concat([{ length: '1 Lesson', start: 1, touched: false }]); const ok = ypDraftFree(save.length, 1).length > 0; ypAssessDraft = save; return ok; })();
+            if (add) { add.disabled = !anyRoom; add.classList.toggle('opacity-40', !anyRoom); add.classList.toggle('cursor-not-allowed', !anyRoom); add.title = anyRoom ? '' : 'Every week of this topic already has an assessment. Lengthen the topic to add more.'; }
+            const hint = document.getElementById('ass-modal-hint');
+            if (hint) hint.textContent = `This topic is ${weeks} week${weeks === 1 ? '' : 's'} long. ` + (ypAssessDraft.length > 1 ? 'Each assessment needs its own week or weeks. ' : '') + 'Assessments go at the end unless you choose another week.';
+        }
+        function ypDraftSet(k, f, v) {
+            const r = ypAssessDraft[k]; if (!r) return;
+            if (f === 'length') r.length = v; else { r.start = parseInt(v) || 1; r.touched = true; }
+            ypDraftFix(); ypDraftRender();
+        }
+        function ypDraftAdd() {
+            ypAssessDraft.push({ title: '', length: '1 Lesson', start: 1, touched: false });
+            ypDraftFix();
+            if (ypAssessDraft[ypAssessDraft.length - 1].bad) { ypAssessDraft.pop(); showToast('Every week of this topic already has an assessment.'); }
+            ypDraftRender();
+        }
+        function ypDraftRemove(k) { ypAssessDraft.splice(k, 1); if (!ypAssessDraft.length) ypAssessDraft.push({ title: '', length: '1 Lesson', start: 1, touched: false }); ypDraftFix(); ypDraftRender(); }
         function openAssessModal(id) {
             const list = ypTopicSlots(id);
             if (!list.length) return;
             ypAssessEditId = id;
-            const a = list[0].slot.assessment;
+            const all = ypAssessAll(list[0].slot);
             document.getElementById('ass-modal-sub').textContent = list[0].slot.customText + ' (' + list.length + ' week' + (list.length === 1 ? '' : 's') + ')';
-            document.getElementById('ass-modal-length').value = a ? a.length : '1 Lesson';
-            document.getElementById('ass-modal-title').value = a && a.title ? a.title : '';
-            const st = document.getElementById('ass-modal-start');
-            st.dataset.touched = a ? '1' : '';
-            st.innerHTML = '';
-            if (a) { st.innerHTML = '<option value="' + (a.startOffset || 1) + '"></option>'; st.value = String(a.startOffset || 1); }
-            document.getElementById('ass-modal-remove').style.visibility = a ? 'visible' : 'hidden';
-            updateAssessEditUI();
-            setAssessChoice(!a && list[0].slot.noAssessment ? 'none' : 'yes');
+            ypAssessDraft = all.length ? all.map(a => ({ title: a.title || '', length: a.label, start: a.start, touched: true })) : [{ title: '', length: '1 Lesson', start: 1, touched: false }];
+            ypDraftFix(); ypDraftRender();
+            document.getElementById('ass-modal-remove').style.visibility = all.length ? 'visible' : 'hidden';
+            setAssessChoice(!all.length && list[0].slot.noAssessment ? 'none' : 'yes');
             const m = document.getElementById('ass-modal'); m.classList.remove('hidden'); m.classList.add('flex');
-        }
-        function updateAssessEditUI() {
-            const list = ypTopicSlots(ypAssessEditId), weeks = list.length || 1;
-            const lenSel = document.getElementById('ass-modal-length'), startSel = document.getElementById('ass-modal-start');
-            Array.from(lenSel.options).forEach(o => { o.disabled = ypAssessWeeksOf(o.value) > weeks; });
-            if (lenSel.options[lenSel.selectedIndex].disabled) lenSel.value = '1 Week';
-            if (lenSel.options[lenSel.selectedIndex].disabled) lenSel.value = '1 Lesson';
-            const aw = ypAssessWeeksOf(lenSel.value), lastStart = Math.max(1, weeks - aw + 1);
-            const prev = parseInt(startSel.value), touched = startSel.dataset.touched === '1';
-            startSel.innerHTML = '';
-            for (let i = 1; i <= lastStart; i++) startSel.innerHTML += `<option value="${i}">${aw > 1 ? `Weeks ${i} to ${i + aw - 1}` : `Week ${i}`} of the topic</option>`;
-            startSel.value = String(touched && prev >= 1 && prev <= lastStart ? prev : lastStart);
-            const s0 = parseInt(startSel.value);
-            document.getElementById('ass-modal-hint').textContent = `Runs in ${aw > 1 ? 'weeks ' + s0 + ' to ' + (s0 + aw - 1) : 'week ' + s0} of this ${weeks}-week topic. It is placed at the end unless you choose another week.`;
         }
         function saveAssessEdit() {
             const list = ypTopicSlots(ypAssessEditId);
             if (!list.length) { closeAssessModal(); return; }
-            if (ypAssessChoice === 'none') { list.forEach(x => { x.slot.assessment = null; x.slot.noAssessment = true; }); closeAssessModal(); renderTermGrids(); saveState('Marked: no assessment for this topic'); return; }
-            const len = document.getElementById('ass-modal-length').value, start = parseInt(document.getElementById('ass-modal-start').value) || 1, ttl = document.getElementById('ass-modal-title').value.trim().slice(0, 60);
-            list.forEach(x => { x.slot.assessment = Object.assign({ startOffset: start, length: len, weeks: ypAssessWeeksOf(len) }, ttl ? { title: ttl } : {}); delete x.slot.noAssessment; });
-            closeAssessModal(); renderTermGrids(); saveState('Assessment saved');
+            if (ypAssessChoice === 'none') { list.forEach(x => { ypSetAssessRaw(x.slot, []); x.slot.noAssessment = true; }); closeAssessModal(); renderTermGrids(); saveState('Marked: no assessment for this topic'); return; }
+            if (ypAssessDraft.some(r => r.bad)) { showToast('One assessment has no free week. Shorten it or remove another first.'); return; }
+            const arr = ypAssessDraft.map(r => { const ttl = String(r.title || '').trim().slice(0, 60); return Object.assign({ startOffset: r.start, length: r.length, weeks: ypAssessWeeksOf(r.length) }, ttl ? { title: ttl } : {}); });
+            list.forEach(x => { ypSetAssessRaw(x.slot, arr.map(a => Object.assign({}, a))); delete x.slot.noAssessment; });
+            closeAssessModal(); renderTermGrids(); saveState(arr.length > 1 ? arr.length + ' assessments saved' : 'Assessment saved');
         }
         function removeAssessEdit() {
-            ypTopicSlots(ypAssessEditId).forEach(x => { x.slot.assessment = null; });
-            closeAssessModal(); renderTermGrids(); saveState('Assessment removed');
+            ypTopicSlots(ypAssessEditId).forEach(x => { ypSetAssessRaw(x.slot, []); });
+            closeAssessModal(); renderTermGrids(); saveState('Assessments removed');
         }
         function closeAssessModal() {
             const m = document.getElementById('ass-modal'); m.classList.add('hidden'); m.classList.remove('flex'); ypAssessEditId = null;
@@ -11018,11 +11359,36 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // ---------- Assessments inside a topic ----------
         // slot.assessment = { startOffset: week of the topic it starts, length: '2 Lessons' | '1 Week' | '3 Weeks' ..., weeks: whole weeks it covers }
         function ypAssessWeeksOf(len) { var m = /(\d+)\s*week/i.exec(len || ''); return m ? +m[1] : 1; }
-        function ypAssess(slot) {
-            var a = slot && slot.assessment;
-            if (!a) return null;
+        // A topic can have several assessments. slot.assessment is the first one (kept so older plans and code keep working); any others are in slot.assessmentMore.
+        function ypAssessNorm(a) {
             var weeks = ypAssessWeeksOf(a.length), start = a.startOffset || 1;
             return { start: start, weeks: weeks, end: start + weeks - 1, title: a.title || '', label: a.length || '1 Lesson', lessons: !/week/i.test(a.length || '') };
+        }
+        function ypAssessRaw(slot) {
+            var r = []; if (!slot) return r;
+            if (slot.assessment) r.push(slot.assessment);
+            (slot.assessmentMore || []).forEach(function(a) { if (a) r.push(a); });
+            return r;
+        }
+        function ypSetAssessRaw(slot, arr) {
+            arr = (arr || []).slice().sort(function(a, b) { return (a.startOffset || 1) - (b.startOffset || 1); });
+            slot.assessment = arr[0] || null;
+            if (arr.length > 1) slot.assessmentMore = arr.slice(1); else delete slot.assessmentMore;
+        }
+        function ypAssessAll(slot) { return ypAssessRaw(slot).map(ypAssessNorm).sort(function(a, b) { return a.start - b.start; }); }
+        function ypAssess(slot) { return ypAssessAll(slot)[0] || null; }
+        // Tidy a list for a topic that is n weeks long: drop any that no longer fit, pull late ones back in, and drop any that now overlap an earlier one.
+        function ypTidyAssess(arr, n) {
+            var out = [], used = {};
+            (arr || []).slice().sort(function(a, b) { return (a.startOffset || 1) - (b.startOffset || 1); }).forEach(function(a) {
+                var w = ypAssessWeeksOf(a.length), st = a.startOffset || 1;
+                if (w > n) return;
+                if (st + w - 1 > n) st = n - w + 1;
+                for (var k = st; k < st + w; k++) if (used[k]) return;
+                for (k = st; k < st + w; k++) used[k] = true;
+                out.push(Object.assign({}, a, { startOffset: st, weeks: w }));
+            });
+            return out;
         }
         // Short label for the calendar: the teacher's type or title, cut to fit so the assessment row never grows taller than the topic row.
         function ypAssessLabel(a, max) {
@@ -11033,34 +11399,39 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function ypAssessText(a) { return a.weeks > 1 ? a.weeks + ' weeks' : (a.lessons ? a.label.toLowerCase() : '1 week'); }
         // Which of a block's weeks (1 = its first week) the assessment covers. A topic split by a blocked week is several blocks, each with its own unitWeek.
-        function ypAssessCols(slot, span) {
-            var a = ypAssess(slot);
-            if (!a) return null;
-            var first = slot.unitWeek || 1, last = first + span - 1, s = Math.max(a.start, first), e = Math.min(a.end, last);
-            if (s > e) return null;
-            return { c1: s - first + 1, c2: e - first + 1, a: a, fromPrev: a.start < first, toNext: a.end > last };
+        function ypAssessColsAll(slot, span) {
+            var first = slot.unitWeek || 1, last = first + span - 1, out = [];
+            ypAssessAll(slot).forEach(function(a) {
+                var st = Math.max(a.start, first), e = Math.min(a.end, last);
+                if (st > e) return;
+                out.push({ c1: st - first + 1, c2: e - first + 1, a: a, fromPrev: a.start < first, toNext: a.end > last });
+            });
+            return out;
         }
+        function ypAssessCols(slot, span) { return ypAssessColsAll(slot, span)[0] || null; }
         function ypAssessWeekRange(c, base) { var w1 = base + c.c1, w2 = base + c.c2; return w1 === w2 ? 'Wk ' + w1 : 'Wks ' + w1 + '-' + w2; }
-        function ypAssessHasWeek(slot) { var a = ypAssess(slot); return !!a && slot.unitWeek >= a.start && slot.unitWeek <= a.end; }
+        function ypAssessHasWeek(slot) { return ypAssessAll(slot).some(function(a) { return slot.unitWeek >= a.start && slot.unitWeek <= a.end; }); }
         // On the term card: a gold bar that sits under exactly the weeks the assessment runs in.
         function ypAssessStrip(slot, span) {
-            var c = ypAssessCols(slot, span);
-            if (!c) return '';
-            var a = c.a, tip = 'Assessment: ' + (c.fromPrev || c.toNext ? 'continues across blocks. ' : '') + 'Wk ' + a.start + (a.weeks > 1 ? ' to ' + a.end : '') + ' of the topic (' + ypAssessText(a) + ')';
-            return '<div style="display:grid;grid-template-columns:repeat(' + span + ',minmax(0,1fr));gap:0.5rem;margin:0.75rem -13px 0;" title="' + ypEsc(tip) + '">' +
-                '<div style="grid-column:' + c.c1 + ' / ' + (c.c2 + 1) + ';background:#fef3c7;color:#92400e;border-top:2px solid #f59e0b;border-bottom:2px solid #f59e0b;text-align:center;font-size:10px;font-weight:800;line-height:1.2;padding:3px 2px;">' +
-                '<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (c.fromPrev ? '◂ ' : '') + '📝 ' + (a.title ? ypEsc(ypAssessLabel(a, 16)) : 'Assess') + (c.toNext ? ' ▸' : '') + '</div><div style="font-weight:600;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ypEsc(ypAssessText(a)) + '</div></div></div>';
+            var cs = ypAssessColsAll(slot, span);
+            if (!cs.length) return '';
+            var tip = cs.map(function(c) { var a = c.a; return (a.title ? a.title + ': ' : 'Assessment: ') + (c.fromPrev || c.toNext ? 'continues across blocks. ' : '') + 'Wk ' + a.start + (a.weeks > 1 ? ' to ' + a.end : '') + ' of the topic (' + ypAssessText(a) + ')'; }).join('\n');
+            var bars = cs.map(function(c) {
+                var a = c.a, n = c.c2 - c.c1 + 1;
+                return '<div style="grid-row:1;grid-column:' + c.c1 + ' / ' + (c.c2 + 1) + ';background:#fef3c7;color:#92400e;border-top:2px solid #f59e0b;border-bottom:2px solid #f59e0b;text-align:center;font-size:10px;font-weight:800;line-height:1.2;padding:3px 2px;min-width:0;">' +
+                    '<div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (c.fromPrev ? '◂ ' : '') + '📝 ' + (a.title ? ypEsc(ypAssessLabel(a, n > 1 ? 16 : 9)) : (n > 1 || cs.length === 1 ? 'Assess' : '')) + (c.toNext ? ' ▸' : '') + '</div><div style="font-weight:600;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + ypEsc(ypAssessText(a)) + '</div></div>';
+            }).join('');
+            return '<div style="display:grid;grid-template-columns:repeat(' + span + ',minmax(0,1fr));gap:0.5rem;margin:0.75rem -13px 0;" title="' + ypEsc(tip) + '">' + bars + '</div>';
         }
         // Cells for a table row, one per week of the term, so the assessment lines up under the same weeks as its topic.
-        function ypAssessCells(t, border) {
+        function ypAssessCells(t, border, compact) {
             var slots = yearPlannerState.terms[t] || [], len = yearPlannerState.termLengths[t] || 0, marks = new Array(len).fill(null), any = false, i = 0;
             while (i < len) {
                 var slot = slots[i];
                 if (slot && typeof slot === 'object') {
                     var span = 1;
                     while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
-                    var c = ypAssessCols(slot, span);
-                    if (c) { for (var j = c.c1; j <= c.c2; j++) marks[i + j - 1] = { id: slot.id, c: c, name: slot.customText || slot.subtopic || '' }; any = true; }
+                    ypAssessColsAll(slot, span).forEach(function(c, ci) { for (var j = c.c1; j <= c.c2; j++) marks[i + j - 1] = { id: slot.id + '#' + ci, c: c, name: slot.customText || slot.subtopic || '' }; any = true; });
                     i += span;
                 } else i++;
             }
@@ -11071,7 +11442,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 var n = 1;
                 while (k + n < len && marks[k + n] && marks[k + n].id === m.id) n++;
                 var ml = ypAssessLabel(m.c.a, Math.min(30, 11 * n));
-                html += '<td colspan="' + n + '" title="' + ypEsc((m.c.a.title ? m.c.a.title + ' - ' : '') + 'Assessment (' + ypAssessText(m.c.a) + ') in ' + (m.name || 'this topic')) + '" style="border:1px solid #f59e0b;background:#fef3c7;color:#92400e;text-align:center;font-weight:bold;font-size:10px;padding:3px 2px;line-height:1.25;max-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">📝 ' + ypEsc(ml) + '<span style="font-weight:600;font-size:9px;"> · ' + ypEsc(ypAssessText(m.c.a)) + '</span></td>';
+                html += '<td colspan="' + n + '" title="' + ypEsc((m.c.a.title ? m.c.a.title + ' - ' : '') + 'Assessment (' + ypAssessText(m.c.a) + ') in ' + (m.name || 'this topic')) + '" style="border:1px solid #f59e0b;background:#fef3c7;color:#92400e;text-align:center;font-weight:bold;font-size:' + (compact ? '8.5pt' : '10px') + ';padding:' + (compact ? '2pt 1pt' : '3px 2px') + ';line-height:1.25;max-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">📝 ' + ypEsc(ml) + (compact && n === 1 ? '' : '<span style="font-weight:600;font-size:' + (compact ? '8pt' : '9px') + ';"> · ' + ypEsc(ypAssessText(m.c.a)) + '</span>') + '</td>';
                 k += n;
             }
             return { html: html, any: any };
@@ -11310,8 +11681,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         let span = 1;
                         while (i + span < len && slots[i + span] && slots[i + span].id === slot.id) span++;
                         const weekLabel = span === 1 ? `Week ${i + 1}` : `Weeks ${i + 1}-${i + span}`;
-                        const ac = ypAssessCols(slot, span);
-                        const assessmentLabel = ac ? ypAssessWeekRange(ac, i) + ' (' + ypAssessText(ac.a) + ')' : '';
+                        const assessmentLabel = ypAssessColsAll(slot, span).map(ac => (ac.a.title ? ac.a.title + ': ' : '') + ypAssessWeekRange(ac, i) + ' (' + ypAssessText(ac.a) + ')').join('; ');
                         rows.push([`Term ${t}`, weekLabel, slot.strand || '', slot.customText || slot.subtopic || '', assessmentLabel, calRangeText(t, i, span)]);
                         i += span;
                     } else {
@@ -11367,15 +11737,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             `DESCRIPTION:${icsEscape((slot.strand || '') + '\\n' + ypCourseName() + ' - Year ' + yearPlannerState.year + ', Term ' + t)}`,
                             'END:VEVENT');
                         // the assessment inside the topic gets its own calendar event, on the weeks it runs
-                        const ac = ypAssessCols(slot, span);
-                        if (ac) {
+                        ypAssessColsAll(slot, span).forEach((ac, aci) => {
                             const aStart = ypAddDays(termStart, 7 * (i + ac.c1 - 1)), aEnd = ypAddDays(termStart, 7 * (i + ac.c1 - 1) + 7 * (ac.c2 - ac.c1) + 5);
-                            lines.push('BEGIN:VEVENT', `UID:${uid.replace('@whs-year-planner', '-assessment@whs-year-planner')}`, `DTSTAMP:${stamp}`,
+                            lines.push('BEGIN:VEVENT', `UID:${uid.replace('@whs-year-planner', '-assessment' + aci + '@whs-year-planner')}`, `DTSTAMP:${stamp}`,
                                 `DTSTART;VALUE=DATE:${ypICSDate(aStart)}`, `DTEND;VALUE=DATE:${ypICSDate(aEnd)}`,
-                                `SUMMARY:${icsEscape('Assessment: ' + (slot.customText || slot.subtopic) + ' (' + ypAssessText(ac.a) + ')')}`,
+                                `SUMMARY:${icsEscape((ac.a.title || 'Assessment') + ': ' + (slot.customText || slot.subtopic) + ' (' + ypAssessText(ac.a) + ')')}`,
                                 `DESCRIPTION:${icsEscape(ypCourseName() + ' - Year ' + yearPlannerState.year + ', Term ' + t)}`,
                                 'END:VEVENT');
-                        }
+                        });
                         i += span;
                     } else {
                         i++;
@@ -11467,6 +11836,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 generateSimplePlan(out);
                 return;
             }
+
+            if (format === 'onepage') { showOnePagePlan(); return; }
+            if (format === 'daygrid') { showDayGridPlan(); return; }
 
             if (format === 'timeline') {
                 // Reuses the exact same builder as the standalone "Timeline View" toolbar
@@ -11705,9 +12077,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         });
 
                         let assNote = '';
-                        if(slot.assessment) {
-                            const aa = ypAssess(slot);
-                            assNote = `<div class="mt-3 p-2 bg-slate-100 border border-slate-200 rounded text-xs"><strong class="text-slate-800">Assessment (${aa.weeks > 1 ? 'Wks ' + aa.start + '-' + aa.end : 'Wk ' + aa.start} of unit):</strong><br>Duration: ${ypAssessText(aa)}</div>`;
+                        const aaAll = ypAssessAll(slot);
+                        if (aaAll.length) {
+                            assNote = `<div class="mt-3 p-2 bg-slate-100 border border-slate-200 rounded text-xs">` + aaAll.map(aa => `<div><strong class="text-slate-800">${ypEsc(aa.title || 'Assessment')} (${aa.weeks > 1 ? 'Wks ' + aa.start + '-' + aa.end : 'Wk ' + aa.start} of unit):</strong> ${ypAssessText(aa)}</div>`).join('') + `</div>`;
                         }
 
                         const isDraftTopicWaiheke = !!(db.content[slot.subtopic] && db.content[slot.subtopic]._draft);
@@ -11809,6 +12181,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function pruneCloneForClipboard(root) {
             // Remove icon SVGs outright — pasted clipboard HTML can't render them.
             root.querySelectorAll('svg').forEach(el => el.remove());
+            root.querySelectorAll('[data-no-copy]').forEach(el => el.remove());
 
             // Bottom-up: drop any DIV/SPAN that's now empty (e.g. an icon-chip wrapper that
             // only ever contained the SVG we just removed), so no stray coloured boxes remain.
