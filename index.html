@@ -2636,7 +2636,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             <button id="yp-setup-toggle" onclick="ypToggleSetup()" aria-expanded="false" class="shrink-0 text-xs font-bold rounded-lg border border-white/30 px-3 py-1.5 hover:bg-white/10 transition-colors">Change &#9662;</button>
         </div>
         <select id="report-format" title="Which finished plan Generate Plan makes" class="max-w-[190px] border-white/20 rounded-lg shadow-sm text-sm p-2 border bg-white/10 text-white cursor-pointer focus:ring-2 focus:ring-[var(--whs-gold)] focus:border-[var(--whs-gold)] [&>option]:text-slate-800">
-            <option value="daygrid" selected>Day-by-day grid, landscape (spreadsheet or Google Docs) — Recommended</option>
+            <option value="daygrid" selected>Day-by-day grid, landscape (spreadsheet or PDF) — Recommended</option>
             <option value="timeline">Timeline View (By Term, Colour-Coded)</option>
             <option value="onepage">One page, landscape (best for Google Docs)</option>
             <option value="standard">Standard Matrix Output</option>
@@ -2650,7 +2650,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         <div class="relative yp-menu-wrap">
             <button onclick="ypToggleMenu('yp-menu-export', event)" aria-haspopup="true" aria-expanded="false" id="yp-menu-export-btn" class="px-4 py-2 rounded-lg text-sm font-bold border border-white/30 text-white hover:bg-white/10 flex items-center gap-1.5 transition-colors">Export / Print <span class="text-[10px]">&#9662;</span></button>
             <div id="yp-menu-export" class="yp-menu-panel hidden" role="menu">
-                <button id="yp-daygrid-btn" role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); showDayGridPlan()">Day-by-day grid, landscape <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>Like the Excel Year Plan: every day shaded for holidays, SOD and events. Copy to Google Docs or print</small></button>
+                <button id="yp-daygrid-btn" role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); showDayGridPlan()">Day-by-day grid, landscape <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>Like the Excel Year Plan: every day shaded for holidays, SOD and events. Print or save as PDF</small></button>
                 <button role="menuitem" class="yp-menu-item rec" onclick="ypCloseMenus(); downloadDayGridXlsx()">Day-by-day grid as a spreadsheet (.xlsx) <span class="ml-1 text-[9px] font-black uppercase tracking-wide rounded-full px-1.5 py-0.5" style="background:#b45309;color:#fff;">Recommended</span><small>The same grid with its colours, for Excel or Google Sheets</small></button>
                 <button id="yp-timeline-btn" role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); printFullYearPlan('timeline')">Timeline View<small>The whole year at a glance: each term as one coloured strip, with dates, holidays and key events</small></button>
                 <button role="menuitem" class="yp-menu-item" onclick="ypCloseMenus(); showOnePagePlan()">One page, landscape (Google Docs)<small>The whole year in one compact table that fits a landscape page</small></button>
@@ -3027,7 +3027,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
             <div class="flex gap-3">
                 <button onclick="closeOutput()" class="px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/10 rounded-lg transition-colors border border-white/20">Close</button>
-                <button onclick="copyOutputForDocs()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
+                <button id="output-copy-btn" onclick="copyOutputForDocs()" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                     Copy for Google Docs
                 </button>
@@ -3108,7 +3108,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
 <li><mark class="wn-key">Year Planner: more than one assessment per topic</mark>. Click the assessment button on a topic, then <strong>Add another assessment</strong>. Each has its own type or title, length and week, and they all show on the card, the year plans, the calendar (.ics) and the CSV.</li>
 <li><mark class="wn-key">Year Planner: one-page landscape plan</mark>. A new <strong>One page, landscape (best for Google Docs)</strong> output, in Generate Plan and the Export menu, puts the whole year on one landscape page with the subject, year level and year as the heading, a row of topics and a row of assessments for each term, and holiday or school event weeks shaded. Set your Google Doc to landscape with narrow margins before you paste it.</li>
-<li><mark class="wn-key">Year Planner: day-by-day grid</mark>. The new <strong>Recommended</strong> year plan output, <strong>Day-by-day grid (like the Excel plan)</strong>, is now the default in Generate Plan and sits at the top of the Export menu. Copy it to Google Docs, print it, or <strong>download it as a spreadsheet (.xlsx)</strong> that keeps the colours, merged cells and rotated text. Each week has five day columns with the month and dates, a Term bar, then a TOPIC row and an ASSESSMENT row. Public holidays, staff-only days, school events and camps are shaded as single days down both rows.</li>
+<li><mark class="wn-key">Year Planner: day-by-day grid</mark>. The new <strong>Recommended</strong> year plan output, <strong>Day-by-day grid (like the Excel plan)</strong>, is now the default in Generate Plan and sits at the top of the Export menu. <strong>Download it as a spreadsheet (.xlsx)</strong> that keeps the colours, merged cells and rotated text, or print / save it as a PDF. (Copy for Google Docs is hidden for this view because it does not keep the layout.) Assessments use a stronger gold so they stand out from the topic colours. Each week has five day columns with the month and dates, a Term bar, then a TOPIC row and an ASSESSMENT row. Public holidays, staff-only days, school events and camps are shaded as single days down both rows.</li>
 <li><mark class="wn-key">Science unit plan template</mark>: now has <strong>Connections to prior learning</strong> and <strong>Connections to future learning</strong> under Knowledge and Practices, like the school template.</li>
 <li><mark class="wn-key">Year Planner: AIMS Games buffer</mark>. Year 7 and Year 8 plans start with a buffer week in Term 3, Week 8 (the school week inside 4 to 12 September) and an "AIMS Games" marker on the calendar. Remove the buffer if it does not apply to your classes.</li>
 <li><mark class="wn-key">Success criteria and your own notes in the AI links</mark>. The "Make resources with AI" and "Differentiate this lesson" links now carry each lesson's success criteria. Both pages open with a short "From your unit plan" summary with a tick beside each line (pre-set for the type of resource, for example slides get everything and flashcards get the learning intention and key knowledge; shaded ticks are needed for that resource and stay on) and a yellow box for your own specifics or changes.</li>
@@ -3510,7 +3510,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
-                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can copy to Google Docs or download as a spreadsheet, and prior and future learning in the Science unit template.</li>
+                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can download as a spreadsheet or print, and prior and future learning in the Science unit template.</li>
                         <li><mark class="wn-key">AIMS Games buffer</mark>: Years 7 and 8 start with a buffer in Term 3, Week 8. Remove it if you like.</li>
                         <li><mark class="wn-key">AI links carry success criteria</mark>: resource and differentiate pages show a plan summary with ticks for what goes into the prompt, and a box for your own changes.</li>
                         <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
@@ -10977,7 +10977,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             topicDays.push({ bg: tint, top: `border-top:3px solid ${hue};`, g: 'T' + slot.id, text: (slot.customText || slot.subtopic || ''), slotId: slot.id, style: 'text-align:center;font-weight:bold;font-size:8pt;line-height:1.15;vertical-align:middle;padding:2pt;' });
                         } else topicDays.push({ bg: '#ffffff', g: 'E' + i, text: '' });
                         // assessment row
-                        if (weekAss) assDays.push({ bg: '#fef3c7', top: 'border-color:#f59e0b;', g: 'A' + slot.id + '#' + weekAss.start, text: '📝 ' + ypAssessLabel(weekAss, 30), title: (weekAss.title ? weekAss.title + ' - ' : '') + ypAssessText(weekAss), style: 'text-align:center;font-weight:bold;font-size:7.5pt;color:#92400e;vertical-align:middle;padding:1pt;line-height:1.15;' });
+                        if (weekAss) assDays.push({ bg: '#ffd966', top: 'border-color:#bf9000;', g: 'A' + slot.id + '#' + weekAss.start, text: '📝 ' + ypAssessLabel(weekAss, 30), title: (weekAss.title ? weekAss.title + ' - ' : '') + ypAssessText(weekAss), style: 'text-align:center;font-weight:bold;font-size:7.5pt;color:#7f3f00;vertical-align:middle;padding:1pt;line-height:1.15;' });
                         else if (x && x.edge) assDays.push({ bg: C.edge, g: 'edge' + x.edge + i, text: '' });
                         else if (x && x.staff) assDays.push({ bg: C.staff, g: 'st' + x.staff.label, text: '' });
                         else if (x && x.hol) assDays.push({ bg: C.hol, g: 'ho' + x.hol.label, text: '' });
@@ -11002,7 +11002,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             const cols = `<colgroup><col width="${labW}%">${Array(D).fill(`<col width="${dW}%">`).join('')}</colgroup>`;
             const lg = (bg, txt) => `<td style="${B}background:${bg};font-size:7pt;text-align:center;vertical-align:middle;padding:1pt;">${txt}</td>`;
             const legend = strands.map(st => `<td style="${B}background:${gridTint(st, strands)};border-top:3px solid ${gridHue(st, strands)};font-size:7pt;text-align:center;padding:1pt;">${ypEsc(st)}</td>`).join('') +
-                lg('#fef3c7', 'Assessment') + lg(C.assess, 'Exams / CAA') + lg(C.hol, 'Public holiday') + lg(C.staff, 'Staff only day (SOD)') + lg(C.school, 'School event') + lg(C.edge, 'Not a school day') + lg(C.blocked, 'Blocked week');
+                lg('#ffd966', 'Assessment') + lg(C.assess, 'Exams / CAA') + lg(C.hol, 'Public holiday') + lg(C.staff, 'Staff only day (SOD)') + lg(C.school, 'School event') + lg(C.edge, 'Not a school day') + lg(C.blocked, 'Blocked week');
             const centre = (h) => h.replace(/<td /g, '<td align="center" valign="middle" ').replace(/vertical-align:(top|bottom);/g, 'vertical-align:middle;');
             return centre(`<table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;table-layout:fixed;width:100%;">${cols}<tbody>${rows}</tbody></table>
                 <table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;width:100%;margin-top:3pt;"><tbody><tr>${legend}</tr></tbody></table>`);
@@ -11013,8 +11013,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             document.getElementById('output-title').innerText = `${ypCourseTitleAlt()} — Year Plan (day-by-day grid, landscape)`;
             document.getElementById('output-content').innerHTML = `
                 <style>@page { size: A4 landscape; margin: 8mm; }</style>
-                <div data-no-copy="1" class="no-print mb-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-xs text-amber-900"><strong>For a Google Doc:</strong> first set the Doc to landscape (File &gt; Page setup &gt; Landscape, margins about 1 cm), then click <strong>Copy for Google Docs</strong> and paste. Holidays, staff-only days and school events are shaded as single days. Print / Save PDF is set to landscape A4. <button type="button" onclick="downloadDayGridXlsx()" class="ml-2 rounded-md bg-emerald-600 px-3 py-1 text-xs font-bold text-white hover:bg-emerald-700">Download as spreadsheet (.xlsx)</button></div>
+                <div data-no-copy="1" class="no-print mb-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-2 text-xs text-amber-900"><strong>Best as a spreadsheet:</strong> download it to edit in Excel or Google Sheets, or use Print / Save PDF (landscape A4). Copying this grid into Google Docs does not keep its layout, so that option is not offered for this view. <button type="button" onclick="downloadDayGridXlsx()" class="ml-2 rounded-md bg-emerald-600 px-3 py-1 text-xs font-bold text-white hover:bg-emerald-700">Download as spreadsheet (.xlsx)</button></div>
                 <div id="onepage-wrap" style="width:960px;max-width:100%;margin:0 auto;background:#fff;padding:6px;">${buildDayGridPlan()}</div>`;
+            var cb = document.getElementById('output-copy-btn'); if (cb) cb.classList.add('hidden');
             document.getElementById('output-overlay').classList.remove('hidden');
             document.getElementById('output-overlay').classList.add('flex');
         }
@@ -11077,7 +11078,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         if (cs > 1 || rs > 1) ws.mergeCells(R, c, R + rs - 1, c + cs - 1);
                         c += cs;
                     });
-                    ws.getRow(R).height = fixedH || (maxFont <= 2.5 ? 4 : Math.max(11, maxFont * 1.7));
+                    ws.getRow(R).height = spans ? 24 : fixedH || (maxFont <= 2.5 ? 4 : Math.max(11, maxFont * 1.7));
                 });
                 return r0 + trs.length;
             };
@@ -12131,6 +12132,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function closeOutput() {
+            var cb = document.getElementById('output-copy-btn'); if (cb) cb.classList.remove('hidden');
             document.getElementById('output-overlay').classList.add('hidden');
             document.getElementById('output-overlay').classList.remove('flex');
         }
