@@ -3108,6 +3108,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Practical lessons by percentage</mark>. In the Unit Planner practical section choose <strong>% of lessons</strong> (25, 50, 75, 100 or your own number) for PE, Drama, Music, Technology and other hands-on subjects. Those lessons are planned as whole practical lessons and labelled <strong>[PRACTICAL]</strong>.</li>
 <li><mark class="wn-key">Bigger topics, own devices, mixed lessons</mark>. A topic that needs several lessons can now be one row (for example <strong>Lessons 5-7</strong>) where not every stage runs every lesson and most time is You Do. Prompts now know we are a <strong>bring-your-own-device</strong> school (no booking Chromebooks), and lessons can be bookwork, on device or a <strong>mix of both</strong>.</li>
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
+<li><mark class="wn-key">Year Planner: AIMS Games buffer</mark>. Year 7 and Year 8 plans start with a buffer week in Term 3, Week 8 (the school week inside 4 to 12 September) and an "AIMS Games" marker on the calendar. Remove the buffer if it does not apply to your classes.</li>
 <li><mark class="wn-key">Success criteria and your own notes in the AI links</mark>. The "Make resources with AI" and "Differentiate this lesson" links now carry each lesson's success criteria. Both pages open with a short "From your unit plan" summary with a tick beside each line (pre-set for the type of resource, for example slides get everything and flashcards get the learning intention and key knowledge; shaded ticks are needed for that resource and stay on) and a yellow box for your own specifics or changes.</li>
 <li><mark class="wn-key">Year Planner: short assessment labels</mark>. Assessments now have an optional <strong>Type or title</strong> (Test, Quiz, Report or your own). The year calendar shows that short label instead of the topic name, cut to fit so the row stays slim.</li>
 <li><mark class="wn-key">Year Planner: year level camps</mark>. The 2027 camps (Year 7 Feb, Year 8 Mar, Year 9 Aug, Year 10 Nov to Dec) appear on the calendar, but only when that year level is selected.</li>
@@ -3507,6 +3508,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
+                        <li><mark class="wn-key">AIMS Games buffer</mark>: Years 7 and 8 start with a buffer in Term 3, Week 8. Remove it if you like.</li>
                         <li><mark class="wn-key">AI links carry success criteria</mark>: resource and differentiate pages show a plan summary with ticks for what goes into the prompt, and a box for your own changes.</li>
                         <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
                         <li><mark class="wn-key">Year level camps</mark>: shown on the Year Planner calendar for Years 7 to 10 only.</li>
@@ -8742,7 +8744,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 4: { start: '2027-10-11', end: '2027-12-17' }
             },
             // [first day, last day or null, label, kind, short label for the narrow week boxes (optional or null), audience (optional), blocks the week (optional)]
-            // audience: 'senior' = shown only for Years 11 to 13; 'y7', 'y8', 'y9', 'y10' = that year level only (year camps and CAA weeks); 'notsenior' = everything except Years 11 to 13; left out = every year.
+            // audience: 'senior' = shown only for Years 11 to 13; 'y7', 'y8', 'y9', 'y10' = that year level only (year camps and CAA weeks), or several joined with commas such as 'y7,y8' (AIMS Games); 'notsenior' = everything except Years 11 to 13; left out = every year.
             // blocks: true = for that audience the whole week is blocked out of the planner (nothing can be planned into it).
             events: [
                 ['2027-01-26', null, 'Staff only day', 'staff', 'Staff day'], ['2027-01-27', null, 'Staff only day', 'staff', 'Staff day'],
@@ -8753,7 +8755,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 ['2027-04-26', null, 'Anzac Day (observed)', 'hol', 'Anzac Day'],
                 ['2027-05-17', '2027-05-21', 'CAA week', 'assess', null, 'y10'], ['2027-05-28', null, 'Fun Run', 'school'],
                 ['2027-06-07', null, "King's Birthday", 'hol'], ['2027-06-24', null, 'Matariki event', 'school'], ['2027-06-25', null, 'Matariki', 'hol'],
-                ['2027-08-17', '2027-08-20', 'Year 9 Camp', 'school', 'Y9 Camp', 'y9'], ['2027-08-27', null, 'Staff only day', 'staff', 'Staff day'], ['2027-08-30', null, 'Spring Break', 'hol'],
+                ['2027-08-17', '2027-08-20', 'Year 9 Camp', 'school', 'Y9 Camp', 'y9'], ['2027-09-04', '2027-09-12', 'AIMS Games', 'school', 'AIMS Games', 'y7,y8'], ['2027-08-27', null, 'Staff only day', 'staff', 'Staff day'], ['2027-08-30', null, 'Spring Break', 'hol'],
                 ['2027-09-06', '2027-09-10', 'Senior Exam Week', 'assess', 'Snr Exam Week', 'senior', true], ['2027-09-13', '2027-09-17', 'CAA week', 'assess', null, 'y10'],
                 ['2027-10-25', null, 'Labour Day', 'hol'],
                 ['2027-11-04', null, 'Senior Prizegiving', 'school', 'Snr Prizegiving', 'senior'], ['2027-11-05', null, 'Staff only day', 'staff', 'Staff day'],
@@ -8784,7 +8786,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var senior = y === '11' || y === '12' || y === '13';
             if (aud === 'senior') return senior;
             if (aud === 'notsenior') return !senior;
-            if (/^y(7|8|9|10)$/.test(aud)) return y === aud.slice(1);
+            if (/^y\d+(,y\d+)*$/.test(aud)) return aud.split(',').indexOf('y' + y) !== -1;
             return true;
         }
         function calEventsByDate() {
@@ -9858,7 +9860,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function ypRenderEmptyHint() {
             const el = document.getElementById('yp-empty-hint');
             if (!el) return;
-            const has = [1, 2, 3, 4].some(t => (yearPlannerState.terms[t] || []).some(s => s && typeof s === 'object'));
+            const has = ypHasRealContent();
             if (has || !ypSetupReady()) { el.classList.add('hidden'); return; }
             el.innerHTML = '&#128073; Nothing planned yet. Pick ' + (ypIsSenior() ? 'a standard' : 'a topic') + ' in the library on the left, then click empty weeks to drop it straight in.';
             el.classList.remove('hidden');
@@ -9948,7 +9950,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             const nextNcea = ypPickNcea(newSubject, newYear, yearPlannerState.nceaSubject);
             if (newSubject === yearPlannerState.subject && newYear === yearPlannerState.year && nextNcea === (yearPlannerState.nceaSubject || '')) return;
 
-            const hasContent = [1, 2, 3, 4].some(t => yearPlannerState.terms[t] && yearPlannerState.terms[t].some(s => s && typeof s === 'object'));
+            const hasContent = ypHasRealContent();
             if (hasContent) {
                 ypConfirm('Change the plan?', 'Changing the Learning Area or Year Level will clear the topics currently allocated in your plan.', 'Yes, change it', function() { ypApplyContext(newSubject, newYear, nextNcea); });
                 return;
@@ -9967,6 +9969,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 3: Array(yearPlannerState.termLengths[3]).fill(null),
                 4: Array(yearPlannerState.termLengths[4]).fill(null)
             };
+            if (ypSeedAims()) showToast('Added a buffer week for AIMS Games (Term 3, Week 8). Remove it if it does not apply.');
             
             syncContextUI();
             renderLibrary();
@@ -9977,7 +9980,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function selectNceaSubject(i) {
             const name = ypNceaSubjects(yearPlannerState.subject, yearPlannerState.year)[i];
             if (!name || name === ypPickNcea(yearPlannerState.subject, yearPlannerState.year, yearPlannerState.nceaSubject)) return;
-            const hasContent = [1, 2, 3, 4].some(t => yearPlannerState.terms[t] && yearPlannerState.terms[t].some(s => s && typeof s === 'object'));
+            const hasContent = ypHasRealContent();
             if (hasContent) {
                 ypConfirm('Change the subject?', 'Changing the subject will clear the topics currently allocated in your plan.', 'Yes, change it', function() { ypApplyNcea(name); });
                 return;
@@ -10174,6 +10177,26 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         // A "Buffer" is a spare week for catching up or extending. It is armed like a library topic, then dropped on empty weeks.
+        // A topic or buffer the teacher can see as part of their plan, not the AIMS Games buffer the planner pre-fills for Years 7 and 8
+        function ypIsRealTopic(s) { return !!s && typeof s === 'object' && !s.aimsSeed; }
+        function ypHasRealContent() { return [1, 2, 3, 4].some(t => ((yearPlannerState.terms || {})[t] || []).some(ypIsRealTopic)); }
+        // Years 7 and 8 start with a buffer in the school week that falls inside AIMS Games (4 to 12 September 2027). Teachers can remove it.
+        function ypSeedAims() {
+            var y = String(yearPlannerState.year || '');
+            if (y !== '7' && y !== '8') return false;
+            for (var t = 1; t <= 4; t++) {
+                var slots = yearPlannerState.terms[t], len = yearPlannerState.termLengths[t] || 0;
+                if (!slots) continue;
+                for (var i = 0; i < len; i++) {
+                    var w = calWeek(t, i);
+                    if (!w || w.mon > '2027-09-12' || w.fri < '2027-09-04') continue;
+                    if (slots[i] !== null) continue;
+                    slots[i] = { strand: 'Buffer', subtopic: 'Buffer', id: 'aims-' + Date.now().toString(36) + t + i, customText: 'AIMS Games', keyContent: 'AIMS Games week (4 to 12 September): keep this free as a buffer for students away and disrupted lessons. Remove it if it does not apply to your classes.', learningTasks: '', duration: 1, assessment: null, unitWeek: 1, buffer: true, isCustom: true, aimsSeed: true };
+                    return true;
+                }
+            }
+            return false;
+        }
         function armBuffer() {
             if (armedTopic && armedTopic.buffer) armedTopic = null;
             else armedTopic = { strand: 'Buffer', subtopic: 'Buffer', buffer: true, id: Date.now().toString() + Math.random().toString(36).slice(2, 6) };
@@ -10220,7 +10243,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function ypHasAnyTopic() {
-            return [1, 2, 3, 4].some(t => ((yearPlannerState.terms || {})[t] || []).some(s => s && typeof s === 'object'));
+            return ypHasRealContent();
         }
         function ypSyncStartHere(started) {
             const tab = document.getElementById('tab-1');
@@ -11845,7 +11868,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function resetPlanner() {
-            const hasContent = [1, 2, 3, 4].some(t => yearPlannerState.terms[t] && yearPlannerState.terms[t].some(s => s && typeof s === 'object'));
+            const hasContent = ypHasRealContent();
             if (hasContent) {
                 ypConfirm('Reset the plan?', 'This will clear every topic from all four terms. This cannot be undone.', 'Yes, reset plan', ypDoReset);
                 return;
@@ -11860,6 +11883,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 3: Array(yearPlannerState.termLengths[3]).fill(null),
                 4: Array(yearPlannerState.termLengths[4]).fill(null)
             };
+            ypSeedAims();
             renderTermGrids();
             renderLibrary();
             renderYearPlannerWarnings();
@@ -11899,7 +11923,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     showToast('Curriculum updated since your last visit — ' + parts.join(', ') + '.');
                     saveState();
                 }
-                var hasContent = [1, 2, 3, 4].some(t => yearPlannerState.terms[t] && yearPlannerState.terms[t].some(s => s && typeof s === 'object'));
+                var hasContent = ypHasRealContent();
                 if (hasContent) { ypDeptChosen = true; ypYearChosen = true; ypSetupOpen = false; checkYearPlannerBothSelected(); }
                 syncTopTermLengthInputs();
                 renderLibrary();
