@@ -3108,6 +3108,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Richer Unit Plans</mark> (school, Science and Maths templates). New <strong>✨ Plan extras</strong> add a <strong>coverage check</strong>, misconceptions to <strong>watch for</strong>, built-in <strong>retrieval</strong>, vocabulary by lesson, a <strong>key vocabulary list</strong> with a <strong>Make a quiz from these words</strong> link, with anything the teacher must add highlighted yellow. Optionally also make a <strong>student overview</strong>.</li>
 <li><mark class="wn-key">Year Planner: more than one assessment per topic</mark>. Click the assessment button on a topic, then <strong>Add another assessment</strong>. Each has its own type or title, length and week, and they all show on the card, the year plans, the calendar (.ics) and the CSV.</li>
 <li><mark class="wn-key">Worksheets: Detailed or Questions only, in portrait</mark>. In the Make with AI pop-up the Worksheet prompt now has two buttons: <strong>Detailed worksheet</strong> (teaching section, worked example, then questions) and <strong>Questions only worksheet</strong> (just the questions with space to answer). The "Turning the AI's output into a Doc" steps now say Landscape for the wide templates but Portrait for worksheets and other student resources. A worksheet now covers only the <strong>I do and/or We do</strong> stages, with no starter, independent task or reflection section. Worksheets are laid out for <strong>A4 portrait</strong>, every section is tagged <strong>[BOOKWORK]</strong> or <strong>[ON DEVICE]</strong> with the device tasks written out (the Delivery detail is now always included), answer boxes keep their borders when pasted into Google Docs, and the AI is told to give only the code block.</li>
+<li><mark class="wn-key">Whole-lesson slideshow</mark>. The Make with AI pop-up from the unit plan now has a gold <strong>Lesson slideshow</strong> panel down the right-hand side. One click builds a prompt for a slideshow that runs the whole lesson and covers all five stages (<strong>Connect, I Do, We Do, You Do, Review</strong>), with a stage tracker on every slide, timings, the Learning Intention and success criteria, and the bookwork or device tags. Choose 10 to 16 slides and PowerPoint, Google Slides or an HTML slideshow.</li>
 <li><mark class="wn-key">Year Planner: one-page landscape plan</mark>. A new <strong>One page, landscape (best for Google Docs)</strong> output, in Generate Plan and the Export menu, puts the whole year on one landscape page with the subject, year level and year as the heading, a row of topics and a row of assessments for each term, and holiday or school event weeks shaded. Set your Google Doc to landscape with narrow margins before you paste it.</li>
 <li><mark class="wn-key">Year Planner: day-by-day grid</mark>. The new <strong>Recommended</strong> year plan output, <strong>Day-by-day grid (like the Excel plan)</strong>, is now the default in Generate Plan and sits at the top of the Export menu. <strong>Download it as a spreadsheet (.xlsx)</strong> that keeps the colours, merged cells and rotated text, or print / save it as a PDF. (Copy for Google Docs is hidden for this view because it does not keep the layout.) Assessments use a stronger gold so they stand out from the topic colours. Each week has five day columns with the month and dates, a Term bar, then a TOPIC row and an ASSESSMENT row. Public holidays, staff-only days, school events and camps are shaded as single days down both rows.</li>
 <li><mark class="wn-key">Science unit plan template</mark>: now has <strong>Connections to prior learning</strong> and <strong>Connections to future learning</strong> under Knowledge and Practices, like the school template.</li>
@@ -3511,7 +3512,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
-                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can download as a spreadsheet or print, and Detailed or Questions only portrait worksheets, and prior and future learning in the Science unit template.</li>
+                        <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can download as a spreadsheet or print, Detailed or Questions only portrait worksheets, and a whole-lesson slideshow option in the resource pop-up, and prior and future learning in the Science unit template.</li>
                         <li><mark class="wn-key">AIMS Games buffer</mark>: Years 7 and 8 start with a buffer in Term 3, Week 8. Remove it if you like.</li>
                         <li><mark class="wn-key">AI links carry success criteria</mark>: resource and differentiate pages show a plan summary with ticks for what goes into the prompt, and a box for your own changes.</li>
                         <li><mark class="wn-key">Assessment type or title</mark>: add one (e.g. Test) and the year calendar shows it as a short label.</li>
@@ -12379,6 +12380,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     p += 'Add an "Image credits" line at the foot of the last slide listing the sources of any real images used.' + (o('notes') ? ' Put short speaker notes on every slide telling the teacher what to say and do.' : '') + '\n';
                     return p;
                 } },
+            ls: { label: '🎞 Whole-lesson slideshow', shortChat: true, side: true, opts: [
+                { id: 'out', t: 'sel', l: 'Make the slides as', d: 'pptx', ch: [['pptx', 'PowerPoint file (.pptx)'], ['gslides', 'Google Slides (best in Gemini)'], ['html', 'HTML slideshow (opens in any browser)']] },
+                { id: 'n', t: 'sel', l: 'Slides', d: '12', ch: [['10', '10'], ['12', '12'], ['14', '14'], ['16', '16']] },
+                { id: 'notes', t: 'chk', l: 'Speaker notes and timings', d: true }],
+                build: function(s, o) {
+                    var p = RES_DEF.sl.build(s, o);
+                    var plan = s.st ? ' The lesson plan gives these stages, in order: ' + s.st + '. Use the plan\'s own stage names and timings for the labels, but keep all five stages.' : '';
+                    var stages = 'WHOLE-LESSON SLIDESHOW: this one slideshow must run the WHOLE lesson from start to finish and cover ALL FIVE stages, in this order: 1) CONNECT: a short starter that retrieves earlier learning and links it to today. 2) I DO: the teacher explains and models the key knowledge, with a fully worked example and the thinking said out loud. 3) WE DO: guided practice with the class, with questions worked through together and quick checks for understanding. 4) YOU DO: the independent task, saying exactly what students do and what a finished piece looks like, with the success criteria to check against. 5) REVIEW: a recap, a check of the success criteria and an exit ticket question. Slide 1 is the title with the Learning Intention and 2 to 3 "I can" success criteria. Show a small stage tracker along the top of every slide (1 Connect, 2 I Do, 3 We Do, 4 You Do, 5 Review) with the current stage highlighted, and give each stage a suggested number of minutes so the slideshow can be used to run the lesson.' + plan + '\n';
+                    return p.replace(/(Structure the slides to follow THIS lesson plan|Run the slides as the lesson will run)[^\n]*\n/, function() { return stages; });
+                } },
             fc: { label: '🃏 Flashcards', opts: [
                 { id: 'n', t: 'sel', l: 'Cards', d: '12', ch: [['8', '8'], ['12', '12'], ['16', '16'], ['20', '20']] },
                 { id: 'style', t: 'sel', l: 'Style', d: 'td', ch: [['td', 'Term and definition'], ['qa', 'Question and answer'], ['mix', 'A mix of both']] },
@@ -12554,6 +12565,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var RES_ORDER = ['ws', 'sl', 'fc', 'mm', 'vis', 'ex', 'qz', 'rd', 'wf', 'vp', 'lb', 'px', 'rb', 'pj', 'db', 'rp', 'tn', 'hw', 'pn', 'mx', 'dg', 'pf'];
         var RES_DEFAULT_SHOW = ['ws', 'sl', 'fc', 'mm', 'vis'];
         RES_ORDER.forEach(function(k, i) { RES_DEF[k].c = i % RES_COLORS.length; });
+        RES_DEF.ls.c = 1;
         function resClean(s, max) { return String(s || '').replace(/[\u0000-\u001f\u007f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max || 300); }
         function resEnc(s) { return encodeURIComponent(String(s || '')).replace(/%20/g, '+'); }
         var RES_DEFAULT_BASE = 'https://kennedyd-create.github.io/WHS---CPM-Dashboard-v2/';
@@ -12724,13 +12736,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // Which lesson details go into the prompt for each kind of resource (the teacher can tick or untick them in the blue box)
         var RES_USE_FIELDS = [['li', 'Learning Intention'], ['sc', 'Success criteria'], ['kn', 'Key knowledge'], ['a', 'Main activity'], ['dm', 'Delivery'], ['st', 'Stages']];
         var RES_USE_DEF = {
-            sl: 'li sc kn a dm st', ws: 'li sc kn a dm', fc: 'kn', mm: 'kn', vp: 'kn', lb: 'li kn', vis: 'kn a', ex: 'li sc kn', qz: 'li sc kn',
+            sl: 'li sc kn a dm st', ls: 'li sc kn a dm st', ws: 'li sc kn a dm', fc: 'kn', mm: 'kn', vp: 'kn', lb: 'li kn', vis: 'kn a', ex: 'li sc kn', qz: 'li sc kn',
             rd: 'li sc kn a', wf: 'li sc kn a', rb: 'li sc', pf: 'li sc', tn: 'li kn a st', pn: 'li kn a st', hw: 'li sc kn',
             px: 'li sc kn a dm', pj: 'li sc kn a dm', db: 'li sc kn a dm', rp: 'li sc kn a dm', mx: 'li sc kn a dm', dg: 'li sc kn a dm'
         };
         // Details the resource's own wording depends on: always ticked, shaded, and cannot be unticked
         var RES_USE_REQ = {
-            sl: 'li sc kn', ws: 'li kn dm', fc: 'li kn', mm: 'li', vis: 'li', ex: 'li', qz: 'li kn', vp: 'kn', lb: 'kn', rb: 'li', db: 'kn', rp: 'li',
+            sl: 'li sc kn', ls: 'li sc kn', ws: 'li kn dm', fc: 'li kn', mm: 'li', vis: 'li', ex: 'li', qz: 'li kn', vp: 'kn', lb: 'kn', rb: 'li', db: 'kn', rp: 'li',
             tn: 'kn', mx: 'kn', dg: 'kn', pf: 'li'
         };
         function resReqFor(kind) { var o = {}; (RES_USE_REQ[kind] || '').split(' ').forEach(function(k) { if (k) o[k] = true; }); return o; }
@@ -12835,6 +12847,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (mb) { mb.classList.toggle('hidden', rest === 0); mb.textContent = resState.moreOpen ? '− Hide other types' : '＋ More resource types (' + rest + ')'; }
             more.style.display = (resState.moreOpen && rest > 0) ? 'flex' : 'none';
             if (lbl) lbl.classList.toggle('hidden', !resState.suggested);
+            var lsb = document.getElementById('res-ls-btn'), lsn = document.getElementById('res-ls-note'), lson = resState.kind === 'ls';
+            if (lsb) { lsb.textContent = lson ? '✓ Lesson slideshow selected' : 'Make the lesson slideshow'; lsb.setAttribute('aria-pressed', lson ? 'true' : 'false'); lsb.className = 'w-full px-3 py-2.5 rounded-lg text-sm font-black border-2 shadow-sm ' + (lson ? 'border-[#002066] bg-[#002066] text-white' : 'border-[#002066] bg-[var(--whs-gold)] text-[#002066] hover:brightness-95'); }
+            if (lsn) lsn.classList.toggle('hidden', !lson);
         }
         function resToggleMore() { if (!resState) return; resState.moreOpen = !resState.moreOpen; resBuildTabs(); }
         function resSetKind(k) {
@@ -13265,7 +13280,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
     </script>
     <!-- Resource prompt popup (opened from a "Make with AI" link in a Unit Plan) -->
     <div id="res-modal" class="fixed inset-0 bg-whsblue-700/60 backdrop-blur-sm z-[90] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="res-title">
-        <div class="modal-panel bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[94vh] overflow-hidden flex flex-col">
+        <div class="modal-panel bg-white rounded-xl shadow-2xl w-full max-w-3xl lg:max-w-6xl max-h-[94vh] overflow-hidden flex flex-col">
             <div class="whs-gradient-bg text-white px-5 py-4 flex items-start justify-between gap-3 shrink-0">
                 <div>
                     <h3 class="font-bold text-lg" id="res-title">Resource prompt</h3>
@@ -13273,7 +13288,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 </div>
                 <button type="button" onclick="resClose()" class="text-white/80 hover:text-white text-2xl leading-none px-2" aria-label="Close">&times;</button>
             </div>
-            <div class="p-5 overflow-y-auto space-y-4 bg-[#dce8f7]">
+            <div class="flex flex-1 min-h-0 overflow-hidden">
+            <div class="p-5 overflow-y-auto space-y-4 bg-[#dce8f7] flex-1 min-w-0">
                 <div id="res-summary" class="rounded-xl border-2 border-sky-300 bg-sky-50 px-4 py-3 text-xs text-sky-900"></div>
                 <label class="block rounded-xl border-2 border-amber-400 bg-amber-50 px-4 py-3 text-[10px] font-extrabold uppercase tracking-widest text-amber-900">✏️ Your specifics or changes for this lesson (optional)
                     <textarea id="res-extra" rows="3" oninput="resRender()" placeholder="e.g. my class has just finished fractions, keep the reading level low, include a diagram to label, swap the group task for individual work" class="w-full mt-1 p-2 rounded-lg border-2 border-amber-400 bg-white text-sm font-normal normal-case tracking-normal text-slate-800"></textarea>
@@ -13307,6 +13323,22 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                     <textarea id="res-prompt" rows="10" class="w-full p-3 rounded-lg border-2 border-amber-400 bg-amber-50 text-slate-900 text-xs font-mono leading-relaxed"></textarea>
                 </div>
+            </div>
+            <aside id="res-side" class="hidden lg:flex flex-col gap-3 w-72 shrink-0 overflow-y-auto p-4 border-l-4 border-amber-400 bg-amber-50 text-[#002066]">
+                <p class="text-[10px] font-extrabold uppercase tracking-widest text-amber-800">For the whole lesson</p>
+                <h4 class="text-lg font-black leading-tight">🎞 Lesson slideshow</h4>
+                <p class="text-xs font-semibold text-slate-700 leading-snug">One slideshow that guides the whole lesson from start to finish and covers all 5 stages:</p>
+                <ol class="text-xs font-bold space-y-1">
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-[#002066] text-white text-[10px] flex items-center justify-center">1</span>Connect</li>
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-[#002066] text-white text-[10px] flex items-center justify-center">2</span>I Do</li>
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-[#002066] text-white text-[10px] flex items-center justify-center">3</span>We Do</li>
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-[#002066] text-white text-[10px] flex items-center justify-center">4</span>You Do</li>
+                    <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-[#002066] text-white text-[10px] flex items-center justify-center">5</span>Review</li>
+                </ol>
+                <p class="text-[11px] text-slate-600 leading-snug">Uses the Learning Intention, success criteria, stages and bookwork or device details on the left, with a stage tracker on every slide and timings for each stage.</p>
+                <button type="button" id="res-ls-btn" onclick="resSetKind('ls')" class="w-full px-3 py-2.5 rounded-lg text-sm font-black border-2 border-[#002066] bg-[var(--whs-gold)] text-[#002066] hover:brightness-95 shadow-sm">Make the lesson slideshow</button>
+                <p id="res-ls-note" class="hidden text-[11px] font-bold text-emerald-800 leading-snug">Selected. Choose the slide count and file type in the options, then copy the prompt.</p>
+            </aside>
             </div>
             <div class="p-4 border-t-2 border-slate-300 bg-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
                 <p class="text-xs font-semibold text-slate-700">Copy the prompt, then paste it into your AI. If it gives you an HTML block: save it as a .html file, open it in Chrome, select all, copy, and paste into a Google Doc (leave the Doc on Portrait, the pages are laid out for A4 portrait).</p>
