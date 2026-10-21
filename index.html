@@ -635,7 +635,23 @@
 </head>
 <body class="p-4 md:p-8">
 
-    <div id="global-toast" role="status" aria-live="polite"></div>
+    <div id="as-plan-modal" class="hidden fixed inset-0 flex items-center justify-center p-4" style="z-index: 9000; background: rgba(15, 23, 42, 0.55);" role="dialog" aria-modal="true" aria-labelledby="as-modal-title">
+<div class="bg-white text-slate-800 rounded-2xl shadow-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 border-t-4 border-t-purple-600">
+<div class="flex items-start justify-between gap-3 mb-2"><h3 id="as-modal-title" class="text-lg font-black text-slate-900">📋 Your unit plan has filled in this page</h3><button type="button" class="text-slate-500 hover:text-slate-900 text-xl leading-none" onclick="asPlanModalGo('changes')" aria-label="Close">✕</button></div>
+<p class="text-sm text-slate-600 mb-2">Most of the information from your unit plan has been brought across, so check it suits the assessment you want and <strong>change anything that doesn't</strong>. Here is what came across:</p>
+<ul id="as-modal-list" class="text-xs text-slate-700 space-y-0.5 mb-4 pl-4 list-disc"></ul>
+<div class="flex gap-2 mb-3" role="tablist">
+<button type="button" id="as-modal-tab-keep" role="tab" onclick="asPlanModalTab('keep')">✅ Keep all</button>
+<button type="button" id="as-modal-tab-changes" role="tab" onclick="asPlanModalTab('changes')">✏️ Make changes</button>
+<button type="button" id="as-modal-tab-scratch" role="tab" onclick="asPlanModalTab('scratch')">🧹 Start from scratch</button>
+</div>
+<div id="as-modal-panel-keep" class="hidden"><p class="text-sm text-slate-600 mb-3">Use everything exactly as it has been filled in and go straight to your prompt. You can still open any section later to change something.</p><button type="button" class="px-5 py-2 rounded-lg border-2 border-emerald-700 bg-emerald-600 text-white text-xs font-black tracking-wider hover:bg-emerald-700" onclick="asPlanModalGo('keep')">Keep all and see my prompt ▾</button></div>
+<div id="as-modal-panel-changes"><p class="text-sm text-slate-600 mb-3">Step through the sections with <strong>Back</strong> and <strong>Next</strong> and change whatever you like. The unit plan details stay filled in until you change them.</p><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="asPlanModalGo('changes')">Make changes ▸</button></div>
+<div id="as-modal-panel-scratch" class="hidden"><p class="text-sm text-slate-600 mb-3">Clears <strong>everything except the subject, year level and topic</strong>: the unit plan details, key knowledge, length, formats and every option. You then build the assessment from the start.</p><button type="button" class="px-5 py-2 rounded-lg border-2 border-red-700 bg-red-600 text-white text-xs font-black tracking-wider hover:bg-red-700" onclick="asPlanModalGo('scratch')">Start from scratch</button></div>
+</div>
+</div>
+<button type="button" id="as-float-copy" data-action="copy" data-target="prompt-assessment-text" class="hidden fixed z-40 left-1/2 -translate-x-1/2 bottom-6 px-6 py-3 rounded-full bg-[#002066] text-white text-xs font-black tracking-wider shadow-xl border-2 border-white hover:bg-blue-900">📋 COPY PROMPT</button>
+<div id="global-toast" role="status" aria-live="polite"></div>
 
     <!-- My Teaching Profile: a persistent corner widget, independent of whichever builder is
          open. Collapsed pill by default; expands to the picker; collapses again once you're
@@ -2059,6 +2075,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         <!-- VIEW: ASSESSMENT GENERATOR -->
         <div id="view-assessment" class="hidden space-y-8 animate-in fade-in duration-500">
+            <div id="assess-from-plan" class="hidden max-w-3xl mx-auto bg-sky-50 border-2 border-sky-300 rounded-xl px-4 py-3 text-sm text-sky-900">
+                <strong>📋 Opened from your unit plan.</strong> <span id="assess-from-plan-text"></span>
+                <div id="assess-from-plan-list" class="mt-1 text-xs"></div>
+            </div>
             <div class="text-center max-w-3xl mx-auto mb-8">
                 <h2 class="text-4xl font-black text-slate-900 mb-4">Assessment Generator</h2>
                 <p class="text-slate-600">Design customised formative and summative assessments aligned to the curriculum.</p>
@@ -2071,8 +2091,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
             <!-- Tab Color Theme: Purple -->
             <div class="glass-card p-6 md:p-8 border-t-4 border-t-purple-600 max-w-5xl mx-auto mb-8 space-y-6 shadow-sm bg-white">
-                <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
-                <div class="grid md:grid-cols-2 gap-6">
+<p class="text-xs text-slate-500 -mt-2">Work through the sections in order. Each one closes when it is complete and the next one opens. Click any heading, or Back, to return.</p>
+<div class="as-sec scroll-mt-28 rounded-xl border-2 border-purple-300 bg-white shadow-sm overflow-hidden" data-as="1">
+<button type="button" class="as-sec-h w-full flex items-center gap-3 px-4 py-3 text-left bg-purple-50 hover:bg-purple-100 transition-colors" onclick="asSecToggle(1)" aria-expanded="false"><span class="as-sec-n shrink-0 w-7 h-7 rounded-full bg-purple-700 text-white text-xs font-black flex items-center justify-center">1</span><span class="text-sm font-black uppercase tracking-widest text-purple-800">Subject and year level</span><span class="as-sec-s ml-auto text-xs font-semibold text-slate-500 text-right"></span><svg class="as-sec-chev w-4 h-4 shrink-0 text-purple-800 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="as-sec-b hidden p-5">
+<div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
+<div class="grid md:grid-cols-2 gap-6">
                     <div>
                         <span class="text-xs font-bold text-purple-800 uppercase tracking-widest block mb-2">Department <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
                         <div class="flex flex-wrap gap-2" id="assess-dept-opts">
@@ -2099,16 +2123,23 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         </div>
                     </div>
                 </div>
-                </div>
 
+</div>
+<div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><span></span><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="asSecOpen(2)">Next ▸</button></div></div>
+</div>
                 <div id="assess-select-prompt" class="text-center py-10 px-4 bg-slate-50 rounded-xl border-2 border-dashed border-slate-300">
                     <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
                 </div>
 
-                <div id="assess-config-rest" class="hidden space-y-6">
-
-                <div id="assess-curriculum-link" class="flex justify-start"></div>
-
+<div id="assess-config-rest" class="hidden space-y-4">
+<div class="as-sec scroll-mt-28 rounded-xl border-2 border-purple-300 bg-white shadow-sm overflow-hidden" data-as="2">
+<button type="button" class="as-sec-h w-full flex items-center gap-3 px-4 py-3 text-left bg-purple-50 hover:bg-purple-100 transition-colors" onclick="asSecToggle(2)" aria-expanded="false"><span class="as-sec-n shrink-0 w-7 h-7 rounded-full bg-purple-700 text-white text-xs font-black flex items-center justify-center">2</span><span class="text-sm font-black uppercase tracking-widest text-purple-800">What are you assessing?</span><span class="as-sec-s ml-auto text-xs font-semibold text-slate-500 text-right"></span><svg class="as-sec-chev w-4 h-4 shrink-0 text-purple-800 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="as-sec-b hidden p-5">
+<div class="mb-4">
+                        <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Topic or unit name <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></label>
+                        <input type="text" id="assess-main-topic-input" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-purple-300 font-medium text-slate-800 bg-white outline-none mb-2">
+                        <div style="min-height: 28px" class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
+                    </div>
                 <div id="junior-scope-container" class="hidden">
                     <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
                         <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-2">Junior Assessment Scope (Years 7-10) <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
@@ -2119,6 +2150,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                 </div>
 
+
                 <div id="ncea-standard-container-outer" class="hidden">
                     <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
                         <div><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-1">NCEA Assessment Mode (Senior Only)</span><p class="text-xs text-purple-700 font-medium leading-tight">Generates NCEA-style options with shared Achieved/Merit/Excellence matrix.</p></div>
@@ -2126,192 +2158,112 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     </div>
                 </div>
 
-                <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
-                    <div class="flex justify-between items-center mb-2"><label class="text-xs font-black text-purple-800 uppercase tracking-widest block">What are you assessing? <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></label></div>
-                    <input type="text" id="assess-main-topic-input" placeholder="e.g. Newton's Second Law F=ma..." class="sync-topic w-full p-3 rounded-lg border border-purple-300 font-medium text-slate-800 bg-white outline-none mb-2">
-                    <div class="recent-topics-row flex flex-wrap gap-1.5 items-center" aria-label="Recently used topics"></div>
-                </div>
 
-                <div class="mt-4 bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
+<div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><button type="button" class="px-4 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-black tracking-wider text-slate-700 hover:bg-slate-100" onclick="asSecOpen(1)">◂ Back</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="asSecOpen(3)">Next ▸</button></div></div>
+</div>
+<div class="as-sec scroll-mt-28 rounded-xl border-2 border-purple-300 bg-white shadow-sm overflow-hidden" data-as="3">
+<button type="button" class="as-sec-h w-full flex items-center gap-3 px-4 py-3 text-left bg-purple-50 hover:bg-purple-100 transition-colors" onclick="asSecToggle(3)" aria-expanded="false"><span class="as-sec-n shrink-0 w-7 h-7 rounded-full bg-purple-700 text-white text-xs font-black flex items-center justify-center">3</span><span class="text-sm font-black uppercase tracking-widest text-purple-800">Source material and unit plan</span><span class="as-sec-s ml-auto text-xs font-semibold text-slate-500 text-right"></span><svg class="as-sec-chev w-4 h-4 shrink-0 text-purple-800 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="as-sec-b hidden p-5">
+<div class="grid md:grid-cols-2 gap-4 items-start">
+                <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
                     <label class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Source Material (Google Docs / Slides Allowed) <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
                     <input type="text" id="assess-source-material" placeholder="Paste Google Docs, Slides, or other URLs (separate multiple links with commas)..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none">
                 </div>
 
-                <div class="mt-4 bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
+                <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
                     <label class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Link to a Unit Plan <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
-                    <div class="grid md:grid-cols-3 gap-2">
-                        <input type="text" id="assess-unit-link" placeholder="Paste the unit plan doc/text..." class="md:col-span-2 w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none">
+                    <div class="grid gap-2">
+                        <input type="text" id="assess-unit-link" placeholder="Paste the unit plan doc/text..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none">
                         <input type="text" id="assess-unit-number" placeholder="Which part? e.g. 'end of unit'" class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none">
                     </div>
                 </div>
 
-                <details class="group bg-purple-50 rounded-xl border border-purple-300 open:bg-white open:shadow-md transition-all duration-300 mt-4">
-                    <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-4 text-xs uppercase tracking-widest text-purple-800 hover:bg-purple-100 rounded-xl group-open:rounded-b-none group-open:hover:bg-transparent transition-colors">
-                        <span class="flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Curriculum Integrations &amp; Device Use <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
-                        <span class="transition-transform duration-300 group-open:rotate-180">
-                            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M6 9l6 6 6-6"></path></svg>
-                        </span>
-                    </summary>
-                    <div class="p-5 pt-2 border-t border-purple-200">
-                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Local Context</span>
-                                <div class="flex flex-col gap-2">
-                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="context" data-val="none">Standard</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke">Waiheke Context</button>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Mātauranga Māori</span>
-                                <div class="flex flex-col gap-2">
-                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="maori" data-val="none">Standard</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="maori" data-val="integrate">Integrate</button>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Literacy Integration</span>
-                                <div class="flex flex-col gap-2">
-                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="lit" data-val="none">Standard</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="lit" data-val="integrate">Focus on Literacy</button>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Numeracy Integration</span>
-                                <div class="flex flex-col gap-2">
-                                    <button class="builder-btn active text-left" data-action="assessment-state" data-key="num" data-val="none">Standard</button>
-                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="num" data-val="integrate">Focus on Numeracy</button>
-                                </div>
-                            </div>
 </div>
-                    <div class="mt-4 pt-4 border-t border-slate-200" id="assess-devices-container">
-                        <div class="flex flex-wrap items-center gap-2 mb-2"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Device Use</span></div>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="assess-devices-opts"><button class="builder-btn active text-left" data-action="assessment-state" data-key="devices" data-val="none">Standard</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="book">No devices (paper)</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="some">Some devices</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="all">All devices</button></div>
-                        <p id="assess-device-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
-                    </div>
-                    <div class="mt-4 pt-4 border-t border-slate-200" id="assess-ai-container">
-                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-2">Student AI Use</span>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="assess-ai-opts"><button class="builder-btn active text-left" data-action="assessment-state" data-key="ai" data-val="none">Standard</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="plan">AI to plan</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="collaborate">AI to collaborate</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="critique">Critique the AI</button></div>
-                        <p id="assess-ai-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p>
-                    </div>
-                    </div>
-                </details>
-
-                <div class="mt-4 pt-4 border-t border-slate-200">
-                    <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
-                        <span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Scope & Duration <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
-                        <div class="flex flex-wrap gap-2">
-                            <button class="builder-btn active" data-action="assessment-state" data-key="duration" data-val="1 Period Test">1 Period Test</button>
-                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="2 Period Assessment">2 Period Assessment</button>
-                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="1 Week Mini-Project">1 Week Mini-Project</button>
-                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="3-4 Week Deep Dive">3-4 Week Deep Dive</button>
-                            <button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="Other">Other</button>
-                        </div>
-                        <div id="assess-custom-dur-container" class="hidden pt-2"><input type="text" id="assess-custom-dur" placeholder="Specify duration..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none"></div>
-                    </div>
-                </div>
-
-                <div id="junior-formats-container" class="hidden mt-4 pt-4 border-t border-slate-200">
-                    <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
-                        <span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Assessment Formats (Years 7-10) <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
-                        <div class="flex flex-wrap gap-2">
-                            <button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button>
-                            <button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button>
-                            <button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button>
-                            <button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button>
-                            <button class="builder-btn active" data-action="assessment-format" data-val="Short Answer">Short Answer</button>
-                            <button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button>
-                            <button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button>
-                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Podcast Script">Podcast Script</button>
-                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Explainer Video">Explainer Video</button>
-                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Infographic / Data Story">Infographic / Data Story</button>
-                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Digital Documentary">Digital Documentary</button>
-                            <button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Photo Essay">Photo Essay</button>
-                            <button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button>
-                            <button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button>
-                            <button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button>
-                        </div>
-                        <div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none"></div>
-                        <p class="text-[10px] text-indigo-700 mt-2">
+<div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><button type="button" class="px-4 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-black tracking-wider text-slate-700 hover:bg-slate-100" onclick="asSecOpen(2)">◂ Back</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="asSecOpen(4)">Next ▸</button></div></div>
+</div>
+<div class="as-sec scroll-mt-28 rounded-xl border-2 border-purple-300 bg-white shadow-sm overflow-hidden" data-as="4">
+<button type="button" class="as-sec-h w-full flex items-center gap-3 px-4 py-3 text-left bg-purple-50 hover:bg-purple-100 transition-colors" onclick="asSecToggle(4)" aria-expanded="false"><span class="as-sec-n shrink-0 w-7 h-7 rounded-full bg-purple-700 text-white text-xs font-black flex items-center justify-center">4</span><span class="text-sm font-black uppercase tracking-widest text-purple-800">Time, format and questions</span><span class="as-sec-s ml-auto text-xs font-semibold text-slate-500 text-right"></span><svg class="as-sec-chev w-4 h-4 shrink-0 text-purple-800 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="as-sec-b hidden p-5">
+<div class="space-y-4">
+<div>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-2"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest w-14 shrink-0">Length</span><div class="flex flex-wrap gap-2"><button class="builder-btn active" data-action="assessment-state" data-key="duration" data-val="1 Period Test">1 Period Test</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="2 Period Assessment">2 Period Assessment</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="1 Week Mini-Project">1 Week Mini-Project</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="3-4 Week Deep Dive">3-4 Week Deep Dive</button><button class="builder-btn" data-action="assessment-state" data-key="duration" data-val="Other">Other</button></div></div>
+<div id="assess-custom-dur-container" class="hidden pt-2"><input type="text" id="assess-custom-dur" placeholder="Specify duration..." class="w-full p-2.5 rounded-lg border border-slate-300 text-sm outline-none"></div>
+</div>
+<div id="junior-formats-container" class="hidden">
+<div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Format (Years 7-10)</span><span class="text-[11px] font-semibold text-sky-800">Click as many as you like for a mix. Click one again to remove it.</span></div>
+<div class="flex flex-wrap gap-2"><button class="builder-btn" data-action="assessment-format" data-val="Written Essay">Written Essay</button><button class="builder-btn" data-action="assessment-format" data-val="Paragraph">Paragraph</button><button class="builder-btn" data-action="assessment-format" data-val="Multiple Choice">Multiple Choice</button><button class="builder-btn" data-action="assessment-format" data-val="Resource Based">Resource Based</button><button class="builder-btn" data-action="assessment-format" data-val="Short Answer">Short Answer</button><button class="builder-btn" data-action="assessment-format" data-val="Research Report">Research Report</button><button class="builder-btn" data-action="assessment-format" data-val="Presentation">Presentation</button><button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Podcast Script">Podcast Script</button><button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Explainer Video">Explainer Video</button><button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Infographic / Data Story">Infographic / Data Story</button><button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Digital Documentary">Digital Documentary</button><button class="builder-btn story-shaded tooltip-wrapper tooltip-bottom" data-tooltip="Story-based assessment format, inspired by digital storytelling pedagogy" data-action="assessment-format" data-val="Photo Essay">Photo Essay</button><button class="builder-btn surprise-btn" data-action="assessment-format" data-val="Surprise Me">Surprise Me ✨</button><button class="builder-btn" data-action="assessment-format" data-val="Other">Other</button><button class="builder-btn border-dashed border-slate-400 text-slate-500" data-action="clear-assessment-formats">✕ Clear</button></div>
+<div id="assess-custom-format-container" class="hidden pt-2"><input type="text" id="assess-custom-format" placeholder="Specify custom format..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none"></div>
+<p id="assess-story-note" class="text-[10px] text-indigo-700 mt-1.5">
                             <span class="inline-block w-2 h-2 rounded-full bg-indigo-400 mr-1 align-middle"></span>
                             The indigo formats above are inspired by <a href="https://iste.org/products/a1w8Z000005oLjYQAU/storytelling-with-purpose" target="_blank" rel="noopener" class="font-bold underline hover:no-underline">Storytelling With Purpose</a> by Michael Hernandez (ISTE) — using digital story projects as authentic assessment, not just an add-on.
                         </p>
-                    </div>
-                </div>
+</div>
+<div class="grid md:grid-cols-2 gap-x-6 gap-y-4 items-start">
+<div>
+<div id="assess-volume-wrap">
+<span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-1">Question volume</span>
+<input type="text" id="assess-custom-volume" placeholder="e.g. Exactly 10 multiple choice questions..." class="w-full p-2 rounded-lg border border-sky-400 text-sm outline-none text-slate-800 bg-white">
+<div class="grid grid-cols-3 gap-2 mt-2">
+<div><label class="text-[9px] font-bold text-sky-700 uppercase tracking-widest block mb-0.5">Multiple choice</label><input type="number" min="0" id="assess-mcq-count" placeholder="0" class="w-full p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
+<div><label class="text-[9px] font-bold text-sky-700 uppercase tracking-widest block mb-0.5">Short answer</label><input type="number" min="0" id="assess-short-count" placeholder="0" class="w-full p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
+<div><label class="text-[9px] font-bold text-sky-700 uppercase tracking-widest block mb-0.5">Extended</label><input type="number" min="0" id="assess-extended-count" placeholder="0" class="w-full p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
+</div>
+<p class="text-[10px] text-slate-500 mt-1">Blank lets the AI decide.</p>
+</div>
+<div id="assess-audience-wrap">
+<span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-1">Real audience</span>
+<input type="text" id="assess-real-audience" placeholder="e.g. younger students, the school newsletter, a local council..." class="w-full p-2 rounded-lg border border-sky-400 text-sm outline-none text-slate-800 bg-white">
+<p class="text-[10px] text-slate-500 mt-1">Who is this for, beyond the teacher marking it? The brief and criteria will reflect it.</p>
+</div>
+</div>
+<div class="md:pt-5"><button id="assess-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered questions of equal difficulty, to reduce copying risk in class" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button><p class="text-[10px] text-slate-500 mt-1">Two parallel versions with reordered questions, to reduce copying.</p></div>
+</div>
+</div>
+<div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><button type="button" class="px-4 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-black tracking-wider text-slate-700 hover:bg-slate-100" onclick="asSecOpen(3)">◂ Back</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="asSecOpen(5)">Next ▸</button></div></div>
+</div>
+<div class="as-sec scroll-mt-28 rounded-xl border-2 border-purple-300 bg-white shadow-sm overflow-hidden" data-as="5">
+<button type="button" class="as-sec-h w-full flex items-center gap-3 px-4 py-3 text-left bg-purple-50 hover:bg-purple-100 transition-colors" onclick="asSecToggle(5)" aria-expanded="false"><span class="as-sec-n shrink-0 w-7 h-7 rounded-full bg-purple-700 text-white text-xs font-black flex items-center justify-center">5</span><span class="text-sm font-black uppercase tracking-widest text-purple-800">Optional extras: curriculum, devices, AI and supports</span><span class="as-sec-s ml-auto text-xs font-semibold text-slate-500 text-right"></span><svg class="as-sec-chev w-4 h-4 shrink-0 text-purple-800 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+<div class="as-sec-b hidden p-5">
+<div class="grid md:grid-cols-3 gap-4 items-start">
+<div class="rounded-xl border border-purple-300 bg-purple-50 p-4"><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-3">Curriculum</span>
+                
 
-                <div class="mt-4 pt-4 border-t border-slate-200">
-                    <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
-                        <span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Real Audience <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
-                        <p class="text-[10px] text-slate-500 mb-2 font-medium">Who's this actually for, beyond the teacher marking it? Story-based formats especially land better with a genuine audience in mind — the brief and criteria will reflect it.</p>
-                        <input type="text" id="assess-real-audience" placeholder="e.g. younger students, the school newsletter, a local council submission, families at assembly..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none text-slate-800 bg-white">
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-4 border-t border-slate-200">
-                    <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
-                        <span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Question Volume / Specific Instructions <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></span>
-                        <input type="text" id="assess-custom-volume" placeholder="e.g. Exactly 10 multiple choice questions, or 5 short answer questions..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none text-slate-800 bg-white">
-                        <p class="text-[10px] text-sky-700 mt-2 mb-1">Or specify an exact mix by question type (leave blank to let the AI decide):</p>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div><label class="text-[9px] font-bold text-sky-700 uppercase tracking-widest block mb-1">Multiple Choice</label><input type="number" min="0" id="assess-mcq-count" placeholder="0" class="w-full p-2 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
-                            <div><label class="text-[9px] font-bold text-sky-700 uppercase tracking-widest block mb-1">Short Answer</label><input type="number" min="0" id="assess-short-count" placeholder="0" class="w-full p-2 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
-                            <div><label class="text-[9px] font-bold text-sky-700 uppercase tracking-widest block mb-1">Extended Response</label><input type="number" min="0" id="assess-extended-count" placeholder="0" class="w-full p-2 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-4 pt-4 border-t border-slate-200">
-                    <button id="assess-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered questions of equal difficulty, to reduce copying risk in class" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button>
-                </div>
-
-                <div class="mt-4 pt-6 border-t border-slate-200 grid md:grid-cols-3 gap-4 items-start">
+<div class="mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Add to the assessment</span><div class="flex flex-wrap gap-2" id="assess-curric-chips"><button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke">Waiheke context</button><button class="builder-btn text-left" data-action="assessment-state" data-key="maori" data-val="integrate">Mātauranga Māori</button><button class="builder-btn text-left" data-action="assessment-state" data-key="lit" data-val="integrate">Literacy focus</button><button class="builder-btn text-left" data-action="assessment-state" data-key="num" data-val="integrate">Numeracy focus</button></div><p class="text-[10px] text-slate-500 mt-2 leading-snug">Click to switch on, click again to switch off. Nothing is added unless you switch it on.</p></div></div><div class="rounded-xl border border-purple-300 bg-purple-50 p-4" id="assess-devices-container"><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-3">Device Use</span><div class="flex flex-col gap-2" id="assess-devices-opts"><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="book">No devices (paper)</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="some">Some devices</button><button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="all">All devices</button></div><p class="text-[10px] text-slate-500 mt-2 leading-snug">Click an option again to turn it off.</p><p id="assess-device-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p></div><div class="rounded-xl border border-purple-300 bg-purple-50 p-4" id="assess-ai-container"><span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-3">Student AI Use</span><div class="flex flex-col gap-2" id="assess-ai-opts"><button class="builder-btn active text-left" data-action="assessment-state" data-key="ai" data-val="none">No AI</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="plan">AI to plan</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="collaborate">AI to collaborate</button><button class="builder-btn text-left" data-action="assessment-state" data-key="ai" data-val="critique">Critique the AI</button></div><p id="assess-ai-hint" class="hidden text-[11px] text-slate-500 mt-2 leading-snug"></p></div></div>
+                <div class="mt-4 pt-6 border-t border-slate-200 grid md:grid-cols-2 gap-4 items-start">
                     <details class="group bg-sky-50 rounded-xl border border-sky-400">
-                        <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-sky-800 uppercase tracking-widest">
-                            <span id="assess-differentiation-summary">Differentiation & Inclusion — None</span>
-                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        </summary>
-                        <div class="p-3 pt-1 border-t border-sky-300 space-y-1">
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
-                                <input type="radio" name="assess-differentiation" checked onchange="setAssessmentExtra('None')"> None (Standard)
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
-                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('3-Tier Assessment')"> 3-Tiered Assessment
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
-                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('ADHD Friendly')"> ADHD Friendly
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
-                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('Dyslexia Friendly')"> Dyslexia Friendly
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
-                                <input type="radio" name="assess-differentiation" onchange="setAssessmentExtra('ESOL Scaffold')"> ESOL Scaffold
-                            </label>
-                        </div>
-                    </details>
+<summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-sky-800 uppercase tracking-widest">
+<span id="assess-accommodations-summary">Differentiation &amp; Accommodations — None selected</span>
+<svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</summary>
+<div class="p-3 pt-1 border-t border-sky-300 space-y-1">
+<p class="text-[10px] font-bold text-sky-700 uppercase tracking-widest px-2 pt-1">Tick as many as you need</p>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+<input type="checkbox" onchange="setAccommodation('3-Tiered Assessment', this.checked)"> 3-Tiered Assessment (three levels of challenge)
+</label>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+<input type="checkbox" onchange="setAccommodation('ADHD Friendly', this.checked)"> ADHD friendly (chunked, clear steps)
+</label>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+<input type="checkbox" onchange="setAccommodation('ESOL Scaffold', this.checked)"> ESOL scaffold (language supports built in)
+</label>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Add formatting notes for large print/dyslexia-friendly presentation (font, spacing, layout guidance)">
+<input type="checkbox" onchange="setAccommodation('Dyslexia-Friendly Layout', this.checked)"> Dyslexia-friendly layout (large print, spacing, plain fonts)
+</label>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Rewrite instructions and a copy of the questions in simple, unambiguous language for a reader/writer to read aloud">
+<input type="checkbox" onchange="setAccommodation('Reader/Writer Support', this.checked)"> Reader/Writer support
+</label>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Produce a second, fully plain-language version of the whole assessment (short sentences, common words, no idioms)">
+<input type="checkbox" onchange="setAccommodation('Plain-Language Version', this.checked)"> Plain-language version (a second copy)
+</label>
+<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Note where extra time would typically apply and any tasks that could be split across sessions">
+<input type="checkbox" onchange="setAccommodation('Extended Time Notes', this.checked)"> Extended time notes
+</label>
+</div>
+</details>
 
-                    <details class="group bg-sky-50 rounded-xl border border-sky-400">
-                        <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-sky-800 uppercase tracking-widest">
-                            <span id="assess-accommodations-summary">Formal Accommodations — None selected</span>
-                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                        </summary>
-                        <div class="p-3 pt-1 border-t border-sky-300 space-y-1">
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Rewrite instructions and a copy of the questions in simple, unambiguous language for a reader/writer to read aloud">
-                                <input type="checkbox" onchange="setAccommodation('Reader/Writer Support', this.checked)"> Reader/Writer Support
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Produce a second, fully plain-language version of the whole assessment (short sentences, common words, no idioms)">
-                                <input type="checkbox" onchange="setAccommodation('Plain-Language Version', this.checked)"> Plain-Language Version
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Add formatting notes for large print/dyslexia-friendly presentation (font, spacing, layout guidance)">
-                                <input type="checkbox" onchange="setAccommodation('Large Print / Dyslexia-Friendly Formatting', this.checked)"> Large Print / Dyslexia-Friendly Formatting
-                            </label>
-                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="Note where extra time would typically apply and any tasks that could be split across sessions">
-                                <input type="checkbox" onchange="setAccommodation('Extended Time Notes', this.checked)"> Extended Time Notes
-                            </label>
-                        </div>
-                    </details>
-
-                    <details class="group bg-amber-50 rounded-xl border border-amber-400">
+<details class="group bg-amber-50 rounded-xl border border-amber-400">
                         <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-amber-800 uppercase tracking-widest">
-                            <span id="assess-outputs-summary">Additional Outputs — None selected</span>
+                            <span class="flex items-center gap-2 flex-wrap"><span id="assess-outputs-summary">Additional Outputs — None selected</span><span class="text-[9px] font-black text-emerald-900 bg-emerald-200 border border-emerald-400 px-2 py-0.5 rounded-full tracking-wider">★ RECOMMENDED</span></span>
                             <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </summary>
                         <div class="p-3 pt-1 border-t border-amber-200 space-y-1">
@@ -2330,11 +2282,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         </div>
                     </details>
                 </div>
-
-                </div>
+<div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><button type="button" class="px-4 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-black tracking-wider text-slate-700 hover:bg-slate-100" onclick="asSecOpen(4)">◂ Back</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-emerald-700 bg-emerald-600 text-white text-xs font-black tracking-wider hover:bg-emerald-700" onclick="asSecDone()">Done: see my prompt ▾</button></div></div>
+</div>
+</div>
             </div>
 
-            <div class="glass-card p-8 border-t-4 border-t-purple-600 max-w-5xl mx-auto">
+            <div id="assess-prompt-card" class="glass-card p-8 border-t-4 border-t-purple-600 max-w-5xl mx-auto">
                 <div class="bg-blue-50 rounded-2xl border border-blue-100 flex flex-col shadow-sm sticky top-24 max-h-[calc(100vh-7rem)] overflow-hidden">
                     <div class="sticky top-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-b border-blue-100 flex flex-wrap justify-between items-center gap-2">
                         <div class="flex items-center gap-2 flex-wrap">
@@ -3129,7 +3082,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Worksheets: Detailed or Questions only, in portrait</mark>. In the Make with AI pop-up the Worksheet prompt now has two buttons: <strong>Detailed worksheet</strong> (teaching section, worked example, then questions) and <strong>Questions only worksheet</strong> (just the questions with space to answer). The "Turning the AI's output into a Doc" steps now say Landscape for the wide templates but Portrait for worksheets and other student resources. A worksheet now covers only the <strong>I do and/or We do</strong> stages, with no starter, independent task or reflection section. Worksheets are laid out for <strong>A4 portrait</strong>, every section is tagged <strong>[BOOKWORK]</strong> or <strong>[ON DEVICE]</strong> with the device tasks written out (the Delivery detail is now always included), answer boxes keep their borders when pasted into Google Docs, and the AI is told to give only the code block.</li>
 <li><mark class="wn-key">Whole-lesson slideshow</mark>. The Make with AI pop-up from the unit plan now has a gold <strong>Lesson slideshow (all 5 stages)</strong> tab at the right-hand end of the <em>Suggested for this lesson</em> tabs. One click builds a prompt for a slideshow that runs the whole lesson and covers all five stages (<strong>Connect, I Do, We Do, You Do, Review</strong>), with a stage tracker on every slide, timings, the Learning Intention and success criteria, and the bookwork or device tags. Choose 10 to 16 slides and PowerPoint, Google Slides or an HTML slideshow. Slides and the lesson slideshow now default to <strong>Google Slides</strong> (PowerPoint and HTML are still in the list). The plain Slides type is gone, so the Lesson slideshow is the one slides option (old Slides links open it). The Lesson slideshow tab is a brighter yellow. The <em>More resource types</em> list is now grouped and colour-coded by purpose: Practise and check (blue), Learn the content (green), Talk, write and perform (purple), Investigate and make (orange), Assess and communicate (rose). Clicking the slideshow button scrolls to the options and flashes them with a <strong>Choose how to make your slides here</strong> label, so the Make the slides as choice is always seen.</li>
 <li><mark class="wn-key">Make with AI pop-up: suggestions and prompts</mark>. <strong>Exit ticket / starter</strong> no longer appears under <em>Suggested for this lesson</em> (the unit plan prompt no longer picks it, and old links ignore it); it is still under <em>More resource types</em>. Role-play cards now have a role, what the person wants, a secret detail, sentence starters, an observer card, a teacher run sheet with timings and a debrief linked to the success criteria. Discussion / debate adds a preparation sheet and run sheet. Flashcards and Mix &amp; match are laid out for A4 portrait, and the Labelling sheet no longer asks for an SVG drawing when the Google Docs-friendly tick is on (it asks for an insert-diagram box instead, because SVG does not paste into Docs).</li>
-<li><mark class="wn-key">Highlighted “ADD AN IMAGE HERE” boxes</mark>. Worksheets, reading sheets, labelling sheets and practical sheets made with the “Make with AI” prompts now ask the AI to include relevant photos, maps, graphs or diagrams. Where it cannot, it leaves a <strong>bright yellow box with a red border</strong> saying exactly what to add and what to search for, and a reminder at the top of the page telling you how many images are missing. The boxes are built to survive a paste into Google Docs. Delete each box once you have added your picture.</li>
+<li><mark class="wn-key">Highlighted “ADD AN IMAGE HERE” boxes</mark>. Worksheets, reading sheets, labelling sheets and practical sheets made with the “Make with AI” prompts, plus the Lesson Builder, the lesson slideshow and the Differentiate “Low-text / visual” option, now ask the AI to include relevant photos, maps, graphs or diagrams. Where it cannot, it leaves a <strong>bright yellow box with a red border</strong> saying exactly what to add and what to search for, and a reminder at the top of the page telling you how many images are missing. The boxes are built to survive a paste into Google Docs. Delete each box once you have added your picture.</li>
 <li><mark class="wn-key">Stages explained on Differentiate this lesson</mark>. Under each of the five stage tick boxes there is now a line of small text saying what that stage is for in the lesson (for example, We Do: guided practice, worksheet questions done together).</li>
 <li><mark class="wn-key">Differentiate this lesson (from the unit plan)</mark>. The <strong>Differentiate this lesson</strong> link in the unit plan now opens a shorter page. The subject, year level, topic and lesson details are already known, so there is no paste box. Tick the <strong>stages</strong> you want adapted (Connect, I Do, We Do, You Do, Review, or none for the whole lesson), use the quick <strong>Simplify the content</strong> button, or open <em>More ways to differentiate</em>. Choose <strong>HTML</strong> or <strong>plain text</strong> for a Google Doc, and add your own specifics in an optional drop-down. The normal Differentiate any task page is unchanged.</li>
 <li><mark class="wn-key">Year Planner: one-page landscape plan</mark>. A new <strong>One page, landscape (best for Google Docs)</strong> output, in Generate Plan and the Export menu, puts the whole year on one landscape page with the subject, year level and year as the heading, a row of topics and a row of assessments for each term, and holiday or school event weeks shaded. Set your Google Doc to landscape with narrow margins before you paste it.</li>
@@ -3140,6 +3093,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Year Planner: short assessment labels</mark>. Assessments now have an optional <strong>Type or title</strong> (Test, Quiz, Report or your own). The year calendar shows that short label instead of the topic name, cut to fit so the row stays slim.</li>
 <li><mark class="wn-key">Year Planner: year level camps</mark>. The 2027 camps (Year 7 Feb, Year 8 Mar, Year 9 Aug, Year 10 Nov to Dec) appear on the calendar, but only when that year level is selected.</li>
 <li><mark class="wn-key">Year Planner: Buffer and closed strands</mark>. A new <strong>⏳ Buffer</strong> button next to Own topic lets you click empty weeks to add a spare buffer week. The Curriculum Strands now start <strong>closed</strong> (they still open when you search). Your own topics and buffers are also kept now when you reload.</li>
+<li><mark class="wn-key">Assessment Generator shortcuts</mark>. Section 4 (Length, Format, Question volume or Real audience, Versions A and B) is now laid out more compactly. <strong>Additional Outputs</strong> is marked <strong>Recommended</strong>. A <strong>COPY PROMPT</strong> button follows you down the page while the prompt is still below the screen. Waiheke context, Mātauranga Māori, Literacy and Numeracy are now four on/off buttons, and your choices (with devices and AI) are remembered next time. <em>What are you assessing?</em> closes once the topic and specific knowledge are filled in (practices are optional), but not while you are still tabbing between its boxes.</li>
+<li><mark class="wn-key">Assessment Generator tidy-up</mark>. <strong>Differentiation &amp; Accommodations</strong> are now one list of tick boxes (3-tiered, ADHD friendly, ESOL scaffold, dyslexia-friendly layout, reader/writer, plain-language version, extended time), so nothing is asked twice. The Assessment Formats box says you can click more than one, and the Curriculum options now say <strong>None</strong> instead of Standard.</li>
+<li><mark class="wn-key">Assessment Generator, step by step</mark>. The page is now five sections that open one at a time: Subject and year, What are you assessing?, Source material and unit plan, Time, format and questions, and Optional extras (curriculum, devices, AI and supports). The first two close and open the next by themselves once they are filled in, every section has <strong>Back</strong> and <strong>Next</strong> buttons, and you can click any heading to return. <em>What are you assessing?</em> now holds the topic with the specific knowledge and practices (or the NZQA standard). Source material and Unit plan sit side by side, as do Curriculum, Device use and Student AI use. Device use no longer has a Standard option (click an option again to turn it off) and Student AI use starts on <strong>No AI</strong>. No assessment format is highlighted until you choose one. A <strong>1 Period Test</strong> offers Paragraph, Multiple Choice, Resource Based and Short Answer, with question volume; longer tasks offer every format and the Real audience box instead.</li>
+<li><mark class="wn-key">Assessment link carries the unit plan details</mark>. The <strong>Make this assessment with AI</strong> link now opens the Assessment Generator with a blue “Opened from your unit plan” box showing the task outline, what it is judged on, the key knowledge and the time planned. Tick or untick each line to choose what goes into the prompt, which then builds the assessment from what the unit actually taught. The planned time sets the <strong>Length</strong> and the task suggests a <strong>Format</strong>, and a pop-up lets you choose <strong>Keep all</strong>, <strong>Make changes</strong> or <strong>Start from scratch</strong> (which clears everything except the subject, year level and topic).</li>
 <li><mark class="wn-key">Assessment lessons in the Unit Plan</mark>. When the unit includes an assessment, its lesson now starts with a clear <strong>Example Assessment - Teacher to refine/adapt</strong> label and a short outline, with a <strong>Make this assessment with AI</strong> link that opens the Assessment builder with the subject, year and topic already filled in.</li>
 <li><mark class="wn-key">“Make with AI” links in the Unit Plan</mark> (school, Science and Maths templates). Every lesson gets a <strong>🤖 link</strong> in its Preparation/ Resources cell. The AI that writes the plan picks the <strong>resource types that suit each lesson</strong>. Click the link (in the file, or in the Doc you pasted it into) and this site opens a popup with <strong>ready-made AI prompts for those types</strong>, built from that lesson's Learning Intention, key knowledge and main activity plus your Waiheke / Māori / literacy / numeracy / device choices, with a <em>More resource types</em> button for the rest. 22 types: 📄 worksheet (print-ready HTML), 🎞 slides (the AI builds a real PowerPoint, Google Slides or HTML slideshow), 🃏 flashcards, 🧩 mix &amp; match (pairs, dominoes, card sort), 🖼 find visuals (graphs, maps, photos with search links), 🎟 exit ticket / starter, ❓ quiz, 📖 reading + questions, ✍️ writing frame, 🔤 vocabulary pack, 🏷 labelling sheet, 🧪 practical sheet, ✅ rubric / checklist, 🧭 project brief, 🗣 discussion / debate, 🎭 role-play cards, 👩‍🏫 teacher notes, 🏠 homework task, 💌 whānau note, ➗ maths worked examples, 💬 dialogue cards and 🏅 performance checklist. Use the <strong>Gemini / ChatGPT / Claude</strong> buttons beside Copy. A switch in Add-Ons turns the links off.</li>
 <li><mark class="wn-key">Unit Plan tidy-up</mark> (school template): the device label (<strong>[ON DEVICE]</strong>, <strong>[BOOKWORK]</strong> or <strong>[MIX…]</strong>) now appears once, beside the lesson number, instead of being repeated. <strong>Assessment lessons</strong> are shaded very light red across the whole row. The <strong>Strategies, activities, tasks</strong> column is wider and the table runs closer to the page edges. The graphic organiser option has been removed from the Make with AI popup, and every prompt now asks for New Zealand English spelling. The school-template HTML is now a fixed, more compact width, so it pastes into a landscape Google Doc the same way on any screen.</li>
@@ -3534,7 +3491,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div class="ob-up">
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
-<li><mark class="wn-key">Highlighted image boxes</mark>: worksheets and reading, labelling and practical sheets now include relevant visuals, or a bright yellow “ADD AN IMAGE HERE” box telling you what to add. Under each stage on Differentiate this lesson, small text shows what it is for.</li>
+<li><mark class="wn-key">Assessment Generator</mark>: now five sections that open one at a time, with Back and Next. A 1 Period Test has fewer formats and a question-volume box; longer tasks have Real audience. No format is pre-selected.</li>
+<li><mark class="wn-key">Assessment link</mark>: opens the Assessment Generator with the task outline, success criteria, key knowledge, length and format from your unit plan. A pop-up lets you keep all, make changes or start from scratch.</li>
+<li><mark class="wn-key">Highlighted image boxes</mark>: worksheets, reading, labelling and practical sheets, the Lesson Builder, the lesson slideshow and low-text differentiation now include relevant visuals, or a bright yellow “ADD AN IMAGE HERE” box telling you what to add. Under each stage on Differentiate this lesson, small text shows what it is for.</li>
 
                         <li><mark class="wn-key">Richer Unit Plans</mark>: new ✨ Plan extras add a coverage check, misconceptions, retrieval and a key vocabulary list.</li>
                         <li><mark class="wn-key">Year Planner</mark>: several assessments per topic, a one-page landscape year plan, and a recommended day-by-day grid you can download as a spreadsheet or print, Detailed or Questions only portrait worksheets, and a whole-lesson slideshow option in the resource pop-up, and prior and future learning in the Science unit template.</li>
@@ -3775,7 +3734,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:['Short Answer'], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
+        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
 
         // ---------- My Teaching Profile ----------
         // A teacher's personal preferred approaches, not a class setting — one profile for
@@ -5140,7 +5099,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (missing) {
                 showGlobalToast('⚠️ ' + missing.msg);
                 var mEl = document.getElementById(missing.id);
-                if (mEl) { mEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); if (mEl.focus) mEl.focus(); }
+                if (mEl) { try { asSecReveal(mEl); } catch (e) {} mEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); if (mEl.focus) mEl.focus(); }
                 return;
             }
             if (targetId === 'prompt-unit-text') maybeShowTaskFieldTip();
@@ -5963,7 +5922,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     }
                     if (st.assessmentState) {
                         Object.assign(assessmentState, st.assessmentState);
-                        if (!assessmentState.formats) assessmentState.formats = ['Short Answer'];
+                        if (!assessmentState.formats) assessmentState.formats = [];
                         if (!assessmentState.outputs) assessmentState.outputs = [];
                         if (assessmentState.nceaMode === undefined) assessmentState.nceaMode = true;
                     }
@@ -6077,6 +6036,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         var fc = document.getElementById('assess-custom-format-container');
                         if (fc) fc.classList.remove('hidden');
                     }
+                    asApplyDuration();
                     
                     if (!assessmentState.outputs) assessmentState.outputs = [];
                     document.querySelectorAll('[onchange^="setAssessmentOutput"]').forEach(function(cb) {
@@ -6086,6 +6046,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     updateOutputsSummary();
                     
                     if (!assessmentState.accommodations) assessmentState.accommodations = [];
+                    (function() { /* older saves: the single Differentiation choice and the old large-print name now live in one list */
+                        var ac = assessmentState.accommodations, mv = { '3-Tier Assessment': '3-Tiered Assessment', 'Dyslexia Friendly': 'Dyslexia-Friendly Layout', 'Large Print / Dyslexia-Friendly Formatting': 'Dyslexia-Friendly Layout' };
+                        var ex = assessmentState.extra; if (ex && ex !== 'None') { ex = mv[ex] || ex; if (ac.indexOf(ex) < 0) ac.push(ex); }
+                        assessmentState.extra = 'None';
+                        assessmentState.accommodations = ac.map(function(x) { return mv[x] || x; }).filter(function(x, i, a) { return a.indexOf(x) === i; });
+                    })();
                     document.querySelectorAll('[onchange^="setAccommodation"]').forEach(function(cb) {
                         var m = cb.getAttribute('onchange').match(/setAccommodation\('([^']+)'/);
                         if (m) cb.checked = assessmentState.accommodations.includes(m[1]);
@@ -6449,13 +6415,123 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             saveAppState();
         }
 
+
+        // ---------- Assessment Generator: step-by-step sections (v2.9) ----------
+        // Sections open one at a time. Subject/year and What are you assessing? close and open the next one by themselves
+        // when they are complete; every section has Back and Next buttons and its heading can be clicked at any time.
+        var asDone = {};
+        var AS_ONE_FORMATS = ['Paragraph', 'Multiple Choice', 'Resource Based', 'Short Answer'];
+        function asSecEl(n) { return document.querySelector('#view-assessment .as-sec[data-as="' + n + '"]'); }
+        function asVal(id) { return ((document.getElementById(id) || {}).value || '').trim(); }
+        function asIsOpen(n) { var e = asSecEl(n); return !!(e && !e.querySelector('.as-sec-b').classList.contains('hidden')); }
+        function asSecOpen(n, quiet) {
+            if (n >= 2 && !(assessmentState.dept && assessmentState.year)) { try { showGlobalToast('Choose a department and a year level first'); } catch (e) {} n = 1; }
+            document.querySelectorAll('#view-assessment .as-sec').forEach(function(sec) {
+                var on = parseInt(sec.getAttribute('data-as'), 10) === n;
+                sec.querySelector('.as-sec-b').classList.toggle('hidden', !on);
+                sec.querySelector('.as-sec-h').setAttribute('aria-expanded', on ? 'true' : 'false');
+                var ch = sec.querySelector('.as-sec-chev'); if (ch) ch.style.transform = on ? 'rotate(180deg)' : '';
+            });
+            if (n === 1 || n === 2) { if (asSecComplete(n)) asDone[n] = true; } /* opened to review: do not close it again by itself */
+            var el = asSecEl(n);
+            if (el && !quiet) { try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
+        }
+        function asSecToggle(n) { asSecOpen(asIsOpen(n) ? 0 : n); }
+        function asSecDone() {
+            asSecOpen(0);
+            var t = document.getElementById('prompt-assessment-text');
+            if (t) { try { t.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {} }
+        }
+        function asSecReveal(el) { var sec = el && el.closest ? el.closest('.as-sec') : null; if (sec) asSecOpen(parseInt(sec.getAttribute('data-as'), 10), true); }
+        function asSecComplete(n) {
+            var sen = (assessmentState.year || '').indexOf('Level') > -1;
+            if (n === 1) return !!(assessmentState.dept && assessmentState.year);
+            if (n === 2) { if (!asVal('assess-main-topic-input')) return false; return sen ? !!asVal('assess-ncea-standard') : !!asVal('assess-junior-knowledge'); }
+            return false;
+        }
+        function asCut(x, n) { x = String(x || ''); return x.length > n ? x.slice(0, n - 1) + '…' : x; }
+        function asSecSummary(n) {
+            var a = assessmentState, sen = (a.year || '').indexOf('Level') > -1, o = [];
+            if (n === 1) return [a.dept, (a.year || '').replace(/ \(NCEA Level (\d)\)/, ' (L$1)')].filter(Boolean).join(' · ');
+            if (n === 2) return asCut(asVal('assess-main-topic-input'), 40);
+            if (n === 3) { if (asVal('assess-source-material')) o.push('Source'); if (asVal('assess-unit-link')) o.push('Unit plan'); return o.join(' + ') || 'Optional'; }
+            if (n === 4) { o.push(a.duration === 'Other' ? (asVal('assess-custom-dur') || 'Other') : a.duration); if (!sen && a.formats && a.formats.length) o.push(a.formats.join(', ')); return asCut(o.join(' · '), 60); }
+            if (n === 5) {
+                if (a.context === 'waiheke') o.push('Waiheke'); if (a.maori === 'integrate') o.push('Māori'); if (a.lit === 'integrate') o.push('Literacy'); if (a.num === 'integrate') o.push('Numeracy');
+                var dl = { book: 'Paper', some: 'Some devices', all: 'All devices' }[a.devices]; if (dl) o.push(dl);
+                var al = { plan: 'AI to plan', collaborate: 'AI collaborates', critique: 'Critique AI' }[a.ai]; if (al) o.push(al);
+                if (a.accommodations && a.accommodations.length) o.push(a.accommodations.length + ' support' + (a.accommodations.length > 1 ? 's' : ''));
+                if (a.outputs && a.outputs.length) o.push(a.outputs.length + ' output' + (a.outputs.length > 1 ? 's' : ''));
+                return asCut(o.join(' · '), 60) || 'Optional';
+            }
+            return '';
+        }
+        function asSecUpdate(adv) {
+            if (!document.querySelector('#view-assessment .as-sec')) return;
+            for (var n = 1; n <= 5; n++) {
+                var sec = asSecEl(n); if (!sec) continue;
+                var st = sec.querySelector('.as-sec-s'); if (st) st.textContent = asSecSummary(n);
+                var badge = sec.querySelector('.as-sec-n');
+                if (badge) { var ok = n <= 2 && asSecComplete(n); badge.textContent = ok ? '✓' : String(n); badge.classList.toggle('bg-emerald-600', ok); badge.classList.toggle('bg-purple-700', !ok); }
+            }
+            var moved = false;
+            [1, 2].forEach(function(n) {
+                var c = asSecComplete(n);
+                if (!c) { asDone[n] = false; return; }
+                if (adv && !asDone[n]) { asDone[n] = true; if (!moved && asIsOpen(n)) { moved = true; asSecOpen(n + 1); } }
+            });
+        }
+        /* A COPY PROMPT button that follows you down the page while the prompt is still below the screen */
+        function asFloatUpdate() {
+            var b = document.getElementById('as-float-copy'); if (!b) return;
+            var v = document.getElementById('view-assessment'), card = document.getElementById('assess-prompt-card'), show = false;
+            if (v && !v.classList.contains('hidden') && card && assessmentState.dept && assessmentState.year) show = card.getBoundingClientRect().top > window.innerHeight - 80;
+            b.classList.toggle('hidden', !show);
+        }
+        function asSecInit(quiet) {
+            asSecUpdate(false);
+            asSecOpen(!asSecComplete(1) ? 1 : (!asSecComplete(2) ? 2 : 3), quiet !== false);
+        }
+        /* A 1 Period Test: only four formats, question volume shown, no real audience. Longer tasks: the reverse. */
+        function asApplyDuration() {
+            var one = assessmentState.duration === '1 Period Test';
+            document.querySelectorAll('#junior-formats-container [data-action="assessment-format"]').forEach(function(b) {
+                b.style.display = (one && AS_ONE_FORMATS.indexOf(b.getAttribute('data-val')) === -1) ? 'none' : '';
+            });
+            var note = document.getElementById('assess-story-note'); if (note) note.style.display = one ? 'none' : '';
+            if (one && assessmentState.formats) {
+                assessmentState.formats = assessmentState.formats.filter(function(f) { return AS_ONE_FORMATS.indexOf(f) > -1; });
+                document.querySelectorAll('[data-action="assessment-format"]').forEach(function(b) { b.classList.toggle('active', assessmentState.formats.indexOf(b.getAttribute('data-val')) > -1); });
+                var cf = document.getElementById('assess-custom-format-container'); if (cf) cf.classList.add('hidden');
+            }
+            var vw = document.getElementById('assess-volume-wrap'); if (vw) vw.style.display = one ? '' : 'none';
+            var aw = document.getElementById('assess-audience-wrap'); if (aw) aw.style.display = one ? 'none' : '';
+        }
+        (function() {
+            function init() {
+                var v = document.getElementById('view-assessment'); if (!v) return;
+                /* Moving on from the last field of a section closes it; tabbing between fields in the same section does not */
+                v.addEventListener('focusout', function(e) {
+                    var t = e.target; if (!(t && t.matches && t.matches('input[type="text"]'))) return;
+                    var r = e.relatedTarget;
+                    if (r && r.closest && (r.closest('.as-sec-h') || (r.matches('input,textarea,select') && r.closest('.as-sec-b') === t.closest('.as-sec-b')))) return;
+                    asSecUpdate(true);
+                });
+                window.addEventListener('scroll', asFloatUpdate, { passive: true }); setInterval(asFloatUpdate, 400);
+            }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+        })();
         function setAssessmentState(k, v, b) {
             if (k === 'ai') updateAIHint('assess', v);
             if (k === 'devices') updateDeviceHint('assess', v);
+            if (['devices', 'context', 'maori', 'lit', 'num'].indexOf(k) > -1 && assessmentState[k] === v) v = 'none'; /* click again to turn off */
             assessmentState[k] = v;
-            var p = b.parentElement;
-            p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
-            b.classList.add('active');
+            if (k === 'context' || k === 'maori' || k === 'lit' || k === 'num') b.classList.toggle('active', v !== 'none'); /* independent on/off chips */
+            else {
+                var p = b.parentElement;
+                p.querySelectorAll('.builder-btn').forEach(function(el) { el.classList.remove('active'); });
+                if (!(k === 'devices' && v === 'none')) b.classList.add('active');
+            }
             if (k === 'dept' || k === 'year') {
                 renderCurriculumLink('assess-curriculum-link', assessmentState.dept, assessmentState.year);
                 checkSeniorStatus();
@@ -6464,8 +6540,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (k === 'duration') {
                 var cd = document.getElementById('assess-custom-dur-container');
                 if (cd) v === 'Other' ? cd.classList.remove('hidden') : cd.classList.add('hidden');
+                asApplyDuration();
             }
             updateAssessmentBuilderPrompt();
+            if (k === 'dept' || k === 'year') asSecUpdate(true);
             saveAppState();
         }
 
@@ -6478,7 +6556,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (si > -1) assessmentState.formats.splice(si, 1);
                 var i = assessmentState.formats.indexOf(v);
                 if (i > -1) {
-                    if (assessmentState.formats.length > 1) assessmentState.formats.splice(i, 1);
+                    assessmentState.formats.splice(i, 1);
                 } else {
                     assessmentState.formats.push(v);
                 }
@@ -6496,7 +6574,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function updateDifferentiationSummary() {
             var el = document.getElementById('assess-differentiation-summary');
-            if (el) el.textContent = 'Differentiation & Inclusion — ' + (assessmentState.extra === 'None' ? 'None' : assessmentState.extra);
+            updateAccommodationsSummary();
         }
         function setAssessmentExtra(v) {
             assessmentState.extra = v;
@@ -6523,7 +6601,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function updateAccommodationsSummary() {
             var n = (assessmentState.accommodations || []).length;
             var el = document.getElementById('assess-accommodations-summary');
-            if (el) el.textContent = 'Formal Accommodations' + (n ? ' — ' + n + ' selected' : ' — None selected');
+            if (el) el.textContent = 'Differentiation & Accommodations' + (n ? ' — ' + n + ' selected' : ' — None selected');
         }
         function setAccommodation(v, checked) {
             if (!assessmentState.accommodations) assessmentState.accommodations = [];
@@ -8111,7 +8189,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             
             if (lessonState.mode !== 'notebooklm' && (outs.includes('media') || lessonState.mode === 'relief')) txt += 'CRITICAL: Media Integration: Do NOT hallucinate URLs. Instead, provide exact search queries (e.g. [Search YouTube: "Crash Course Mitosis"]).\n';
-            if (lessonState.mode !== 'notebooklm' && outs.includes('images')) txt += 'CRITICAL: Image/Diagram Integration: AI models hallucinate dead links. Do NOT use direct URLs. Instead, insert highly descriptive placeholders where images should go using this format: `[📸 INSERT IMAGE: Detailed description - Search query: "exact google image search terms"]`.\n';
+            if (lessonState.mode !== 'notebooklm' && outs.includes('images')) txt += 'CRITICAL: Image/Diagram Integration: AI models hallucinate dead links. Do NOT use direct URLs or broken image tags. Wherever a photo, map, graph or diagram would help students, put a bright HIGHLIGHTED box that the teacher cannot miss, ' + (lessonState.whsTemplate ? 'written exactly like this (a one-cell table with inline styles): ' + IMG_BOX_HTML : 'written exactly like this on its own line: ' + IMG_LINE_PLAIN) + ' Put each one exactly where the picture belongs, and describe precisely what to add. If you can insert a real, freely licensed image, do that instead and add a small credit.\n';
             
             if (lessonState.extra !== 'None') txt += 'Differentiate/Scaffold strictly for: ' + lessonState.extra + '.\n';
             
@@ -8355,6 +8433,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function updateAssessmentBuilderPrompt() {
             updateAssessmentAddonsBanner();
+            try { asSecUpdate(false); } catch (e) {}
             if (!assessmentState.dept) {
                 var earlyBox = document.getElementById('prompt-assessment-text');
                 if (earlyBox) earlyBox.innerText = "Select a Department above.";
@@ -8380,12 +8459,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var hasStory = af.some(function(f) { return STORYTELLING_FORMATS.indexOf(f) !== -1; });
             var audience = (document.getElementById('assess-real-audience') || {}).value || "";
             assessmentState.realAudience = audience;
+            /* A 1 Period Test has question volume and no real audience; longer tasks are the other way round */
+            if (assessmentState.duration === '1 Period Test') { audience = ''; assessmentState.realAudience = ''; } else { vol = ''; mcqN = ''; shortN = ''; extN = ''; }
             
             var txt = '### System Role\nAct as an expert pedagogical coach and ' + assessmentState.dept + ' teacher.\n\n### Context\nTopic: "' + t + '". Class: ' + yr + ' ' + assessmentState.dept + '.\n';
             if (ul) {
                 txt += 'UNIT LINK: Base the scope of this assessment on the following unit' + (un ? ' (' + un + ')' : '') + ': "' + ul + '". If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             }
-            txt += '\n### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
+            txt += '\n' + asPlanText() + '### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
             
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
             txt += 'Scale matches duration: ' + durText + '. ';
@@ -8416,16 +8497,18 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += 'Base the assessment STRICTLY on these source materials: "' + sm + '". ';
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
             }
-            if (assessmentState.extra !== 'None') txt += 'Differentiate for: ' + assessmentState.extra + '.\n';
+            var dAcc = assessmentState.accommodations || [];
+            var dList = [['3-Tiered Assessment', '3-Tier Assessment'], ['ADHD Friendly', 'ADHD Friendly'], ['ESOL Scaffold', 'ESOL Scaffold'], ['Dyslexia-Friendly Layout', 'Dyslexia Friendly']].filter(function(x) { return dAcc.indexOf(x[0]) > -1; }).map(function(x) { return x[1]; });
+            if (dList.length) txt += 'Differentiate for: ' + dList.join(', ') + '.\n';
             if (audience) txt += 'Real audience: frame this task as genuinely for ' + audience + ', not just for the teacher marking it — write the task brief, and any criteria, with that audience in mind.\n';
             txt += teachingProfileInstruction(yr, false, true);
             
             var acc = assessmentState.accommodations || [];
-            if (acc.length) {
+            if (['Reader/Writer Support', 'Plain-Language Version', 'Dyslexia-Friendly Layout', 'Extended Time Notes'].some(function(x) { return acc.indexOf(x) > -1; })) {
                 txt += 'CRITICAL ACCOMMODATIONS: This assessment requires the following formal accommodations:\n';
                 if (acc.includes('Reader/Writer Support')) txt += '- Reader/Writer Support: write all instructions and questions in simple, unambiguous language suitable for being read aloud by a reader/writer.\n';
                 if (acc.includes('Plain-Language Version')) txt += '- Plain-Language Version: after the main assessment, produce a SECOND, fully plain-language version of the same assessment (short sentences, common words, no idioms, no double-barrelled questions), covering identical content and difficulty.\n';
-                if (acc.includes('Large Print / Dyslexia-Friendly Formatting')) txt += '- Large Print / Dyslexia-Friendly Formatting: add a short formatting note (font, spacing, layout) suitable for large-print or dyslexia-friendly presentation.\n';
+                if (acc.includes('Dyslexia-Friendly Layout')) txt += '- Dyslexia-Friendly Layout: add a short formatting note (font, spacing, layout) suitable for large-print or dyslexia-friendly presentation.\n';
                 if (acc.includes('Extended Time Notes')) txt += '- Extended Time Notes: add a brief note on which sections could reasonably be split across two sessions for a student with extended time.\n';
             }
 
@@ -12400,7 +12483,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     else if (devMode === 'book') p += 'BOOKWORK OR DEVICE: this lesson is all bookwork. Tag the task slides 📓 BOOKWORK, say exactly what students write or copy into their books, and do not ask students to use a device.\n';
                     else if (devMode === 'device') p += 'BOOKWORK OR DEVICE: this lesson is all on device. Tag the task slides 💻 ON DEVICE and say exactly what students open, type or submit (for example a Google Doc, Slides or Form).\n';
                     p += 'Design: one idea per slide, no more than 5 short bullets, large readable text, and a consistent clean look in navy (#002066) and light blue (#d1e6f6).\n';
-                    p += 'IMAGES: use REAL images wherever possible. Aim for a real photograph, diagram, map, graph or screenshot on most slides, and make sure each one supports the teaching point rather than just decorating the slide. (1) Photos and diagrams: if you can search the web or use image tools, find real ones from freely licensed sources (Wikimedia Commons, Unsplash, Pexels, Openverse, NASA, Te Papa, DigitalNZ, NZ Government sites), insert them, and add a short credit such as "Photo: name, Wikimedia Commons, CC BY-SA" in small text on the slide or in the notes. Use only images you have actually retrieved: never invent, guess or paste an image address. (2) Graphs and data: when numbers matter, build a real chart from accurate figures and name the source. (3) Diagrams: where there is no suitable photo, draw a clean labelled diagram yourself (process or cycle, cross-section, timeline, number line, table, flow chart) large enough to read from the back of the room. (4) If you cannot retrieve or make a real image, do not leave a gap or a broken picture: add a clearly labelled placeholder in this format: [📸 INSERT IMAGE: detailed description - Search query: "exact google image search terms"]. Never use images that show identifiable students.\n';
+                    p += 'IMAGES: use REAL images wherever possible. Aim for a real photograph, diagram, map, graph or screenshot on most slides, and make sure each one supports the teaching point rather than just decorating the slide. (1) Photos and diagrams: if you can search the web or use image tools, find real ones from freely licensed sources (Wikimedia Commons, Unsplash, Pexels, Openverse, NASA, Te Papa, DigitalNZ, NZ Government sites), insert them, and add a short credit such as "Photo: name, Wikimedia Commons, CC BY-SA" in small text on the slide or in the notes. Use only images you have actually retrieved: never invent, guess or paste an image address. (2) Graphs and data: when numbers matter, build a real chart from accurate figures and name the source. (3) Diagrams: where there is no suitable photo, draw a clean labelled diagram yourself (process or cycle, cross-section, timeline, number line, table, flow chart) large enough to read from the back of the room. (4) If you cannot retrieve or make a real image, do not leave a gap or a broken picture: put a bright yellow rectangle with a thick red border where the picture belongs, with bold red text reading "📷 ADD AN IMAGE HERE: [photo, map, graph or diagram] [what it should show] | Search: exact Google Images search words" (in an HTML slideshow, use a div with the inline style background:#ffff00; border:3px solid #cc0000; color:#cc0000; font-weight:bold; padding:12px). In your one-line chat message, also give the slide numbers that still have a yellow ADD AN IMAGE HERE box, so none is missed. Never use images that show identifiable students.\n';
                     if (o('out') === 'html') p += 'For the HTML slideshow, draw diagrams and charts as inline SVG or in code. For a photograph, use a direct image address only if you are certain it exists (for example one on upload.wikimedia.org); otherwise show a neat visible box with a caption and the search phrase instead of an image tag.\n';
                     p += 'Add an "Image credits" line at the foot of the last slide listing the sources of any real images used.' + (o('notes') ? ' Put short speaker notes on every slide telling the teacher what to say and do.' : '') + '\n';
                     return p;
@@ -12712,7 +12795,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return tag + 'Include at least one short [ON DEVICE] section (for example a quick research or typed response, with the exact search words or link and a box to record the answer), because devices add real value there.\n';
         }
         // Visuals in worksheets and similar: a real image if the AI can add one, otherwise a bright box the teacher cannot miss
-        var RES_IMG_RULE = 'VISUALS: include relevant visuals where they help students understand or answer (photographs, maps, graphs or diagrams), usually 1 to 3 in the resource, chosen to match the key knowledge. Do NOT invent image web addresses or links, and do not use broken image tags. Wherever a visual belongs, put a bright HIGHLIGHTED box that the teacher cannot miss, written exactly like this (a one-cell table with inline styles): <table width="100%" cellspacing="0" cellpadding="8" style="border-collapse: collapse;"><tr><td bgcolor="#ffff00" style="background-color: #ffff00; border: 3px solid #cc0000; color: #cc0000; font-weight: bold;">📷 ADD AN IMAGE HERE: [photo, map, graph or diagram] [what it should show and why it helps] | Search: "exact Google Images search words"</td></tr></table> Put each box exactly where the picture should go, and make any question that depends on it point to it (for example "Look at the image above"). If you can genuinely insert a real, freely licensed image, do that instead and add a small credit. If there is at least one box, also put the same highlighted style of box at the very top, above the title, reading "TEACHER: N images to add (the yellow boxes below). Delete this box before printing."\n';
+        var IMG_BOX_HTML = '<table width="100%" cellspacing="0" cellpadding="8" style="border-collapse: collapse;"><tr><td bgcolor="#ffff00" style="background-color: #ffff00; border: 3px solid #cc0000; color: #cc0000; font-weight: bold;">📷 ADD AN IMAGE HERE: [photo, map, graph or diagram] [what it should show and why it helps] | Search: "exact Google Images search words"</td></tr></table>';
+        var IMG_LINE_PLAIN = '🟨 **📷 ADD AN IMAGE HERE:** [photo, map, graph or diagram] [what it should show and why it helps] | Search: "exact Google Images search words" 🟨';
+        var RES_IMG_RULE = 'VISUALS: include relevant visuals where they help students understand or answer (photographs, maps, graphs or diagrams), usually 1 to 3 in the resource, chosen to match the key knowledge. Do NOT invent image web addresses or links, and do not use broken image tags. Wherever a visual belongs, put a bright HIGHLIGHTED box that the teacher cannot miss, written exactly like this (a one-cell table with inline styles): ' + IMG_BOX_HTML + ' Put each box exactly where the picture should go, and make any question that depends on it point to it (for example "Look at the image above"). If you can genuinely insert a real, freely licensed image, do that instead and add a small credit. If there is at least one box, also put the same highlighted style of box at the very top, above the title, reading "TEACHER: N images to add (the yellow boxes below). Delete this box before printing."\n';
         function resDeviceLine(dv) {
             if (dv === 'none') return '';
             if (dv === '0') return 'DEVICE USE — BOOKWORK: students do this on paper with no devices, so make it printable and do not include any online or screen task.\n';
@@ -13032,7 +13117,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             ['el', '🌏 EAL / language learners', 'EAL / ENGLISH LANGUAGE LEARNERS: add a short glossary of key terms with simple definitions, sentence frames, and icons or visuals where they help. Invite students to use their home language to think and plan. Keep the content demand the same.'],
             ['dy', '🔤 Dyslexia-friendly layout', 'DYSLEXIA / LITERACY-FRIENDLY LAYOUT: short chunks of text, clear headings, plenty of white space, a clean sans-serif font at a generous size, numbered steps and bullet points instead of dense paragraphs, and no need for lots of copying or handwriting.'],
             ['fo', '🎯 Focus and attention', 'FOCUS AND ATTENTION: split the task into short, numbered, time-boxed steps with a tick box for each, one instruction at a time, a clear "done" point and a suggested movement or reset break.'],
-            ['vi', '🖼 Low-text / visual', 'LOW-TEXT / VISUAL: use diagrams, tables, icons, flow charts or labelled pictures in place of paragraphs of text. Where a picture is needed, insert a placeholder in this format: [📸 INSERT IMAGE: detailed description - Search query: "exact google image search terms"].'],
+            ['vi', '🖼 Low-text / visual', 'LOW-TEXT / VISUAL: use diagrams, tables, icons, flow charts or labelled pictures in place of paragraphs of text. Where a picture, map or diagram is needed, {IMG}'],
             ['ex', '🚀 Extend / more challenge', 'EXTEND (more challenge): add deeper, more open-ended or higher-order questions, a real-world or cross-curricular link, or a harder application. Do not simply add more of the same work.'],
             ['ti', '🔺 Three tiers', 'THREE TIERS: write three versions of the same task at different levels of support (more support, core, extension) so students work toward the same goal in different ways. Name the tiers neutrally.'],
             ['ef', '⏩ Early finishers', 'EARLY FINISHERS: add 2 or 3 open-ended "what next" tasks that deepen the learning and do not need teacher help.'],
@@ -13157,7 +13242,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 var line;
                 if (c === 'nd') line = 'A SPECIFIC LEARNER OR NEED: adapt the task for this need: "' + (need || 'the learner described by the teacher') + '". Do not use a name.';
                 else if (c === 'sp') line = 'SIMPLIFY THE CONTENT: keep the same key ideas and the same learning intention, but make the content easier to take in: shorter sentences, plain words (explain each subject word where it first appears), fewer ideas in each chunk, fewer steps and a clear example. Do not remove the important ideas.' + (simAB ? ' Write TWO versions: Version A is lightly simplified (the same task in clearer, shorter language); Version B is simplified further (smaller chunks, key words listed or highlighted, a worked example and sentence starters).' : ' Write ONE simplified version.');
-                else line = t[2];
+                else line = t[2].replace('{IMG}', html ? 'put a bright HIGHLIGHTED box that the teacher cannot miss, written exactly like this (a one-cell table with inline styles): ' + IMG_BOX_HTML + ' Put it exactly where the picture belongs and say precisely what to add. If you can insert a real, freely licensed image, do that instead.' : 'put a highlighted line on its own, written exactly like this: ' + IMG_LINE_PLAIN + ' Put it exactly where the picture belongs and say precisely what to add. Never invent an image web address.');
                 p += (i + 1) + '. ' + line + '\n';
             });
             if (plan) p += '\nStart from the differentiation the unit plan already gives ("' + plan + '") and build on it, so the result matches what the teacher planned.\n';
@@ -13310,14 +13395,116 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return resBaseUrl() + '?diff=1&amp;u=' + resFixedToken(yr, t) + '&amp;n=' + vars.n + '&amp;dt=' + vars.dt + '&amp;df=' + vars.df + '&amp;li=' + vars.li + '&amp;kn=' + vars.kn + '&amp;a=' + vars.a + '&amp;sc=' + vars.sc;
         }
         // Assessment lessons in a Unit Plan template: a clear "Example Assessment" label and a link that opens the Assessment builder
-        function assessLinkHref(yr, t) { return resBaseUrl() + '?as=1&amp;u=' + resFixedToken(yr, t) + '&amp;kn=[KN+words]'; }
+        function assessLinkHref(yr, t, v) {
+            v = v || { n: '[N]', kn: '[KN+words]', a: '[TASK+words]', sc: '[SC+words]', du: '[DUR+words]', fm: '[FM+codes]' };
+            return resBaseUrl() + '?as=1&amp;u=' + resFixedToken(yr, t) + '&amp;n=' + v.n + '&amp;kn=' + v.kn + '&amp;a=' + v.a + '&amp;sc=' + v.sc + '&amp;du=' + v.du + '&amp;fm=' + v.fm;
+        }
         function assessLessonInstruction(yr, t) {
             if (!resAnyTemplate() || unitState.assessmentIncluded !== 'yes') return '';
             var p = 'ASSESSMENT LESSON LABEL: in the activities cell of each assessment lesson, start with this bold red line exactly as written: <strong style="color: #c00000;">Example Assessment - Teacher to refine/adapt</strong>. Under it write only a short outline of the task (2 to 4 lines: what students do or produce, how long it takes, and the main things it is judged on), not the full questions. Whenever you write any assessment content anywhere in the plan, label it the same way.\n';
-            if (resLinksOn()) p += 'Directly under that outline add this link, copied exactly with ONLY [KN+words] replaced by 3 to 6 words naming what the assessment covers (separate the words with + and change nothing else): <a href="' + assessLinkHref(yr, t) + '" target="_blank">📝 Make this assessment with AI</a>\n';
+            if (resLinksOn()) {
+                var ex = '<a href="' + assessLinkHref(yr, t, { n: '6', kn: 'causes+and+effects+of+migration', a: 'students+write+a+report+using+three+sources', sc: 'I+can+explain+two+causes;I+can+use+evidence;I+can+reach+a+conclusion', du: '2+periods', fm: 'rr+pr' }) + '" target="_blank">📝 Make this assessment with AI</a>';
+                p += 'Directly under that outline add the assessment link. Its address is FIXED: copy everything up to and including "&amp;n=" exactly, and never rename, reorder, add or drop a parameter (they are as, u, n, kn, a, sc, du and fm, in that order). Only these change: [N] = the number of this assessment lesson in the unit; [KN+words] = 3 to 8 words naming the key knowledge it assesses; [TASK+words] = 6 to 20 words saying what students do or produce (the same task as your outline); [SC+words] = what it is judged on, 2 to 4 criteria of 3 to 10 words each, joining the words of each criterion with + and separating the criteria with a semicolon (;); [DUR+words] = how long it takes, in this form: 1+period, 2+periods, 1+week or 3+weeks; [FM+codes] = 1 to 3 codes for the formats that best fit the task, joined with + and chosen ONLY from these: pa paragraph; mc multiple choice; rb resource based; sa short answer; we written essay; rr research report; pr presentation; po podcast script; ev explainer video; in infographic or data story; dd digital documentary; ph photo essay (for a single-period test use only pa, mc, rb or sa; for example rr+pr). Use + between words and no other punctuation, quote marks or spaces inside the address. Example of a finished link: ' + ex + '\n';
+            }
             return p + '\n';
         }
         // The link opens the Assessment builder with the subject, year and topic from the unit plan already filled in
+        var asPlan = null;
+        function asPlanUse(k, on) { if (asPlan) { asPlan.use[k] = !!on; asPlanRender(); try { updateAssessmentBuilderPrompt(); } catch (e) {} } }
+        function asPlanRender() {
+            var box = document.getElementById('assess-from-plan'); if (!box) return;
+            var any = asPlan && (asPlan.kn || asPlan.a || asPlan.sc || asPlan.du || asPlan.fm);
+            if (!any) { box.classList.add('hidden'); return; }
+            box.classList.remove('hidden');
+            var head = document.getElementById('assess-from-plan-text'); if (head) head.textContent = (asPlan.n ? 'Assessment lesson ' + asPlan.n + ' of the unit.' : '');
+            var rows = [];
+            [['a', 'Task outline', asPlan.a], ['sc', 'Judged on', asPlan.sc], ['kn', 'Key knowledge', asPlan.kn]].forEach(function(f) {
+                if (!f[2]) return;
+                var txt = f[0] === 'sc' ? resScList(f[2]).map(function(x) { return ypEsc(resCut(x, 70)); }).join(' &bull; ') : ypEsc(resCut(f[2], 120));
+                rows.push('<li class="list-none -ml-5"><label class="cursor-pointer' + (asPlan.use[f[0]] ? '' : ' opacity-50') + '"><input type="checkbox" class="mr-1.5 align-middle" ' + (asPlan.use[f[0]] ? 'checked ' : '') + 'onchange="asPlanUse(\'' + f[0] + '\', this.checked)"><strong>' + f[1] + ':</strong> ' + txt + '</label></li>');
+            });
+            var info = [];
+            if (asPlan.dur) info.push('<li class="list-none -ml-5"><strong>Length set to:</strong> ' + ypEsc(asPlan.dur) + (asPlan.du ? ' (the plan said ' + ypEsc(asPlan.du) + ')' : '') + '</li>');
+            if (asPlan.fmNames && asPlan.fmNames.length) info.push('<li class="list-none -ml-5"><strong>Format suggested:</strong> ' + ypEsc(asPlan.fmNames.join(', ')) + '</li>');
+            var l = document.getElementById('assess-from-plan-list'); if (l) l.innerHTML = '<ul class="mt-1 space-y-1 pl-5">' + rows.join('') + info.join('') + '</ul><div class="mt-1 text-[11px]">Ticked lines go into the prompt. Untick any you do not want. Length and format are set in section 4. <button type="button" class="underline font-bold" onclick="asPlanModalOpen()">Review your options</button></div>';
+        }
+        function asPlanText() {
+            if (!asPlan) return '';
+            var u = asPlan.use, o = '';
+            if (!(u.a && asPlan.a) && !(u.sc && asPlan.sc) && !(u.kn && asPlan.kn)) return '';
+            o += '### Unit plan details\nThis assessment comes from ' + (asPlan.n ? 'lesson ' + asPlan.n + ' of ' : '') + 'a unit plan, so build it from what that unit actually taught.\n';
+            if (u.a && asPlan.a) o += 'Task outline from the plan: ' + asPlan.a + '. Develop this task in full rather than replacing it.\n';
+            if (u.sc && asPlan.sc) o += 'The plan says students will be judged on: ' + resScList(asPlan.sc).join('; ') + '. Make sure the marking criteria cover each of these.\n';
+            if (u.kn && asPlan.kn) o += 'Key knowledge taught in the unit: ' + asPlan.kn + '. Assess only this knowledge and the skills used to apply it.\n';
+            return o + '\n';
+        }
+        // The planned time and format words from the link become the Length and Format buttons in section 4
+        var AS_FM_CODES = { pa: 'Paragraph', mc: 'Multiple Choice', rb: 'Resource Based', sa: 'Short Answer', we: 'Written Essay', rr: 'Research Report', pr: 'Presentation', po: 'Podcast Script', ev: 'Explainer Video', 'in': 'Infographic / Data Story', dd: 'Digital Documentary', ph: 'Photo Essay' };
+        function asDurFromText(t) {
+            t = String(t || '').toLowerCase(); if (!t) return '';
+            var n = (t.match(/\d+/) || [''])[0];
+            if (/week/.test(t)) return (parseInt(n, 10) >= 3 || /3\s*-\s*4/.test(t)) ? '3-4 Week Deep Dive' : '1 Week Mini-Project';
+            if (/min/.test(t)) return parseInt(n, 10) > 60 ? '2 Period Assessment' : '1 Period Test';
+            if (/period|lesson|class|hour/.test(t)) return (parseInt(n, 10) >= 2 || /two|double/.test(t)) ? '2 Period Assessment' : '1 Period Test';
+            return 'Other';
+        }
+        function asPlanApplyLengthFormat() {
+            if (!asPlan) return;
+            var dur = asDurFromText(asPlan.du);
+            if (dur) {
+                assessmentState.duration = dur; asPlan.dur = dur === 'Other' ? asPlan.du : dur;
+                setActiveBtn('assessment-state', dur, 'duration');
+                var cd = document.getElementById('assess-custom-dur-container'); if (cd) cd.classList.toggle('hidden', dur !== 'Other');
+                var ci = document.getElementById('assess-custom-dur'); if (ci && dur === 'Other') ci.value = asPlan.du;
+            }
+            var jun = (assessmentState.year || '').indexOf('Level') < 0;
+            var names = (asPlan.fm || '').split(/[+, ]+/).map(function(c) { return AS_FM_CODES[c]; }).filter(function(x, i, a) { return x && a.indexOf(x) === i; }).slice(0, 3);
+            if (assessmentState.duration === '1 Period Test') names = names.filter(function(x) { return AS_ONE_FORMATS.indexOf(x) > -1; });
+            if (jun && names.length) {
+                assessmentState.formats = names.slice(); asPlan.fmNames = names.slice();
+                document.querySelectorAll('[data-action="assessment-format"]').forEach(function(b) { b.classList.toggle('active', names.indexOf(b.getAttribute('data-val')) > -1); });
+            }
+            try { asApplyDuration(); } catch (e) {}
+        }
+        // The pop-up that tells the teacher what came across and lets them choose how to carry on
+        var asModalTab = 'changes';
+        function asPlanModalTab(k) {
+            asModalTab = k;
+            ['keep', 'changes', 'scratch'].forEach(function(x) {
+                var b = document.getElementById('as-modal-tab-' + x), pnl = document.getElementById('as-modal-panel-' + x), on = x === k;
+                if (b) { b.setAttribute('aria-selected', on ? 'true' : 'false'); b.className = 'flex-1 px-3 py-2 rounded-lg border-2 text-sm font-black transition ' + (on ? 'bg-[#002066] border-[#002066] text-white' : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-100'); }
+                if (pnl) pnl.classList.toggle('hidden', !on);
+            });
+        }
+        function asPlanModalOpen() {
+            var m = document.getElementById('as-plan-modal'); if (!m || !asPlan) return;
+            var rows = [['Subject', assessmentState.dept], ['Year level', assessmentState.year], ['Topic', asVal('assess-main-topic-input')], ['Key knowledge', asPlan.kn], ['Task outline', asPlan.a], ['Judged on', asPlan.sc ? resScList(asPlan.sc).join('; ') : ''], ['Length', asPlan.dur || ''], ['Format', (asPlan.fmNames || []).join(', ')]];
+            var l = document.getElementById('as-modal-list');
+            if (l) l.innerHTML = rows.filter(function(r) { return r[1]; }).map(function(r) { return '<li><strong>' + r[0] + ':</strong> ' + ypEsc(resCut(r[1], 110)) + '</li>'; }).join('');
+            asPlanModalTab('changes');
+            m.classList.remove('hidden');
+        }
+        function asPlanModalClose() { var m = document.getElementById('as-plan-modal'); if (m) m.classList.add('hidden'); }
+        function asPlanModalGo(k) {
+            asPlanModalClose();
+            if (k === 'keep') asSecDone();
+            else if (k === 'scratch') asPlanScratch();
+            else asSecOpen(2);
+        }
+        // Start from scratch: everything is cleared except the subject, year level and topic
+        function asPlanScratch() {
+            asPlan = null; asPlanRender();
+            ['assess-junior-knowledge', 'assess-junior-practices', 'assess-ncea-standard', 'assess-source-material', 'assess-unit-link', 'assess-unit-number', 'assess-custom-dur', 'assess-custom-format', 'assess-custom-volume', 'assess-mcq-count', 'assess-short-count', 'assess-extended-count', 'assess-real-audience'].forEach(function(id) { var e = document.getElementById(id); if (e) e.value = ''; });
+            var a = assessmentState;
+            a.duration = '1 Period Test'; a.formats = []; a.context = 'none'; a.maori = 'none'; a.lit = 'none'; a.num = 'none'; a.ai = 'none'; a.devices = 'none'; a.extra = 'None';
+            a.accommodations = []; a.outputs = []; a.dualVersion = false; a.sourceMaterial = ''; a.unitLink = ''; a.unitNum = ''; a.mcqCount = ''; a.shortCount = ''; a.extendedCount = ''; a.realAudience = '';
+            ['duration', 'context', 'maori', 'lit', 'num', 'ai', 'devices'].forEach(function(k) { setActiveBtn('assessment-state', a[k], k); });
+            document.querySelectorAll('[data-action="assessment-format"]').forEach(function(b) { b.classList.remove('active'); });
+            ['assess-custom-dur-container', 'assess-custom-format-container'].forEach(function(id) { var e = document.getElementById(id); if (e) e.classList.add('hidden'); });
+            document.querySelectorAll('#view-assessment input[type="checkbox"]').forEach(function(c) { c.checked = false; });
+            try { updateAIHint('assess', 'none'); updateDeviceHint('assess', 'none'); updateAccommodationsSummary(); updateOutputsSummary(); applyAssessmentDualVersion(false); } catch (e) {}
+            asApplyDuration(); updateAssessmentBuilderPrompt(); saveAppState(); asSecOpen(2);
+        }
         function asOpenFromUrl() {
             var q;
             try { q = new URLSearchParams(location.search); } catch (e) { return false; }
@@ -13325,12 +13512,16 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var u = String(q.get('u') || '').split('~');
             var d = resClean(u[0] || '', 60), y = resClean(u[1] || '', 40), t = resClean(u[2] || '', 120);
             var kn = resClean(q.get('kn') || '', 300);
+            asPlan = { n: resClean(q.get('n') || '', 3).replace(/[^0-9]/g, ''), kn: kn, a: resClean(q.get('a') || '', 300), sc: resClean(q.get('sc') || '', 500), du: resClean(q.get('du') || '', 60), fm: resClean(q.get('fm') || '', 40).toLowerCase(), use: { kn: true, a: true, sc: true } };
             showView('assessment');
             var pickOpt = function(box, val) { if (!val) return; var b = null; document.querySelectorAll('#' + box + ' [data-val]').forEach(function(x) { if (x.getAttribute('data-val') === val) b = x; }); if (b) b.click(); };
             pickOpt('assess-dept-opts', d); pickOpt('assess-year-opts', y);
             var setv = function(id, v) { var e = document.getElementById(id); if (e && v) { e.value = v; e.dispatchEvent(new Event('input', { bubbles: true })); } };
             setv('assess-main-topic-input', t); setv('assess-junior-knowledge', kn);
+            asPlanApplyLengthFormat();
             try { updateAssessmentBuilderPrompt(); } catch (e) {}
+            asPlanRender();
+            try { asApplyDuration(); asSecInit(true); asSecOpen(asSecComplete(2) ? 4 : 2, true); window.scrollTo(0, 0); asPlanModalOpen(); } catch (e) {}
             try { showGlobalToast('Opened from your unit plan: ' + [d, y, t].filter(Boolean).join(' · ')); } catch (e) {}
             try { history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
             return true;
@@ -13376,6 +13567,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             checkUnitMathsTemplateVisibility();
             checkUnitMathsStrategyVisibility();
             checkAssessBothSelected();
+            asApplyDuration(); asSecInit();
             checkLessonBothSelected();
             updateStageUI();
             renderPracticalTitleBoxes();
