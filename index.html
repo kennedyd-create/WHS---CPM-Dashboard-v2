@@ -2145,6 +2145,124 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
                 </div>
 
+                <!-- Years 7-10 Literacy/Numeracy check toggle (English or Maths only). Backported
+                     from the generic-site build, Oct 2026. Visible whenever that dept/year
+                     combination is checkable, whichever of the two panels below is showing. -->
+                <div id="assess-junior-check-toggle" class="hidden flex flex-wrap items-center gap-2 bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3">
+                    <span class="text-[10px] font-black text-indigo-800 uppercase tracking-widest">This assessment is a:</span>
+                    <button type="button" id="assess-jc-toggle-standard" class="builder-btn active" aria-pressed="true" title="Build a full, topic-based subject assessment" onclick="setJuniorCheckMode(false)">📋 Standard subject assessment</button>
+                    <button type="button" id="assess-jc-toggle-check" class="builder-btn" aria-pressed="false" title="Build a short diagnostic Literacy/Numeracy check instead of a full assessment" onclick="setJuniorCheckMode(true)">🩺 Literacy / Numeracy check</button>
+                    <span class="text-[10px] text-indigo-700 basis-full">A quick diagnostic check (like SMART, PAT or a running record) instead of a full topic-based assessment.</span>
+                </div>
+
+                <div id="assess-junior-check-config" class="hidden space-y-4">
+                    <div class="rounded-xl border-2 border-purple-300 bg-white shadow-sm p-5 space-y-5">
+                        <div>
+                            <p class="text-xs font-black text-purple-800 uppercase tracking-widest mb-1">🩺 Years 7-10 Literacy / Numeracy Check</p>
+                            <p class="text-xs text-slate-500 leading-snug">A quick diagnostic check rather than a full subject assessment — modelled on the structure of SMART (the national online Reading/Writing/Maths check for Years 3-10) and the Ministry's own named reporting-rubric elements, never a copy of any copyrighted test item.</p>
+                        </div>
+
+                        <div id="assess-jc-skill-wrap" class="hidden">
+                            <span class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-2">Which skill? <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
+                            <div class="flex flex-wrap gap-2" id="assess-jc-skill-opts">
+                                <button type="button" class="builder-btn text-left" data-jc-skill="Reading" aria-pressed="false" title="A Reading diagnostic check" onclick="setJuniorCheckSkill('Reading')">📖 Reading check</button>
+                                <button type="button" class="builder-btn text-left" data-jc-skill="Writing" aria-pressed="false" title="A Writing diagnostic check" onclick="setJuniorCheckSkill('Writing')">✍️ Writing check</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Topic or focus (optional)</label>
+                            <input type="text" id="assess-jc-topic-input" placeholder="e.g. an everyday persuasive issue, a non-fiction topic, a real-life measurement context..." class="sync-topic w-full p-3 rounded-lg border border-purple-300 font-medium text-slate-800 bg-white outline-none">
+                        </div>
+
+                        <div id="assess-jc-type-wrap">
+                            <span class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-2">Check type <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
+                            <div class="flex flex-wrap gap-2" id="assess-jc-type-opts"></div>
+                        </div>
+
+                        <div id="assess-jc-multitext-wrap" class="hidden rounded-lg border border-purple-300 bg-purple-50 p-3">
+                            <label class="flex items-center gap-2 text-sm font-medium text-purple-900 cursor-pointer">
+                                <input type="checkbox" id="assess-jc-multitext-cb" onchange="setJuniorCheckMultiText(this.checked)">
+                                <span>Use <strong>3-4 short passages in a range of styles</strong> (e.g. a narrative, a piece of non-fiction, a poem or rhyme, a set of instructions) instead of one single passage</span>
+                            </label>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4 items-start">
+                            <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
+                                <label class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Source Material (Google Docs / Slides Allowed) <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
+                                <input type="text" id="assess-jc-source-material" placeholder="Paste Google Docs, Slides, or other URLs (separate multiple links with commas)..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none" oninput="setJuniorCheckSourceMaterial(this.value)">
+                            </div>
+                            <div class="bg-sky-50 border-l-4 border-l-sky-600 border border-sky-400 shadow-sm rounded-xl p-4">
+                                <label class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block mb-2">Link to a Unit Plan <span class="text-[9px] font-black text-sky-800 bg-sky-200 px-2 py-0.5 rounded-full ml-1">Optional</span></label>
+                                <div class="grid gap-2">
+                                    <input type="text" id="assess-jc-unit-link" placeholder="Paste the unit plan doc/text..." class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none" oninput="setJuniorCheckUnitLink(this.value)">
+                                    <input type="text" id="assess-jc-unit-number" placeholder="Which part? e.g. 'end of unit'" class="w-full p-2.5 rounded-lg border border-sky-400 text-sm outline-none" oninput="setJuniorCheckUnitNum(this.value)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-xl border-2 border-sky-300 bg-sky-50 p-3"><button type="button" id="assess-jc-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered items of equal difficulty, to reduce copying risk" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button><p class="text-[10px] text-slate-500 mt-1">Two parallel versions with reordered items, to reduce copying — useful even for a low-stakes check.</p></div>
+
+                        <div>
+                            <span class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-2">Time available</span>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="builder-btn active" data-action="assessment-state" data-key="primaryDuration" data-val="short">15-20 min, one-on-one / small group</button>
+                                <button class="builder-btn" data-action="assessment-state" data-key="primaryDuration" data-val="medium">30-40 min, group or whole class</button>
+                                <button class="builder-btn" data-action="assessment-state" data-key="primaryDuration" data-val="week">Spread across a week (several short sessions)</button>
+                            </div>
+                        </div>
+
+                        <div class="rounded-lg border border-sky-300 bg-sky-50 p-3 text-xs text-sky-900" id="assess-jc-curriculum-note"></div>
+                        <div id="assess-jc-curriculum-link"></div>
+
+                        <div class="pt-4 border-t border-slate-200 grid md:grid-cols-3 gap-4 items-start">
+                            <div class="rounded-xl border border-purple-300 bg-purple-50 p-4">
+                                <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-3">Add to the assessment</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="context" data-val="waiheke">Waiheke context</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="maori" data-val="integrate">Mātauranga Māori</button>
+                                </div>
+                                <p class="text-[10px] text-slate-500 mt-2 leading-snug">Click to switch on, click again to switch off.</p>
+                            </div>
+                            <div class="rounded-xl border border-purple-300 bg-purple-50 p-4">
+                                <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-3">Device Use</span>
+                                <div class="flex flex-col gap-2">
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="book">No devices (paper)</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="some">Some devices</button>
+                                    <button class="builder-btn text-left" data-action="assessment-state" data-key="devices" data-val="all">All devices</button>
+                                </div>
+                                <p class="text-[10px] text-slate-500 mt-2 leading-snug">Click an option again to turn it off.</p>
+                            </div>
+                            <details class="group bg-sky-50 rounded-xl border border-sky-400">
+                                <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-sky-800 uppercase tracking-widest">
+                                    <span id="assess-jc-accommodations-summary">Differentiation &amp; Accommodations — None selected</span>
+                                    <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                </summary>
+                                <div class="p-3 pt-1 border-t border-sky-300 space-y-1">
+                                    <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('3-Tiered Assessment', this.checked)"> 3-Tiered Assessment (three levels of challenge)</label>
+                                    <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('ESOL Scaffold', this.checked)"> ESOL scaffold (language supports built in)</label>
+                                    <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('Dyslexia-Friendly Layout', this.checked)"> Dyslexia-friendly layout (large print, spacing, plain fonts)</label>
+                                    <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('Reader/Writer Support', this.checked)"> Reader/Writer support</label>
+                                </div>
+                            </details>
+                        </div>
+
+                        <details class="group bg-amber-50 rounded-xl border border-amber-400">
+                            <summary class="cursor-pointer list-none p-3 flex justify-between items-center text-xs font-bold text-amber-800 uppercase tracking-widest">
+                                <span id="assess-jc-outputs-summary">Additional Outputs — None selected</span>
+                                <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                            </summary>
+                            <div class="p-3 pt-1 border-t border-amber-200 space-y-1">
+                                <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAssessmentOutput('Student Exemplars', this.checked)"> Student Exemplars</label>
+                                <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAssessmentOutput('Marking Schedule', this.checked)"> Teacher Marking / Scoring Guide</label>
+                                <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAssessmentOutput('Answer Key', this.checked)"> Answer Key</label>
+                                <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAssessmentOutput('Parent Summary', this.checked)"> Plain-language parent/whānau summary</label>
+                                <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAssessmentOutput('Peer Check-bric', this.checked)"> Peer Check-bric</label>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+
 <div id="assess-config-rest" class="hidden space-y-4">
 <div id="as-review-bar" class="hidden scroll-mt-28 rounded-xl border-2 border-emerald-400 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
 <div class="flex items-start justify-between gap-3"><div><strong>✅ Filled in from your unit plan.</strong> <span id="as-review-msg">Please check each section before you copy the prompt.</span></div><button type="button" class="text-xs font-bold underline shrink-0" onclick="asReviewOff()">Dismiss</button></div>
@@ -2293,6 +2411,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             </label>
                             <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer tooltip-wrapper tooltip-bottom" data-tooltip="A literal answer key for closed-response questions (multiple choice, calculations, short factual answers) — distinct from the judgement-based Marking Schedule">
                                 <input type="checkbox" onchange="setAssessmentOutput('Answer Key', this.checked)"> Answer Key
+                            </label>
+                            <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
+                                <input type="checkbox" onchange="setAssessmentOutput('Parent Summary', this.checked)"> Plain-language parent/whānau summary
                             </label>
                             <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
                                 <input type="checkbox" onchange="setAssessmentOutput('Peer Check-bric', this.checked)"> Peer Check-bric
@@ -3754,7 +3875,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'' };
+        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'', primaryDuration:'short', juniorCheck:false, juniorCheckSkill:'', juniorCheckType:'', juniorCheckMultiText:false };
 
         // ---------- My Teaching Profile ----------
         // A teacher's personal preferred approaches, not a class setting — one profile for
@@ -3854,6 +3975,15 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var el = document.querySelector('.sync-topic');
             return (el && el.value.trim()) ? el.value.trim() : "[Insert Specific Topic Here]";
         }
+
+        // Backported Oct 2026 alongside the Years 7-10 Literacy/Numeracy check -- WHS had
+        // no numeric year-extraction helper before this.
+        function yearNumFromVal(val) {
+            var m = /Year\s*(\d+)/i.exec(String(val || ''));
+            if (m) return parseInt(m[1], 10);
+            var n = parseInt(val, 10);
+            return isNaN(n) ? null : n;
+        }
         
         var topicTimeout;
         function syncTopics(val) {
@@ -3928,12 +4058,34 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (leftCol) leftCol.classList.toggle('hidden', !ready);
         }
 
+        // Years 7-10 (English or Maths) can show either the normal wizard or the
+        // Literacy/Numeracy check below -- backported Oct 2026 from the generic-site
+        // build. A stale check toggle from a previous dept/year selection is dropped the
+        // moment it's no longer valid for the newly-selected dept/year.
+        function isJuniorSecondary(yr) {
+            return !String(yr || '').includes('Level') && !!String(yr || '').trim();
+        }
+        // Which Years 7-10 departments the Literacy/Numeracy check applies to: English
+        // (which splits into a Reading or Writing check via juniorCheckSkill) and Maths
+        // (a numeracy check, no further split needed).
+        function isCheckableDept(dept) { return dept === 'English' || dept === 'Maths'; }
+
         function checkAssessBothSelected() {
-            var ready = !!(assessmentState.dept && assessmentState.year);
+            var bothSet = !!(assessmentState.dept && assessmentState.year);
+            var checkable = isJuniorSecondary(assessmentState.year) && isCheckableDept(assessmentState.dept);
+            if (!checkable) assessmentState.juniorCheck = false;
+            var checkReady = bothSet && checkable && assessmentState.juniorCheck;
+            var ready = bothSet && !checkReady;
             var prompt = document.getElementById('assess-select-prompt');
             var rest = document.getElementById('assess-config-rest');
-            if (prompt) prompt.classList.toggle('hidden', ready);
+            var checkConfig = document.getElementById('assess-junior-check-config');
+            var toggleWrap = document.getElementById('assess-junior-check-toggle');
+            if (prompt) prompt.classList.toggle('hidden', ready || checkReady);
             if (rest) rest.classList.toggle('hidden', !ready);
+            if (checkConfig) checkConfig.classList.toggle('hidden', !checkReady);
+            if (toggleWrap) toggleWrap.classList.toggle('hidden', !(bothSet && checkable));
+            if (checkReady) { try { renderJuniorCheckPanel(); } catch (e) {} }
+            try { renderJuniorCheckToggle(); } catch (e) {}
         }
 
         function checkSeniorStatus() {
@@ -6652,14 +6804,47 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function applyAssessmentDualVersion(on) {
             assessmentState.dualVersion = !!on;
-            var btn = document.getElementById('assess-dual-version-btn');
-            if (btn) {
-                btn.classList.toggle('active', assessmentState.dualVersion);
-                btn.setAttribute('aria-pressed', assessmentState.dualVersion ? 'true' : 'false');
-            }
+            // Shared across the standard wizard AND the Years 7-10 check (backported Oct
+            // 2026) -- both buttons point at the same assessmentState.dualVersion flag, so
+            // keep them in sync with each other no matter which one was clicked.
+            ['assess-dual-version-btn', 'assess-jc-dual-version-btn'].forEach(function(id) {
+                var btn = document.getElementById(id);
+                if (btn) {
+                    btn.classList.toggle('active', assessmentState.dualVersion);
+                    btn.setAttribute('aria-pressed', assessmentState.dualVersion ? 'true' : 'false');
+                }
+            });
         }
         function toggleAssessmentDualVersion(btn) {
             applyAssessmentDualVersion(!assessmentState.dualVersion);
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+
+        // Years 7-10 Literacy/Numeracy check: multi-passage Reading, and source-material /
+        // unit-plan linking (backported Oct 2026). The source-material/unit-link fields are
+        // shared with the standard wizard's own inputs (same assessmentState fields), since
+        // both describe the same underlying assessment-in-progress.
+        function setJuniorCheckMultiText(checked) {
+            assessmentState.juniorCheckMultiText = !!checked;
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+        function setJuniorCheckSourceMaterial(v) {
+            assessmentState.sourceMaterial = v;
+            var el = document.getElementById('assess-source-material'); if (el) el.value = v;
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+        function setJuniorCheckUnitLink(v) {
+            assessmentState.unitLink = v;
+            var el = document.getElementById('assess-unit-link'); if (el) el.value = v;
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+        function setJuniorCheckUnitNum(v) {
+            assessmentState.unitNum = v;
+            var el = document.getElementById('assess-unit-number'); if (el) el.value = v;
             updateAssessmentBuilderPrompt();
             saveAppState();
         }
@@ -8503,7 +8688,265 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             updatePromptHealthBadge(txt, 'lesson-prompt-health');
         }
 
+        // ---- Ministry of Education named reporting elements, used to ground the Years
+        // 7-10 Literacy/Numeracy check's rubric against the real reporting framework
+        // instead of a generic 5-tier description. Pure Ministry-sourced data, no site
+        // branding -- backported verbatim Oct 2026. ----
+        var REPORTING_ELEMENTS = {
+            Reading: [
+                { name: 'Word Recognition', range: [1, 3], desc: 'decoding, accuracy, expression and reading rate' },
+                { name: 'Word Recognition and Reading Enrichment', range: [4, 8], desc: 'decoding, fluency and vocabulary enrichment' },
+                { name: 'Comprehension', range: [1, 8], desc: 'inference, using evidence from the text, text structure and summarising' },
+                { name: 'Critical Analysis', range: [1, 8], desc: 'representation, perspective, bias and making connections' },
+                { name: 'Textual and Critical Analysis', range: [9, 10], desc: 'comprehension and critical analysis combined into one element, as SMART and the Ministry\'s own reporting rubric use from Year 9' }
+            ],
+            Writing: [
+                { name: 'Transcription', range: [1, 8], desc: 'handwriting, spelling and keyboarding' },
+                { name: 'Composition', range: [1, 10], desc: 'sentence structure, punctuation and text-type features' },
+                { name: 'Writing Processes', range: [1, 8], desc: 'planning, rereading, revising and editing' },
+                { name: 'Crafting Texts', range: [9, 10], desc: 'purpose, audience, language choices and (where relevant) literary essays' }
+            ],
+            Maths: [
+                { name: 'Number', range: [1, 10] },
+                { name: 'Algebra', range: [1, 10] },
+                { name: 'Measurement', range: [1, 10] },
+                { name: 'Geometry', range: [1, 10] },
+                { name: 'Statistics', range: [1, 10] },
+                { name: 'Probability', range: [5, 10] }
+            ]
+        };
+        function reportingElementsFor(subjectKey, yn) {
+            return (REPORTING_ELEMENTS[subjectKey] || []).filter(function(e) { return yn >= e.range[0] && yn <= e.range[1]; });
+        }
+        // Appended to a generated rubric's PART 2 instruction so the 5-tier scale is written
+        // against the Ministry's own named elements for this subject/year rather than one
+        // generic description per tier. Returns '' if the subject/year isn't covered (so it's
+        // always safe to append).
+        function reportingRubricInstruction(subjectKey, yn, yr) {
+            var els = reportingElementsFor(subjectKey, yn);
+            if (!els.length) return '';
+            var names = els.map(function(e) { return e.name + (e.desc ? ' (' + e.desc + ')' : ''); }).join('; ');
+            return 'Base the rubric\'s criteria on the Ministry of Education\'s own named ' + subjectKey + ' reporting elements for ' + yr + ': ' + names + '. For EACH of these elements that this specific task actually touches, describe what it looks like at each of the 5 tiers above, rather than one single generic description per tier.';
+        }
+
+        var PRIMARY_DURATION_TEXT = {
+            short: 'a 15-20 minute one-on-one or small-group session',
+            medium: 'a 30-40 minute group or whole-class session',
+            week: 'several short sessions spread across a week rather than one sitting'
+        };
+
+        // ---- Years 7-10 Literacy / Numeracy check. Backported Oct 2026 from the generic-
+        // site build (explicit user request). Sits alongside the normal Assessment
+        // Generator wizard as an alternative for English/Maths only -- see
+        // isCheckableDept/isJuniorSecondary, setJuniorCheckMode and
+        // checkAssessBothSelected's second branch. English isn't split into Reading/
+        // Writing dept buttons at these years, so this flow asks the Reading-vs-Writing
+        // question itself via juniorCheckSkill. WHS-specific adaptations vs. the generic
+        // build: "Waiheke context" wording instead of a configurable Local Context modal
+        // (WHS has no communityContextRule()/localContextResearchDirective()), and
+        // skill->'English' mapping for curriculum-link lookups (WHS's tahurangiLinks has
+        // no separate Reading/Writing keys). ----
+        var JUNIOR_CHECK_TYPES = {
+            Reading: [
+                ['jc-oral-reading', '🗣️ Oral reading check (running-record style)'],
+                ['jc-guided-comprehension', '👥 Guided reading comprehension task'],
+                ['jc-independent-comprehension', '📖 Independent reading comprehension task'],
+                ['jc-critical-analysis', '🔎 Critical reading / analysis task']
+            ],
+            Maths: [
+                ['jc-oral-numeracy', '🔢 Oral numeracy check (interview-style)'],
+                ['jc-written-numeracy', '📝 Written numeracy task set'],
+                ['jc-practical-numeracy', '🧮 Hands-on / practical numeracy task']
+            ]
+        };
+        // Mirrors SMART Writing's own purpose bands exactly: Years 7-8 offer Persuade /
+        // Entertain (Narrative) / Inform; Years 9-10 drop Inform.
+        function juniorCheckWritingTypes(yn) {
+            var all = [
+                ['jc-write-persuade', '📣 Persuade'],
+                ['jc-write-narrative', '📚 Entertain (Narrative)'],
+                ['jc-write-inform', 'ℹ️ Inform']
+            ];
+            return yn >= 9 ? all.filter(function(x) { return x[0] !== 'jc-write-inform'; }) : all;
+        }
+        var JUNIOR_CHECK_TASK_BRIEF = {
+            'jc-oral-reading': 'Design an oral reading check in the style of a running record: a short ORIGINAL passage (never a copy or close paraphrase of any published text) pitched at a typical independent/instructional reading level for {YR}, followed by 3-4 comprehension/understanding questions to ask after the reading, plus brief teacher notes on what to listen for (self-correction, decoding strategies, fluency, expression, reading rate).',
+            'jc-guided-comprehension': 'Design a guided reading comprehension task: a short ORIGINAL text pitched at {YR}, followed by comprehension questions covering literal retrieval, inference using evidence from the text, and text structure.',
+            'jc-independent-comprehension': 'Design an independent reading comprehension task students complete mostly on their own: a short ORIGINAL text pitched at {YR}, followed by questions stepping up from literal retrieval through inference to summarising the text in the student\'s own words.',
+            'jc-critical-analysis': 'Design a short critical reading / analysis task using a short ORIGINAL text (never a copy or close paraphrase of any published text): questions that go beyond comprehension into critical analysis — the writer\'s purpose and perspective, how an idea, group or viewpoint is represented, any bias or assumption, and connections to wider context or other texts — pitched at {YR}.',
+            'jc-oral-numeracy': 'Design an oral, one-on-one, interview-style numeracy check for {YR}: a short sequence of ORIGINAL number/maths problems to pose verbally, moving from easier to harder, designed to reveal the student\'s actual strategy/reasoning rather than just a final answer, with teacher notes on what each kind of answer reveals.',
+            'jc-written-numeracy': 'Design a short written numeracy task set for {YR}, sampling across more than one of the Maths strands relevant to the topic below (Number, Algebra, Measurement, Geometry, Statistics, and Probability from Year 5), mixing fact/procedural fluency with simple applied problem-solving.',
+            'jc-practical-numeracy': 'Design a hands-on, practical/applied numeracy task using ordinary, real-life materials or contexts appropriate for {YR}, with clear teacher set-up instructions and a short list of what to watch the student do and say.',
+            'jc-write-persuade': 'Design a short, wholly ORIGINAL persuasive writing check for {YR}, in the STYLE (never the content) of the SMART Writing national check\'s Persuade purpose: a clear persuasive writing prompt on an everyday, age-appropriate issue, asking the student to convince a specified audience of a viewpoint.',
+            'jc-write-narrative': 'Design a short, wholly ORIGINAL narrative writing check for {YR}, in the STYLE (never the content) of the SMART Writing national check\'s Entertain (Narrative) purpose: a prompt asking the student to write a short story or personal narrative that entertains a reader.',
+            'jc-write-inform': 'Design a short, wholly ORIGINAL informative writing check for {YR} (the Inform purpose, used in SMART Writing at Years 7-8 only), in the STYLE (never the content) of that check: a prompt asking the student to inform a reader clearly and accurately about a topic.'
+        };
+        // Which skill a given Years 7-10 dept check is running: English splits into Reading or
+        // Writing (juniorCheckSkill), Maths is numeracy and needs no further split.
+        function renderJuniorCheckToggle() {
+            var dept = assessmentState.dept, year = assessmentState.year;
+            var checkable = isJuniorSecondary(year) && isCheckableDept(dept);
+            var stdBtn = document.getElementById('assess-jc-toggle-standard');
+            var chkBtn = document.getElementById('assess-jc-toggle-check');
+            if (!checkable || !stdBtn || !chkBtn) return;
+            stdBtn.classList.toggle('active', !assessmentState.juniorCheck);
+            stdBtn.setAttribute('aria-pressed', String(!assessmentState.juniorCheck));
+            chkBtn.classList.toggle('active', !!assessmentState.juniorCheck);
+            chkBtn.setAttribute('aria-pressed', String(!!assessmentState.juniorCheck));
+        }
+        function setJuniorCheckMode(isCheck) {
+            assessmentState.juniorCheck = !!isCheck;
+            checkAssessBothSelected();
+            updateAssessmentBuilderPrompt();
+            try { asSecUpdate(true); } catch (e) {}
+            saveAppState();
+        }
+        function setJuniorCheckSkill(skill) {
+            assessmentState.juniorCheckSkill = skill;
+            assessmentState.juniorCheckType = '';
+            renderJuniorCheckPanel();
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+        function setJuniorCheckType(type) {
+            assessmentState.juniorCheckType = type;
+            renderJuniorCheckPanel();
+            updateAssessmentBuilderPrompt();
+            saveAppState();
+        }
+        function renderJuniorCheckPanel() {
+            var dept = assessmentState.dept, yr = assessmentState.year || '', yn = yearNumFromVal(yr) || 7;
+            var skillWrap = document.getElementById('assess-jc-skill-wrap');
+            if (dept === 'English') {
+                if (skillWrap) skillWrap.classList.remove('hidden');
+                if (assessmentState.juniorCheckSkill !== 'Reading' && assessmentState.juniorCheckSkill !== 'Writing') assessmentState.juniorCheckSkill = '';
+            } else if (dept === 'Maths') {
+                if (skillWrap) skillWrap.classList.add('hidden');
+                assessmentState.juniorCheckSkill = 'Maths';
+            } else {
+                if (skillWrap) skillWrap.classList.add('hidden');
+                assessmentState.juniorCheckSkill = '';
+            }
+            document.querySelectorAll('#assess-jc-skill-opts .builder-btn').forEach(function(b) {
+                var isOn = b.getAttribute('data-jc-skill') === assessmentState.juniorCheckSkill;
+                b.classList.toggle('active', isOn);
+                b.setAttribute('aria-pressed', String(isOn));
+            });
+            var skill = assessmentState.juniorCheckSkill;
+            var types = skill === 'Writing' ? juniorCheckWritingTypes(yn) : (JUNIOR_CHECK_TYPES[skill] || []);
+            var validVals = types.map(function(x) { return x[0]; });
+            if (assessmentState.juniorCheckType && validVals.indexOf(assessmentState.juniorCheckType) === -1) assessmentState.juniorCheckType = '';
+            var typeOpts = document.getElementById('assess-jc-type-opts');
+            if (typeOpts) {
+                typeOpts.innerHTML = types.map(function(x) {
+                    var isOn = assessmentState.juniorCheckType === x[0];
+                    return '<button type="button" class="builder-btn text-left' + (isOn ? ' active' : '') + '" aria-pressed="' + isOn + '" title="' + x[1].replace(/"/g, '&quot;') + '" onclick="setJuniorCheckType(\'' + x[0] + '\')">' + x[1] + '</button>';
+                }).join('');
+            }
+            setActiveBtn('assessment-state', assessmentState.primaryDuration, 'primaryDuration');
+            setActiveBtn('assessment-state', assessmentState.context, 'context');
+            setActiveBtn('assessment-state', assessmentState.maori, 'maori');
+            setActiveBtn('assessment-state', assessmentState.devices, 'devices');
+            var mtWrap2 = document.getElementById('assess-jc-multitext-wrap');
+            if (skill !== 'Reading') assessmentState.juniorCheckMultiText = false;
+            if (mtWrap2) mtWrap2.classList.toggle('hidden', skill !== 'Reading');
+            var mtCb2 = document.getElementById('assess-jc-multitext-cb');
+            if (mtCb2) mtCb2.checked = !!assessmentState.juniorCheckMultiText;
+            var jcSm = document.getElementById('assess-jc-source-material'); if (jcSm) jcSm.value = assessmentState.sourceMaterial || '';
+            var jcUl = document.getElementById('assess-jc-unit-link'); if (jcUl) jcUl.value = assessmentState.unitLink || '';
+            var jcUn = document.getElementById('assess-jc-unit-number'); if (jcUn) jcUn.value = assessmentState.unitNum || '';
+            applyAssessmentDualVersion(!!assessmentState.dualVersion);
+            var note = document.getElementById('assess-jc-curriculum-note');
+            var curriculumDept = (skill === 'Reading' || skill === 'Writing') ? 'English' : skill;
+            if (note) {
+                if (skill) {
+                    var phase = yn <= 8 ? 'Phase 3 (Years 7-8)' : 'Phase 4 (Years 9-10)';
+                    var subjectLabel = skill === 'Maths' ? 'Mathematics and Statistics' : 'English';
+                    note.innerHTML = 'Aligns to <strong>' + phase + '</strong> of the refreshed New Zealand Curriculum\'s ' + subjectLabel + ' Progress Outcome, and is graded against the Ministry of Education\'s named ' + skill + ' reporting elements for ' + yr + ' (see the rubric in the generated prompt).';
+                } else {
+                    note.innerHTML = '';
+                }
+            }
+            if (skill) renderCurriculumLink('assess-jc-curriculum-link', curriculumDept, yr);
+            var accEl = document.getElementById('assess-jc-accommodations-summary');
+            if (accEl) { var n1 = (assessmentState.accommodations || []).length; accEl.textContent = 'Differentiation & Accommodations' + (n1 ? ' — ' + n1 + ' selected' : ' — None selected'); }
+            var outEl = document.getElementById('assess-jc-outputs-summary');
+            if (outEl) { var n2 = (assessmentState.outputs || []).length; outEl.textContent = 'Additional Outputs' + (n2 ? ' — ' + n2 + ' selected' : ' — None selected'); }
+        }
+        function updateJuniorCheckPrompt() {
+            renderJuniorCheckPanel();
+            updateAssessmentAddonsBanner();
+            var yr = assessmentState.year || '';
+            var skill = assessmentState.juniorCheckSkill;
+            if (!skill) {
+                var earlyBox = document.getElementById('prompt-assessment-text');
+                if (earlyBox) earlyBox.innerText = assessmentState.dept === 'English' ? 'Choose a Reading or Writing check above.' : 'Select a Department above.';
+                updateRequiredChecklist('prompt-assessment-text', 'assess-required-checklist');
+                return;
+            }
+            var t = getGlobalTopic();
+            var curriculumDept = (skill === 'Reading' || skill === 'Writing') ? 'English' : skill;
+            var cUrl = getCurriculumLink(curriculumDept, yr);
+            var ctype = assessmentState.juniorCheckType;
+            var yn = yearNumFromVal(yr) || 7;
+            var phase = yn <= 8 ? '3' : '4', phaseRange = yn <= 8 ? 'Years 7-8' : 'Years 9-10';
+            var subjectLabel = skill === 'Maths' ? 'Mathematics and Statistics' : 'English';
+            var durKey = assessmentState.primaryDuration || 'short';
+            var durText = PRIMARY_DURATION_TEXT[durKey] || PRIMARY_DURATION_TEXT.short;
+            var classLabel = yr + ' ' + (skill === 'Maths' ? 'Numeracy' : skill) + ' check';
+
+            var txt = '### System Role\nAct as an expert New Zealand secondary school teacher running a short diagnostic literacy/numeracy check, NOT a full subject assessment.\n\n### Context\nFocus: "' + t + '". Class: ' + classLabel + '. Time available: ' + durText + '.\n\n### Task\n';
+            if (ctype && JUNIOR_CHECK_TASK_BRIEF[ctype]) {
+                txt += JUNIOR_CHECK_TASK_BRIEF[ctype].replace(/\{YR\}/g, yr);
+                if (skill === 'Reading' && assessmentState.juniorCheckMultiText) {
+                    txt += ' Instead of one single passage, use 3-4 SEPARATE short original passages, each in a different style or context (for example: a simple narrative, a piece of non-fiction/information writing, a short poem or rhyme, and a set of instructions or a dialogue) — all still pitched at the right level for ' + yr + '. Ask only a small number of questions about each passage rather than piling every question onto one text, so the check samples the student\'s reading across a genuine range of text types.';
+                }
+                txt += '\n\n';
+            } else {
+                txt += '[Choose a Check type above before copying this prompt.]\n\n';
+            }
+            txt += '### Strict Rules\nNo meta-commentary. Use Markdown. Write every student-facing word in clear, direct, age-appropriate New Zealand English for ' + yr + '.\n';
+            txt += 'CRITICAL — ORIGINALITY: Do NOT reproduce, closely paraphrase, or imitate specific items from SMART (the national online Reading/Writing/Maths check for Years 3-10 that replaced e-asTTle in 2026), PAT, e-asTTle, STAR, PROBE, or any other named, copyrighted or Ministry assessment tool. Everything you write — passages, prompts and problems — must be wholly original. You may take inspiration from the general STYLE and PURPOSE of these tools (which is what was asked for above), never their actual content.\n';
+            txt += nzSpellingRule + '\n' + noLatexRule + '\n';
+            txt += 'Align to Phase ' + phase + ' (' + phaseRange + ') of the refreshed New Zealand Curriculum\'s ' + subjectLabel + ' Progress Outcome (' + cUrl + ') — pitch what the task expects a ' + yr + ' student to understand, know and do at that point.\n';
+            if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
+            if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic. Highlight with **[MĀTAURANGA MĀORI]**.\n';
+            txt += deviceAssessmentInstruction(assessmentState.devices, 'none');
+            var jcSm = (assessmentState.sourceMaterial || '').trim();
+            if (jcSm) {
+                txt += 'Base the check STRICTLY on this source material: "' + jcSm + '". ';
+                txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the check.\n';
+            }
+            var jcUl = (assessmentState.unitLink || '').trim();
+            if (jcUl) {
+                txt += 'UNIT LINK: Base the scope of this check on the following unit' + (assessmentState.unitNum ? ' (' + assessmentState.unitNum + ')' : '') + ': "' + jcUl + '". If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
+            }
+            var dAcc = assessmentState.accommodations || [];
+            var dList = [['3-Tiered Assessment', '3-Tier Assessment'], ['ESOL Scaffold', 'ESOL Scaffold'], ['Dyslexia-Friendly Layout', 'Dyslexia Friendly'], ['Reader/Writer Support', 'Reader/Writer Support']].filter(function(x) { return dAcc.indexOf(x[0]) > -1; }).map(function(x) { return x[1]; });
+            if (dList.length) txt += 'Differentiate for: ' + dList.join(', ') + '.\n';
+            txt += teachingProfileInstruction(yr, false, true);
+            if (assessmentState.dualVersion) {
+                txt += 'CRITICAL: Produce TWO parallel versions of the entire check — "Version A" and "Version B" — with reordered and/or varied items of equal difficulty and identical coverage, to reduce copying risk. Clearly label each version with its own heading.\n';
+            }
+
+            txt += '\n### Output Format\nPART 1: The Check Task, written in direct, student-facing language.\n';
+            txt += 'PART 2: A simple success-criteria rubric. You MUST use exactly these 5 scale tiers, in this order: Emerging, Developing, Consolidating, Proficient, Exceeding — these are the Ministry of Education\'s own progress descriptors, defined like this: ' + NZ_PROGRESS_DEFS + '. Write what each tier looks like for this specific check, at ' + yr + ' level. ' + reportingRubricInstruction(skill, yn, yr) + '\n';
+            var partNum = 3;
+            var outs = assessmentState.outputs || [];
+            if (outs.includes('Student Exemplars')) { txt += 'PART ' + partNum + ': Student Exemplars (a strong response and a developing response).\n'; partNum++; }
+            if (outs.includes('Marking Schedule')) { txt += 'PART ' + partNum + ': Teacher Marking / Scoring Guide — how to score or note each part of the task in practice.\n'; partNum++; }
+            if (outs.includes('Answer Key')) { txt += 'PART ' + partNum + ': Answer Key — literal correct answers for any closed-response items, separate from the rubric above.\n'; partNum++; }
+            if (outs.includes('Parent Summary')) { txt += 'PART ' + partNum + ': A short, plain-language summary of this check a teacher could send home to parents/whānau — what was assessed and why, in a warm, non-technical tone, no jargon, no scores or grades included.\n'; partNum++; }
+            if (outs.includes('Peer Check-bric')) { txt += 'PART ' + partNum + ': A student-friendly Peer Check-bric — a short, plain-language version of the success-criteria rubric a classmate could use to give feedback on another student\'s work before it is handed in.\n'; partNum++; }
+
+            var box = document.getElementById('prompt-assessment-text');
+            if (box) box.innerText = txt;
+            updateRequiredChecklist('prompt-assessment-text', 'assess-required-checklist');
+            updatePromptHealthBadge(txt, 'assess-prompt-health');
+        }
+
         function updateAssessmentBuilderPrompt() {
+            if (assessmentState.juniorCheck && isJuniorSecondary(assessmentState.year) && isCheckableDept(assessmentState.dept)) { updateJuniorCheckPrompt(); return; }
             updateAssessmentAddonsBanner();
             try { asSecUpdate(false); } catch (e) {}
             if (!assessmentState.dept) {
@@ -8539,7 +8982,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += 'UNIT LINK: Base the scope of this assessment on the following unit' + (un ? ' (' + un + ')' : '') + ': "' + ul + '". If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             }
             txt += '\n' + asPlanText() + '### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n';
-            
+            txt += 'CRITICAL — ORIGINALITY: Do NOT reproduce, closely paraphrase, or imitate specific items from PAT, SMART (the national online Reading/Writing/Maths check for Years 3-10 that replaced e-asTTle in 2026), e-asTTle, STAR, PROBE, or any real NZQA examination paper, Assessment Resource, or other named, copyrighted or Ministry/NZQA assessment material. Everything you write — passages, questions, tasks and problems — must be wholly original. You may take inspiration from the general STYLE, FORMAT and DIFFICULTY of these tools, never their actual content.\n';
+
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
             txt += 'Scale matches duration: ' + durText + '. ';
             var hasMix = (mcqN && parseInt(mcqN) > 0) || (shortN && parseInt(shortN) > 0) || (extN && parseInt(extN) > 0);
@@ -8560,7 +9004,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
             txt += 'Align to ' + (isLeg ? 'CURRENT NCEA requirements' : (isFinalisedArea(assessmentState.dept, yr) ? 'the finalised Years 0–10 Knowledge & Practices (' + cUrl + ')' : 'new Knowledge & Practices drafts (' + cUrl + ')')) + '.\n' + nzSpellingRule + '\n' + BYOD_RULE + '\n' + noLatexRule + '\n';
             if (assessmentState.context === 'waiheke') txt += 'Include Waiheke/Hauraki contexts.\n';
-            if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic.\n';
+            if (assessmentState.maori === 'integrate') txt += 'Weave in Mātauranga Māori where authentic to the topic. Highlight with **[MĀTAURANGA MĀORI]**.\n';
             if (assessmentState.lit === 'integrate') txt += 'Focus on disciplinary literacy — ensure at least one question explicitly assesses reading/writing skill in this subject, not just content recall.\n';
             if (assessmentState.num === 'integrate') txt += 'Focus on disciplinary numeracy — ensure at least one question requires a numeracy skill (calculation, data interpretation, graphing) relevant to this subject.\n';
             if (assessmentState.ai && assessmentState.ai !== 'none') txt += aiAssessmentInstruction(assessmentState.ai, yr);
@@ -8621,6 +9065,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (outs.includes('Student Exemplars')) { txt += 'PART ' + partNum + ': Student Exemplars (Top grade and Mid grade).\n'; partNum++; }
             if (outs.includes('Marking Schedule')) { txt += 'PART ' + partNum + ': Strict Teacher Marking Schedule.\n'; partNum++; }
             if (outs.includes('Answer Key')) { txt += 'PART ' + partNum + ': Answer Key — literal correct answers for all closed-response questions (multiple choice, calculations, short factual answers). This is distinct from the Marking Schedule and should list answers only, no judgement criteria.\n'; partNum++; }
+            if (outs.includes('Parent Summary')) { txt += 'PART ' + partNum + ': A short, plain-language summary of this assessment a teacher could send home to parents/whānau — what was assessed and why, in a warm, non-technical tone, no jargon, no scores or grades included.\n'; partNum++; }
             if (outs.includes('Peer Check-bric')) { txt += 'PART ' + partNum + ': Student-friendly Peer Check-bric.\n'; partNum++; }
             
             var box = document.getElementById('prompt-assessment-text');
