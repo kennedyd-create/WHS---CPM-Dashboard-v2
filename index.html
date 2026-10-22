@@ -1193,6 +1193,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
                 <div id="lesson-config-rest" class="hidden">
 
+<div id="les-y78-wrap" style="display:none" class="rounded-xl border-2 border-teal-400 bg-teal-50 px-4 py-3 text-sm text-teal-900 mb-4"><label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="les-y78" class="mt-1" onchange="y78Toggle('les', this.checked)"><span><strong id="les-y78-title"></strong> <span id="les-y78-hint" class="text-xs"></span></span></label></div>
+
                 <div id="les-curriculum-link" class="flex justify-start mb-6"></div>
 
                 <!-- LESSON PLAN TITLE (like Unit Plan Title in Unit Planner) -->
@@ -1680,6 +1682,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <div id="unit-config-rest" class="hidden unit-grid">
 
                         <div id="unit-curriculum-link" data-sec="2" class="flex justify-start"></div>
+<div id="unit-y78-wrap" style="display:none" class="rounded-xl border-2 border-teal-400 bg-teal-50 px-4 py-3 text-sm text-teal-900"><label class="flex items-start gap-2 cursor-pointer"><input type="checkbox" id="unit-y78" class="mt-1" onchange="y78Toggle('unit', this.checked)"><span><strong id="unit-y78-title"></strong> <span id="unit-y78-hint" class="text-xs"></span></span></label></div>
 
                         <div class="unit-sec" id="unit-sec-2" data-n="2" role="button" tabindex="0" aria-expanded="true" onclick="unitSecToggle(2)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();unitSecToggle(2)}"><b>2</b><span class="unit-sec-title">What you are teaching</span><span class="unit-sec-sum"></span><i class="unit-sec-chev">▾</i></div>
 
@@ -3087,6 +3090,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 </ul>
 <p class="wn-h" id="wn-unit">📘 Unit Planner</p>
 <ul class="list-disc pl-5 space-y-1.5 text-slate-600">
+<li><mark class="wn-key">Year 7-8 English and Maths</mark>: a new optional tick box in the Lesson Builder, Unit Planner and Resource maker. For <strong>English</strong> it is <strong>Structured literacy</strong> (explicit vocabulary, oral language, sentence construction and spelling patterns, with phonics only for students who need it). For <strong>Maths</strong> it is <strong>Explicit maths</strong> (concrete, representational, abstract steps, worked examples, a daily review and fluency practice). It only appears for those two subjects at Year 7 or 8 and is never pre-ticked.</li>
 <li><mark class="wn-key">Worksheets paste cleanly into Google Docs</mark>. Every HTML worksheet, card set, quiz and differentiated task from the “Make with AI” and Differentiate prompts is now built from simple tables with inline colours, so it keeps its layout when pasted into a Doc. <strong>Copy Prompt</strong> in those pop-ups also no longer jumps you to the bottom of the prompt.</li>
 <li><mark class="wn-key">Prompt length check and prompt file</mark>. The Unit Planner now shows how long your prompt is. Gemini cuts off pasted prompts at about 32,000 characters, which can make it lose the plan layout. When the counter turns amber, we highly recommend you click <strong>⬇ PROMPT FILE (.txt)</strong> and upload the file to Gemini instead of pasting. The HTML template now comes earlier in the prompt too.</li>
 <li><mark class="wn-key">Lighter, safer plans</mark>. The school logo drawing is no longer built into the HTML unit and lesson plans, because its long code was getting cut off or repeated by some AIs. The plans open with a clear text title instead.</li>
@@ -3506,6 +3510,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div class="ob-up">
                     <p class="ob-up-h">📘 Unit Planner</p>
                     <ul class="list-disc pl-5 space-y-1 text-slate-600">
+<li><mark class="wn-key">Year 7-8 English and Maths</mark>: optional tick box (Lesson Builder, Unit Planner, Resource maker). For <strong>English</strong> it is <strong>Structured literacy</strong> (explicit vocabulary, oral language, sentence construction and spelling patterns, with phonics only for students who need it). For <strong>Maths</strong> it is <strong>Explicit maths</strong> (concrete, representational, abstract steps, worked examples, a daily review and fluency practice). It only appears for those two subjects at Year 7 or 8 and is never pre-ticked.</li>
 <li><mark class="wn-key">Assessment Generator</mark>: now five sections that open one at a time, with Back and Next. A 1 Period Test has fewer formats and a question-volume box; longer tasks have Real audience. No format is pre-selected.</li>
 <li><mark class="wn-key">Assessment link</mark>: opens the Assessment Generator with the task outline, success criteria, key knowledge, length and format from your unit plan. A pop-up lets you keep all, make changes or start from scratch.</li>
 <li><mark class="wn-key">Highlighted image boxes</mark>: worksheets, reading, labelling and practical sheets, the Lesson Builder, the lesson slideshow and low-text differentiation now include relevant visuals, or a bright yellow “ADD AN IMAGE HERE” box telling you what to add. Under each stage on Differentiate this lesson, small text shows what it is for.</li>
@@ -7608,6 +7613,30 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         // The Ministry of Education's five progress descriptors (Years 0-10), worded as on education.govt.nz "Guide to your child's reporting and progress"
         var NZ_PROGRESS_DEFS = 'Emerging = students require support to meet curriculum expectations for their year level (for example, beginning to understand some learning ideas for their year level with a lot of support); Developing = students are making some progress towards curriculum expectations for their year level (for example, starting to understand key ideas, often with some support); Consolidating = students are meeting many curriculum expectations for their year level (for example, learning to use helpful techniques on their own to support their learning); Proficient = students are meeting curriculum expectations for their year level (for example, can use what they have learned in different situations without help); Exceeding = students are exceeding curriculum expectations for their year level (for example, shows advanced thinking by understanding tricky ideas, solving problems and making connections)';
+        // ---------- Year 7-8 English and Maths: optional "structured literacy" / "explicit maths" tick box ----------
+        function y78Kind(dept, year) { if (!/^Year [78]$/.test(year || '')) return ''; return dept === 'English' ? 'lit' : (dept === 'Maths' ? 'mat' : ''); }
+        var Y78_INFO = {
+            lit: { title: '📖 Structured literacy (Years 7-8)', hint: 'Optional. Explicit, step-by-step teaching of vocabulary, oral language, sentence construction and spelling patterns. Phonics only for students who still need it.' },
+            mat: { title: '➗ Explicit maths (Years 7-8)', hint: 'Optional. Concrete, representational, abstract (CRA) steps, worked examples, a short daily review and fluency practice.' }
+        };
+        function y78Text(kind, scope) {
+            var where = scope === 'unit' ? 'Build this into the lesson sequence across the unit (not every lesson needs every part): ' : (scope === 'res' ? 'Where it suits this resource, build in: ' : 'Build into this lesson, where it fits what is being taught: ');
+            if (kind === 'lit') return 'STRUCTURED LITERACY (Years 7-8, teacher has chosen this): teach using a structured literacy approach: explicit, systematic and cumulative, in small steps with plenty of short, frequent practice and feedback. ' + where + 'explicit teaching of a few Tier 2 and Tier 3 words (student-friendly definition, word parts and examples, used aloud and in writing); oral language rehearsal before writing (say it, then write it); sentence construction taught explicitly (sentence types, combining and expanding sentences with conjunctions, building up to paragraphs); teacher modelling of reading and writing strategies with the thinking said out loud; and spelling taught through word parts and patterns (morphology). Phonics and decoding are for the students who still need them: add a short, optional targeted-support note for those students instead of whole-class phonics. Handwriting only where it helps. Teach in the order: model, guided practice, then independent practice.\n';
+            if (kind === 'mat') return 'EXPLICIT MATHS (Years 7-8, teacher has chosen this): teach using explicit, structured mathematics in small steps. ' + where + 'concrete, representational, abstract (CRA): use concrete materials or a visual model first when an idea is new, then diagrams, then symbols, and say which stage students are working at; fully worked examples (with every step shown and the reasoning explained), then partly completed examples, then independent practice; a short daily review at the start (3 to 5 mixed questions retrieving earlier learning, including earlier units); short fluency practice on key facts or procedures; and quick checks for understanding before students work alone. Anticipate common misconceptions and name them.\n';
+            return '';
+        }
+        function y78Sync(scope) {
+            var st = scope === 'les' ? lessonState : unitState, w = document.getElementById(scope + '-y78-wrap'); if (!w) return;
+            var k = y78Kind(st.dept, st.year);
+            if (st.y78k === undefined) st.y78k = k; else if (st.y78k !== k) { st.y78k = k; st.y78 = false; } /* a different subject or year starts unticked */
+            w.style.display = k ? '' : 'none'; if (!k) return;
+            var t = document.getElementById(scope + '-y78-title'), h = document.getElementById(scope + '-y78-hint'), c = document.getElementById(scope + '-y78');
+            if (t) t.textContent = Y78_INFO[k].title; if (h) h.textContent = Y78_INFO[k].hint; if (c) c.checked = !!st.y78;
+        }
+        function y78Toggle(scope, on) {
+            var st = scope === 'les' ? lessonState : unitState; st.y78 = !!on;
+            try { if (scope === 'les') updateLessonBuilderPrompt(); else updateUnitBuilderPrompt(); saveAppState(); } catch (e) {}
+        }
         // Example slot label for the unit prompt, using the real lesson numbers when the plan is known
         function asSlotExample() {
             try { var pl = hwPlan(); if (pl && pl.assess > 1) return 'Lessons ' + pl.assessFrom + '-' + pl.total; } catch (e) {}
@@ -7760,6 +7789,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function hwEsc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
         function updateUnitBuilderPrompt() {
+            y78Sync('unit');
             if (actRenderedDept !== unitState.dept) renderUnitActivitiesCard();
             unitActRefresh();
             syncUnitWhsTemplateBtn();
@@ -7831,6 +7861,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (unitState.num !== 'integrate') unitOffAreas.push('explicit numeracy integration');
             if (unitOffAreas.length) txt += 'CRITICAL: The following were NOT selected for this unit — ' + unitOffAreas.join(', ') + '. Do not add dedicated content, headings, or call-outs for them anywhere in the sequence. Leave them out entirely rather than writing a generic or token mention; it is fine, and preferred, for a unit to have none of these highlighted at all.\n';
             txt += iepActive() ? '' : teachingProfileInstruction(yr, true, false);
+            if (unitState.y78 && y78Kind(unitState.dept, unitState.year)) txt += y78Text(y78Kind(unitState.dept, unitState.year), 'unit');
             if (unitState.assessmentIncluded === 'yes') txt += 'Important: Add ' + actAssessTime + ' to the sequence explicitly for a summative ' + actAssessType + '. This time is ADDED to the base duration (making the total ' + totalDurText + '). Do NOT generate the actual assessment questions; reserve the lesson time and label it clearly in the sequence with a short outline of the task. If the assessment takes MORE THAN ONE lesson, show it as ONE slot that covers all of those lessons, for example "' + asSlotExample() + ': Assessment - [task name]", with one outline of the whole task (including how the time is used across those lessons). Never split a single assessment into a separate entry for each lesson.\n';
             if (unitState.practicalIncluded === 'yes') {
                 var pd = ((document.getElementById('unit-practical-details') || {}).value || '').trim();
@@ -8100,6 +8131,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function updateLessonBuilderPrompt() {
+            y78Sync('les');
             updateLessonAddonsBanner();
             var t = getGlobalTopic(), ct = (document.getElementById('les-custom-task') || {}).value || "", sm = (document.getElementById('les-source-material') || {}).value || "";
             lessonState.sourceMaterial = sm;
@@ -8220,6 +8252,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (lessonState.num !== 'integrate') lessonOffAreas.push('explicit numeracy integration');
             if (lessonOffAreas.length) txt += 'CRITICAL: The following were NOT selected for this lesson — ' + lessonOffAreas.join(', ') + '. Do not add dedicated content, headings, or call-outs for them. Leave them out entirely rather than writing a generic or token mention; it is fine, and preferred, for a lesson to have none of these highlighted at all.\n';
             txt += teachingProfileInstruction(yr, seq > 1, false);
+            if (lessonState.y78 && y78Kind(lessonState.dept, lessonState.year)) txt += y78Text(y78Kind(lessonState.dept, lessonState.year), 'les');
             
             if (sm) {
                 txt += 'Source Strictness: Base content entirely on these source materials: "' + sm + '". CRITICAL: Do not hallucinate. If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the lesson.\n';
@@ -12889,6 +12922,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (!def.noDev) p += (resLessonDeviceLine(U.dm ? s.dm : '') || resDeviceLine(s.dv));
             if (def.ownLinks) p += 'Do NOT invent website addresses or deep links: the only links you give are the Google search links described above.\n';
             else p += 'Do NOT invent website addresses or deep links. If a clip or site is needed, give a search suggestion such as [Search YouTube: "exact words"] and write TEACHER TO CHECK after any clip.\n';
+            if (s.y78 && y78Kind(s.d, s.y)) p += y78Text(y78Kind(s.d, s.y), 'res');
             if (def.img) p += RES_IMG_RULE;
             p += 'Do not use real student names. ' + (def.shortChat ? 'Keep any chat message short: just the file or link and one line on how to open it.' : 'No meta-commentary: output only the resource.') + '\n';
             if (s.extra) p += 'TEACHER SPECIFICS AND CHANGES (follow these first; if they differ from the plan details above, the teacher\'s words win): ' + s.extra + '\n';
@@ -12988,6 +13022,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 el.id = 'res-' + resState.kind + '-' + op.id; el.setAttribute('data-k', key);
                 box.appendChild(lab);
             });
+            var y78k = y78Kind(resState.d, resState.y);
+            if (y78k) {
+                var yl = document.createElement('label'); yl.className = 'inline-flex items-center gap-1.5 font-bold text-teal-800 bg-teal-50 border-2 border-teal-400 rounded-lg px-2 py-1';
+                var yc = document.createElement('input'); yc.type = 'checkbox'; yc.id = 'res-y78'; yc.checked = !!resState.y78;
+                yc.addEventListener('change', function() { resState.y78 = yc.checked; resRender(); });
+                yl.appendChild(yc); yl.appendChild(document.createTextNode(' ' + Y78_INFO[y78k].title.replace(/^\S+\s/, '')));
+                box.appendChild(yl);
+            }
         }
         function resBuildTabs() {
             var main = document.getElementById('res-tabs'), more = document.getElementById('res-tabs-more'), mb = document.getElementById('res-more-btn'), lbl = document.getElementById('res-sugg-label');
