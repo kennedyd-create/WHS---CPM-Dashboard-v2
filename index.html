@@ -662,6 +662,9 @@
         .ob-tab.on { background: #002066; color: #fff; border-color: #002066; }
         html.dark .ob-tab { background: #0f172a; color: #bfdbfe; border-color: #475569; }
         html.dark .ob-tab.on { background: #bfdbfe; color: #0f172a; border-color: #bfdbfe; }
+        html.dark #ob-panel-why th, html.dark #ob-panel-why td { border-color: #334155; }
+        html.dark #ob-panel-why th { background: #0f172a; }
+        html.dark #ob-panel-why td, html.dark #ob-panel-why p { color: #cbd5e1; }
         .ob-up { border: 1px solid #e2e8f0; border-radius: .75rem; padding: .75rem 1rem; margin-bottom: .75rem; background: #f8fafc; }
         html.dark .ob-up { background: #0f172a; border-color: #334155; }
         .ob-up-h { font-weight: 800; color: #002066; margin-bottom: .4rem; }
@@ -3292,7 +3295,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file. Remove some options to make the prompt shorter and Copy comes back.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table with one row per skill: step-by-step teaching for non-specialists, the exact words to say, a ready example in small blue text, and what to watch for), even if you only chose lesson outlines. The lesson rows just point to it. It is also built into the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: in "Do you already have something planned for this unit?" there is a new gold row for <strong>Writer's Toolbox</strong> (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
-<li><mark class="wn-key">Teacher tools</mark>: a new <strong>🧰 Teacher tools</strong> button (beside Teacher Well-being, in the same teal) opens six tabs: <strong>Report comments</strong> (builds a prompt that drafts comments from your own notes, with [Name] left blank), a printable <strong>Tracking grid</strong> using the five progress stages, <strong>Follow-up prompts</strong> to send after a unit plan (also under the new 💬 FOLLOW-UPS button), <strong>Ready prompts</strong> for everyday secondary teaching, <strong>AI use &amp; privacy</strong> (what this site stores, safe-use checklist, and a department AI statement to copy), and <strong>Why this site</strong>.</li>
+<li><mark class="wn-key">Teacher tools</mark>: a new <strong>🧰 Teacher tools</strong> button (beside Teacher Well-being, in the same teal) opens five tabs: <strong>Report comments</strong> (builds a prompt that drafts comments from your own notes, with [Name] left blank), a printable <strong>Tracking grid</strong> using the five progress stages, <strong>Follow-up prompts</strong> to send after a unit plan (also under the new 💬 FOLLOW-UPS button), <strong>Ready prompts</strong> for everyday secondary teaching, and <strong>AI use &amp; privacy</strong> (what this site stores, safe-use checklist, and a department AI statement to copy). A new <strong>💡 Why this site</strong> tab is in New Here &amp; Recent Updates.</li>
 <li><mark class="wn-key">Gemini Gem Prompt Maker removed</mark>: the button has gone from the top bar, as Gems are being retired.</li>
 <li><mark class="wn-key">Marking assistant (trial, Years 7 to 10)</mark>: in the Assessment Generator a new <strong>Marking assistant</strong> button builds a prompt for an AI marking assistant. Give it the task sheet and marking schedule (paste them, or tick that you will attach them in the AI) and your students' work (typed text, scanned PDFs or Google Docs). It suggests a stage for each student (Emerging to Exceeding) with the evidence, a strength and a next step, and can also make a class overview, a whole-class feedback sheet with a D.I.R.T. plan, and report-ready comments. You make the final judgement. Use initials, not names. For NCEA use the Moderation Assistant.</li>
 <li><mark class="wn-key">Marking assistant tab</mark>: a smaller rose <strong>🖍️ Marking assistant</strong> tab now sits beside the title inside the Assessment Generator, for marking an assessment you already have (Years 7 to 10, trial). Pick the year and subject, paste or attach your task sheet and marking schedule, and build the prompt. The button inside the Assessment Generator still works as before.</li>
@@ -3669,6 +3672,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             <div class="ob-tabs" role="tablist">
                 <button type="button" id="ob-tab-start" class="ob-tab" role="tab" onclick="obShowTab('start')">🧭 Where to start</button>
                 <button type="button" id="ob-tab-updates" class="ob-tab" role="tab" onclick="obShowTab('updates')">✨ Recent updates</button>
+                <button type="button" id="ob-tab-why" class="ob-tab" role="tab" onclick="obShowTab('why')">💡 Why this site</button>
             </div>
             <div id="ob-panel-start">
             <p class="text-center text-slate-500 text-sm mb-6">What are you trying to do today?</p>
@@ -3699,6 +3703,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 </button>
             </div>
             </div>
+            <div id="ob-panel-why" class="hidden text-sm text-slate-700"></div>
             <div id="ob-panel-updates" class="hidden text-sm text-slate-700">
                 <p class="text-center text-slate-500 text-sm mb-4">The short version of what has changed recently.</p>
                 <div class="ob-up">
@@ -3723,7 +3728,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table, one row per skill, with steps, exact wording and an example), even if you only chose lesson outlines. The lesson rows just point to it. Also in the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: a new gold row in "Do you already have something planned?" (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
-<li><mark class="wn-key">Teacher tools</mark>: a new teal 🧰 button beside Teacher Well-being with report comments, a printable tracking grid, follow-up and ready-made prompts, an AI use and privacy page, and a short "why this site" comparison. Follow-up prompts are also under the 💬 FOLLOW-UPS button after a unit plan.</li>
+<li><mark class="wn-key">Teacher tools</mark>: a new teal 🧰 button beside Teacher Well-being with report comments, a printable tracking grid, follow-up and ready-made prompts, and an AI use and privacy page. A new <strong>💡 Why this site</strong> tab (here in New Here &amp; Recent Updates) compares this site with typing your own prompt. Follow-up prompts are also under the 💬 FOLLOW-UPS button after a unit plan.</li>
 <li><mark class="wn-key">Gemini Gem Prompt Maker removed</mark>: the button has gone from the top bar, as Gems are being retired.</li>
 <li><mark class="wn-key">Marking assistant (trial, Years 7 to 10)</mark>: in the Assessment Generator a new <strong>Marking assistant</strong> button builds a prompt for an AI marking assistant. Give it the task sheet and marking schedule (paste them, or tick that you will attach them in the AI) and your students' work (typed text, scanned PDFs or Google Docs). It suggests a stage for each student (Emerging to Exceeding) with the evidence, a strength and a next step, and can also make a class overview, a whole-class feedback sheet with a D.I.R.T. plan, and report-ready comments. You make the final judgement. Use initials, not names. For NCEA use the Moderation Assistant.</li>
 <li><mark class="wn-key">Marking assistant tab</mark>: a smaller rose <strong>🖍️ Marking assistant</strong> tab now sits beside the title inside the Assessment Generator, for marking an assessment you already have (Years 7 to 10, trial). Pick the year and subject, paste or attach your task sheet and marking schedule, and build the prompt. The button inside the Assessment Generator still works as before.</li>
@@ -5157,11 +5162,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var toastTimeout;
         /* ---------- Onboarding guide ---------- */
         function obShowTab(which) {
-            var s = document.getElementById('ob-panel-start'), u = document.getElementById('ob-panel-updates');
+            var s = document.getElementById('ob-panel-start'), u = document.getElementById('ob-panel-updates'), w = document.getElementById('ob-panel-why');
             if (!s || !u) return;
             s.classList.toggle('hidden', which !== 'start');
             u.classList.toggle('hidden', which !== 'updates');
-            ['start', 'updates'].forEach(function (k) {
+            if (w) { if (which === 'why') w.innerHTML = tkWhyHtml(); w.classList.toggle('hidden', which !== 'why'); }
+            ['start', 'updates', 'why'].forEach(function (k) {
                 var t = document.getElementById('ob-tab-' + k);
                 if (t) { t.classList.toggle('on', k === which); t.setAttribute('aria-selected', k === which ? 'true' : 'false'); }
             });
@@ -9443,8 +9449,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function mkCopy(btn) { if (!mkCheck()) return; mkPreview(); copyText('mk-prompt-text', btn); }
         function mkDownload() { if (!mkCheck()) return; mkPreview(); downloadPromptFile('mk-prompt-text', 'Marking_assistant_prompt'); }
         // ---------- Teacher tools: report comments, tracking grid, follow-ups, ready prompts, AI use and privacy, why this site ----------
-        var TK_TABS = [['report', '✍️ Report comments'], ['grid', '📋 Tracking grid'], ['follow', '💬 Follow-up prompts'], ['ready', '💡 Ready prompts'], ['ai', '🔒 AI use & privacy'], ['why', '🧭 Why this site']];
-        var TK_TABCOL = { report: ['#0284c7', '#e0f2fe', '#075985'], grid: ['#059669', '#d1fae5', '#065f46'], follow: ['#7c3aed', '#ede9fe', '#5b21b6'], ready: ['#d97706', '#fef3c7', '#92400e'], ai: ['#e11d48', '#ffe4e6', '#9f1239'], why: ['#0d9488', '#ccfbf1', '#115e59'] };
+        var TK_TABS = [['report', '✍️ Report comments'], ['grid', '📋 Tracking grid'], ['follow', '💬 Follow-up prompts'], ['ready', '💡 Ready prompts'], ['ai', '🔒 AI use & privacy']];
+        var TK_TABCOL = { report: ['#0284c7', '#e0f2fe', '#075985'], grid: ['#059669', '#d1fae5', '#065f46'], follow: ['#7c3aed', '#ede9fe', '#5b21b6'], ready: ['#d97706', '#fef3c7', '#92400e'], ai: ['#e11d48', '#ffe4e6', '#9f1239'] };
         var TK_YEARS = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'];
         var TK_DEPTS = ['Science', 'Maths', 'Social Sciences', 'English', 'Māori', 'Technology', 'Arts', 'PE & Health', 'Other'];
         var tkTab = 'report';
@@ -9495,7 +9501,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function tkRender() {
             var tabs = document.getElementById('tk-tabs'), body = document.getElementById('tk-body'); if (!tabs || !body) return;
             tabs.innerHTML = TK_TABS.map(function(x) { var c = TK_TABCOL[x[0]]; return '<button type="button" class="tk-tab' + (tkTab === x[0] ? ' on' : '') + '" style="--tc:' + c[0] + ';--tl:' + c[1] + ';--td:' + c[2] + '" aria-pressed="' + (tkTab === x[0]) + '" onclick="tkGo(\'' + x[0] + '\')">' + actEsc(x[1]) + '</button>'; }).join('');
-            body.innerHTML = ({ report: tkReportHtml, grid: tkGridHtml, follow: function() { return tkListHtml('follow', 'Send these to the AI after it has made your unit plan. Change anything in [square brackets] before you paste.'); }, ready: function() { return tkListHtml('ready', 'Everyday prompts for secondary teachers. Change anything in [square brackets], and use initials, not student names.'); }, ai: tkAiHtml, why: tkWhyHtml })[tkTab]();
+            body.innerHTML = ({ report: tkReportHtml, grid: tkGridHtml, follow: function() { return tkListHtml('follow', 'Send these to the AI after it has made your unit plan. Change anything in [square brackets] before you paste.'); }, ready: function() { return tkListHtml('ready', 'Everyday prompts for secondary teachers. Change anything in [square brackets], and use initials, not student names.'); }, ai: tkAiHtml })[tkTab]();
             if (tkTab === 'report') rcPreview();
         }
         function tkSec(h, inner) { return '<div class="tk-sec border-t border-sky-200 pt-3 mt-3"><p class="text-[11px] font-black uppercase tracking-widest text-sky-800 mb-1.5">' + h + '</p>' + inner + '</div>'; }
