@@ -309,6 +309,25 @@
         #as-mark-tab:hover { background: #ffe4e6; transform: translateY(-1px); }
         html.dark #as-mark-tab { background: #3b1020; color: #fda4af; }
         html.dark #as-mark-tab:hover { background: #4c1527; color: #fecdd3; }
+        .wk-box { background: #fff; }
+        html.dark .wk-box { background: #1e293b !important; border-color: #155e75 !important; color: #e2e8f0; }
+        html.dark .wk-in { background: #0f172a; color: #e2e8f0; border-color: #475569; }
+        html.dark .wk-row { border-color: #334155; }
+        html.dark #view-weekly h2, html.dark #view-weekly .text-slate-900, html.dark #view-weekly .text-slate-800 { color: #f1f5f9; }
+        html.dark #view-weekly .text-slate-600, html.dark #view-weekly .text-slate-700 { color: #cbd5e1; }
+        #wk-file.plen-glow, #wk-copy.plen-glow { }
+        #wk-file.plen-glow { background-color: #fef3c7; border-color: #f59e0b; color: #92400e; }
+        #wk-file.plen-must { background-color: #f59e0b; border-color: #b45309; color: #fff; animation: plen-pulse 1.6s ease-in-out infinite; }
+        #wk-copy.plen-locked { background-color: #e2e8f0; color: #64748b; border-color: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+        .wk-grid { border-collapse: separate; border-spacing: 3px; }
+        .wk-grid th { font-size: 10px; font-weight: 800; color: #155e75; padding: 2px 6px; text-align: center; }
+        .wk-cell { width: 44px; height: 28px; border-radius: 6px; border: 2px solid #67e8f9; background: #ecfeff; color: #fff; font-weight: 900; cursor: pointer; }
+        .wk-cell:hover { background: #cffafe; }
+        .wk-cell.on { background: #0891b2; border-color: #0e7490; }
+        html.dark .wk-grid th { color: #67e8f9; }
+        html.dark .wk-cell { background: #0f2a33; border-color: #155e75; }
+        html.dark .wk-cell.on { background: #0891b2; border-color: #22d3ee; }
+        html.dark .wk-card { border-color: #155e75; }
         html.dark #tk-modal > div { background: #0f172a; color: #e2e8f0; }
         html.dark #tk-modal textarea, html.dark #tk-modal input[type=text], html.dark #tk-modal select { background: #1e293b; color: #e2e8f0; }
         html.dark #tk-modal .tk-sec, html.dark #tk-modal .tk-card, html.dark #tk-modal table td, html.dark #tk-modal table th { border-color: #334155; }
@@ -657,11 +676,45 @@
         html.dark .wn-chip:hover { background: #bfdbfe; color: #0f172a; }
 
         /* Onboarding tabs and updates */
-        .ob-tabs { display: flex; gap: .4rem; justify-content: center; margin: .25rem 0 1rem; }
+        .ob-tabs { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; margin: .25rem 0 1rem; }
         .ob-tab { font-size: .8rem; font-weight: 700; padding: .4rem 1rem; border-radius: 999px; border: 1px solid #cbd5e1; background: #fff; color: #002066; cursor: pointer; }
+        /* Site index (banner ☰ button) */
+        .idx-panel { width: min(560px, calc(100vw - 16px)); background: #fff; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 14px; box-shadow: 0 18px 50px rgba(15, 23, 42, .35); display: flex; flex-direction: column; overflow: hidden; }
+        .idx-panel.hidden { display: none; }
+        .idx-top { padding: .7rem .8rem .5rem; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
+        .idx-q { flex: 1; min-width: 0; border: 1px solid #94a3b8; border-radius: 8px; padding: .4rem .6rem; font-size: .85rem; background: #fff; color: #0f172a; }
+        .idx-seg { display: inline-flex; border: 1px solid #002066; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+        .idx-seg button { font-size: .7rem; font-weight: 800; padding: .38rem .6rem; background: #fff; color: #002066; }
+        .idx-seg button.on { background: #002066; color: #fff; }
+        .idx-x { font-size: 1rem; color: #64748b; padding: 0 .3rem; }
+        .idx-sub { display: flex; justify-content: space-between; font-size: .68rem; color: #64748b; margin-top: .35rem; }
+        .idx-list { overflow-y: auto; padding: .2rem .4rem .6rem; }
+        .idx-head { position: sticky; top: 0; background: #fff; font-size: .72rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; padding: .55rem .4rem .25rem; border-bottom: 2px solid #e2e8f0; margin-top: .3rem; color: #002066; z-index: 1; }
+        .idx-n { font-weight: 700; color: #94a3b8; margin-left: .3rem; }
+        .idx-item { display: flex; align-items: flex-start; gap: .55rem; width: 100%; text-align: left; padding: .4rem .45rem; border-radius: 8px; }
+        .idx-item:hover, .idx-item:focus-visible { background: #eff6ff; outline: none; }
+        .idx-dot { width: .55rem; height: .55rem; border-radius: 50%; margin-top: .4rem; flex-shrink: 0; }
+        .idx-txt { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .idx-name { font-size: .83rem; font-weight: 800; color: #0f172a; }
+        .idx-desc { font-size: .72rem; color: #64748b; line-height: 1.3; }
+        .idx-tag { font-size: .62rem; font-weight: 800; white-space: nowrap; margin-top: .15rem; }
+        .idx-empty { padding: 1.2rem .8rem; font-size: .85rem; color: #64748b; }
+        .idx-flash { outline: 4px solid #f59e0b !important; outline-offset: 3px; border-radius: 6px; animation: idx-pulse 1s ease-in-out 2; }
+        @keyframes idx-pulse { 50% { outline-color: #fde68a; } }
+        html.dark .idx-panel { background: #0f172a; color: #e2e8f0; border-color: #475569; }
+        html.dark .idx-top { background: #1e293b; border-color: #334155; }
+        html.dark .idx-q { background: #0f172a; color: #e2e8f0; border-color: #64748b; }
+        html.dark .idx-seg { border-color: #bfdbfe; } html.dark .idx-seg button { background: #0f172a; color: #bfdbfe; } html.dark .idx-seg button.on { background: #bfdbfe; color: #0f172a; }
+        html.dark .idx-head { background: #0f172a; border-color: #334155; }
+        html.dark .idx-item:hover, html.dark .idx-item:focus-visible { background: #1e293b; }
+        html.dark .idx-name { color: #f1f5f9; } html.dark .idx-desc, html.dark .idx-sub { color: #94a3b8; }
+        @media print { #idx-btn, #idx-panel, #idx-backdrop { display: none !important; } }
         .ob-tab.on { background: #002066; color: #fff; border-color: #002066; }
         html.dark .ob-tab { background: #0f172a; color: #bfdbfe; border-color: #475569; }
         html.dark .ob-tab.on { background: #bfdbfe; color: #0f172a; border-color: #bfdbfe; }
+        html.dark #ob-panel-ai textarea { background: #1e293b; color: #e2e8f0; }
+        html.dark #ob-panel-ai .tk-sec { border-color: #334155; }
+        html.dark #ob-panel-ai li, html.dark #ob-panel-ai p { color: #cbd5e1; }
         html.dark #ob-panel-why th, html.dark #ob-panel-why td { border-color: #334155; }
         html.dark #ob-panel-why th { background: #0f172a; }
         html.dark #ob-panel-why td, html.dark #ob-panel-why p { color: #cbd5e1; }
@@ -751,6 +804,15 @@
 </div>
 </div>
 </div>
+    <div id="wk-intro-modal" class="hidden fixed inset-0 items-center justify-center p-4" style="z-index: 9000; background: rgba(15, 23, 42, 0.55);" role="dialog" aria-modal="true" aria-labelledby="wk-intro-title" onclick="if(event.target===this)wkIntroClose()">
+<div class="bg-white text-slate-800 rounded-2xl shadow-2xl max-w-md w-full p-6 border-t-4 border-t-cyan-500">
+<h3 id="wk-intro-title" class="text-lg font-black mb-2">🗓️ Weekly Plan works best with unit plans</h3>
+<p class="text-sm text-slate-900 mb-2"><strong>Weekly Plan only works with unit plans that have numbered lessons</strong> (Lesson 1, Lesson 2, Lesson 3 and so on). You tell it which lesson number each class is up to.</p><p class="text-sm text-slate-700">Add the unit plans for your classes, or at least for some of them. With a unit plan, the weekly plan can show each class's lessons. A class without one still appears in your week, but with just the subject and no lesson details.</p>
+<p class="text-xs text-slate-500 mt-2">You only add each class and unit plan once. They stay on this device for next time.</p>
+<label class="flex items-center gap-2 text-sm mt-4 cursor-pointer"><input type="checkbox" id="wk-intro-hide"> Do not show this message again</label>
+<div class="flex justify-end mt-4"><button type="button" class="px-6 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-black" onclick="wkIntroClose()">OK ✓</button></div>
+</div>
+</div>
     <div id="tk-modal" class="hidden fixed inset-0 items-center justify-center p-4" style="z-index: 9000; background: rgba(15, 23, 42, 0.55);" role="dialog" aria-modal="true" aria-labelledby="tk-title">
 <div class="bg-white text-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 border-t-4 border-t-sky-500">
 <div class="flex items-start justify-between gap-3 mb-2"><h3 id="tk-title" class="text-lg font-black">🧰 Teacher tools</h3><button type="button" class="text-slate-500 hover:text-slate-900 text-xl leading-none" onclick="tkClose()" aria-label="Close">✕</button></div>
@@ -775,6 +837,15 @@
 </div>
 <button type="button" id="as-float-copy" data-action="copy" data-target="prompt-assessment-text" class="hidden fixed z-40 left-1/2 -translate-x-1/2 bottom-6 px-6 py-3 rounded-full bg-[#002066] text-white text-xs font-black tracking-wider shadow-xl border-2 border-white hover:bg-blue-900">📋 COPY PROMPT</button>
 <div id="global-toast" role="status" aria-live="polite"></div>
+
+    <div id="idx-backdrop" class="hidden fixed inset-0" style="z-index: 8400;" onclick="idxToggle(false)"></div>
+    <div id="idx-panel" class="hidden fixed idx-panel" style="z-index: 8500;" role="dialog" aria-label="Site index">
+        <div class="idx-top">
+            <div class="flex items-center gap-2"><input id="idx-q" type="search" class="idx-q" placeholder="Search every tool and option…" autocomplete="off" oninput="idxRender()" aria-label="Search the site index"><span class="idx-seg"><button type="button" id="idx-m-area" class="on" aria-pressed="true" onclick="idxMode_('area')">By area</button><button type="button" id="idx-m-az" aria-pressed="false" onclick="idxMode_('az')">A to Z</button></span><button type="button" class="idx-x" onclick="idxToggle(false)" aria-label="Close the index">✕</button></div>
+            <div class="idx-sub"><span id="idx-count"></span><span>Click an entry to go straight to it.</span></div>
+        </div>
+        <div id="idx-body" class="idx-list"></div>
+    </div>
 
     <!-- My Teaching Profile: a persistent corner widget, independent of whichever builder is
          open. Collapsed pill by default; expands to the picker; collapses again once you're
@@ -1206,11 +1277,15 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <svg class="moon-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                 <svg class="sun-icon w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </button>
+            <button id="idx-btn" type="button" class="absolute bottom-3 left-3 md:bottom-4 md:left-4 z-20 h-9 px-2.5 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full transition shadow-sm flex items-center gap-1.5 backdrop-blur-sm" aria-haspopup="true" aria-expanded="false" aria-controls="idx-panel" title="Site index: every tool and option, by area or A to Z" onclick="idxToggle()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path></svg><span class="text-[10px] font-bold uppercase tracking-wider hidden md:inline">Index</span>
+            </button>
         </header>
 
         <nav class="sticky top-0 z-50 bg-[#e2e8f0]/95 backdrop-blur-md flex flex-col items-center border-b-2 border-slate-300 mb-6 gap-2 pb-2 pt-2 px-2 md:px-4 shadow-sm transition-all duration-300 overflow-visible">
             <div class="flex flex-wrap items-center justify-center gap-1 md:gap-2">
                 <button id="nav-lesson" class="nav-btn nav-active tooltip-wrapper tooltip-bottom" data-tooltip="Create a single highly detailed lesson plan" data-action="view" data-target="lesson">📖 Lesson Builder</button>
+                <button id="nav-weekly" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Your classes and periods, saved on this device: a plan for the week" data-action="view" data-target="weekly">🗓️ Weekly Plan</button>
                 <button id="nav-planning" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Sequence a multi-week unit structure" data-action="view" data-target="planning">🗂️ Unit Planner</button>
                 <button id="nav-assessment" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generate tests, tasks, and rubrics" data-action="view" data-target="assessment">✅ Assessment Generator</button>
                 <button id="nav-yearplanner" class="nav-btn tooltip-wrapper tooltip-bottom" data-tooltip="Build a full-year term-by-term curriculum plan" data-action="view" data-target="yearplanner">📅 Year Planner</button>
@@ -1232,7 +1307,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <span class="nav-sep" aria-hidden="true"></span>
 
                 <!-- Group 2: wellbeing -->
-                <div class="flex items-center gap-1"><button class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="A minute to breathe, plus a book recommendation" data-action="show-wellbeing">🧘 Teacher Well-being</button><button id="nav-teachertools" type="button" class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Report comments, tracking grids, follow-up prompts, ready prompts, and AI use and privacy" onclick="tkOpen('report')">🧰 Teacher tools</button></div>
+                <div class="flex items-center gap-1"><button class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="A minute to breathe, plus a book recommendation" data-action="show-wellbeing">🧘 Teacher Well-being</button><button id="nav-teachertools" type="button" class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Report comments, tracking grids, follow-up prompts and ready prompts" onclick="tkOpen('report')">🧰 Teacher tools</button></div>
 
                 <span class="nav-sep" aria-hidden="true"></span>
 
@@ -2808,6 +2883,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
         </div>
 
+        <div id="view-weekly" class="hidden animate-in fade-in duration-500"><div id="wk-root" class="max-w-4xl mx-auto"></div></div>
+
         <div id="view-yearplanner" class="hidden animate-in fade-in duration-500">
             <div class="max-w-6xl mx-auto mb-6 text-center relative">
                 <button type="button" class="yp-back yp-back-top" onclick="ypBackToMenu()" title="Back to the main menu (Lesson Builder, Unit Planner, Assessment Generator and the other tools)">← Main menu</button>
@@ -3295,7 +3372,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file. Remove some options to make the prompt shorter and Copy comes back.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table with one row per skill: step-by-step teaching for non-specialists, the exact words to say, a ready example in small blue text, and what to watch for), even if you only chose lesson outlines. The lesson rows just point to it. It is also built into the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: in "Do you already have something planned for this unit?" there is a new gold row for <strong>Writer's Toolbox</strong> (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
-<li><mark class="wn-key">Teacher tools</mark>: a new <strong>🧰 Teacher tools</strong> button (beside Teacher Well-being, in the same teal) opens five tabs: <strong>Report comments</strong> (builds a prompt that drafts comments from your own notes, with [Name] left blank), a printable <strong>Tracking grid</strong> using the five progress stages, <strong>Follow-up prompts</strong> to send after a unit plan (also under the new 💬 FOLLOW-UPS button), <strong>Ready prompts</strong> for everyday secondary teaching, and <strong>AI use &amp; privacy</strong> (what this site stores, safe-use checklist, and a department AI statement to copy). A new <strong>💡 Why this site</strong> tab is in New Here &amp; Recent Updates.</li>
+<li><mark class="wn-key">Site index</mark>: the new <strong>☰ Index</strong> button at the bottom left of the banner opens a list of every tool and option on the site. Switch between <strong>By area</strong> and <strong>A to Z</strong>, or type to search (try "quiz", "report" or "homework"). Click an entry to go straight to it.</li>
+<li><mark class="wn-key">Weekly Plan</mark>: a new main tab between Lesson Builder and Unit Planner. Save your classes, periods and unit plans once (they stay on this device, even after Reset saved data), then each week choose the start date and the lesson number each class is up to. It checks the 2027 school calendar for holidays, camps and events, and gives you a <strong>Weekly summary</strong> or <strong>Full lesson plans</strong>, laid out to paste into a Google Doc. Unit plans must have numbered lessons.</li>
+<li><mark class="wn-key">🗓️ Weekly Plan (new main tab)</mark>: add your classes once (class, year, subject, and the periods you teach them in a 5-day, 5-period week) and optionally paste each unit plan. It is <strong>saved on your device</strong>, and stays even if you press Reset saved data (the tab has its own reset, with two warnings). Each week, pick the start date from the calendar and enter the lesson each class is up to. The week is checked against the <strong>school calendar</strong> (holidays, staff-only days, year-level camps and school events), and you get a printable week plan with a whole-week grid, lesson cards, homework and a prep checklist. Unit plans are saved once and <strong>shared between classes</strong> (two Year 8 classes on the same unit use one copy, with their own lesson number each week), and a tick box adds <strong>each lesson written in full</strong>. Use ✏️ Edit to change a class or unit plan when you move to a new topic.</li>
+<li><mark class="wn-key">Teacher tools</mark>: a new <strong>🧰 Teacher tools</strong> button (beside Teacher Well-being, in the same teal) opens four tabs: <strong>Report comments</strong> (builds a prompt that drafts comments from your own notes, with [Name] left blank), a printable <strong>Tracking grid</strong> using the five progress stages, <strong>Follow-up prompts</strong> to send after a unit plan (also under the 💬 FOLLOW-UPS button), and <strong>Ready prompts</strong> for everyday secondary teaching. <strong>💡 Why this site</strong> and <strong>🔒 AI use &amp; privacy</strong> (what this site stores, a safe-use checklist and a department AI statement to copy) are tabs in New Here &amp; Recent Updates.</li>
 <li><mark class="wn-key">Gemini Gem Prompt Maker removed</mark>: the button has gone from the top bar, as Gems are being retired.</li>
 <li><mark class="wn-key">Marking assistant (trial, Years 7 to 10)</mark>: in the Assessment Generator a new <strong>Marking assistant</strong> button builds a prompt for an AI marking assistant. Give it the task sheet and marking schedule (paste them, or tick that you will attach them in the AI) and your students' work (typed text, scanned PDFs or Google Docs). It suggests a stage for each student (Emerging to Exceeding) with the evidence, a strength and a next step, and can also make a class overview, a whole-class feedback sheet with a D.I.R.T. plan, and report-ready comments. You make the final judgement. Use initials, not names. For NCEA use the Moderation Assistant.</li>
 <li><mark class="wn-key">Marking assistant tab</mark>: a smaller rose <strong>🖍️ Marking assistant</strong> tab now sits beside the title inside the Assessment Generator, for marking an assessment you already have (Years 7 to 10, trial). Pick the year and subject, paste or attach your task sheet and marking schedule, and build the prompt. The button inside the Assessment Generator still works as before.</li>
@@ -3673,6 +3753,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <button type="button" id="ob-tab-start" class="ob-tab" role="tab" onclick="obShowTab('start')">🧭 Where to start</button>
                 <button type="button" id="ob-tab-updates" class="ob-tab" role="tab" onclick="obShowTab('updates')">✨ Recent updates</button>
                 <button type="button" id="ob-tab-why" class="ob-tab" role="tab" onclick="obShowTab('why')">💡 Why this site</button>
+                <button type="button" id="ob-tab-ai" class="ob-tab" role="tab" onclick="obShowTab('ai')">🔒 AI use &amp; privacy</button>
             </div>
             <div id="ob-panel-start">
             <p class="text-center text-slate-500 text-sm mb-6">What are you trying to do today?</p>
@@ -3693,6 +3774,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <span class="block font-bold text-[#002066] text-sm">📅 Plan a whole year</span>
                     <span class="block text-xs text-slate-500 mt-1">Build a full-year, term-by-term curriculum plan — click topics straight into place, or add your own beyond the curriculum library → <strong>Year Planner</strong></span>
                 </button>
+                <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition sm:col-span-2" data-action="onboarding-go" data-target="weekly">
+                    <span class="block font-bold text-[#002066] text-sm">🗓️ Plan my week</span>
+                    <span class="block text-xs text-slate-500 mt-1">Save your classes and periods once, then get a plan for the week in a minute, checked against the school calendar → <strong>Weekly Plan</strong></span>
+                </button>
                 <button class="text-left p-4 rounded-xl border-2 border-slate-200 hover:border-[#002066] hover:bg-slate-50 transition sm:col-span-2" data-action="onboarding-go" data-target="theory">
                     <span class="block font-bold text-[#002066] text-sm">📖 Understand the CPM itself</span>
                     <span class="block text-xs text-slate-500 mt-1">Read the research and theory behind the Common Practice Model → <strong>CPM Theory</strong></span>
@@ -3704,6 +3789,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             </div>
             </div>
             <div id="ob-panel-why" class="hidden text-sm text-slate-700"></div>
+            <div id="ob-panel-ai" class="hidden text-sm text-slate-700"></div>
             <div id="ob-panel-updates" class="hidden text-sm text-slate-700">
                 <p class="text-center text-slate-500 text-sm mb-4">The short version of what has changed recently.</p>
                 <div class="ob-up">
@@ -3728,7 +3814,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table, one row per skill, with steps, exact wording and an example), even if you only chose lesson outlines. The lesson rows just point to it. Also in the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: a new gold row in "Do you already have something planned?" (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
-<li><mark class="wn-key">Teacher tools</mark>: a new teal 🧰 button beside Teacher Well-being with report comments, a printable tracking grid, follow-up and ready-made prompts, and an AI use and privacy page. A new <strong>💡 Why this site</strong> tab (here in New Here &amp; Recent Updates) compares this site with typing your own prompt. Follow-up prompts are also under the 💬 FOLLOW-UPS button after a unit plan.</li>
+<li><mark class="wn-key">Site index</mark>: the new <strong>☰ Index</strong> button at the bottom left of the banner opens a list of every tool and option on the site. Switch between <strong>By area</strong> and <strong>A to Z</strong>, or type to search (try "quiz", "report" or "homework"). Click an entry to go straight to it.</li>
+<li><mark class="wn-key">Weekly Plan</mark>: a new main tab between Lesson Builder and Unit Planner. Save your classes, periods and unit plans once (they stay on this device, even after Reset saved data), then each week choose the start date and the lesson number each class is up to. It checks the 2027 school calendar for holidays, camps and events, and gives you a <strong>Weekly summary</strong> or <strong>Full lesson plans</strong>, laid out to paste into a Google Doc. Unit plans must have numbered lessons.</li>
+<li><mark class="wn-key">🗓️ Weekly Plan (new main tab)</mark>: save your classes, periods and unit plans once on this device, then each week pick the start date and the lesson each class is up to. It checks the school calendar and gives you a printable plan for the week. Classes on the same unit share one saved unit plan, and you can ask for each lesson in full.</li>
+<li><mark class="wn-key">Teacher tools</mark>: a new teal 🧰 button beside Teacher Well-being with report comments, a printable tracking grid, and follow-up and ready-made prompts. <strong>💡 Why this site</strong> and <strong>🔒 AI use &amp; privacy</strong> are new tabs here in New Here &amp; Recent Updates.</li>
 <li><mark class="wn-key">Gemini Gem Prompt Maker removed</mark>: the button has gone from the top bar, as Gems are being retired.</li>
 <li><mark class="wn-key">Marking assistant (trial, Years 7 to 10)</mark>: in the Assessment Generator a new <strong>Marking assistant</strong> button builds a prompt for an AI marking assistant. Give it the task sheet and marking schedule (paste them, or tick that you will attach them in the AI) and your students' work (typed text, scanned PDFs or Google Docs). It suggests a stage for each student (Emerging to Exceeding) with the evidence, a strength and a next step, and can also make a class overview, a whole-class feedback sheet with a D.I.R.T. plan, and report-ready comments. You make the final judgement. Use initials, not names. For NCEA use the Moderation Assistant.</li>
 <li><mark class="wn-key">Marking assistant tab</mark>: a smaller rose <strong>🖍️ Marking assistant</strong> tab now sits beside the title inside the Assessment Generator, for marking an assessment you already have (Years 7 to 10, trial). Pick the year and subject, paste or attach your task sheet and marking schedule, and build the prompt. The button inside the Assessment Generator still works as before.</li>
@@ -4109,8 +4198,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function showView(viewId) {
+            var prevView = sessionStorage.getItem('whs_active_view');
             sessionStorage.setItem('whs_active_view', viewId);
-            ['planning', 'lesson', 'assessment', 'theory', 'yearplanner', 'notebook', 'exploreboard', 'quizmaker', 'differentiate'].forEach(function(v) {
+            ['planning', 'lesson', 'assessment', 'theory', 'yearplanner', 'weekly', 'notebook', 'exploreboard', 'quizmaker', 'differentiate'].forEach(function(v) {
                 var el = document.getElementById('view-' + v);
                 var btn = document.getElementById('nav-' + v);
                 if (el) el.classList.add('hidden');
@@ -4122,6 +4212,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (aB) aB.classList.add('nav-active');
             if (viewId === 'theory') loadTheoryStage(1);
             if (viewId === 'planning') showKPNoticeIfNeeded();
+            if (viewId === 'weekly' && typeof wkRender === 'function') { wkRender(); if (prevView !== 'weekly') wkIntroOpen(); }
             var embedded = !!EMBED_PAGES[viewId];
             document.body.classList.toggle('eb-mode', embedded);
             document.body.classList.toggle('yp-mode', viewId === 'yearplanner');
@@ -5162,12 +5253,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var toastTimeout;
         /* ---------- Onboarding guide ---------- */
         function obShowTab(which) {
-            var s = document.getElementById('ob-panel-start'), u = document.getElementById('ob-panel-updates'), w = document.getElementById('ob-panel-why');
+            var s = document.getElementById('ob-panel-start'), u = document.getElementById('ob-panel-updates'), w = document.getElementById('ob-panel-why'), a = document.getElementById('ob-panel-ai');
             if (!s || !u) return;
             s.classList.toggle('hidden', which !== 'start');
             u.classList.toggle('hidden', which !== 'updates');
             if (w) { if (which === 'why') w.innerHTML = tkWhyHtml(); w.classList.toggle('hidden', which !== 'why'); }
-            ['start', 'updates', 'why'].forEach(function (k) {
+            if (a) { if (which === 'ai') a.innerHTML = tkAiHtml(); a.classList.toggle('hidden', which !== 'ai'); }
+            ['start', 'updates', 'why', 'ai'].forEach(function (k) {
                 var t = document.getElementById('ob-tab-' + k);
                 if (t) { t.classList.toggle('on', k === which); t.setAttribute('aria-selected', k === which ? 'true' : 'false'); }
             });
@@ -9448,9 +9540,548 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function mkCopy(btn) { if (!mkCheck()) return; mkPreview(); copyText('mk-prompt-text', btn); }
         function mkDownload() { if (!mkCheck()) return; mkPreview(); downloadPromptFile('mk-prompt-text', 'Marking_assistant_prompt'); }
+        // ---------- Site index (the ☰ button in the banner): every tool and option, by area or A to Z ----------
+        var IDX_AREAS = [
+            ['lesson', '📖 Lesson Builder', '#1d4ed8'], ['weekly', '🗓️ Weekly Plan', '#0891b2'], ['unit', '🗂️ Unit Planner', '#7c3aed'],
+            ['assess', '✅ Assessment Generator', '#059669'], ['year', '📅 Year Planner', '#b45309'], ['tools', '🧭 Small tools', '#be185d'],
+            ['teacher', '🧑‍🏫 For teachers', '#0f766e'], ['ai', '🤖 Your AI prompt', '#4338ca'], ['help', '❓ Help and settings', '#475569']
+        ];
+        var IDX = [], idxMode = 'area';
+        function idxFind(view, text, sel) {
+            var root = document.getElementById('view-' + view) || document.body, t = (text || '').toLowerCase(); if (!t) return null;
+            if (t.indexOf('|') > -1) { var alts = t.split('|'); for (var a = 0; a < alts.length; a++) { var r = idxFind(view, alts[a], sel); if (r) return r; } return null; }
+            var list = root.querySelectorAll(sel || 'button,a,summary,label,h2,h3,h4,span,p'), el, tx, i;
+            for (i = 0; i < list.length; i++) { el = list[i]; tx = (el.innerText || '').toLowerCase(); if (el.offsetParent !== null && tx.indexOf(t) > -1 && tx.length < 400) return el; }
+            // Not visible: it may be inside a closed fold-out. Open it and look again.
+            for (i = 0; i < list.length; i++) {
+                el = list[i]; tx = (el.textContent || '').toLowerCase(); if (tx.indexOf(t) < 0 || tx.length > 400) continue;
+                var d = el.closest('details'), opened = false; while (d) { if (!d.open) { d.open = true; opened = true; } d = d.parentElement ? d.parentElement.closest('details') : null; }
+                if (opened && el.offsetParent !== null) return el;
+            }
+            return null;
+        }
+        var IDX_HINT = { lesson: 'Choose a subject and year level first. This option then appears further down the page.', planning: 'Choose a subject and year level, then work down the steps. This option appears in a later step.', assessment: 'Choose a subject and year level first. This option then appears in a later step.', yearplanner: 'Choose a department and year level first. This option then appears.', weekly: 'Add a class first. This option then appears.' };
+        function idxFlash(view, text, sel, hint) {
+            var found = idxFind(view, text, sel);
+            if (!found) { window.scrollTo({ top: 0, behavior: 'smooth' }); if (text && (hint || IDX_HINT[view])) showGlobalToast(hint || IDX_HINT[view]); return; }
+            found.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            found.classList.add('idx-flash'); setTimeout(function() { found.classList.remove('idx-flash'); }, 2600);
+        }
+        // Put a view back to its normal state first, so an entry always lands somewhere that shows what it names.
+        function idxNorm(view) {
+            try {
+                if (view === 'lesson' && lessonState.mode !== 'standard') setLessonMode('standard', document.getElementById('mode-btn-standard'));
+                if (view === 'planning') unitSetTab('std');
+                if (view === 'assessment' && typeof setJuniorCheckMode === 'function' && typeof assessmentState !== 'undefined' && assessmentState.juniorCheck) setJuniorCheckMode(false);
+                if (view === 'weekly' && wkUi.editing) wkCancelEdit();
+            } catch (e) {}
+        }
+        function idxV(view, text, pre, sel, hint) { var f = function() { if (view) showView(view); if (!f.keep) idxNorm(view); if (pre) { try { pre(); } catch (e) {} } setTimeout(function() { idxFlash(view, text, sel, hint); }, 300); }; f.idxView = view; f.idxText = text; f.idxSel = sel; f.hint = hint; return f; }
+        function idxStage(n) { return function() { var b = document.getElementById('stage-block-' + n); if (b && b.classList.contains('hidden')) { var bt = [].slice.call(document.querySelectorAll('#view-lesson button')).filter(function(x) { return new RegExp('^' + n + '\\s+(Connect|I Do|We Do|You Do|Review)').test(x.innerText.trim()) && x.offsetParent !== null; })[0]; if (bt) bt.click(); } }; }
+        function idxK(f) { f.keep = true; return f; }
+        function idxE(area, name, desc, kw, go, note) { IDX.push({ a: area, n: name, d: desc, k: kw || '', go: go, note: note || '' }); }
+        function idxClick(sel) { var b = document.querySelector(sel); if (b) b.click(); }
+        function idxOb(tab) { return function() { showOnboardingModal(); setTimeout(function() { obShowTab(tab); }, 50); }; }
+        (function idxBuild() {
+            var L = 'lesson', W = 'weekly', U = 'unit', A = 'assess', Y = 'year', T = 'tools', P = 'teacher', I = 'ai', H = 'help';
+            // Lesson Builder
+            idxE(L, 'Lesson Builder', 'One detailed lesson plan built on the CPM five stages.', 'lesson plan cpm 5 stages', idxV('lesson', ''));
+            idxE(L, 'Standard lesson', 'The normal lesson plan mode.', 'mode', idxV('lesson', 'Standard Lesson', function() { setLessonMode('standard', document.getElementById('mode-btn-standard')); }));
+            idxE(L, 'Emergency Relief lesson', 'A lesson a relief teacher can run with no preparation.', 'relief reliever cover sub absent', idxV('lesson', 'Emergency Relief', function() { setLessonMode('relief', document.getElementById('mode-btn-relief')); }));
+            idxE(L, 'Relief task types', 'AI worksheet, Education Perfect, Writer\'s Toolbox or Google Classroom task for the relief lesson.', 'relief ep education perfect writers toolbox classroom', idxV('lesson', 'Education Perfect', function() { setLessonMode('relief', document.getElementById('mode-btn-relief')); }));
+            idxE(L, 'Gemini Notebook Builder (lesson)', 'Build a lesson from your own sources in Gemini Notebook.', 'notebook notebooklm sources', goToLessonNotebookMode);
+            idxE(L, 'Subject and year level', 'Choose the subject and Year 7 to 13 (NCEA levels).', 'science maths english social sciences arts technology year ncea', idxV('lesson', 'Social Sciences'));
+            idxE(L, 'Learner support options', '3-tiered worksheet, ADHD friendly, dyslexia friendly, ESOL scaffold.', 'differentiate adhd dyslexia esol tiered', idxV('lesson', '3-Tiered Worksheet'));
+            idxE(L, 'Curriculum integrations', 'Waiheke context, literacy focus, numeracy focus.', 'waiheke literacy numeracy integrate', idxV('lesson', 'Waiheke Context'));
+            idxE(L, 'Device use and AI levels', 'No, some or all devices; AI to plan, collaborate or critique the AI.', 'devices byod ai level critique', idxV('lesson', 'AI to plan'));
+            idxE(L, 'Number of lessons', '1, 2, 3 or more lessons in one go.', 'sequence multiple', idxV('lesson', '1 Lesson'));
+            idxE(L, 'Teaching frameworks', 'CPM five stages, or SOLO, Six Thinking Hats, UDL, PDP, Backward Design, Project-Based Learning.', 'solo hats udl pdp backward design pbl framework', idxV('lesson', 'CPM 5 Stages'));
+            idxE(L, 'Choose the lesson stages', 'All five stages, or only Connect, I Do, We Do, You Do or Review.', 'stages connect i do we do you do review', idxV('lesson', 'All 5 stages'));
+            idxE(L, 'Connect activities', 'Retrieval do-now quiz, concept mapping, vocabulary drills, pick a stick and more.', 'starter do now retrieval', idxV('lesson', 'Retrieval Do-Now Quiz', idxStage(1), null, 'Choose a subject and year level first, then this stage\'s activity menu appears.'));
+            idxE(L, 'I Do activities', 'Think-aloud script, worked example, Frayer model, dual coding and more.', 'explicit teaching worked example think aloud', idxV('lesson', 'Think-Aloud Script', idxStage(2), null, 'Choose a subject and year level first, then this stage\'s activity menu appears.'));
+            idxE(L, 'We Do activities', 'Mini-whiteboards, think-pair-share, jigsaw, value continuum, fishbone and more.', 'guided practice whiteboards pair share', idxV('lesson', 'Mini-Whiteboards', idxStage(3), null, 'Choose a subject and year level first, then this stage\'s activity menu appears.'));
+            idxE(L, 'You Do activities', 'Tiered tasks, independent scaffolds, peer critique, extended writing, Education Perfect and more.', 'independent practice tiered', idxV('lesson', 'Tiered Tasks', idxStage(4), null, 'Choose a subject and year level first, then this stage\'s activity menu appears.'));
+            idxE(L, 'Review activities', 'Exit ticket, 3-2-1 summary, traffic lights, two stars and a wish and more.', 'plenary exit ticket reflection', idxV('lesson', 'Exit Ticket', idxStage(5), null, 'Choose a subject and year level first, then this stage\'s activity menu appears.'));
+            idxE(L, 'Lesson plan length', 'Full, short or Mastery of Expertise (MoE) lesson plan.', 'full short moe plan output', idxV('lesson', 'Full Lesson Plan'));
+            idxE(L, 'Extra lesson outputs', 'Add slides, worksheet, content doc, quiz, media and videos, images or an LMS post.', 'slides worksheet quiz lms images add on', idxV('lesson', '+ Slides'));
+            idxE(L, 'Worksheet styles and amounts', 'Practice worksheet, standard task, gap fill, matching; 10, 15 or 20 questions; with or without answers.', 'worksheet cloze matching questions answers', idxV('lesson', '+ Worksheet', null, null, 'Choose a subject and year level first. Worksheet styles appear once you add + Worksheet.'));
+            idxE(L, 'Quiz file formats (lesson)', 'Google Forms, Kahoot, Blooket and Gimkit files.', 'kahoot blooket gimkit forms csv', idxV('lesson', '+ Quiz', null, null, 'Choose a subject and year level first. Quiz file formats appear once you add + Quiz.'));
+            idxE(L, 'WHS Official Template (lesson)', 'Lesson plan laid out like the official WHS template (beta).', 'whs template html beta', idxV('lesson', 'WHS Official Template'));
+            idxE(L, 'Link to the official curriculum', 'Opens the official curriculum (or the Tāhūrangi draft) for the chosen subject and year.', 'tahurangi curriculum draft official nzc', idxV('lesson', 'Curriculum for|Draft for'));
+            idxE(L, 'Attachments and custom instructions', 'Add your own notes or instructions for the AI.', 'custom instructions attach notes', idxV('lesson', 'Attachments'));
+            // Weekly Plan
+            idxE(W, 'Weekly Plan', 'Your classes and periods saved on this device, and a plan for one week.', 'timetable week classes periods', idxV('weekly', ''));
+            idxE(W, 'Add a class', 'Class label, year, subject, the periods you have it, and a unit plan.', 'class periods timetable 7a', idxV('weekly', '', function() { wkEdit('new'); }));
+            idxE(W, 'Add a unit plan (Weekly Plan)', 'Save a unit plan with numbered lessons once, and use it for several classes.', 'unit plan paste lessons numbered', idxV('weekly', '', function() { wkUnitEdit('new'); }));
+            idxE(W, 'Weekly summary', 'Colour timetable grid, a short card for each lesson, homework and a prep checklist.', 'week grid homework prep checklist', idxV('weekly', 'Weekly summary'));
+            idxE(W, 'Full lesson plans (Weekly Plan)', 'Every lesson of the week written out in full, one page each.', 'full lessons week', idxV('weekly', 'Full lesson plans'));
+            idxE(W, 'School calendar check', 'Holidays, staff days, camps and school events are taken off or flagged for the chosen week (2027).', 'holiday camp term dates calendar', idxV('weekly', 'The week starting'));
+            idxE(W, 'Send only this week\'s lessons', 'Cuts each unit plan to the lessons needed this week, so the prompt stays short.', 'trim shorten long prompt characters', idxV('weekly', 'Send only this week'));
+            idxE(W, 'Reset the Weekly Plan', 'Removes your saved classes and unit plans (with two warnings).', 'delete clear', idxV('weekly', 'Reset', null, '#wk-root button'));
+            // Unit Planner
+            idxE(U, 'Unit Planner', 'Plan a multi-week unit lesson by lesson.', 'unit plan sequence', idxV('planning', '', function() { unitSetTab('std'); }));
+            idxE(U, 'IEP Unit', 'A unit plan adapted for a learner with an individual education plan.', 'iep learner support special needs sac', idxV('planning', '', function() { unitSetTab('iep'); }));
+            idxE(U, 'Homework Schedule (for an existing unit)', 'Weekly homework, parent emails and Google Classroom posts for a unit you already have (as tables in the chat or an HTML page).', 'homework parent email classroom html', idxV('planning', '', function() { unitSetTab('hw'); }));
+            idxE(U, 'Pick a strand and topic from the curriculum', 'Fills in Specific Knowledge and Practices straight from the curriculum.', 'knowledge practices kp picker tahurangi strand', idxV('planning', '', function() { openKPPicker(); }));
+            idxE(U, 'Unit length', '4, 8, 12, 16 or 20 lessons.', 'lessons how many', idxV('planning', '4 Lessons'));
+            idxE(U, 'Unit plan style', 'Full CPM sequence, short summaries, lesson outlines only, or MoE lesson plans.', 'full cpm outline moe style', idxV('planning', 'Full CPM Sequence'));
+            idxE(U, 'Maths strategy sequence', 'A unit plan built around maths teaching strategies.', 'maths strategy', idxV('planning', 'Maths Strategy Sequence'));
+            idxE(U, 'Science unit plan template', 'Unit plan in the Science template (HTML).', 'science template html', idxV('planning', 'Science Unit Plan Template', null, null, 'This button appears in the plan-style step when the subject is Science.'));
+            idxE(U, 'Maths unit plan template', 'Unit plan in the Maths template (HTML, beta).', 'maths template html beta', idxV('planning', 'Maths Unit Plan Template', null, null, 'This button appears in the add-ons step when the subject is Maths.'));
+            idxE(U, 'WHS Official Template (unit)', 'Unit plan laid out like the official WHS template (beta).', 'whs template html', idxV('planning', 'WHS Official Template'));
+            idxE(U, 'Gemini Notebook knowledge (unit)', 'Build the unit from sources you load into Gemini Notebook.', 'notebook sources', goToUnitNotebookAddon);
+            idxE(U, '"Make with AI" links in the unit plan', 'Each lesson gets a link that opens a ready prompt for slides, worksheets, quizzes and more.', 'make with ai resources slideshow worksheet', idxV('planning', 'Make with AI'));
+            idxE(U, 'Plan extras', 'Extra sections added to the unit plan.', 'extras add on', idxV('planning', 'Plan extras', null, null, 'Plan extras appears in the add-ons step once the unit plan is set up.'));
+            idxE(U, 'Unit curriculum integrations and devices', 'Waiheke context, literacy, numeracy, device percentage, AI level.', 'waiheke literacy numeracy devices ai', idxV('planning', 'Curriculum Integrations'));
+            idxE(U, '"Make with AI" pop-up', 'Opens from a lesson in a finished unit plan: worksheets, reading sheets, slides, a whole-lesson slideshow and more.', 'resources worksheet slides slideshow popup', idxV('planning', ''), 'The Make with AI pop-up opens from the 🤖 link beside each lesson in a generated unit plan.');
+            // Assessment
+            idxE(A, 'Assessment Generator', 'Tests, tasks and rubrics for Years 7 to 13.', 'test task rubric', idxV('assessment', ''));
+            idxE(A, 'Standard subject assessment', 'An assessment for a subject and year level.', 'subject assessment', idxV('assessment', 'Standard subject', function() { setJuniorCheckMode(false); }, null, 'These two buttons appear for Years 7 to 10 once you choose English or Maths.'));
+            idxE(A, 'Literacy and numeracy check', 'A reading or writing check for Years 7 to 10.', 'reading writing literacy numeracy check junior', idxV('assessment', 'Literacy / Numeracy', function() { setJuniorCheckMode(true); }, null, 'These two buttons appear for Years 7 to 10 once you choose English or Maths.'));
+            idxE(A, 'Marking assistant (Years 7 to 10)', 'Get help marking an assessment you already have.', 'marking mark feedback', idxV('assessment', '', function() { mkOpen(); }));
+            idxE(A, 'Assessment formats', 'Essay, paragraph, multiple choice, resource based, report, presentation, podcast, video, infographic and more.', 'essay mcq presentation podcast infographic documentary photo essay', idxV('assessment', 'Time, format', function() { asSecOpen(4, true); }));
+            idxE(A, 'Time, format and questions', 'How long, how many questions, and the format.', 'period test time', idxV('assessment', 'Time, format', function() { asSecOpen(4, true); }));
+            idxE(A, 'Source material and unit plan', 'Attach your unit plan or sources so the assessment matches what was taught.', 'source unit plan attach', idxV('assessment', 'Source material', function() { asSecOpen(3, true); }));
+            idxE(A, 'Version A and Version B', 'Two matching versions of the same assessment.', 'dual version cheating', idxV('assessment', 'Version A', function() { asSecOpen(4, true); }));
+            idxE(A, 'Differentiation and accommodations', 'Supports for learners who need them.', 'accommodations support', idxV('assessment', 'Differentiation', function() { asSecOpen(5, true); }));
+            idxE(A, 'Additional outputs (assessment)', 'Marking guide, rubric and other extras.', 'rubric marking schedule', idxV('assessment', 'Additional Outputs', function() { asSecOpen(5, true); }));
+            // Year Planner
+            idxE(Y, 'Year Planner', 'Drag topics from the curriculum library into a full year, term by term.', 'year plan curriculum terms', idxV('yearplanner', ''));
+            idxE(Y, 'Choose department and year level', 'Social Sciences, Science, English, Maths, PE and Health, Arts, Māori, Technology; Year 7 to 13.', 'department subject year', idxV('yearplanner', 'Social Sciences'));
+            idxE(Y, 'Add your own topic', 'A topic that is not in the curriculum library.', 'custom topic', idxV('yearplanner', '', function() { openCustomTopicModal(); }));
+            idxE(Y, 'Buffer weeks', 'Put a spare week into the plan.', 'buffer spare', idxV('yearplanner', 'Buffer'));
+            idxE(Y, 'Year view and coverage', 'See the year at a glance, and which parts of the curriculum are covered.', 'coverage year view', idxV('yearplanner', 'Full Year Coverage'));
+            idxE(Y, 'Generate the plan', 'Turns your blocks into a printable plan.', 'generate', idxV('yearplanner', 'Generate Plan'));
+            idxE(Y, 'Export and print the plan', 'Day-by-day grid, spreadsheet, timeline, one page for Google Docs, full-year grid, calendar (.ics), CSV.', 'export print xlsx ics csv google docs timeline', idxV('yearplanner', 'Export / Print'));
+            idxE(Y, 'Block unavailable weeks', 'Camps, exams and so on; the plan flows around them.', 'camps exams blocked', idxV('yearplanner', '', function() { openBlockedWeeksModal(); }));
+            idxE(Y, 'Term lengths and dates', 'How many weeks are in each term and when they start.', 'terms weeks dates', idxV('yearplanner', '', function() { openTermLengthsModal(); }));
+            idxE(Y, '2027 school calendar', 'Term dates, holidays and key dates for 2027.', 'calendar holidays events', idxV('yearplanner', '2027 school calendar'));
+            idxE(Y, 'Calendar display (dots, labels, hidden)', 'How school events show on the plan: open Plan settings, then choose Dots, Labels or Hidden.', 'events dots labels', idxV('yearplanner', 'Plan settings'));
+            idxE(Y, 'Reset the Year Planner', 'Clears the plan and starts again.', 'clear delete', idxV('yearplanner', 'Reset Plan'));
+            // Small tools
+            idxE(T, 'Make an Explore Board', 'A printable or shareable student board of links, tasks and AI squares around one topic.', 'explore board students links', idxV('exploreboard', ''));
+            idxE(T, 'Make a Quiz', 'Multiple-choice quiz files for Kahoot, Blooket, Gimkit, Quizizz and Quizlet.', 'quiz kahoot blooket gimkit quizizz quizlet', idxV('quizmaker', ''));
+            idxE(T, 'Differentiate any task', 'Paste in a lesson or task and get a differentiated version.', 'differentiate scaffold extend', idxV('differentiate', ''));
+            idxE(T, 'Differentiation options', 'Simplify, scaffold, lower reading level, EAL, dyslexia-friendly, extension, tiers, choice board, Bloom, SOLO, Webb, Six Thinking Hats and more.', 'bloom solo webb gardner eal dyslexia choice board tiers', idxV('differentiate', 'Scaffold / more support'));
+            idxE(T, 'Arcade Mode', 'Turn a topic into a playable review game for students (opens in a new tab).', 'game review arcade', function() { window.open('https://kennedyd-create.github.io/ArcadeAI/', '_blank', 'noopener'); });
+            idxE(T, 'Copy the Arcade Mode link for students', 'Copies the link so you can share it.', 'copy link arcade', function() { idxClick('[data-action="copy-arcade"]'); });
+            idxE(T, 'Gemini Notebook guide', 'Step by step: use Gemini Notebook\'s own source grounding to build a full course.', 'notebook notebooklm sources course', idxV('notebook', ''));
+            // For teachers
+            idxE(P, 'Teacher Well-being', 'A minute to breathe, plus a book recommendation.', 'wellbeing breathe book calm', function() { showWellbeingModal(); });
+            idxE(P, 'Teacher tools', 'Report comments, tracking grid, follow-up prompts and ready prompts.', 'tools reports', function() { tkOpen(); });
+            idxE(P, 'Report comments', 'Draft school report comments from a few details, using class codes not names.', 'reports comments writing', function() { tkOpen('report'); });
+            idxE(P, 'Tracking grid', 'A printable grid for tracking tasks or progress for a class.', 'tracking grid print', function() { tkOpen('grid'); });
+            idxE(P, 'Follow-up prompts', 'Prompts to paste after the AI replies: shorter, simpler, harder and more.', 'follow up refine shorter', function() { tkOpen('follow'); });
+            idxE(P, 'Ready prompts', 'Ready-made prompts for common teacher jobs.', 'ready made prompts emails', function() { tkOpen('ready'); });
+            idxE(P, 'My Teaching Profile', 'Tell it your teaching style once and it is woven into your prompts.', 'profile style preferences junior senior', function() { toggleTeachingProfilePanel(true); });
+            idxE(P, 'Student Dashboard', 'The student-facing portal (opens in a new tab).', 'students portal', function() { window.open('https://kennedyd-create.github.io/WHS---Student-/', '_blank', 'noopener'); });
+            idxE(P, 'Copy the Student Dashboard link', 'Copies the link so you can share it.', 'copy link students', function() { idxClick('[data-action="copy-dashboard"]'); });
+            // AI prompt bar
+            idxE(I, 'Copy prompt', 'Copies the prompt to paste into any AI.', 'copy clipboard', idxV('lesson', 'COPY PROMPT'));
+            idxE(I, 'Prompt file (.txt)', 'Downloads the prompt as a text file, to attach in the AI.', 'download file txt', idxV('lesson', 'PROMPT FILE'));
+            idxE(I, 'Open Gemini, ChatGPT or Claude', 'One click to open your AI of choice.', 'gemini chatgpt claude open', idxV('lesson', 'OPEN GEMINI'));
+            idxE(I, 'Show or view the prompt', 'Read the prompt before you copy it (the button is called Show prompt or View prompt, depending on the page).', 'view prompt preview', idxV('weekly', 'SHOW PROMPT'));
+            idxE(I, 'Prompt length check', 'A warning near 28,000 characters and a copy lock at 32,000, so prompts are not cut off.', 'characters long limit', idxV('lesson', ''), 'The length chip appears beside the prompt buttons on every page.');
+            // Help and settings
+            idxE(H, 'New here and recent updates', 'The quick guide and the latest changes.', 'welcome guide start', function() { showOnboardingModal(); });
+            idxE(H, 'Where to start', 'A short guide to which tool to use first.', 'start guide', idxOb('start'));
+            idxE(H, 'Recent updates', 'What has been added lately.', 'whats new changes', idxOb('updates'));
+            idxE(H, 'Why this site', 'Why the site exists and how it helps.', 'purpose about', idxOb('why'));
+            idxE(H, 'AI use and privacy', 'How to use AI safely: no student names, checking the output.', 'privacy safety students names', idxOb('ai'));
+            idxE(H, 'CPM Theory', 'The research behind the Common Practice Model.', 'cpm research theory', idxV('theory', ''));
+            idxE(H, 'What\'s New (full list)', 'Every change, version by version.', 'changelog version history', function() { showChangelogModal(); });
+            idxE(H, 'Credits and sources', 'Where the ideas and data came from.', 'credits references', function() { showCreditsModal(); });
+            idxE(H, 'WHS template help', 'What the WHS Official Template option does.', 'template help', function() { showWhsTemplateHelpModal(); });
+            idxE(H, 'Send feedback', 'Email feedback to the school.', 'email contact', function() { location.href = 'mailto:feedback@waiheke.school.nz?subject=CPM%20Prompt%20Generator%20Feedback'; });
+            idxE(H, 'Dark mode', 'Switch between light and dark.', 'theme night', function() { toggleDarkMode(); });
+            idxE(H, 'Reset saved data', 'Clears your saved choices on this device (asks first). The Weekly Plan is kept.', 'clear delete reset', function() { var r = document.getElementById('reset-modal'); if (r) r.classList.remove('hidden'); });
+        })();
+        function idxAreaInfo(k) { for (var i = 0; i < IDX_AREAS.length; i++) if (IDX_AREAS[i][0] === k) return IDX_AREAS[i]; return IDX_AREAS[0]; }
+        function idxItemHtml(it, i, showArea) {
+            var ai = idxAreaInfo(it.a);
+            return '<button type="button" class="idx-item" onclick="idxGo(' + i + ')"><span class="idx-dot" style="background:' + ai[2] + '"></span><span class="idx-txt"><span class="idx-name">' + actEsc(it.n) + '</span><span class="idx-desc">' + actEsc(it.d) + '</span></span>' + (showArea ? '<span class="idx-tag" style="color:' + ai[2] + '">' + actEsc(ai[1]) + '</span>' : '') + '</button>';
+        }
+        function idxRender() {
+            var body = document.getElementById('idx-body'); if (!body) return;
+            var q = ((document.getElementById('idx-q') || {}).value || '').toLowerCase().split(/\s+/).filter(Boolean), rows = [];
+            IDX.forEach(function(it, i) { var hay = (it.n + ' ' + it.d + ' ' + it.k + ' ' + idxAreaInfo(it.a)[1]).toLowerCase(); if (q.every(function(w) { return hay.indexOf(w) > -1; })) rows.push(i); });
+            var h = '';
+            if (!rows.length) h = '<p class="idx-empty">Nothing matches that. Try a shorter word, such as "quiz", "report" or "homework".</p>';
+            else if (idxMode === 'az') {
+                rows.sort(function(x, y) { return IDX[x].n.replace(/[^A-Za-z0-9]/g, '').toLowerCase() < IDX[y].n.replace(/[^A-Za-z0-9]/g, '').toLowerCase() ? -1 : 1; });
+                var cur = '';
+                rows.forEach(function(i) { var l = IDX[i].n.replace(/[^A-Za-z0-9]/g, '').charAt(0).toUpperCase(); if (l !== cur) { cur = l; h += '<div class="idx-head">' + l + '</div>'; } h += idxItemHtml(IDX[i], i, true); });
+            } else {
+                IDX_AREAS.forEach(function(ar) { var mine = rows.filter(function(i) { return IDX[i].a === ar[0]; }); if (!mine.length) return; h += '<div class="idx-head" style="color:' + ar[2] + '">' + actEsc(ar[1]) + ' <span class="idx-n">' + mine.length + '</span></div>'; mine.forEach(function(i) { h += idxItemHtml(IDX[i], i, false); }); });
+            }
+            body.innerHTML = h;
+            var c = document.getElementById('idx-count'); if (c) c.textContent = rows.length + (rows.length === 1 ? ' entry' : ' entries');
+        }
+        function idxMode_(m) { idxMode = m; ['area', 'az'].forEach(function(k) { var b = document.getElementById('idx-m-' + k); if (b) { b.classList.toggle('on', k === m); b.setAttribute('aria-pressed', k === m ? 'true' : 'false'); } }); idxRender(); }
+        function idxToggle(open) {
+            var p = document.getElementById('idx-panel'), t = document.getElementById('idx-btn'), bd = document.getElementById('idx-backdrop'); if (!p || !t) return;
+            var show = typeof open === 'boolean' ? open : p.classList.contains('hidden');
+            if (!show) { p.classList.add('hidden'); if (bd) bd.classList.add('hidden'); t.setAttribute('aria-expanded', 'false'); return; }
+            var r = t.getBoundingClientRect(), below = r.bottom + 8, room = window.innerHeight - below - 12;
+            p.style.left = Math.max(8, r.left) + 'px';
+            if (room < 260) { p.style.top = 'auto'; p.style.bottom = Math.max(8, window.innerHeight - r.top + 8) + 'px'; p.style.maxHeight = Math.max(240, r.top - 20) + 'px'; }
+            else { p.style.bottom = 'auto'; p.style.top = below + 'px'; p.style.maxHeight = room + 'px'; }
+            p.classList.remove('hidden'); if (bd) bd.classList.remove('hidden'); t.setAttribute('aria-expanded', 'true');
+            idxRender(); var q = document.getElementById('idx-q'); if (q) { q.focus(); q.select(); }
+        }
+        function idxGo(i) {
+            var it = IDX[i]; if (!it) return; idxToggle(false);
+            setTimeout(function() { try { it.go(); } catch (e) { console.error(e); } if (it.note) showGlobalToast(it.note); }, 60);
+        }
+        document.addEventListener('keydown', function(e) {
+            var p = document.getElementById('idx-panel'); if (!p || p.classList.contains('hidden')) return;
+            if (e.key === 'Escape') { idxToggle(false); var t = document.getElementById('idx-btn'); if (t) t.focus(); }
+            else if (e.key === 'Enter' && e.target && e.target.id === 'idx-q') { var f = p.querySelector('.idx-item'); if (f) f.click(); }
+        });
+
+        // ---------- Weekly Plan (main tab; classes are saved on this device and survive "Reset saved data") ----------
+        var WK_KEY = 'whs_weekly_plan_v1';
+        var WK_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], WK_DAYFULL = { Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday' };
+        var WK_PERIODS = 5, WK_MINS = 60;
+        var wkData = { v: 2, classes: [], units: [], full: false };
+        var wkUi = { start: '', lessons: {}, extra: '', editing: null, draft: null, unitEdit: null, unitDraft: null, showPrompt: false, resetStep: 0, delArm: false, unitDelArm: false };
+        function wkLoad() {
+            try { var r = localStorage.getItem(WK_KEY); if (r) { var d = JSON.parse(r); if (d && Array.isArray(d.classes)) { wkData = d; if (!Array.isArray(wkData.units)) wkData.units = []; wkData.full = !!wkData.full; wkData.trim = d.trim !== false; wkMigrate(); } } } catch (e) {}
+        }
+        // Older saves kept a pasted unit plan inside each class. Move them into the shared list of unit plans (one copy, however many classes use it).
+        function wkMigrate() {
+            var ch = false;
+            wkData.classes.forEach(function(c) {
+                if (c.mode === 'saved') { var u = wkData.units.filter(function(x) { return x.plan === c.plan; })[0]; if (!u) { u = { id: 'u' + Date.now() + Math.floor(Math.random() * 1000), name: c.unit || ('Unit plan for ' + c.label), plan: c.plan || '' }; wkData.units.push(u); } c.mode = 'unit'; c.unitId = u.id; delete c.plan; ch = true; }
+            });
+            if (ch) wkSave();
+        }
+        function wkSave() { try { localStorage.setItem(WK_KEY, JSON.stringify(wkData)); return true; } catch (e) { if (typeof showGlobalToast === 'function') showGlobalToast('Could not save on this device (storage is full or blocked).'); return false; } }
+        var WK_INTRO_KEY = 'whs_weekly_intro_hidden';
+        function wkIntroOpen() {
+            var hide = false; try { hide = localStorage.getItem(WK_INTRO_KEY) === '1'; } catch (e) {}
+            if (hide) return;
+            var m = document.getElementById('wk-intro-modal'), c = document.getElementById('wk-intro-hide'); if (!m) return; if (c) c.checked = false; m.classList.remove('hidden'); m.style.display = 'flex';
+        }
+        function wkIntroClose() {
+            var m = document.getElementById('wk-intro-modal'), c = document.getElementById('wk-intro-hide');
+            if (c && c.checked) { try { localStorage.setItem(WK_INTRO_KEY, '1'); } catch (e) {} }
+            if (m) { m.classList.add('hidden'); m.style.display = ''; }
+        }
+        wkLoad();
+        function wkYearN(c) { var m = /\d+/.exec(c.year || ''); return m ? m[0] : ''; }
+        function wkDate(iso) { var p = iso.split('-').map(Number); return new Date(Date.UTC(p[0], p[1] - 1, p[2])); }
+        function wkLong(iso) { var p = iso.split('-').map(Number), M = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']; return WK_DAYFULL[WK_DAYS[(wkDate(iso).getUTCDay() + 6) % 7]] + ' ' + p[2] + ' ' + M[p[1] - 1] + ' ' + p[0]; }
+        function wkMonday(iso) { var dow = wkDate(iso).getUTCDay(); if (dow === 6) return ypAddDays(iso, 2); if (dow === 0) return ypAddDays(iso, 1); return ypAddDays(iso, 1 - dow); }
+        function wkAudOk(aud, yn) {
+            if (!aud || !yn) return true;
+            var senior = yn === '11' || yn === '12' || yn === '13';
+            if (aud === 'senior') return senior;
+            if (aud === 'notsenior') return !senior;
+            if (/^y\d+(,y\d+)*$/.test(aud)) return aud.split(',').indexOf('y' + yn) !== -1;
+            return true;
+        }
+        // For one date and one year level: is there no teaching (and why), and what else is on that might disturb lessons?
+        function wkDayInfo(iso, yn) {
+            var off = '', flags = [], terms = WHS_CAL.terms, inTerm = false;
+            Object.keys(terms).forEach(function(k) { var c = terms[k]; if (iso >= c.start && iso <= c.end) { inTerm = true; if (c.studentsFrom && iso < c.studentsFrom) off = 'Before students start'; } });
+            if (!inTerm) off = 'School holidays';
+            (calEventsByDate()[iso] || []).forEach(function(e) {
+                if (!wkAudOk(e.aud, yn)) return;
+                if (e.kind === 'hol') off = e.label;
+                else if (e.kind === 'staff') off = off || (e.label + ' (no students)');
+                else if (e.block) off = off || e.label;
+                else if (e.kind === 'school' && /^y\d+$/.test(e.aud)) off = off || e.label;
+                else flags.push(e.label + (e.kind === 'assess' ? ' (assessment week)' : ''));
+            });
+            return { off: off, flags: flags };
+        }
+        // Everything about the chosen week for the saved classes.
+        function wkWeek() {
+            if (!wkUi.start) return null;
+            var mon = wkMonday(wkUi.start), days = [0, 1, 2, 3, 4].map(function(i) { return ypAddDays(mon, i); });
+            var out = { mon: mon, moved: mon !== wkUi.start, days: days, available: mon.slice(0, 4) === String(WHS_CAL.year), classes: {} };
+            wkData.classes.forEach(function(c) {
+                var yn = wkYearN(c), rec = { off: [], flags: [], keep: [] };
+                days.forEach(function(iso, di) {
+                    var info = out.available ? wkDayInfo(iso, yn) : { off: '', flags: [] }, d = WK_DAYS[di];
+                    for (var p = 1; p <= WK_PERIODS; p++) if (c.slots[d + p]) { if (info.off) rec.off.push({ d: d, p: p, why: info.off }); else rec.keep.push({ d: d, p: p }); }
+                    if (info.flags.length && Object.keys(c.slots).some(function(k) { return c.slots[k] && k.slice(0, 3) === d; })) rec.flags.push({ d: d, what: info.flags.join(', ') });
+                });
+                out.classes[c.id] = rec;
+            });
+            return out;
+        }
+        function wkSlotText(list) {
+            return WK_DAYS.map(function(d) { var ps = list.filter(function(x) { return x.d === d; }).map(function(x) { return 'P' + x.p; }); return ps.length ? WK_DAYFULL[d] + ' ' + ps.join(' and ') : ''; }).filter(Boolean).join(', ');
+        }
+        function wkAllSlots(c) { var l = []; WK_DAYS.forEach(function(d) { for (var p = 1; p <= WK_PERIODS; p++) if (c.slots[d + p]) l.push({ d: d, p: p }); }); return l; }
+        function wkUnit(c) { return c.mode === 'unit' ? (wkData.units.filter(function(u) { return u.id === c.unitId; })[0] || null) : null; }
+        function wkHasPlan(c) { return (c.mode === 'unit' && !!wkUnit(c)) || c.mode === 'attach'; }
+        function wkUsedBy(u) { return wkData.classes.filter(function(c) { return c.mode === 'unit' && c.unitId === u.id; }).map(function(c) { return c.label; }); }
+        function wkRender() {
+            var root = document.getElementById('wk-root'); if (!root) return;
+            var esc = actEsc, h = '';
+            h += '<div class="text-center mb-4"><div class="flex flex-wrap items-center justify-center gap-3 mb-2"><h2 class="text-4xl font-black text-slate-900">🗓️ Weekly Plan</h2><span class="inline-flex items-center gap-1.5"><span class="wk-box inline-flex items-center rounded-full border border-cyan-300 bg-cyan-50 text-cyan-900 text-[10px] font-bold px-2.5 py-1" title="Your classes, periods and unit plans stay on this device each time you visit, even if you press Reset saved data.">💾 Saved on this device only</span><button type="button" class="text-[10px] font-bold text-red-700 border border-red-300 rounded-full px-2 py-1 hover:bg-red-50" onclick="wkResetOpen()" title="Remove everything saved in the Weekly Plan">Reset</button></span></div><p class="text-slate-600 max-w-2xl mx-auto">Save your classes and periods once. Each week, pick the date and the lesson each class is up to, and get a plan for the week. Use class codes, never student names.</p></div>';
+            if (wkUi.editing) { h += wkEditorHtml(); root.innerHTML = h + wkResetHtml(); return; }
+            if (wkUi.unitEdit) { h += wkUnitEditorHtml(); root.innerHTML = h + wkResetHtml(); return; }
+            // 1: date
+            var wk = wkWeek();
+            h += '<div class="wk-box rounded-xl border-2 border-cyan-200 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">1 · The week starting</p><div class="flex flex-wrap items-center gap-3"><input type="date" id="wk-date" class="wk-in rounded border border-slate-300 p-2 text-sm" value="' + esc(wkUi.start) + '" onchange="wkSetDate(this.value)">' + (wk ? '<span class="text-sm font-bold text-slate-800">Week of ' + esc(wkLong(wk.mon)) + '</span>' : '<span class="text-xs text-slate-500">Choose any day in the week; the plan uses that week\'s Monday to Friday.</span>') + '</div>' + (wk && wk.moved ? '<p class="text-[11px] text-slate-500 mt-1">That date is not a Monday, so the plan uses the Monday of that week.</p>' : '') + wkCalHtml(wk) + '</div>';
+            // 2: classes
+            h += '<div class="wk-box rounded-xl border-2 border-cyan-200 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">2 · Your classes</p>';
+            if (!wkData.classes.length) h += '<p class="text-sm text-slate-600">No classes yet. Add each class you teach, tick its periods, and (optionally) add the unit plan.</p>';
+            wkData.classes.forEach(function(c) {
+                var rec = wk ? wk.classes[c.id] : null, slots = wkSlotText(wkAllSlots(c)), plan = wkHasPlan(c);
+                var sel = '<option value="none"' + (!plan ? ' selected' : '') + '>No unit plan (subject only)</option>' + wkData.units.map(function(u) { return '<option value="' + u.id + '"' + (c.mode === 'unit' && c.unitId === u.id ? ' selected' : '') + '>' + esc(u.name) + '</option>'; }).join('') + '<option value="attach"' + (c.mode === 'attach' ? ' selected' : '') + '>I will attach it in the AI</option>';
+                h += '<div class="wk-row mt-2 rounded-lg border border-slate-200 p-3 flex flex-wrap items-end gap-3"><div class="flex-1" style="min-width:200px"><p class="text-sm font-black text-slate-900">' + esc(c.label) + ' <span class="font-semibold text-slate-600">· ' + esc(c.year) + ' ' + esc(c.subj) + '</span></p><p class="text-[11px] text-slate-600">' + esc(slots) + '</p>' + (rec && rec.off.length ? '<p class="text-[11px] font-bold text-red-700 mt-0.5">Loses ' + esc(wkSlotText(rec.off)) + ' this week (' + esc(rec.off.map(function(x) { return x.why; }).filter(function(v, i, a) { return a.indexOf(v) === i; }).join(', ')) + ')</p>' : '') + '</div>'
+                    + '<label class="text-[11px] font-bold text-slate-700">Unit plan<select class="wk-in block mt-0.5 w-52 rounded border border-slate-300 p-1.5 text-xs font-normal" onchange="wkRowUnit(\'' + c.id + '\',this.value)">' + sel + '</select></label>'
+                    + '<label class="text-[11px] font-bold text-slate-700">' + (plan ? 'Lesson number you are up to' : 'Lesson number you are up to') + '<input type="text" class="wk-in block mt-0.5 w-40 rounded border border-slate-300 p-1.5 text-sm font-normal" value="' + esc(wkUi.lessons[c.id] || '') + '" placeholder="' + (c.last ? 'Last time: ' + esc(c.last) : 'e.g. 7') + '" oninput="wkLesson(\'' + c.id + '\',this.value)"></label>'
+                    + '<button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="wkEdit(\'' + c.id + '\')">✏️ Edit</button></div>';
+            });
+            h += '<div class="mt-3"><button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="wkEdit(\'new\')">+ Add a class</button></div>';
+            h += '<div class="mt-4 pt-3 border-t border-cyan-200"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-1">Your unit plans</p><p class="text-[11px] text-slate-600 mb-1">Load a unit plan once and use it for as many classes as you like. Each class keeps its own "lesson you are up to", so classes can be on different lessons.</p>';
+            wkData.units.forEach(function(u) { var by = wkUsedBy(u); h += '<div class="wk-row mt-1.5 rounded-lg border border-slate-200 p-2 flex flex-wrap items-center gap-3"><div class="flex-1" style="min-width:200px"><p class="text-sm font-bold text-slate-900">' + esc(u.name) + '</p><p class="text-[11px] text-slate-600">' + (by.length ? 'Used by ' + esc(by.join(', ')) : 'Not used by any class yet') + ' · ' + u.plan.length.toLocaleString() + ' characters</p></div><button type="button" class="builder-btn text-xs py-1 px-3" onclick="wkUnitEdit(\'' + u.id + '\')">✏️ Edit</button></div>'; });
+            h += '<div class="mt-2"><button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="wkUnitEdit(\'new\')">+ Add a unit plan</button></div></div></div>';
+            // 3: extras
+            h += '<div class="wk-box rounded-xl border-2 border-cyan-200 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">3 · Anything else on this week? (optional)</p><textarea rows="2" class="wk-in w-full rounded border border-slate-300 p-2 text-xs" oninput="wkUi.extra=this.value;wkRefresh()" placeholder="Things that are not on the school calendar, e.g. my class has a test Tuesday, I am away Thursday P4">' + esc(wkUi.extra) + '</textarea></div>';
+            // 4: prompt bar
+            h += '<div class="wk-box rounded-xl border-2 border-cyan-300 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">4 · Choose what you get</p>' + wkOptHtml() + '<div class="flex flex-wrap items-center gap-2 mb-4">' + wtChip(wkData.trim !== false, 'Send only this week\'s lessons from each unit plan (keeps the prompt short)', 'wkToggleTrim()') + '<span class="text-[11px] text-slate-500">If lessons can\'t be found, the whole plan is sent.</span></div><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">5 · Get your plan</p><div class="flex flex-wrap items-center gap-3">'
+                + '<span class="pb-grp"><button type="button" id="wk-copy" class="pb-btn pb-copy" onclick="wkCopy(this)">COPY PROMPT</button><span class="pb-or">or</span><button type="button" id="wk-file" class="pb-btn pb-copy" onclick="wkDownload()">⬇ PROMPT FILE (.txt)</button></span>'
+                + '<span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>'
+                + '<span class="pb-end"><button type="button" class="pb-small" onclick="wkTogglePrompt()">' + (wkUi.showPrompt ? '🙈 HIDE PROMPT' : '👁 SHOW PROMPT') + '</button></span></div>'
+                + '<span id="wk-prompt-length" class="hidden plen-ok text-[10px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1 border mt-2"></span><p id="wk-prompt-longnote" class="hidden text-xs font-semibold text-amber-900 mt-2"></p>'
+                + '<p id="wk-warn" class="hidden text-xs font-bold text-red-700 mt-2"></p><p id="wk-how" class="text-xs font-bold text-cyan-900 mt-2"></p>'
+                + '<div id="wk-prompt-box" class="' + (wkUi.showPrompt ? '' : 'hidden ') + 'mt-2 max-h-56 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3 text-[11px] font-mono whitespace-pre-wrap"><span id="wk-prompt-text"></span></div></div>';
+            root.innerHTML = h + wkResetHtml(); wkRefresh();
+        }
+        function wkCalHtml(wk) {
+            if (!wk) return '';
+            if (!wk.available) return '<p class="text-xs text-slate-600 mt-2 bg-slate-50 border border-slate-200 rounded-lg p-2">The school calendar built into this site covers ' + WHS_CAL.year + ', so this week cannot be checked for holidays or events automatically. Add anything that is on in box 3.</p>';
+            var lines = [];
+            wk.days.forEach(function(iso, di) {
+                var seen = {}, parts = [];
+                wkData.classes.forEach(function(c) { var yn = wkYearN(c), info = wkDayInfo(iso, yn); [info.off].concat(info.flags).filter(Boolean).forEach(function(tx) { if (!seen[tx]) { seen[tx] = { t: tx, off: tx === info.off, who: [] }; parts.push(seen[tx]); } seen[tx].who.push(c.label); }); });
+                if (parts.length) lines.push('<li><strong>' + WK_DAYFULL[WK_DAYS[di]] + ' ' + Number(iso.slice(8)) + '</strong>: ' + parts.map(function(x) { return actEsc(x.t) + (x.off ? ' <span class="text-red-700 font-bold">(no lessons for ' + actEsc(x.who.join(', ')) + ')</span>' : ' <span class="text-amber-800">(may disturb lessons: ' + actEsc(x.who.join(', ')) + ')</span>'); }).join('; ') + '</li>');
+            });
+            if (!wkData.classes.length) return '<p class="text-[11px] text-slate-500 mt-2">Add your classes below and this week will be checked against the school calendar (holidays, staff days, camps and school events for each year level).</p>';
+            return lines.length ? '<div class="mt-2 rounded-lg border border-amber-300 bg-amber-50 p-2.5 text-xs text-amber-900"><p class="font-black mb-1">📅 School calendar for this week</p><ul class="list-disc pl-5 space-y-0.5">' + lines.join('') + '</ul><p class="mt-1 text-[11px]">These are built into the plan automatically.</p></div>' : '<p class="text-xs text-emerald-800 mt-2 bg-emerald-50 border border-emerald-200 rounded-lg p-2">📅 Nothing on the school calendar affects your classes this week.</p>';
+        }
+        function wkEditorHtml() {
+            var d = wkUi.draft, esc = actEsc, inp = 'class="wk-in w-full rounded border border-slate-300 p-2 text-xs"', isNew = wkUi.editing === 'new';
+            var grid = '<table class="wk-grid"><thead><tr><th></th>' + WK_DAYS.map(function(x) { return '<th>' + x + '</th>'; }).join('') + '</tr></thead><tbody>';
+            for (var p = 1; p <= WK_PERIODS; p++) { grid += '<tr><th>P' + p + '</th>' + WK_DAYS.map(function(x) { var on = !!d.slots[x + p]; return '<td><button type="button" class="wk-cell' + (on ? ' on' : '') + '" aria-pressed="' + on + '" aria-label="' + WK_DAYFULL[x] + ' period ' + p + '" onclick="wkDraftSlot(\'' + x + p + '\')">' + (on ? '✓' : '') + '</button></td>'; }).join('') + '</tr>'; }
+            grid += '</tbody></table>';
+            var radio = function(label, val) { return '<label class="block text-xs mb-1 cursor-pointer"><input type="radio" name="wk-mode" ' + (d.mode === val ? 'checked ' : '') + 'onchange="wkDraftSet(\'mode\',\'' + val + '\',true)"> ' + label + '</label>'; };
+            var unitOpts = '<option value="">Choose a unit plan…</option>' + wkData.units.map(function(u) { return '<option value="' + u.id + '"' + (d.unitId === u.id ? ' selected' : '') + '>' + esc(u.name) + '</option>'; }).join('') + '<option value="new"' + (d.unitId === 'new' ? ' selected' : '') + '>+ Add a new unit plan…</option>';
+            var h = '<div class="wk-box rounded-xl border-2 border-cyan-300 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">' + (isNew ? 'Add a class' : 'Edit class') + '</p>'
+                + '<div class="grid gap-2" style="grid-template-columns: 1fr 1fr 1fr;"><input type="text" ' + inp + ' value="' + esc(d.label) + '" oninput="wkDraftSet(\'label\',this.value)" placeholder="Class, e.g. 8B">' + tkSelect('wk-dy', TK_YEARS, d.year, "wkDraftSet('year',this.value)", 'Year level…') + tkSelect('wk-ds', TK_DEPTS, d.subj, "wkDraftSet('subj',this.value)", 'Subject…') + '</div>'
+                + '<p class="text-xs font-bold text-slate-800 mt-3 mb-1">Click the periods this class has (a 5-day, 5-period week; 60 minutes each)</p>' + grid
+                + '<p class="text-xs font-bold text-slate-800 mt-3 mb-1">Unit plan</p>' + radio('No unit plan: just show the subject, with no lesson details', 'none') + radio('Use a unit plan saved on this device' + (wkData.units.length ? '' : ' (add one below)'), 'unit') + radio('I will attach it in the AI each week (not saved)', 'attach')
+                + (d.mode === 'unit' ? '<select class="wk-in w-full rounded border border-slate-300 p-2 text-xs" style="margin-top:6px" onchange="wkDraftSet(\'unitId\',this.value,true)">' + unitOpts + '</select><p class="text-[11px] text-slate-500 mt-1">Two classes on the same unit can share one saved unit plan. Each class has its own lesson number each week.</p>' : '')
+                + (d.mode === 'unit' && d.unitId === 'new' ? '<input type="text" ' + inp + ' style="margin-top:6px" value="' + esc(d.newName) + '" oninput="wkDraftSet(\'newName\',this.value)" placeholder="Unit name, e.g. Year 8 Migration"><textarea rows="8" ' + inp + ' style="margin-top:6px" oninput="wkDraftSet(\'newPlan\',this.value)" placeholder="Paste the unit plan here. Very long plans can make the prompt too long to paste: if that happens, use the prompt file.">' + esc(d.newPlan) + '</textarea>' : '')
+                + (d.mode === 'attach' ? '<input type="text" ' + inp + ' style="margin-top:6px" value="' + esc(d.unit) + '" oninput="wkDraftSet(\'unit\',this.value)" placeholder="Unit name (optional), e.g. Migration">' : '')
+                + '<p id="wk-ewarn" class="hidden text-xs font-bold text-red-700 mt-2"></p>'
+                + '<div class="flex flex-wrap items-center gap-2 mt-3"><button type="button" class="px-5 py-2 rounded-lg border-2 border-cyan-700 bg-cyan-600 text-white text-xs font-black tracking-wider hover:bg-cyan-700" onclick="wkSaveClass()">SAVE CLASS</button><button type="button" class="builder-btn text-xs py-2 px-3" onclick="wkCancelEdit()">Cancel</button>' + (isNew ? '' : '<button type="button" class="ml-auto text-[11px] font-bold text-red-700 border border-red-300 rounded-md px-2 py-1 hover:bg-red-50" onclick="wkDeleteClass()">' + (wkUi.delArm ? 'Click again to delete this class' : 'Delete this class') + '</button>') + '</div></div>';
+            return h;
+        }
+        function wkUnitEditorHtml() {
+            var d = wkUi.unitDraft, esc = actEsc, inp = 'class="wk-in w-full rounded border border-slate-300 p-2 text-xs"', isNew = wkUi.unitEdit === 'new', by = isNew ? [] : wkUsedBy(d);
+            return '<div class="wk-box rounded-xl border-2 border-cyan-300 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">' + (isNew ? 'Add a unit plan' : 'Edit unit plan') + '</p>'
+                + (by.length ? '<p class="text-[11px] text-slate-600 mb-2">Used by ' + esc(by.join(', ')) + '. Changes apply to all of these classes.</p>' : '')
+                + '<input type="text" ' + inp + ' value="' + esc(d.name) + '" oninput="wkUnitSet(\'name\',this.value)" placeholder="Unit name, e.g. Year 8 Migration"><textarea rows="12" ' + inp + ' style="margin-top:6px" oninput="wkUnitSet(\'plan\',this.value)" placeholder="Paste the unit plan here.">' + esc(d.plan) + '</textarea>'
+                + '<p id="wk-uwarn" class="hidden text-xs font-bold text-red-700 mt-2"></p>'
+                + '<div class="flex flex-wrap items-center gap-2 mt-3"><button type="button" class="px-5 py-2 rounded-lg border-2 border-cyan-700 bg-cyan-600 text-white text-xs font-black tracking-wider hover:bg-cyan-700" onclick="wkUnitSave()">SAVE UNIT PLAN</button><button type="button" class="builder-btn text-xs py-2 px-3" onclick="wkUnitCancel()">Cancel</button>' + (isNew ? '' : '<button type="button" class="ml-auto text-[11px] font-bold text-red-700 border border-red-300 rounded-md px-2 py-1 hover:bg-red-50" onclick="wkUnitDelete()">' + (wkUi.unitDelArm ? 'Click again to delete' + (by.length ? ' (' + esc(by.join(', ')) + ' will have no unit plan)' : '') : 'Delete this unit plan') + '</button>') + '</div></div>';
+        }
+        function wkResetHtml() {
+            if (!wkUi.resetStep) return '';
+            var s = wkUi.resetStep;
+            return '<div class="fixed inset-0 flex items-center justify-center p-4" style="z-index:9500;background:rgba(15,23,42,.6)"><div class="wk-box bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border-t-4 ' + (s === 1 ? 'border-t-amber-500' : 'border-t-red-600') + '"><h3 class="text-lg font-black mb-2">' + (s === 1 ? '⚠️ Remove your weekly plan information?' : '🛑 Final warning') + '</h3><p class="text-sm text-slate-700">' + (s === 1 ? 'This will remove all your saved classes, periods and unit plans from this device.' : 'This cannot be undone. Every saved class, period and unit plan will be deleted from this device. You will have to enter them all again.') + '</p><div class="flex gap-2 justify-end mt-4"><button type="button" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold" onclick="wkResetCancel()">Keep my information</button><button type="button" class="px-4 py-2 rounded-lg ' + (s === 1 ? 'bg-amber-500 hover:bg-amber-600' : 'bg-red-600 hover:bg-red-700') + ' text-white text-sm font-bold" onclick="wkResetNext()">' + (s === 1 ? 'Continue' : 'Yes, delete everything') + '</button></div></div></div>';
+        }
+        function wkResetOpen() { wkUi.resetStep = 1; wkRender(); }
+        function wkResetCancel() { wkUi.resetStep = 0; wkRender(); }
+        function wkResetNext() {
+            if (wkUi.resetStep === 1) { wkUi.resetStep = 2; wkRender(); return; }
+            try { localStorage.removeItem(WK_KEY); } catch (e) {}
+            wkData = { v: 2, classes: [], units: [], full: false }; wkUi = { start: '', lessons: {}, extra: '', editing: null, draft: null, unitEdit: null, unitDraft: null, showPrompt: false, resetStep: 0, delArm: false, unitDelArm: false };
+            wkRender(); if (typeof showGlobalToast === 'function') showGlobalToast('Weekly plan information removed from this device.');
+        }
+        function wkSetDate(v) { wkUi.start = v; wkRender(); }
+        function wkLesson(id, v) { wkUi.lessons[id] = v; var w = document.getElementById('wk-warn'); if (w) w.classList.add('hidden'); wkRefresh(); }
+        function wkTogglePrompt() { wkUi.showPrompt = !wkUi.showPrompt; wkRender(); }
+        function wkEdit(id) {
+            wkUi.delArm = false; wkUi.editing = id;
+            wkUi.draft = id === 'new' ? { id: 'c' + Date.now(), label: '', year: '', subj: '', slots: {}, mode: 'none', unitId: '', unit: '', last: '', newName: '', newPlan: '' } : Object.assign({ newName: '', newPlan: '', unitId: '', unit: '' }, JSON.parse(JSON.stringify(wkData.classes.filter(function(c) { return c.id === id; })[0])));
+            wkRender(); window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function wkCancelEdit() { wkUi.editing = null; wkUi.draft = null; wkRender(); }
+        function wkDraftSet(k, v, rerender) { wkUi.draft[k] = v; var w = document.getElementById('wk-ewarn'); if (w) w.classList.add('hidden'); if (rerender) wkRender(); }
+        function wkDraftSlot(k) { wkUi.draft.slots[k] = !wkUi.draft.slots[k]; wkRender(); }
+        function wkSaveClass() {
+            var d = wkUi.draft, msg = '';
+            if (!d.label.trim()) msg = 'Give the class a short label, such as 8B.'; else if (!d.year) msg = 'Choose the year level.'; else if (!d.subj) msg = 'Choose the subject.'; else if (!wkAllSlots(d).length) msg = 'Click the periods this class has.';
+            else if (d.mode === 'unit' && !d.unitId) msg = 'Choose a saved unit plan, add a new one, or pick another option.';
+            else if (d.mode === 'unit' && d.unitId === 'new' && !d.newPlan.trim()) msg = 'You chose to add a new unit plan, but the box is empty. Paste it, or choose another option.';
+            if (msg) { var w = document.getElementById('wk-ewarn'); if (w) { w.textContent = '⚠️ ' + msg; w.classList.remove('hidden'); } return; }
+            d.label = d.label.trim();
+            if (d.mode === 'unit' && d.unitId === 'new') { var u = { id: 'u' + Date.now(), name: d.newName.trim() || ('Unit plan ' + (wkData.units.length + 1)), plan: d.newPlan.trim() }; wkData.units.push(u); d.unitId = u.id; }
+            if (d.mode !== 'unit') d.unitId = ''; if (d.mode !== 'attach') d.unit = '';
+            delete d.newName; delete d.newPlan; delete d.plan;
+            var i = -1; wkData.classes.forEach(function(c, n) { if (c.id === d.id) i = n; });
+            if (i > -1) wkData.classes[i] = d; else wkData.classes.push(d);
+            if (!wkSave()) return;
+            wkUi.editing = null; wkUi.draft = null; wkRender(); if (typeof showGlobalToast === 'function') showGlobalToast('Class saved on this device ✓');
+        }
+        function wkDeleteClass() {
+            if (!wkUi.delArm) { wkUi.delArm = true; wkRender(); return; }
+            wkData.classes = wkData.classes.filter(function(c) { return c.id !== wkUi.draft.id; }); wkSave(); wkUi.editing = null; wkUi.draft = null; wkUi.delArm = false; wkRender();
+        }
+        function wkUnitEdit(id) { wkUi.unitDelArm = false; wkUi.unitEdit = id; wkUi.unitDraft = id === 'new' ? { id: 'u' + Date.now(), name: '', plan: '' } : JSON.parse(JSON.stringify(wkData.units.filter(function(u) { return u.id === id; })[0])); wkRender(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function wkUnitSet(k, v) { wkUi.unitDraft[k] = v; var w = document.getElementById('wk-uwarn'); if (w) w.classList.add('hidden'); }
+        function wkUnitCancel() { wkUi.unitEdit = null; wkUi.unitDraft = null; wkRender(); }
+        function wkUnitSave() {
+            var d = wkUi.unitDraft; if (!d.plan.trim()) { var w = document.getElementById('wk-uwarn'); if (w) { w.textContent = '⚠️ Paste the unit plan first.'; w.classList.remove('hidden'); } return; }
+            d.name = d.name.trim() || ('Unit plan ' + (wkData.units.length + 1)); d.plan = d.plan.trim();
+            var i = -1; wkData.units.forEach(function(u, n) { if (u.id === d.id) i = n; });
+            if (i > -1) wkData.units[i] = d; else wkData.units.push(d);
+            if (!wkSave()) return; wkUi.unitEdit = null; wkUi.unitDraft = null; wkRender(); if (typeof showGlobalToast === 'function') showGlobalToast('Unit plan saved on this device ✓');
+        }
+        function wkUnitDelete() {
+            if (!wkUi.unitDelArm) { wkUi.unitDelArm = true; wkRender(); return; }
+            var id = wkUi.unitDraft.id; wkData.units = wkData.units.filter(function(u) { return u.id !== id; });
+            wkData.classes.forEach(function(c) { if (c.mode === 'unit' && c.unitId === id) { c.mode = 'none'; c.unitId = ''; } });
+            wkSave(); wkUi.unitEdit = null; wkUi.unitDraft = null; wkUi.unitDelArm = false; wkRender();
+        }
+        function wkRowUnit(id, v) {
+            var c = wkData.classes.filter(function(x) { return x.id === id; })[0]; if (!c) return;
+            if (v === 'none') { c.mode = 'none'; c.unitId = ''; c.unit = ''; } else if (v === 'attach') { c.mode = 'attach'; c.unitId = ''; } else { c.mode = 'unit'; c.unitId = v; c.unit = ''; }
+            wkSave(); wkRender();
+        }
+        function wkToggleFull() { wkData.full = !wkData.full; wkSave(); wkRender(); }
+        function wkSetFull(v) { wkData.full = !!v; wkSave(); wkRender(); }
+        function wkOptHtml() {
+            function card(on, tone, title, desc, call) {
+                var c = tone === 'cyan' ? ['border-cyan-500 bg-cyan-50', 'bg-cyan-600', 'text-cyan-900', 'border-cyan-200 hover:bg-cyan-50'] : ['border-violet-500 bg-violet-50', 'bg-violet-600', 'text-violet-900', 'border-violet-200 hover:bg-violet-50'];
+                return '<button type="button" class="text-left rounded-xl border-2 p-3 transition ' + (on ? c[0] : 'bg-white ' + c[3]) + '" aria-pressed="' + (on ? 'true' : 'false') + '" onclick="' + call + '"><span class="flex items-center gap-2 mb-1"><span class="inline-flex w-5 h-5 rounded-full items-center justify-center text-[11px] font-black ' + (on ? c[1] + ' text-white' : 'border-2 border-slate-300 text-transparent') + '">✓</span><span class="text-sm font-black ' + c[2] + '">' + title + '</span></span><span class="block text-[11px] text-slate-600 leading-snug">' + desc + '</span></button>';
+            }
+            return '<div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">'
+                + card(!wkData.full, 'cyan', 'Weekly summary', 'One document for the week: a colour timetable grid, a short card for each lesson (learning intention, main activity, resources), homework and a prep and photocopying checklist. Best for seeing the whole week at a glance.', 'wkSetFull(false)')
+                + card(!!wkData.full, 'violet', 'Full lesson plans', 'Everything in the weekly summary, plus every lesson written out in full on its own page: success criteria, Connect, I Do, We Do, You Do and Review with timings that add to 60 minutes, teacher questions and checks for understanding. Longer to make and to read.', 'wkSetFull(true)')
+                + '</div>';
+        }
+        function wkToggleTrim() { wkData.trim = wkData.trim === false; wkSave(); wkRender(); }
+        // Cut a pasted unit plan down to the lessons needed this week (and tidy buttons and notes that don't help planning).
+        // nums = lesson numbers wanted. Returns null when the lessons can't be found, so the whole plan is sent instead.
+        function wkTrimPlan(plan, nums) {
+            var re = /^[ \t#*>\-]*(?:lesson|l)\s*\.?\s*(\d+)\b/gim, m, marks = [], top = 0;
+            while ((m = re.exec(plan))) { var n = parseInt(m[1], 10); if (n > top) { marks.push({ i: m.index, n: n }); top = n; } }
+            if (marks.length < 3) return null;
+            var endRe = /^\s*(Coverage check|Overall Device Balance|Evaluation\s*$|HOMEWORK SCHEDULE|GOOGLE CLASSROOM POSTS)/im, tail = plan.slice(marks[marks.length - 1].i), em = endRe.exec(tail.slice(1));
+            var planEnd = em ? marks[marks.length - 1].i + 1 + em.index : plan.length;
+            var head = plan.slice(0, marks[0].i).trim().slice(0, 600), parts = [], got = [];
+            marks.forEach(function(mk, k) {
+                if (nums.indexOf(mk.n) < 0) return;
+                var seg = plan.slice(mk.i, k + 1 < marks.length ? marks[k + 1].i : planEnd).trim();
+                seg = seg.replace(/\nKnowledge\s*\n[\s\S]*?(?=\nStrategies, activities, tasks:|\nExample Assessment)/, '\n').replace(/^\s*(?:🎯|🤖|📝).*$/gm, '').replace(/^\s*Covers:.*$/gm, '').replace(/\n{3,}/g, '\n\n').trim();
+                parts.push(seg); got.push(mk.n);
+            });
+            if (!parts.length) return null;
+            return { text: (head ? head + '\n\n' : '') + parts.join('\n\n'), got: got };
+        }
+        function wkUnitNums(u, recs) {
+            var nums = [], ok = true;
+            wkData.classes.forEach(function(c) {
+                if (!(c.mode === 'unit' && c.unitId === u.id)) return;
+                var n = parseInt(((wkUi.lessons[c.id] || '').match(/\d+/) || [''])[0], 10);
+                if (!n) { ok = false; return; }
+                for (var k = 0; k < Math.max(1, recs[c.id] || 0); k++) if (nums.indexOf(n + k) < 0) nums.push(n + k);
+            });
+            return ok && nums.length ? nums : null;
+        }
+        var WK_TEMPLATE = [
+            '<!DOCTYPE html><html lang="en-NZ"><head><meta charset="UTF-8"><title>Weekly plan, week starting [date]</title><style>',
+            'body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b}',
+            'h1{font-size:20pt;color:#002066;margin:0 0 4pt}',
+            'h2{font-size:14pt;color:#002066;border-bottom:2px solid #002066;padding-bottom:3pt;margin:18pt 0 6pt}',
+            'table{border-collapse:collapse;width:100%;margin-bottom:10pt}',
+            'th,td{border:1px solid #94a3b8;padding:5pt;vertical-align:top;font-size:10pt}',
+            'th{background:#e2e8f0;text-align:center}',
+            'td.p{background:#e2e8f0;font-weight:bold;text-align:center;width:6%}',
+            'td.k{background:#f1f5f9;font-weight:bold;width:20%}',
+            'td.na{color:#94a3b8;text-align:center}',
+            '.lost{background:#fee2e2;color:#7f1d1d}',
+            '.chg td{background:#fff7ed;border:1px solid #fb923c}',
+            '.c1{background:#dbeafe}.c2{background:#dcfce7}.c3{background:#fef3c7}.c4{background:#fae8ff}.c5{background:#ccfbf1}.c6{background:#ffedd5}.c7{background:#e0e7ff}.c8{background:#fce7f3}',
+            'table.grid th,table.grid td{font-size:9pt;padding:4pt}',
+            '@page{size:A4 portrait;margin:12mm}',
+            '</style></head><body>',
+            '<h1>Weekly plan, week starting [date]</h1>',
+            '<p>[the classes this week, one line]</p>',
+            '<table class="chg"><tr><td><b>Changes to the plan</b><br>[one line per change or event]</td></tr></table>',
+            '<h2>Timetable grid</h2>',
+            '<table class="grid"><tr><th style="width:6%"></th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th></tr>',
+            '<tr><td class="p">P1</td><td class="c1"><b>[class]</b><br>[L8: short title]</td><td class="lost"><b>[class]</b><br>[reason: no lesson]</td><td class="na">-</td><td class="na">-</td><td class="na">-</td></tr>',
+            '<tr><td class="p">P2</td><td>[same pattern for P2 to P5, five cells per row]</td></tr></table>',
+            '<h2>[class] · [year and subject] · [unit name]</h2>',
+            '<table><tr><th colspan="2" class="c1" style="text-align:left">[Monday P1 · Lesson 8: title]</th></tr>',
+            '<tr><td class="k">[row label]</td><td>[text]</td></tr><tr><td class="k">[another row label]</td><td>[text]</td></tr></table>',
+            '<h2>Homework</h2>',
+            '<table><tr><th style="width:20%">Class</th><th>Homework</th></tr><tr><td>[class]</td><td>[homework]</td></tr></table>',
+            '<h2>Prep and photocopying checklist</h2>',
+            '<table><tr><th style="width:20%">When</th><th>What to prepare</th></tr><tr><td>[Monday P1 · class]</td><td>☐ [item]</td></tr></table>',
+            '</body></html>'
+        ].join('\n');
+        function wkPrompt() {
+            var wk = wkWeek(), t = 'You are a planning assistant for a New Zealand secondary teacher. Make a plan for ONE real week across all of the teacher\'s classes. Write in New Zealand English. You draft; the teacher checks.\n\n';
+            t += '### The week\n' + (wk ? 'Week starting ' + wkLong(wk.mon) + '.' : 'Week starting: [choose the date].') + ' The school day is Monday to Friday with ' + WK_PERIODS + ' periods a day (P1 to P' + WK_PERIODS + '), each ' + WK_MINS + ' minutes long.\n\n### The teacher\'s classes\n';
+            var notes = [], usedUnits = [], perCount = {};
+            wkData.classes.forEach(function(c) {
+                var rec = wk ? wk.classes[c.id] : { off: [], flags: [], keep: wkAllSlots(c) };
+                var keep = rec.keep.length || rec.off.length ? rec.keep : wkAllSlots(c), u = wkUnit(c);
+                perCount[c.id] = keep.length; t += '- ' + c.label + ', ' + c.year + ' ' + c.subj + '. Periods this week: ' + (wkSlotText(keep) || 'none') + ' (' + keep.length + ').\n';
+                if (u) { if (usedUnits.indexOf(u) < 0) usedUnits.push(u); t += '  - Unit plan "' + u.name + '", pasted below.\n'; }
+                else if (c.mode === 'attach') t += '  - Unit plan' + (c.unit ? ' ("' + c.unit + '")' : '') + ': attached or pasted by the teacher after this message, labelled "' + c.label + '".\n';
+                else t += '  - No unit plan. Show only the class label and subject for its periods. Do not invent any lesson content.' + ((wkUi.lessons[c.id] || '').trim() ? ' The teacher says this class is up to: ' + wkUi.lessons[c.id].trim() + '. Show that beside the subject, and nothing more.' : '') + '\n';
+                if (wkHasPlan(c)) t += '  - ' + c.label + ' is up to: ' + ((wkUi.lessons[c.id] || '').trim() || '[say which lesson]') + '. Start there and give the lessons in order, one per period.\n';
+                if (rec.off.length) notes.push(c.label + ' loses ' + wkSlotText(rec.off) + ' (' + rec.off.map(function(x) { return x.why; }).filter(function(v, i, a) { return a.indexOf(v) === i; }).join(', ') + ').');
+                rec.flags.forEach(function(f) { notes.push(c.label + ', ' + WK_DAYFULL[f.d] + ': ' + f.what + ' (lessons still planned, but may be disturbed).'); });
+            });
+            var shared = usedUnits.filter(function(u) { return wkUsedBy(u).length > 1; });
+            if (shared.length) t += '\nClasses that share a unit plan may be on different lessons this week. Plan each class separately from its own lesson number.\n';
+            t += '\n### From the school calendar\n' + (wk ? (wk.available ? (notes.length ? notes.map(function(n) { return '- ' + n; }).join('\n') + '\nThese come from the school calendar. Apply them exactly as written: periods listed as lost have no lesson.' : 'Nothing on the school calendar affects these classes this week.') : 'The school calendar could not be checked for this week. Rely on the teacher\'s notes below.') : '[choose the date]') + '\n';
+            t += '\n### What else is on this week\n' + (wkUi.extra.trim() || 'Nothing else the teacher has told you about.') + '\n\n';
+            usedUnits.forEach(function(u) {
+                var body = u.plan.trim(), note = ' (saved by the teacher)', nums = wkData.trim !== false ? wkUnitNums(u, perCount) : null, tr = nums ? wkTrimPlan(body, nums) : null;
+                if (tr) { body = tr.text; note = ' (only lesson' + (tr.got.length > 1 ? 's ' : ' ') + tr.got.join(', ') + ' shown, with the knowledge and practices notes left out, to keep this short; the teacher has the rest)'; }
+                t += '### Unit plan: ' + u.name + note + '\n"""\n' + body + '\n"""\n\n';
+            });
+            var full = !!wkData.full;
+            t += '### Rules\n- Use ONLY lessons from the unit plans. Never invent lessons, topics or resources, and keep lesson numbers, titles and learning intentions as written. For a class with no unit plan, show only its label and subject.\n' + (full ? '- The teacher has asked for each lesson in full. You may add teaching detail (timings, teacher questions, worked examples, checks for understanding), but every lesson must stay inside what the unit plan says for it. No new topics.\n' : '') + '- Give each class its lessons in order, one per period it has this week, starting from the lesson the teacher is up to. If a period is lost, the lessons simply continue into the next period it has. If a unit plan has fewer lessons left than periods, say which period is free and suggest something small from the unit plan (practice, review or catch-up), not new content.\n- If a unit plan is missing for a class that needs one, say so and ask for it. Do not guess.\n- If the teacher\'s notes remove a period, move that lesson to the class\'s next period and list the change.\n- Refer to classes only by the labels above, never by student names.\n- No citation markers, source tags or footnote references anywhere (such as [cite: 1] or [1]), and no markdown.\n\n### What to give back\nGive ONE complete HTML file in a single code block, with one short sentence before it and nothing after it. The teacher will open it in Chrome, select everything, copy it and paste it into a Google Doc, so it must paste cleanly: use ONLY tables, headings, paragraphs and bold text. No flexbox, no grid, no scripts, no web fonts, no images, no emoji and no markdown. Write & as &amp;.\n\nUse EXACTLY this template and these styles. Only fill in the [brackets] and repeat rows and tables as needed:\n' + WK_TEMPLATE + '\n\nHow to fill it in:\n- Title: "Weekly plan, week starting ' + (wk ? wkLong(wk.mon) : '[date]') + '".\n- "Changes to the plan" box: list every lost period, every move and every school event that may disturb lessons, one per line. Leave the box out if there are none.\n- Timetable grid: P1 to P5 down the side. Give each class its own colour class (c1 for the first class listed above, c2 for the second, and so on). A teaching cell has the class label in bold, then the lesson number and a short title of no more than five words so the cell stays narrow (or just the subject if there is no unit plan). A lost period uses class "lost" with the reason. A period the teacher does not teach uses class "na" with "-".\n';
+            if (full) t += '- Lesson plans: for each class that has a unit plan, a heading with the class, subject and unit, then one table for every lesson this week, in day and period order, starting each on a new page. The table has a coloured heading row (day, period, lesson number and title) then rows for: Learning intention, Success criteria, Connect, I Do, We Do, You Do, Review (put the minutes in each label so they add up to ' + WK_MINS + '), Resources, and Check for understanding. In the stage rows say what the teacher says and does, what students do, and the questions to ask.\n';
+            else t += '- Lesson cards: for each class that has a unit plan, a heading with the class, subject and unit, then one table for every lesson this week, in day and period order. The table has a coloured heading row (day, period, lesson number and title) then rows for: Learning intention, Main activity (from the unit plan), Resources.\n';
+            t += '- Homework: a table with the columns Class and Homework, taken from the unit plans (say so if there is none).\n- Prep and photocopying checklist: a table with the columns When (day, period, class) and What to prepare, in the order the teacher needs things. Start each item with the character ☐.\n';
+            return t;
+        }
+        function wkRefresh() {
+            var el = document.getElementById('wk-prompt-text'); if (!el) return;
+            var t = wkPrompt(); el.textContent = t;
+            if (typeof promptLengthChip === 'function') promptLengthChip(t, 'wk-prompt-length', 'wk-prompt-longnote', 'wk-file', 'wk-copy');
+            var att = wkData.classes.filter(function(c) { return c.mode === 'attach'; }).map(function(c) { return c.label; });
+            var h = document.getElementById('wk-how'); if (h) h.textContent = (att.length ? 'In the AI, attach the unit plan for ' + (att.length > 1 ? att.slice(0, -1).join(', ') + ' and ' + att[att.length - 1] : att[0]) + ' in the same message as this prompt, then send. ' : '') + 'To use the result in a Google Doc: save the code block as a .html file, open it in Chrome, press Ctrl+A then Ctrl+C, and paste into a Google Doc. It is laid out for a Portrait page, which is the Google Docs default.';
+        }
+        function wkCheck() {
+            var msg = '';
+            if (!wkUi.start) msg = 'Choose the date the week starts.';
+            else if (!wkData.classes.length) msg = 'Add at least one class.';
+            else wkData.classes.forEach(function(c) { if (!msg && !(wkUi.lessons[c.id] || '').trim()) msg = 'Enter the lesson number ' + c.label + ' is up to.'; else if (!msg && c.mode === 'unit' && !/\d/.test(wkUi.lessons[c.id])) msg = 'Use a number for the lesson ' + c.label + ' is up to (for example 7), so the right lessons can be found in the unit plan.'; });
+            var w = document.getElementById('wk-warn'); if (w) { w.textContent = msg ? '⚠️ ' + msg : ''; w.classList.toggle('hidden', !msg); } return !msg;
+        }
+        function wkRemember() { var ch = false; wkData.classes.forEach(function(c) { var v = (wkUi.lessons[c.id] || '').trim(); if (v && c.last !== v) { c.last = v; ch = true; } }); if (ch) wkSave(); }
+        function wkCopy(btn) { if (!wkCheck()) return; wkRefresh(); wkRemember(); copyText('wk-prompt-text', btn); }
+        function wkDownload() { if (!wkCheck()) return; wkRefresh(); wkRemember(); downloadPromptFile('wk-prompt-text', 'Weekly_plan_prompt'); }
         // ---------- Teacher tools: report comments, tracking grid, follow-ups, ready prompts, AI use and privacy, why this site ----------
-        var TK_TABS = [['report', '✍️ Report comments'], ['grid', '📋 Tracking grid'], ['follow', '💬 Follow-up prompts'], ['ready', '💡 Ready prompts'], ['ai', '🔒 AI use & privacy']];
-        var TK_TABCOL = { report: ['#0284c7', '#e0f2fe', '#075985'], grid: ['#059669', '#d1fae5', '#065f46'], follow: ['#7c3aed', '#ede9fe', '#5b21b6'], ready: ['#d97706', '#fef3c7', '#92400e'], ai: ['#e11d48', '#ffe4e6', '#9f1239'] };
+        var TK_TABS = [['report', '✍️ Report comments'], ['grid', '📋 Tracking grid'], ['follow', '💬 Follow-up prompts'], ['ready', '💡 Ready prompts']];
+        var TK_TABCOL = { report: ['#0284c7', '#e0f2fe', '#075985'], grid: ['#059669', '#d1fae5', '#065f46'], follow: ['#7c3aed', '#ede9fe', '#5b21b6'], ready: ['#d97706', '#fef3c7', '#92400e'] };
         var TK_YEARS = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'];
         var TK_DEPTS = ['Science', 'Maths', 'Social Sciences', 'English', 'Māori', 'Technology', 'Arts', 'PE & Health', 'Other'];
         var tkTab = 'report';
@@ -9463,6 +10094,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var TK_FOLLOW = [
             ['Change the shape', 'Make a lesson block', 'Turn Lessons [a] to [b] into one multi-lesson block with a bigger You Do and a short Connect and Review in each lesson. Keep the lesson numbers in order.'],
             ['Change the shape', 'Shorten the unit', 'Shorten this unit to [n] lessons. Keep the assessment and the most important knowledge and practices, and tell me what you cut.'],
+            ['Change the shape', 'Group it into weeks', 'Group this unit plan into weeks of [n] lessons each, with a short heading for each week saying what the week is about. Keep the lesson numbers and content as they are.'],
             ['Change the shape', 'Add a revision lesson', 'Add one revision lesson before the assessment, and renumber the lessons that follow.'],
             ['Differentiate', 'Scaffold and stretch', 'For every lesson, add one scaffold for students who need more support (including ESOL learners) and one stretch task for students who are ready for more. Keep each to one or two lines.'],
             ['Differentiate', 'Relief teacher note', 'Write a short note for a relief teacher for Lesson [n]: what to do, what to hand out, and what to collect. Assume they do not know the topic.'],
@@ -9501,7 +10133,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function tkRender() {
             var tabs = document.getElementById('tk-tabs'), body = document.getElementById('tk-body'); if (!tabs || !body) return;
             tabs.innerHTML = TK_TABS.map(function(x) { var c = TK_TABCOL[x[0]]; return '<button type="button" class="tk-tab' + (tkTab === x[0] ? ' on' : '') + '" style="--tc:' + c[0] + ';--tl:' + c[1] + ';--td:' + c[2] + '" aria-pressed="' + (tkTab === x[0]) + '" onclick="tkGo(\'' + x[0] + '\')">' + actEsc(x[1]) + '</button>'; }).join('');
-            body.innerHTML = ({ report: tkReportHtml, grid: tkGridHtml, follow: function() { return tkListHtml('follow', 'Send these to the AI after it has made your unit plan. Change anything in [square brackets] before you paste.'); }, ready: function() { return tkListHtml('ready', 'Everyday prompts for secondary teachers. Change anything in [square brackets], and use initials, not student names.'); }, ai: tkAiHtml })[tkTab]();
+            body.innerHTML = ({ report: tkReportHtml, grid: tkGridHtml, follow: function() { return tkListHtml('follow', 'Send these to the AI after it has made your unit plan. Change anything in [square brackets] before you paste.'); }, ready: function() { return tkListHtml('ready', 'Everyday prompts for secondary teachers. Change anything in [square brackets], and use initials, not student names.'); } })[tkTab]();
             if (tkTab === 'report') rcPreview();
         }
         function tkSec(h, inner) { return '<div class="tk-sec border-t border-sky-200 pt-3 mt-3"><p class="text-[11px] font-black uppercase tracking-widest text-sky-800 mb-1.5">' + h + '</p>' + inner + '</div>'; }
@@ -9590,6 +10222,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             h += tkSec('What this site stores', li([
                 '<strong>No account, no server of its own, no tracking code.</strong> Nothing you type is sent to the people who made this site.',
                 'What you type is saved only in <strong>your own browser</strong> (its local storage), so a draft survives a refresh. The <strong>Reset saved data</strong> button clears it.',
+                'The <strong>Weekly Plan</strong> tab also keeps your class labels, periods and any unit plans you paste on this device. <strong>Reset saved data does not remove them</strong>: use the Reset weekly plan button inside that tab. Clearing your browser\'s site data will also remove them.',
                 'The page does load its look from two outside services (the Tailwind CSS library and Google Fonts), so your browser contacts them when the page opens. Nothing you type goes to them.',
                 'The only thing that leaves is the <strong>prompt you choose to copy or download</strong> and put into an AI yourself. After that, the AI tool’s own privacy terms apply.',
                 'Arcade Mode and the Student Dashboard are separate sites with their own settings.'
@@ -9953,8 +10586,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             preservedProfile = Object.assign({}, unified.teachingProfile, { enabled: false });
                         }
                     } catch (e) {}
+                    var preservedWeekly = null, preservedIntro = null; try { preservedWeekly = localStorage.getItem(WK_KEY); preservedIntro = localStorage.getItem(WK_INTRO_KEY); } catch (e) {}
                     localStorage.clear(); 
                     sessionStorage.clear(); 
+                    if (preservedWeekly) { try { localStorage.setItem(WK_KEY, preservedWeekly); } catch (e) {} }
+                    if (preservedIntro) { try { localStorage.setItem(WK_INTRO_KEY, preservedIntro); } catch (e) {} }
                     if (preservedProfile) {
                         try { localStorage.setItem(WHS_UNIFIED_KEY, JSON.stringify({ teachingProfile: preservedProfile })); } catch (e) {}
                     }
