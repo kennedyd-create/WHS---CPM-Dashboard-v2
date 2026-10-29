@@ -263,24 +263,14 @@
         html.dark #unit-act-card .act-row.act-bk { background: #042f2e; border-color: #2dd4bf; }
         html.dark #unit-act-card .act-row.act-bk span { color: #ccfbf1; }
         html.dark #unit-act-card .act-row.act-bk input { background: #1e293b; color: #e2e8f0; }
-        .eg-panel .eg-row { background: #fff; border: 1px solid #fcd34d; border-radius: .5rem; padding: .5rem .6rem; margin-top: .4rem; }
-        .eg-panel .eg-q { font-size: 12px; color: #334155; line-height: 1.4; }
-        .eg-panel .eg-hl { background: #fef3c7; border-radius: 3px; padding: 0 2px; font-weight: 600; }
-        .eg-panel .eg-side { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: #1e40af; background: #dbeafe; border-radius: 99px; padding: 1px 6px; margin-left: 4px; white-space: nowrap; }
-        .eg-panel .eg-ctl { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-top: .35rem; }
-        .eg-panel .eg-segs { display: inline-flex; border: 1px solid #94a3b8; border-radius: .4rem; overflow: hidden; }
-        .eg-panel .eg-seg { font-size: 11px; padding: 3px 9px; background: #fff; color: #334155; border-right: 1px solid #94a3b8; cursor: pointer; }
-        .eg-panel .eg-seg:last-child { border-right: 0; }
-        .eg-panel .eg-seg.on { background: #2563eb; color: #fff; font-weight: 800; }
-        .eg-panel .eg-own { flex: 1; min-width: 14rem; border: 1px solid #a78bfa; border-radius: .4rem; padding: 4px 8px; font-size: 12px; background: #faf5ff; color: #1e293b; }
-        html.dark .eg-panel { background: #451a03; border-color: #f59e0b; color: #fef3c7; }
-        html.dark .eg-panel .eg-row { background: #1e293b; border-color: #92400e; }
-        html.dark .eg-panel .eg-q { color: #e2e8f0; }
-        html.dark .eg-panel .eg-hl { background: #78350f; }
-        html.dark .eg-panel .eg-seg { background: #0f172a; color: #e2e8f0; border-color: #475569; }
-        html.dark .eg-panel .eg-seg.on { background: #2563eb; color: #fff; }
-        html.dark .eg-panel .eg-own { background: #1e293b; color: #e2e8f0; }
-        html.dark .eg-panel p { color: #fde68a; }
+        #unit-act-card .act-row.act-ssc { border: 2px solid #4f46e5; background: #eef2ff; }
+        #unit-act-card .act-row.act-ssc .ssc-badge { background: #4f46e5; color: #fff; }
+        .ssc-optb { font-size: 9px; font-weight: 800; text-transform: uppercase; color: #92400e; background: #fef3c7; border-radius: 99px; padding: 1px 6px; }
+        html.dark #unit-act-card .act-row.act-ssc { background: #1e1b4b; border-color: #818cf8; }
+        html.dark #unit-act-card .act-row.act-ssc span { color: #e0e7ff; }
+        html.dark #unit-act-card .act-row.act-ssc .ssc-card { background: #0f172a; border-color: #4338ca; }
+        html.dark #unit-act-card .act-row.act-ssc .ssc-card p { color: #e2e8f0; }
+        html.dark #unit-act-card .act-row.act-ssc input { background: #1e293b; color: #e2e8f0; }
         html.dark #tx-modal > div { background: #0f172a; color: #e2e8f0; }
         html.dark #tx-modal .tx-card { border-color: #334155; }
         html.dark #tx-modal select, html.dark #tx-modal input { background: #1e293b; color: #e2e8f0; }
@@ -1768,7 +1758,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                         <textarea id="unit-junior-practices" rows="1" placeholder="e.g. Interpreting diagrams..." class="autosize-textarea w-full p-2.5 rounded-lg border border-blue-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea>
                                     </div>
                                 </div>
-                                <div id="unit-eg-panel" class="hidden eg-panel rounded-xl border-2 border-amber-400 bg-amber-50 p-3 text-slate-800"><div id="unit-eg-body"></div></div>
                                 <p class="text-[10px] text-blue-700 text-center leading-tight">You can write or paste as much as you need in either box — it'll grow as you type.</p>
                             </div>
                         </div>
@@ -3271,7 +3260,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file. Remove some options to make the prompt shorter and Copy comes back.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table with one row per skill: step-by-step teaching for non-specialists, the exact words to say, a ready example in small blue text, and what to watch for), even if you only chose lesson outlines. The lesson rows just point to it. It is also built into the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: in "Do you already have something planned for this unit?" there is a new gold row for <strong>Writer's Toolbox</strong> (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
-<li><mark class="wn-key">Examples in the curriculum text</mark>: after the picker fills Specific Knowledge and Practices, a gold panel lists every "e.g." or "for example" it found. For each one choose <strong>Keep all</strong>, <strong>My own</strong> (type your example), <strong>AI picks</strong> (the AI chooses one to suit your unit) or <strong>Remove</strong>, then press Apply. The boxes update. English, Maths, Science, Social Sciences, Arts and PE &amp; Health, Years 7 to 10.</li>
+<li><mark class="wn-key">Case studies and local examples (Social Sciences)</mark>: when the curriculum text you picked asks for a case study or a local example (for example flooding, tourism destinations, migration, your local community), a new row in "Do you already have something planned?" lets you choose for each one: the curriculum's own option where it names one, <strong>Let the AI choose</strong>, or <strong>My choice</strong>. Optional curriculum items can be left out.</li>
 <li><mark class="wn-key">English texts</mark>: for English there is a new purple row, <strong>Texts for this unit</strong>. Add as many novels, short stories, plays, poems, films or other texts as you like, mark each as the <strong>focus text</strong> or <strong>also included</strong>, ask the AI to suggest texts, or choose <strong>Not relevant for this unit</strong>.</li>
 <li><mark class="wn-key">Textbook or workbook</mark>: for Maths and Science there is a new teal row for a specific textbook, workbook or platform used throughout the unit. The lessons are built to use it.</li>
 <li><mark class="wn-key">Years 9 and 10 lesson shape</mark>: the unit plan now expects a bigger You Do and more multi-lesson blocks in Years 9 and 10 than in Years 7 and 8 (Years 11 to 13 are unchanged).</li>
@@ -3698,7 +3687,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table, one row per skill, with steps, exact wording and an example), even if you only chose lesson outlines. The lesson rows just point to it. Also in the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: a new gold row in "Do you already have something planned?" (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
-<li><mark class="wn-key">Examples in the curriculum text</mark>: after the picker fills Specific Knowledge and Practices, a gold panel lists every "e.g." or "for example" it found. For each one choose <strong>Keep all</strong>, <strong>My own</strong> (type your example), <strong>AI picks</strong> (the AI chooses one to suit your unit) or <strong>Remove</strong>, then press Apply. The boxes update. English, Maths, Science, Social Sciences, Arts and PE &amp; Health, Years 7 to 10.</li>
+<li><mark class="wn-key">Case studies and local examples (Social Sciences)</mark>: when the curriculum text you picked asks for a case study or a local example (for example flooding, tourism destinations, migration, your local community), a new row in "Do you already have something planned?" lets you choose for each one: the curriculum's own option where it names one, <strong>Let the AI choose</strong>, or <strong>My choice</strong>. Optional curriculum items can be left out.</li>
 <li><mark class="wn-key">English texts</mark>: for English there is a new purple row, <strong>Texts for this unit</strong>. Add as many novels, short stories, plays, poems, films or other texts as you like, mark each as the <strong>focus text</strong> or <strong>also included</strong>, ask the AI to suggest texts, or choose <strong>Not relevant for this unit</strong>.</li>
 <li><mark class="wn-key">Textbook or workbook</mark>: for Maths and Science there is a new teal row for a specific textbook, workbook or platform used throughout the unit. The lessons are built to use it.</li>
 <li><mark class="wn-key">Years 9 and 10 lesson shape</mark>: the unit plan now expects a bigger You Do and more multi-lesson blocks in Years 9 and 10 than in Years 7 and 8 (Years 11 to 13 are unchanged).</li>
@@ -4832,7 +4821,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             // Remember what was filled and for which subject/year, so that content can be cleared
             // again if the teacher moves to a different subject or year (see kpClearStaleFill).
             unitState.kpFill = { dept: unitState.dept, year: unitEffYear(), k: kpHash(unitState.juniorKnowledge), p: kpHash(unitState.juniorPractices) };
-            unitState.egDone = null; egSig = '';
             closeKPPicker();
             updateUnitBuilderPrompt();
             saveAppState();
@@ -4843,88 +4831,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // teacher then switches to another, that text is now wrong for the new selection (e.g.
         // Social Sciences content sitting in a Science unit) -- clear it and say so. Anything the
         // teacher has edited themselves is left alone.
-        // ---------- "Examples in this text": keep, replace or remove the e.g. / for example phrases the picker fills in ----------
-        var egSig = '', egMatches = [], egChoice = {};
-        var EG_AI = '[AI to choose a suitable example for this unit]';
-        function egScan(text, side) {
-            var out = [], used = [], m, re;
-            var overlaps = function(a, b) { return used.some(function(u) { return a < u[1] && b > u[0]; }); };
-            re = /\(([^()]*?)\b(e\.g\.|for example)[,:]?\s+([^()]+?)\)/gi;
-            while ((m = re.exec(text))) {
-                var tS = m.index + m[0].indexOf(m[3], m[1].length + m[2].length + 1);
-                out.push({ side: side, kind: 'br', pre: m[1], bS: m.index, bE: m.index + m[0].length, mS: m.index + 1 + m[1].length, tS: tS, tE: tS + m[3].length, text: m[3] });
-                used.push([m.index, m.index + m[0].length]);
-            }
-            re = /\b(e\.g\.|for example)[,:]?\s+([^\n;]+?)(?=\.(?:\s|$)|;|\n|$)/gi;
-            while ((m = re.exec(text))) {
-                if (overlaps(m.index, m.index + m[0].length)) continue;
-                var s2 = m.index + m[0].indexOf(m[2], m[1].length);
-                out.push({ side: side, kind: 'pl', pre: '', mS: m.index, tS: s2, tE: s2 + m[2].length, text: m[2] });
-            }
-            out.sort(function(a, b) { return a.mS - b.mS; });
-            return out;
-        }
-        function egCtx(txt, it) {
-            var before = txt.slice(Math.max(0, it.mS - 45), it.mS).replace(/\*\*/g, '').replace(/\s+/g, ' ');
-            if (it.mS > 45) before = '…' + before;
-            var ex = it.text.replace(/\*\*/g, ''); if (ex.length > 130) ex = ex.slice(0, 127) + '…';
-            return actEsc(before) + '<span class="eg-hl">' + (it.kind === 'br' ? '(' : '') + 'e.g. ' + actEsc(ex) + (it.kind === 'br' ? ')' : '') + '</span>';
-        }
-        function egBoxes() { return { k: document.getElementById('unit-junior-knowledge'), p: document.getElementById('unit-junior-practices') }; }
-        function egRefresh() {
-            var panel = document.getElementById('unit-eg-panel'); if (!panel) return;
-            var b = egBoxes(), kv = b.k ? b.k.value : '', pv = b.p ? b.p.value : '';
-            var sig = kpHash(kv) + '|' + kpHash(pv) + '|' + (unitState.egDone || '');
-            if (sig === egSig) return;
-            egSig = sig; egChoice = {};
-            var f = unitState.kpFill, pair = kpHash(kv) + '|' + kpHash(pv);
-            var show = !!(f && f.dept === unitState.dept && f.year === unitEffYear() && kpHash(kv) === f.k && kpHash(pv) === f.p && unitState.egDone !== pair);
-            egMatches = show ? egScan(kv, 'k').concat(egScan(pv, 'p')) : [];
-            if (!egMatches.length) { panel.classList.add('hidden'); return; }
-            egRender(); panel.classList.remove('hidden');
-        }
-        function egRender() {
-            var b = egBoxes(), body = document.getElementById('unit-eg-body'); if (!body) return;
-            var h = '<p class="text-xs font-black text-amber-900 mb-0.5">✏️ Examples in this text <span class="font-normal">(' + egMatches.length + ' found)</span></p><p class="text-[11px] text-slate-600 mb-1">The curriculum text gives examples. <strong>Keep all</strong> of them, put in <strong>your own</strong>, let the <strong>AI pick</strong> ones to suit your unit, or <strong>remove</strong> them.</p>';
-            egMatches.forEach(function(it, i) {
-                var c = (egChoice[i] || { c: 'keep' }).c, v = (egChoice[i] || {}).v || '';
-                var seg = function(key, label) { return '<button type="button" class="eg-seg' + (c === key ? ' on' : '') + '" aria-pressed="' + (c === key) + '" onclick="egSet(' + i + ',\'' + key + '\')">' + label + '</button>'; };
-                h += '<div class="eg-row"><div class="eg-q">' + egCtx(it.side === 'k' ? b.k.value : b.p.value, it) + ' <span class="eg-side">' + (it.side === 'k' ? 'Knowledge' : 'Practices') + '</span></div>'
-                    + '<div class="eg-ctl"><span class="eg-segs">' + seg('keep', 'Keep all') + seg('own', 'My own') + seg('ai', 'AI picks') + seg('rm', 'Remove') + '</span>'
-                    + (c === 'own' ? '<input type="text" class="eg-own" value="' + actEsc(v) + '" oninput="egOwn(' + i + ',this.value)" placeholder="Type your own example(s)">' : '') + '</div></div>';
-            });
-            h += '<div class="flex flex-wrap gap-2 mt-2"><button type="button" class="px-4 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-black hover:bg-blue-700" onclick="egApply()">Apply my choices</button><button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="egKeepAll()">Keep all as they are</button></div><p class="text-[10px] text-slate-500 mt-1.5">The two boxes above update when you apply. You can still edit them by hand.</p>';
-            body.innerHTML = h;
-        }
-        function egPending() { try { egRefresh(); } catch (e) {} var pn = document.getElementById('unit-eg-panel'); return !!pn && !pn.classList.contains('hidden'); }
-        function egSet(i, c) { egChoice[i] = { c: c, v: (egChoice[i] || {}).v || '' }; egRender(); if (c === 'own') { var el = document.querySelector('#unit-eg-body .eg-row:nth-of-type(' + (i + 2) + ') .eg-own'); if (el) el.focus(); } }
-        function egOwn(i, v) { egChoice[i] = { c: 'own', v: v }; }
-        function egClose(msg) {
-            var b = egBoxes(); unitState.juniorKnowledge = b.k ? b.k.value : ''; unitState.juniorPractices = b.p ? b.p.value : '';
-            var kh = kpHash(unitState.juniorKnowledge), ph = kpHash(unitState.juniorPractices);
-            if (unitState.kpFill) { unitState.kpFill.k = kh; unitState.kpFill.p = ph; }
-            unitState.egDone = kh + '|' + ph; egSig = '';
-            egRefresh(); updateUnitBuilderPrompt(); saveAppState(); if (typeof unitSecRefresh === 'function') unitSecRefresh(); if (msg) showToast(msg);
-        }
-        function egKeepAll() { egClose('Kept all the examples ✓'); }
-        function egApply() {
-            var b = egBoxes(), txt = { k: b.k.value, p: b.p.value }, changed = 0;
-            egMatches.slice().map(function(it, i) { return { it: it, i: i }; }).sort(function(a, b2) { return b2.it.mS - a.it.mS; }).forEach(function(o) {
-                var it = o.it, ch = egChoice[o.i] || { c: 'keep' }, s = txt[it.side];
-                if (ch.c === 'own' && String(ch.v || '').trim()) { s = s.slice(0, it.tS) + ch.v.trim() + s.slice(it.tE); changed++; }
-                else if (ch.c === 'ai') { s = s.slice(0, it.tS) + EG_AI + s.slice(it.tE); changed++; }
-                else if (ch.c === 'rm') {
-                    if (it.kind === 'br' && !it.pre.trim()) s = s.slice(0, it.bS).replace(/[ \t]+$/, '') + s.slice(it.bE);
-                    else if (it.kind === 'br') s = s.slice(0, it.mS).replace(/[ \t,]+$/, '') + s.slice(it.tE);
-                    else s = s.slice(0, it.mS).replace(/[ \t,]+$/, '') + s.slice(it.tE);
-                    changed++;
-                }
-                txt[it.side] = s;
-            });
-            ['k', 'p'].forEach(function(sd) { txt[sd] = txt[sd].replace(/\(\s*\)/g, '').replace(/[ \t]+([.,;)])/g, '$1').replace(/,\s*\./g, '.').replace(/[ \t]{2,}/g, ' '); });
-            b.k.value = txt.k; b.p.value = txt.p; autosizeTextarea(b.k); autosizeTextarea(b.p);
-            egClose(changed ? 'Examples updated ✓' : 'Kept all the examples ✓');
-        }
         function kpClearStaleFill() {
             var f = unitState.kpFill;
             if (!f) return;
@@ -5493,14 +5399,15 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         };
         var actRenderedDept = null;
         var ACT_WT = ['wt', "Writer's Toolbox writing tasks", ''];
+        var ACT_SSC = ['ssc', 'Case studies and local examples the curriculum leaves to you', ''];
         var ACT_BK = ['bk', 'A specific textbook, workbook or platform used throughout the unit', ''];
         var ACT_TX = ['txt', 'Texts for this unit (novel, play, film, poem and so on)', ''];
         function actList() {
             var sub = ACT_SUBJECT[unitState.dept] || [];
-            return (unitState.dept === 'English' ? [ACT_TX] : (bkApplies() ? [ACT_BK] : [])).concat(wtApplies() ? [ACT_WT] : [], sub, ACT_COMMON);
+            return (unitState.dept === 'English' ? [ACT_TX] : (bkApplies() ? [ACT_BK] : [])).concat(sscItems().length ? [ACT_SSC] : [], wtApplies() ? [ACT_WT] : [], sub, ACT_COMMON);
         }
         function wtApplies() { return /^Year (7|8|9|10)$/.test(unitState.year || ''); } /* Writer's Toolbox is offered for Years 7 to 10 only */
-        function actRenderKey() { return (unitState.dept || '') + '|' + (wtApplies() ? 'wt' : ''); }
+        function actRenderKey() { return (unitState.dept || '') + '|' + (wtApplies() ? 'wt' : '') + '|' + sscItems().map(function(c) { return c[0]; }).join(','); }
         function bkApplies() { return unitState.dept === 'Maths' || unitState.dept === 'Science'; }
         function txApplies() { return unitState.dept === 'English'; }
         function actEnsureState() {
@@ -5517,6 +5424,26 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             actList().forEach(function(r) {
                 var k = actKey(r[0]), q = unitState.actQ[k] || '', d = unitState.actD[k] || '';
                 var subj = (ACT_SUBJECT[unitState.dept] || []).some(function(x) { return x[0] === r[0]; });
+                if (r[0] === 'ssc') {
+                    var its = sscItems(), cards = '';
+                    its.forEach(function(c) {
+                        var s = sscGet(c[0]);
+                        cards += '<div class="ssc-card rounded-lg border border-indigo-200 bg-white p-2 mt-2"><p class="text-xs font-semibold text-slate-700">' + actEsc(c[2]) + (c[4] ? ' <span class="ssc-optb">optional in the curriculum</span>' : '') + '</p><div class="flex flex-wrap gap-1.5 mt-1.5">'
+                            + c[3].map(function(o, oi) { return wtChip(s.m === 'opt' && s.o === o, o, "sscSet('" + c[0] + "','opt'," + oi + ")"); }).join('')
+                            + wtChip(s.m === 'ai', 'Let the AI choose', "sscSet('" + c[0] + "','ai')") + wtChip(s.m === 'own', 'My choice', "sscSet('" + c[0] + "','own')")
+                            + (c[4] ? wtChip(s.m === 'skip', 'Leave it out', "sscSet('" + c[0] + "','skip')") : '') + '</div>'
+                            + (s.m === 'own' ? '<input type="text" id="ssc-own-' + c[0] + '" value="' + actEsc(s.t) + '" oninput="sscOwn(\'' + c[0] + '\',this.value)" placeholder="' + actEsc(c[5]) + '" class="w-full mt-1.5 p-2 rounded border border-slate-300 text-xs text-slate-800 outline-none">' : '') + '</div>';
+                    });
+                    html += '<div class="act-row act-ssc rounded-lg p-2.5 col-span-full" data-k="ssc">'
+                        + '<div class="flex items-start justify-between gap-2">'
+                        + '<span class="text-xs font-semibold leading-snug flex-1"><span class="ssc-badge text-[9px] font-black uppercase tracking-wider rounded-full px-2 py-0.5 mr-1.5">🌏 Case studies and local examples</span>The curriculum text you chose leaves ' + its.length + (its.length === 1 ? ' case study or local example' : ' case studies or local examples') + ' to you. Do you want to choose ' + (its.length === 1 ? 'it' : 'them') + '? <span class="font-normal text-slate-600">Otherwise the AI will choose.</span></span>'
+                        + '<span class="flex gap-1 shrink-0">'
+                        + '<button type="button" class="builder-btn act-yes text-[11px] py-0.5 px-2.5' + (q === 'yes' ? ' active' : '') + '" onclick="actSetQ(\'ssc\',\'yes\')" aria-pressed="' + (q === 'yes') + '">Yes, I will choose</button>'
+                        + '<button type="button" class="builder-btn act-no text-[11px] py-0.5 px-2.5' + (q === 'no' ? ' active' : '') + '" onclick="actSetQ(\'ssc\',\'no\')" aria-pressed="' + (q === 'no') + '">No, the AI chooses</button>'
+                        + '</span></div>'
+                        + '<div class="act-detail' + (q === 'yes' ? '' : ' hidden') + '">' + cards + '</div></div>';
+                    return;
+                }
                 if (r[0] === 'bk') {
                     var bk = bkState();
                     html += '<div class="act-row act-bk rounded-lg p-2.5 col-span-full" data-k="bk">'
@@ -5590,13 +5517,14 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 row.querySelector('.act-no').setAttribute('aria-pressed', q === 'no' ? 'true' : 'false');
                 var inp = row.querySelector('.act-detail');
                 inp.classList.toggle('hidden', q !== 'yes');
-                if (q === 'yes' && k !== 'wt' && k !== 'txt' && k !== 'bk') inp.focus();
+                if (q === 'yes' && k !== 'wt' && k !== 'txt' && k !== 'bk' && k !== 'ssc') inp.focus();
                 if (q === 'yes' && k === 'bk') { var bi = document.getElementById('bk-title'); if (bi) bi.focus(); }
             }
             actSyncAllNo();
             updateUnitBuilderPrompt(); saveAppState();
             if (k === 'wt' && unitState.actQ[key] === 'yes') wtOpen();
             if (k === 'txt' && unitState.actQ[key] === 'yes') txOpen();
+            if (k === 'ssc') sscSync();
         }
         function actSetD(k, v) {
             actEnsureState();
@@ -5630,17 +5558,18 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var items = actYesItems().filter(function(x) { return x.d; }), free = unitActFree(), out = '';
             if (items.length) {
                 out += 'The teacher already has the following planned for this unit. These MUST be built into the unit exactly as described (do not swap them for your own ideas), and the rest of the unit should be designed around them:\n';
-                items.forEach(function(x) { if (x.k !== 'txt' && x.k !== 'bk') out += '- ' + x.label + ': ' + x.d + '\n'; });
+                items.forEach(function(x) { if (x.k !== 'txt' && x.k !== 'bk' && x.k !== 'ssc') out += '- ' + x.label + ': ' + x.d + '\n'; });
                 out += txDetailText();
                 out += bkDetailText();
+                out += sscDetailText();
                 out += wtDetailText();
                 if (free) out += 'Additional instructions from the teacher: "' + free + '".\n';
                 out += 'For anything the teacher has not specified, use your professional judgement; do not ask me about it.\n';
-                return out + txNoLine();
+                return out + actNoLines();
             }
-            if (free) return 'Specific Instructions: "' + free + '".\n' + txNoLine();
-            if (unitActivitiesDecided()) return 'The teacher has no particular activities, tasks or resources in mind and has chosen to let you decide. Use your professional judgement to choose engaging, varied, NZ-relevant activities, at least one suitable case study or real-world context, and one sensible mid-unit check. Do NOT ask me any questions about this; go straight to generating the unit.\n' + txNoLine();
-            return txNoLine();
+            if (free) return 'Specific Instructions: "' + free + '".\n' + actNoLines();
+            if (unitActivitiesDecided()) return 'The teacher has no particular activities, tasks or resources in mind and has chosen to let you decide. Use your professional judgement to choose engaging, varied, NZ-relevant activities, at least one suitable case study or real-world context, and one sensible mid-unit check. Do NOT ask me any questions about this; go straight to generating the unit.\n' + actNoLines();
+            return actNoLines();
         }
         // ---------- Writer's Toolbox tasks (Unit Planner, "Do you already have something planned?") ----------
         var WT_PARAS = ['Scientist', 'Lawyer', 'Hammer', 'Slam Dunk', 'Compare/Contrast'];
@@ -5709,6 +5638,63 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (!String(unitState.actD[key] || '').trim()) { unitState.actQ[key] = ''; renderUnitActivitiesCard(); updateUnitBuilderPrompt(); saveAppState(); }
             wtClose();
         }
+        // ---------- Case studies and local examples the curriculum leaves to the teacher (Social Sciences, Years 7 to 10) ----------
+        // [id, regex found in the filled Knowledge/Practices text, label, curriculum options (if it names any), optional in the curriculum, placeholder for "My choice"]
+        var SS_CHOICES = [
+            ['civ-rates', /local example of ratepayers or residents campaigning/i, 'A local example of ratepayers or residents campaigning about rates rises or council spending', [], false, 'e.g. the local campaign about the new library, with the arguments on each side'],
+            ['civ-part', /Using local examples to describe the forms of active citizen/i, 'Local examples of active citizen participation', [], false, 'e.g. a beach clean-up, a petition, a submission to the council'],
+            ['mig-int', /International migration – exemplified/i, 'International migration: a case study of a migrant group (or groups) and the impact on the local area', [], false, 'e.g. Dutch migrants in the 1950s, Pacific migration to Auckland'],
+            ['mig-int2', /Internal migration – exemplified/i, 'Internal migration: case studies of places in New Zealand with population change, including your own local area', ['Include our own local area as one of the places'], false, 'e.g. Queenstown growth, Christchurch after the earthquakes, our own area'],
+            ['mig-field', /Optional: Carrying out fieldwork to identify evidence of the impact of migrant/i, 'Fieldwork on the impact of migrant groups on the local area', [], true, 'e.g. a walk of the town centre looking for signs of different migrant groups'],
+            ['mig-survey', /Optional: Surveying people about why they have migrated/i, 'Surveying people about why they have migrated into the local area', [], true, 'e.g. survey of parents and neighbours who moved here in the last 10 years'],
+            ['haz-swap', /may choose to replace one of these with volcanoes/i, 'Natural hazards: the curriculum’s two examples are floods and earthquakes', ['Floods and earthquakes (the curriculum default)', 'Volcanoes in place of one of them', 'Tsunami in place of one of them', 'Landslides in place of one of them'], false, 'e.g. floods and volcanoes'],
+            ['haz-flood', /Flooding – exemplified/i, 'Flooding: at least one New Zealand case study', [], false, 'e.g. Cyclone Gabrielle in Hawke’s Bay, the 2023 Auckland floods'],
+            ['haz-quake', /Earthquakes – exemplified/i, 'Earthquakes: at least one New Zealand case study', [], false, 'e.g. the 2011 Christchurch earthquake, Kaikōura 2016'],
+            ['haz-plan', /natural hazards response plan in your local area/i, 'The natural hazards response plan in your local area', [], false, 'e.g. our civil defence plan, the school evacuation plan'],
+            ['tour-nz', /Tourism in New Zealand – exemplified/i, 'Tourism in New Zealand: case studies of a range of tourist destinations', [], false, 'e.g. Queenstown, Rotorua, Waiheke Island'],
+            ['tour-eu', /Tourism in Europe – exemplified/i, 'Tourism in Europe: a case study of at least one European tourist destination', [], false, 'e.g. Venice, Barcelona, Santorini'],
+            ['tour-pac', /Tourism in the Pacific – exemplified/i, 'Tourism in the Pacific: a case study of at least one Pacific tourist destination', [], false, 'e.g. Fiji, Rarotonga, Samoa'],
+            ['tour-local', /Optional: Explaining how and why tourism has or has not impacted your local area/i, 'How and why tourism has or has not impacted your local area', [], true, 'e.g. the impact of visitors on our beaches and roads'],
+            ['coast', /Coastal threats and management – exemplified/i, 'Coastal threats and management: at least one New Zealand case study', [], false, 'e.g. erosion at Haumoana, the Waihī Beach seawall'],
+            ['mega', /megacities in low- and high-income/i, 'Causes and impacts of megacity growth: case studies of megacities in low- and high-income Asian countries', [], false, 'e.g. Dhaka and Tokyo, Jakarta and Seoul'],
+            ['ww', /What impact did the World Wars have on our local community/i, 'The impact of the World Wars on our local community', [], false, 'e.g. the local war memorial, names on the roll of honour, a local soldier']
+        ];
+        function sscText() { var k = ((document.getElementById('unit-junior-knowledge') || {}).value || ''), p = ((document.getElementById('unit-junior-practices') || {}).value || ''); return (k + '\n' + p).replace(/\*\*/g, ''); }
+        function sscItems() { if (unitState.dept !== 'Social Sciences') return []; var tx = sscText(); return SS_CHOICES.filter(function(c) { return c[1].test(tx); }); }
+        function sscGet(id) { if (!unitState.ssc || typeof unitState.ssc !== 'object') unitState.ssc = {}; if (!unitState.ssc[id]) unitState.ssc[id] = { m: 'ai', o: '', t: '' }; return unitState.ssc[id]; }
+        function sscSummary() {
+            var its = sscItems(), mine = 0, ai = 0, sk = 0;
+            its.forEach(function(c) { var s = sscGet(c[0]); if (s.m === 'ai') ai++; else if (s.m === 'skip') sk++; else mine++; });
+            return its.length + ' to settle: ' + mine + ' chosen by you, ' + ai + ' left to the AI' + (sk ? ', ' + sk + ' left out' : '');
+        }
+        function sscSync() { actEnsureState(); unitState.actD[actKey('ssc')] = sscSummary(); updateUnitBuilderPrompt(); saveAppState(); }
+        function sscSet(id, m, oi) {
+            var s = sscGet(id), c = SS_CHOICES.filter(function(x) { return x[0] === id; })[0]; s.m = m;
+            if (m === 'opt') s.o = c[3][oi];
+            actEnsureState(); unitState.actD[actKey('ssc')] = sscSummary(); unitState.actAllNo = false;
+            renderUnitActivitiesCard(); updateUnitBuilderPrompt(); saveAppState();
+            if (m === 'own') { var el = document.getElementById('ssc-own-' + id); if (el) el.focus(); }
+        }
+        function sscOwn(id, v) { sscGet(id).t = v; sscSync(); }
+        function sscDetailText() {
+            actEnsureState(); if (unitState.dept !== 'Social Sciences' || unitState.actQ[actKey('ssc')] !== 'yes') return '';
+            var its = sscItems(); if (!its.length) return '';
+            var out = 'CASE STUDIES AND LOCAL EXAMPLES (the curriculum text leaves these to the teacher; use exactly what is stated here):\n';
+            its.forEach(function(c) {
+                var s = sscGet(c[0]);
+                if (s.m === 'opt') out += '- ' + c[2] + ': use ' + s.o + '.\n';
+                else if (s.m === 'own') out += '- ' + c[2] + ': the teacher has chosen "' + String(s.t || '').trim() + '". Use exactly this' + (String(s.t || '').trim() ? '.' : ' (the teacher has not typed it yet, so choose a suitable one and say so).') + '\n';
+                else if (s.m === 'skip') out += '- ' + c[2] + ': this item is optional in the curriculum and the teacher wants it left out.\n';
+                else out += '- ' + c[2] + ': the teacher has not chosen, so you choose a suitable, New Zealand-relevant one and name it clearly; where it needs local knowledge, write "Teacher: add your local example".\n';
+            });
+            return out;
+        }
+        function sscNoLine() {
+            if (unitState.dept !== 'Social Sciences' || unitState.actAllNo) return ''; actEnsureState();
+            if (unitState.actQ[actKey('ssc')] !== 'no' || !sscItems().length) return '';
+            return 'The teacher is leaving the case studies and local examples that the curriculum text asks for to you: for each one choose a suitable, New Zealand-relevant case study or example and name it clearly; where it needs local knowledge, write "Teacher: add your local example".\n';
+        }
+        function actNoLines() { return txNoLine() + sscNoLine(); }
         // ---------- Textbook / workbook used throughout (Maths and Science) ----------
         function bkState() { if (!unitState.bk || typeof unitState.bk !== 'object') unitState.bk = { title: '', use: '' }; return unitState.bk; }
         function bkSet(k, v) {
@@ -5872,7 +5858,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function unitSecDone(n) {
             var v = function(id) { return ((document.getElementById(id) || {}).value || '').trim(); };
             if (n === 1) return !!unitState.dept && !!unitState.year && getGlobalTopic() !== '[Insert Specific Topic Here]';
-            if (n === 2) return /Level/.test(unitState.year || '') ? !!v('unit-ncea-standard') : (!!v('unit-junior-knowledge') && !!v('unit-junior-practices') && !egPending());
+            if (n === 2) return /Level/.test(unitState.year || '') ? !!v('unit-ncea-standard') : (!!v('unit-junior-knowledge') && !!v('unit-junior-practices'));
             if (n === 3) return unitActStrict() || (!!unitSel().s3 && unitActivitiesDone());
             if (n === 4) return !!unitSel().integ;
             if (n === 5) return !unitSelMissing() && (!unit5NeedsConfirm() || !!unitSel().s5);
@@ -8363,7 +8349,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function hwEsc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
         function updateUnitBuilderPrompt() {
-            try { egRefresh(); } catch (e) {}
             y78Sync('unit');
             if (actRenderedDept !== actRenderKey()) renderUnitActivitiesCard();
             unitActRefresh();
