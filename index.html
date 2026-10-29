@@ -9879,7 +9879,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 + '<p class="text-xs font-bold text-slate-800 mt-3 mb-1">Click the periods this class has (a 5-day, 5-period week; 60 minutes each)</p>' + grid
                 + '<p class="text-xs font-bold text-slate-800 mt-3 mb-1">Unit plan</p>' + radio('No unit plan: just show the subject, with no lesson details', 'none') + radio('Use a unit plan saved on this device' + (wkData.units.length ? '' : ' (add one below)'), 'unit') + radio('I will attach it in the AI each week (not saved)', 'attach')
                 + (d.mode === 'unit' ? '<select class="wk-in w-full rounded border border-slate-300 p-2 text-xs" style="margin-top:6px" onchange="wkDraftSet(\'unitId\',this.value,true)">' + unitOpts + '</select><p class="text-[11px] text-slate-500 mt-1">Two classes on the same unit can share one saved unit plan. Each class has its own lesson number each week.</p>' : '')
-                + (d.mode === 'unit' && d.unitId === 'new' ? '<input type="text" ' + inp + ' style="margin-top:6px" value="' + esc(d.newName) + '" oninput="wkDraftSet(\'newName\',this.value)" placeholder="Unit name, e.g. Year 8 Migration"><textarea rows="8" ' + inp + ' style="margin-top:6px" oninput="wkDraftSet(\'newPlan\',this.value)" placeholder="Paste the unit plan here. Very long plans can make the prompt too long to paste: if that happens, use the prompt file.">' + esc(d.newPlan) + '</textarea>' : '')
+                + (d.mode === 'unit' && d.unitId === 'new' ? '<input type="text" ' + inp + ' style="margin-top:6px" value="' + esc(d.newName) + '" oninput="wkDraftSet(\'newName\',this.value)" placeholder="Unit name, e.g. Year 8 Migration"><textarea rows="8" ' + inp + ' style="margin-top:6px" onpaste="wkPaste(event,this)" oninput="wkDraftSet(\'newPlan\',this.value)" placeholder="Paste the unit plan here. Copy it straight from your Google Doc so the links in it come across. (The Weekly Plan now sends only the lessons needed this week, so long plans are fine.)">' + esc(d.newPlan) + '</textarea>' : '')
                 + (d.mode === 'attach' ? '<input type="text" ' + inp + ' style="margin-top:6px" value="' + esc(d.unit) + '" oninput="wkDraftSet(\'unit\',this.value)" placeholder="Unit name (optional), e.g. Migration">' : '')
                 + '<p id="wk-ewarn" class="hidden text-xs font-bold text-red-700 mt-2"></p>'
                 + '<div class="flex flex-wrap items-center gap-2 mt-3"><button type="button" class="px-5 py-2 rounded-lg border-2 border-cyan-700 bg-cyan-600 text-white text-xs font-black tracking-wider hover:bg-cyan-700" onclick="wkSaveClass()">SAVE CLASS</button><button type="button" class="builder-btn text-xs py-2 px-3" onclick="wkCancelEdit()">Cancel</button>' + (isNew ? '' : '<button type="button" class="ml-auto text-[11px] font-bold text-red-700 border border-red-300 rounded-md px-2 py-1 hover:bg-red-50" onclick="wkDeleteClass()">' + (wkUi.delArm ? 'Click again to delete this class' : 'Delete this class') + '</button>') + '</div></div>';
@@ -9889,7 +9889,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var d = wkUi.unitDraft, esc = actEsc, inp = 'class="wk-in w-full rounded border border-slate-300 p-2 text-xs"', isNew = wkUi.unitEdit === 'new', by = isNew ? [] : wkUsedBy(d);
             return '<div class="wk-box rounded-xl border-2 border-cyan-300 p-4 mt-4"><p class="text-xs font-black uppercase tracking-widest text-cyan-800 mb-2">' + (isNew ? 'Add a unit plan' : 'Edit unit plan') + '</p>'
                 + (by.length ? '<p class="text-[11px] text-slate-600 mb-2">Used by ' + esc(by.join(', ')) + '. Changes apply to all of these classes.</p>' : '')
-                + '<input type="text" ' + inp + ' value="' + esc(d.name) + '" oninput="wkUnitSet(\'name\',this.value)" placeholder="Unit name, e.g. Year 8 Migration"><textarea rows="12" ' + inp + ' style="margin-top:6px" oninput="wkUnitSet(\'plan\',this.value)" placeholder="Paste the unit plan here.">' + esc(d.plan) + '</textarea>'
+                + '<input type="text" ' + inp + ' value="' + esc(d.name) + '" oninput="wkUnitSet(\'name\',this.value)" placeholder="Unit name, e.g. Year 8 Migration"><textarea rows="12" ' + inp + ' style="margin-top:6px" onpaste="wkPaste(event,this)" oninput="wkUnitSet(\'plan\',this.value)" placeholder="Paste the unit plan here. Copy it straight from your Google Doc so the links in it come across.">' + esc(d.plan) + '</textarea>'
                 + '<p id="wk-uwarn" class="hidden text-xs font-bold text-red-700 mt-2"></p>'
                 + '<div class="flex flex-wrap items-center gap-2 mt-3"><button type="button" class="px-5 py-2 rounded-lg border-2 border-cyan-700 bg-cyan-600 text-white text-xs font-black tracking-wider hover:bg-cyan-700" onclick="wkUnitSave()">SAVE UNIT PLAN</button><button type="button" class="builder-btn text-xs py-2 px-3" onclick="wkUnitCancel()">Cancel</button>' + (isNew ? '' : '<button type="button" class="ml-auto text-[11px] font-bold text-red-700 border border-red-300 rounded-md px-2 py-1 hover:bg-red-50" onclick="wkUnitDelete()">' + (wkUi.unitDelArm ? 'Click again to delete' + (by.length ? ' (' + esc(by.join(', ')) + ' will have no unit plan)' : '') : 'Delete this unit plan') + '</button>') + '</div></div>';
         }
@@ -9969,6 +9969,38 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 + card(!!wkData.full, 'violet', 'Full lesson plans', 'Everything in the weekly summary, plus every lesson written out in full on its own page: success criteria, Connect, I Do, We Do, You Do and Review with timings that add to 60 minutes, teacher questions and checks for understanding. Longer to make and to read.', 'wkSetFull(true)')
                 + '</div>';
         }
+        // Pasting a unit plan from a Google Doc or web page: keep the web addresses of its links as "name (address)" so the AI can make them live links.
+        function wkHtmlToText(html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html'), out = '';
+            var BLOCK = { P: 1, DIV: 1, LI: 1, TR: 1, H1: 1, H2: 1, H3: 1, H4: 1, H5: 1, H6: 1, UL: 1, OL: 1, TABLE: 1, TD: 1, TH: 1, BR: 1 };
+            function good(a) {
+                var h = a.getAttribute('href') || '', t = (a.textContent || '').trim();
+                var m = h.match(/^https?:\/\/(?:www\.)?google\.com\/url\?(?:.*&)?q=([^&]+)/i); if (m) { try { h = decodeURIComponent(m[1]); } catch (e) {} }
+                if (!/^https?:\/\//i.test(h) || !t) return '';
+                if (/^\s*(🤖|🎯|📝)/.test(t) || /[?&](res|li|kn|diff|df|dt)=/.test(h)) return '';
+                return h;
+            }
+            function walk(n) {
+                if (n.nodeType === 3) { out += n.nodeValue.replace(/\s+/g, ' '); return; }
+                if (n.nodeType !== 1 || /^(STYLE|SCRIPT|META|HEAD|TITLE)$/.test(n.tagName)) return;
+                var tag = n.tagName, isB = !!BLOCK[tag];
+                if (tag === 'BR') { out += '\n'; return; }
+                if (isB) out += '\n';
+                for (var c = n.firstChild; c; c = c.nextSibling) walk(c);
+                if (tag === 'A') { var h = good(n); if (h && out.slice(-h.length - 2) !== '(' + h + ')') out += ' (' + h + ')'; }
+                if (isB) out += '\n';
+            }
+            walk(doc.body);
+            return out.replace(/[ \t]+\n/g, '\n').replace(/\n[ \t]+/g, '\n').replace(/\n{2,}/g, '\n').trim();
+        }
+        function wkPaste(ev, ta) {
+            var cd = ev.clipboardData; if (!cd) return;
+            var html = cd.getData('text/html'); if (!html || !/<a\s[^>]*href=/i.test(html)) return;
+            var txt = wkHtmlToText(html); if (!txt) return;
+            ev.preventDefault();
+            ta.setRangeText(txt, ta.selectionStart, ta.selectionEnd, 'end');
+            ta.dispatchEvent(new Event('input', { bubbles: true }));
+        }
         function wkToggleTrim() { wkData.trim = wkData.trim === false; wkSave(); wkRender(); }
         // Cut a pasted unit plan down to the lessons needed this week (and tidy buttons and notes that don't help planning).
         // nums = lesson numbers wanted. Returns null when the lessons can't be found, so the whole plan is sent instead.
@@ -10001,19 +10033,25 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         var WK_TEMPLATE = [
             '<!DOCTYPE html><html lang="en-NZ"><head><meta charset="UTF-8"><title>Weekly plan, week starting [date]</title><style>',
             'body{font-family:Arial,sans-serif;font-size:11pt;color:#1e293b}',
-            'h1{font-size:20pt;color:#002066;margin:0 0 4pt}',
-            'h2{font-size:14pt;color:#002066;border-bottom:2px solid #002066;padding-bottom:3pt;margin:18pt 0 6pt}',
+            'h1{font-size:15pt;color:#002066;margin:0 0 4pt;white-space:nowrap}',
+            'h2{font-size:13pt;color:#002066;border-bottom:2px solid #002066;padding-bottom:3pt;margin:18pt 0 6pt}',
             'table{border-collapse:collapse;width:100%;margin-bottom:10pt}',
             'th,td{border:1px solid #94a3b8;padding:5pt;vertical-align:top;font-size:10pt}',
             'th{background:#e2e8f0;text-align:center}',
             'td.p{background:#e2e8f0;font-weight:bold;text-align:center;width:6%}',
             'td.k{background:#f1f5f9;font-weight:bold;width:20%}',
+            'td.s{background:#ddd6fe;font-weight:bold;width:20%}',
+            'td.sv{background:#f5f3ff}',
+            'h3{font-size:12pt;color:#002066;margin:14pt 0 4pt;padding:4pt 6pt;border-left:6px solid #002066}',
+            'h2.hwh{color:#b45309;border-bottom:2px solid #b45309}th.hw{background:#fcd34d}td.hw{background:#fffbeb}',
+            'h2.prh{color:#0f766e;border-bottom:2px solid #0f766e}th.pr{background:#5eead4}td.pr{background:#f0fdfa}',
+            'a{color:#1155cc}',
             'td.na{color:#94a3b8;text-align:center}',
             '.lost{background:#fee2e2;color:#7f1d1d}',
             '.chg td{background:#fff7ed;border:1px solid #fb923c}',
             '.c1{background:#dbeafe}.c2{background:#dcfce7}.c3{background:#fef3c7}.c4{background:#fae8ff}.c5{background:#ccfbf1}.c6{background:#ffedd5}.c7{background:#e0e7ff}.c8{background:#fce7f3}',
             'table.grid th,table.grid td{font-size:9pt;padding:4pt}',
-            '@page{size:A4 portrait;margin:12mm}',
+            '@page{size:A4 portrait;margin:8mm}',
             '</style></head><body>',
             '<h1>Weekly plan, week starting [date]</h1>',
             '<p>[the classes this week, one line]</p>',
@@ -10023,12 +10061,13 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             '<tr><td class="p">P1</td><td class="c1"><b>[class]</b><br>[L8: short title]</td><td class="lost"><b>[class]</b><br>[reason: no lesson]</td><td class="na">-</td><td class="na">-</td><td class="na">-</td></tr>',
             '<tr><td class="p">P2</td><td>[same pattern for P2 to P5, five cells per row]</td></tr></table>',
             '<h2>[class] · [year and subject] · [unit name]</h2>',
-            '<table><tr><th colspan="2" class="c1" style="text-align:left">[Monday P1 · Lesson 8: title]</th></tr>',
-            '<tr><td class="k">[row label]</td><td>[text]</td></tr><tr><td class="k">[another row label]</td><td>[text]</td></tr></table>',
-            '<h2>Homework</h2>',
-            '<table><tr><th style="width:20%">Class</th><th>Homework</th></tr><tr><td>[class]</td><td>[homework]</td></tr></table>',
-            '<h2>Prep and photocopying checklist</h2>',
-            '<table><tr><th style="width:20%">When</th><th>What to prepare</th></tr><tr><td>[Monday P1 · class]</td><td>☐ [item]</td></tr></table>',
+            '<h3 class="c1" style="page-break-before:always">[Monday P1 · Lesson 8: title]</h3>',
+            '<table><tr><td class="k">[info row label]</td><td>[text]</td></tr>',
+            '<tr><td class="s">[stage row label]</td><td class="sv">[text]</td></tr></table>',
+            '<h2 class="hwh">Homework</h2>',
+            '<table><tr><th class="hw" style="width:14%">Class</th><th class="hw" style="width:22%">Set in</th><th class="hw">Homework</th></tr><tr><td class="hw">[class]</td><td class="hw">[Wednesday P3 · Lesson 16]</td><td class="hw">[homework]</td></tr></table>',
+            '<h2 class="prh">Prep and photocopying checklist</h2>',
+            '<table><tr><th class="pr" style="width:22%">When</th><th class="pr">What to prepare</th></tr><tr><td class="pr">[Monday P1 · class]</td><td class="pr">☐ [item]</td></tr></table>',
             '</body></html>'
         ].join('\n');
         function wkPrompt() {
@@ -10056,10 +10095,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 t += '### Unit plan: ' + u.name + note + '\n"""\n' + body + '\n"""\n\n';
             });
             var full = !!wkData.full;
-            t += '### Rules\n- Use ONLY lessons from the unit plans. Never invent lessons, topics or resources, and keep lesson numbers, titles and learning intentions as written. For a class with no unit plan, show only its label and subject.\n' + (full ? '- The teacher has asked for each lesson in full. You may add teaching detail (timings, teacher questions, worked examples, checks for understanding), but every lesson must stay inside what the unit plan says for it. No new topics.\n' : '') + '- Give each class its lessons in order, one per period it has this week, starting from the lesson the teacher is up to. If a period is lost, the lessons simply continue into the next period it has. If a unit plan has fewer lessons left than periods, say which period is free and suggest something small from the unit plan (practice, review or catch-up), not new content.\n- If a unit plan is missing for a class that needs one, say so and ask for it. Do not guess.\n- If the teacher\'s notes remove a period, move that lesson to the class\'s next period and list the change.\n- Refer to classes only by the labels above, never by student names.\n- No citation markers, source tags or footnote references anywhere (such as [cite: 1] or [1]), and no markdown.\n\n### What to give back\nGive ONE complete HTML file in a single code block, with one short sentence before it and nothing after it. The teacher will open it in Chrome, select everything, copy it and paste it into a Google Doc, so it must paste cleanly: use ONLY tables, headings, paragraphs and bold text. No flexbox, no grid, no scripts, no web fonts, no images, no emoji and no markdown. Write & as &amp;.\n\nUse EXACTLY this template and these styles. Only fill in the [brackets] and repeat rows and tables as needed:\n' + WK_TEMPLATE + '\n\nHow to fill it in:\n- Title: "Weekly plan, week starting ' + (wk ? wkLong(wk.mon) : '[date]') + '".\n- "Changes to the plan" box: list every lost period, every move and every school event that may disturb lessons, one per line. Leave the box out if there are none.\n- Timetable grid: P1 to P5 down the side. Give each class its own colour class (c1 for the first class listed above, c2 for the second, and so on). A teaching cell has the class label in bold, then the lesson number and a short title of no more than five words so the cell stays narrow (or just the subject if there is no unit plan). A lost period uses class "lost" with the reason. A period the teacher does not teach uses class "na" with "-".\n';
-            if (full) t += '- Lesson plans: for each class that has a unit plan, a heading with the class, subject and unit, then one table for every lesson this week, in day and period order, starting each on a new page. The table has a coloured heading row (day, period, lesson number and title) then rows for: Learning intention, Success criteria, Connect, I Do, We Do, You Do, Review (put the minutes in each label so they add up to ' + WK_MINS + '), Resources, and Check for understanding. In the stage rows say what the teacher says and does, what students do, and the questions to ask.\n';
-            else t += '- Lesson cards: for each class that has a unit plan, a heading with the class, subject and unit, then one table for every lesson this week, in day and period order. The table has a coloured heading row (day, period, lesson number and title) then rows for: Learning intention, Main activity (from the unit plan), Resources.\n';
-            t += '- Homework: a table with the columns Class and Homework, taken from the unit plans (say so if there is none).\n- Prep and photocopying checklist: a table with the columns When (day, period, class) and What to prepare, in the order the teacher needs things. Start each item with the character ☐.\n';
+            t += '### Rules\n- Use ONLY lessons from the unit plans. Never invent lessons, topics or resources, and keep lesson numbers, titles and learning intentions as written. For a class with no unit plan, show only its label and subject.\n' + (full ? '- The teacher has asked for each lesson in full. You may add teaching detail (timings, teacher questions, worked examples, checks for understanding), but every lesson must stay inside what the unit plan says for it. No new topics.\n' : '') + '- Give each class its lessons in order, one per period it has this week, starting from the lesson the teacher is up to. If a period is lost, the lessons simply continue into the next period it has. If a unit plan has fewer lessons left than periods, say which period is free and suggest something small from the unit plan (practice, review or catch-up), not new content.\n- If a unit plan is missing for a class that needs one, say so and ask for it. Do not guess.\n- If the teacher\'s notes remove a period, move that lesson to the class\'s next period and list the change.\n- Refer to classes only by the labels above, never by student names.\n- No citation markers, source tags or footnote references anywhere (such as [cite: 1] or [1]), and no markdown.\n\n### What to give back\nGive ONE complete HTML file in a single code block, with one short sentence before it and nothing after it. The teacher will open it in Chrome, select everything, copy it and paste it into a Google Doc, so it must paste cleanly: use ONLY tables, headings, paragraphs, bold text, one italic note line and links. No flexbox, no grid, no scripts, no web fonts, no images, no emoji and no markdown. Write & as &amp;.\n\nUse EXACTLY this template and these styles. Only fill in the [brackets] and repeat rows and tables as needed:\n' + WK_TEMPLATE + '\n\nHow to fill it in:\n- Title: "Weekly plan, week starting ' + (wk ? wkLong(wk.mon) : '[date]') + '".\n- "Changes to the plan" box: list every lost period, every move and every school event that may disturb lessons, one per line. Leave the box out if there are none.\n- Timetable grid: P1 to P5 down the side. Give each class its own colour class (c1 for the first class listed above, c2 for the second, and so on). A teaching cell has the class label in bold, then the lesson number and a short title of no more than five words so the cell stays narrow (or just the subject if there is no unit plan). A lost period uses class "lost" with the reason. A period the teacher does not teach uses class "na" with "-".\n';
+            if (full) t += '- Lesson plans: for each class that has a unit plan, an h2 heading with the class, subject and unit, then an italic line saying "Success criteria, timings and checks for understanding are suggestions written by the AI. The learning intentions, activities and resources come from your unit plan.", then for every lesson this week, in day and period order, an h3 title (day, period, lesson number and title) with the class colour class and the style page-break-before:always (copy the template), followed by one table. Info rows (td class "k"): Learning intention, Success criteria, Resources, Check for understanding. Stage rows (label td class "s", text td class "sv"): Connect, I Do, We Do, You Do, Review, with the minutes in each label so they add up to ' + WK_MINS + '. Put the info rows Learning intention and Success criteria first, then the five stage rows, then Resources, then Check for understanding. In the stage rows say what the teacher says and does, what students do, and the questions to ask.\n';
+            else t += '- Lesson cards: for each class that has a unit plan, an h2 heading with the class, subject and unit, then for every lesson this week, in day and period order, an h3 title (day, period, lesson number and title) with the class colour class (leave out the page-break style) followed by one table. All rows are info rows (td class "k"): Learning intention, Main activity (from the unit plan), Resources.\n';
+            t += '- Homework: h2 class "hwh" and a table with the columns Class, Set in (day, period and lesson number) and Homework, using the classes "hw" shown in the template. Take the homework from the lessons in the unit plans and say so if there is none.\n- Prep and photocopying checklist: h2 class "prh" and a table with the columns When (day, period, class) and What to prepare, using the classes "pr" shown in the template, in the order the teacher needs things. Start each item with the character ☐.\n- Links: where the unit plan shows a web address beside a resource, for example "Te Ara: Migration Story Hub (https://...)", make that resource name a clickable link with <a href="the address">name</a>, in the lesson tables and in the checklist. Use ONLY web addresses that appear in the unit plans. Never invent or guess a web address. If there is none, write the name as plain text.\n';
             return t;
         }
         function wkRefresh() {
@@ -10067,7 +10106,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var t = wkPrompt(); el.textContent = t;
             if (typeof promptLengthChip === 'function') promptLengthChip(t, 'wk-prompt-length', 'wk-prompt-longnote', 'wk-file', 'wk-copy');
             var att = wkData.classes.filter(function(c) { return c.mode === 'attach'; }).map(function(c) { return c.label; });
-            var h = document.getElementById('wk-how'); if (h) h.textContent = (att.length ? 'In the AI, attach the unit plan for ' + (att.length > 1 ? att.slice(0, -1).join(', ') + ' and ' + att[att.length - 1] : att[0]) + ' in the same message as this prompt, then send. ' : '') + 'To use the result in a Google Doc: save the code block as a .html file, open it in Chrome, press Ctrl+A then Ctrl+C, and paste into a Google Doc. It is laid out for a Portrait page, which is the Google Docs default.';
+            var h = document.getElementById('wk-how'); if (h) h.textContent = (att.length ? 'In the AI, attach the unit plan for ' + (att.length > 1 ? att.slice(0, -1).join(', ') + ' and ' + att[att.length - 1] : att[0]) + ' in the same message as this prompt, then send. ' : '') + 'To use the result in a Google Doc: save the code block as a .html file, open it in Chrome, press Ctrl+A then Ctrl+C, and paste into a Google Doc. It is laid out for a Portrait page, which is the Google Docs default. For wider tables, first set the Doc\'s margins to 0.5 inch (File, Page setup) and then paste.';
         }
         function wkCheck() {
             var msg = '';
