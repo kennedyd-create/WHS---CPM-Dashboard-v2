@@ -60,6 +60,31 @@
         .strategy-btn-sm { padding: 0.3rem 0.55rem !important; font-size: 0.68rem !important; line-height: 1.15 !important; }
         
         /* Shaded lesson-plan-format options, each with its own colour */
+        #mk-modal .builder-btn[aria-pressed]:not(.active) { background-color: #ffe4e6; border: 1.5px solid #fda4af; color: #881337; }
+        #mk-modal .builder-btn[aria-pressed]:not(.active):hover { background-color: #fecdd3; border-color: #fb7185; }
+        #mk-modal .builder-btn[aria-pressed].active { background-color: #be123c; border: 1.5px solid #9f1239; color: #fff; }
+        html.dark #mk-modal .builder-btn[aria-pressed]:not(.active) { background-color: #3b1020; border-color: #9f1239; color: #fda4af; }
+        html.dark #mk-modal .builder-btn[aria-pressed]:not(.active):hover { background-color: #4c1527; }
+        .pb-grp { display: inline-flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+        .pb-grp + .pb-grp { border-left: 2px solid #94a3b8; padding-left: 14px; margin-left: 2px; }
+        #view-lesson .pb-grp + .pb-grp { border-left: 0; padding-left: 0; margin-left: 0; }
+        html.dark .pb-grp + .pb-grp { border-left-color: #64748b; }
+        .pb-or { font-size: 10px; font-weight: 800; font-style: italic; color: #64748b; }
+        .pb-btn { display: inline-flex; align-items: center; padding: 6px 12px; border-radius: 8px; border: 2px solid; font-size: 10px; font-weight: 900; letter-spacing: .05em; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,.12); white-space: nowrap; transition: background .15s; }
+        .pb-copy { background: #047857; border-color: #065f46; color: #fff; }
+        .pb-copy:hover { background: #065f46; }
+        .pb-ai { background: #dbeafe; border-color: #2563eb; color: #1e3a8a; }
+        .pb-ai:hover { background: #bfdbfe; }
+        .pb-right { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; flex: 1 1 auto; justify-content: flex-end; }
+        .pb-end { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+        .pb-small { font-size: 9px; font-weight: 800; letter-spacing: .04em; padding: 3px 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; color: #475569; cursor: pointer; white-space: nowrap; }
+        .pb-small:hover { background: #f1f5f9; }
+        .pb-small.pb-fu { border-color: #fda4af; color: #9f1239; background: #fff1f2; }
+        html.dark .pb-or { color: #94a3b8; }
+        html.dark .pb-ai { background: #1e3a5f; border-color: #3b82f6; color: #bfdbfe; }
+        html.dark .pb-ai:hover { background: #274b78; }
+        html.dark .pb-small { background: #1e293b; border-color: #475569; color: #cbd5e1; }
+        html.dark .pb-small.pb-fu { background: #3b1020; border-color: #9f1239; color: #fda4af; }
         .builder-btn.shaded:not(.active) { background-color: #fff1f2; border-color: #fecdd3; color: #9f1239; }
         .builder-btn.shaded.active { background-color: #e11d48; border-color: #e11d48; }
         .builder-btn.teal-shaded:not(.active) { background-color: #f0fdfa; border-color: #99f6e4; color: #0f766e; }
@@ -271,6 +296,23 @@
         html.dark #unit-act-card .act-row.act-ssc .ssc-card { background: #0f172a; border-color: #4338ca; }
         html.dark #unit-act-card .act-row.act-ssc .ssc-card p { color: #e2e8f0; }
         html.dark #unit-act-card .act-row.act-ssc input { background: #1e293b; color: #e2e8f0; }
+        html.dark #mk-modal > div { background: #0f172a; color: #e2e8f0; }
+        html.dark #mk-modal textarea, html.dark #mk-modal input[type=text] { background: #1e293b; color: #e2e8f0; }
+        html.dark #mk-modal .mk-sec { border-color: #334155; }
+        #tk-tabs .tk-tab { flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; font-size: clamp(10px, 1.05vw, 12px); font-weight: 800; padding: 7px 4px; border-radius: 9px; border: 2px solid var(--tc); background: var(--tl); color: var(--td); cursor: pointer; transition: transform .1s, background .15s; }
+        #tk-tabs .tk-tab:hover { transform: translateY(-1px); background: #fff; }
+        #tk-tabs .tk-tab.on { background: var(--tc); color: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+        html.dark #tk-tabs .tk-tab { background: #1e293b; color: var(--tl); }
+        html.dark #tk-tabs .tk-tab:hover { background: #334155; }
+        html.dark #tk-tabs .tk-tab.on { background: var(--tc); color: #fff; }
+        #as-mark-tab { font-size: 12px; font-weight: 800; padding: 6px 12px; border-radius: 9px; border: 2px solid #e11d48; background: #fff1f2; color: #9f1239; cursor: pointer; vertical-align: middle; transition: background .15s, transform .1s; }
+        #as-mark-tab:hover { background: #ffe4e6; transform: translateY(-1px); }
+        html.dark #as-mark-tab { background: #3b1020; color: #fda4af; }
+        html.dark #as-mark-tab:hover { background: #4c1527; color: #fecdd3; }
+        html.dark #tk-modal > div { background: #0f172a; color: #e2e8f0; }
+        html.dark #tk-modal textarea, html.dark #tk-modal input[type=text], html.dark #tk-modal select { background: #1e293b; color: #e2e8f0; }
+        html.dark #tk-modal .tk-sec, html.dark #tk-modal .tk-card, html.dark #tk-modal table td, html.dark #tk-modal table th { border-color: #334155; }
+        html.dark #tk-modal .tk-card { background: #111c33; }
         html.dark #tx-modal > div { background: #0f172a; color: #e2e8f0; }
         html.dark #tx-modal .tx-card { border-color: #334155; }
         html.dark #tx-modal select, html.dark #tx-modal input { background: #1e293b; color: #e2e8f0; }
@@ -690,6 +732,27 @@
 <p class="text-sm text-slate-600">Add each novel, short story, play, poem, film or other text that is the <strong>focus</strong> of the unit or is <strong>also included</strong>. The unit plan will be built around them.</p>
 <div id="tx-body"></div>
 <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-purple-200 pt-3"><p class="text-xs text-slate-600 flex-1 min-w-[12rem]"><strong>Summary:</strong> <span id="tx-live"></span></p><div class="flex flex-wrap gap-2"><button type="button" class="builder-btn text-xs py-2 px-4" onclick="txNotRelevant()">Not relevant for this unit</button><button type="button" class="builder-btn text-xs py-2 px-4" onclick="txCancel()">Cancel</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="txSave()">Save to my unit ✓</button></div></div>
+</div>
+</div>
+    <div id="mk-modal" class="hidden fixed inset-0 items-center justify-center p-4" style="z-index: 9000; background: rgba(15, 23, 42, 0.55);" role="dialog" aria-modal="true" aria-labelledby="mk-title">
+<div class="bg-white text-slate-800 rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 border-t-4 border-t-rose-500">
+<div class="flex items-start justify-between gap-3 mb-1"><h3 id="mk-title" class="text-lg font-black">🖍️ Marking assistant (Years 7–10) <span class="text-[10px] font-black uppercase tracking-wider bg-rose-100 text-rose-800 rounded-full px-2 py-0.5 align-middle">Trial</span></h3><button type="button" class="text-slate-500 hover:text-slate-900 text-xl leading-none" onclick="mkClose()" aria-label="Close">✕</button></div>
+<p class="text-sm text-slate-600">Builds a prompt for an AI <strong>marking assistant</strong>. It suggests a stage for each piece of work on the five Ministry progress stages (Emerging, Developing, Consolidating, Proficient, Exceeding), with the evidence, a strength and a next step. <strong>You make the final judgement.</strong> For NCEA standards use the Moderation Assistant instead.</p>
+<div class="mt-2 rounded-lg border border-amber-300 bg-amber-50 p-2.5 text-[11px] text-amber-900"><strong>Before you give student work to any AI:</strong> use Gemini signed in with your school Google account (not a personal free account), use initials or codes instead of names, never include NSNs, and treat every suggested stage as a second opinion to test against your own.</div>
+<div id="mk-body"></div>
+<div class="mt-4 border-t border-rose-200 pt-3">
+<div class="flex flex-wrap items-center justify-between gap-2"><p class="text-xs text-slate-600"><strong>Your marking assistant prompt</strong> <span id="mk-count" class="font-bold"></span></p><div class="flex flex-wrap gap-2"><span class="pb-grp"><button type="button" id="mk-copy" class="pb-btn pb-copy" onclick="mkCopy(this)">COPY PROMPT</button><span class="pb-or">or</span><button type="button" class="pb-btn pb-copy" onclick="mkDownload()">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span></div></div>
+<p id="mk-warn" class="hidden text-xs font-bold text-red-700 mt-2"></p>
+<p id="mk-how" class="text-xs font-bold text-rose-800 mt-2"></p>
+<div class="mt-2 max-h-40 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3 text-[11px] font-mono whitespace-pre-wrap"><span id="mk-prompt-text"></span></div>
+</div>
+</div>
+</div>
+    <div id="tk-modal" class="hidden fixed inset-0 items-center justify-center p-4" style="z-index: 9000; background: rgba(15, 23, 42, 0.55);" role="dialog" aria-modal="true" aria-labelledby="tk-title">
+<div class="bg-white text-slate-800 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto p-6 border-t-4 border-t-sky-500">
+<div class="flex items-start justify-between gap-3 mb-2"><h3 id="tk-title" class="text-lg font-black">🧰 Teacher tools</h3><button type="button" class="text-slate-500 hover:text-slate-900 text-xl leading-none" onclick="tkClose()" aria-label="Close">✕</button></div>
+<div id="tk-tabs" class="flex flex-nowrap gap-1 mb-1"></div>
+<div id="tk-body"></div>
 </div>
 </div>
     <div id="as-plan-modal" class="hidden fixed inset-0 flex items-center justify-center p-4" style="z-index: 9000; background: rgba(15, 23, 42, 0.55);" role="dialog" aria-modal="true" aria-labelledby="as-modal-title">
@@ -1161,13 +1224,12 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <svg class="w-3 h-3 md:w-3.5 md:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                     </button>
                 </div>
-                <a href="https://kennedyd-create.github.io/Gempromptmaker/" target="_blank" class="eb-pill rounded px-2 py-1 font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Helps you make a prompt that you put into a Gemini Gem">Gemini Gem Prompt Maker ↗</a>
                 <button id="nav-notebook" class="eb-pill px-2 py-1 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="How to use Gemini Notebook's own source-grounding to build a full course, step by step" data-action="view" data-target="notebook">📓 Gemini Notebook</button>
 
                 <span class="nav-sep" aria-hidden="true"></span>
 
                 <!-- Group 2: wellbeing -->
-                <button class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="A minute to breathe, plus a book recommendation" data-action="show-wellbeing">🧘 Teacher Well-being</button>
+                <div class="flex items-center gap-1"><button class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="A minute to breathe, plus a book recommendation" data-action="show-wellbeing">🧘 Teacher Well-being</button><button id="nav-teachertools" type="button" class="px-2 py-1 bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800 rounded font-bold text-[9px] md:text-[10px] transition flex items-center shadow-sm tooltip-wrapper tooltip-bottom" data-tooltip="Report comments, tracking grids, follow-up prompts, ready prompts, and AI use and privacy" onclick="tkOpen('report')">🧰 Teacher tools</button></div>
 
                 <span class="nav-sep" aria-hidden="true"></span>
 
@@ -1549,12 +1611,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                     <span id="lesson-prompt-health" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300"></span>
                                 </div>
                                 <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
-                                    <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
-                                    <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                                    <span class="other-ai-lesson flex gap-1.5 items-center">
-                                        <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">ChatGPT ↗</a>
-                                        <a href="https://claude.ai/new" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">Claude ↗</a>
-                                    </span>
+                                    <span class="pb-grp"><button type="button" class="pb-btn pb-copy" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button><span class="pb-or">or</span><button type="button" class="pb-btn pb-copy" onclick="downloadPromptFile('prompt-lesson-text','lesson-prompt')" title="Saves the prompt as a text file you can upload to Gemini, ChatGPT or Claude instead of pasting it">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>
                                 </div>
                             </div>
                             <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
@@ -1562,12 +1619,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                 <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-lesson-text">Select options...</span></div>
                             </div>
                             <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
-                                <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button>
-                                <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                                <span class="other-ai-lesson flex gap-1.5 items-center">
-                                    <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">ChatGPT ↗</a>
-                                    <a href="https://claude.ai/new" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">Claude ↗</a>
-                                </span>
+                                <span class="pb-grp"><button type="button" class="pb-btn pb-copy" data-action="copy" data-target="prompt-lesson-text">COPY PROMPT</button><span class="pb-or">or</span><button type="button" class="pb-btn pb-copy" onclick="downloadPromptFile('prompt-lesson-text','lesson-prompt')" title="Saves the prompt as a text file you can upload to Gemini, ChatGPT or Claude instead of pasting it">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>
                             </div>
                         </div>
                     </div> <!-- End Right Column -->
@@ -2116,16 +2168,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             <span id="unit-prompt-health" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300"></span>
                             <span id="unit-prompt-length" class="hidden plen-ok text-[10px] font-bold px-2.5 py-1 rounded-full inline-flex items-center gap-1 border"></span>
                         </div>
-                        <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
-                            <button type="button" id="unit-prompt-toggle" onclick="toggleUnitPromptDrawer()" aria-expanded="false" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">👁 SHOW PROMPT</button>
-                            <button id="unit-prompt-copy" class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button>
-                            <button type="button" id="unit-prompt-file" onclick="downloadPromptFile('prompt-unit-text','unit-plan-prompt')" title="Saves the prompt as a text file you can upload to Gemini, ChatGPT or Claude instead of pasting it. Use this when the prompt is long." class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center">⬇ PROMPT FILE (.txt)</button>
-                            <a href="https://gemini.google.com/app" target="_blank" class="bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-amber-900 hover:bg-amber-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                            <span class="other-ai-unit flex gap-1.5 items-center">
-                                    <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">ChatGPT ↗</a>
-                                    <a href="https://claude.ai/new" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">Claude ↗</a>
-                                </span>
-                        </div>
+                        <div class="pb-right"><span class="pb-grp"><button id="unit-prompt-copy" type="button" class="pb-btn pb-copy" data-action="copy" data-target="prompt-unit-text">COPY PROMPT</button><span class="pb-or">or</span><button type="button" id="unit-prompt-file" onclick="downloadPromptFile('prompt-unit-text','unit-plan-prompt')" title="Saves the prompt as a text file you can upload to Gemini, ChatGPT or Claude instead of pasting it. Use this when the prompt is long." class="pb-btn pb-copy">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span><span class="pb-end"><button type="button" id="unit-prompt-followups" onclick="tkOpen('follow')" title="Ready-made messages to send the AI after it has made your unit plan, such as shortening it or adding differentiation" class="pb-small pb-fu">💬 FOLLOW-UPS</button><button type="button" id="unit-prompt-toggle" onclick="toggleUnitPromptDrawer()" aria-expanded="false" class="pb-small">👁 SHOW PROMPT</button></span></div>
                     </div>
                     <div id="unit-prompt-longnote" class="hidden mt-2 text-[11px] font-semibold text-amber-900 bg-amber-50 border border-amber-300 rounded-lg px-3 py-2"></div>
                 </div>
@@ -2140,7 +2183,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div id="assess-from-plan-list" class="mt-1 text-xs"></div>
             </div>
             <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-4xl font-black text-slate-900 mb-4">Assessment Generator</h2>
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-4"><h2 class="text-4xl font-black text-slate-900">Assessment Generator</h2><button type="button" id="as-mark-tab" onclick="mkOpen()" title="Already have an assessment? Build a prompt for an AI marking assistant (Years 7 to 10, trial)">🖍️ Marking assistant</button></div>
                 <p class="text-slate-600">Design customised formative and summative assessments aligned to the curriculum.</p>
                 <div class="mt-4 flex justify-center">
                     <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-black tracking-wider rounded-lg transition border-2 border-red-800 shadow-md flex items-center gap-1.5" data-action="reset-app">↺ RESET SAVED DATA</button>
@@ -2479,12 +2522,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             <h4 class="text-xs font-bold uppercase text-[#002066] tracking-widest">Generated AI Prompt</h4>
                             <span id="assess-required-checklist" class="text-[10px] font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-amber-300">⚠️ 0 of 1 required fields set</span>
                             <span id="assess-prompt-health" class="hidden text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-1 rounded-full inline-flex items-center gap-1 border border-emerald-300"></span>
+                            <button type="button" id="as-mark-btn" class="hidden text-[10px] font-black tracking-wider px-3 py-1.5 rounded-lg border-2 border-rose-500 bg-rose-50 text-rose-800 hover:bg-rose-100 shadow-sm" onclick="mkOpen()">🖍️ MARKING ASSISTANT (Years 7–10)</button>
                         </div>
                         <div class="flex flex-wrap gap-1.5 md:gap-2 justify-end items-center">
-                            <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
-                            <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                            <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">ChatGPT ↗</a>
-                            <a href="https://claude.ai/new" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">Claude ↗</a>
+                            <span class="pb-grp"><button type="button" class="pb-btn pb-copy" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button><span class="pb-or">or</span><button type="button" class="pb-btn pb-copy" onclick="downloadPromptFile('prompt-assessment-text','assessment-prompt')" title="Saves the prompt as a text file you can upload to Gemini, ChatGPT or Claude instead of pasting it">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>
                         </div>
                     </div>
                     <div class="p-4 md:p-6 flex-grow overflow-y-auto custom-scrollbar bg-blue-50/30">
@@ -2492,10 +2533,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         <div class="bg-white p-5 rounded-xl text-sm font-mono text-slate-700 border border-blue-200 shadow-inner whitespace-pre-wrap"><span id="prompt-assessment-text">...</span></div>
                     </div>
                     <div class="sticky bottom-0 z-10 bg-blue-50/95 backdrop-blur-sm p-4 md:p-6 border-t border-blue-100 flex flex-wrap justify-end gap-1.5 md:gap-2 items-center">
-                        <button class="bg-white border border-slate-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-slate-50 shadow-sm flex items-center" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button>
-                        <a href="https://gemini.google.com/app" target="_blank" class="bg-blue-100 border border-blue-300 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                        <a href="https://chatgpt.com/" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">ChatGPT ↗</a>
-                        <a href="https://claude.ai/new" target="_blank" class="bg-white border border-slate-300 px-2 py-1 rounded-lg transition text-[9px] font-bold tracking-wider text-slate-600 hover:bg-slate-50 shadow-sm flex items-center">Claude ↗</a>
+                        <span class="pb-grp"><button type="button" class="pb-btn pb-copy" data-action="copy" data-target="prompt-assessment-text">COPY PROMPT</button><span class="pb-or">or</span><button type="button" class="pb-btn pb-copy" onclick="downloadPromptFile('prompt-assessment-text','assessment-prompt')" title="Saves the prompt as a text file you can upload to Gemini, ChatGPT or Claude instead of pasting it">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>
                     </div>
                 </div>
             </div>
@@ -2598,10 +2636,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         </div>
                         <div id="df-quick-actions" class="hidden mt-2 pt-2 border-t border-amber-300 flex flex-wrap items-center gap-1.5">
                             <span class="text-xs font-bold text-amber-900 mr-1">Your prompt is ready →</span>
-                            <button type="button" id="df-qcopy" class="px-3 py-1 rounded-lg text-[10px] font-black tracking-wider bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm">COPY PROMPT</button>
-                            <a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="bg-blue-100 border-2 border-blue-500 px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm">OPEN GEMINI ↗</a>
-                            <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="bg-white border-2 border-slate-400 px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider text-slate-800 hover:bg-slate-50 shadow-sm">ChatGPT ↗</a>
-                            <a href="https://claude.ai/new" target="_blank" rel="noopener" class="bg-white border-2 border-slate-400 px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider text-slate-800 hover:bg-slate-50 shadow-sm">Claude ↗</a>
+                            <span class="pb-grp"><button type="button" id="df-qcopy" class="pb-btn pb-copy">COPY PROMPT</button><span class="pb-or">or</span><button type="button" id="df-qfile" class="pb-btn pb-copy" onclick="downloadPromptFile('df-prompt','differentiate-prompt')">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>
                             <button type="button" id="df-qview" class="px-2.5 py-1 rounded-lg text-[10px] font-black tracking-wider border-2 border-slate-300 bg-white hover:bg-slate-100 text-slate-600">VIEW PROMPT ↓</button>
                         </div>
                     </div>
@@ -2648,10 +2683,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#002066]">Your prompt (you can edit it)</span>
                     <div class="flex flex-wrap gap-1.5 md:gap-2 items-center justify-end">
                         <button type="button" id="df-clear" class="px-3 py-1.5 rounded-lg text-[10px] font-black tracking-wider border-2 border-slate-300 bg-white hover:bg-slate-100 text-slate-600">CLEAR</button>
-                        <button type="button" id="df-copy" class="px-4 py-1.5 rounded-lg text-[10px] font-black tracking-wider bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm">COPY PROMPT</button>
-                        <a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="bg-blue-100 border-2 border-blue-500 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-[#002066] hover:bg-blue-200 shadow-sm flex items-center">OPEN GEMINI ↗</a>
-                        <a href="https://chatgpt.com/" target="_blank" rel="noopener" class="bg-white border-2 border-slate-400 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-slate-800 hover:bg-slate-50 shadow-sm flex items-center">ChatGPT ↗</a>
-                        <a href="https://claude.ai/new" target="_blank" rel="noopener" class="bg-white border-2 border-slate-400 px-3 py-1.5 rounded-lg transition text-[10px] font-black tracking-wider text-slate-800 hover:bg-slate-50 shadow-sm flex items-center">Claude ↗</a>
+                        <span class="pb-grp"><button type="button" id="df-copy" class="pb-btn pb-copy">COPY PROMPT</button><span class="pb-or">or</span><button type="button" id="df-file" class="pb-btn pb-copy" onclick="downloadPromptFile('df-prompt','differentiate-prompt')">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span>
                     </div>
                 </div>
                 <textarea id="df-prompt" rows="16" class="w-full p-4 bg-amber-50 text-slate-900 text-xs font-mono leading-relaxed border-0 outline-none"></textarea>
@@ -3260,6 +3292,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file. Remove some options to make the prompt shorter and Copy comes back.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table with one row per skill: step-by-step teaching for non-specialists, the exact words to say, a ready example in small blue text, and what to watch for), even if you only chose lesson outlines. The lesson rows just point to it. It is also built into the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: in "Do you already have something planned for this unit?" there is a new gold row for <strong>Writer's Toolbox</strong> (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
+<li><mark class="wn-key">Teacher tools</mark>: a new <strong>🧰 Teacher tools</strong> button (beside Teacher Well-being, in the same teal) opens six tabs: <strong>Report comments</strong> (builds a prompt that drafts comments from your own notes, with [Name] left blank), a printable <strong>Tracking grid</strong> using the five progress stages, <strong>Follow-up prompts</strong> to send after a unit plan (also under the new 💬 FOLLOW-UPS button), <strong>Ready prompts</strong> for everyday secondary teaching, <strong>AI use &amp; privacy</strong> (what this site stores, safe-use checklist, and a department AI statement to copy), and <strong>Why this site</strong>.</li>
+<li><mark class="wn-key">Gemini Gem Prompt Maker removed</mark>: the button has gone from the top bar, as Gems are being retired.</li>
+<li><mark class="wn-key">Marking assistant (trial, Years 7 to 10)</mark>: in the Assessment Generator a new <strong>Marking assistant</strong> button builds a prompt for an AI marking assistant. Give it the task sheet and marking schedule (paste them, or tick that you will attach them in the AI) and your students' work (typed text, scanned PDFs or Google Docs). It suggests a stage for each student (Emerging to Exceeding) with the evidence, a strength and a next step, and can also make a class overview, a whole-class feedback sheet with a D.I.R.T. plan, and report-ready comments. You make the final judgement. Use initials, not names. For NCEA use the Moderation Assistant.</li>
+<li><mark class="wn-key">Marking assistant tab</mark>: a smaller rose <strong>🖍️ Marking assistant</strong> tab now sits beside the title inside the Assessment Generator, for marking an assessment you already have (Years 7 to 10, trial). Pick the year and subject, paste or attach your task sheet and marking schedule, and build the prompt. The button inside the Assessment Generator still works as before.</li>
 <li><mark class="wn-key">Case studies and local examples (Social Sciences)</mark>: when the curriculum text you picked asks for a case study or a local example (for example flooding, tourism destinations, migration, your local community), a new row in "Do you already have something planned?" lets you choose for each one: the curriculum's own option where it names one, <strong>Let the AI choose</strong>, or <strong>My choice</strong>. Optional curriculum items can be left out.</li>
 <li><mark class="wn-key">English texts</mark>: for English there is a new purple row, <strong>Texts for this unit</strong>. Add as many novels, short stories, plays, poems, films or other texts as you like, mark each as the <strong>focus text</strong> or <strong>also included</strong>, ask the AI to suggest texts, or choose <strong>Not relevant for this unit</strong>.</li>
 <li><mark class="wn-key">Textbook or workbook</mark>: for Maths and Science there is a new teal row for a specific textbook, workbook or platform used throughout the unit. The lessons are built to use it.</li>
@@ -3687,6 +3723,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table, one row per skill, with steps, exact wording and an example), even if you only chose lesson outlines. The lesson rows just point to it. Also in the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: a new gold row in "Do you already have something planned?" (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
+<li><mark class="wn-key">Teacher tools</mark>: a new teal 🧰 button beside Teacher Well-being with report comments, a printable tracking grid, follow-up and ready-made prompts, an AI use and privacy page, and a short "why this site" comparison. Follow-up prompts are also under the 💬 FOLLOW-UPS button after a unit plan.</li>
+<li><mark class="wn-key">Gemini Gem Prompt Maker removed</mark>: the button has gone from the top bar, as Gems are being retired.</li>
+<li><mark class="wn-key">Marking assistant (trial, Years 7 to 10)</mark>: in the Assessment Generator a new <strong>Marking assistant</strong> button builds a prompt for an AI marking assistant. Give it the task sheet and marking schedule (paste them, or tick that you will attach them in the AI) and your students' work (typed text, scanned PDFs or Google Docs). It suggests a stage for each student (Emerging to Exceeding) with the evidence, a strength and a next step, and can also make a class overview, a whole-class feedback sheet with a D.I.R.T. plan, and report-ready comments. You make the final judgement. Use initials, not names. For NCEA use the Moderation Assistant.</li>
+<li><mark class="wn-key">Marking assistant tab</mark>: a smaller rose <strong>🖍️ Marking assistant</strong> tab now sits beside the title inside the Assessment Generator, for marking an assessment you already have (Years 7 to 10, trial). Pick the year and subject, paste or attach your task sheet and marking schedule, and build the prompt. The button inside the Assessment Generator still works as before.</li>
 <li><mark class="wn-key">Case studies and local examples (Social Sciences)</mark>: when the curriculum text you picked asks for a case study or a local example (for example flooding, tourism destinations, migration, your local community), a new row in "Do you already have something planned?" lets you choose for each one: the curriculum's own option where it names one, <strong>Let the AI choose</strong>, or <strong>My choice</strong>. Optional curriculum items can be left out.</li>
 <li><mark class="wn-key">English texts</mark>: for English there is a new purple row, <strong>Texts for this unit</strong>. Add as many novels, short stories, plays, poems, films or other texts as you like, mark each as the <strong>focus text</strong> or <strong>also included</strong>, ask the AI to suggest texts, or choose <strong>Not relevant for this unit</strong>.</li>
 <li><mark class="wn-key">Textbook or workbook</mark>: for Maths and Science there is a new teal row for a specific textbook, workbook or platform used throughout the unit. The lessons are built to use it.</li>
@@ -5247,7 +5287,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function downloadPromptFile(srcId, baseName) {
             var el = document.getElementById(srcId); if (!el) return;
-            var txt = el.innerText || el.textContent || '';
+            var txt = (el.tagName === 'TEXTAREA' ? el.value : (el.innerText || el.textContent)) || '';
             if (!txt.trim() || txt.trim() === '...') return;
             var blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
             var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = baseName + '.txt';
@@ -9320,7 +9360,261 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             updatePromptHealthBadge(txt, 'assess-prompt-health');
         }
 
+        // ---------- Marking assistant (Years 7 to 10 trial): builds a prompt for an AI marking assistant ----------
+        var MK_WORK = [['typed', 'Typed or pasted text'], ['pdf', 'Scanned PDFs of handwritten work'], ['docs', 'Google Docs or Slides links']];
+        var MK_OUTS = [['each', 'Feedback for each student (suggested stage, strength, next step)'], ['over', 'A class overview table'], ['sheet', 'Whole-class feedback and feedforward sheet (with a D.I.R.T. plan)'], ['comm', 'A report-ready comment for each student']];
+        var MK_STYLE = [['warm', 'Warm and encouraging'], ['plain', 'Plain and direct'], ['short', 'Short and sharp']];
+        var mkState = { year: '', dept: '', name: '', crit: '', note: '', schedMode: 'upload', schedText: '', taskMode: 'upload', taskText: '', work: [], outs: [], style: '', seeded: '' };
+        function mkAvailable() { return typeof isJuniorSecondary === 'function' && !!assessmentState.year && isJuniorSecondary(assessmentState.year); }
+        function mkSyncBtn() { var b = document.getElementById('as-mark-btn'); if (b) b.classList.toggle('hidden', !mkAvailable()); }
+        function mkSeed() {
+            var topic = ((document.getElementById('assess-main-topic-input') || {}).value || '').trim();
+            var key = [assessmentState.dept, assessmentState.year, topic, (typeof asPlan !== 'undefined' && asPlan) ? (asPlan.sc || '') : ''].join('~');
+            if (mkState.seeded === key) return; mkState.seeded = key;
+            mkState.name = topic;
+            if (typeof isJuniorSecondary === 'function' && assessmentState.year && isJuniorSecondary(assessmentState.year)) mkState.year = assessmentState.year;
+            if (assessmentState.dept) mkState.dept = assessmentState.dept;
+            mkState.crit = (typeof asPlan !== 'undefined' && asPlan && asPlan.sc) ? String(asPlan.sc).split(';').map(function(x) { return x.trim(); }).filter(Boolean).join('\n') : '';
+        }
+        function mkPrompt() {
+            var s = mkState, y = s.year || 'Year 7-10', d = s.dept || 'this subject';
+            var sp = s.schedMode === 'paste', tp = s.taskMode === 'paste';
+            var t = 'You are a marking assistant for a New Zealand secondary teacher marking ' + y + ' ' + d + ' work' + (s.name.trim() ? ' for the assessment "' + s.name.trim() + '"' : '') + '. You suggest; the teacher decides. Write in New Zealand English.\n\n';
+            t += '### STEP 0: check what you have been given (before anything else)\nThe teacher should have given you:\n';
+            t += '- The TASK SHEET students were given (' + (tp ? 'pasted below' : 'attached') + ').\n- The MARKING SCHEDULE or rubric (' + (sp ? 'pasted below' : 'attached') + ').\n';
+            t += '- STUDENT WORK: ' + (s.work.length ? MK_WORK.filter(function(w) { return s.work.indexOf(w[0]) > -1; }).map(function(w) { return w[1].toLowerCase(); }).join(', ').replace('pdfs', 'PDFs') : 'attached or pasted') + ', one or more files per student.' + (s.work.indexOf('docs') > -1 ? ' If any are Google Docs or Slides links, use your @Google Docs or @Google Drive extension to read every file first.' : '') + '\n';
+            t += 'Students may have more than one file. File names start with the student\'s initials or code: group files by that identifier, and treat each student\'s files together as ONE submission. If one file holds several students, split it at each student\'s heading. If a file cannot be matched, or two identifiers might be the same person, ASK before continuing; do not guess.\n';
+            t += 'In your FIRST reply give a short table (Student | Files | Pages | Readable or not) and quote one line from the marking schedule to show you can read it. If the task sheet or the marking schedule is missing or unreadable, say so and STOP: do not suggest a stage for any student until you have both. Otherwise carry straight on without waiting to be asked.\n';
+            t += 'Handwriting (scanned work): never guess a word that decides a stage. List every passage you could not read with confidence (student and page) and mark that part UNCLEAR until the teacher confirms what it says.\n\n';
+            if (tp) t += '### THE TASK SHEET (pasted by the teacher)\n"""\n' + s.taskText.trim() + '\n"""\n\n';
+            if (sp) t += '### THE MARKING SCHEDULE (pasted by the teacher)\n"""\n' + s.schedText.trim() + '\n"""\n\n';
+            t += '### Judge against the five progress stages\nUse exactly these five stages, in this order: Emerging, Developing, Consolidating, Proficient, Exceeding. They are the Ministry of Education\'s progress descriptors: ' + NZ_PROGRESS_DEFS + '\nThe marking schedule is the authority for what each stage looks like in this task. If it already uses these five stages, use its wording. If it uses other grades or levels, still give one of the five stages and say how you matched it.\n';
+            var cr = s.crit.split('\n').map(function(x) { return x.trim(); }).filter(Boolean);
+            if (cr.length) t += 'Success criteria from the unit plan:\n' + cr.map(function(x) { return '- ' + x; }).join('\n') + '\n';
+            if (s.note.trim()) t += 'Anything else to know: ' + s.note.trim() + '\n';
+            t += '\n### Rules\n- Judge only what is in the work. Never invent, assume or reward things that are not there.\n- A suggested stage is a best-fit judgement against the marking schedule. If the evidence is thin or the work sits between two stages, name both and flag it for the teacher to check.\n- Do not mark down for spelling, handwriting or presentation unless the marking schedule includes it.\n- Refer to students only by the initials or codes used in the file names. Never guess or invent a name.\n- If a piece of work is blank or missing, list it at the end instead of guessing.\n- Work through EVERY student. If you run out of room, say exactly where you stopped so I can ask you to continue.\n- You are an assistant: the teacher makes the final judgement.\n';
+            var style = { warm: 'warm, encouraging and specific', plain: 'plain, direct and specific', short: 'short and sharp, one clear sentence per point' }[s.style];
+            if (style) t += '- Write all feedback to students in a ' + style + ' tone.\n';
+            t += '\n### Output\n'; var n = 1;
+            if (s.outs.indexOf('each') > -1) { t += 'PART ' + n++ + ': Feedback for each student. One block per student, in the order given: **Student:** [code] / **Suggested stage:** [one of the five] / **Evidence:** [a short phrase from the work that shows it] / **Strength:** [one specific thing done well] / **Next step:** [one concrete action, written to the student] / **Check:** [only if borderline or UNCLEAR: what the teacher should look at].\n'; }
+            if (s.outs.indexOf('over') > -1) { t += 'PART ' + n++ + ': Class overview. A table with a row for each stage (Emerging to Exceeding) showing how many students and their codes, then the three most common strengths and the three most common gaps, one line each.\n'; }
+            if (s.outs.indexOf('sheet') > -1) { t += 'PART ' + n++ + ': Whole-class feedback and feedforward sheet. It is about the class, not individuals: no names and no individual stages on the student-facing parts. Use these headings. "1. Where Am I Going? & How Am I Going?": the success criteria in student language (two or three lines per stage from Developing to Exceeding), then three or four sentences on what the class does well and where it generally sits; then a two-column table, Outstanding Exemplars (two entries: student code and what they did well) and Key Vocabulary Errors (two to four: incorrect word and correction). "2. Common Misconceptions": two to four, each with the concrete error and a process-level correction or strategy students can apply themselves. "3. Where To Next?": a two-column table, Moving from Emerging or Developing to Consolidating, and Moving from Consolidating or Proficient to Exceeding, each with an Action and a Strategy. "Student D.I.R.T. Action Plan (Dedicated Improvement and Reflection Time)": short student instructions to use this advice to physically improve their own work, four to six goal starters linked to the misconceptions, then a blank two-column table for students (Vocabulary to correct, Misconception I need to fix, My next step, and an Action taken tick box). Finish with a divider headed "TEACHER ONLY, do not print": which misconception held back the most work and roughly how many students, and any students who need a separate conversation, one line each.\n'; }
+            if (s.outs.indexOf('comm') > -1) { t += 'PART ' + n++ + ': A report-ready comment for each student: two to three sentences in a warm, plain tone, saying what they did well and the next step. No scores and no stage names. Add one separate sentence with a support-at-home idea.\n'; }
+            if (n === 1) t += '[Choose what you want back]\n';
+            return t;
+        }
+        function mkRender() {
+            mkSeed(); var s = mkState, b = document.getElementById('mk-body'); if (!b) return;
+            var sec = function(h, inner) { return '<div class="mk-sec border-t border-rose-200 pt-3 mt-3"><p class="text-[11px] font-black uppercase tracking-widest text-rose-800 mb-1.5">' + h + '</p>' + inner + '</div>'; };
+            var inp = 'class="w-full p-2 rounded border border-slate-300 text-xs text-slate-800 outline-none"';
+            var radio = function(name, cur, label, val, js) { return '<label class="inline-flex items-center gap-1.5 text-xs mr-4 cursor-pointer"><input type="radio" name="' + name + '" ' + (cur === val ? 'checked ' : '') + 'onchange="' + js + '"> ' + label + '</label>'; };
+            var doc = function(title, modeKey, textKey, ph) { return '<div class="mt-2 rounded-lg border border-rose-200 p-2.5"><p class="text-xs font-bold text-slate-800">' + title + ' <span class="text-[9px] font-black uppercase bg-rose-100 text-rose-800 rounded-full px-1.5 py-0.5">required</span></p><div class="mt-1">' + radio('mk-' + modeKey, s[modeKey], 'I’ll attach it in the AI', 'upload', "mkSetMode('" + modeKey + "','upload')") + radio('mk-' + modeKey, s[modeKey], 'Paste it here', 'paste', "mkSetMode('" + modeKey + "','paste')") + '</div>' + (s[modeKey] === 'paste' ? '<textarea rows="5" ' + inp + ' style="margin-top:6px" oninput="mkSet(\'' + textKey + '\',this.value)" placeholder="' + ph + '">' + actEsc(s[textKey]) + '</textarea>' : '') + '</div>'; };
+            var h = sec('The class', '<div class="grid gap-2" style="grid-template-columns: 1fr 1fr;">' + tkSelect('mk-year', ['Year 7', 'Year 8', 'Year 9', 'Year 10'], s.year, "mkSet('year',this.value)", 'Year level…') + tkSelect('mk-dept', TK_DEPTS, s.dept, "mkSet('dept',this.value)", 'Subject…') + '</div>');
+            h += sec('The assessment', '<input type="text" ' + inp + ' value="' + actEsc(s.name) + '" oninput="mkSet(\'name\',this.value)" placeholder="Name of the assessment (optional), e.g. Migration report">'
+                + '<p class="text-[11px] text-slate-500 mt-1.5">The AI will not know your assessment. Give it the task sheet and the marking schedule: paste them here, or attach them in the AI.</p>'
+                + doc('Task sheet given to students', 'taskMode', 'taskText', 'Paste the task instructions students were given.')
+                + doc('Marking schedule or rubric', 'schedMode', 'schedText', 'Paste the whole marking schedule or rubric, including what each stage or grade looks like.'));
+            h += sec('Success criteria from your unit plan (optional)', '<textarea rows="3" ' + inp + ' oninput="mkSet(\'crit\',this.value)" placeholder="One per line. Filled in for you if you came from the unit plan link.">' + actEsc(s.crit) + '</textarea>');
+            h += sec('The students’ work will be (tick all that apply)', '<div class="flex flex-wrap gap-1.5">' + MK_WORK.map(function(w) { return wtChip(s.work.indexOf(w[0]) > -1, w[1], "mkToggle('work','" + w[0] + "')"); }).join('') + '</div><p class="text-[11px] text-slate-500 mt-1.5">Start every file name with the student’s initials or code. Scan handwritten work into a PDF. A student can have more than one file.</p>');
+            h += sec('What do you want back? (tick at least one)', '<div class="flex flex-wrap gap-1.5">' + MK_OUTS.map(function(w) { return wtChip(s.outs.indexOf(w[0]) > -1, w[1], "mkToggle('outs','" + w[0] + "')"); }).join('') + '</div>');
+            h += sec('Feedback tone (optional)', '<div class="flex flex-wrap gap-1.5">' + MK_STYLE.map(function(w) { return wtChip(s.style === w[0], w[1], "mkSetStyle('" + w[0] + "')"); }).join('') + '</div>'
+                + '<input type="text" ' + inp + ' style="margin-top:8px" value="' + actEsc(s.note) + '" oninput="mkSet(\'note\',this.value)" placeholder="Anything else the AI should know? (optional)">');
+            b.innerHTML = h; var w0 = document.getElementById('mk-warn'); if (w0) w0.classList.add('hidden'); mkPreview();
+        }
+        function mkPreview() {
+            var t = mkPrompt(), el = document.getElementById('mk-prompt-text'); if (el) el.textContent = t;
+            var c = document.getElementById('mk-count'); if (c) c.textContent = '(' + t.length.toLocaleString() + ' characters)';
+            var s = mkState, att = [s.taskMode === 'upload' ? 'the task sheet' : null, s.schedMode === 'upload' ? 'the marking schedule' : null, 'the student work'].filter(Boolean);
+            var h = document.getElementById('mk-how'); if (h) h.textContent = 'In the AI, attach ' + (att.length > 1 ? att.slice(0, -1).join(', ') + ' and ' + att[att.length - 1] : att[0]) + ' in the same message as this prompt, then send.';
+        }
+        function mkSet(k, v) { mkState[k] = v; var w = document.getElementById('mk-warn'); if (w) w.classList.add('hidden'); mkPreview(); }
+        function mkSetMode(k, v) { mkState[k] = v; mkRender(); }
+        function mkToggle(k, v) { var a = mkState[k], i = a.indexOf(v); if (i > -1) a.splice(i, 1); else a.push(v); mkRender(); }
+        function mkSetStyle(v) { mkState.style = (mkState.style === v) ? '' : v; mkRender(); }
+        function mkOpen() { var m = document.getElementById('mk-modal'); if (!m) return; mkRender(); m.classList.remove('hidden'); m.style.display = 'flex'; }
+        function mkClose() { var m = document.getElementById('mk-modal'); if (m) { m.classList.add('hidden'); m.style.display = ''; } }
+        function mkCheck() {
+            var s = mkState, msg = '';
+            if ((s.taskMode === 'paste' && !s.taskText.trim()) || (s.schedMode === 'paste' && !s.schedText.trim())) msg = 'You chose to paste the task sheet or marking schedule here, but the box is empty. Paste it, or switch to “I’ll attach it in the AI”.';
+            else if (!s.outs.length) msg = 'Tick at least one thing you want back.';
+            var w = document.getElementById('mk-warn'); if (w) { w.textContent = msg ? '⚠️ ' + msg : ''; w.classList.toggle('hidden', !msg); }
+            return !msg;
+        }
+        function mkCopy(btn) { if (!mkCheck()) return; mkPreview(); copyText('mk-prompt-text', btn); }
+        function mkDownload() { if (!mkCheck()) return; mkPreview(); downloadPromptFile('mk-prompt-text', 'Marking_assistant_prompt'); }
+        // ---------- Teacher tools: report comments, tracking grid, follow-ups, ready prompts, AI use and privacy, why this site ----------
+        var TK_TABS = [['report', '✍️ Report comments'], ['grid', '📋 Tracking grid'], ['follow', '💬 Follow-up prompts'], ['ready', '💡 Ready prompts'], ['ai', '🔒 AI use & privacy'], ['why', '🧭 Why this site']];
+        var TK_TABCOL = { report: ['#0284c7', '#e0f2fe', '#075985'], grid: ['#059669', '#d1fae5', '#065f46'], follow: ['#7c3aed', '#ede9fe', '#5b21b6'], ready: ['#d97706', '#fef3c7', '#92400e'], ai: ['#e11d48', '#ffe4e6', '#9f1239'], why: ['#0d9488', '#ccfbf1', '#115e59'] };
+        var TK_YEARS = ['Year 7', 'Year 8', 'Year 9', 'Year 10', 'Year 11', 'Year 12', 'Year 13'];
+        var TK_DEPTS = ['Science', 'Maths', 'Social Sciences', 'English', 'Māori', 'Technology', 'Arts', 'PE & Health', 'Other'];
+        var tkTab = 'report';
+        var rcState = { year: '', subj: '', period: '', parts: [], focus: [], len: '', tone: '', lang: 'en', stage: false, notesMode: 'upload', notes: '' };
+        var tgState = { cls: '', subj: '', topic: '', crit: '', rows: '30' };
+        var RC_PARTS = [['well', 'What they did well'], ['next', 'Next steps'], ['home', 'Support at home'], ['effort', 'Effort and learning habits'], ['kc', 'Key competencies']];
+        var RC_FOCUS = [['disp', 'Learning dispositions'], ['lit', 'Literacy'], ['num', 'Numeracy'], ['maori', 'Te ao Māori perspectives']];
+        var RC_LEN = [['40', 'Short (about 40 words)'], ['70', 'Medium (about 70 words)'], ['100', 'Longer (about 100 words)']];
+        var RC_TONE = [['warm', 'Warm'], ['plain', 'Plain'], ['succ', 'Succinct']];
+        var TK_FOLLOW = [
+            ['Change the shape', 'Make a lesson block', 'Turn Lessons [a] to [b] into one multi-lesson block with a bigger You Do and a short Connect and Review in each lesson. Keep the lesson numbers in order.'],
+            ['Change the shape', 'Shorten the unit', 'Shorten this unit to [n] lessons. Keep the assessment and the most important knowledge and practices, and tell me what you cut.'],
+            ['Change the shape', 'Add a revision lesson', 'Add one revision lesson before the assessment, and renumber the lessons that follow.'],
+            ['Differentiate', 'Scaffold and stretch', 'For every lesson, add one scaffold for students who need more support (including ESOL learners) and one stretch task for students who are ready for more. Keep each to one or two lines.'],
+            ['Differentiate', 'Relief teacher note', 'Write a short note for a relief teacher for Lesson [n]: what to do, what to hand out, and what to collect. Assume they do not know the topic.'],
+            ['Context', 'Swap a case study', 'Swap the case study in Lesson [n] for [my local example]. Keep the learning intention the same and change only what needs changing.'],
+            ['Context', 'Add a te ao Māori perspective', 'Suggest where a te ao Māori perspective fits naturally in Lessons [a] to [b]. Keep it genuine and specific to the topic, not a token mention, and say where the teacher should check with local iwi or hapū.'],
+            ['Check the quality', 'Check the success criteria', 'Check the plan: does every lesson link to a success criterion or learning intention? List any lessons that do not, and suggest a fix for each.'],
+            ['Check the quality', 'Vary the activities', 'Look for activities that repeat from lesson to lesson and suggest more varied alternatives for them, keeping the same learning.'],
+            ['Check the quality', 'Shorten the homework', 'Make the homework tasks shorter: about 20 minutes each, with a clear purpose and no new content.'],
+            ['Next steps', 'Make the assessment', 'Now write the assessment task for this unit, matched to the knowledge and practices taught, with a rubric using the five stages: Emerging, Developing, Consolidating, Proficient, Exceeding.'],
+            ['Next steps', 'Convert to another year', 'Convert this unit to Year [x]. Keep the structure, adjust the level of the content and language, and tell me what you changed.'],
+            ['Next steps', 'Put it in a table', 'Give me the lesson sequence as one table I can paste into Google Docs: lesson number, learning intention, main activity, resources.']
+        ];
+        var TK_READY = [
+            ['Start of a lesson', 'Three starters', 'Write three 5-minute starter activities for a Year [x] [subject] lesson on [topic]. Each should get every student thinking within a minute, need no preparation, and link to the main learning.'],
+            ['Start of a lesson', 'Retrieval questions', 'Write 10 retrieval practice questions on [topic] for Year [x], mixing earlier content with this week’s. Put the answers at the end.'],
+            ['During a lesson', 'Explain with a NZ example', 'Explain [concept] to a Year [x] student in plain language using an example from New Zealand. Then give me two questions to check they understood.'],
+            ['During a lesson', 'Reading at three levels', 'Here is a text: [paste]. Write 6 questions on it at three levels: finding information, working out what it means, and giving an opinion with evidence. Include the answers.'],
+            ['During a lesson', 'Simplify a text', 'Rewrite this text for a reading age of about [11] without losing the key ideas, and list the five key words I should teach first: [paste text].'],
+            ['End of a lesson', 'Exit tickets', 'Write three exit ticket questions for a lesson on [topic] that show me quickly who has and has not understood, and what each wrong answer is likely to mean.'],
+            ['Planning', 'Common misconceptions', 'List the five most common misconceptions Year [x] students have about [topic], why they happen, and a quick way to check for and fix each one.'],
+            ['Planning', 'Rewrite a task for ESOL', 'Rewrite this task for students who are learning English: keep the thinking the same, simplify the language, add a word bank and a sentence starter. [paste task]'],
+            ['Planning', 'One-page revision sheet', 'Turn these notes into a one-page revision sheet for Year [x]: key ideas, key words with short definitions, and five practice questions. [paste notes]'],
+            ['Assessment', 'Rubric from criteria', 'Turn these success criteria into a rubric with five stages: Emerging, Developing, Consolidating, Proficient, Exceeding. Describe what the work looks like at each stage in student-friendly language. [paste criteria]'],
+            ['Feedback', 'Feedback on a draft', 'Here is a student draft (use only the initials [AB], no names). Give two specific strengths and one next step I can say to the student, and one question I could ask them. [paste draft]'],
+            ['Communication', 'Email to whānau', 'Write a short, warm email to whānau about [what is happening, e.g. the upcoming assessment]. Plain language, under 120 words, with one clear thing I want them to do.']
+        ];
+        var TK_POLICY = 'AI use in [department / school]\n\nWhy we use it\nTeachers may use AI tools to help plan lessons, make resources and draft feedback. AI saves time on the first draft; teachers make every professional decision.\n\nWhat we do\n- Use our school Google account (or another school-approved tool), not a personal free account.\n- Never put NSNs, full names, health or learning-support details, or other identifying information into an AI tool. Use initials or codes.\n- Check everything an AI produces for accuracy, bias and suitability before it reaches students.\n- AI may support marking, but the teacher makes every judgement and holds the evidence. We treat any AI-suggested grade or stage as a second opinion.\n- Tell students and whānau when AI has been used to make a resource, where that matters.\n- Do not paste in published material (for example, whole textbook chapters or NZQA papers) beyond what copyright allows.\n\nStudents\nStudents use AI only where a teacher has said it is allowed for that task. We teach them how to use it honestly and how to say when they have.\n\nReview\nThis statement is reviewed each year by [name / role].';
+        function tkOpen(tab) {
+            tkTab = tab || tkTab;
+            if (!rcState.year) { var y = (typeof unitState !== 'undefined' && unitState.year) || (assessmentState && assessmentState.year) || ''; if (TK_YEARS.indexOf(y) > -1) rcState.year = y; }
+            if (!rcState.subj) { var dd = (typeof unitState !== 'undefined' && unitState.dept) || (assessmentState && assessmentState.dept) || ''; if (TK_DEPTS.indexOf(dd) > -1) rcState.subj = dd; }
+            var m = document.getElementById('tk-modal'); if (!m) return; tkRender(); m.classList.remove('hidden'); m.style.display = 'flex';
+        }
+        function tkClose() { var m = document.getElementById('tk-modal'); if (m) { m.classList.add('hidden'); m.style.display = ''; } }
+        function tkGo(tab) { tkTab = tab; tkRender(); }
+        function tkRender() {
+            var tabs = document.getElementById('tk-tabs'), body = document.getElementById('tk-body'); if (!tabs || !body) return;
+            tabs.innerHTML = TK_TABS.map(function(x) { var c = TK_TABCOL[x[0]]; return '<button type="button" class="tk-tab' + (tkTab === x[0] ? ' on' : '') + '" style="--tc:' + c[0] + ';--tl:' + c[1] + ';--td:' + c[2] + '" aria-pressed="' + (tkTab === x[0]) + '" onclick="tkGo(\'' + x[0] + '\')">' + actEsc(x[1]) + '</button>'; }).join('');
+            body.innerHTML = ({ report: tkReportHtml, grid: tkGridHtml, follow: function() { return tkListHtml('follow', 'Send these to the AI after it has made your unit plan. Change anything in [square brackets] before you paste.'); }, ready: function() { return tkListHtml('ready', 'Everyday prompts for secondary teachers. Change anything in [square brackets], and use initials, not student names.'); }, ai: tkAiHtml, why: tkWhyHtml })[tkTab]();
+            if (tkTab === 'report') rcPreview();
+        }
+        function tkSec(h, inner) { return '<div class="tk-sec border-t border-sky-200 pt-3 mt-3"><p class="text-[11px] font-black uppercase tracking-widest text-sky-800 mb-1.5">' + h + '</p>' + inner + '</div>'; }
+        var TK_INP = 'class="w-full p-2 rounded border border-slate-300 text-xs text-slate-800 outline-none"';
+        function tkSelect(id, opts, cur, js, ph) { return '<select id="' + id + '" ' + TK_INP + ' onchange="' + js + '"><option value="">' + ph + '</option>' + opts.map(function(o) { return '<option' + (cur === o ? ' selected' : '') + '>' + actEsc(o) + '</option>'; }).join('') + '</select>'; }
+        function tkCopyText(txt, btn) {
+            var done = function() { if (btn) { var o = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(function() { btn.textContent = o; }, 1500); } };
+            try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(done, function() { tkCopyFallback(txt); done(); }); return; } } catch (e) {}
+            tkCopyFallback(txt); done();
+        }
+        function tkCopyFallback(txt) { var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); }
+        // ----- report comments -----
+        function tkReportHtml() {
+            var s = rcState;
+            var radio = function(label, val) { return '<label class="inline-flex items-center gap-1.5 text-xs mr-4 cursor-pointer"><input type="radio" name="rc-notes" ' + (s.notesMode === val ? 'checked ' : '') + 'onchange="rcSetMode(\'' + val + '\')"> ' + label + '</label>'; };
+            var h = '<p class="text-sm text-slate-600">Builds a prompt that drafts school report comments from <strong>your own notes</strong>. The AI only uses what you tell it. Names are left as <strong>[Name]</strong> for you to fill in afterwards, so no student names need to go into the AI.</p>';
+            h += tkSec('The class', '<div class="grid gap-2" style="grid-template-columns: 1fr 1fr 1fr;">' + tkSelect('rc-year', TK_YEARS, s.year, "rcSet('year',this.value)", 'Year level…') + tkSelect('rc-subj', TK_DEPTS, s.subj, "rcSet('subj',this.value)", 'Subject…') + '<input type="text" ' + TK_INP + ' value="' + actEsc(s.period) + '" oninput="rcSet(\'period\',this.value,true)" placeholder="Report period, e.g. Term 3"></div>');
+            h += tkSec('What should each comment include? (tick at least one)', '<div class="flex flex-wrap gap-1.5">' + RC_PARTS.map(function(x) { return wtChip(s.parts.indexOf(x[0]) > -1, x[1], "rcToggle('parts','" + x[0] + "')"); }).join('') + '</div>');
+            h += tkSec('Focus (optional)', '<div class="flex flex-wrap gap-1.5">' + RC_FOCUS.map(function(x) { return wtChip(s.focus.indexOf(x[0]) > -1, x[1], "rcToggle('focus','" + x[0] + "')"); }).join('') + wtChip(s.stage, 'Name the progress stage in words (Emerging to Exceeding)', "rcStage()") + '</div>');
+            h += tkSec('Length, tone and language (optional)', '<div class="flex flex-wrap gap-1.5">' + RC_LEN.map(function(x) { return wtChip(s.len === x[0], x[1], "rcPick('len','" + x[0] + "')"); }).join('') + '</div><div class="flex flex-wrap gap-1.5 mt-1.5">' + RC_TONE.map(function(x) { return wtChip(s.tone === x[0], x[1], "rcPick('tone','" + x[0] + "')"); }).join('') + wtChip(s.lang === 'mi', 'Te reo Māori, then English', "rcLang()") + '</div>');
+            h += tkSec('Your notes about each student', '<div>' + radio('I’ll attach a spreadsheet or paste my notes in the AI', 'upload') + radio('Paste my notes here', 'paste') + '</div>' + (s.notesMode === 'paste' ? '<textarea rows="6" ' + TK_INP + ' style="margin-top:6px" oninput="rcSet(\'notes\',this.value,true)" placeholder="One student per line. Use initials or a code, then what you want said. e.g. AB: great progress on lab reports, needs to check units, asks good questions">' + actEsc(s.notes) + '</textarea>' : '') + '<p class="text-[11px] text-slate-500 mt-1.5">Use initials or codes, never NSNs or full names. Use Gemini with your school Google account.</p>');
+            h += '<div class="mt-4 border-t border-sky-200 pt-3"><div class="flex flex-wrap items-center justify-between gap-2"><p class="text-xs text-slate-600"><strong>Your report comment prompt</strong> <span id="rc-count" class="font-bold"></span></p><div class="flex flex-wrap gap-2"><span class="pb-grp"><button type="button" class="pb-btn pb-copy" onclick="rcCopy(this)">COPY PROMPT</button><span class="pb-or">or</span><button type="button" class="pb-btn pb-copy" onclick="rcDownload()">⬇ PROMPT FILE (.txt)</button></span><span class="pb-grp"><a href="https://gemini.google.com/app" target="_blank" rel="noopener" class="pb-btn pb-ai">OPEN GEMINI ↗</a><span class="pb-or">or</span><a href="https://chatgpt.com/" target="_blank" rel="noopener" class="pb-btn pb-ai">ChatGPT ↗</a><span class="pb-or">or</span><a href="https://claude.ai/new" target="_blank" rel="noopener" class="pb-btn pb-ai">Claude ↗</a></span></div></div><p id="rc-warn" class="hidden text-xs font-bold text-red-700 mt-2"></p><p class="text-xs font-bold text-sky-800 mt-2">After you paste it, add your notes (or attach the spreadsheet) in the same message.</p><div class="mt-2 max-h-36 overflow-y-auto rounded-lg border border-slate-200 bg-slate-50 p-3 text-[11px] font-mono whitespace-pre-wrap"><span id="rc-prompt-text"></span></div></div>';
+            return h;
+        }
+        function rcPrompt() {
+            var s = rcState, t = 'You are helping a New Zealand secondary teacher write school report comments. Write in New Zealand English.\n\n### The class\n' + [s.year || '[year level]', s.subj || '[subject]', s.period].filter(Boolean).join(', ') + '.\n\n';
+            t += '### Each comment should include\n' + (s.parts.length ? RC_PARTS.filter(function(x) { return s.parts.indexOf(x[0]) > -1; }).map(function(x) { return '- ' + x[1].toLowerCase(); }).join('\n') : '- [choose what each comment should include]') + '\n';
+            var fo = RC_FOCUS.filter(function(x) { return s.focus.indexOf(x[0]) > -1; }).map(function(x) { return x[1].toLowerCase(); });
+            if (fo.length) t += 'Where the notes allow, give weight to: ' + fo.join(', ') + '.\n';
+            if (s.stage) t += '\nName the student\'s progress stage in words (Emerging, Developing, Consolidating, Proficient or Exceeding) only where the teacher\'s notes give one. The stages are the Ministry of Education\'s: ' + NZ_PROGRESS_DEFS + '\n';
+            var len = { '40': 'about 40 words', '70': 'about 70 words', '100': 'about 100 words' }[s.len], tone = { warm: 'warm and encouraging', plain: 'plain and direct', succ: 'succinct' }[s.tone];
+            t += '\n### Style\n' + (len ? '- Length: ' + len + ' per comment.\n' : '') + (tone ? '- Tone: ' + tone + '.\n' : '') + '- Plain language a family can follow. No jargon, no acronyms unless explained.\n- Vary the wording from comment to comment; do not use the same sentences for different students.\n- Be honest and balanced: name real strengths and a clear next step. Avoid "unfortunately" and never compare students.\n';
+            if (s.lang === 'mi') t += '- Write each comment in te reo Māori first, then the same comment in English. Use macrons. Keep the te reo simple and accurate, and tell me which phrases a fluent speaker should check.\n';
+            t += '\n### The teacher\'s notes\n';
+            if (s.notesMode === 'paste') t += '"""\n' + (s.notes.trim() || '[paste your notes]') + '\n"""\n'; else t += 'I will attach a spreadsheet or paste my notes after this message: one student per row or line, with initials or a code and what to say. If they are not here yet, reply "Ready for the notes" and wait.\n';
+            t += '\n### Rules\n- Use ONLY what the notes say about each student. Never invent grades, behaviours, events or quotes.\n- If a student\'s notes are too thin for a good comment, write "Not enough information" and say what I need to add. Do not pad.\n- Put [Name] wherever the student\'s first name belongs, so I can fill in names afterwards. Use the pronouns in the notes, or "they" if none are given.\n- Refer to students in your reply only by the initials or code in the notes.\n- I will check every comment; you are drafting for me.\n\n### Output\nA table with two columns: Code | Comment (ready to paste). Then, under the table, a list of any students that need more information.\n';
+            return t;
+        }
+        function rcPreview() { var t = rcPrompt(), el = document.getElementById('rc-prompt-text'); if (el) el.textContent = t; var c = document.getElementById('rc-count'); if (c) c.textContent = '(' + t.length.toLocaleString() + ' characters)'; }
+        function rcSet(k, v, quiet) { rcState[k] = v; var w = document.getElementById('rc-warn'); if (w) w.classList.add('hidden'); if (quiet) rcPreview(); else tkRender(); }
+        function rcToggle(k, v) { var a = rcState[k], i = a.indexOf(v); if (i > -1) a.splice(i, 1); else a.push(v); tkRender(); }
+        function rcPick(k, v) { rcState[k] = (rcState[k] === v) ? '' : v; tkRender(); }
+        function rcStage() { rcState.stage = !rcState.stage; tkRender(); }
+        function rcLang() { rcState.lang = rcState.lang === 'mi' ? 'en' : 'mi'; tkRender(); }
+        function rcSetMode(v) { rcState.notesMode = v; tkRender(); }
+        function rcCheck() {
+            var s = rcState, msg = !s.parts.length ? 'Tick at least one thing each comment should include.' : (s.notesMode === 'paste' && !s.notes.trim() ? 'You chose to paste your notes here, but the box is empty. Paste them, or switch to “I’ll attach a spreadsheet or paste my notes in the AI”.' : '');
+            var w = document.getElementById('rc-warn'); if (w) { w.textContent = msg ? '⚠️ ' + msg : ''; w.classList.toggle('hidden', !msg); } return !msg;
+        }
+        function rcCopy(btn) { if (!rcCheck()) return; rcPreview(); copyText('rc-prompt-text', btn); }
+        function rcDownload() { if (!rcCheck()) return; rcPreview(); downloadPromptFile('rc-prompt-text', 'Report_comments_prompt'); }
+        // ----- tracking grid -----
+        function tkGridHtml() {
+            var s = tgState;
+            var h = '<p class="text-sm text-slate-600">Makes a printable tracking grid to gather evidence before you write reports or mark. One row per student, one column per success criterion. Fill each box with a stage letter as you see the evidence: <strong>E</strong> Emerging, <strong>D</strong> Developing, <strong>C</strong> Consolidating, <strong>P</strong> Proficient, <strong>X</strong> Exceeding. Nothing is saved or sent anywhere.</p>';
+            h += tkSec('The grid', '<div class="grid gap-2" style="grid-template-columns: 1fr 1fr 1fr;"><input type="text" ' + TK_INP + ' value="' + actEsc(s.cls) + '" oninput="tgSet(\'cls\',this.value)" placeholder="Class, e.g. 8SCI2"><input type="text" ' + TK_INP + ' value="' + actEsc(s.subj) + '" oninput="tgSet(\'subj\',this.value)" placeholder="Subject, e.g. Science"><input type="text" ' + TK_INP + ' value="' + actEsc(s.topic) + '" oninput="tgSet(\'topic\',this.value)" placeholder="Topic or unit"></div>');
+            h += tkSec('Success criteria (one per line, up to 8)', '<textarea rows="5" ' + TK_INP + ' oninput="tgSet(\'crit\',this.value)" placeholder="e.g. I can explain two causes of migration&#10;I can use evidence from a source">' + actEsc(s.crit) + '</textarea>');
+            h += tkSec('Number of student rows', '<div class="flex flex-wrap gap-1.5">' + ['20', '25', '30', '35'].map(function(n) { return wtChip(s.rows === n, n, "tgSet('rows','" + n + "',true)"); }).join('') + '</div>');
+            h += '<div class="mt-4"><button type="button" class="px-5 py-2 rounded-lg border-2 border-sky-700 bg-sky-600 text-white text-xs font-black tracking-wider hover:bg-sky-700" onclick="tgOpen()">OPEN PRINTABLE GRID</button> <button type="button" class="builder-btn text-xs py-2 px-3" onclick="tgDownload()">⬇ SAVE AS A FILE</button> <span id="tg-warn" class="hidden text-xs font-bold text-red-700 ml-2"></span></div>';
+            return h;
+        }
+        function tgSet(k, v, rerender) { tgState[k] = v; var w = document.getElementById('tg-warn'); if (w) w.classList.add('hidden'); if (rerender) tkRender(); }
+        function tgHtml() {
+            var s = tgState, esc = actEsc, cr = s.crit.split('\n').map(function(x) { return x.trim(); }).filter(Boolean).slice(0, 8), n = parseInt(s.rows, 10) || 30;
+            var th = cr.map(function(c) { return '<th>' + esc(c) + '</th>'; }).join('');
+            var rows = ''; for (var i = 1; i <= n; i++) rows += '<tr><td class="num">' + i + '</td><td class="nm"></td>' + cr.map(function() { return '<td></td>'; }).join('') + '<td></td><td class="nx"></td></tr>';
+            return '<!doctype html><html lang="en-NZ"><head><meta charset="utf-8"><title>Tracking grid</title><style>@page{size:A4 landscape;margin:10mm}body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:14px}h1{font-size:17px;margin:0 0 2px}p{font-size:11px;margin:2px 0 8px}table{border-collapse:collapse;width:100%;table-layout:fixed}th,td{border:1px solid #444;font-size:10px;padding:3px;height:' + (n > 30 ? '17' : '20') + 'px;vertical-align:top}th{background:#e2e8f0;font-weight:700;text-align:left;height:auto}td.num{width:22px;text-align:center;color:#555}td.nm{width:110px}td.nx{width:150px}th:first-child{width:22px}.btn{margin-bottom:8px;padding:6px 14px;font-size:12px}@media print{.btn{display:none}}</style></head><body><button class="btn" onclick="window.print()">Print</button><h1>' + esc([s.cls, s.subj, s.topic].filter(Boolean).join(' · ') || 'Tracking grid') + '</h1><p><b>Stages:</b> E = Emerging · D = Developing · C = Consolidating · P = Proficient · X = Exceeding. Write the stage letter (and the date) when you see the evidence. Use initials or codes for names.</p><table><thead><tr><th>#</th><th>Name or code</th>' + th + '<th>Overall</th><th>Next step</th></tr></thead><tbody>' + rows + '</tbody></table></body></html>';
+        }
+        function tgCheck() { var ok = tgState.crit.split('\n').some(function(x) { return x.trim(); }); var w = document.getElementById('tg-warn'); if (w) { w.textContent = ok ? '' : '⚠️ Add at least one success criterion.'; w.classList.toggle('hidden', ok); } return ok; }
+        function tgOpen() { if (!tgCheck()) return; var u = URL.createObjectURL(new Blob([tgHtml()], { type: 'text/html;charset=utf-8' })); var w = window.open(u, '_blank'); if (!w) showGlobalToast('Your browser blocked the new tab. Use “Save as a file” instead.'); setTimeout(function() { URL.revokeObjectURL(u); }, 60000); }
+        function tgDownload() { if (!tgCheck()) return; var u = URL.createObjectURL(new Blob([tgHtml()], { type: 'text/html;charset=utf-8' })), a = document.createElement('a'); a.href = u; a.download = 'Tracking_grid.html'; document.body.appendChild(a); a.click(); setTimeout(function() { URL.revokeObjectURL(u); a.remove(); }, 500); }
+        // ----- follow-ups and ready prompts -----
+        function tkListHtml(which, intro) {
+            var list = which === 'follow' ? TK_FOLLOW : TK_READY, h = '<p class="text-sm text-slate-600">' + intro + '</p>', last = '';
+            list.forEach(function(x, i) {
+                if (x[0] !== last) { h += '<p class="text-[11px] font-black uppercase tracking-widest text-sky-800 mt-3 mb-1">' + actEsc(x[0]) + '</p>'; last = x[0]; }
+                h += '<div class="tk-card flex items-start gap-3 border border-slate-200 rounded-lg p-2.5 mt-1.5"><div class="flex-1"><p class="text-xs font-bold">' + actEsc(x[1]) + '</p><p class="text-xs text-slate-600 mt-0.5">' + actEsc(x[2]) + '</p></div><button type="button" class="builder-btn text-[11px] py-1 px-3 shrink-0" onclick="tkCopyItem(\'' + which + '\',' + i + ',this)">Copy</button></div>';
+            });
+            return h;
+        }
+        function tkCopyItem(which, i, btn) { tkCopyText((which === 'follow' ? TK_FOLLOW : TK_READY)[i][2], btn); }
+        // ----- AI use and privacy -----
+        function tkAiHtml() {
+            var li = function(a) { return '<ul class="list-disc pl-5 text-xs text-slate-700 space-y-1">' + a.map(function(x) { return '<li>' + x + '</li>'; }).join('') + '</ul>'; };
+            var h = '<p class="text-sm text-slate-600">Plain answers about what this site does with your information, and a starting point for a department AI statement.</p>';
+            h += tkSec('What this site stores', li([
+                '<strong>No account, no server of its own, no tracking code.</strong> Nothing you type is sent to the people who made this site.',
+                'What you type is saved only in <strong>your own browser</strong> (its local storage), so a draft survives a refresh. The <strong>Reset saved data</strong> button clears it.',
+                'The page does load its look from two outside services (the Tailwind CSS library and Google Fonts), so your browser contacts them when the page opens. Nothing you type goes to them.',
+                'The only thing that leaves is the <strong>prompt you choose to copy or download</strong> and put into an AI yourself. After that, the AI tool’s own privacy terms apply.',
+                'Arcade Mode and the Student Dashboard are separate sites with their own settings.'
+            ]));
+            h += tkSec('Using AI safely with student information', li([
+                'Use <strong>Gemini signed in with your school Google account</strong> (or another school-approved tool), not a personal free account that may train on what you upload.',
+                'Never include <strong>NSNs, full names</strong>, health or learning-support details. Use initials or codes.',
+                'AI can support marking and feedback, but the <strong>teacher makes the judgement</strong>. Treat any suggested grade or stage as a second opinion.',
+                'Check every output for accuracy, bias and suitability before students see it.',
+                'Do not paste in whole published texts or exam papers beyond what copyright allows.'
+            ]));
+            h += tkSec('A department AI statement you can adapt', '<textarea id="tk-policy" rows="12" ' + TK_INP + ' style="font-family:monospace">' + actEsc(TK_POLICY) + '</textarea><div class="mt-2"><button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="tkCopyText(document.getElementById(\'tk-policy\').value, this)">Copy statement</button></div>');
+            return h;
+        }
+        // ----- why this site -----
+        function tkWhyHtml() {
+            var rows = [
+                ['Curriculum content', 'You paste or describe it, and the AI may use out-of-date or overseas versions.', 'The Years 7 to 10 picker fills Knowledge and Practices from the actual curriculum text, and keeps the achievement-objective wording.'],
+                ['Lesson structure', 'You write the structure into every prompt.', 'The five-stage lesson (Connect, I Do, We Do, You Do, Review) and the flexible staging rules are built in, with more You Do in older years.'],
+                ['Joined-up planning', 'Each chat starts from scratch.', 'Unit plan to assessment to marking assistant to homework, each pre-filled from the one before.'],
+                ['Consistent prompts', 'Quality depends on how well you wrote the prompt that day.', 'The same carefully tested prompts every time, with checks (for example prompt length and missing fields).'],
+                ['Privacy', 'Depends on the account you use.', 'No account and no server. What you type stays in your browser.'],
+                ['NZ context', 'You remind the AI each time.', 'NZ English, the five progress stages, Māori and Pasifika options, Writer’s Toolbox, Year 7 to 13 and NCEA built in.']
+            ];
+            var h = '<p class="text-sm text-slate-600">A general AI chat is very good for one-off questions, brainstorming and quick edits, and that is often the best tool. This site is for the repeat jobs where you want the same structure and curriculum accuracy every time.</p>';
+            h += '<table class="w-full text-xs mt-3 border-collapse"><thead><tr><th class="text-left p-2 border border-slate-200 bg-slate-50"> </th><th class="text-left p-2 border border-slate-200 bg-slate-50">Typing your own prompt</th><th class="text-left p-2 border border-slate-200 bg-slate-50">This site</th></tr></thead><tbody>' + rows.map(function(r) { return '<tr><td class="p-2 border border-slate-200 font-bold align-top">' + r[0] + '</td><td class="p-2 border border-slate-200 align-top">' + r[1] + '</td><td class="p-2 border border-slate-200 align-top">' + r[2] + '</td></tr>'; }).join('') + '</tbody></table>';
+            h += '<p class="text-xs text-slate-500 mt-3">The site builds the prompt; it does not run the AI. You still check what the AI gives you.</p>';
+            return h;
+        }
         function updateAssessmentBuilderPrompt() {
+            mkSyncBtn();
             if (assessmentState.juniorCheck && isJuniorSecondary(assessmentState.year) && isCheckableDept(assessmentState.dept)) { updateJuniorCheckPrompt(); return; }
             updateAssessmentAddonsBanner();
             try { asSecUpdate(false); } catch (e) {}
