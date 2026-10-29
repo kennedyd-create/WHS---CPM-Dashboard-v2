@@ -697,6 +697,8 @@
         .idx-txt { display: flex; flex-direction: column; min-width: 0; flex: 1; }
         .idx-name { font-size: .83rem; font-weight: 800; color: #0f172a; }
         .idx-desc { font-size: .72rem; color: #64748b; line-height: 1.3; }
+        .idx-need { display: inline-block; align-self: flex-start; margin-top: .2rem; font-size: .64rem; font-weight: 800; color: #92400e; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 999px; padding: .05rem .5rem; }
+        html.dark .idx-need { color: #fde68a; background: #422006; border-color: #92400e; }
         .idx-tag { font-size: .62rem; font-weight: 800; white-space: nowrap; margin-top: .15rem; }
         .idx-empty { padding: 1.2rem .8rem; font-size: .85rem; color: #64748b; }
         .idx-flash { outline: 4px solid #f59e0b !important; outline-offset: 3px; border-radius: 6px; animation: idx-pulse 1s ease-in-out 2; }
@@ -842,7 +844,7 @@
     <div id="idx-panel" class="hidden fixed idx-panel" style="z-index: 8500;" role="dialog" aria-label="Site index">
         <div class="idx-top">
             <div class="flex items-center gap-2"><input id="idx-q" type="search" class="idx-q" placeholder="Search every tool and option…" autocomplete="off" oninput="idxRender()" aria-label="Search the site index"><span class="idx-seg"><button type="button" id="idx-m-area" class="on" aria-pressed="true" onclick="idxMode_('area')">By area</button><button type="button" id="idx-m-az" aria-pressed="false" onclick="idxMode_('az')">A to Z</button></span><button type="button" class="idx-x" onclick="idxToggle(false)" aria-label="Close the index">✕</button></div>
-            <div class="idx-sub"><span id="idx-count"></span><span>Click an entry to go straight to it.</span></div>
+            <div class="idx-sub"><span id="idx-count"></span><span>Click an entry to go to it. ⚠ marks options that need earlier choices.</span></div>
         </div>
         <div id="idx-body" class="idx-list"></div>
     </div>
@@ -9696,10 +9698,28 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             idxE(H, 'Dark mode', 'Switch between light and dark.', 'theme night', function() { toggleDarkMode(); });
             idxE(H, 'Reset saved data', 'Clears your saved choices on this device (asks first). The Weekly Plan is kept.', 'clear delete reset', function() { var r = document.getElementById('reset-modal'); if (r) r.classList.remove('hidden'); });
         })();
+        // Entries that sit behind earlier choices get a small note, so it is clear why they can't be jumped to straight away.
+        var IDX_NEED = {};
+        function idxNeed(msg, ok, names) { names.forEach(function(n) { IDX_NEED[n] = { msg: msg, ok: ok }; }); }
+        (function idxNeeds() {
+            var SY = 'Choose a subject and year level first';
+            var lesOk = function() { return !!(lessonState.dept && lessonState.year); };
+            idxNeed(SY, lesOk, ['Learner support options', 'Curriculum integrations', 'Device use and AI levels', 'Number of lessons', 'Teaching frameworks', 'Choose the lesson stages', 'Connect activities', 'I Do activities', 'We Do activities', 'You Do activities', 'Review activities', 'Lesson plan length', 'Extra lesson outputs', 'WHS Official Template (lesson)', 'Attachments and custom instructions', 'Link to the official curriculum']);
+            idxNeed('Appears once you add + Worksheet', function() { return false; }, ['Worksheet styles and amounts']);
+            idxNeed('Appears once you add + Quiz', function() { return false; }, ['Quiz file formats (lesson)']);
+            var asOk = function() { return !!(assessmentState.dept && assessmentState.year); };
+            idxNeed(SY, asOk, ['Time, format and questions', 'Assessment formats', 'Source material and unit plan', 'Version A and Version B', 'Differentiation and accommodations', 'Additional outputs (assessment)']);
+            idxNeed('Years 7 to 10, English or Maths only', function() { return !!(assessmentState.year && assessmentState.dept && isJuniorSecondary(assessmentState.year) && isCheckableDept(assessmentState.dept)); }, ['Standard subject assessment', 'Literacy and numeracy check']);
+            idxNeed(SY, function() { return !!(ypDeptChosen && ypYearChosen); }, ['Buffer weeks', 'Year view and coverage', 'Generate the plan', 'Export and print the plan', 'Calendar display (dots, labels, hidden)', 'Reset the Year Planner', '2027 school calendar']);
+            idxNeed('Add a class first', function() { return wkData.classes.length > 0; }, ['Weekly summary', 'Full lesson plans (Weekly Plan)', 'School calendar check', 'Send only this week\'s lessons', 'Show or view the prompt']);
+            idxNeed('Appears in a later step: finish the steps above first', function() { return false; }, ['Unit length', 'Unit plan style', 'WHS Official Template (unit)', '"Make with AI" links in the unit plan', 'Plan extras', 'Unit curriculum integrations and devices']);
+            idxNeed('Science only, in a later step', function() { return false; }, ['Science unit plan template']);
+            idxNeed('Maths only, in a later step', function() { return false; }, ['Maths unit plan template', 'Maths strategy sequence']);
+        })();
         function idxAreaInfo(k) { for (var i = 0; i < IDX_AREAS.length; i++) if (IDX_AREAS[i][0] === k) return IDX_AREAS[i]; return IDX_AREAS[0]; }
         function idxItemHtml(it, i, showArea) {
             var ai = idxAreaInfo(it.a);
-            return '<button type="button" class="idx-item" onclick="idxGo(' + i + ')"><span class="idx-dot" style="background:' + ai[2] + '"></span><span class="idx-txt"><span class="idx-name">' + actEsc(it.n) + '</span><span class="idx-desc">' + actEsc(it.d) + '</span></span>' + (showArea ? '<span class="idx-tag" style="color:' + ai[2] + '">' + actEsc(ai[1]) + '</span>' : '') + '</button>';
+            return '<button type="button" class="idx-item" onclick="idxGo(' + i + ')"><span class="idx-dot" style="background:' + ai[2] + '"></span><span class="idx-txt"><span class="idx-name">' + actEsc(it.n) + '</span><span class="idx-desc">' + actEsc(it.d) + '</span>' + (function() { var nd = IDX_NEED[it.n], ok = true; if (nd) { try { ok = nd.ok(); } catch (e) { ok = false; } } return nd && !ok ? '<span class="idx-need">⚠ ' + actEsc(nd.msg) + '</span>' : ''; })() + '</span>' + (showArea ? '<span class="idx-tag" style="color:' + ai[2] + '">' + actEsc(ai[1]) + '</span>' : '') + '</button>';
         }
         function idxRender() {
             var body = document.getElementById('idx-body'); if (!body) return;
