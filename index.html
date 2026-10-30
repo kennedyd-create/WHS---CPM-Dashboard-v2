@@ -3061,6 +3061,10 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-2"><span id="yp-ncea-label">NCEA Subject</span> <span id="yp-ncea-badge" class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Years 11 to 13</span></span>
                 <div class="flex flex-wrap gap-2" id="yp-ncea-opts"></div>
             </div>
+            <div id="yp-plans-wrap" class="hidden">
+                <span class="text-[11px] font-black text-slate-400 uppercase tracking-widest block mb-2">My year plans <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1 tooltip-wrapper tooltip-bottom" data-tooltip="Each learning area and year level keeps its own plan. Pick a subject or year above, or click a plan here, to switch. Nothing is cleared.">saved automatically</span></span>
+                <div class="flex flex-wrap gap-2" id="yp-plans-list"></div>
+            </div>
             <details id="yp-term-details" class="self-end">
                 <summary class="cursor-pointer select-none"><span class="text-[11px] font-black text-slate-500 uppercase tracking-widest">&#9881; Term lengths and dates &#9662; <span class="text-[9px] font-black text-slate-600 bg-slate-200 px-2 py-0.5 rounded-full ml-1 tooltip-wrapper tooltip-bottom" data-tooltip="Set to the 2027 Waiheke High School calendar: Term 1 is 11 weeks, Terms 2 to 4 are 10. Only change these if your term is different">2027 calendar</span></span>
                 </summary>
@@ -3449,6 +3453,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file. Remove some options to make the prompt shorter and Copy comes back.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table with one row per skill: step-by-step teaching for non-specialists, the exact words to say, a ready example in small blue text, and what to watch for), even if you only chose lesson outlines. The lesson rows just point to it. It is also built into the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: in "Do you already have something planned for this unit?" there is a new gold row for <strong>Writer's Toolbox</strong> (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
+<li><mark class="wn-key">Year Planner: more than one year plan</mark>: the Year Planner now keeps <strong>a separate plan for every learning area and year level</strong> (and for each NCEA or Arts subject). Switching subject or year no longer clears your topics: the plan you leave is saved automatically and comes back when you return to it. A new <strong>My year plans</strong> row under the year levels lists every plan you have started with its number of weeks. Click one to jump to it, or the <strong>✕</strong> beside a saved plan to delete it. In the Teacher Hub, step 3 now offers a <strong>Copy a plan from my Year Planner</strong> button for each saved plan, with the matching year level first.</li>
+<li><mark class="wn-key">Teacher Hub: upload a year plan</mark>: in step 3 (Year plans), each subject now has an <strong>Upload a year plan spreadsheet (.xlsx)</strong> button. Use the <strong>day-by-day grid</strong> downloaded from the Year Planner (or one laid out the same way). The Hub reads the Term 1 to Term 4 topic blocks and adds each topic with its weeks, and leaves out holidays, events, assessments and buffer weeks. If the file is titled for a different year level or subject it asks before adding. Each year level and subject keeps its own year plan, so you can load as many as you teach.</li>
 <li><mark class="wn-key">Teacher Hub</mark>: the new <strong>man icon in the top right of the banner</strong> is your profile, saved on this device. It is <strong>red</strong> when empty, <strong>orange</strong> when partly set up and <strong>green</strong> once locked in. Set up five steps once, each locking in and folding away with an <strong>Edit</strong> button: <strong>My Teaching Profile</strong> (now lives here), year levels and subjects, year plans, unit plans and your classes with their periods. After that the icon opens a small calendar with <strong>Today</strong> (your timetable and each lesson from your unit plans), <strong>This Week</strong> and <strong>Upcoming</strong> (the big things in the next few weeks). Tell it which lesson each class is up to and it counts forward, skipping holidays and school events from the 2026 and 2027 school calendars. Nothing is sent to an AI. Back it up or move it with the backup button in Setup.</li>
 <li><mark class="wn-key">Index in folding sections</mark>: in the full index, <strong>By area</strong> now shows each area as a closed drop-down with its count. Click an area to open it. Searching opens the areas that match, and the A to Z view is unchanged.</li>
 <li><mark class="wn-key">Site index</mark>: the new <strong>☰ Index</strong> button at the bottom left of the banner opens a list of every tool and option on the site. Switch between <strong>By area</strong> and <strong>A to Z</strong>, or type to search (try "quiz", "report" or "homework"). Click an entry to go straight to it.</li>
@@ -3893,6 +3899,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Very long prompts use the file download</mark>: when a Unit Planner prompt goes over 32,000 characters (more than Gemini can take when pasted), <strong>COPY PROMPT</strong> switches off and the <strong>⬇ PROMPT FILE (.txt)</strong> button pulses gold, with a note on how to upload the file.</li>
 <li><mark class="wn-key">Explicit Literacy and Numeracy lessons</mark>: for subjects other than Maths and English, when Literacy and/or Numeracy integration is chosen, the unit plan now ends with an <strong>Explicit Literacy Teaching</strong> and/or <strong>Explicit Numeracy Teaching</strong> section (a tight table, one row per skill, with steps, exact wording and an example), even if you only chose lesson outlines. The lesson rows just point to it. Also in the WHS and Science HTML templates.</li>
 <li><mark class="wn-key">Writer's Toolbox tasks</mark>: a new gold row in "Do you already have something planned?" (Years 7 to 10 only). Tick Yes and a pop-up lets you choose how many lessons, what to focus on (paragraph writing, sentences, planning, editing), the paragraph types (Scientist, Lawyer, Hammer, Slam Dunk, Compare/Contrast), and whether to use it in stand-alone lessons or the literacy lessons. In English you can also weave it into many lessons.</li>
+<li><mark class="wn-key">Year Planner: more than one year plan</mark>: the Year Planner now keeps <strong>a separate plan for every learning area and year level</strong> (and for each NCEA or Arts subject). Switching subject or year no longer clears your topics: the plan you leave is saved automatically and comes back when you return to it. A new <strong>My year plans</strong> row under the year levels lists every plan you have started with its number of weeks. Click one to jump to it, or the <strong>✕</strong> beside a saved plan to delete it. In the Teacher Hub, step 3 now offers a <strong>Copy a plan from my Year Planner</strong> button for each saved plan, with the matching year level first.</li>
+<li><mark class="wn-key">Teacher Hub: upload a year plan</mark>: in step 3 (Year plans), each subject now has an <strong>Upload a year plan spreadsheet (.xlsx)</strong> button. Use the <strong>day-by-day grid</strong> downloaded from the Year Planner (or one laid out the same way). The Hub reads the Term 1 to Term 4 topic blocks and adds each topic with its weeks, and leaves out holidays, events, assessments and buffer weeks. If the file is titled for a different year level or subject it asks before adding. Each year level and subject keeps its own year plan, so you can load as many as you teach.</li>
 <li><mark class="wn-key">Teacher Hub</mark>: the new <strong>man icon in the top right of the banner</strong> is your profile, saved on this device. It is <strong>red</strong> when empty, <strong>orange</strong> when partly set up and <strong>green</strong> once locked in. Set up five steps once, each locking in and folding away with an <strong>Edit</strong> button: <strong>My Teaching Profile</strong> (now lives here), year levels and subjects, year plans, unit plans and your classes with their periods. After that the icon opens a small calendar with <strong>Today</strong> (your timetable and each lesson from your unit plans), <strong>This Week</strong> and <strong>Upcoming</strong> (the big things in the next few weeks). Tell it which lesson each class is up to and it counts forward, skipping holidays and school events from the 2026 and 2027 school calendars. Nothing is sent to an AI. Back it up or move it with the backup button in Setup.</li>
 <li><mark class="wn-key">Index in folding sections</mark>: in the full index, <strong>By area</strong> now shows each area as a closed drop-down with its count. Click an area to open it. Searching opens the areas that match, and the A to Z view is unchanged.</li>
 <li><mark class="wn-key">Site index</mark>: the new <strong>☰ Index</strong> button at the bottom left of the banner opens a list of every tool and option on the site. Switch between <strong>By area</strong> and <strong>A to Z</strong>, or type to search (try "quiz", "report" or "homework"). Click an entry to go straight to it.</li>
@@ -11208,6 +11216,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function saveState(message) {
             try {
                 saveUnifiedState({ yearPlannerState: yearPlannerState });
+                if (typeof ypRenderPlansRow === 'function') ypRenderPlansRow();
                 if (message) showToast(message);
             } catch (e) {
                 console.warn('Could not save draft to this browser.', e);
@@ -12055,56 +12064,91 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             checkYearPlannerBothSelected();
         }
 
-        function changeContext(newSubject, newYear) {
+        function changeContext(newSubject, newYear, prefNcea) {
             // Health only and PE only are separate year plans at Years 7 to 10; at Years 11 to 13 they are two of the PE & Health NCEA subjects.
+            var pref = prefNcea !== undefined ? prefNcea : yearPlannerState.nceaSubject;
             if (ypIsSenior(newYear) && (newSubject === 'Health' || newSubject === 'Physical Education')) {
-                yearPlannerState.nceaSubject = newSubject;
+                pref = newSubject;
                 newSubject = 'PE & Health';
             }
-            const nextNcea = ypPickNcea(newSubject, newYear, yearPlannerState.nceaSubject);
+            const nextNcea = ypPickNcea(newSubject, newYear, pref);
             if (newSubject === yearPlannerState.subject && newYear === yearPlannerState.year && nextNcea === (yearPlannerState.nceaSubject || '')) return;
 
-            const hasContent = ypHasRealContent();
-            if (hasContent) {
-                ypConfirm('Change the plan?', 'Changing the Learning Area or Year Level will clear the topics currently allocated in your plan.', 'Yes, change it', function() { ypApplyContext(newSubject, newYear, nextNcea); });
-                return;
-            }
             ypApplyContext(newSubject, newYear, nextNcea);
         }
         function ypApplyContext(newSubject, newYear, nextNcea) {
+            // Each learning area and year level keeps its own plan. Leaving one saves it; coming back brings it back.
+            var oldLabel = ypPlanLabel(yearPlannerState.subject, yearPlannerState.year, yearPlannerState.nceaSubject), hadContent = ypHasRealContent();
+            ypLibStoreActive();
             yearPlannerState.subject = newSubject;
             yearPlannerState.year = newYear;
             yearPlannerState.nceaSubject = nextNcea;
-            
-            // Clear existing plan when context changes
-            yearPlannerState.terms = {
-                1: Array(yearPlannerState.termLengths[1]).fill(null),
-                2: Array(yearPlannerState.termLengths[2]).fill(null),
-                3: Array(yearPlannerState.termLengths[3]).fill(null),
-                4: Array(yearPlannerState.termLengths[4]).fill(null)
-            };
-            if (ypSeedAims()) showToast('Added a buffer week for AIMS Games (Term 3, Week 8). Remove it if it does not apply.');
-            
+            var back = ypLibRestoreActive();
+            if (!back && ypSeedAims()) showToast('Added a buffer week for AIMS Games (Term 3, Week 8). Remove it if it does not apply.');
+            else if (hadContent || back) showToast((hadContent ? oldLabel + ' plan saved. ' : '') + (back ? 'Your ' + ypPlanLabel(newSubject, newYear, nextNcea) + ' plan is back.' : 'Started a new ' + ypPlanLabel(newSubject, newYear, nextNcea) + ' plan.'));
             syncContextUI();
             renderLibrary();
             renderTermGrids();
+            ypRenderPlansRow();
             saveState();
+        }
+        // ---- My year plans: one plan per learning area, year level (and NCEA / Arts subject) ----
+        function ypPlanKey(s, y, n) { return [s || '', y || '', n || ''].join('|'); }
+        function ypPlanLabel(s, y, n) { return (n || s || '') + ' · Year ' + (y || ''); }
+        function ypLib() { var u = loadUnifiedState(); if (!u.yearPlansLib || typeof u.yearPlansLib !== 'object') u.yearPlansLib = {}; return u.yearPlansLib; }
+        function ypCurKey() { return ypPlanKey(yearPlannerState.subject, yearPlannerState.year, yearPlannerState.nceaSubject); }
+        function ypLibStoreActive() {
+            var lib = ypLib(), k = ypCurKey();
+            if (ypHasRealContent()) lib[k] = { subject: yearPlannerState.subject, year: yearPlannerState.year, ncea: yearPlannerState.nceaSubject || '', terms: JSON.parse(JSON.stringify(yearPlannerState.terms)), saved: Date.now() };
+            else delete lib[k];
+            saveUnifiedState({ yearPlansLib: lib });
+        }
+        function ypLibRestoreActive() {
+            var lib = ypLib(), k = ypCurKey(), pl = lib[k], t;
+            yearPlannerState.terms = {};
+            for (t = 1; t <= 4; t++) {
+                var len = yearPlannerState.termLengths[t], src = pl && pl.terms && pl.terms[t] ? pl.terms[t] : [], arr = [];
+                for (var i = 0; i < len; i++) arr.push(src[i] === undefined ? null : src[i]);
+                yearPlannerState.terms[t] = arr;
+            }
+            if (pl) { delete lib[k]; saveUnifiedState({ yearPlansLib: lib }); }
+            return !!pl;
+        }
+        function ypAllPlans() {
+            var out = [], lib = ypLib(), curK = ypCurKey();
+            if (ypHasRealContent()) out.push({ key: curK, subject: yearPlannerState.subject, year: yearPlannerState.year, ncea: yearPlannerState.nceaSubject || '', terms: yearPlannerState.terms, active: true });
+            Object.keys(lib).forEach(function(k) { if (k !== curK) out.push({ key: k, subject: lib[k].subject, year: lib[k].year, ncea: lib[k].ncea || '', terms: lib[k].terms, active: false }); });
+            return out;
+        }
+        function ypSwitchPlan(key) {
+            var pl = ypLib()[key]; if (!pl) return;
+            changeContext(pl.subject, pl.year, pl.ncea || '');
+        }
+        function ypDeletePlan(key) {
+            var pl = ypLib()[key]; if (!pl) return;
+            ypConfirm('Delete this plan?', 'This deletes the saved ' + ypPlanLabel(pl.subject, pl.year, pl.ncea) + ' plan and its topics. This cannot be undone.', 'Yes, delete it', function() { var lib = ypLib(); delete lib[key]; saveUnifiedState({ yearPlansLib: lib }); ypRenderPlansRow(); });
+        }
+        function ypRenderPlansRow() {
+            var wrap = document.getElementById('yp-plans-wrap'), box = document.getElementById('yp-plans-list'); if (!wrap || !box) return;
+            var plans = ypAllPlans();
+            if (!plans.length) { wrap.classList.add('hidden'); box.innerHTML = ''; return; }
+            wrap.classList.remove('hidden');
+            box.innerHTML = plans.map(function(p) {
+                var n = 0; for (var t = 1; t <= 4; t++) ((p.terms || {})[t] || []).forEach(function(sl) { if (ypIsRealTopic(sl)) n++; });
+                var lab = ypEsc(ypPlanLabel(p.subject, p.year, p.ncea)) + ' <span class="text-[10px] font-bold opacity-70">' + n + ' week' + (n === 1 ? '' : 's') + '</span>';
+                return p.active
+                    ? '<span class="builder-btn active inline-flex items-center gap-1" aria-current="true">✓ ' + lab + '</span>'
+                    : '<span class="inline-flex items-stretch"><button type="button" class="builder-btn rounded-r-none" onclick="ypSwitchPlan(\'' + ypEsc(p.key).replace(/'/g, "\\'") + '\')">' + lab + '</button><button type="button" class="builder-btn rounded-l-none border-l-0 px-2 text-slate-500 hover:text-red-700" title="Delete this saved plan" aria-label="Delete saved plan" onclick="ypDeletePlan(\'' + ypEsc(p.key).replace(/'/g, "\\'") + '\')">✕</button></span>';
+            }).join('');
         }
 
         function selectNceaSubject(i) {
             const name = ypNceaSubjects(yearPlannerState.subject, yearPlannerState.year)[i];
             if (!name || name === ypPickNcea(yearPlannerState.subject, yearPlannerState.year, yearPlannerState.nceaSubject)) return;
-            const hasContent = ypHasRealContent();
-            if (hasContent) {
-                ypConfirm('Change the subject?', 'Changing the subject will clear the topics currently allocated in your plan.', 'Yes, change it', function() { ypApplyNcea(name); });
-                return;
-            }
             ypApplyNcea(name);
         }
         function ypApplyNcea(name) {
-            yearPlannerState.nceaSubject = name;
-            yearPlannerState.terms = { 1: Array(yearPlannerState.termLengths[1]).fill(null), 2: Array(yearPlannerState.termLengths[2]).fill(null), 3: Array(yearPlannerState.termLengths[3]).fill(null), 4: Array(yearPlannerState.termLengths[4]).fill(null) };
-            syncContextUI(); renderLibrary(); renderTermGrids(); saveState();
+            ypApplyContext(yearPlannerState.subject, yearPlannerState.year, name);
         }
         function ypRenderNceaRow() {
             const wrap = document.getElementById('yp-ncea-wrap'), opts = document.getElementById('yp-ncea-opts');
@@ -15930,18 +15974,80 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (bad.length) hubUi.warn = (added ? added + ' added. ' : '') + bad.length + ' line' + (bad.length === 1 ? '' : 's') + ' not understood (left in the box). Use the form, e.g. "Term 4, Weeks 1-4: Migration".'; else hubUi.warn = '';
             hubRender();
         }
+
+        // Upload a year plan spreadsheet (the Year Planner's day-by-day grid) into one subject's year plan
+        function hubXlText(v) {
+            if (v == null) return '';
+            if (typeof v === 'object') { if (v.richText) return v.richText.map(function(r) { return r.text; }).join(''); if (v.text != null) return String(v.text); if (v.result != null) return String(v.result); return ''; }
+            return String(v);
+        }
+        function hubXlParse(ws) {
+            var merges = {}, ml = (ws.model && ws.model.merges) || [];
+            function colNum(s) { var n = 0; for (var i = 0; i < s.length; i++) n = n * 26 + s.charCodeAt(i) - 64; return n; }
+            ml.forEach(function(m) { var mm = /^([A-Z]+)(\d+):([A-Z]+)(\d+)$/.exec(m); if (mm) merges[mm[2] + ':' + colNum(mm[1])] = { c2: colNum(mm[3]), r2: +mm[4] }; });
+            function val(r, c) { var cell = ws.getRow(r).getCell(c); return hubXlText(cell.value).replace(/\s+/g, ' ').trim(); }
+            function fillOf(r, c) { var f = ws.getRow(r).getCell(c).fill; return f && f.fgColor && f.fgColor.argb ? String(f.fgColor.argb).toUpperCase() : ''; }
+            var maxR = ws.rowCount, maxC = ws.columnCount, title = val(1, 1), topicFills = {}, otherFills = {}, r, c;
+            var legR = 0; for (r = maxR; r >= 1 && !legR; r--) for (c = 1; c <= maxC; c++) if (/^public holiday/i.test(val(r, c))) { legR = r; break; }
+            var seenA = false;
+            if (legR) for (c = 1; c <= maxC; c++) { var lg = val(legR, c); if (!lg) continue; var lf = fillOf(legR, c); if (/assessment/i.test(lg)) seenA = true; if (!lf) continue; if (seenA) otherFills[lf] = 1; else topicFills[lf] = 1; }
+            var out = [], terms = 0;
+            for (r = 1; r <= maxR; r++) {
+                var tm = /^Term\s*([1-4])\b/i.exec(val(r, 1)); if (!tm) continue; terms++;
+                var term = +tm[1], weekRow = 0, rr;
+                for (rr = r - 1; rr >= Math.max(1, r - 5); rr--) { var found = false; for (c = 1; c <= maxC; c++) if (/^Week\s*1\b/i.test(val(rr, c))) { found = true; break; } if (found) { weekRow = rr; break; } }
+                var topicRow = 0; for (rr = r + 1; rr <= Math.min(maxR, r + 3); rr++) if (/^topic/i.test(val(rr, 1))) { topicRow = rr; break; }
+                if (!weekRow || !topicRow) continue;
+                var weekStarts = []; for (c = 1; c <= maxC; c++) { var wm = /^Week\s*(\d{1,2})\b/i.exec(val(weekRow, c)); if (wm) weekStarts.push({ c: c, w: +wm[1] }); }
+                function weekOf(col) { var w = 0; weekStarts.forEach(function(ws2) { if (col >= ws2.c) w = ws2.w; }); return w; }
+                for (c = 2; c <= maxC; c++) {
+                    var tx = val(topicRow, c); if (!tx) continue;
+                    var mg = merges[topicRow + ':' + c], endC = mg ? mg.c2 : c, span = endC - c + 1, fl = fillOf(topicRow, c);
+                    var isTopic = topicFills[fl] || (!otherFills[fl] && span >= 5 && !/^buffer$/i.test(tx));
+                    if (!isTopic || /^buffer$/i.test(tx)) continue;
+                    var a = weekOf(c), b = weekOf(endC); if (a >= 1 && b >= a) out.push({ term: term, from: a, to: b, name: tx });
+                }
+            }
+            return { title: title, items: out, terms: terms };
+        }
+        async function hubYpUpload(pid, input) {
+            var file = input && input.files && input.files[0]; if (!file) return;
+            try {
+                if (!/\.xlsx$/i.test(file.name)) { input.value = ''; return hubWarn('Choose an Excel file (.xlsx), such as the day-by-day grid from the Year Planner.'); }
+                if (typeof showGlobalToast === 'function') showGlobalToast('Reading ' + file.name + '…');
+                await ypLoadExcelJS();
+                var wb = new ExcelJS.Workbook(); await wb.xlsx.load(await file.arrayBuffer());
+                var ws = wb.worksheets[0], res = ws ? hubXlParse(ws) : { items: [], title: '', terms: 0 };
+                input.value = '';
+                if (!res.items.length) return hubWarn(res.terms ? 'I found the terms but no topic cells in that spreadsheet. Topics are the coloured blocks on the TOPIC rows.' : 'I could not find "Term 1" to "Term 4" and TOPIC rows in that spreadsheet. It needs to be the day-by-day grid from the Year Planner. You can paste a list instead.');
+                var pr = hubPair(pid), t = (res.title || '').toLowerCase();
+                if (pr && t && !(t.indexOf(pr.subj.toLowerCase()) > -1 && t.indexOf(pr.year.toLowerCase()) > -1) && !window.confirm('This spreadsheet is titled "' + res.title + '".\n\nAdd its ' + res.items.length + ' topics to ' + hubPairLabel(pr) + '?')) return;
+                var n = 0; res.items.forEach(function(it) { if (hubYpAdd(pid, it.term, it.from, it.to, it.name)) n++; });
+                hubUi.warn = ''; hubSave(); hubRender();
+                if (typeof showGlobalToast === 'function') showGlobalToast(n + ' topic' + (n === 1 ? '' : 's') + ' added from the spreadsheet ✓');
+            } catch (e) { console.error(e); input.value = ''; hubWarn('I could not read that file. If you are offline, the spreadsheet reader cannot load; paste a list instead.'); }
+        }
         function hubYpDel(id) { hubData.yearPlans = hubData.yearPlans.filter(function(y) { return y.id !== id; }); hubSave(); hubRender(); }
-        function hubYpPlannerCount() { var n = 0; for (var t = 1; t <= 4; t++) (yearPlannerState.terms[t] || []).forEach(function(s) { if (s && s !== 'BLOCKED' && typeof s === 'object') n++; }); return n; }
-        function hubYpImport(pid) {
+        function hubYpPlannerCount() { var n = 0; ypAllPlans().forEach(function(p) { n += hubYpTermsCount(p.terms); }); return n; }
+        function hubYpTermsCount(terms) { var n = 0; for (var t = 1; t <= 4; t++) ((terms || {})[t] || []).forEach(function(s) { if (ypIsRealTopic(s) && s !== 'BLOCKED') n++; }); return n; }
+        function hubYpImport(pid, key) {
+            var pl = ypAllPlans().filter(function(p) { return p.key === key; })[0]; if (!pl) return;
             var groups = {}, order = [];
-            for (var t = 1; t <= 4; t++) (yearPlannerState.terms[t] || []).forEach(function(s, i) {
-                if (!s || s === 'BLOCKED' || typeof s !== 'object') return;
+            for (var t = 1; t <= 4; t++) (pl.terms[t] || []).forEach(function(s, i) {
+                if (!s || s === 'BLOCKED' || typeof s !== 'object' || s.aimsSeed) return;
                 var name = (s.customText || s.subtopic || '').trim(); if (!name || (name === 'Buffer' && !s.customText)) return;
-                var key = t + '|' + (s.id || name + i), g = groups[key];
-                if (g && g.to === i) g.to = i + 1; else if (!g) { groups[key] = { t: t, a: i + 1, to: i + 1, name: name }; order.push(key); }
+                var k = t + '|' + (s.id || name + i), g = groups[k];
+                if (g && g.to === i) g.to = i + 1; else if (!g) { groups[k] = { t: t, a: i + 1, to: i + 1, name: name }; order.push(k); }
             });
             var n = 0; order.forEach(function(k) { var g = groups[k]; if (hubYpAdd(pid, g.t, g.a, g.to, g.name)) n++; });
             hubUi.warn = ''; hubSave(); hubRender(); if (typeof showGlobalToast === 'function') showGlobalToast(n + ' topic' + (n === 1 ? '' : 's') + ' copied from the Year Planner ✓');
+        }
+        // Saved Year Planner plans for this Hub subject: same year first, then the rest
+        function hubYpPlansFor(p) {
+            var yr = String(p.year || '').replace(/\D/g, ''), sj = String(p.subj || '').toLowerCase();
+            var all = ypAllPlans().filter(function(x) { return hubYpTermsCount(x.terms) > 0; });
+            all.forEach(function(x) { x.score = (String(x.year) === yr ? 2 : 0) + (sj && (String(x.subject || '').toLowerCase().indexOf(sj) > -1 || sj.indexOf(String(x.subject || '').toLowerCase()) > -1 || String(x.ncea || '').toLowerCase() === sj) ? 1 : 0); });
+            return all.sort(function(a, b) { return b.score - a.score; });
         }
         function hubBodyYearPlans() {
             var h = '<p class="text-xs text-slate-600 mb-2">Topics by term and week for each subject. <strong>Optional</strong>: you can lock this in with nothing and add them later.</p>';
@@ -15953,7 +16059,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     + '<input type="number" min="1" max="14" class="hub-in w-16" placeholder="Wk from" value="' + hubEsc(f.a) + '" oninput="hubYpFormOf(\'' + p.id + '\').a=this.value"><input type="number" min="1" max="14" class="hub-in w-16" placeholder="to" value="' + hubEsc(f.b) + '" oninput="hubYpFormOf(\'' + p.id + '\').b=this.value">'
                     + '<input type="text" class="hub-in flex-1" style="min-width:160px" placeholder="Topic, e.g. Migration" value="' + hubEsc(f.n) + '" oninput="hubYpFormOf(\'' + p.id + '\').n=this.value"><button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="hubYpFormAdd(\'' + p.id + '\')">+ Add topic</button></div>';
                 h += '<details class="mt-2"><summary class="text-[11px] font-bold text-slate-600 cursor-pointer">Paste a list instead</summary><textarea rows="3" class="hub-in w-full mt-1" placeholder="One per line, e.g.&#10;Term 1, Weeks 1-5: Migration&#10;Term 2, Weeks 1-4: Natural hazards" oninput="hubYpFormOf(\'' + p.id + '\').paste=this.value">' + hubEsc(f.paste) + '</textarea><button type="button" class="builder-btn text-xs py-1 px-3 mt-1" onclick="hubYpPaste(\'' + p.id + '\')">Add from list</button></details>';
-                if (hubYpPlannerCount()) h += '<button type="button" class="builder-btn text-[11px] py-1 px-2.5 mt-2" onclick="hubYpImport(\'' + p.id + '\')">📅 Copy the plan now in my Year Planner (' + hubEsc((yearPlannerState.subject || '') + ' · Year ' + (yearPlannerState.year || '')) + ') into ' + hubEsc(hubPairLabel(p)) + '</button>';
+                h += '<label class="builder-btn text-[11px] py-1 px-2.5 mt-2 mr-2 inline-block cursor-pointer">📤 Upload a year plan spreadsheet (.xlsx)<input type="file" accept=".xlsx" class="hidden" onchange="hubYpUpload(\'' + p.id + '\', this)"></label>';
+                var sv = hubYpPlansFor(p);
+                if (sv.length) h += '<div class="mt-2"><p class="text-[11px] font-bold text-slate-600 mb-1">Copy a plan from my Year Planner into ' + hubEsc(hubPairLabel(p)) + ':</p><div class="flex flex-wrap gap-1.5">' + sv.map(function(x) { return '<button type="button" class="builder-btn text-[11px] py-1 px-2.5" onclick="hubYpImport(\'' + p.id + '\', \'' + ypEsc(x.key).replace(/'/g, "\\'") + '\')">📅 ' + hubEsc(ypPlanLabel(x.subject, x.year, x.ncea)) + ' (' + hubYpTermsCount(x.terms) + ' wk)' + (x.active ? ' · open now' : '') + '</button>'; }).join('') + '</div></div>';
                 h += '</div>';
             });
             return h + hubLockBtn('yearplans', hubData.done.yearplans ? 'Lock in my changes' : (hubData.yearPlans.length ? 'Lock in my year plans' : 'Lock in (I will add year plans later)'));
