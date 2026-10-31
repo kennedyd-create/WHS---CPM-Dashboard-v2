@@ -319,45 +319,46 @@
         @keyframes hub-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,.6), 0 4px 14px rgba(0,0,0,.28); } 50% { box-shadow: 0 0 0 10px rgba(220,38,38,0), 0 4px 14px rgba(0,0,0,.28); } }
         #hub-chip { font-size: 10px; font-weight: 800; border-radius: 9999px; padding: 2px 9px; text-transform: uppercase; letter-spacing: .05em; }
         #hub-chip[data-st="red"] { background: #fee2e2; color: #991b1b; } #hub-chip[data-st="orange"] { background: #ffedd5; color: #9a3412; } #hub-chip[data-st="green"] { background: #dcfce7; color: #166534; }
-        .hub-card { background: #fff; color: #1e293b; }
-        .hub-sec { border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; background: #fff; }
-        .hub-sec-open { border: 2px solid #0e7490; background: #f0fdff; }
+        .hub-card { background: #e6edf5; color: #1e293b; }
+        .hub-sec { border: 1px solid #b4c1d3; border-radius: 12px; padding: 12px; background: #fff; box-shadow: 0 1px 3px rgba(15,23,42,.10); }
+        .hub-sec-open { border: 2px solid #0e7490; background: #dff6fa; }
+        .hub-sec-open .hub-sub { background: #fff; }
         .hub-sec-wait { opacity: .55; }
-        .hub-sub { border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px; background: #fff; margin-top: 8px; }
+        .hub-sub { border: 1px solid #b4c1d3; border-radius: 10px; padding: 10px; background: #f1f5f9; margin-top: 8px; }
         .hub-num { width: 24px; height: 24px; border-radius: 9999px; background: #e2e8f0; color: #334155; font-weight: 900; font-size: 12px; display: inline-flex; align-items: center; justify-content: center; flex: none; }
         .hub-num-done { background: #16a34a; color: #fff; }
         .hub-chip { display: inline-flex; gap: 6px; align-items: center; background: #e0f2fe; border: 1px solid #7dd3fc; color: #075985; border-radius: 9999px; padding: 3px 10px; font-size: 12px; font-weight: 700; }
         .hub-chip button { color: #0369a1; font-weight: 900; }
-        .hub-in { border: 1px solid #cbd5e1; border-radius: 6px; padding: 6px 8px; font-size: 12px; background: #fff; color: #0f172a; }
+        .hub-in { border: 1px solid #94a3b8; border-radius: 6px; padding: 6px 8px; font-size: 12px; background: #fff; color: #0f172a; }
         .hub-lock { padding: 8px 20px; border-radius: 10px; border: 2px solid #15803d; background: #16a34a; color: #fff; font-weight: 900; font-size: 12px; letter-spacing: .04em; cursor: pointer; }
         .hub-lock:hover { background: #15803d; }
         .hub-dash { display: grid; grid-template-columns: 270px 1fr; gap: 16px; align-items: start; }
         .hub-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
         .hub-cal-h { text-align: center; font-size: 10px; font-weight: 800; color: #64748b; }
-        .hub-cal-d { height: 30px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #1e293b; background: transparent; border: 1px solid transparent; cursor: pointer; }
+        .hub-cal-d { height: 30px; border-radius: 6px; font-size: 12px; font-weight: 700; color: #1e293b; background: #eef2f7; border: 1px solid #d5dde8; cursor: pointer; }
         .hub-cal-d:hover { background: #e0f2fe; }
-        .hub-cal-d.out { color: #cbd5e1; } .hub-cal-d.wkend { color: #94a3b8; }
+        .hub-cal-d.out { color: #94a3b8; background: #f8fafc; } .hub-cal-d.wkend { color: #94a3b8; background: #f8fafc; }
         .hub-cal-d.off { background: #e2e8f0; border-color: #94a3b8; color: #475569; }
         .hub-cal-d.ev { background: #fef3c7; border-color: #fcd34d; color: #92400e; }
         .hub-cal-d.today { outline: 2px solid #002066; outline-offset: -2px; }
         .hub-cal-d.sel { background: #002066; border-color: #002066; color: #fff; }
         .hub-lg { display: inline-block; width: 10px; height: 10px; border-radius: 3px; border: 1px solid #94a3b8; vertical-align: -1px; }
         .hub-lg.off { background: #e2e8f0; } .hub-lg.ev { background: #fef3c7; border-color: #fcd34d; } .hub-lg.today { background: #fff; outline: 2px solid #002066; outline-offset: -2px; border-color: transparent; }
-        .hub-nav { width: 28px; height: 28px; border-radius: 8px; border: 1px solid #cbd5e1; background: #fff; font-weight: 900; color: #334155; cursor: pointer; }
+        .hub-nav { width: 28px; height: 28px; border-radius: 8px; border: 1px solid #94a3b8; background: #fff; font-weight: 900; color: #334155; cursor: pointer; }
         .hub-nav:hover { background: #f1f5f9; }
-        .hub-tab { padding: 6px 16px; border-radius: 9999px; border: 2px solid #cbd5e1; background: #fff; font-size: 13px; font-weight: 800; color: #334155; cursor: pointer; }
+        .hub-tab { padding: 6px 16px; border-radius: 9999px; border: 2px solid #94a3b8; background: #fff; font-size: 13px; font-weight: 800; color: #334155; cursor: pointer; }
         .hub-tab.on { background: #002066; border-color: #002066; color: #fff; }
-        .hub-period { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #e2e8f0; }
+        .hub-period { display: flex; gap: 10px; padding: 8px 8px; margin-bottom: 6px; border: 1px solid #b4c1d3; border-radius: 10px; background: #f4f7fb; }
         .hub-pl { width: 30px; flex: none; font-weight: 900; color: #64748b; font-size: 13px; padding-top: 4px; }
-        .hub-lesson { border: 1px solid #e2e8f0; border-left: 5px solid #0e7490; border-radius: 8px; padding: 8px 10px; background: #fff; }
-        .hub-lesson-off { opacity: .6; background: #f8fafc; }
+        .hub-lesson { border: 1px solid #b4c1d3; border-left: 5px solid #0e7490; border-radius: 8px; padding: 8px 10px; background: #fff; box-shadow: 0 1px 2px rgba(15,23,42,.08); }
+        .hub-lesson-off { opacity: .75; background: #e2e8f0; }
         .hub-banner { border-radius: 8px; padding: 6px 10px; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
         .hub-banner-off { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; }
         .hub-banner-ev { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; }
         .hub-tag { background: #ede9fe; color: #5b21b6; border-radius: 9999px; padding: 1px 8px; font-size: 10px; font-weight: 800; }
         .hub-tag-as { background: #fef3c7; color: #92400e; }
         .hub-stage, .hub-res, .hub-hw { display: flex; gap: 8px; border-radius: 6px; padding: 4px 8px; font-size: 12px; }
-        .hub-stage { background: #f3e8ff; } .hub-res { background: #f1f5f9; } .hub-hw { background: #fef3c7; }
+        .hub-stage { background: #f3e8ff; } .hub-res { background: #e2e8f0; } .hub-hw { background: #fef3c7; }
         .hub-stage-k { width: 64px; flex: none; font-weight: 900; font-size: 11px; color: #5b21b6; } .hub-hw .hub-stage-k { color: #92400e; } .hub-res .hub-stage-k { color: #334155; }
         .hub-stage-t { flex: 1; }
         .hub-week { width: 100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
@@ -367,12 +368,12 @@
         .hub-week th.off { color: #991b1b; }
         .hub-why { display: block; font-size: 9px; font-weight: 700; color: #991b1b; }
         .hub-wp { width: 28px; color: #64748b !important; }
-        .hub-week td { vertical-align: top; background: #f8fafc; border-radius: 6px; padding: 3px; height: 48px; }
-        .hub-wc { display: block; width: 100%; text-align: left; border-left: 4px solid #0e7490; background: #fff; border-radius: 4px; padding: 3px 5px; font-size: 12px; margin-bottom: 2px; cursor: pointer; }
+        .hub-week td { vertical-align: top; background: #d9e2ee; border-radius: 6px; padding: 3px; height: 48px; }
+        .hub-wc { display: block; width: 100%; text-align: left; border-left: 4px solid #0e7490; border-top: 1px solid #b4c1d3; border-right: 1px solid #b4c1d3; border-bottom: 1px solid #b4c1d3; background: #fff; border-radius: 4px; padding: 3px 5px; font-size: 12px; margin-bottom: 2px; cursor: pointer; }
         .hub-wc:hover { background: #f0f9ff; } .hub-wc.off { opacity: .45; text-decoration: line-through; }
         .hub-wsub { display: block; font-size: 10px; color: #475569; line-height: 1.25; }
         .hub-flags { margin-top: 8px; font-size: 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 6px 10px 6px 24px; list-style: disc; color: #92400e; }
-        .hub-up { border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px 12px; margin-bottom: 8px; background: #fff; }
+        .hub-up { border: 1px solid #b4c1d3; border-radius: 10px; padding: 8px 12px; margin-bottom: 8px; background: #fff; box-shadow: 0 1px 2px rgba(15,23,42,.08); }
         .hub-i { font-size: 12px; padding-left: 10px; border-left: 3px solid #cbd5e1; }
         .hub-i-off { border-color: #f87171; color: #991b1b; } .hub-i-ev { border-color: #f59e0b; } .hub-i-as { border-color: #f59e0b; font-weight: 700; } .hub-i-end { border-color: #16a34a; font-weight: 700; } .hub-i-yp { border-color: #7c3aed; } .hub-i-unit { border-color: #0e7490; } .hub-i-todo { border-color: #94a3b8; color: #64748b; font-style: italic; }
         .hub-rc { font-size: 11px; font-weight: 700; border-radius: 9999px; padding: 2px 9px; border: 1px solid; }
@@ -382,6 +383,7 @@
         html.dark .hub-rc-res { background: #052e16; border-color: #166534; color: #86efac; } html.dark .hub-rc-make { background: #2e1f4d; border-color: #6d28d9; color: #d8b4fe; } html.dark .hub-rc-ment { background: #422f0a; border-color: #92400e; color: #fcd34d; } html.dark .hub-rc-none { background: #1e293b; border-color: #334155; color: #94a3b8; } html.dark .hub-rc-info { background: #0c4a6e; border-color: #0369a1; color: #e0f2fe; }
         html.dark .hub-drift { background: #431407; border-color: #9a3412; color: #fdba74; } html.dark .hub-i-drift { color: #fdba74; }
         html.dark .hub-card { background: #1e293b; color: #e2e8f0; }
+        html.dark .hub-cal-d { background: #1e293b; border-color: #334155; } html.dark .hub-period { background: #172033; border-color: #334155; } html.dark .hub-sec-open .hub-sub { background: #0f172a; } html.dark .hub-week td { background: #172033; } html.dark .hub-lesson-off { background: #172033; } html.dark .hub-sec, html.dark .hub-lesson, html.dark .hub-up { box-shadow: none; }
         html.dark .hub-card .text-slate-900, html.dark .hub-card .text-slate-800 { color: #f1f5f9; }
         html.dark .hub-card .text-slate-700, html.dark .hub-card .text-slate-600 { color: #cbd5e1; }
         html.dark .hub-card .text-slate-500 { color: #94a3b8; }
@@ -3462,6 +3464,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Teacher Hub: Coverage tab</mark>: in <strong>Classes and periods</strong> there is now a <strong>Coverage</strong> tab. It shows the four terms of the year for each class, with a bar for the weeks each unit plan covers (for example "Y7 Migration, weeks 4 to 9" in Term 1) and "Nothing loaded" where no unit plan is loaded yet. The list of unit plans is now in year level and subject order, with a heading for each.</li>
 <li><mark class="wn-key">Teacher Hub: NOW and NEXT unit for each class</mark>: in Classes and periods, the unit marked <strong>NOW</strong> is the one the class is on today by date, or <strong>NEXT</strong> when no unit has started yet. Before, two classes of the same year level could show different units as current.</li>
 <li><mark class="wn-key">Teacher Hub: "Coming up" pop-up</mark>: the first time you open the Hub each day, a pop-up lists what is coming in the next two weeks, for example "Year 7 Social Sciences has an assessment next week: 7A Thu 18 Mar (lesson 12)", units that are about to finish or start (and a warning if no next unit plan is loaded), and no-school days and events. Press <strong>Show</strong> to jump to that week, or <strong>🔔 Coming up</strong> at the top of the Hub to see it again any time.</li>
+<li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
+<li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
 <li><mark class="wn-key">Year Planner: more than one year plan</mark>: the Year Planner now keeps <strong>a separate plan for every learning area and year level</strong> (and for each NCEA or Arts subject). Switching subject or year no longer clears your topics: the plan you leave is saved automatically and comes back when you return to it. A new <strong>My year plans</strong> row under the year levels lists every plan you have started with its number of weeks. Click one to jump to it, or the <strong>✕</strong> beside a saved plan to delete it. In the Teacher Hub, step 3 now offers a <strong>Copy a plan from my Year Planner</strong> button for each saved plan, with the matching year level first.</li>
 <li><mark class="wn-key">Teacher Hub: upload a year plan</mark>: in step 3 (Year plans), each subject now has an <strong>Upload a year plan spreadsheet (.xlsx)</strong> button. Use the <strong>day-by-day grid</strong> downloaded from the Year Planner (or one laid out the same way). The Hub reads the Term 1 to Term 4 topic blocks and adds each topic with its weeks, and leaves out holidays, events, assessments and buffer weeks. If the file is titled for a different year level or subject it asks before adding. Each year level and subject keeps its own year plan, so you can load as many as you teach. A topic written in only one block is now carried across the school holidays, events and camps that break up its colour, so a topic that runs from week 2 to week 10 is added as weeks 2 to 10.</li>
 <li><mark class="wn-key">Teacher Hub</mark>: the new <strong>man icon in the top right of the banner</strong> is your profile, saved on this device. It is <strong>red</strong> when empty, <strong>orange</strong> when partly set up and <strong>green</strong> once locked in. Set up five steps once, each locking in and folding away with an <strong>Edit</strong> button: <strong>My Teaching Profile</strong> (now lives here), year levels and subjects, year plans, unit plans and your classes with their periods. After that the icon opens a small calendar with <strong>Today</strong> (your timetable and each lesson from your unit plans), <strong>This Week</strong> and <strong>Upcoming</strong> (the big things in the next few weeks). Tell it which lesson each class is up to and it counts forward, skipping holidays and school events from the 2026 and 2027 school calendars. Nothing is sent to an AI. Back it up or move it with the backup button in Setup.</li>
@@ -3917,6 +3921,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Teacher Hub: Coverage tab</mark>: in <strong>Classes and periods</strong> there is now a <strong>Coverage</strong> tab. It shows the four terms of the year for each class, with a bar for the weeks each unit plan covers (for example "Y7 Migration, weeks 4 to 9" in Term 1) and "Nothing loaded" where no unit plan is loaded yet. The list of unit plans is now in year level and subject order, with a heading for each.</li>
 <li><mark class="wn-key">Teacher Hub: NOW and NEXT unit for each class</mark>: in Classes and periods, the unit marked <strong>NOW</strong> is the one the class is on today by date, or <strong>NEXT</strong> when no unit has started yet. Before, two classes of the same year level could show different units as current.</li>
 <li><mark class="wn-key">Teacher Hub: "Coming up" pop-up</mark>: the first time you open the Hub each day, a pop-up lists what is coming in the next two weeks, for example "Year 7 Social Sciences has an assessment next week: 7A Thu 18 Mar (lesson 12)", units that are about to finish or start (and a warning if no next unit plan is loaded), and no-school days and events. Press <strong>Show</strong> to jump to that week, or <strong>🔔 Coming up</strong> at the top of the Hub to see it again any time.</li>
+<li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
+<li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
 <li><mark class="wn-key">Year Planner: more than one year plan</mark>: the Year Planner now keeps <strong>a separate plan for every learning area and year level</strong> (and for each NCEA or Arts subject). Switching subject or year no longer clears your topics: the plan you leave is saved automatically and comes back when you return to it. A new <strong>My year plans</strong> row under the year levels lists every plan you have started with its number of weeks. Click one to jump to it, or the <strong>✕</strong> beside a saved plan to delete it. In the Teacher Hub, step 3 now offers a <strong>Copy a plan from my Year Planner</strong> button for each saved plan, with the matching year level first.</li>
 <li><mark class="wn-key">Teacher Hub: upload a year plan</mark>: in step 3 (Year plans), each subject now has an <strong>Upload a year plan spreadsheet (.xlsx)</strong> button. Use the <strong>day-by-day grid</strong> downloaded from the Year Planner (or one laid out the same way). The Hub reads the Term 1 to Term 4 topic blocks and adds each topic with its weeks, and leaves out holidays, events, assessments and buffer weeks. If the file is titled for a different year level or subject it asks before adding. Each year level and subject keeps its own year plan, so you can load as many as you teach. A topic written in only one block is now carried across the school holidays, events and camps that break up its colour, so a topic that runs from week 2 to week 10 is added as weeks 2 to 10.</li>
 <li><mark class="wn-key">Teacher Hub</mark>: the new <strong>man icon in the top right of the banner</strong> is your profile, saved on this device. It is <strong>red</strong> when empty, <strong>orange</strong> when partly set up and <strong>green</strong> once locked in. Set up five steps once, each locking in and folding away with an <strong>Edit</strong> button: <strong>My Teaching Profile</strong> (now lives here), year levels and subjects, year plans, unit plans and your classes with their periods. After that the icon opens a small calendar with <strong>Today</strong> (your timetable and each lesson from your unit plans), <strong>This Week</strong> and <strong>Upcoming</strong> (the big things in the next few weeks). Tell it which lesson each class is up to and it counts forward, skipping holidays and school events from the 2026 and 2027 school calendars. Nothing is sent to an AI. Back it up or move it with the backup button in Setup.</li>
@@ -9961,7 +9967,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 var sel = '<option value="none"' + (!plan ? ' selected' : '') + '>No unit plan (subject only)</option>' + wkData.units.map(function(u) { return '<option value="' + u.id + '"' + (c.mode === 'unit' && c.unitId === u.id ? ' selected' : '') + '>' + esc(u.name) + '</option>'; }).join('') + '<option value="attach"' + (c.mode === 'attach' ? ' selected' : '') + '>I will attach it in the AI</option>';
                 h += '<div class="wk-row mt-2 rounded-lg border border-slate-200 p-3 flex flex-wrap items-end gap-3"><div class="flex-1" style="min-width:200px"><p class="text-sm font-black text-slate-900">' + esc(c.label) + ' <span class="font-semibold text-slate-600">· ' + esc(c.year) + ' ' + esc(c.subj) + '</span></p><p class="text-[11px] text-slate-600">' + esc(slots) + '</p>' + (rec && rec.off.length ? '<p class="text-[11px] font-bold text-red-700 mt-0.5">Loses ' + esc(wkSlotText(rec.off)) + ' this week (' + esc(rec.off.map(function(x) { return x.why; }).filter(function(v, i, a) { return a.indexOf(v) === i; }).join(', ')) + ')</p>' : '') + '</div>'
                     + '<label class="text-[11px] font-bold text-slate-700">Unit plan<select class="wk-in block mt-0.5 w-52 rounded border border-slate-300 p-1.5 text-xs font-normal" onchange="wkRowUnit(\'' + c.id + '\',this.value)">' + sel + '</select></label>'
-                    + '<label class="text-[11px] font-bold text-slate-700">' + (plan ? 'Lesson number you are up to' : 'Lesson number you are up to') + '<input type="text" class="wk-in block mt-0.5 w-40 rounded border border-slate-300 p-1.5 text-sm font-normal" value="' + esc(wkUi.lessons[c.id] || '') + '" placeholder="' + (function() { var hs = (wk && typeof hubSuggestWeek === 'function' && wkUnit(c)) ? hubSuggestWeek(c, wk.mon) : ''; return hs ? 'Teacher Hub says ' + hs : (c.last ? 'Last time: ' + esc(c.last) : 'e.g. 7'); })() + '" oninput="wkLesson(\'' + c.id + '\',this.value)"></label>'
+                    + '<label class="text-[11px] font-bold text-slate-700">' + (plan ? 'Lesson number you are up to' : 'Lesson number (optional: no unit plan)') + '<input type="text" class="wk-in block mt-0.5 w-40 rounded border border-slate-300 p-1.5 text-sm font-normal" value="' + esc(wkUi.lessons[c.id] || '') + '" placeholder="' + (function() { var hs = (wk && typeof hubSuggestWeek === 'function' && wkUnit(c)) ? hubSuggestWeek(c, wk.mon) : ''; return hs ? 'Teacher Hub says ' + hs : (c.last ? 'Last time: ' + esc(c.last) : 'e.g. 7'); })() + '" oninput="wkLesson(\'' + c.id + '\',this.value)"></label>'
                     + '<button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="wkEdit(\'' + c.id + '\')">✏️ Edit</button></div>';
             });
             h += '<div class="mt-3"><button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="wkEdit(\'new\')">+ Add a class</button></div>';
@@ -10237,7 +10243,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var msg = '';
             if (!wkUi.start) msg = 'Choose the date the week starts.';
             else if (!wkData.classes.length) msg = 'Add at least one class.';
-            else wkData.classes.forEach(function(c) { if (!msg && !(wkUi.lessons[c.id] || '').trim()) msg = 'Enter the lesson number ' + c.label + ' is up to.'; else if (!msg && c.mode === 'unit' && !/\d/.test(wkUi.lessons[c.id])) msg = 'Use a number for the lesson ' + c.label + ' is up to (for example 7), so the right lessons can be found in the unit plan.'; });
+            else wkData.classes.forEach(function(c) { if (!msg && wkHasPlan(c) && !(wkUi.lessons[c.id] || '').trim()) msg = 'Enter the lesson number ' + c.label + ' is up to.'; else if (!msg && c.mode === 'unit' && !/\d/.test(wkUi.lessons[c.id] || '')) msg = 'Use a number for the lesson ' + c.label + ' is up to (for example 7), so the right lessons can be found in the unit plan.'; });
             var w = document.getElementById('wk-warn'); if (w) { w.textContent = msg ? '⚠️ ' + msg : ''; w.classList.toggle('hidden', !msg); } return !msg;
         }
         function wkRemember() { var ch = false; wkData.classes.forEach(function(c) { var v = (wkUi.lessons[c.id] || '').trim(); if (v && c.last !== v) { c.last = v; ch = true; } }); if (ch) wkSave(); }
@@ -15699,12 +15705,18 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (chip) { chip.setAttribute('data-st', st); chip.textContent = st === 'red' ? 'Not set up' : st === 'orange' ? 'Partly set up' : 'Set up'; }
         }
         // ---- calendar helpers ----
+        // ---- the teacher's own events (a trip, an assembly, a duty, a sick day): hubData.own = [{ id, from, to, label, cls: [] (all my classes) or class ids, off: no lessons }] ----
+        function hubOwnList() { return Array.isArray(hubData.own) ? hubData.own : []; }
+        function hubOwnOn(c, iso) { return hubOwnList().filter(function(e) { return e.from <= iso && iso <= e.to && (!e.cls || !e.cls.length || (c && e.cls.indexOf(c.id) >= 0)); }); }
+        function hubOwnOff(c, iso) { var l = hubOwnOn(c, iso).filter(function(e) { return e.off; }); return l.length ? l[0].label : ''; }
+        function hubOwnText(e) { var names = (e.cls || []).map(function(id) { var c = wkData.classes.filter(function(x) { return x.id === id; })[0]; return c ? c.label : ''; }).filter(function(x) { return x; }); return e.label + ' (my event' + (names.length ? ': ' + names.join(', ') : '') + (e.off ? ', no lessons' : '') + ')'; }
         function hubDay(iso, yn) { if (!calFor(iso)) return { off: '', flags: [], known: false }; var i = wkDayInfo(iso, yn); i.known = true; return i; }
         function hubDayAll(iso) {
             var yns = hubYears(); if (!yns.length) yns = [''];
             var infos = yns.map(function(y) { return hubDay(iso, y); }), flags = [], partial = [], off = '', allOff = infos.every(function(i) { return i.off; });
             if (allOff) off = infos[0].off;
             infos.forEach(function(i, k) { i.flags.forEach(function(f) { if (flags.indexOf(f) < 0) flags.push(f); }); if (i.off && !allOff) { var t = i.off + ' (Year ' + yns[k] + ' only)'; if (partial.indexOf(t) < 0) partial.push(t); } });
+            hubOwnList().forEach(function(e) { if (e.from <= iso && iso <= e.to) { var t = hubOwnText(e); if (flags.indexOf(t) < 0) flags.push(t); } });
             return { off: off, flags: flags, partial: partial, all: flags.concat(partial), known: infos[0].known };
         }
         function hubDow(iso) { return wkDate(iso).getUTCDay(); }
@@ -15737,7 +15749,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function hubPeriodsOn(c, iso) {
             var dow = hubDow(iso); if (dow < 1 || dow > 5) return [];
             var d = WK_DAYS[dow - 1], ps = [];
-            if (hubDay(iso, wkYearN(c)).off) return ps;
+            if (hubDay(iso, wkYearN(c)).off || hubOwnOff(c, iso)) return ps;
             for (var p = 1; p <= WK_PERIODS; p++) if (c.slots[d + p]) ps.push(p);
             return ps;
         }
@@ -15983,7 +15995,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var c = document.getElementById('hub-card'); if (c) c.scrollTop = 0;
             if (!step && !hubCurrent() && hubData.popDay !== hubToday()) hubPopShow(true);
         }
-        function hubClose() { hubPopClose(); var m = document.getElementById('hub-modal'); if (!m) return; m.classList.add('hidden'); m.style.display = ''; hubUi.open = false; hubUi.unitDraft = null; hubUi.classDraft = null; hubUi.importData = null; }
+        function hubClose() { hubPopClose(); hubOverlayClose(); var m = document.getElementById('hub-modal'); if (!m) return; m.classList.add('hidden'); m.style.display = ''; hubUi.open = false; hubUi.unitDraft = null; hubUi.classDraft = null; hubUi.importData = null; }
         function hubToggleSetup() { hubUi.setup = !hubUi.setup; hubUi.edit = ''; hubUi.warn = ''; hubUi.unitDraft = null; hubUi.classDraft = null; hubRender(); }
         function hubEditStep(k) { hubUi.edit = k; hubUi.setup = true; hubUi.warn = ''; hubUi.unitDraft = null; hubUi.classDraft = null; hubRender(); }
         function hubWarn(msg) { hubUi.warn = msg; hubRender(); var w = document.getElementById('hub-warn'); if (w) w.scrollIntoView({ block: 'center' }); }
@@ -16407,7 +16419,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             function b(k, l) { return '<button type="button" class="builder-btn text-xs py-1 px-3' + ((hubUi.clsTab || 'list') === k ? ' active' : '') + '" onclick="hubClsTab(\'' + k + '\')">' + l + '</button>'; }
             return '<div class="flex flex-wrap gap-2 mb-2">' + b('list', 'Classes') + b('cov', 'Coverage') + '</div>';
         }
-        function hubCoverageHtml() {
+        function hubCoverageTerms() {
             var yrs = hubCovYears(), COL = ['#dbeafe', '#dcfce7', '#fef3c7', '#fae8ff', '#ccfbf1', '#ffedd5', '#e0e7ff', '#fce7f3'];
             if (!yrs.length) return '<p class="text-xs text-slate-500">No unit plans with dates yet. Add a unit plan with its start and finish dates and it will appear here.</p>';
             var yr = yrs.indexOf(hubUi.covYear) >= 0 ? hubUi.covYear : (yrs.indexOf(hubToday().slice(0, 4)) >= 0 ? hubToday().slice(0, 4) : yrs[0]), T = WHS_CALS[yr].terms;
@@ -16455,6 +16467,43 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (first) return { u: first.u, now: false };
             var cu = hubUnitById(c.unitId); return cu ? { u: cu, now: false, nodate: true } : null;
         }
+        // ---- where each class is up to (the next lesson it will teach, counting from today) ----
+        function hubUpTo(c) {
+            if (c.mode !== 'unit' || !hubAnchors(c).length) return null;
+            var today = hubToday(), i, iso, ps, k;
+            for (i = 0; i < 90; i++) { iso = ypAddDays(today, i); ps = hubPeriodsOn(c, iso); for (k = 0; k < ps.length; k++) { var u = hubUnitAt(c, iso, ps[k]), n = hubLessonAt(c, iso, ps[k]); if (u) return { u: u, n: n || 0, iso: iso, p: ps[k], P: hubParseUnit(u) }; } }
+            return null;
+        }
+        function hubUpToHtml() {
+            var cls = wkData.classes.filter(function(c) { return c.mode === 'unit'; }); if (!cls.length) return '';
+            cls.sort(function(a, b) { var ya = TK_YEARS.indexOf(a.year), yb = TK_YEARS.indexOf(b.year); if (ya !== yb) return ya - yb; var sa = TK_DEPTS.indexOf(a.subj), sb = TK_DEPTS.indexOf(b.subj); if (sa !== sb) return sa - sb; return String(a.label).localeCompare(String(b.label)); });
+            var info = cls.map(function(c) { return { c: c, x: hubUpTo(c) }; }), byUnit = {};
+            info.forEach(function(r) { if (r.x && r.x.n > 0 && !(r.x.P.max && r.x.n > r.x.P.max)) (byUnit[r.x.u.id] = byUnit[r.x.u.id] || []).push(r); });
+            var h = '<div class="hub-sec mb-3"><p class="text-sm font-black text-slate-900 mb-1">📍 Where each class is up to</p><p class="text-[11px] text-slate-600 mb-2">The next lesson each class will have, counting from today.</p><div class="space-y-1.5">';
+            info.forEach(function(r) {
+                var c = r.c, x = r.x, col = hubColour(c), line;
+                if (!x) line = '<span class="text-slate-500">Set the lesson it is up to on the Today tab and it will show here.</span>';
+                else if (x.n < 1) line = '<strong>' + hubEsc(x.u.name) + '</strong> starts ' + hubEsc(hubShort(x.iso)) + '.';
+                else if (x.P.max && x.n > x.P.max) line = '<strong>' + hubEsc(x.u.name) + '</strong> is finished. Add the next unit plan, or it follows on by itself if one is loaded.';
+                else {
+                    var max = x.P.max || 0, pct = max ? Math.max(0, Math.min(100, Math.round((x.n - 1) / max * 100))) : 0;
+                    line = '<strong>' + hubEsc(x.u.name) + '</strong>: next is <strong>lesson ' + x.n + (max ? ' of ' + max : '') + '</strong> on ' + hubEsc(hubShort(x.iso)) + ' (P' + x.p + ')' + (max ? '<div style="height:8px;background:#e2e8f0;border-radius:4px;margin-top:3px;max-width:320px"><div style="height:8px;width:' + pct + '%;background:' + col + ';border-radius:4px"></div></div>' : '');
+                }
+                h += '<div class="hub-sub" style="margin-top:0;border-left:5px solid ' + col + '"><span class="text-sm font-black" style="color:' + col + '">' + hubEsc(c.label) + '</span> <span class="text-[11px] text-slate-600">' + hubEsc(c.year + ' ' + c.subj) + '</span><div class="text-xs text-slate-800 mt-0.5">' + line + '</div></div>';
+            });
+            h += '</div>';
+            var cmp = [];
+            Object.keys(byUnit).forEach(function(id) {
+                var l = byUnit[id]; if (l.length < 2) return;
+                l.sort(function(a, b) { return b.x.n - a.x.n; });
+                var top = l[0], beh = l.filter(function(r) { return top.x.n - r.x.n >= 2; });
+                if (!beh.length) cmp.push('<li>' + hubEsc(l.map(function(r) { return r.c.label; }).join(' and ')) + ' are level on ' + hubEsc(top.x.u.name) + ' (within a lesson of each other).</li>');
+                else beh.forEach(function(r) { cmp.push('<li><strong>' + hubEsc(r.c.label) + '</strong> is ' + (top.x.n - r.x.n) + ' lessons behind <strong>' + hubEsc(top.c.label) + '</strong> on ' + hubEsc(top.x.u.name) + ' (lesson ' + r.x.n + ' and lesson ' + top.x.n + ').</li>'); });
+            });
+            if (cmp.length) h += '<ul class="hub-flags mt-2">' + cmp.join('') + '</ul>';
+            return h + '</div>';
+        }
+        function hubCoverageHtml() { return hubUpToHtml() + hubCoverageTerms(); }
         // The unit plans a class follows (its own and every other unit for its year level and subject), with dates for this class
         function hubClassUnitsHtml(c) {
             if (c.mode !== 'unit') return '';
@@ -16590,6 +16639,205 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (!wkSave()) return; hubSave();
             hubRender(); var cd = document.getElementById('hub-card'); if (cd) cd.scrollTop = 0;
             if (typeof showGlobalToast === 'function') showGlobalToast('Your hub is ready ✓' + (f1 && f1.date > today ? ' Showing your first lesson, ' + hubShort(f1.date) + '.' : ''));
+        }
+        // ===== Print, relief pack and calendar export =====
+        function hubOverlayClose() { var e = document.getElementById('hub-print'); if (e) e.remove(); }
+        function hubOverlay(inner, landscape, bar, extra) {
+            hubOverlayClose();
+            var d = document.createElement('div'); d.id = 'hub-print'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true');
+            d.style.cssText = 'position:fixed;inset:0;z-index:9400;overflow:auto;padding:16px;background:rgba(15,23,42,.6)';
+            d.innerHTML = '<style>#hub-print .hp{max-width:' + (landscape ? '1100' : '820') + 'px;margin:0 auto;background:#fff;color:#111827;border-radius:12px;padding:20px 24px;font-family:Arial,sans-serif;font-size:13px;line-height:1.4}#hub-print h1{font-size:20px;margin:0 0 2px;color:#002066}#hub-print h2{font-size:15px;margin:14px 0 4px;color:#002066;border-bottom:2px solid #002066;padding-bottom:2px}#hub-print h3{font-size:13px;margin:10px 0 2px}#hub-print table{border-collapse:collapse;width:100%}#hub-print th,#hub-print td{border:1px solid #94a3b8;padding:4px 6px;vertical-align:top;font-size:12px;text-align:left}#hub-print th{background:#e2e8f0}#hub-print .hp-lesson{border:1px solid #94a3b8;border-left:5px solid #0e7490;border-radius:6px;padding:6px 10px;margin:6px 0;page-break-inside:avoid}#hub-print .hp-off{background:#f1f5f9;color:#475569}#hub-print .hp-flag{background:#fef3c7;border:1px solid #fcd34d;border-radius:6px;padding:3px 8px;margin:3px 0;font-size:12px}#hub-print .hp-st{display:flex;gap:8px;padding:2px 0}#hub-print .hp-st b{width:70px;flex:none;color:#5b21b6}#hub-print .hp-notes{border:1px dashed #64748b;border-radius:6px;padding:8px 10px;min-height:80px;margin:6px 0;white-space:pre-wrap}#hub-print a{color:#1d4ed8}#hub-print ol{list-style:decimal}#hub-print ul{list-style:disc}#hub-print .hp-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #cbd5e1}#hub-print button.hp-b{border:2px solid #002066;background:#002066;color:#fff;border-radius:8px;padding:6px 14px;font-weight:700;cursor:pointer}#hub-print button.hp-b2{border:2px solid #94a3b8;background:#fff;color:#111827;border-radius:8px;padding:6px 14px;font-weight:700;cursor:pointer}@media print{body>*:not(#hub-print){display:none!important}#hub-print{position:static!important;overflow:visible!important;background:#fff!important;padding:0!important}#hub-print .hp{max-width:none!important;border-radius:0!important;padding:0!important}#hub-print .hp-bar,#hub-print .hp-noprint{display:none!important}@page{size:A4 ' + (landscape ? 'landscape' : 'portrait') + ';margin:12mm}}</style><div class="hp">' + (bar === false ? '' : '<div class="hp-bar"><button type="button" class="hp-b" onclick="window.print()">🖨 Print or save as PDF</button>' + (extra || '') + '<button type="button" class="hp-b2" onclick="hubOverlayClose()">Close</button><span style="font-size:12px;color:#475569">In the print window choose "Save as PDF" to email it.</span></div>') + inner + '</div>';
+            d.addEventListener('click', function(e) { if (e.target === d) hubOverlayClose(); });
+            document.body.appendChild(d); d.scrollTop = 0;
+        }
+        // one day's lessons, period by period: [{ p, c, off, u, n, P, f }]
+        function hubDayRows(iso) {
+            var dow = hubDow(iso), rows = []; if (dow < 1 || dow > 5) return rows;
+            var d = WK_DAYS[dow - 1];
+            for (var p = 1; p <= WK_PERIODS; p++) wkData.classes.filter(function(c) { return c.slots[d + p]; }).forEach(function(c) {
+                var di = hubDay(iso, wkYearN(c)), r = { p: p, c: c, off: di.off || hubOwnOff(c, iso) || '', u: null, n: 0, P: null, f: null };
+                if (!r.off && c.mode === 'unit') { r.u = hubUnitAt(c, iso, p); if (r.u) { r.P = hubParseUnit(r.u); r.n = hubLessonAt(c, iso, p) || 0; if (r.n > 0 && r.P.lessons[r.n] && !(r.P.max && r.n > r.P.max)) r.f = hubLessonFields(r.P.lessons[r.n].text); } }
+                rows.push(r);
+            });
+            return rows;
+        }
+        function hubLi(f) { return f && f.li ? f.li.replace(/^LI\s*:\s*/i, '') : ''; }
+        function hubPrFlags(iso) { var a = hubDayAll(iso), h = ''; if (a.off) h += '<div class="hp-flag" style="background:#fee2e2;border-color:#fca5a5">No school: ' + hubEsc(a.off) + '</div>'; a.all.forEach(function(f) { h += '<div class="hp-flag">' + hubEsc(f) + '</div>'; }); return h; }
+        function hubPrintToday() {
+            var iso = hubUi.date, rows = hubDayRows(iso);
+            if (!rows.length && (hubDow(iso) < 1 || hubDow(iso) > 5)) return hubOverlay('<h1>' + hubEsc(hubLong(iso)) + '</h1><p>It is the weekend.</p>');
+            var h = '<h1>' + hubEsc(hubLong(iso)) + '</h1><p style="margin:0 0 6px;color:#475569">' + hubEsc(hubTwText(iso)) + '</p>' + hubPrFlags(iso);
+            h += '<table style="margin-top:8px"><thead><tr><th style="width:36px">Period</th><th style="width:110px">Class</th><th style="width:90px">Lesson</th><th>Learning intention and resources</th><th style="width:70px">Prepared</th></tr></thead><tbody>';
+            for (var p = 1; p <= WK_PERIODS; p++) {
+                var rs = rows.filter(function(r) { return r.p === p; });
+                if (!rs.length) h += '<tr><th>P' + p + '</th><td colspan="4" style="color:#94a3b8">Not teaching</td></tr>';
+                rs.forEach(function(r, i) {
+                    var li = hubLi(r.f), ri = r.f ? hubResInfo(r.f) : null, tag = r.f ? hubTag(r.f.head) : '';
+                    h += '<tr class="' + (r.off ? 'hp-off' : '') + '">' + (i ? '<th></th>' : '<th>P' + p + '</th>') + '<td><strong>' + hubEsc(r.c.label) + '</strong><br>' + hubEsc(r.c.year + ' ' + r.c.subj) + '</td>';
+                    if (r.off) h += '<td colspan="3">No lesson: ' + hubEsc(r.off) + '</td></tr>';
+                    else if (r.f) h += '<td>' + hubEsc(r.u.name) + '<br><strong>Lesson ' + r.n + (r.P.max ? ' of ' + r.P.max : '') + '</strong>' + (tag ? '<br>' + hubEsc(tag) : '') + (r.P.assess[r.n] ? '<br><strong>ASSESSMENT</strong>' : '') + '</td><td>' + (li ? '<strong>LI:</strong> ' + hubEsc(li) : hubEsc(r.f.head)) + (r.f.res.length ? '<br>' + r.f.res.map(function(x) { return hubLinkify(x); }).join('<br>') : '') + '</td><td style="text-align:center">' + (r.u && hubIsPrep(r.c.id, r.u.id, r.n) ? '☑' : '☐') + '</td></tr>';
+                    else h += '<td colspan="3" style="color:#64748b">' + (r.u && r.n > 0 ? 'Lesson ' + r.n + ' of ' + hubEsc(r.u.name) + ' (not in the pasted plan)' : r.u ? 'Before lesson 1 of ' + hubEsc(r.u.name) : 'No unit plan loaded') + '</td></tr>';
+                });
+            }
+            hubOverlay(h + '</tbody></table>');
+        }
+        function hubPrintWeek() {
+            var mon = hubMondayOf(hubUi.date), days = [0, 1, 2, 3, 4].map(function(i) { return ypAddDays(mon, i); }), all = days.map(hubDayRows);
+            var h = '<h1>Week of ' + hubEsc(hubShort(mon)) + '</h1><p style="margin:0 0 6px;color:#475569">' + hubEsc(hubTwText(mon)) + '</p>';
+            h += '<table><thead><tr><th style="width:34px"></th>' + days.map(function(iso, i) { var a = hubDayAll(iso); return '<th>' + WK_DAYFULL[WK_DAYS[i]] + ' ' + Number(iso.slice(8)) + (a.off ? '<br><span style="font-weight:400;color:#991b1b">' + hubEsc(a.off) + '</span>' : '') + '</th>'; }).join('') + '</tr></thead><tbody>';
+            for (var p = 1; p <= WK_PERIODS; p++) {
+                h += '<tr><th>P' + p + '</th>' + days.map(function(iso, i) {
+                    var rs = all[i].filter(function(r) { return r.p === p; });
+                    return '<td>' + (rs.map(function(r) { var li = hubLi(r.f).replace(/^We are learning to\s*/i, ''); return '<div style="margin-bottom:3px"><strong>' + hubEsc(r.c.label) + '</strong>' + (r.off ? ' <span style="color:#991b1b">no lesson</span>' : r.n > 0 ? ' L' + r.n + (r.u && hubIsPrep(r.c.id, r.u.id, r.n) ? ' ✓' : '') : '') + (li ? '<br><span style="font-size:11px">' + hubEsc(li.length > 110 ? li.slice(0, 108) + '…' : li) + '</span>' : '') + '</div>'; }).join('') || '<span style="color:#cbd5e1">·</span>') + '</td>';
+                }).join('') + '</tr>';
+            }
+            h += '</tbody></table>';
+            var runs = hubRuns(days, function(iso) { return hubDayAll(iso).all; });
+            if (runs.length) h += '<h2>This week</h2>' + runs.map(function(r) { return '<div class="hp-flag"><strong>' + hubEsc(hubRunText(r)) + '</strong>: ' + hubEsc(r.label) + '</div>'; }).join('');
+            var l = hubWeekLessons(mon), left = l.filter(function(x) { return !hubIsPrep(x.c.id, x.u.id, x.n); });
+            if (l.length) h += '<p style="margin-top:8px"><strong>Prepared:</strong> ' + (l.length - left.length) + ' of ' + l.length + ' lessons' + (left.length ? '. Still to prepare: ' + left.map(function(x) { return hubEsc(x.c.label) + ' lesson ' + x.n; }).join(', ') : '') + '.</p>';
+            hubOverlay(h, true);
+        }
+        function hubRelief(kind) {
+            var iso = hubUi.date, days = kind === 'week' ? [0, 1, 2, 3, 4].map(function(i) { return ypAddDays(hubMondayOf(iso), i); }) : [iso];
+            days = days.filter(function(d) { var w = hubDow(d); return w >= 1 && w <= 5; });
+            var h = '<h1>Relief pack: ' + (kind === 'week' ? 'week of ' + hubEsc(hubShort(days[0] || iso)) : hubEsc(hubLong(iso))) + '</h1>';
+            h += '<h3>Notes for the relief teacher <span class="hp-noprint" style="font-weight:400;color:#64748b">(click the box to type; it prints as typed)</span></h3><div class="hp-notes" contenteditable="true">Room and where to find me:\nClass routines and seating:\nStudents who need support (use initials only):\nWhere the resources and devices are:\nWho to ask for help:\n</div>';
+            if (!days.length) h += '<p>No school days to show.</p>';
+            days.forEach(function(d) {
+                var rows = hubDayRows(d);
+                h += '<h2>' + hubEsc(hubLong(d)) + '</h2>' + hubPrFlags(d);
+                if (!rows.length) h += '<p style="color:#64748b">No lessons.</p>';
+                rows.forEach(function(r) {
+                    var f = r.f, head = '<strong>P' + r.p + ' · ' + hubEsc(r.c.label) + '</strong> · ' + hubEsc(r.c.year + ' ' + r.c.subj);
+                    if (r.off) { h += '<div class="hp-lesson hp-off">' + head + '<br>No lesson: ' + hubEsc(r.off) + '</div>'; return; }
+                    if (!f) { h += '<div class="hp-lesson hp-off">' + head + '<br>' + (r.u && r.n > 0 ? 'Lesson ' + r.n + ' of ' + hubEsc(r.u.name) + ' is not in the pasted unit plan.' : 'No lesson details loaded for this class.') + ' Please set work with the teacher\'s instructions above.</div>'; return; }
+                    var tag = hubTag(f.head);
+                    h += '<div class="hp-lesson">' + head + '<br><strong>' + hubEsc(r.u.name) + ' · Lesson ' + r.n + (r.P.max ? ' of ' + r.P.max : '') + '</strong>' + (tag ? ' · ' + hubEsc(tag) : '') + (r.P.assess[r.n] ? ' · <strong>ASSESSMENT</strong>' : '');
+                    if (f.li) h += '<div style="margin-top:3px"><strong>LI:</strong> ' + hubEsc(hubLi(f)) + '</div>';
+                    f.stages.forEach(function(st) { h += '<div class="hp-st"><b>' + hubEsc(st.k) + '</b><span>' + hubEsc(st.t).replace(/\n/g, '<br>') + '</span></div>'; });
+                    if (f.res.length) h += '<div style="margin-top:3px"><strong>Resources:</strong><ul style="margin:2px 0 0 18px;padding:0">' + f.res.map(function(x) { return '<li>' + hubLinkify(x) + '</li>'; }).join('') + '</ul></div>';
+                    if (f.hw) h += '<div style="margin-top:3px"><strong>Homework:</strong> ' + hubEsc(f.hw) + '</div>';
+                    if (f.watch) h += '<div style="margin-top:3px"><strong>Watch for:</strong> ' + hubEsc(f.watch) + '</div>';
+                    if (f.diff) h += '<div style="margin-top:3px"><strong>Differentiation:</strong> ' + hubEsc(f.diff) + '</div>';
+                    h += '</div>';
+                });
+            });
+            hubOverlay('<div id="hub-pr-content">' + h + '<p style="margin-top:12px;font-size:11px;color:#64748b">Made with the WHS Teacher Hub.</p></div>', false, true, '<button type="button" class="hp-b" onclick="hubCopyRelief(false)" title="Copy the whole pack, with its formatting and links, then paste it into your LMS">📋 Copy for my LMS</button><button type="button" class="hp-b2" onclick="hubCopyRelief(true)" title="Copy as plain text, with the web addresses written out">Copy as plain text</button>');
+        }
+        // Copy the relief pack: rich (headings, bold, links) so it pastes tidily into an LMS, or plain text with the web addresses written out
+        function hubCopyRelief(plain) {
+            var el = document.getElementById('hub-pr-content'); if (!el) return;
+            function done() { if (typeof showGlobalToast === 'function') showGlobalToast('Copied. Paste it into your LMS ✓'); }
+            if (!plain) {
+                var ok = false;
+                var hid = Array.prototype.slice.call(el.querySelectorAll('.hp-noprint'));
+                try { hid.forEach(function(x) { x.style.display = 'none'; }); var sel = window.getSelection(), r = document.createRange(); r.selectNodeContents(el); sel.removeAllRanges(); sel.addRange(r); ok = document.execCommand('copy'); sel.removeAllRanges(); } catch (e) {}
+                hid.forEach(function(x) { x.style.display = ''; });
+                if (ok) return done();
+            }
+            var box = el.cloneNode(true); box.removeAttribute('id'); box.style.cssText = 'position:absolute;left:-9999px;top:0;width:700px';
+            Array.prototype.forEach.call(box.querySelectorAll('.hp-noprint'), function(x) { x.remove(); });
+            Array.prototype.forEach.call(box.querySelectorAll('.hp-st'), function(x) { x.style.display = 'block'; var b = x.querySelector('b'); if (b) b.textContent = b.textContent + ': '; });
+            Array.prototype.forEach.call(box.querySelectorAll('a'), function(a) { var h = a.getAttribute('href'); if (h && a.textContent.indexOf(h) < 0) a.textContent = a.textContent + ' (' + h + ')'; });
+            var host = document.getElementById('hub-print') || document.body; host.appendChild(box); var txt = box.innerText; box.remove();
+            function fallback() { var t = document.createElement('textarea'); t.value = txt; t.style.cssText = 'position:fixed;left:-9999px'; document.body.appendChild(t); t.select(); var ok2 = false; try { ok2 = document.execCommand('copy'); } catch (e) {} t.remove(); if (ok2) done(); else if (typeof showGlobalToast === 'function') showGlobalToast('Could not copy. Select the pack and press Ctrl+C.'); }
+            try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(txt).then(done, fallback); return; } } catch (e) {}
+            fallback();
+        }
+        // ---- Google Calendar (.ics) ----
+        var HUB_BELLS = [['08:45', '09:45'], ['09:45', '10:45'], ['11:15', '12:15'], ['12:15', '13:15'], ['14:00', '15:00']];
+        function hubBells() { var b = hubData.bells; return Array.isArray(b) && b.length === WK_PERIODS ? b : HUB_BELLS.slice(0, WK_PERIODS); }
+        function hubCalOpen() {
+            var b = hubBells(), h = '<h1>📅 Put my lessons in Google Calendar</h1><p style="color:#475569;margin:2px 0 8px">This makes a calendar file (.ics) of your lessons, with the learning intention in each entry. Lessons that are not taught (holidays, events, your own events) are left out.</p>';
+            h += '<h3>1 · Which lessons?</h3><select id="hub-ics-range" style="border:1px solid #94a3b8;border-radius:6px;padding:5px"><option value="week">This week</option><option value="4w" selected>The next four weeks</option><option value="term">The rest of this term</option><option value="year">The rest of the school year</option></select>';
+            h += '<h3>2 · When do your periods start and finish? <span style="font-weight:400;color:#64748b">(check these match your timetable)</span></h3><table style="max-width:360px"><thead><tr><th>Period</th><th>Starts</th><th>Ends</th></tr></thead><tbody>' + b.map(function(x, i) { return '<tr><th>P' + (i + 1) + '</th><td><input type="time" id="hub-ics-s' + i + '" value="' + x[0] + '" style="border:1px solid #94a3b8;border-radius:4px;padding:2px"></td><td><input type="time" id="hub-ics-e' + i + '" value="' + x[1] + '" style="border:1px solid #94a3b8;border-radius:4px;padding:2px"></td></tr>'; }).join('') + '</tbody></table>';
+            h += '<label style="display:block;margin-top:8px"><input type="checkbox" id="hub-ics-own" checked> Also add my own events (all-day entries)</label>';
+            h += '<div style="margin-top:12px"><button type="button" class="hp-b" onclick="hubCalGo()">⬇ Download the calendar file</button> <button type="button" class="hp-b2" onclick="hubOverlayClose()">Close</button></div>';
+            h += '<h3>3 · Add it to Google Calendar</h3><ol style="margin:2px 0 0 18px;padding:0"><li>Open Google Calendar on a computer and click the cog, then <strong>Settings</strong>.</li><li>Choose <strong>Import &amp; export</strong>, then <strong>Import</strong>, and pick the downloaded file.</li><li>Choose a calendar for it. A new calendar such as "WHS lessons" is best, because you can delete it and import again if your plans change.</li></ol>';
+            hubOverlay(h, false, false);
+        }
+        function hubIcsEsc(t) { return String(t == null ? '' : t).replace(/\\/g, '\\\\').replace(/;/g, '\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n'); }
+        function hubIcsFold(l) { var out = []; while (l.length > 73) { var cut = 73; if (/[\uDC00-\uDFFF]/.test(l.charAt(cut))) cut--; out.push(l.slice(0, cut)); l = ' ' + l.slice(cut); } out.push(l); return out.join('\r\n'); }
+        function hubIcsRange(kind) {
+            var today = hubToday(), mon = hubMondayOf(today), from = mon, to;
+            if (kind === 'week') to = ypAddDays(mon, 4); else if (kind === '4w') to = ypAddDays(mon, 27);
+            else { var yr = today.slice(0, 4), cal = WHS_CALS[yr] || null, end = '';
+                if (cal) { var T = cal.terms; if (kind === 'term') Object.keys(T).forEach(function(k) { if (!end && T[k].end >= today) end = T[k].end; }); else end = T[4] ? T[4].end : ''; }
+                to = end || ypAddDays(mon, 27); }
+            return { from: from, to: to };
+        }
+        function hubIcsBuild(kind, own) {
+            var r = hubIcsRange(kind), now = new Date(), stamp = now.getUTCFullYear() + ('0' + (now.getUTCMonth() + 1)).slice(-2) + ('0' + now.getUTCDate()).slice(-2) + 'T' + ('0' + now.getUTCHours()).slice(-2) + ('0' + now.getUTCMinutes()).slice(-2) + '00Z', bells = hubBells(), L = [], n = 0;
+            L.push('BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//WHS Teacher Hub//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'X-WR-CALNAME:WHS lessons', 'X-WR-TIMEZONE:Pacific/Auckland',
+                'BEGIN:VTIMEZONE', 'TZID:Pacific/Auckland', 'BEGIN:DAYLIGHT', 'TZOFFSETFROM:+1200', 'TZOFFSETTO:+1300', 'TZNAME:NZDT', 'DTSTART:19700927T020000', 'RRULE:FREQ=YEARLY;BYMONTH=9;BYDAY=-1SU', 'END:DAYLIGHT', 'BEGIN:STANDARD', 'TZOFFSETFROM:+1300', 'TZOFFSETTO:+1200', 'TZNAME:NZST', 'DTSTART:19700405T030000', 'RRULE:FREQ=YEARLY;BYMONTH=4;BYDAY=1SU', 'END:STANDARD', 'END:VTIMEZONE');
+            function dt(iso, t) { return iso.replace(/-/g, '') + 'T' + t.replace(':', '') + '00'; }
+            for (var iso = r.from; iso <= r.to; iso = ypAddDays(iso, 1)) {
+                hubDayRows(iso).forEach(function(x) {
+                    if (x.off) return;
+                    var b = bells[x.p - 1]; if (!b) return;
+                    var li = x.f ? hubLi(x.f).replace(/^We are learning to\s*/i, '') : '', sum = x.c.label + (x.n > 0 && x.f ? ' L' + x.n : '') + ': ' + (li ? li : x.c.year + ' ' + x.c.subj);
+                    if (sum.length > 90) sum = sum.slice(0, 88) + '...';
+                    var desc = x.f ? x.u.name + ' - lesson ' + x.n + (x.P.max ? ' of ' + x.P.max : '') + (x.P.assess[x.n] ? ' (ASSESSMENT)' : '') + '\n' + (hubLi(x.f) ? 'LI: ' + hubLi(x.f) + '\n' : '') + x.f.stages.map(function(st) { return st.k + ': ' + st.t.replace(/\n/g, ' '); }).join('\n') + (x.f.res.length ? '\nResources:\n' + x.f.res.join('\n') : '') : x.c.year + ' ' + x.c.subj;
+                    L.push('BEGIN:VEVENT', 'UID:' + x.c.id + '-' + iso + '-p' + x.p + '@whs-hub', 'DTSTAMP:' + stamp, 'DTSTART;TZID=Pacific/Auckland:' + dt(iso, b[0]), 'DTEND;TZID=Pacific/Auckland:' + dt(iso, b[1]), 'SUMMARY:' + hubIcsEsc(sum), 'DESCRIPTION:' + hubIcsEsc(desc), 'END:VEVENT'); n++;
+                });
+            }
+            if (own) hubOwnList().forEach(function(e) {
+                if (e.to < r.from || e.from > r.to) return;
+                L.push('BEGIN:VEVENT', 'UID:' + e.id + '@whs-hub', 'DTSTAMP:' + stamp, 'DTSTART;VALUE=DATE:' + e.from.replace(/-/g, ''), 'DTEND;VALUE=DATE:' + ypAddDays(e.to, 1).replace(/-/g, ''), 'SUMMARY:' + hubIcsEsc(e.label), 'END:VEVENT'); n++;
+            });
+            L.push('END:VCALENDAR');
+            return { text: L.map(hubIcsFold).join('\r\n') + '\r\n', n: n, from: r.from, to: r.to };
+        }
+        function hubCalGo() {
+            var b = [], i, ok = true;
+            for (i = 0; i < WK_PERIODS; i++) { var s1 = document.getElementById('hub-ics-s' + i), e1 = document.getElementById('hub-ics-e' + i); if (!s1 || !e1 || !s1.value || !e1.value) ok = false; else b.push([s1.value, e1.value]); }
+            if (!ok) { if (typeof showGlobalToast === 'function') showGlobalToast('Fill in the start and finish time of every period.'); return; }
+            hubData.bells = b; hubSave();
+            var res = hubIcsBuild(document.getElementById('hub-ics-range').value, document.getElementById('hub-ics-own').checked);
+            if (!res.n) { if (typeof showGlobalToast === 'function') showGlobalToast('No lessons found in that range.'); return; }
+            var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([res.text], { type: 'text/calendar' })); a.download = 'WHS_lessons_' + res.from + '.ics';
+            document.body.appendChild(a); a.click(); setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+            if (typeof showGlobalToast === 'function') showGlobalToast(res.n + ' calendar entries downloaded ✓');
+        }
+        // ===== action buttons above Today / This Week =====
+        function hubActionsHtml() {
+            var b = function(js, l, t) { return '<button type="button" class="builder-btn text-[11px] py-1 px-2.5" title="' + t + '" onclick="' + js + '">' + l + '</button>'; };
+            var h = b('hubEvToggle()', '📌 My events' + (hubOwnList().filter(function(e) { return e.to >= hubToday(); }).length ? ' (' + hubOwnList().filter(function(e) { return e.to >= hubToday(); }).length + ')' : ''), 'Add a trip, assembly or day away');
+            if (hubUi.tab === 'today') h += b('hubPrintToday()', '🖨 Print today', 'A clean one-page sheet for today') + b("hubRelief('day')", '🧑‍🏫 Relief pack: today', 'Full lesson details for a relief teacher');
+            if (hubUi.tab === 'week') h += b('hubPrintWeek()', '🖨 Print this week', 'The week as a printable page') + b("hubRelief('week')", '🧑‍🏫 Relief pack: this week', 'Full lesson details for a relief teacher') + b('hubCalOpen()', '📅 Google Calendar', 'Download your lessons as a calendar file');
+            return '<div class="flex flex-wrap gap-1.5 mb-2">' + h + '</div>';
+        }
+        // ===== My events panel =====
+        function hubEvToggle() { hubUi.evOpen = !hubUi.evOpen; if (hubUi.evOpen && !hubUi.evDraft) hubEvNew(hubUi.date); else hubRender(); }
+        function hubEvNew(iso) { hubUi.evDraft = { label: '', from: iso || hubUi.date, to: iso || hubUi.date, cls: {}, all: true, off: true }; hubUi.evOpen = true; hubUi.warn = ''; hubRender(); var e = document.getElementById('hub-ev-label'); if (e) e.focus(); }
+        function hubEvSet(k, v) { var d = hubUi.evDraft; d[k] = v; if (k === 'from' && (!hubStartOk(d.to) || d.to < v)) { d.to = v; var e = document.getElementById('hub-ev-to'); if (e) e.value = v; } }
+        function hubEvAll(v) { hubUi.evDraft.all = v; hubRender(); }
+        function hubEvCls(id) { hubUi.evDraft.cls[id] = !hubUi.evDraft.cls[id]; }
+        function hubEvSave() {
+            var d = hubUi.evDraft; if (!d) return;
+            if (!d.label.trim()) return hubWarn('Give the event a short name, such as "Year 7 trip".');
+            if (!hubStartOk(d.from) || !hubStartOk(d.to)) return hubWarn('Choose the first and last day.');
+            if (d.to < d.from) return hubWarn('The last day is before the first day.');
+            var ids = d.all ? [] : wkData.classes.filter(function(c) { return d.cls[c.id]; }).map(function(c) { return c.id; });
+            if (!d.all && !ids.length) return hubWarn('Choose which classes it is for, or choose all my classes.');
+            if (!Array.isArray(hubData.own)) hubData.own = [];
+            hubData.own.push({ id: 'e' + Date.now() + Math.floor(Math.random() * 1000), from: d.from, to: d.to, label: d.label.trim(), cls: ids, off: !!d.off });
+            hubSave(); hubUi.evDraft = null; hubUi.evOpen = false; hubUi.warn = ''; hubRender();
+            if (typeof showGlobalToast === 'function') showGlobalToast(d.off ? 'Event saved. Lessons after it move on ✓' : 'Event saved ✓');
+        }
+        function hubEvDel(id) { hubData.own = hubOwnList().filter(function(e) { return e.id !== id; }); hubSave(); hubRender(); }
+        function hubEvPanel() {
+            var d = hubUi.evDraft, today = hubToday(), h = '<div class="hub-sec mb-3"><div class="flex items-center gap-2 mb-1"><p class="text-sm font-black text-slate-900">📌 My events</p><button type="button" class="ml-auto text-slate-500 text-lg leading-none" onclick="hubUi.evOpen=false;hubRender()" aria-label="Close">✕</button></div><p class="text-[11px] text-slate-600 mb-2">A trip, assembly, duty, meeting or a day away. If it means no lessons, the lessons after it move on by themselves.</p>';
+            if (d) {
+                h += '<div class="flex flex-wrap items-end gap-3"><label class="text-[11px] font-bold text-slate-700">What is it?<input id="hub-ev-label" type="text" class="hub-in block mt-0.5" style="min-width:220px" placeholder="e.g. Year 7 trip" value="' + hubEsc(d.label) + '" oninput="hubEvSet(\'label\',this.value)"></label><label class="text-[11px] font-bold text-slate-700">First day<input type="date" class="hub-in block mt-0.5" value="' + d.from + '" onchange="hubEvSet(\'from\',this.value)"></label><label class="text-[11px] font-bold text-slate-700">Last day<input id="hub-ev-to" type="date" class="hub-in block mt-0.5" value="' + d.to + '" onchange="hubEvSet(\'to\',this.value)"></label></div>';
+                h += '<div class="mt-2 text-[11px] font-bold text-slate-700">Which classes? <label class="font-normal ml-1"><input type="radio" name="hub-ev-all" ' + (d.all ? 'checked ' : '') + 'onchange="hubEvAll(true)"> All my classes</label> <label class="font-normal ml-2"><input type="radio" name="hub-ev-all" ' + (d.all ? '' : 'checked ') + 'onchange="hubEvAll(false)"> Only some</label></div>';
+                if (!d.all) h += '<div class="flex flex-wrap gap-3 mt-1 text-xs">' + wkData.classes.map(function(c) { return '<label><input type="checkbox" ' + (d.cls[c.id] ? 'checked ' : '') + 'onchange="hubEvCls(\'' + c.id + '\')"> ' + hubEsc(c.label) + '</label>'; }).join('') + '</div>';
+                h += '<label class="block mt-2 text-xs font-bold text-slate-800"><input type="checkbox" ' + (d.off ? 'checked ' : '') + 'onchange="hubEvSet(\'off\',this.checked)"> No lessons on these days (the lessons after them move on)</label>' + hubWarnHtml() + '<div class="flex gap-2 mt-2"><button type="button" class="hub-lock" onclick="hubEvSave()">SAVE EVENT</button><button type="button" class="builder-btn text-xs py-2 px-3" onclick="hubUi.evDraft=null;hubUi.evOpen=false;hubUi.warn=\'\';hubRender()">Cancel</button></div>';
+            } else h += '<button type="button" class="builder-btn text-xs py-1.5 px-3" onclick="hubEvNew(hubUi.date)">+ Add an event</button>';
+            var up = hubOwnList().filter(function(e) { return e.to >= ypAddDays(today, -7); }).sort(function(a, b) { return a.from < b.from ? -1 : 1; });
+            if (up.length) h += '<ul class="mt-3 space-y-1">' + up.map(function(e) { return '<li class="flex flex-wrap items-center gap-2 text-xs border-t border-slate-200 pt-1"><span class="font-bold">' + hubEsc(e.label) + '</span><span class="text-slate-600">' + hubEsc(hubRunText({ from: e.from, to: e.to })) + (e.cls && e.cls.length ? ' · ' + hubEsc(e.cls.map(function(id) { var c = wkData.classes.filter(function(x) { return x.id === id; })[0]; return c ? c.label : ''; }).join(', ')) : ' · all my classes') + (e.off ? ' · no lessons' : '') + '</span><button type="button" class="ml-auto text-[11px] font-bold text-red-700 underline" onclick="hubEvDel(\'' + e.id + '\')">Delete</button></li>'; }).join('') + '</ul>';
+            return h + '</div>';
         }
         // ===== Reminders pop-up: what is coming up in the next two weeks =====
         function hubWeekWord(iso) {
@@ -16741,7 +16989,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var out = [], seen = {};
             wkData.classes.forEach(function(c) {
                 if (c.mode !== 'unit') return;
-                for (var i = 0; i < 5; i++) { var iso = ypAddDays(mon, i); if (hubDay(iso, wkYearN(c)).off) continue;
+                for (var i = 0; i < 5; i++) { var iso = ypAddDays(mon, i); if (hubDay(iso, wkYearN(c)).off || hubOwnOff(c, iso)) continue;
                     hubPeriodsOn(c, iso).forEach(function(p) {
                         var u = hubUnitAt(c, iso, p), n = u ? hubLessonAt(c, iso, p) : 0; if (!u || !(n > 0)) return;
                         var P = hubParseUnit(u); if (!P.lessons[n] || (P.max && n > P.max)) return;
@@ -16835,7 +17083,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var tabs = [['today', 'Today'], ['week', 'This Week'], ['upcoming', 'Upcoming']].map(function(t) { return '<button type="button" class="hub-tab' + (hubUi.tab === t[0] ? ' on' : '') + '" onclick="hubTab(\'' + t[0] + '\')">' + t[1] + '</button>'; }).join('');
             var head = '<div class="flex flex-wrap items-baseline justify-between gap-2 mb-2"><div class="flex gap-1.5">' + tabs + '</div><p class="text-xs font-bold text-slate-600">' + hubEsc(hubTab_title(d, mon, tw)) + '</p></div>';
             var body = hubUi.tab === 'today' ? hubTabToday() : hubUi.tab === 'week' ? hubTabWeek() : hubTabUpcoming();
-            return hubBannersHtml() + '<div class="hub-dash"><div>' + left + '</div><div class="min-w-0">' + head + body + '</div></div>';
+            return hubBannersHtml() + '<div class="hub-dash"><div>' + left + '</div><div class="min-w-0">' + head + (hubUi.evOpen ? hubEvPanel() : '') + hubActionsHtml() + body + '</div></div>';
         }
         function hubTab_title(d, mon, tw) { return hubUi.tab === 'today' ? hubLong(d) + (tw ? ' · ' + tw : '') : hubUi.tab === 'week' ? 'Week of ' + hubShort(mon) + (tw ? ' · ' + tw : '') : 'The weeks after ' + hubShort(ypAddDays(mon, 4)); }
         // one day's lesson card for one class in one period
@@ -16893,8 +17141,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 h += '<div class="hub-period"><div class="hub-pl">P' + p + '</div><div class="flex-1 min-w-0 space-y-2">';
                 if (!cls.length) h += '<p class="text-xs text-slate-400 py-1">Not teaching</p>';
                 cls.forEach(function(c) {
-                    var di = hubDay(iso, wkYearN(c));
-                    if (di.off) h += '<div class="hub-lesson hub-lesson-off" style="border-left-color:' + hubColour(c) + '"><span class="font-black" style="color:' + hubColour(c) + '">' + esc(c.label) + '</span> <span class="text-xs text-slate-500">' + esc(c.year + ' ' + c.subj) + ' · no lesson (' + esc(di.off) + ')</span></div>';
+                    var di = hubDay(iso, wkYearN(c)), ow = hubOwnOff(c, iso);
+                    if (di.off || ow) h += '<div class="hub-lesson hub-lesson-off" style="border-left-color:' + hubColour(c) + '"><span class="font-black" style="color:' + hubColour(c) + '">' + esc(c.label) + '</span> <span class="text-xs text-slate-500">' + esc(c.year + ' ' + c.subj) + ' · no lesson (' + esc(di.off || ow) + ')</span></div>';
                     else h += hubCard(c, iso, p);
                 });
                 h += '</div></div>';
@@ -16929,9 +17177,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 days.forEach(function(iso, i) {
                     var d = WK_DAYS[i], cls = wkData.classes.filter(function(c) { return c.slots[d + p]; }), cell = '';
                     cls.forEach(function(c) {
-                        var col = hubColour(c), di = hubDay(iso, wkYearN(c)), u = hubUnitAt(c, iso, p), n = (u && !di.off) ? hubLessonAt(c, iso, p) : null, sub = '', ic = '';
+                        var col = hubColour(c), di = hubDay(iso, wkYearN(c)), ow = hubOwnOff(c, iso), u = hubUnitAt(c, iso, p), n = (u && !di.off && !ow) ? hubLessonAt(c, iso, p) : null, sub = '', ic = '';
                         if (u && n > 0) { var P = hubParseUnit(u), L = P.lessons[n]; if (L && !(P.max && n > P.max)) { var f = hubLessonFields(L.text), ri = hubResInfo(f); ic = (ri.ws && ri.ws !== 'ment' ? ' 📄' : '') + (ri.sl && ri.sl !== 'ment' ? ' 🎞' : ''); sub = (hubTag(f.head) ? hubTag(f.head) + ': ' : '') + f.li.replace(/^We are learning to\s*/i, ''); } else if (n > P.max && P.max) sub = 'Past the end of the plan'; }
-                        cell += '<button type="button" class="hub-wc' + (di.off ? ' off' : '') + '" style="border-left-color:' + col + '" onclick="hubGoDay(\'' + iso + '\')"><span class="font-black" style="color:' + col + '">' + esc(c.label) + '</span>' + (n > 0 ? ' <span class="font-bold">L' + n + '</span>' + (u && hubIsPrep(c.id, u.id, n) ? ' <span class="text-green-700 font-black" title="Prepared">✓</span>' : '') : (u && !di.off && !hubAnchors(c).length ? ' <span class="text-amber-800 font-bold">set lesson</span>' : '')) + (ic ? '<span class="text-[11px]" title="Worksheet or slideshow">' + ic + '</span>' : '') + (sub ? '<span class="hub-wsub">' + esc(sub.length > 70 ? sub.slice(0, 68) + '…' : sub) + '</span>' : '') + '</button>';
+                        cell += '<button type="button" class="hub-wc' + (di.off || ow ? ' off' : '') + '" title="' + esc(di.off || ow || '') + '" style="border-left-color:' + col + '" onclick="hubGoDay(\'' + iso + '\')"><span class="font-black" style="color:' + col + '">' + esc(c.label) + '</span>' + (n > 0 ? ' <span class="font-bold">L' + n + '</span>' + (u && hubIsPrep(c.id, u.id, n) ? ' <span class="text-green-700 font-black" title="Prepared">✓</span>' : '') : (u && !di.off && !ow && !hubAnchors(c).length ? ' <span class="text-amber-800 font-bold">set lesson</span>' : '')) + (ic ? '<span class="text-[11px]" title="Worksheet or slideshow">' + ic + '</span>' : '') + (sub ? '<span class="hub-wsub">' + esc(sub.length > 70 ? sub.slice(0, 68) + '…' : sub) + '</span>' : '') + '</button>';
                     });
                     h += '<td>' + (cell || '<span class="text-slate-300">·</span>') + '</td>';
                 });
