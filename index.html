@@ -2408,6 +2408,18 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     <p class="text-sm font-bold text-slate-500">👆 Select a Department and Year Level above to continue</p>
                 </div>
 
+                <!-- Command-word matrix (Years 7-10, any department): view and edit the key words for each stage
+                     at the chosen year, then Confirm to use them in the assessment prompt. -->
+                <div id="assess-matrix-wrap" class="hidden scroll-mt-28 rounded-xl border-2 border-teal-300 bg-teal-50 p-3 space-y-3">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-[10px] font-black text-teal-800 uppercase tracking-widest">🔑 Command words for each stage</span>
+                        <button type="button" id="assess-matrix-btn" class="px-4 py-1.5 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-black tracking-wider shadow-sm" aria-expanded="false" onclick="asMxToggle()">Show matrix</button>
+                        <span id="assess-matrix-status" class="text-[11px] text-teal-900 font-semibold"></span>
+                        <span class="text-[10px] text-teal-800 basis-full">See the command words the prompt uses at each stage, change them for your class, then confirm. Optional: if you do nothing, the standard words are used.</span>
+                    </div>
+                    <div id="assess-matrix-panel" class="hidden"></div>
+                </div>
+
                 <!-- Years 7-10 Literacy/Numeracy check toggle (English or Maths only). Backported
                      from the generic-site build, Oct 2026. Visible whenever that dept/year
                      combination is checkable, whichever of the two panels below is showing. -->
@@ -3483,6 +3495,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Teacher Hub: "Coming up" pop-up</mark>: the first time you open the Hub each day, a pop-up lists what is coming in the next two weeks, for example "Year 7 Social Sciences has an assessment next week: 7A Thu 18 Mar (lesson 12)", units that are about to finish or start (and a warning if no next unit plan is loaded), and no-school days and events. Press <strong>Show</strong> to jump to that week, or <strong>🔔 Coming up</strong> at the top of the Hub to see it again any time.</li>
 <li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
 <li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
+<li><mark class="wn-key">Assessment Generator: editable command-word matrix (Years 7–10)</mark>: pick a department and a Year 7 to 10 level and a <strong>Show matrix</strong> button appears. It opens the five stages (Emerging to Exceeding) across Years 7 to 10 with your year highlighted. Delete words you do not want, add your own, then press <strong>Confirm</strong> and the assessment prompt uses your words instead of the standard ones. Saved per department and year; Reset or Stop using my words puts the standard words back. The word lists for every subject were checked against the Years 7 to 10 content and practices in the curriculum, so the standard words and the matrix now match and no word sits at two stages in the same year. Thinking words (explain, analyse, evaluate) set the level and sit in the stage rows; skill words (graph, draw, measure) are in a separate Skills row, and the prompt tells the AI to show the level of a skill through independence, accuracy and complexity, not the verb.</li>
+<li><mark class="wn-key">Assessment Generator: Ministry progress markers and curriculum command words (Years 7–10)</mark>: for <strong>English and Maths</strong> the prompt now includes the Ministry's November 2026 progress markers for that year (what a Proficient student can do by the end of the year), so the Proficient stage is written against them and Consolidating, Developing, Emerging and Exceeding are scaled around it. For <strong>every Year 7–10 subject</strong> the prompt now includes the school's own key words for each stage at that year (for example Year 7 Emerging = Recall and Identify, up to Exceeding = Synthesising), and these decide which stage a verb belongs to. For <strong>English, Maths, Science, Social Sciences, The Arts and Health and PE</strong> it also lists the command words the Years 7–10 teaching sequences use, so questions and descriptors use real curriculum verbs. The Ministry has not yet published progress markers for the other learning areas (due in 2027), so those use the five generic stage descriptors, the school's key words and the command words. Applies to the main Assessment Generator and the Years 7–10 Literacy / Numeracy check.</li>
 <li><mark class="wn-key">All Unit Planner curriculum content checked against the November 2026 documents</mark>: English, Maths and Statistics, Science, The Arts and Health and PE were compared with the November 2026 Ministry PDFs. English and Maths and Statistics teaching sequences are unchanged (their source label now says November 2026). Small wording changes were applied in Science (for example the classification key, skeleton, fossils, series circuits and tectonic plate wording, and the particle-attraction line removed), Health and PE (Years 0–6 fitness and skills wording, and Year 9 and 10 activation levels) and The Arts (Year 9–10 Visual Arts interpreting practice). Progress markers in the November documents are not included in the Unit Planner.</li>
 <li><mark class="wn-key">Social Sciences updated to the November 2026 curriculum</mark>: the Unit Planner's Social Sciences knowledge and practices now follow the November 2026 final of Social Sciences Years 0–10. Checked against the official November 2026 PDF. Changes include: the Year 8 Taxpayers' Union example removed; the Year 8 Te Tiriti signing text (the Māori text was the one debated at Waitangi, the vast majority signed te Tiriti, only 39 rangatira signed the English text); the Year 9–10 Māori responses bullet (working inside, alongside and outside the Crown system); and te Tiriti o Waitangi/the Treaty of Waitangi written with an unspaced slash. Dates to know: the curriculum is in force from 1 January 2027, and implementation is mandatory by 31 December 2027 for Years 9–10 and by 31 December 2028 for Years 0–8. Boards may teach from the 2026 statement, the revoked 2022 statements, or both during the transition.</li>
 <li><mark class="wn-key">Unit Planner: separate HTML files for the extras</mark>: when you tick the <strong>Student unit overview</strong> and/or the <strong>Independent project menu</strong>, the prompt now asks the AI for exactly that many <strong>separate, complete HTML files</strong>, each in its own labelled code block: <strong>File 1, the unit plan</strong>, then the student overview, then the independent project menu. A note in the add-ons panel shows how many files your prompt will ask for. Save each code block as its own file.</li>
@@ -3948,6 +3962,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Teacher Hub: "Coming up" pop-up</mark>: the first time you open the Hub each day, a pop-up lists what is coming in the next two weeks, for example "Year 7 Social Sciences has an assessment next week: 7A Thu 18 Mar (lesson 12)", units that are about to finish or start (and a warning if no next unit plan is loaded), and no-school days and events. Press <strong>Show</strong> to jump to that week, or <strong>🔔 Coming up</strong> at the top of the Hub to see it again any time.</li>
 <li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
 <li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
+<li><mark class="wn-key">Assessment Generator: editable command-word matrix (Years 7–10)</mark>: pick a department and a Year 7 to 10 level and a <strong>Show matrix</strong> button appears. It opens the five stages (Emerging to Exceeding) across Years 7 to 10 with your year highlighted. Delete words you do not want, add your own, then press <strong>Confirm</strong> and the assessment prompt uses your words instead of the standard ones. Saved per department and year; Reset or Stop using my words puts the standard words back. The word lists for every subject were checked against the Years 7 to 10 content and practices in the curriculum, so the standard words and the matrix now match and no word sits at two stages in the same year. Thinking words (explain, analyse, evaluate) set the level and sit in the stage rows; skill words (graph, draw, measure) are in a separate Skills row, and the prompt tells the AI to show the level of a skill through independence, accuracy and complexity, not the verb.</li>
+<li><mark class="wn-key">Assessment Generator: Ministry progress markers and curriculum command words (Years 7–10)</mark>: for <strong>English and Maths</strong> the prompt now includes the Ministry's November 2026 progress markers for that year (what a Proficient student can do by the end of the year), so the Proficient stage is written against them and Consolidating, Developing, Emerging and Exceeding are scaled around it. For <strong>every Year 7–10 subject</strong> the prompt now includes the school's own key words for each stage at that year (for example Year 7 Emerging = Recall and Identify, up to Exceeding = Synthesising), and these decide which stage a verb belongs to. For <strong>English, Maths, Science, Social Sciences, The Arts and Health and PE</strong> it also lists the command words the Years 7–10 teaching sequences use, so questions and descriptors use real curriculum verbs. The Ministry has not yet published progress markers for the other learning areas (due in 2027), so those use the five generic stage descriptors, the school's key words and the command words. Applies to the main Assessment Generator and the Years 7–10 Literacy / Numeracy check.</li>
 <li><mark class="wn-key">All Unit Planner curriculum content checked against the November 2026 documents</mark>: English, Maths and Statistics, Science, The Arts and Health and PE were compared with the November 2026 Ministry PDFs. English and Maths and Statistics teaching sequences are unchanged (their source label now says November 2026). Small wording changes were applied in Science (for example the classification key, skeleton, fossils, series circuits and tectonic plate wording, and the particle-attraction line removed), Health and PE (Years 0–6 fitness and skills wording, and Year 9 and 10 activation levels) and The Arts (Year 9–10 Visual Arts interpreting practice). Progress markers in the November documents are not included in the Unit Planner.</li>
 <li><mark class="wn-key">Social Sciences updated to the November 2026 curriculum</mark>: the Unit Planner's Social Sciences knowledge and practices now follow the November 2026 final of Social Sciences Years 0–10. Checked against the official November 2026 PDF. Changes include: the Year 8 Taxpayers' Union example removed; the Year 8 Te Tiriti signing text (the Māori text was the one debated at Waitangi, the vast majority signed te Tiriti, only 39 rangatira signed the English text); the Year 9–10 Māori responses bullet (working inside, alongside and outside the Crown system); and te Tiriti o Waitangi/the Treaty of Waitangi written with an unspaced slash. Dates to know: the curriculum is in force from 1 January 2027, and implementation is mandatory by 31 December 2027 for Years 9–10 and by 31 December 2028 for Years 0–8. Boards may teach from the 2026 statement, the revoked 2022 statements, or both during the transition.</li>
 <li><mark class="wn-key">Unit Planner: separate HTML files for the extras</mark>: when you tick the <strong>Student unit overview</strong> and/or the <strong>Independent project menu</strong>, the prompt now asks the AI for exactly that many <strong>separate, complete HTML files</strong>, each in its own labelled code block: <strong>File 1, the unit plan</strong>, then the student overview, then the independent project menu. A note in the add-ons panel shows how many files your prompt will ask for. Save each code block as its own file.</li>
@@ -4428,6 +4444,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (toggleWrap) toggleWrap.classList.toggle('hidden', !(bothSet && checkable));
             if (checkReady) { try { renderJuniorCheckPanel(); } catch (e) {} }
             try { renderJuniorCheckToggle(); } catch (e) {}
+            try { asMxRefresh(); } catch (e) {}
         }
 
         function checkSeniorStatus() {
@@ -7240,6 +7257,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (asReview && n >= 2 && n <= 5) asReview.seen[n] = true;
             asReviewRender();
             var el = asSecEl(n);
+            /* Years 7-10: land on the command-word matrix (sits just above section 2) so it is not scrolled past */
+            if (n === 2) { var mxw = document.getElementById('assess-matrix-wrap'); if (mxw && !mxw.classList.contains('hidden')) el = mxw; }
             if (el && !quiet) { try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
         }
         var AS_REVIEW_NAMES = { 2: 'What are you assessing?', 3: 'Source material and unit plan', 4: 'Time, format and questions', 5: 'Optional extras' };
@@ -9385,6 +9404,241 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return 'Base the rubric\'s criteria on the Ministry of Education\'s own named ' + subjectKey + ' reporting elements for ' + yr + ': ' + names + '. For EACH of these elements that this specific task actually touches, describe what it looks like at each of the 5 tiers above, rather than one single generic description per tier.';
         }
 
+
+        // ---- Ministry progress markers (November 2026), Years 7-10, English (Reading and Writing) and
+        // Maths. Wording copied from the Ministry PDFs. They describe a PROFICIENT student at the end of
+        // each year, so they anchor the Proficient tier only. Other learning areas have no markers yet
+        // (the Ministry says they will be developed in 2027). ----
+        var NZ_PROGRESS_MARKERS = {"English": {"7": {"Reading": ["read texts that reflect the text specification expectations for Years 7–8", "adjust their reading expression and intonation according to the purpose of reading and the nature of the Year 7 text", "make justified inferences within a Year 7 text and at a whole-text level", "draw reasoned conclusions about the author’s purpose, message, or viewpoint, across different Year 7 text forms, selecting evidence that supports their interpretation", "identify how positions and perspectives are represented and how Year 7 texts are influenced by the time and place they were created."], "Writing": ["handwrite legibly with automaticity and keyboard efficiently and accurately", "spell words, including topic-specific vocabulary and words with ambiguous patterns", "craft sentences to communicate ideas and illustrate relationships", "use varied and complex punctuation to communicate meaning", "write multi-paragraph texts for specific purposes, organising information and ideas using structures that best suit the purpose and audience", "when writing to entertain, structure paragraphs to create a clear sequence of events and provide a resolution or sense of closure that follows logically from the rest of the text", "when writing to inform, clearly introduce the topic, organise ideas and information logically into paragraphs, and incorporate headings and visual features such as illustrations, charts, and tables", "when writing to persuade, introduce a preferred position, support it with clear reasons and relevant evidence, and conclude by restating their position", "revise and edit texts, paying attention to the style and clarity of the writing and how it suits the intended audience and purpose", "plan and craft multi-paragraph texts."]}, "8": {"Reading": ["read texts that reflect the text specification expectations for Years 7–8", "adjust their reading expression and intonation according to the purpose of reading and the nature of the Year 8 text", "make inferences across a range of Year 8 texts, using evidence that includes subtle details and layered information", "summarise and draw conclusions by synthesising evidence across a range of Year 8 text forms to support coherent interpretation of the author’s purpose, messages, or viewpoint", "compare how topics, people, places, or ideas are represented in Year 8 texts and consider how these representations reflect or challenge particular positions or perspectives."], "Writing": ["express and record their ideas using both handwriting and keyboarding, demonstrating accurate spelling and correct use of a range of punctuation", "plan and write multi-paragraph texts that deliberately combine modes and text types to suit the purpose", "when writing to entertain, sequence events, thoughts, or experiences clearly, signal shifts between settings or ideas, and conclude with a resolution or sense of closure that follows logically from the rest of the text", "when writing to inform, clearly introduce the topic, provide a preview of what will be covered, organise ideas and information logically within and across paragraphs, using carefully selected and varied transition words and phrases, and write concluding paragraphs highlighting the most important points", "when writing to persuade, introduce a preferred position, acknowledge alternative or opposing views, support their position with logical reasoning and relevant evidence, and conclude by restating their position", "revise and edit texts, paying attention to the style, flow, and clarity of the writing."]}, "9": {"Reading": ["identify and explain how authors use features across a range of forms suitable for Year 9 to shape meaning and guide audience expectations", "interpret the meaning of texts that reflect the text specifications for Years 9–10 in relation to their literary, historical, cultural, and social contexts, identifying the inclusion or exclusion of particular viewpoints and using evidence to support conclusions about authorial purpose and perspective", "identify misinformation, disinformation, and malinformation in texts suitable for Year 9 through the examination of language, source, and context", "make connections between texts suitable for Year 9, personal experiences, and the wider world to support their interpretations."], "Writing": ["craft texts for a range of purposes and audiences, using appropriate language, structural, and stylistic features", "use accurate grammar, punctuation, and vocabulary to communicate meaning, adjusting tone and formality to suit context", "use appropriate language, structural, and stylistic features for their selected audience and purpose, supporting their ideas with well-chosen details", "when writing literary essays, students develop a thesis statement, structure paragraphs around topic sentences, use evidence from the text to support their argument, and conclude by summarising their main points."]}, "10": {"Reading": ["analyse how texts suitable for Year 10 reflect, reinforce, or challenge dominant values and viewpoints of their time", "examine how authors position their texts, suitable for Year 10, within literary traditions", "interpret the meaning of texts that reflect the text specifications for Years 9–10 using contextual knowledge and evidence and evaluate how authorial choices shape meaning", "assess the credibility and intent of media and digital texts suitable for Year 10 by evaluating the impact of misinformation, disinformation, and malinformation through analysis of language, source, and context", "compare how features are used across different forms suitable for Year 10 to influence audience response."], "Writing": ["plan and craft texts, selecting and adapting language, structural, and stylistic features that suit a range of audiences and purposes and reflect the demands of different forms", "use grammar, punctuation, and vocabulary with precision to support clarity, coherence, and style", "when writing literary essays, develop a thesis that presents a clear argument, structure body paragraphs to build the argument, use relevant evidence and contextual knowledge to support their interpretation of authorial choices, and conclude by rephrasing the thesis and reinforcing key insights."]}}, "Maths": {"7": ["represent and work confidently with large numbers, demonstrating a clear understanding of rounding, place value, and the order of operations", "connect multiplication of whole numbers to decimals", "apply fractions, decimals, and percentages to real-world problems, explaining and justifying their reasoning", "compare, add, and subtract negative numbers using number lines and other representations", "distinguish between decimals and negative numbers", "form and solve equations and work with algebraic expressions involving any of the four operations", "use formulae in contexts of perimeter, area, and volume.", "classify triangles, transform 2D shapes, and interpret and communicate their locations", "generalise their understanding of geometric concepts", "collect and visualise data and interpret measures of central tendency", "apply probability concepts to chance-based situations, explaining outcomes and justifying conclusions."], "8": ["represent number relationships with confidence, using factors, multiples, prime factorisation, and basic powers and roots", "operate with fractions and decimals and make generalisations, providing evidence of their reasoning", "work with percentages and ratios, explaining and justifying their thinking", "apply number knowledge to add and subtract expressions involving negative numbers and convert metric units", "manipulate, solve, and graph linear equations", "calculate the area of parallelograms and trapeziums and solve problems involving the area and perimeter of 2D shapes and volume of 3D prisms", "identify and describe parts of a circle", "transform 2D shapes on the coordinate plane", "connect geometric and measurement concepts to solve problems involving time, angles, 2D and 3D shapes, perimeter, area, and volume", "collect and visualise data, and interpret measures of central tendency and spread, using these conclusions to support decision-making", "work with probabilities as fractions, decimals and percentages."], "9": ["represent number relationships using factors, multiples, powers, and roots, including with numbers expressed in scientific notation, and justify their reasoning when applying these concepts", "calculate and estimate with rational numbers, including integers", "use ratio, proportion, percentages, and rates to solve practical and real-world problems, explaining and generalising their strategies", "work with algebraic conventions and apply algebraic thinking to expand and simplify expressions, solve equations, graph linear relationships, and work with inequalities", "connect measurement concepts to solve problems involving shapes including circles and Pythagoras’ theorem, using small and large metric units appropriately and justifying their solutions", "connect geometric concepts to solve problems involving angles on lines and shapes including circles, justifying their solutions", "explain their reasoning and justify decisions using measures of central tendency and spread", "collect and visualise data and interpret probabilities."], "10": ["apply operations, represent and work with positive and negative numbers", "use exponent rules, including with numbers in scientific notation, and explain and justify their solutions", "calculate and estimate using rational and irrational numbers", "apply ratio, proportion, percentages, and rates to solve practical problems, using reasoning to generalise and make connections between their strategies", "demonstrate their algebraic thinking in their ability to expand, factorise, and simplify expressions, and substitute into and solve equations", "represent linear equations in tables and graphs, interpreting their features", "find unknown lengths in right-angled triangles", "calculate the area of circles, and surface area of composite figures, connecting measurement concepts to real-world contexts", "use appropriate units, including rates, with appropriate prefixes in the metric system", "use the properties of similarity in 2D shapes in calculations", "transform 2D shapes by resizing, using any scale factor", "collect, present, analyse, and evaluate data, using appropriate visual representations and calculations", "interpret analysis and communicate findings", "interpret probabilities (both experimental and theoretical) representing information meaningfully and justifying decisions."]}};
+        // ---- Command words: the verbs the Years 7-10 teaching sequences themselves use for what students
+        // do (counted from the practices in the site's curriculum data). The low/mid/high lists are only a
+        // grouping for reference; the prompt uses them as one flat list. ----
+        var CMD_WORDS = {
+            'English': { label: 'English', low: ['identify','read','ask','summarise','select','spell'], mid: ['explain','compare','discuss','examine','distinguish','apply','structure','support','plan','edit','present'], high: ['analyse','evaluate','refine','craft','combine','anticipate','reflect','establish','create'] },
+            'Maths': { label: 'Mathematics and Statistics', low: ['identify','read','locate','round','order','record','collect','add','multiply','divide','convert','find'], mid: ['calculate','compare','represent','interpret','estimate','simplify','expand','express','solve','classify','transform','factorise','rearrange','apply'], high: ['reason','explain','justify','generalise','derive','prove','verify','evaluate','create'] },
+            'Science': { label: 'Science', low: ['identify','observe','measure','gather','label','define','classify','describe'], mid: ['use','plan','represent','compare','construct','organise','interpret','calculate','explain','model','predict','test','examine','discuss'], high: ['analyse','design','investigate','formulate','critique','justify','evaluate','connect'] },
+            'Social Sciences': { label: 'Social Sciences', low: ['identify','ask','collect','describe','sequence','listen','access','track'], mid: ['explain','compare','consider','construct','organise','examine','discuss','investigate','formulate','develop','communicate'], high: ['analyse','evaluate','create','design','craft','reflect','suggest','produce'] },
+            'Arts': { label: 'The Arts', low: ['identify','recognise','describe','repeat','show','play','sing','annotate'], mid: ['use','create','perform','compose','select','make','organise','interpret','explain','combine','improvise','rehearse','apply','discuss','devise','construct','communicate','experiment','explore'], high: ['analyse','evaluate','refine','distinguish','develop','adapt','extend','demonstrate'] },
+            'PE & Health': { label: 'Health and Physical Education', low: ['identify','describe','participate','observe','define','move'], mid: ['use','select','apply','explain','discuss','investigate','plan','trial','experiment','compare','lead'], high: ['analyse','evaluate','critique','propose','design','modify','reflect'] }
+        };
+        // Text for the prompt: the Ministry progress markers for this year (English / Maths only).
+        // skill may be 'Reading', 'Writing' or 'Maths'; for a general English task pass 'English' to include both.
+        function progressMarkersInstruction(dept, yn, yr, skill) {
+            if (!yn || yn < 7 || yn > 10) return '';
+            var lines = [];
+            if (dept === 'Maths') {
+                var m = (NZ_PROGRESS_MARKERS.Maths || {})[yn]; if (!m) return '';
+                lines = m.map(function(x) { return '- ' + x; });
+            } else if (dept === 'English') {
+                var e = (NZ_PROGRESS_MARKERS.English || {})[yn]; if (!e) return '';
+                ['Reading', 'Writing'].forEach(function(k) {
+                    if (skill && skill !== 'English' && skill !== k) return;
+                    lines.push(k + (yn >= 9 ? (k === 'Reading' ? ' (as part of Text Studies)' : ' (as part of Language Studies)') : '') + ':');
+                    e[k].forEach(function(x) { lines.push('- ' + x); });
+                });
+            } else return '';
+            return 'MINISTRY PROGRESS MARKERS (November 2026) for ' + yr + ' ' + (dept === 'Maths' ? 'Mathematics and Statistics' : 'English') + '. These describe what a student who is PROFICIENT is expected to be able to do by the end of ' + yr + '. Use them as the benchmark for the Proficient tier: Consolidating is meeting many of them, Developing and Emerging are progressively fewer with more support, and Exceeding goes beyond them. Only use the markers this task actually assesses and keep the Ministry wording where it fits:\n' + lines.join('\n') + '\n';
+        }
+
+        // ================= Command-word matrix tab (Years 7-10) =================
+        // Default words = the school's matrix pair for that stage and year (WHS_LEVEL_KEYWORDS) plus a few
+        // command words from the subject's teaching sequence. The teacher can delete or add words for the
+        // selected year, then Confirm. A confirmed matrix is stored per department and year in
+        // assessmentState.matrix and replaces the standard key words in the prompt.
+        var AS_STAGES = ['Emerging', 'Developing', 'Consolidating', 'Proficient', 'Exceeding'];
+        var AS_ROWS = AS_STAGES.concat(['Skills']);
+        // THINKING words by stage: these show how deep the understanding goes and set the tier.
+        var SUBJECT_MATRIX_EXTRAS = {
+            'English': { Emerging: ['recognise','name'], Developing: ['summarise','describe','paraphrase','outline','clarify','respond'], Consolidating: ['explain','compare','discuss','consider','connect','contrast','support','apply'], Proficient: ['examine','distinguish','interpret','challenge','argue','persuade','defend','justify','conclude','establish','evaluate','analyse'], Exceeding: ['combine','anticipate','reflect','create','review'] },
+            'Maths': { Emerging: ['state','recognise'], Developing: ['represent','describe','summarise'], Consolidating: ['interpret','classify','demonstrate','determine','connect','apply'], Proficient: ['reason','verify','derive','predict','justify','evaluate'], Exceeding: ['generalise','prove','create'] },
+            'Science': { Emerging: ['list','name','state'], Developing: ['classify','represent','describe','define','discuss'], Consolidating: ['model','apply','determine','explain','compare'], Proficient: ['examine','interpret','predict','investigate','support','analyse','evaluate','critique','justify'], Exceeding: ['design','formulate','connect','reflect'] },
+            'Social Sciences': { Emerging: ['recognise'], Developing: ['describe','define','question','discuss'], Consolidating: ['explain','compare','consider','examine','interpret','respond','explore'], Proficient: ['investigate','formulate','analyse','evaluate','challenge','justify','debate'], Exceeding: ['create','design','reflect','suggest'] },
+            'Arts': { Emerging: ['identify','recognise'], Developing: ['describe','respond','discuss'], Consolidating: ['explain','apply','consider','contrast','connect'], Proficient: ['interpret','distinguish','devise','critique','analyse','evaluate','design'], Exceeding: ['adapt','extend','demonstrate','create','reflect','suggest'] },
+            'PE & Health': { Emerging: ['identify','name','list','recognise'], Developing: ['discuss','describe','define','determine'], Consolidating: ['apply','explain','solve','illustrate'], Proficient: ['investigate','analyse','propose','evaluate','critique','justify','support','challenge'], Exceeding: ['design','modify','reflect','integrate','adapt','develop'] }
+        };
+        // SKILL words (techniques and processes): they say what students DO and do not set the tier. The level shows in how independent, accurate or complex the work is.
+        var SUBJECT_SKILL_WORDS = {
+            'English': ['read','ask','listen','spell','select','present','organise','explore','communicate','draft','structure','edit','write','use','develop','express','plan','revise','craft','refine'],
+            'Maths': ['read','locate','find','order','round','record','measure','add','subtract','multiply','divide','collect','convert','estimate','graph','plot','draw','select','express','check','solve','simplify','expand','transform','factorise','rearrange','construct','use','trial','experiment','calculate','communicate'],
+            'Science': ['observe','measure','label','gather','collect','record','organise','draw','select','graph','communicate','research','use','plan','construct','test','calculate','experiment','develop','write'],
+            'Social Sciences': ['ask','listen','access','collect','track','locate','sequence','organise','communicate','represent','map','share','choose','graph','construct','develop','plan','produce','use','craft','refine'],
+            'Arts': ['play','sing','repeat','show','listen','record','read','annotate','select','organise','share','sequence','represent','explore','experiment','communicate','use','perform','make','compose','improvise','rehearse','construct','combine','plan','express','test','refine','develop'],
+            'PE & Health': ['observe','move','participate','select','organise','sequence','use','plan','trial','lead','experiment','maintain','model']
+        };
+        var asMxOpen = false, asMxDraft = null, asMxDraftKey = '';
+        function asMxCap(w) { w = String(w || '').replace(/\s+/g, ' ').trim(); return w ? w.charAt(0).toUpperCase() + w.slice(1) : ''; }
+        function asMxKey(dept, yn) { return dept + '|' + yn; }
+        function asMxYear() { var yn = yearNumFromVal(assessmentState.year); return (yn >= 7 && yn <= 10) ? yn : 0; }
+        function asMxStem(w) {
+            w = String(w).toLowerCase().replace(/^re-/, '').replace(/[^a-z]/g, '');
+            w = w.replace(/(ing|ed|es|s)$/, '').replace(/e$/, '');
+            return w.replace(/(.)\1$/, '$1');
+        }
+        function asMxDefaults(dept, yn) {
+            var k = WHS_LEVEL_KEYWORDS[yn] || {}, ex = SUBJECT_MATRIX_EXTRAS[dept] || {}, out = {}, used = {}, school = {};
+            AS_STAGES.forEach(function(st) {
+                var words = [];
+                if (st === 'Exceeding') { var m = /^(\w+)\s*\((.*)\)$/.exec(String(k[st] || '')); if (m) { words.push(m[1].replace(/ising$/, 'ise')); m[2].split(/\s*&\s*/).forEach(function(w) { words.push(w); }); } }
+                else words = String(k[st] || '').split(/\s*&\s*/);
+                school[st] = words;
+                words.forEach(function(w) { used[asMxStem(w)] = 1; });
+            });
+            /* school matrix words first; a curriculum word is skipped if the same verb is already used at any stage that year */
+            AS_STAGES.forEach(function(st) {
+                var clean = [], seen = {};
+                school[st].forEach(function(w) { w = asMxCap(w); if (w && !seen[w.toLowerCase()]) { seen[w.toLowerCase()] = 1; clean.push(w); } });
+                (ex[st] || []).forEach(function(w) {
+                    w = asMxCap(w); var sk = asMxStem(w);
+                    if (!w || seen[w.toLowerCase()] || used[sk]) return;
+                    used[sk] = 1; seen[w.toLowerCase()] = 1; clean.push(w);
+                });
+                out[st] = clean;
+            });
+            var sk = [], sseen = {};
+            (SUBJECT_SKILL_WORDS[dept] || []).forEach(function(w) {
+                w = asMxCap(w); var kk = asMxStem(w);
+                if (!w || sseen[kk] || used[kk]) return; sseen[kk] = 1; sk.push(w);
+            });
+            out.Skills = sk;
+            return out;
+        }
+        function asMxSaved(dept, yn) {
+            var m = (assessmentState.matrix || {})[asMxKey(dept, yn)];
+            return (m && m.confirmed && m.stages) ? m.stages : null;
+        }
+        function asMxConfirmed(dept, yn) { return !!asMxSaved(dept, yn); }
+        function asMxStages(dept, yn) { return asMxSaved(dept, yn) || asMxDefaults(dept, yn); }
+        function asMxRefresh() {
+            var wrap = document.getElementById('assess-matrix-wrap'); if (!wrap) return;
+            var yn = asMxYear(), dept = assessmentState.dept;
+            var show = !!(dept && yn);
+            wrap.classList.toggle('hidden', !show);
+            if (!show) { asMxOpen = false; asMxDraft = null; var p0 = document.getElementById('assess-matrix-panel'); if (p0) p0.classList.add('hidden'); return; }
+            var key = asMxKey(dept, yn);
+            if (asMxDraftKey !== key) { asMxDraft = null; asMxDraftKey = key; }
+            asMxStatus();
+            if (asMxOpen) asMxRender();
+        }
+        function asMxStatus() {
+            var st = document.getElementById('assess-matrix-status'), btn = document.getElementById('assess-matrix-btn');
+            var yn = asMxYear(), dept = assessmentState.dept;
+            if (btn) { btn.textContent = asMxOpen ? 'Hide matrix' : 'Show matrix'; btn.setAttribute('aria-expanded', asMxOpen ? 'true' : 'false'); }
+            if (!st) return;
+            if (!dept || !yn) { st.textContent = ''; return; }
+            st.textContent = asMxConfirmed(dept, yn) ? '✅ Using your confirmed words for ' + dept + ', Year ' + yn : 'Standard words in use for ' + dept + ', Year ' + yn;
+        }
+        function asMxToggle() {
+            asMxOpen = !asMxOpen;
+            var p = document.getElementById('assess-matrix-panel'); if (p) p.classList.toggle('hidden', !asMxOpen);
+            asMxStatus(); if (asMxOpen) asMxRender();
+        }
+        function asMxDraftGet() {
+            var yn = asMxYear(), dept = assessmentState.dept;
+            if (!asMxDraft) { var base = asMxStages(dept, yn); asMxDraft = {}; AS_ROWS.forEach(function(s) { asMxDraft[s] = (base[s] || []).slice(); }); asMxDraftKey = asMxKey(dept, yn); }
+            return asMxDraft;
+        }
+        function asMxEl(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+        function asMxRender() {
+            var panel = document.getElementById('assess-matrix-panel'); if (!panel) return;
+            var yn = asMxYear(), dept = assessmentState.dept; if (!yn || !dept) return;
+            var draft = asMxDraftGet();
+            panel.textContent = '';
+            panel.appendChild(asMxEl('p', 'text-xs text-slate-700 leading-snug mb-2', dept + ' command words, Years 7 to 10. Year ' + yn + ' (highlighted) is the one you can change: press × to delete a word, or type a new word and press Enter or +. The stage rows are thinking words, which set the level. The Skills row holds the techniques and processes students use (for example graph or draw); these do not set the level. The other years are for reference. Press Confirm to use your words in the assessment.'));
+            if (!SUBJECT_MATRIX_EXTRAS[dept]) panel.appendChild(asMxEl('p', 'text-[11px] text-amber-800 bg-amber-50 border border-amber-200 rounded p-2 mb-2', 'There are no ' + dept + ' curriculum command words in this site yet, so this starts from the school matrix only. Add your own words if you like.'));
+            var wrap = asMxEl('div', 'overflow-x-auto'); var tbl = asMxEl('table', 'w-full text-xs border-collapse bg-white');
+            var thead = asMxEl('thead'); var hr = asMxEl('tr'); hr.appendChild(asMxEl('th', 'text-left p-2 border border-slate-300 bg-slate-100 w-28', 'Stage'));
+            [7, 8, 9, 10].forEach(function(y) { hr.appendChild(asMxEl('th', 'text-left p-2 border border-slate-300 ' + (y === yn ? 'bg-purple-700 text-white' : 'bg-slate-100 text-slate-600'), 'Year ' + y + (y === yn ? ' (editing)' : ''))); });
+            thead.appendChild(hr); tbl.appendChild(thead);
+            var tb = asMxEl('tbody');
+            AS_ROWS.forEach(function(stage) {
+                var isSk = stage === 'Skills';
+                var tr = asMxEl('tr'); var th = asMxEl('th', 'text-left align-top p-2 border border-slate-300 font-bold ' + (isSk ? 'bg-amber-100 text-amber-900' : 'bg-slate-100'), isSk ? 'Skills (any stage)' : stage);
+                if (isSk) th.appendChild(asMxEl('div', 'font-normal text-[10px] leading-snug mt-1', 'What students do. These do not set the level.'));
+                tr.appendChild(th);
+                [7, 8, 9, 10].forEach(function(y) {
+                    var td = asMxEl('td', 'align-top p-2 border border-slate-300 ' + (y === yn ? (isSk ? 'bg-amber-50' : 'bg-purple-50') : 'bg-slate-50 text-slate-500'));
+                    if (y === yn) {
+                        var chips = asMxEl('div', 'flex flex-wrap gap-1 mb-1.5');
+                        draft[stage].forEach(function(w, i) {
+                            var c = asMxEl('span', 'inline-flex items-center gap-1 bg-white border border-purple-300 text-purple-900 rounded-full pl-2 pr-1 py-0.5 font-semibold');
+                            c.appendChild(document.createTextNode(w));
+                            var x = asMxEl('button', 'w-4 h-4 rounded-full bg-purple-100 hover:bg-red-200 text-purple-900 leading-none text-[11px]', '×'); x.type = 'button'; x.setAttribute('aria-label', 'Delete ' + w);
+                            x.onclick = function() { draft[stage].splice(i, 1); asMxRender(); };
+                            c.appendChild(x); chips.appendChild(c);
+                        });
+                        if (!draft[stage].length) chips.appendChild(asMxEl('span', 'italic text-slate-400', 'No words yet'));
+                        td.appendChild(chips);
+                        var row = asMxEl('div', 'flex gap-1');
+                        var inp = asMxEl('input', 'min-w-0 flex-1 px-2 py-1 rounded border border-purple-300 text-xs'); inp.type = 'text'; inp.maxLength = 30; inp.placeholder = 'Add a word'; inp.setAttribute('aria-label', 'Add a word to ' + stage);
+                        var add = asMxEl('button', 'px-2 rounded bg-purple-700 text-white font-black', '+'); add.type = 'button'; add.setAttribute('aria-label', 'Add word to ' + stage);
+                        var doAdd = function() { var w = asMxCap(inp.value); if (!w) return; if (!draft[stage].some(function(e) { return e.toLowerCase() === w.toLowerCase(); })) draft[stage].push(w); asMxRender(); var again = document.querySelector('#assess-matrix-panel input[aria-label="Add a word to ' + stage + '"]'); if (again) again.focus(); };
+                        inp.onkeydown = function(e) { if (e.key === 'Enter') { e.preventDefault(); doAdd(); } };
+                        add.onclick = doAdd; row.appendChild(inp); row.appendChild(add); td.appendChild(row);
+                    } else {
+                        td.textContent = (asMxStages(dept, y)[stage] || []).join(', ');
+                    }
+                    tr.appendChild(td);
+                });
+                tb.appendChild(tr);
+            });
+            tbl.appendChild(tb); wrap.appendChild(tbl); panel.appendChild(wrap);
+            var bar = asMxEl('div', 'flex flex-wrap items-center gap-2 mt-3');
+            var ok = asMxEl('button', 'px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black tracking-wider', '✅ Confirm and use in my assessment'); ok.type = 'button'; ok.onclick = asMxConfirm;
+            var rs = asMxEl('button', 'px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-bold text-slate-700', '↩ Reset to standard words'); rs.type = 'button'; rs.onclick = asMxReset;
+            bar.appendChild(ok); bar.appendChild(rs);
+            if (asMxConfirmed(dept, yn)) { var un = asMxEl('button', 'px-3 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-bold text-slate-700', 'Stop using my words'); un.type = 'button'; un.onclick = asMxStop; bar.appendChild(un); }
+            bar.appendChild(asMxEl('span', 'text-[11px] text-slate-600', 'Only the Year ' + yn + ' words change. Your choice is saved in this browser for ' + dept + ', Year ' + yn + '.'));
+            panel.appendChild(bar);
+        }
+        function asMxPersist() { try { saveAppState(); } catch (e) {} try { updateAssessmentBuilderPrompt(); } catch (e) {} asMxStatus(); }
+        function asMxConfirm() {
+            var yn = asMxYear(), dept = assessmentState.dept; if (!yn || !dept) return;
+            var d = asMxDraftGet(), stages = {}, total = 0;
+            AS_ROWS.forEach(function(s) { stages[s] = (d[s] || []).slice(); total += stages[s].length; });
+            if (!total) { var st0 = document.getElementById('assess-matrix-status'); if (st0) st0.textContent = 'Add at least one word before confirming.'; return; }
+            if (!assessmentState.matrix) assessmentState.matrix = {};
+            assessmentState.matrix[asMxKey(dept, yn)] = { confirmed: true, stages: stages };
+            asMxPersist(); asMxRender();
+        }
+        function asMxReset() { asMxDraft = null; asMxRender(); var yn = asMxYear(), dept = assessmentState.dept; var def = asMxDefaults(dept, yn); asMxDraft = {}; AS_ROWS.forEach(function(s) { asMxDraft[s] = (def[s] || []).slice(); }); asMxRender(); }
+        function asMxStop() {
+            var yn = asMxYear(), dept = assessmentState.dept;
+            if (assessmentState.matrix) delete assessmentState.matrix[asMxKey(dept, yn)];
+            asMxDraft = null; asMxPersist(); asMxRender();
+        }
+
+        // ---- WHS key words for each progress level and year (Years 7-10). This is the school's own
+        // "Matrix Development v2" (David Kennedy). It decides which key words belong to which stage;
+        // the subject command words below are only for subject wording. ----
+        var WHS_LEVEL_KEYWORDS = {
+            7:  { Emerging: 'Recall & Identify', Developing: 'Describe & Outline', Consolidating: 'Explain & Demonstrate', Proficient: 'Analyse & Evaluate', Exceeding: 'Synthesising (Integrating & Connecting)' },
+            8:  { Emerging: 'Recognise & List', Developing: 'Describe & Paraphrase', Consolidating: 'Calculate & Apply', Proficient: 'Analyse & Critique', Exceeding: 'Synthesising (Predicting & Forecasting)' },
+            9:  { Emerging: 'Identify & Name', Developing: 'Summarise & Discuss', Consolidating: 'Apply & Illustrate', Proficient: 'Evaluate & Justify', Exceeding: 'Synthesising (Deconstructing & Re-evaluating)' },
+            10: { Emerging: 'Recall & Recognise', Developing: 'Define & Interpret', Consolidating: 'Compare & Calculate', Proficient: 'Justify & Appraise', Exceeding: 'Synthesising (Theorising & Modelling)' }
+        };
+        // Text for the prompt: the school's key words for each level at this year (Years 7-10, any subject).
+        function levelKeywordsInstruction(yn, yr, dept) {
+            var k = WHS_LEVEL_KEYWORDS[yn]; if (!k) return '';
+            var mine = dept ? asMxSaved(dept, yn) : null;
+            if (mine) {
+                var sk = (mine.Skills || []).join(', ');
+                return 'COMMAND-WORD MATRIX FOR ' + yr.toUpperCase() + ' ' + String(dept).toUpperCase() + ' (confirmed by the teacher, so use it as given). THINKING WORDS set the tier: write each tier descriptor around the words for its stage, and pitch each task question at the stage whose words it uses. ' + AS_STAGES.map(function(st) { return st + ' = ' + (mine[st] || []).join(', '); }).join('; ') + '. Do not move a word to a different stage.' + (sk ? ' SKILL WORDS name what students do (techniques and processes) and do NOT set the tier: ' + sk + '. Use them to word task instructions. Show the level of a skill through the conditions, not the verb: whether the method or data is given or chosen, how independently, accurately and fluently the student works, and how complex the task is.' : '') + '\n';
+            }
+            var ln = function(w) { return w.replace(/ & /g, ' and '); };
+            return 'KEY WORDS FOR EACH LEVEL AT ' + yr.toUpperCase() + ' (this school\'s own matrix). Use these as the lead verbs: write each tier descriptor around its key words, and pitch each task question at the tier whose key words it uses (for example, a Proficient question asks students to ' + ln(k.Proficient).toLowerCase() + '). Emerging = ' + ln(k.Emerging) + '; Developing = ' + ln(k.Developing) + '; Consolidating = ' + ln(k.Consolidating) + '; Proficient = ' + ln(k.Proficient) + '; Exceeding = ' + ln(k.Exceeding) + '. Where the subject command words below suggest a different tier, the key words above decide the tier.\n';
+        }
+        // Text for the prompt: curriculum command words for this subject (Years 7-10). Flat list, no tiers:
+        // the tier for each verb comes from the school's matrix above.
+        function cmdWordsInstruction(dept, yn, yr) {
+            var c = CMD_WORDS[dept]; if (!c || !yn || yn < 7 || yn > 10) return '';
+            if (asMxConfirmed(dept, yn)) return '';
+            var all = [], seen = {}, ex = SUBJECT_MATRIX_EXTRAS[dept], sk = SUBJECT_SKILL_WORDS[dept] || [];
+            var src = ex ? AS_STAGES.reduce(function(a, st) { return a.concat(ex[st] || []); }, []) : c.low.concat(c.mid, c.high);
+            src.forEach(function(w) { if (!seen[w]) { seen[w] = 1; all.push(w); } });
+            var skl = sk.filter(function(w) { return !seen[w]; });
+            return 'SUBJECT COMMAND WORDS from the Years 7-10 ' + c.label + ' teaching sequence (the verbs the curriculum itself uses for what students do). Thinking words, which show how deep the understanding goes: ' + all.join(', ') + '. Use them with the level key words above, rather than vague words such as "understand" or "know".' + (skl.length ? ' Skill words, which name a technique or process and do NOT set the level: ' + skl.join(', ') + '. Show the level of a skill through the conditions, not the verb: whether the method or data is given or chosen, how independently, accurately and fluently the student works, and how complex the task is.' : '') + '\n';
+        }
+
         var PRIMARY_DURATION_TEXT = {
             short: 'a 15-20 minute one-on-one or small-group session',
             medium: 'a 30-40 minute group or whole-class session',
@@ -9586,7 +9840,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
 
             txt += '\n### Output Format\nPART 1: The Check Task, written in direct, student-facing language.\n';
-            txt += 'PART 2: A simple success-criteria rubric. You MUST use exactly these 5 scale tiers, in this order: Emerging, Developing, Consolidating, Proficient, Exceeding — these are the Ministry of Education\'s own progress descriptors, defined like this: ' + NZ_PROGRESS_DEFS + '. Write what each tier looks like for this specific check, at ' + yr + ' level. ' + reportingRubricInstruction(skill, yn, yr) + '\n';
+            txt += 'PART 2: A simple success-criteria rubric. You MUST use exactly these 5 scale tiers, in this order: Emerging, Developing, Consolidating, Proficient, Exceeding — these are the Ministry of Education\'s own progress descriptors, defined like this: ' + NZ_PROGRESS_DEFS + '. Write what each tier looks like for this specific check, at ' + yr + ' level. ' + reportingRubricInstruction(skill, yn, yr) + '\n' + levelKeywordsInstruction(yn, yr, curriculumDept) + progressMarkersInstruction(curriculumDept, yn, yr, skill) + cmdWordsInstruction(curriculumDept, yn, yr);
             var partNum = 3;
             var outs = assessmentState.outputs || [];
             if (outs.includes('Student Exemplars')) { txt += 'PART ' + partNum + ': Student Exemplars (a strong response and a developing response).\n'; partNum++; }
@@ -10567,7 +10821,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (hasSurp) txt += 'PART ' + partNum + ': TWO out-of-the-box assessment options.\n'; else txt += 'PART ' + partNum + ': Assessment Task (' + fStr + ').\n';
                 if (hasStory) txt += 'Note on storytelling formats: since this produces a written brief, not actual audio/video/images, the student-facing task should ask for the WRITTEN deliverable — a full script with speaker/scene notes for a podcast or video, or a written plan/copy for an infographic or photo essay (all text, data points, and captions specified, with a description of the intended visual layout).\n';
                 partNum++;
-                txt += 'PART ' + partNum + ': Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. These are the Ministry of Education progress descriptors for Years 0-10, defined like this: ' + NZ_PROGRESS_DEFS + '. Each tier is judged against the curriculum expectations for ' + yr + ', so write every tier descriptor for this task at that year level and base it on these definitions. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n';
+                txt += 'PART ' + partNum + ': Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. These are the Ministry of Education progress descriptors for Years 0-10, defined like this: ' + NZ_PROGRESS_DEFS + '. Each tier is judged against the curriculum expectations for ' + yr + ', so write every tier descriptor for this task at that year level and base it on these definitions. Map explicit cognitive verbs for ' + yr + ' to these specific tiers.\n' + levelKeywordsInstruction(yearNumFromVal(yr), yr, assessmentState.dept) + progressMarkersInstruction(assessmentState.dept, yearNumFromVal(yr), yr, 'English') + cmdWordsInstruction(assessmentState.dept, yearNumFromVal(yr), yr);
                 if (hasStory) {
                     txt += 'Because this includes a digital storytelling format, ALSO weave in criteria for: a clear focus/angle (what this story is actually about, and why it matters), effective use of evidence (visual, audio, or data, as fits the format), and engagement with the intended audience' + (audience ? ' (' + audience + ')' : '') + '. If real people, images, audio, or data are used, include a criterion for ethical, appropriately credited use of sources.\n';
                 }
