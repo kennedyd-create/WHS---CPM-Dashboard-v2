@@ -2521,7 +2521,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                                     <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                                 </summary>
                                 <div class="p-3 pt-1 border-t border-sky-300 space-y-1">
-                                    <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('3-Tiered Assessment', this.checked)"> 3-Tiered Assessment (three levels of challenge)</label>
+                                    
                                     <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('ESOL Scaffold', this.checked)"> ESOL scaffold (language supports built in)</label>
                                     <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('Dyslexia-Friendly Layout', this.checked)"> Dyslexia-friendly layout (large print, spacing, plain fonts)</label>
                                     <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer"><input type="checkbox" onchange="setAccommodation('Reader/Writer Support', this.checked)"> Reader/Writer support</label>
@@ -2674,7 +2674,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <div class="p-2 pt-1 space-y-2">
 <div class="flex flex-wrap items-center gap-1.5"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Change the share of marks (%)</span><span id="assess-marks-shares" class="inline-flex flex-wrap items-center gap-1.5"></span><span id="assess-marks-share-sum" class="text-[11px] font-semibold text-sky-900"></span><button type="button" class="builder-btn hidden" id="assess-marks-reset" onclick="asMarksSharesReset()">Back to automatic</button></div>
 <div class="flex flex-wrap items-center gap-2"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Marks to stage</span><button type="button" class="builder-btn" id="assess-marks-m-bestfit" onclick="asMarksMethod('bestfit')">Best fit by stage (recommended)</button><button type="button" class="builder-btn" id="assess-marks-m-bands" onclick="asMarksMethod('bands')">Total percentage bands</button></div>
-<div id="assess-marks-thr-row" class="flex flex-wrap items-center gap-2"><label for="assess-marks-thr" class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">A stage is reached at</label><input type="number" min="50" max="90" id="assess-marks-thr" value="65" oninput="asMarksChange()" class="w-16 p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"><span class="text-[11px] text-slate-600">% of the marks available at that stage</span></div>
+<div id="assess-marks-thr-row" class="flex flex-wrap items-center gap-2"><label for="assess-marks-thr" class="text-xs text-slate-700">A student reaches a stage when they earn at least</label><input type="number" min="50" max="90" id="assess-marks-thr" value="65" oninput="asMarksChange()" class="w-16 p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"><span class="text-xs text-slate-700">% of that stage's marks.</span><span class="text-[10px] text-slate-500 basis-full">They are placed at the highest stage they reach. Example: with 65%, earning 5 of the 7 Proficient marks (71%) reaches Proficient.</span></div>
 <label class="flex items-center gap-2 text-xs text-slate-700"><input type="checkbox" id="assess-marks-pct" checked onchange="asMarksChange()"> Also give a percentage for school records (the stage stays the judgement)</label>
 <p id="assess-marks-note" class="text-[10px] text-slate-500 leading-snug"></p>
 </div>
@@ -2701,9 +2701,6 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 </summary>
 <div class="p-3 pt-1 border-t border-sky-300 space-y-1">
 <p class="text-[10px] font-bold text-sky-700 uppercase tracking-widest px-2 pt-1">Tick as many as you need</p>
-<label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
-<input type="checkbox" onchange="setAccommodation('3-Tiered Assessment', this.checked)"> 3-Tiered Assessment (three levels of challenge)
-</label>
 <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
 <input type="checkbox" onchange="setAccommodation('ADHD Friendly', this.checked)"> ADHD friendly (chunked, clear steps)
 </label>
@@ -4513,7 +4510,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 assessmentState.kpFill = { dept: a.dept, year: a.year, k: kpHash(kb ? kb.value : ''), p: kpHash(pb ? pb.value : '') };
                 try { updateAssessmentBuilderPrompt(); saveAppState(); } catch (e) {}
                 try { showToast('Knowledge & Practices filled in' + (p.partial ? ' (the parts you ticked)' : '') + ' ✓'); } catch (e) {}
-            }, { box: 'the Junior Assessment Scope boxes', skip: 'this assessment won\'t cover', button: 'Use this in my assessment', what: 'my assessment', parts: true, untick: true, wide: true });
+            }, { box: 'the Junior Assessment Scope boxes', skip: 'this assessment won\'t cover', button: 'Use this in my assessment', what: 'my assessment', parts: true, untick: true, wide: true, boxes: ['assess-junior-knowledge', 'assess-junior-practices'] });
         }
         function checkAssessBothSelected() {
             var bothSet = !!(assessmentState.dept && assessmentState.year);
@@ -5132,6 +5129,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 if (ext && s.parts) kpEnsureSel(r);
                 var kb = document.getElementById('unit-junior-knowledge'), pb = document.getElementById('unit-junior-practices');
                 var hasExisting = !ext && !!((kb && kb.value.trim()) || (pb && pb.value.trim()));
+                if (ext && kpExt('boxes', null)) hasExisting = kpExt('boxes', []).some(function(id) { var e = document.getElementById(id); return !!(e && e.value.trim()); });
                 var big = kpCountPoints(r.kBlocks) + kpCountPoints(r.pBlocks) > 35;
                 var chosen = r.caseStudies ? 'Case study: ' + r.caseStudies[r.caseIdx].label : (r.unit.sub ? 'Focus: ' + (r.section.label || '') + ' — ' + r.unit.label : '');
                 html = kpStepHead('confirm', ext ? (kpExt('untick', false) ? 'Tick what you will assess' : 'Ready to use') : 'Ready to fill in', ext ? (kpExt('untick', false) && s.parts ? 'Tick the knowledge and practices this assessment will cover, or press All. Nothing is ticked until you choose.' : 'This is the curriculum content that will go into ' + kpExt('box', 'your quiz content box') + ' for Year ' + yrNum + '.') : 'This is what will go into your two boxes for Year ' + yrNum + '.') +
@@ -6962,7 +6960,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         var ac = assessmentState.accommodations, mv = { '3-Tier Assessment': '3-Tiered Assessment', 'Dyslexia Friendly': 'Dyslexia-Friendly Layout', 'Large Print / Dyslexia-Friendly Formatting': 'Dyslexia-Friendly Layout' };
                         var ex = assessmentState.extra; if (ex && ex !== 'None') { ex = mv[ex] || ex; if (ac.indexOf(ex) < 0) ac.push(ex); }
                         assessmentState.extra = 'None';
-                        assessmentState.accommodations = ac.map(function(x) { return mv[x] || x; }).filter(function(x, i, a) { return a.indexOf(x) === i; });
+                        assessmentState.accommodations = ac.map(function(x) { return mv[x] || x; }).filter(function(x, i, a) { return a.indexOf(x) === i && x !== '3-Tiered Assessment'; }); /* the 3-tiered option was removed in Nov 2026 */
                     })();
                     document.querySelectorAll('[onchange^="setAccommodation"]').forEach(function(cb) {
                         var m = cb.getAttribute('onchange').match(/setAccommodation\('([^']+)'/);
@@ -7335,7 +7333,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // when they are complete; every section has Back and Next buttons and its heading can be clicked at any time.
         var asDone = {};
         var asReview = null; /* set after "Keep all" from a unit plan: the sections the teacher still has to look at */
-        var AS_ONE_FORMATS = ['Paragraph', 'Multiple Choice', 'Resource Based', 'Short Answer'];
+        var AS_ONE_FORMATS = ['Written Essay', 'Paragraph', 'Multiple Choice', 'Resource Based', 'Short Answer'];
         function asSecEl(n) { return document.querySelector('#view-assessment .as-sec[data-as="' + n + '"]'); }
         function asVal(id) { return ((document.getElementById(id) || {}).value || '').trim(); }
         function asIsOpen(n) { var e = asSecEl(n); return !!(e && !e.querySelector('.as-sec-b').classList.contains('hidden')); }
@@ -7530,6 +7528,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function updateAccommodationsSummary() {
+            if (assessmentState.accommodations) assessmentState.accommodations = assessmentState.accommodations.filter(function(x) { return x !== '3-Tiered Assessment' && x !== '3-Tier Assessment'; });
             var n = (assessmentState.accommodations || []).length;
             var el = document.getElementById('assess-accommodations-summary');
             if (el) el.textContent = 'Differentiation & Accommodations' + (n ? ' — ' + n + ' selected' : ' — None selected');
@@ -9542,6 +9541,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function asTaskKind() {
             var t = assessmentState.taskType;
             if (t === 'questions' || t === 'single') return t;
+            var fm = assessmentState.formats || [];
+            if (fm.length === 1 && fm[0] === 'Written Essay') return 'single'; /* a lone essay is one piece of work, even in one period */
             return assessmentState.duration === '1 Period Test' ? 'questions' : 'single';
         }
         function asOwnMatrixOn() { return !!(assessmentState.ownMatrix && asMarksYearOk()); }
@@ -9600,7 +9601,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             ['auto', 'questions', 'single'].forEach(function(t) { var b = document.getElementById('as-st-t-' + t); if (b) b.classList.toggle('active', (a.taskType || 'auto') === t); });
             var tn = document.getElementById('as-st-task-note'); if (tn) tn.textContent = (a.taskType || 'auto') === 'auto'
-                ? 'Decide for me: a 1 period test is treated as a test with many questions. Anything longer is treated as one piece of work (an essay, report, project or performance).'
+                ? 'Decide for me: a 1 period test is treated as a test with many questions, unless the only format chosen is Written Essay. Anything longer is treated as one piece of work (an essay, report, project or performance).'
                 : (a.taskType === 'questions' ? 'The questions are spread across the five stages, from easier to harder, so the paper shows where each student is.' : 'One piece of work, not split into questions. Every student can make a start, the best work can reach the top stages, and the marking guide describes what each stage looks like in the response.');
             var pcx = document.getElementById('as-st-profile-sel');
             if (pcx) {
@@ -9695,7 +9696,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var kind = asTaskKind(), own = asOwnMatrixOn(), mx = asStageMatrixOn();
             var ref = own ? 'the stages in the teacher\'s own marking matrix (Part 2)' : (mx ? 'the school key words for each stage (Part 2)' : 'the five Ministry stages');
             var prof = asProfilePitchText();
-            if (kind === 'questions') return prof + 'STAGING: This is a question set. Spread the questions across the five stages (Emerging, Developing, Consolidating, Proficient, Exceeding) so the paper can place a student: include questions at every stage, mostly at the lower and middle stages and some at Proficient and Exceeding. Pitch each question using ' + ref + ', and put a small teacher-only tag after each question showing its stage.\n';
+            if (kind === 'questions') return prof + 'STAGING: This is a question set. Spread the questions across the five stages (Emerging, Developing, Consolidating, Proficient, Exceeding) so the paper can place a student: include questions at every stage, ' + (prof ? 'in the proportions given in CLASS SPREAD above' : 'with the most at Consolidating and Proficient (the year-level expectation), a way in at Emerging and Developing, and some at Exceeding') + '. A question can have several parts, each pitched at its own stage, so a short paper (or the question count above) can still cover every stage. Pitch each question or part using ' + ref + ', and put a small tag after each one showing its stage. These stage tags are for the teacher only: put them in a separate teacher copy or answer key, and keep them out of the version students receive.\n';
             return prof + 'STAGING: This is ONE task, not a question set. Do not split it into questions at different stages. Build it so every student has a way in (clear, achievable first steps) and there is room to reach Proficient and Exceeding (for example an open or extending final part, or a choice of how far to take it). The stages are then described as the quality of the response in Part 2, using ' + ref + '.\n';
         }
         // Part 2 replacement when the teacher has their own matrix
@@ -9778,14 +9779,23 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // Sentence for the task part: how to give questions marks
         function asMarksTaskText() {
             if (!asMarksOn()) return '';
-            var n = asMarksTotal();
-            return 'MARKS: This assessment is marked out of ' + n + ' marks. Give every question a mark value written like "(3 marks)" and make the marks add up to EXACTLY ' + n + ', with "Total: ' + n + ' marks" shown at the top. Tag every question with the stage it is pitched at (Emerging, Developing, Consolidating, Proficient or Exceeding) and the command word it uses, from the command words above, and pitch the question at that stage. ' + (asMarksFromSpread() ? 'Weight the marks to follow the expected class spread given below, with enough at Emerging and Developing for every student to have a way in, and some at Exceeding for room to reach the top. ' : 'Weight the marks so the most sit on the year-level expectation (Consolidating and Proficient), with enough at Emerging and Developing for every student to have a way in, and a few at Exceeding for room to reach the top. Do not weight the paper toward the lower stages. ') + 'Split for ' + n + ' marks: ' + asMarksSplitText(n) + '. A multiple choice question is 1 mark; longer answers get one mark for each separate point the answer needs. Show the marks to students next to each question.' + (assessmentState.dualVersion ? ' Version A and Version B must have the same total and the same marks at each stage.' : '') + '\n';
+            var n = asMarksTotal(), kind = asTaskKind(), own = asOwnMatrixOn(), mx = asStageMatrixOn();
+            var ref = own ? 'the teacher\'s own matrix (Part 2)' : (mx ? 'the key words and command words in Part 2' : 'the five Ministry stages');
+            var weight = asMarksFromSpread()
+                ? 'Weight the marks to follow the expected class spread given in CLASS SPREAD above, with enough at Emerging and Developing for every student to have a way in, and some at Exceeding for room to reach the top. '
+                : 'Weight the marks so the most sit on the year-level expectation (Consolidating and Proficient), with enough at Emerging and Developing for every student to have a way in, and a few at Exceeding for room to reach the top. Do not weight the paper toward the lower stages. ';
+            var split = 'Split for ' + n + ' marks: ' + asMarksSplitText(n) + '. ';
+            var ownNote = own ? 'If their matrix uses different level names, match each of their levels to the nearest of the five stages for this split. ' : '';
+            var ab = assessmentState.dualVersion ? ' Version A and Version B must have the same total and the same marks at each stage.' : '';
+            if (kind === 'single') return 'MARKS: This one piece of work is marked out of ' + n + ' marks, with "Total: ' + n + ' marks" shown at the top of the task. Do not give questions marks by stage. Share the ' + n + ' marks across the features of a response that Part 2 describes, so that the marks for the features that show each stage follow this split. ' + weight + split + ownNote + 'In the marking guide, show which features earn marks at which stage. Show the total marks to students, but not the stages.' + ab + '\n';
+            return 'MARKS: This assessment is marked out of ' + n + ' marks. Give every question (or part) a mark value written like "(3 marks)" and make the marks add up to EXACTLY ' + n + ', with "Total: ' + n + ' marks" shown at the top. In the teacher-only tag, show the stage each question is pitched at and the command word it uses, from ' + ref + ', and pitch the question at that stage. ' + ownNote + weight + split + 'A multiple choice question is 1 mark; longer answers get one mark for each separate point the answer needs. Show the marks to students next to each question, but not the stage tags.' + ab + '\n';
         }
         // The extra part: mark scheme and how marks become a stage
         function asMarksPartText(partNum) {
             if (!asMarksOn()) return '';
             var n = asMarksTotal(), m = assessmentState.marksMethod || 'bestfit', thr = asMarksThr();
-            var t = 'PART ' + partNum + ': Mark scheme and marks-to-stage guide. (a) A mark scheme that shows where each mark is awarded for every question, with accepted alternative answers. (b) Add a Marks column to the Junior Grading Matrix above showing the marks available at each stage and the running total, out of ' + n + '. (c) ';
+            var single = asTaskKind() === 'single', own = asOwnMatrixOn();
+            var t = 'PART ' + partNum + ': Mark scheme and marks-to-stage guide. (a) A mark scheme that shows where each mark is awarded ' + (single ? 'across the features of the response, with what earns each mark' : 'for every question, with accepted alternative answers') + '. (b) ' + (own ? 'Add the marks available at each stage and the running total, out of ' + n + ', to the stage alignment table in Part 2. Do not create a new grading matrix.' : 'Add a Marks column to the Junior Grading Matrix in Part 2 showing the marks available at each stage and the running total, out of ' + n + '.') + ' (c) ';
             return t + asMarksConvertText(n, m, thr, assessmentState.marksPct !== false);
         }
         // How marks become a stage (shared by the generator and the Marking assistant)
@@ -10199,7 +10209,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += 'UNIT LINK: Base the scope of this check on the following unit' + (assessmentState.unitNum ? ' (' + assessmentState.unitNum + ')' : '') + ': "' + jcUl + '". If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             }
             var dAcc = assessmentState.accommodations || [];
-            var dList = [['3-Tiered Assessment', '3-Tier Assessment'], ['ESOL Scaffold', 'ESOL Scaffold'], ['Dyslexia-Friendly Layout', 'Dyslexia Friendly'], ['Reader/Writer Support', 'Reader/Writer Support']].filter(function(x) { return dAcc.indexOf(x[0]) > -1; }).map(function(x) { return x[1]; });
+            var dList = [['ESOL Scaffold', 'ESOL Scaffold'], ['Dyslexia-Friendly Layout', 'Dyslexia Friendly'], ['Reader/Writer Support', 'Reader/Writer Support']].filter(function(x) { return dAcc.indexOf(x[0]) > -1; }).map(function(x) { return x[1]; });
             if (dList.length) txt += 'Differentiate for: ' + dList.join(', ') + '.\n';
             txt += teachingProfileInstruction(yr, false, true);
             if (assessmentState.dualVersion) {
@@ -10325,7 +10335,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 + '<div id="mk-profile-grid">' + mkProfileGrid() + '</div>'
                 + '<p class="text-[10px] text-slate-500 mt-1">An illustrative planning profile, not Ministry data. It is only compared with the class results afterwards and never changes a student\'s stage.</p></div>'
                 + '<div class="mt-2">' + wtChip(s.marksOn, s.marksOn ? 'Marks included' : 'Include marks', "mkSetBool('marksOn'," + (!s.marksOn) + ")") + '</div>'
-                + (s.marksOn ? '<div class="mt-2">' + num('Out of', 'marksTotal', s.marksTotal, '30') + [['bestfit', 'Best fit (recommended)'], ['bands', 'Percentage bands']].map(function(w) { return wtChip(s.marksMethod === w[0], w[1], "mkSetMode('marksMethod','" + w[0] + "')"); }).join('') + (s.marksMethod === 'bestfit' ? '<div class="mt-1">' + num('Stage reached at', 'marksThr', s.marksThr, '65') + '% of that stage\'s marks</div>' : '') + chk('pc', s.marksPct, 'Also show the percentage for school records', "mkSetBool('marksPct',this.checked)") + '</div>' : ''));
+                + (s.marksOn ? '<div class="mt-2">' + num('Out of', 'marksTotal', s.marksTotal, '30') + [['bestfit', 'Best fit (recommended)'], ['bands', 'Percentage bands']].map(function(w) { return wtChip(s.marksMethod === w[0], w[1], "mkSetMode('marksMethod','" + w[0] + "')"); }).join('') + (s.marksMethod === 'bestfit' ? '<div class="mt-1">' + num('A student reaches a stage when they earn at least', 'marksThr', s.marksThr, '65') + '% of that stage\'s marks. They are placed at the highest stage they reach.</div>' : '') + chk('pc', s.marksPct, 'Also show the percentage for school records', "mkSetBool('marksPct',this.checked)") + '</div>' : ''));
             h += sec('Success criteria from your unit plan (optional)', '<textarea rows="3" ' + inp + ' oninput="mkSet(\'crit\',this.value)" placeholder="One per line. Filled in for you if you came from the unit plan link.">' + actEsc(s.crit) + '</textarea>');
             h += sec('The students’ work will be (tick all that apply)', '<div class="flex flex-wrap gap-1.5">' + MK_WORK.map(function(w) { return wtChip(s.work.indexOf(w[0]) > -1, w[1], "mkToggle('work','" + w[0] + "')"); }).join('') + '</div><p class="text-[11px] text-slate-500 mt-1.5">Start every file name with the student’s initials or code. Scan handwritten work into a PDF. A student can have more than one file.</p>');
             h += sec('What do you want back? (tick at least one)', '<div class="flex flex-wrap gap-1.5">' + MK_OUTS.map(function(w) { return wtChip(s.outs.indexOf(w[0]) > -1, w[1], "mkToggle('outs','" + w[0] + "')"); }).join('') + '</div>');
@@ -11216,7 +11226,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 txt += 'If any of these are Google Docs or Google Slides links, use your @Google Docs or @Google Drive extension to read all provided files before generating the assessment.\n';
             }
             var dAcc = assessmentState.accommodations || [];
-            var dList = [['3-Tiered Assessment', '3-Tier Assessment'], ['ADHD Friendly', 'ADHD Friendly'], ['ESOL Scaffold', 'ESOL Scaffold'], ['Dyslexia-Friendly Layout', 'Dyslexia Friendly']].filter(function(x) { return dAcc.indexOf(x[0]) > -1; }).map(function(x) { return x[1]; });
+            var dList = [['ADHD Friendly', 'ADHD Friendly'], ['ESOL Scaffold', 'ESOL Scaffold'], ['Dyslexia-Friendly Layout', 'Dyslexia Friendly']].filter(function(x) { return dAcc.indexOf(x[0]) > -1; }).map(function(x) { return x[1]; });
             if (dList.length) txt += 'Differentiate for: ' + dList.join(', ') + '.\n';
             if (audience) txt += 'Real audience: frame this task as genuinely for ' + audience + ', not just for the teacher marking it — write the task brief, and any criteria, with that audience in mind.\n';
             txt += teachingProfileInstruction(yr, false, true);
