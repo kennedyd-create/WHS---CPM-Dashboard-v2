@@ -477,6 +477,13 @@
         .kp-crumb { padding: .15rem .6rem; border-radius: 999px; background: #fff; border: 1px solid #c9d6ee; color: #002066; }
         .kp-crumb-sep { color: #94a3b8; }
         .kp-crumb-item { display: inline-flex; align-items: center; gap: .35rem; max-width: 100%; }
+.kp-two { display: grid; grid-template-columns: 1fr; gap: .9rem; }
+        .kp-modal-card.kp-wide { max-width: 68rem; height: 92vh; max-height: 92vh; }
+        .kp-modal-card.kp-wide .kp-body { flex: 1 1 auto; }
+        .kp-modal-card.kp-wide .kp-list { max-height: max(48vh, calc(92vh - 31rem)); }
+        .kp-modal-card.kp-wide .kp-preview-text { max-height: 22rem; }
+        .kp-modal-card.kp-wide .kp-row, .kp-modal-card.kp-wide .kp-grp { font-size: .84rem; }
+        @media (min-width: 820px) { .kp-modal-card.kp-wide .kp-two { grid-template-columns: 1fr 1fr; } }
         .kp-body { padding: 1.15rem 1.25rem 1.25rem; overflow-y: auto; overscroll-behavior: contain; }
         .kp-step-title { font-weight: 900; font-size: 1rem; color: #0f172a; }
         .kp-step-help { margin: .2rem 0 .95rem; font-size: .76rem; line-height: 1.45; color: #64748b; }
@@ -2554,9 +2561,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 <div id="junior-scope-container" class="hidden">
                     <div class="bg-purple-50 border-l-4 border-l-purple-500 border border-purple-300 shadow-sm rounded-xl p-5">
                         <span class="text-xs font-black text-purple-800 uppercase tracking-widest block mb-2">Junior Assessment Scope (Years 7-10) <span class="text-[9px] font-black text-purple-800 bg-purple-200 px-2 py-0.5 rounded-full ml-1">Required</span></span>
+                        <button type="button" id="assess-kp-trigger" onclick="asKpOpen()" aria-haspopup="dialog" class="kp-cta hidden mb-3">
+                            <span class="kp-cta-icon">📚</span>
+                            <span class="kp-cta-text">
+                                <span class="kp-cta-title">Pick from the curriculum and tick what you'll assess</span>
+                                <span class="kp-cta-sub">Choose a strand and topic, then tick the knowledge and practices this assessment covers (or select all). We'll fill in both boxes for you.</span>
+                            </span>
+                            <span class="kp-cta-badge">Click here ▸</span>
+                        </button>
                         <div class="grid md:grid-cols-2 gap-4">
-                            <div><label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><input type="text" id="assess-junior-knowledge" placeholder="e.g. Structure of a plant cell..." class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none"></div>
-                            <div><label class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Specific Practices</label><input type="text" id="assess-junior-practices" placeholder="e.g. Interpreting diagrams..." class="w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none"></div>
+                            <div><label for="assess-junior-knowledge" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Specific Knowledge</label><textarea id="assess-junior-knowledge" rows="1" placeholder="e.g. Structure of a plant cell..." class="autosize-textarea w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea></div>
+                            <div><label for="assess-junior-practices" class="text-[10px] font-bold text-purple-800 uppercase tracking-widest block mb-1">Specific Practices</label><textarea id="assess-junior-practices" rows="1" placeholder="e.g. Interpreting diagrams..." class="autosize-textarea w-full p-2.5 rounded-lg border border-purple-300 text-sm outline-none resize-none overflow-hidden transition-all duration-150"></textarea></div>
                         </div>
                     </div>
                 </div>
@@ -2632,7 +2647,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <label class="flex items-start gap-2 text-xs text-slate-700"><input type="checkbox" id="as-st-matrix" checked onchange="asStagesChange()" class="mt-0.5"><span><strong>Use our school's key-word matrix.</strong> A stage then means how deep the thinking is (Emerging = recall up to Exceeding = synthesise). Untick for the Ministry stage meanings only.</span></label>
 <div id="as-st-bench-row" class="hidden space-y-1"><label class="flex items-start gap-2 text-xs text-slate-700"><input type="checkbox" id="as-st-bench" checked onchange="asStagesChange()" class="mt-0.5"><span id="as-st-bench-label"></span></label><select id="as-st-strand" onchange="asStagesChange()" class="hidden ml-6 p-1.5 rounded-lg border border-sky-400 text-xs outline-none bg-white"></select></div>
 <p id="as-st-bench-none" class="hidden text-[11px] text-slate-500 leading-snug">No Ministry benchmark for this subject yet, so Proficient rests on the matrix and the Ministry stage meanings.</p>
-<div class="flex flex-wrap items-center gap-2"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">This is</span><button type="button" class="builder-btn" id="as-st-t-auto" onclick="asStagesTask('auto')">Decide for me</button><button type="button" class="builder-btn" id="as-st-t-questions" onclick="asStagesTask('questions')">Question set</button><button type="button" class="builder-btn" id="as-st-t-single" onclick="asStagesTask('single')">One task</button></div>
+<div class="flex flex-wrap items-center gap-2"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">What kind of assessment is this?</span><button type="button" class="builder-btn" id="as-st-t-auto" onclick="asStagesTask('auto')">Decide for me</button><button type="button" class="builder-btn" id="as-st-t-questions" onclick="asStagesTask('questions')">A test with many questions</button><button type="button" class="builder-btn" id="as-st-t-single" onclick="asStagesTask('single')">One piece of work</button></div>
 <p id="as-st-task-note" class="text-[10px] text-slate-500 leading-snug"></p>
 <div id="as-st-profile-row" class="space-y-1.5"><label for="as-st-profile-sel" class="text-[10px] font-bold text-sky-800 uppercase tracking-widest block">Expected class spread</label><select id="as-st-profile-sel" onchange="asStagesProfileSel(this.value)" class="p-1.5 rounded-lg border border-sky-400 text-xs outline-none bg-white max-w-full"></select><div id="as-st-profile-own" class="hidden flex flex-wrap items-center gap-1.5"></div><div id="as-st-profile-text"></div>
 <p class="text-[10px] text-slate-500 leading-snug">Only used to pitch the paper. It never changes a student's stage and is not a curve.</p>
@@ -2653,14 +2668,19 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <p class="text-[10px] text-slate-500 mt-1">Optional. Without it the assessment is graded on the five stages only.</p>
 <div id="assess-marks-opts" class="hidden mt-2 space-y-2">
 <div class="flex flex-wrap items-center gap-2"><label for="assess-marks-total" class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Total marks</label><input type="number" min="5" max="200" id="assess-marks-total" value="30" oninput="asMarksChange()" class="w-20 p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"></div>
-<div class="space-y-1"><div class="flex flex-wrap items-center gap-1.5"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Share of marks (%)</span><span id="assess-marks-shares" class="inline-flex flex-wrap items-center gap-1.5"></span><span id="assess-marks-share-sum" class="text-[11px] font-semibold text-sky-900"></span><button type="button" class="builder-btn" onclick="asMarksSharesReset()">Reset</button><button type="button" class="builder-btn hidden" id="assess-marks-from-profile" onclick="asMarksFromProfile()">Set from expected class spread</button></div><p id="assess-marks-split" class="text-[10px] text-slate-600 leading-snug"></p></div>
+<p id="assess-marks-split" class="text-[11px] text-slate-700 leading-snug"></p>
+<details id="assess-marks-more" class="rounded-lg border border-sky-300 bg-white/60">
+<summary class="cursor-pointer p-2 text-[10px] font-bold text-sky-800 uppercase tracking-widest">More options</summary>
+<div class="p-2 pt-1 space-y-2">
+<div class="flex flex-wrap items-center gap-1.5"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Change the share of marks (%)</span><span id="assess-marks-shares" class="inline-flex flex-wrap items-center gap-1.5"></span><span id="assess-marks-share-sum" class="text-[11px] font-semibold text-sky-900"></span><button type="button" class="builder-btn hidden" id="assess-marks-reset" onclick="asMarksSharesReset()">Back to automatic</button></div>
 <div class="flex flex-wrap items-center gap-2"><span class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">Marks to stage</span><button type="button" class="builder-btn" id="assess-marks-m-bestfit" onclick="asMarksMethod('bestfit')">Best fit by stage (recommended)</button><button type="button" class="builder-btn" id="assess-marks-m-bands" onclick="asMarksMethod('bands')">Total percentage bands</button></div>
 <div id="assess-marks-thr-row" class="flex flex-wrap items-center gap-2"><label for="assess-marks-thr" class="text-[10px] font-bold text-sky-800 uppercase tracking-widest">A stage is reached at</label><input type="number" min="50" max="90" id="assess-marks-thr" value="65" oninput="asMarksChange()" class="w-16 p-1.5 rounded-lg border border-sky-400 text-sm outline-none text-center"><span class="text-[11px] text-slate-600">% of the marks available at that stage</span></div>
 <label class="flex items-center gap-2 text-xs text-slate-700"><input type="checkbox" id="assess-marks-pct" checked onchange="asMarksChange()"> Also give a percentage for school records (the stage stays the judgement)</label>
 <p id="assess-marks-note" class="text-[10px] text-slate-500 leading-snug"></p>
 </div>
+</details>
 </div>
-<div class="rounded-xl border-2 border-sky-300 bg-sky-50 p-3"><button id="assess-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered questions of equal difficulty, to reduce copying risk in class" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button><p class="text-[10px] text-slate-500 mt-1">Two parallel versions with reordered questions, to reduce copying.</p></div>
+</div>
 </div>
 </div>
 <div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><button type="button" class="px-4 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-black tracking-wider text-slate-700 hover:bg-slate-100" onclick="asSecOpen(3)">◂ Back</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-purple-700 bg-purple-600 text-white text-xs font-black tracking-wider hover:bg-purple-700" onclick="asSecOpen(5)">Next ▸</button></div></div>
@@ -2729,6 +2749,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                         </div>
                     </details>
                 </div>
+<div class="mt-4 rounded-xl border-2 border-sky-300 bg-sky-50 p-3"><button id="assess-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered questions of equal difficulty, to reduce copying risk in class" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button><p class="text-[10px] text-slate-500 mt-1">Two parallel versions with reordered questions, to reduce copying.</p></div>
 <div class="flex justify-between items-center gap-3 pt-4 mt-4 border-t border-slate-200"><button type="button" class="px-4 py-2 rounded-lg border-2 border-slate-300 bg-white text-xs font-black tracking-wider text-slate-700 hover:bg-slate-100" onclick="asSecOpen(4)">◂ Back</button><button type="button" class="px-5 py-2 rounded-lg border-2 border-emerald-700 bg-emerald-600 text-white text-xs font-black tracking-wider hover:bg-emerald-700" onclick="asSecDone()">Done: see my prompt ▾</button></div></div>
 </div>
 </div>
@@ -3528,7 +3549,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Teacher Hub: "Coming up" pop-up</mark>: the first time you open the Hub each day, a pop-up lists what is coming in the next two weeks, for example "Year 7 Social Sciences has an assessment next week: 7A Thu 18 Mar (lesson 12)", units that are about to finish or start (and a warning if no next unit plan is loaded), and no-school days and events. Press <strong>Show</strong> to jump to that week, or <strong>🔔 Coming up</strong> at the top of the Hub to see it again any time.</li>
 <li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
 <li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
-<li><mark class="wn-key">Stages: choose how they are used (Years 7–10)</mark>: a new <strong>How the stages are used</strong> box in the Assessment Generator, and the same settings in the <strong>Marking assistant</strong>. Tick whether to use <strong>our school key-word matrix</strong> (a stage means how deep the thinking is) or the Ministry meaning only (Proficient = meeting expectations), whether to use the <strong>Ministry progress markers</strong> (English and Maths), whether the task is a <strong>question set</strong> (questions spread across the stages) or <strong>one task</strong> (a way in for everyone, room to reach the top, and stage descriptions of the quality of the response), and whether you <strong>already have a marking matrix</strong> (the AI checks the task against yours instead of writing a new one). For Social Sciences, Science, The Arts and Health and PE, where the Ministry has no progress markers yet, you can pick a <strong>strand</strong> and the prompt uses that year's curriculum practices as the Proficient benchmark. You can also choose an <strong>expected class spread</strong> from a drop-down (Term 1, first half, mid-year, second half or end of year, or a class that needs more support or has higher prior achievement, or your own percentages), and the percentage for each of the five stages is shown as soon as you pick one. The box is tidier too: one benchmark tick, and the spread and your own marking matrix are kept out of the way until you need them. It is used only to pitch the paper, and in the Marking assistant to compare with the class results. It is illustrative, not Ministry data, and it never changes a student's stage. In the Marking assistant you can also say your schedule uses other grades, or ask for a draft matrix to approve first, and turn on marks with the same best-fit or percentage options.</li>
+<li><mark class="wn-key">Stages: choose how they are used (Years 7–10)</mark>: a new <strong>How the stages are used</strong> box in the Assessment Generator, and the same settings in the <strong>Marking assistant</strong>. Tick whether to use <strong>our school key-word matrix</strong> (a stage means how deep the thinking is) or the Ministry meaning only (Proficient = meeting expectations), whether to use the <strong>Ministry progress markers</strong> (English and Maths), whether the task is a <strong>test with many questions</strong> (questions spread across the stages) or <strong>one piece of work</strong> (a way in for everyone, room to reach the top, and stage descriptions of the quality of the response), and whether you <strong>already have a marking matrix</strong> (the AI checks the task against yours instead of writing a new one). You can also choose an <strong>expected class spread</strong> from a drop-down (Term 1, first half, mid-year, second half or end of year, or a class that needs more support or has higher prior achievement, or your own percentages), and the percentage for each of the five stages is shown as soon as you pick one. If you include marks, they follow that spread by default (just set the total), and the other marks options are tucked into More options. The box is tidier too: one benchmark tick, and the spread and your own marking matrix are kept out of the way until you need them. It is used only to pitch the paper, and in the Marking assistant to compare with the class results. It is illustrative, not Ministry data, and it never changes a student's stage. In the Marking assistant you can also say your schedule uses other grades, or ask for a draft matrix to approve first, and turn on marks with the same best-fit or percentage options.</li>
+<li><mark class="wn-key">Assessment Generator: pick the knowledge and practices from the curriculum (Years 7–10)</mark>: in <strong>Junior Assessment Scope</strong> there is now a <strong>Pick from the curriculum</strong> button, the same one as the Unit Planner. Choose a strand and topic, then tick just the knowledge and practices this assessment covers (or press <strong>All</strong>) and both boxes fill in for you. The <strong>Command words for each stage</strong> box now sits straight after <strong>What are you assessing?</strong>.</li>
 <li><mark class="wn-key">Assessment Generator: optional marks (Years 7–10)</mark>: in <strong>Time, format and questions</strong> press <strong>Include marks</strong>, set the total (for example 30) and the prompt gives every question a mark value tagged with its stage, with more marks at the lower stages and fewer at the higher ones. It adds a mark scheme and a marks-to-stage guide: <strong>best fit by stage</strong> (recommended, looks at the marks earned at each stage, with your own percentage; the default is 65%) or <strong>total percentage bands</strong>. The share of marks for each stage is editable and now defaults to 15 / 20 / 30 / 25 / 10 per cent, so most marks sit on the year-level expectation. You can also ask for a percentage for school records; the stage stays the judgement. Off by default, and not shown for Years 11 to 13.</li>
 <li><mark class="wn-key">Assessment Generator: editable command-word matrix (Years 7–10)</mark>: pick a department and a Year 7 to 10 level and a <strong>Show matrix</strong> button appears. It opens the five stages (Emerging to Exceeding) across Years 7 to 10 with your year highlighted. Delete words you do not want, add your own, then press <strong>Confirm</strong> and the assessment prompt uses your words instead of the standard ones. Saved per department and year; Reset or Stop using my words puts the standard words back. The word lists for every subject were checked against the Years 7 to 10 content and practices in the curriculum, so the standard words and the matrix now match and no word sits at two stages in the same year. Thinking words (explain, analyse, evaluate) set the level and sit in the stage rows; skill words (graph, draw, measure) are in a separate Skills row, and the prompt tells the AI to show the level of a skill through independence, accuracy and complexity, not the verb.</li>
 <li><mark class="wn-key">Assessment Generator: Ministry progress markers and curriculum command words (Years 7–10)</mark>: for <strong>English and Maths</strong> the prompt now includes the Ministry's November 2026 progress markers for that year (what a Proficient student can do by the end of the year), so the Proficient stage is written against them and Consolidating, Developing, Emerging and Exceeding are scaled around it. For <strong>every Year 7–10 subject</strong> the prompt now includes the school's own key words for each stage at that year (for example Year 7 Emerging = Recall and Identify, up to Exceeding = Synthesising), and these decide which stage a verb belongs to. For <strong>English, Maths, Science, Social Sciences, The Arts and Health and PE</strong> it also lists the command words the Years 7–10 teaching sequences use, so questions and descriptors use real curriculum verbs. The Ministry has not yet published progress markers for the other learning areas (due in 2027), so those use the five generic stage descriptors, the school's key words and the command words. Applies to the main Assessment Generator and the Years 7–10 Literacy / Numeracy check.</li>
@@ -3997,7 +4019,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Teacher Hub: "Coming up" pop-up</mark>: the first time you open the Hub each day, a pop-up lists what is coming in the next two weeks, for example "Year 7 Social Sciences has an assessment next week: 7A Thu 18 Mar (lesson 12)", units that are about to finish or start (and a warning if no next unit plan is loaded), and no-school days and events. Press <strong>Show</strong> to jump to that week, or <strong>🔔 Coming up</strong> at the top of the Hub to see it again any time.</li>
 <li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
 <li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
-<li><mark class="wn-key">Stages: choose how they are used (Years 7–10)</mark>: a new <strong>How the stages are used</strong> box in the Assessment Generator, and the same settings in the <strong>Marking assistant</strong>. Tick whether to use <strong>our school key-word matrix</strong> (a stage means how deep the thinking is) or the Ministry meaning only (Proficient = meeting expectations), whether to use the <strong>Ministry progress markers</strong> (English and Maths), whether the task is a <strong>question set</strong> (questions spread across the stages) or <strong>one task</strong> (a way in for everyone, room to reach the top, and stage descriptions of the quality of the response), and whether you <strong>already have a marking matrix</strong> (the AI checks the task against yours instead of writing a new one). For Social Sciences, Science, The Arts and Health and PE, where the Ministry has no progress markers yet, you can pick a <strong>strand</strong> and the prompt uses that year's curriculum practices as the Proficient benchmark. You can also choose an <strong>expected class spread</strong> from a drop-down (Term 1, first half, mid-year, second half or end of year, or a class that needs more support or has higher prior achievement, or your own percentages), and the percentage for each of the five stages is shown as soon as you pick one. The box is tidier too: one benchmark tick, and the spread and your own marking matrix are kept out of the way until you need them. It is used only to pitch the paper, and in the Marking assistant to compare with the class results. It is illustrative, not Ministry data, and it never changes a student's stage. In the Marking assistant you can also say your schedule uses other grades, or ask for a draft matrix to approve first, and turn on marks with the same best-fit or percentage options.</li>
+<li><mark class="wn-key">Stages: choose how they are used (Years 7–10)</mark>: a new <strong>How the stages are used</strong> box in the Assessment Generator, and the same settings in the <strong>Marking assistant</strong>. Tick whether to use <strong>our school key-word matrix</strong> (a stage means how deep the thinking is) or the Ministry meaning only (Proficient = meeting expectations), whether to use the <strong>Ministry progress markers</strong> (English and Maths), whether the task is a <strong>test with many questions</strong> (questions spread across the stages) or <strong>one piece of work</strong> (a way in for everyone, room to reach the top, and stage descriptions of the quality of the response), and whether you <strong>already have a marking matrix</strong> (the AI checks the task against yours instead of writing a new one). You can also choose an <strong>expected class spread</strong> from a drop-down (Term 1, first half, mid-year, second half or end of year, or a class that needs more support or has higher prior achievement, or your own percentages), and the percentage for each of the five stages is shown as soon as you pick one. If you include marks, they follow that spread by default (just set the total), and the other marks options are tucked into More options. The box is tidier too: one benchmark tick, and the spread and your own marking matrix are kept out of the way until you need them. It is used only to pitch the paper, and in the Marking assistant to compare with the class results. It is illustrative, not Ministry data, and it never changes a student's stage. In the Marking assistant you can also say your schedule uses other grades, or ask for a draft matrix to approve first, and turn on marks with the same best-fit or percentage options.</li>
+<li><mark class="wn-key">Assessment Generator: pick the knowledge and practices from the curriculum (Years 7–10)</mark>: in <strong>Junior Assessment Scope</strong> there is now a <strong>Pick from the curriculum</strong> button, the same one as the Unit Planner. Choose a strand and topic, then tick just the knowledge and practices this assessment covers (or press <strong>All</strong>) and both boxes fill in for you. The <strong>Command words for each stage</strong> box now sits straight after <strong>What are you assessing?</strong>.</li>
 <li><mark class="wn-key">Assessment Generator: optional marks (Years 7–10)</mark>: in <strong>Time, format and questions</strong> press <strong>Include marks</strong>, set the total (for example 30) and the prompt gives every question a mark value tagged with its stage, with more marks at the lower stages and fewer at the higher ones. It adds a mark scheme and a marks-to-stage guide: <strong>best fit by stage</strong> (recommended, looks at the marks earned at each stage, with your own percentage; the default is 65%) or <strong>total percentage bands</strong>. The share of marks for each stage is editable and now defaults to 15 / 20 / 30 / 25 / 10 per cent, so most marks sit on the year-level expectation. You can also ask for a percentage for school records; the stage stays the judgement. Off by default, and not shown for Years 11 to 13.</li>
 <li><mark class="wn-key">Assessment Generator: editable command-word matrix (Years 7–10)</mark>: pick a department and a Year 7 to 10 level and a <strong>Show matrix</strong> button appears. It opens the five stages (Emerging to Exceeding) across Years 7 to 10 with your year highlighted. Delete words you do not want, add your own, then press <strong>Confirm</strong> and the assessment prompt uses your words instead of the standard ones. Saved per department and year; Reset or Stop using my words puts the standard words back. The word lists for every subject were checked against the Years 7 to 10 content and practices in the curriculum, so the standard words and the matrix now match and no word sits at two stages in the same year. Thinking words (explain, analyse, evaluate) set the level and sit in the stage rows; skill words (graph, draw, measure) are in a separate Skills row, and the prompt tells the AI to show the level of a skill through independence, accuracy and complexity, not the verb.</li>
 <li><mark class="wn-key">Assessment Generator: Ministry progress markers and curriculum command words (Years 7–10)</mark>: for <strong>English and Maths</strong> the prompt now includes the Ministry's November 2026 progress markers for that year (what a Proficient student can do by the end of the year), so the Proficient stage is written against them and Consolidating, Developing, Emerging and Exceeding are scaled around it. For <strong>every Year 7–10 subject</strong> the prompt now includes the school's own key words for each stage at that year (for example Year 7 Emerging = Recall and Identify, up to Exceeding = Synthesising), and these decide which stage a verb belongs to. For <strong>English, Maths, Science, Social Sciences, The Arts and Health and PE</strong> it also lists the command words the Years 7–10 teaching sequences use, so questions and descriptors use real curriculum verbs. The Ministry has not yet published progress markers for the other learning areas (due in 2027), so those use the five generic stage descriptors, the school's key words and the command words. Applies to the main Assessment Generator and the Years 7–10 Literacy / Numeracy check.</li>
@@ -4268,7 +4291,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'', primaryDuration:'short', juniorCheck:false, juniorCheckSkill:'', juniorCheckType:'', juniorCheckMultiText:false, marksOn:false, marksTotal:'30', marksMethod:'bestfit', marksThreshold:'65', marksPct:true, marksShares:['15','20','30','25','10'], stageMatrix:true, stageMarkers:true, stageCurric:true, stageStrand:'', stageProfile:'', stageProfileOwn:['','','','',''], taskType:'auto', ownMatrix:false, ownMatrixMode:'paste', ownMatrixText:'' };
+        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'', primaryDuration:'short', juniorCheck:false, juniorCheckSkill:'', juniorCheckType:'', juniorCheckMultiText:false, marksOn:false, marksTotal:'30', marksMethod:'bestfit', marksThreshold:'65', marksPct:true, marksSharesManual:false, marksShares:['15','20','30','25','10'], stageMatrix:true, stageMarkers:true, stageCurric:true, stageStrand:'', stageProfile:'', stageProfileOwn:['','','','',''], taskType:'auto', ownMatrix:false, ownMatrixMode:'paste', ownMatrixText:'' };
 
         // ---------- My Teaching Profile ----------
         // A teacher's personal preferred approaches, not a class setting — one profile for
@@ -4465,6 +4488,33 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // (a numeracy check, no further split needed).
         function isCheckableDept(dept) { return dept === 'English' || dept === 'Maths'; }
 
+        // ---- Junior Assessment Scope: pick Specific Knowledge and Practices from the curriculum, with ticks (reuses the Unit Planner picker) ----
+        function asKpAvailable() { var a = assessmentState; return !!(a.dept && a.year && String(a.year).indexOf('Level') < 0 && kpHasContent(a.dept, a.year)); }
+        function asKpSync() {
+            var t = document.getElementById('assess-kp-trigger'); if (t) t.classList.toggle('hidden', !asKpAvailable());
+            var f = assessmentState.kpFill, a = assessmentState;
+            if (f && (f.dept !== a.dept || f.year !== a.year)) {
+                var kb = document.getElementById('assess-junior-knowledge'), pb = document.getElementById('assess-junior-practices'), cleared = false;
+                if (kb && kpHash(kb.value) === f.k) { kb.value = ''; autosizeTextarea(kb); cleared = true; }
+                if (pb && kpHash(pb.value) === f.p) { pb.value = ''; autosizeTextarea(pb); cleared = true; }
+                a.kpFill = null;
+                if (cleared) { try { updateAssessmentBuilderPrompt(); } catch (e) {} try { showToast('Cleared the curriculum points: they were for ' + f.dept + ', ' + f.year + '.'); } catch (e) {} }
+            }
+        }
+        function asKpOpen() {
+            var a = assessmentState;
+            if (!asKpAvailable()) { customAlert('Choose a subject and Year 7 to 10 first', 'The curriculum picker works for Years 7 to 10 once a subject and year level are chosen. You can also type or paste the knowledge and practices yourself.'); return; }
+            openKPPickerFor(a.dept, a.year, function(p) {
+                var kb = document.getElementById('assess-junior-knowledge'), pb = document.getElementById('assess-junior-practices');
+                if (kb) { kb.value = p.knowledge || ''; autosizeTextarea(kb); kb.dispatchEvent(new Event('input', { bubbles: true })); }
+                if (pb) { pb.value = p.practices || ''; autosizeTextarea(pb); pb.dispatchEvent(new Event('input', { bubbles: true })); }
+                var tp = document.getElementById('assess-main-topic-input');
+                if (tp && !tp.value.trim() && p.title) { tp.value = p.title; tp.dispatchEvent(new Event('input', { bubbles: true })); }
+                assessmentState.kpFill = { dept: a.dept, year: a.year, k: kpHash(kb ? kb.value : ''), p: kpHash(pb ? pb.value : '') };
+                try { updateAssessmentBuilderPrompt(); saveAppState(); } catch (e) {}
+                try { showToast('Knowledge & Practices filled in' + (p.partial ? ' (the parts you ticked)' : '') + ' ✓'); } catch (e) {}
+            }, { box: 'the Junior Assessment Scope boxes', skip: 'this assessment won\'t cover', button: 'Use this in my assessment', what: 'my assessment', parts: true, untick: true, wide: true });
+        }
         function checkAssessBothSelected() {
             var bothSet = !!(assessmentState.dept && assessmentState.year);
             var checkable = isJuniorSecondary(assessmentState.year) && isCheckableDept(assessmentState.dept);
@@ -4484,6 +4534,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             try { asMxRefresh(); } catch (e) {}
             try { asMarksRefresh(); } catch (e) {}
             try { asStagesSync(); } catch (e) {}
+            try { asKpSync(); } catch (e) {}
         }
 
         function checkSeniorStatus() {
@@ -4849,7 +4900,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             return sec.idea.desc || '';
         }
 
-        function kpResetState() { kpPickerState = { strand: null, sectionIndex: null, unitIndex: null, caseStudyIndex: null, trail: [], parts: false, selK: null, selP: null }; }
+        function kpResetState() { kpPickerState = { strand: null, sectionIndex: null, unitIndex: null, caseStudyIndex: null, trail: [], parts: !!kpExt('parts', false), selK: null, selP: null }; }
 
         // Works out where the picker currently is from the teacher's explicit choices, treating any
         // single-option level as automatically resolved WITHOUT recording it. `need` says which
@@ -4930,8 +4981,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function kpSelCount(blocks, sel) { return kpCountPoints(kpSelBlocks(blocks, sel)); }
         function kpEnsureSel(r) {
             var s = kpPickerState;
-            if (!s.selK) s.selK = kpItems(r.kBlocks).filter(function(i) { return !i.head; }).map(function() { return true; });
-            if (!s.selP) s.selP = kpItems(r.pBlocks).filter(function(i) { return !i.head; }).map(function() { return true; });
+            var on = !kpExt('untick', false);
+            if (!s.selK) s.selK = kpItems(r.kBlocks).filter(function(i) { return !i.head; }).map(function() { return on; });
+            if (!s.selP) s.selP = kpItems(r.pBlocks).filter(function(i) { return !i.head; }).map(function() { return on; });
         }
         function kpSetMode(parts) { var r = kpResolve(); if (r.need !== 'confirm') return; kpPickerState.parts = !!parts; if (parts) kpEnsureSel(r); renderKPPickerStep(); }
         function kpPartsCounts() {
@@ -4940,7 +4992,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var ck = document.getElementById('kp-count-k'), cp = document.getElementById('kp-count-p'), btn = document.getElementById('kp-use-btn');
             if (ck) ck.textContent = k + ' of ' + kpCountPoints(r.kBlocks);
             if (cp) cp.textContent = p + ' of ' + kpCountPoints(r.pBlocks);
-            if (btn) { btn.disabled = (k + p) === 0; btn.textContent = (k + p) === 0 ? 'Tick at least one point' : 'Use these ' + (k + p) + ' point' + ((k + p) === 1 ? '' : 's') + ' in my quiz'; }
+            if (btn) { btn.disabled = (k + p) === 0; btn.textContent = (k + p) === 0 ? 'Tick at least one point' : 'Use these ' + (k + p) + ' point' + ((k + p) === 1 ? '' : 's') + ' in ' + kpExt('what', 'my quiz'); }
         }
         function kpTick(side, idx, on) { var s = kpPickerState; (side === 'k' ? s.selK : s.selP)[idx] = !!on; kpSyncGroups(); kpPartsCounts(); }
         function kpTickGroup(side, grp, on) {
@@ -4986,7 +5038,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             kpResetState();
             var m = document.getElementById('kp-picker-modal');
-            if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+            if (m) { m.classList.remove('hidden'); m.classList.add('flex'); var cd0 = m.querySelector('.kp-modal-card'); if (cd0) cd0.classList.remove('kp-wide'); }
             document.addEventListener('keydown', kpKeyHandler);
             renderKPPickerStep();
         }
@@ -4997,7 +5049,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             kpExternal = { dept: dept, year: year, cb: cb, opts: opts || null };
             kpResetState();
             var m = document.getElementById('kp-picker-modal');
-            if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+            if (m) { m.classList.remove('hidden'); m.classList.add('flex'); var cd = m.querySelector('.kp-modal-card'); if (cd) cd.classList.toggle('kp-wide', !!kpExt('wide', false)); }
             document.addEventListener('keydown', kpKeyHandler);
             renderKPPickerStep();
             return true;
@@ -5077,14 +5129,15 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     }).join('') + '</div>';
             } else {
                 var ext = !!kpExternal;
+                if (ext && s.parts) kpEnsureSel(r);
                 var kb = document.getElementById('unit-junior-knowledge'), pb = document.getElementById('unit-junior-practices');
                 var hasExisting = !ext && !!((kb && kb.value.trim()) || (pb && pb.value.trim()));
                 var big = kpCountPoints(r.kBlocks) + kpCountPoints(r.pBlocks) > 35;
                 var chosen = r.caseStudies ? 'Case study: ' + r.caseStudies[r.caseIdx].label : (r.unit.sub ? 'Focus: ' + (r.section.label || '') + ' — ' + r.unit.label : '');
-                html = kpStepHead('confirm', ext ? 'Ready to use' : 'Ready to fill in', ext ? 'This is the curriculum content that will go into ' + kpExt('box', 'your quiz content box') + ' for Year ' + yrNum + '.' : 'This is what will go into your two boxes for Year ' + yrNum + '.') +
+                html = kpStepHead('confirm', ext ? (kpExt('untick', false) ? 'Tick what you will assess' : 'Ready to use') : 'Ready to fill in', ext ? (kpExt('untick', false) && s.parts ? 'Tick the knowledge and practices this assessment will cover, or press All. Nothing is ticked until you choose.' : 'This is the curriculum content that will go into ' + kpExt('box', 'your quiz content box') + ' for Year ' + yrNum + '.') : 'This is what will go into your two boxes for Year ' + yrNum + '.') +
                     (chosen ? '<span class="kp-chosen">' + kpEsc(chosen) + '</span>' : '') +
                     (ext ? '<div class="kp-modes"><button type="button" class="kp-seg' + (s.parts ? '' : ' on') + '" onclick="kpSetMode(false)">Whole topic</button><button type="button" class="kp-seg' + (s.parts ? ' on' : '') + '" onclick="kpSetMode(true)">Choose parts</button></div>' : '') +
-                    (ext && s.parts ? kpPartsList('k', r.kBlocks, 'Specific Knowledge', s.selK) + kpPartsList('p', r.pBlocks, 'Specific Practices', s.selP)
+                    (ext && s.parts ? '<div class="kp-two">' + kpPartsList('k', r.kBlocks, 'Specific Knowledge', s.selK) + kpPartsList('p', r.pBlocks, 'Specific Practices', s.selP) + '</div>'
                                     : kpPreviewBox('Specific Knowledge', r.kText, r.kBlocks) + kpPreviewBox('Specific Practices', r.pText, r.pBlocks)) +
                     (big ? '<div class="kp-info">This topic covers a lot of ground. After filling it in, delete the parts ' + (ext ? kpExt('skip', 'this quiz won\'t cover') : 'this unit won\'t teach') + ' so it stays focused.</div>' : '') +
                     (hasExisting ? '<div class="kp-warn">Heads up: this will replace what\'s already in the Specific Knowledge and Specific Practices boxes.</div>' : '') +
@@ -5100,8 +5153,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 
         function kpSelect(level, value) {
             var s = kpPickerState, li = KP_LEVELS.indexOf(level);
-            s.parts = false; s.selK = null; s.selP = null;
+            s.selK = null; s.selP = null;
             if (level === 'strand') s.strand = value;
+            s.parts = !!kpExt('parts', false);
             if (li <= 1) s.sectionIndex = (level === 'section') ? value : null;
             if (li <= 2) s.unitIndex = (level === 'unit') ? value : null;
             if (li <= 3) s.caseStudyIndex = (level === 'case') ? value : null;
@@ -5118,7 +5172,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var s = kpPickerState;
             var last = s.trail.pop();
             if (!last) return;
-            s.parts = false; s.selK = null; s.selP = null;
+            s.parts = !!kpExt('parts', false); s.selK = null; s.selP = null;
             if (last === 'strand') { s.strand = null; s.sectionIndex = null; s.unitIndex = null; s.caseStudyIndex = null; }
             else if (last === 'section') { s.sectionIndex = null; s.unitIndex = null; s.caseStudyIndex = null; }
             else if (last === 'unit') { s.unitIndex = null; s.caseStudyIndex = null; }
@@ -7297,9 +7351,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (asReview && n >= 2 && n <= 5) asReview.seen[n] = true;
             asReviewRender();
             var el = asSecEl(n);
-            /* Years 7-10: land on the command-word matrix (sits just above section 2) so it is not scrolled past */
-            if (n === 2) { var mxw = document.getElementById('assess-matrix-wrap'); if (mxw && !mxw.classList.contains('hidden')) el = mxw; }
-            if (el && !quiet) { try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
+                        if (el && !quiet) { try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {} }
         }
         var AS_REVIEW_NAMES = { 2: 'What are you assessing?', 3: 'Source material and unit plan', 4: 'Time, format and questions', 5: 'Optional extras' };
         function asReviewRender() {
@@ -9497,7 +9549,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // ---- Curriculum benchmark: for subjects with no Ministry progress markers yet ----
         // Uses the Years 7-10 PRACTICE statements in the site's curriculum data (what students do with the
         // knowledge) for the chosen strand and year, as the Proficient benchmark.
+        // Switched off for now (23 Nov 2026): the "use the curriculum practices as the Proficient benchmark" option is hidden and adds nothing to any prompt.
+        // Set to true to bring it back; all the code behind it is still here.
+        var AS_CURRIC_BENCH_ON = false;
         function asCurricStrands(dept, yr) {
+            if (!AS_CURRIC_BENCH_ON) return [];
             if (!dept || dept === 'English' || dept === 'Maths') return [];
             if (!KP_SUBJECTS[dept] || !kpHasContent(dept, yr)) return [];
             var data = kpData(dept), band = kpYearBand(yr), bd = data && data.bands[band]; if (!bd) return [];
@@ -9544,8 +9600,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             ['auto', 'questions', 'single'].forEach(function(t) { var b = document.getElementById('as-st-t-' + t); if (b) b.classList.toggle('active', (a.taskType || 'auto') === t); });
             var tn = document.getElementById('as-st-task-note'); if (tn) tn.textContent = (a.taskType || 'auto') === 'auto'
-                ? 'Decide for me: a 1 period test is a question set, anything longer is one task.'
-                : (a.taskType === 'questions' ? 'Questions across the stages, so the paper can place a student.' : 'A way in for every student and room to reach the top stages, with stage descriptions of the response.');
+                ? 'Decide for me: a 1 period test is treated as a test with many questions. Anything longer is treated as one piece of work (an essay, report, project or performance).'
+                : (a.taskType === 'questions' ? 'The questions are spread across the five stages, from easier to harder, so the paper shows where each student is.' : 'One piece of work, not split into questions. Every student can make a start, the best work can reach the top stages, and the marking guide describes what each stage looks like in the response.');
             var pcx = document.getElementById('as-st-profile-sel');
             if (pcx) {
                 if (!pcx.options.length) pcx.innerHTML = '<option value="">Not set</option>' + AS_PROFILES.concat([{ k: 'own', label: 'Set my own' }]).map(function(p) { return '<option value="' + p.k + '">' + actEsc(p.label) + '</option>'; }).join('');
@@ -9620,8 +9676,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             assessmentState.stageProfileOwn = [].map.call(box.querySelectorAll('input'), function(i) { return String(i.value || '').replace(/[^0-9.]/g, '').slice(0, 5); });
             asStagesSync(); asMarksSync(); asStagesPersist();
         }
-        function asMarksFromProfile() {
-            var a = assessmentState, pc = asProfileGet(a.stageProfile, a.stageProfileOwn); if (!pc) return;
+        // Marks follow the expected class spread by default: the spread itself, with a floor on Emerging, Developing and Exceeding
+        // so every student has a way in and there is room to reach the top.
+        function asMarksSharesFromProfile(pc) {
             var floors = [10, 10, 0, 0, 5], sh = pc.slice(), fixed = [false, false, false, false, false];
             for (var it = 0; it < 4; it++) {
                 var fsum = 0, rest = 0;
@@ -9629,10 +9686,9 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 sh.forEach(function(x, i) { if (!fixed[i]) rest += pc[i]; });
                 sh.forEach(function(x, i) { if (!fixed[i]) sh[i] = rest > 0 ? pc[i] * (100 - fsum) / rest : 0; });
             }
-            a.marksShares = sh.map(function(x) { return String(Math.round(x * 10) / 10); });
-            var shw = document.getElementById('assess-marks-shares'); if (shw) shw.innerHTML = '';
-            asMarksSync(); asMarksPersist();
+            return sh;
         }
+        function asMarksFromSpread() { var a = assessmentState; return !a.marksSharesManual && !!asProfileGet(a.stageProfile, a.stageProfileOwn); }
         // Part 1 guidance: how the task itself is staged
         function asStageSpreadText() {
             if (!asMarksYearOk()) return '';
@@ -9660,6 +9716,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         // Share of the marks for each stage (percent). Default puts the most marks on the year-level expectation
         // (Consolidating and Proficient) with a way in below and room above. Teachers can edit it.
         function asMarksShares() {
+            if (asMarksFromSpread()) return asMarksSharesFromProfile(asProfileGet(assessmentState.stageProfile, assessmentState.stageProfileOwn));
             var a = assessmentState.marksShares, v = AS_STAGES.map(function(st, i) { var x = parseFloat(a && a[i]); return (x >= 0 && x <= 100) ? x : NaN; });
             var sum = v.reduce(function(t, x) { return t + (isNaN(x) ? 0 : x); }, 0);
             if (v.some(isNaN) || sum <= 0) v = AS_MARK_SHARES_DEFAULT.map(Number), sum = 100;
@@ -9686,15 +9743,15 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             var shw = document.getElementById('assess-marks-shares');
             if (shw) {
                 {
-                    var sv = a.marksShares || AS_MARK_SHARES_DEFAULT;
+                    var sv = asMarksFromSpread() ? asMarksShares().map(function(x) { return String(Math.round(x * 10) / 10); }) : (a.marksShares || AS_MARK_SHARES_DEFAULT);
                     if (!shw.firstChild) shw.innerHTML = AS_STAGES.map(function(st, i) { return '<label class="text-[10px] text-slate-700">' + st.slice(0, 4) + '. <input type="text" inputmode="numeric" data-i="' + i + '" oninput="asMarksSharesChange()" class="w-11 p-1 rounded border border-sky-400 text-xs text-center outline-none" aria-label="' + st + ' share of marks (percent)"></label>'; }).join('');
                     [].forEach.call(shw.querySelectorAll('input'), function(inp) { if (document.activeElement !== inp) inp.value = sv[+inp.dataset.i] == null ? '' : sv[+inp.dataset.i]; });
                 }
-                var tot = (a.marksShares || AS_MARK_SHARES_DEFAULT).reduce(function(t, x) { return t + (parseFloat(x) || 0); }, 0);
+                var tot = (asMarksFromSpread() ? asMarksShares() : (a.marksShares || AS_MARK_SHARES_DEFAULT)).reduce(function(t, x) { return t + (parseFloat(x) || 0); }, 0);
                 var ss = document.getElementById('assess-marks-share-sum'); if (ss) { ss.textContent = '= ' + Math.round(tot * 10) / 10 + '%' + (Math.abs(tot - 100) > 0.05 ? ' (scaled to 100%)' : ''); ss.style.color = Math.abs(tot - 100) > 0.05 ? '#b45309' : ''; }
             }
-            var mfp = document.getElementById('assess-marks-from-profile'); if (mfp) mfp.classList.toggle('hidden', !asProfileGet(a.stageProfile, a.stageProfileOwn));
-            var sp = document.getElementById('assess-marks-split'); if (sp) sp.textContent = 'For ' + n + ' marks: ' + asMarksSplitText(n) + '. Most of the marks sit on the year-level expectation (Consolidating and Proficient), with a way in below and room to reach Exceeding.';
+            var sp = document.getElementById('assess-marks-split'); if (sp) sp.textContent = 'For ' + n + ' marks: ' + asMarksSplitText(n) + '. ' + (asMarksFromSpread() ? 'This follows your expected class spread (' + asProfileLabel(a.stageProfile) + '), with a way in at Emerging and Developing and room at Exceeding.' : (a.marksSharesManual ? 'These are your own shares.' : 'This is the standard split. Choose an expected class spread above to pitch the marks to your class instead.'));
+            var rb = document.getElementById('assess-marks-reset'); if (rb) rb.classList.toggle('hidden', !a.marksSharesManual);
             var nt = document.getElementById('assess-marks-note'); if (nt) nt.textContent = (a.marksMethod || 'bestfit') === 'bestfit'
                 ? 'Best fit looks at the marks a student earns at each stage, not only the total, so a student who answers all the easy questions is not pushed up a stage.'
                 : 'Percentage bands are quick but can overstate a student who only answers the easier questions, because the lower stages hold more of the marks.';
@@ -9705,10 +9762,11 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function asMarksToggle() { assessmentState.marksOn = !assessmentState.marksOn; asMarksSync(); asMarksPersist(); }
         function asMarksSharesChange() {
             var shw = document.getElementById('assess-marks-shares'); if (!shw) return;
+            assessmentState.marksSharesManual = true;
             assessmentState.marksShares = [].map.call(shw.querySelectorAll('input'), function(i) { return String(i.value || '').replace(/[^0-9.]/g, '').slice(0, 5); });
             asMarksSync(); asMarksPersist();
         }
-        function asMarksSharesReset() { assessmentState.marksShares = AS_MARK_SHARES_DEFAULT.slice(); var shw = document.getElementById('assess-marks-shares'); if (shw) shw.innerHTML = ''; asMarksSync(); asMarksPersist(); }
+        function asMarksSharesReset() { assessmentState.marksSharesManual = false; assessmentState.marksShares = AS_MARK_SHARES_DEFAULT.slice(); var shw = document.getElementById('assess-marks-shares'); if (shw) shw.innerHTML = ''; asMarksSync(); asMarksPersist(); }
         function asMarksMethod(m) { assessmentState.marksMethod = m; asMarksSync(); asMarksPersist(); }
         function asMarksChange() {
             var t = document.getElementById('assess-marks-total'), th = document.getElementById('assess-marks-thr'), pc = document.getElementById('assess-marks-pct');
@@ -9721,7 +9779,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         function asMarksTaskText() {
             if (!asMarksOn()) return '';
             var n = asMarksTotal();
-            return 'MARKS: This assessment is marked out of ' + n + ' marks. Give every question a mark value written like "(3 marks)" and make the marks add up to EXACTLY ' + n + ', with "Total: ' + n + ' marks" shown at the top. Tag every question with the stage it is pitched at (Emerging, Developing, Consolidating, Proficient or Exceeding) and the command word it uses, from the command words above, and pitch the question at that stage. Weight the marks so the most sit on the year-level expectation (Consolidating and Proficient), with enough at Emerging and Developing for every student to have a way in, and a few at Exceeding for room to reach the top. Do not weight the paper toward the lower stages. Split for ' + n + ' marks: ' + asMarksSplitText(n) + '. A multiple choice question is 1 mark; longer answers get one mark for each separate point the answer needs. Show the marks to students next to each question.' + (assessmentState.dualVersion ? ' Version A and Version B must have the same total and the same marks at each stage.' : '') + '\n';
+            return 'MARKS: This assessment is marked out of ' + n + ' marks. Give every question a mark value written like "(3 marks)" and make the marks add up to EXACTLY ' + n + ', with "Total: ' + n + ' marks" shown at the top. Tag every question with the stage it is pitched at (Emerging, Developing, Consolidating, Proficient or Exceeding) and the command word it uses, from the command words above, and pitch the question at that stage. ' + (asMarksFromSpread() ? 'Weight the marks to follow the expected class spread given below, with enough at Emerging and Developing for every student to have a way in, and some at Exceeding for room to reach the top. ' : 'Weight the marks so the most sit on the year-level expectation (Consolidating and Proficient), with enough at Emerging and Developing for every student to have a way in, and a few at Exceeding for room to reach the top. Do not weight the paper toward the lower stages. ') + 'Split for ' + n + ' marks: ' + asMarksSplitText(n) + '. A multiple choice question is 1 mark; longer answers get one mark for each separate point the answer needs. Show the marks to students next to each question.' + (assessmentState.dualVersion ? ' Version A and Version B must have the same total and the same marks at each stage.' : '') + '\n';
         }
         // The extra part: mark scheme and how marks become a stage
         function asMarksPartText(partNum) {
@@ -9808,8 +9866,17 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
         function asMxConfirmed(dept, yn) { return !!asMxSaved(dept, yn); }
         function asMxStages(dept, yn) { return asMxSaved(dept, yn) || asMxDefaults(dept, yn); }
+        // The command-word box sits just below "What are you assessing?" (section 2). In the quick Literacy/Numeracy check mode
+        // sections 2 to 5 are hidden, so it stays above the check toggle there.
+        function asMxPlace(wrap) {
+            var a = assessmentState, chk = !!(a.juniorCheck && isJuniorSecondary(a.year) && isCheckableDept(a.dept));
+            var sec2 = document.querySelector('#assess-config-rest .as-sec[data-as="2"]'), tog = document.getElementById('assess-junior-check-toggle');
+            if (chk) { if (tog && tog.previousElementSibling !== wrap) tog.insertAdjacentElement('beforebegin', wrap); }
+            else if (sec2 && sec2.nextElementSibling !== wrap) sec2.insertAdjacentElement('afterend', wrap);
+        }
         function asMxRefresh() {
             var wrap = document.getElementById('assess-matrix-wrap'); if (!wrap) return;
+            asMxPlace(wrap);
             var yn = asMxYear(), dept = assessmentState.dept;
             var show = !!(dept && yn);
             wrap.classList.toggle('hidden', !show);
@@ -10251,7 +10318,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 + (mkHas ? chk('mk', s.stageMarkers, '<strong>Use the Ministry progress markers</strong> as the Proficient benchmark.', "mkSetBool('stageMarkers',this.checked)")
                     : mkSts.length ? chk('cu', s.stageCurric, '<strong>Use the curriculum practices for this year</strong> as the Proficient benchmark. Ministry markers for this subject are due in 2027. Strand: ' + tkSelect('mk-strand', mkSts, s.stageStrand, "mkSet('stageStrand',this.value)", 'Choose a strand…'), "mkSetBool('stageCurric',this.checked)")
                     : (s.dept ? '<p class="text-[11px] text-slate-500 mt-1.5">No Ministry benchmark for this subject yet, so Proficient rests on the matrix and the Ministry stage meanings.</p>' : ''))
-                + '<div class="mt-2">' + [['auto', 'Work it out from the task sheet'], ['questions', 'Question set'], ['single', 'One task']].map(function(w) { return wtChip(s.taskType === w[0], w[1], "mkSetMode('taskType','" + w[0] + "')"); }).join('') + '</div>'
+                + '<div class="mt-2"><p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">What kind of assessment is it?</p>' + [['auto', 'Work it out from the task sheet'], ['questions', 'A test with many questions'], ['single', 'One piece of work (essay, project...)']].map(function(w) { return wtChip(s.taskType === w[0], w[1], "mkSetMode('taskType','" + w[0] + "')"); }).join('') + '<p class="text-[10px] text-slate-500 mt-1">' + (s.taskType === 'questions' ? 'Questions are spread across the five stages, so the marking looks at which stage each answer reaches.' : s.taskType === 'single' ? 'One piece of work: the stage is judged from the quality of the whole response, not question by question.' : 'The AI reads the task sheet and decides which of the two it is.') + '</p></div>'
                 + '<div class="mt-2"><p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Expected class spread (used for the class overview)</p>'
                 + '<select class="p-1.5 rounded border border-slate-300 text-xs bg-white max-w-full" onchange="mkSetProfile(this.value)"><option value="">Not set</option>' + AS_PROFILES.concat([{ k: 'own', label: 'Set my own' }]).map(function(p) { return mkOpt(p.k, p.label, s.stageProfile); }).join('') + '</select>'
                 + '<div id="mk-profile-own" class="mt-1' + (s.stageProfile === 'own' ? '' : ' hidden') + '">' + AS_STAGES.map(function(st, i) { return '<label class="text-xs text-slate-700 mr-2">' + st.slice(0, 4) + '. <input type="text" inputmode="numeric" class="w-12 p-1 rounded border border-slate-300 text-xs text-center" value="' + actEsc(s.stageProfileOwn[i] || '') + '" oninput="mkSetProfileOwn(' + i + ',this.value)"></label>'; }).join('') + '</div>'
@@ -11168,8 +11235,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             
             if (hasRes) txt += 'CRITICAL: Provide exact search queries for real-world resources; do NOT hallucinate URLs or invent source texts/authors — this applies at every year level.\n';
-            if (isJun && jk) txt += 'Test this knowledge: ' + jk + '.\n';
-            if (isJun && jp) txt += 'Test these practices: ' + jp + '.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema for task instructions. Define complex task words.\n\n### Output Format\n';
+            if (isJun && jk) txt += 'Test this knowledge:' + (jk.indexOf('\n') > -1 ? '\n' : ' ') + jk + '.\n';
+            if (isJun && jp) txt += 'Test these practices:' + (jp.indexOf('\n') > -1 ? '\n' : ' ') + jp + '.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema for task instructions. Define complex task words.\n\n### Output Format\n';
             
             var partNum = 1;
             if (isJun) {
