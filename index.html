@@ -2746,6 +2746,15 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                             <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                         </summary>
                         <div class="p-3 pt-1 border-t border-amber-200 space-y-1">
+<div id="assess-html-box" class="m-2 rounded-xl border-2 border-sky-300 bg-white p-3">
+<button type="button" id="assess-html-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="The AI gives you separate HTML files (portrait, WHS blue) that you save, open in Chrome, and copy into Google Docs" aria-pressed="false" onclick="asHtmlToggle()">📄 Make HTML files for Google Docs</button>
+<p class="text-[10px] text-slate-500 mt-1">Separate files: student assessment, mark schedule and teacher answers. Portrait, WHS blue, wider pages, pastes cleanly into a Google Doc.<button type="button" class="as-q" onclick="asHelp(this)" aria-label="More about this">?</button><span class="hidden"> Each file comes out as its own code block. Save each one as a .html file, open it in Chrome, select all, copy, and paste into a Google Doc (leave the Doc on Portrait). Stage tags and answers only appear in the teacher files, never in the student assessment. The pages are wider than normal (about 19 cm), so in the Google Doc set <em>File, Page setup</em> margins to about 1 cm before you paste.</span></p>
+<div id="assess-html-opts" class="hidden mt-2 space-y-1.5">
+<label class="flex items-center gap-2 text-xs p-2 rounded-lg bg-sky-50 border border-sky-200"><input type="checkbox" checked disabled> Student assessment</label>
+<label class="flex items-center gap-2 text-xs p-2 rounded-lg bg-sky-50 border border-sky-200 cursor-pointer"><input type="checkbox" id="assess-html-sched" checked onchange="asHtmlOpt('htmlSchedule', this.checked)"> Mark schedule</label>
+<label class="flex items-center gap-2 text-xs p-2 rounded-lg bg-sky-50 border border-sky-200 cursor-pointer"><input type="checkbox" id="assess-html-teach" checked onchange="asHtmlOpt('htmlTeacher', this.checked)"> Teacher answers and notes</label>
+</div>
+</div>
 <div class="p-2"><button id="assess-dual-version-btn" class="builder-btn tooltip-wrapper tooltip-bottom" data-tooltip="Generates two parallel versions (A and B) with varied/reordered questions of equal difficulty, to reduce copying risk in class" data-action="toggle-assessment-dual-version" aria-pressed="false">🔀 Generate as Version A + Version B</button><p class="text-[10px] text-slate-500 mt-1">Two parallel versions with reordered questions, to reduce copying.</p></div>
                             <label class="flex items-center gap-2 text-sm p-2 hover:bg-white rounded-lg cursor-pointer">
                                 <input type="checkbox" onchange="setAssessmentOutput('Student Exemplars', this.checked)"> Student Exemplars
@@ -3566,6 +3575,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
 <li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
 <li><mark class="wn-key">Stages: choose how they are used (Years 7–10)</mark>: a new <strong>How the stages are used</strong> box in the Assessment Generator, and the same settings in the <strong>Marking assistant</strong>. Tick whether to use <strong>our school key-word matrix</strong> (a stage means how deep the thinking is) or the Ministry meaning only (Proficient = meeting expectations), whether to use the <strong>Ministry progress markers</strong> (English and Maths), whether the task is a <strong>test with many questions</strong> (questions spread across the stages) or <strong>one piece of work</strong> (a way in for everyone, room to reach the top, and stage descriptions of the quality of the response), and whether you <strong>already have a marking matrix</strong> (the AI checks the task against yours instead of writing a new one). You can also choose an <strong>expected class spread</strong> from a drop-down (Term 1, first half, mid-year, second half or end of year, or a class that needs more support or has higher prior achievement, or your own percentages), and the percentage for each of the five stages is shown as soon as you pick one. If you include marks, they follow that spread by default (just set the total), and the other marks options are tucked into More options. The box is tidier too: one benchmark tick, and the spread and your own marking matrix are kept out of the way until you need them. It is used only to pitch the paper, and in the Marking assistant to compare with the class results. It is illustrative, not Ministry data, and it never changes a student's stage. In the Marking assistant you can also say your schedule uses other grades, or ask for a draft matrix to approve first, and turn on marks with the same best-fit or percentage options.</li>
+<li><mark class="wn-key">Assessment Generator: the AI sources visuals first</mark>: when a question needs a picture, the prompt now tells the AI to try, in this order: (1) put a <strong>real</strong> photograph, map, graph of real data or accurate diagram into the response (with a credit and no invented web addresses); (2) if it cannot, give a <strong>live link</strong> to the source, or to a ready-made search on a free image site; (3) finally give the search words in the bright yellow “ADD AN IMAGE HERE” box, and say how many it could not do and what it tried.</li>
+<li><mark class="wn-key">Assessment Generator: HTML files for Google Docs</mark>: in <strong>Outputs</strong> there is now a <strong>Make HTML files for Google Docs</strong> button. The AI gives you separate files: the <strong>student assessment</strong> (nothing a student should not see), a <strong>mark schedule</strong> and <strong>teacher answers and notes</strong> (plus the parent summary and peer check-bric if you tick them). They are portrait, in the school blue (#002066 and #d1e6f6), built from tables so they paste cleanly into a Google Doc, and the pages are wider than usual (set the Doc margins to about 1 cm). Stage tags and answers only appear in the teacher files.</li>
 <li><mark class="wn-key">Assessment Generator: simpler and tidier (Years 7–10)</mark>: a <strong>Quick start</strong> row at the top of <em>Time, format and questions</em> sets length, format and marks in one tap (<em>Quick test</em>, <em>Essay or project</em>, <em>Unit assessment</em>) and an <strong>Other</strong> button that opens the full Length and Format lists (reports, presentations, podcasts and more), which stay tucked away otherwise. The key words, stages, class spread and marks now live in one folded <strong>Stages and marks</strong> card with a one-line summary, so most teachers can leave it alone. The page is now four steps: Source material and the Unit plan link moved into <em>Optional extras</em>, and <strong>Version A + Version B</strong> moved into <strong>Outputs</strong>. Long notes are behind a small <strong>?</strong>, and a row of chips above the prompt shows what you have chosen (tap one to change it). The prompt itself is unchanged.</li>
 <li><mark class="wn-key">Assessment Generator: simpler words for Years 7 and 8</mark>: the prompt now asks the AI to check its vocabulary for the year group. For Years 7 and 8 it uses short sentences and simple words, and puts a simple-language version in brackets after any complex word or term the first time it appears (for example <em>photosynthesis (how plants make their own food)</em>). Years 9 and 10 get a lighter version. It will not explain a word when the question is testing that word.</li>
 <li><mark class="wn-key">Assessment Generator: pick the knowledge and practices from the curriculum (Years 7–10)</mark>: in <strong>Junior Assessment Scope</strong> there is now a <strong>Pick from the curriculum</strong> button, the same one as the Unit Planner. Choose a strand and topic, then tick just the knowledge and practices this assessment covers (or press <strong>All</strong>) and both boxes fill in for you. The <strong>Command words for each stage</strong> box now sits straight after <strong>What are you assessing?</strong>.</li>
@@ -4038,6 +4049,8 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
 <li><mark class="wn-key">Weekly Plan: lesson number only when there is a unit plan</mark>: you no longer need to enter a lesson number to copy the prompt for a class that has no unit plan. Classes with a unit plan (or one you attach in the AI) still need the lesson number they are up to.</li>
 <li><mark class="wn-key">Teacher Hub: my events, relief pack, print, Google Calendar and where each class is up to</mark>: <strong>(1) 📌 My events</strong>: add a trip, assembly, duty or day away for all your classes or only some; if it means no lessons, the lessons after it move on by themselves, and it shows in Today, This Week and Coming up. <strong>(2) 🧑‍🏫 Relief pack</strong> for today or the whole week: the full lessons (learning intention, stages, resources, homework, what to watch for) plus a box of notes you can type, ready to print, save as a PDF, or <strong>📋 copy and paste into your LMS</strong>. <strong>(3) 🖨 Print today</strong> and <strong>Print this week</strong>. <strong>(4) 📅 Google Calendar</strong>: download your lessons (with the learning intention) as a calendar file and import it into Google Calendar. <strong>(5)</strong> The Coverage tab now starts with <strong>📍 Where each class is up to</strong>, with a progress bar for each class and a note when one class is behind another on the same unit. <strong>(6)</strong> The Hub has clearer shading, so panels stand out from the background.</li>
 <li><mark class="wn-key">Stages: choose how they are used (Years 7–10)</mark>: a new <strong>How the stages are used</strong> box in the Assessment Generator, and the same settings in the <strong>Marking assistant</strong>. Tick whether to use <strong>our school key-word matrix</strong> (a stage means how deep the thinking is) or the Ministry meaning only (Proficient = meeting expectations), whether to use the <strong>Ministry progress markers</strong> (English and Maths), whether the task is a <strong>test with many questions</strong> (questions spread across the stages) or <strong>one piece of work</strong> (a way in for everyone, room to reach the top, and stage descriptions of the quality of the response), and whether you <strong>already have a marking matrix</strong> (the AI checks the task against yours instead of writing a new one). You can also choose an <strong>expected class spread</strong> from a drop-down (Term 1, first half, mid-year, second half or end of year, or a class that needs more support or has higher prior achievement, or your own percentages), and the percentage for each of the five stages is shown as soon as you pick one. If you include marks, they follow that spread by default (just set the total), and the other marks options are tucked into More options. The box is tidier too: one benchmark tick, and the spread and your own marking matrix are kept out of the way until you need them. It is used only to pitch the paper, and in the Marking assistant to compare with the class results. It is illustrative, not Ministry data, and it never changes a student's stage. In the Marking assistant you can also say your schedule uses other grades, or ask for a draft matrix to approve first, and turn on marks with the same best-fit or percentage options.</li>
+<li><mark class="wn-key">Assessment Generator: the AI sources visuals first</mark>: when a question needs a picture, the prompt now tells the AI to try, in this order: (1) put a <strong>real</strong> photograph, map, graph of real data or accurate diagram into the response (with a credit and no invented web addresses); (2) if it cannot, give a <strong>live link</strong> to the source, or to a ready-made search on a free image site; (3) finally give the search words in the bright yellow “ADD AN IMAGE HERE” box, and say how many it could not do and what it tried.</li>
+<li><mark class="wn-key">Assessment Generator: HTML files for Google Docs</mark>: in <strong>Outputs</strong> there is now a <strong>Make HTML files for Google Docs</strong> button. The AI gives you separate files: the <strong>student assessment</strong> (nothing a student should not see), a <strong>mark schedule</strong> and <strong>teacher answers and notes</strong> (plus the parent summary and peer check-bric if you tick them). They are portrait, in the school blue (#002066 and #d1e6f6), built from tables so they paste cleanly into a Google Doc, and the pages are wider than usual (set the Doc margins to about 1 cm). Stage tags and answers only appear in the teacher files.</li>
 <li><mark class="wn-key">Assessment Generator: simpler and tidier (Years 7–10)</mark>: a <strong>Quick start</strong> row at the top of <em>Time, format and questions</em> sets length, format and marks in one tap (<em>Quick test</em>, <em>Essay or project</em>, <em>Unit assessment</em>) and an <strong>Other</strong> button that opens the full Length and Format lists (reports, presentations, podcasts and more), which stay tucked away otherwise. The key words, stages, class spread and marks now live in one folded <strong>Stages and marks</strong> card with a one-line summary, so most teachers can leave it alone. The page is now four steps: Source material and the Unit plan link moved into <em>Optional extras</em>, and <strong>Version A + Version B</strong> moved into <strong>Outputs</strong>. Long notes are behind a small <strong>?</strong>, and a row of chips above the prompt shows what you have chosen (tap one to change it). The prompt itself is unchanged.</li>
 <li><mark class="wn-key">Assessment Generator: simpler words for Years 7 and 8</mark>: the prompt now asks the AI to check its vocabulary for the year group. For Years 7 and 8 it uses short sentences and simple words, and puts a simple-language version in brackets after any complex word or term the first time it appears (for example <em>photosynthesis (how plants make their own food)</em>). Years 9 and 10 get a lighter version. It will not explain a word when the question is testing that word.</li>
 <li><mark class="wn-key">Assessment Generator: pick the knowledge and practices from the curriculum (Years 7–10)</mark>: in <strong>Junior Assessment Scope</strong> there is now a <strong>Pick from the curriculum</strong> button, the same one as the Unit Planner. Choose a strand and topic, then tick just the knowledge and practices this assessment covers (or press <strong>All</strong>) and both boxes fill in for you. The <strong>Command words for each stage</strong> box now sits straight after <strong>What are you assessing?</strong>.</li>
@@ -4311,7 +4324,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             dept:'', year:'', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', s1:'', s2:'', s3:'', s4:'', s5:'', extra:'None', outputs:['plan'], worksheetFormat:'Standard Task', practiceAmount:'15', practiceAnswers:'include', quizFormats:['Google Forms'], activeStages:[], sourceMaterial:'', unitLink:'', unitNum:'', reliefType:'full-worksheet', reliefCustom:'', duration:'60', lessonTopic:'', whsTemplate:false 
         };
         
-        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'', primaryDuration:'short', juniorCheck:false, juniorCheckSkill:'', juniorCheckType:'', juniorCheckMultiText:false, marksOn:false, marksTotal:'30', marksMethod:'bestfit', marksThreshold:'65', marksPct:true, marksSharesManual:false, marksShares:['15','20','30','25','10'], stageMatrix:true, stageMarkers:true, stageCurric:true, stageStrand:'', stageProfile:'', stageProfileOwn:['','','','',''], taskType:'auto', ownMatrix:false, ownMatrixMode:'paste', ownMatrixText:'' };
+        var assessmentState = { dept:'', year:'', formats:[], duration:'1 Period Test', context:'none', maori:'none', lit:'none', num:'none', ai:'none', devices:'none', extra:'None', outputs:[], sourceMaterial:'', nceaMode:true, accommodations:[], dualVersion:false, htmlOn:false, htmlSchedule:true, htmlTeacher:true, unitLink:'', unitNum:'', mcqCount:'', shortCount:'', extendedCount:'', realAudience:'', primaryDuration:'short', juniorCheck:false, juniorCheckSkill:'', juniorCheckType:'', juniorCheckMultiText:false, marksOn:false, marksTotal:'30', marksMethod:'bestfit', marksThreshold:'65', marksPct:true, marksSharesManual:false, marksShares:['15','20','30','25','10'], stageMatrix:true, stageMarkers:true, stageCurric:true, stageStrand:'', stageProfile:'', stageProfileOwn:['','','','',''], taskType:'auto', ownMatrix:false, ownMatrixMode:'paste', ownMatrixText:'' };
 
         // ---------- My Teaching Profile ----------
         // A teacher's personal preferred approaches, not a class setting — one profile for
@@ -6993,6 +7006,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     });
                     updateAccommodationsSummary();
                     applyAssessmentDualVersion(!!assessmentState.dualVersion);
+                    try { asHtmlSync(); } catch (e) {}
                     var aul = document.getElementById('assess-unit-link'); if (aul) aul.value = assessmentState.unitLink || "";
                     var aun = document.getElementById('assess-unit-number'); if (aun) aun.value = assessmentState.unitNum || "";
                     var amc = document.getElementById('assess-mcq-count'); if (amc) amc.value = assessmentState.mcqCount || "";
@@ -7415,7 +7429,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 var dl = { book: 'Paper', some: 'Some devices', all: 'All devices' }[a.devices]; if (dl) o.push(dl);
                 var al = { plan: 'AI to plan', collaborate: 'AI collaborates', critique: 'Critique AI' }[a.ai]; if (al) o.push(al);
                 if (a.accommodations && a.accommodations.length) o.push(a.accommodations.length + ' support' + (a.accommodations.length > 1 ? 's' : ''));
-                var nOut = ((a.outputs || []).length) + (a.dualVersion ? 1 : 0); if (nOut) o.push(nOut + ' output' + (nOut > 1 ? 's' : ''));
+                var nOut = asOutputsCount(); if (nOut) o.push(nOut + ' output' + (nOut > 1 ? 's' : ''));
                 return asCut(o.join(' · '), 60) || 'Optional';
             }
             return '';
@@ -7539,7 +7553,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
         }
 
         function updateOutputsSummary() {
-            var n = (assessmentState.outputs || []).length + (assessmentState.dualVersion ? 1 : 0);
+            var n = asOutputsCount();
             var el = document.getElementById('assess-outputs-summary');
             if (el) el.textContent = 'Outputs' + (n ? ' — ' + n + ' selected' : ' — None selected');
         }
@@ -9802,6 +9816,71 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (yn <= 8) return 'Check the vocabulary for Year ' + yn + ' students. Everything students read (instructions, questions, source texts, success criteria) must use simple, familiar words and short sentences. Whenever you use a complex word or subject term that students may not know yet, put a simple-language version in brackets straight after it the first time it appears, ' + eg + '.' + keep;
             return 'Check the vocabulary for Year ' + yn + ' students. If a word or subject term is likely to be unfamiliar, add a short simple-language version in brackets after it the first time it appears, ' + eg + '.' + keep;
         }
+        // ---------- Assessment as separate HTML files (student assessment, mark schedule, teacher answers) ----------
+        // Visuals in assessments: the AI tries to source or make them itself first; a yellow box is the last resort
+        function asVisualsRule() {
+            var html = asHtmlOn();
+            var t = 'VISUALS: if a question or task needs a visual (a photograph, map, graph, diagram, data table or source image), try your best to source or make it yourself FIRST and put it straight into your response. Where possible the visuals must be REAL: real photographs, real maps, graphs of real data and accurate, properly labelled diagrams, not decorative clip art, and never made-up data presented as real. Only ask the teacher to add a visual after you have genuinely tried. Work through these in order: ';
+            t += '(1) PUT IT IN. Real photographs, maps and diagrams: if you can search the web or use image tools, find real ones from freely licensed sources (Wikimedia Commons, Unsplash, Pexels, Openverse, NASA, Te Papa, DigitalNZ, LINZ, Stats NZ, NZ Government sites) and insert them with a small credit such as "Photo: name, Wikimedia Commons, CC BY-SA"; if you can generate images, generate one that fits. Graphs, tables and diagrams you can make yourself also count here: build a graph from real, accurate figures (name the source and the year; if the numbers are made up for practice, label them "practice data"), or draw a clean, accurate, clearly labelled diagram (a process or cycle, a cross-section, a timeline, a number line, a flow chart, a grid or a map outline). ' + (html ? 'Build charts and diagrams from tables, using cell borders and background colours written inline (for example a bar chart made of table cells shaded to the right length), because SVG drawings and scripts do not survive a paste into a Google Doc. ' : 'Draw diagrams as an inline SVG where you can, otherwise as a clear labelled text or table diagram. ') + 'Use only images you have actually retrieved or made: never invent, guess or paste an image address, and do not use broken image tags. ';
+            t += '(2) IF YOU CANNOT PUT IT IN, GIVE A LIVE LINK so the teacher can get it in one click. Link to the real page where you found the image (only if you have actually opened it), or, if you could not open one, to a ready-made search on a free image site that always works, with the search words joined by + , for example https://commons.wikimedia.org/w/index.php?search=WORDS&ns6=1 or https://unsplash.com/s/photos/WORDS or https://www.pexels.com/search/WORDS/ or https://www.google.com/search?tbm=isch&q=WORDS . Never guess a direct link to an image file or a deep page you have not opened. ';
+            t += '(3) FINALLY GIVE THE SEARCH PROMPT. Put a bright HIGHLIGHTED box where the picture belongs that says what the picture should show and gives the exact search words, with the live link from step (2) inside the box, written like this: ' + (html ? IMG_BOX_HTML : IMG_LINE_PLAIN) + ' Then, in one plain line ' + (html ? 'before the first file' : 'at the very end') + ', say how many visuals the teacher still has to add and what you tried for each. ';
+            t += 'Make every question that depends on a visual point to it (for example "Look at the image above"), and check that the visual does not give away the answer.\n';
+            return t;
+        }
+        function asHtmlOn() { return !!assessmentState.htmlOn; }
+        function asOutputsCount() { var a = assessmentState; return (a.outputs || []).length + (a.dualVersion ? 1 : 0) + (a.htmlOn ? 1 : 0); }
+        function asHtmlFileList() {
+            var a = assessmentState, outs = a.outputs || [], f = [['Student assessment', 'student-assessment.html']];
+            if (a.htmlSchedule !== false) f.push(['Mark schedule', 'mark-schedule.html']);
+            if (a.htmlTeacher !== false) f.push(['Teacher answers and notes', 'teacher-answers.html']);
+            if (outs.indexOf('Parent Summary') > -1) f.push(['Parent and whānau summary', 'parent-summary.html']);
+            if (outs.indexOf('Peer Check-bric') > -1) f.push(['Peer check-bric', 'peer-check-bric.html']);
+            return f;
+        }
+        function asHtmlSync() {
+            var a = assessmentState, b = document.getElementById('assess-html-btn');
+            if (b) { b.classList.toggle('active', !!a.htmlOn); b.setAttribute('aria-pressed', a.htmlOn ? 'true' : 'false'); }
+            var o = document.getElementById('assess-html-opts'); if (o) o.classList.toggle('hidden', !a.htmlOn);
+            var s1 = document.getElementById('assess-html-sched'); if (s1) s1.checked = a.htmlSchedule !== false;
+            var s2 = document.getElementById('assess-html-teach'); if (s2) s2.checked = a.htmlTeacher !== false;
+            try { updateOutputsSummary(); } catch (e) {}
+        }
+        function asHtmlToggle() {
+            assessmentState.htmlOn = !assessmentState.htmlOn;
+            asHtmlSync(); updateAssessmentBuilderPrompt(); saveAppState();
+        }
+        function asHtmlOpt(k, v) {
+            assessmentState[k] = !!v;
+            asHtmlSync(); updateAssessmentBuilderPrompt(); saveAppState();
+        }
+        // The page rules shared by every file. Pages are portrait and wider than the usual 17 cm (narrow 10 mm margins give about 19 cm).
+        function asHtmlStyleRule() {
+            return 'PAGE AND LOOK (every file): A4 PORTRAIT, with the sides extended further out than normal: include @page { size: A4 portrait; margin: 10mm; } and let the content fill the full page width of about 19 cm (no narrow centred column). Use the WHS colours: dark blue #002066 for headings, the title band and table header rows (white text on the dark blue), and light blue #d1e6f6 for answer areas, labels and alternate rows. Font: Arial at 11pt. Every file starts with a title band (a one-cell table in #002066, white text) giving the school ("Waiheke High School"), the document title, the subject, year level and topic. Student-facing files then have a Name and Date line.\n'
+                + 'GOOGLE DOCS LAYOUT: use simple tags only (headings, p, ul, ol, strong, em, a and tables). Use tables with width="100%" instead of divs, flexbox or grid for anything side by side. Put every border and background colour directly on each cell (style="border: 1px solid #000000; background-color: #d1e6f6;" and bgcolor="#d1e6f6"), never in a CSS class and never only on the table, because Google Docs drops borders and colours that come from classes. Make every answer box a one-cell table, for example <table width="100%" cellspacing="0" cellpadding="6" style="border-collapse: collapse;"><tr><td style="border: 1px solid #666666; height: 60px; vertical-align: top;">Answer:</td></tr></table> (taller for longer answers). Show a label such as [BOOKWORK] as bold text in square brackets, not as a styled span. Use no scripts, web fonts or SVG drawings, and start each new section on a new page only where it helps (use page-break-before: always on a heading or a paragraph).\n';
+        }
+        function asHtmlOutputText(map) {
+            var files = asHtmlFileList(), N = files.length, a = assessmentState, outs = a.outputs || [];
+            var pl = function(arr) { return arr.length ? 'PART ' + arr.join(' and PART ') : ''; };
+            var p = '\n### OUTPUT: ' + N + ' SEPARATE HTML FILES\n';
+            p += 'You must produce exactly ' + N + ' separate, complete HTML files, each in its own code block (' + N + ' code blocks in all), in this order: ' + files.map(function(x, k) { return 'FILE ' + (k + 1) + ' of ' + N + ': ' + x[0] + ' (' + x[1] + ')'; }).join('; ') + '. Before each code block write one plain line naming it, for example "FILE 2 of ' + N + ': ' + (files[1] || files[0])[0] + ' (' + (files[1] || files[0])[1] + ')". Every file runs from <!DOCTYPE html> to </html> and is written once.\n';
+            p += htmlOutputRule();
+            p += asHtmlStyleRule();
+            p += 'FILE 1 of ' + N + ' (student-assessment.html), STUDENT ASSESSMENT: ' + (pl(map.task) || 'the assessment task') + ' only, written for students. It is the copy that is printed and handed out, so it contains NO answers, NO mark scheme, NO grading matrix, NO stage tags and NO teacher notes. Include: the Name and Date line, the time allowed, clear instructions' + (asMarksOn() ? ', the total marks, and the marks for every question or section shown in brackets after it, for example "(3 marks)"' : '') + ', then the questions or task with a one-cell answer box under each question (sized for the expected answer, with lines or space for extended writing)' + (a.dualVersion ? '. Put Version A and Version B in this one file, each starting on its own page with its own heading' : '') + (((a.accommodations || []).indexOf('Plain-Language Version') > -1) ? '. Put the plain-language version in this file too, starting on its own page' : '') + '.\n';
+            var k = 2;
+            if (a.htmlSchedule !== false) {
+                p += 'FILE ' + k + ' of ' + N + ' (mark-schedule.html), MARK SCHEDULE for the teacher: ' + (pl(map.sched.concat(a.htmlTeacher === false ? map.teach : []).sort(function(x, y) { return x - y; })) || 'the grading matrix and marking information') + '. Lay it out as tables. This is the only file where the Emerging, Developing, Consolidating, Proficient and Exceeding stage tags appear next to questions. Keep question numbers identical to FILE 1' + (a.dualVersion ? ' and cover both Version A and Version B' : '') + '.\n';
+                k++;
+            }
+            if (a.htmlTeacher !== false) {
+                var tp = pl(map.teach);
+                p += 'FILE ' + k + ' of ' + N + ' (teacher-answers.html), TEACHER ANSWERS AND NOTES: the correct answer for every question, in the same order and with the same numbers as FILE 1, in a table with the columns Question, Answer and Notes (what a strong response includes, accepted alternatives, and the common mistake to watch for)' + (tp ? '. Also include ' + tp : '') + (a.dualVersion ? '. Cover both Version A and Version B' : '') + '. For extended or open responses give a short model response and what to look for, not just a mark.\n';
+                k++;
+            }
+            if (outs.indexOf('Parent Summary') > -1) { p += 'FILE ' + k + ' of ' + N + ' (parent-summary.html), ' + (pl(map.parent) || 'the parent summary') + ' on one page, in the style above.\n'; k++; }
+            if (outs.indexOf('Peer Check-bric') > -1) { p += 'FILE ' + k + ' of ' + N + ' (peer-check-bric.html), ' + (pl(map.peer) || 'the peer check-bric') + ', laid out as a one page table students can tick.\n'; k++; }
+            p += 'Each PART above goes in the file named for it and is not repeated in the others. Do not turn any file into plain text or a summary, and do not skip any of them. Write the files one straight after the other without stopping to ask. If you run out of room, finish the file you are on, list the files still to come, and I will say "continue". Before you end, check that you have produced exactly ' + N + ' code blocks.\n';
+            return p;
+        }
         function asHelp(btn) { var n = btn.nextElementSibling; if (n) n.classList.toggle('hidden'); }
         function asChipGo(w) {
             try {
@@ -9826,6 +9905,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                     var pc = asProfileGet(a.stageProfile, a.stageProfileOwn); if (pc) chips.push(['Spread: ' + asProfileLabel(a.stageProfile), 'sm']);
                 }
                 if (a.dualVersion) chips.push(['Version A + B', 'out']);
+                if (a.htmlOn) chips.push([asHtmlFileList().length + ' HTML files', 'out']);
             }
             bar.textContent = '';
             chips.forEach(function(c) { var b = document.createElement('button'); b.type = 'button'; b.className = 'as-chip'; b.textContent = c[0]; b.title = 'Change this'; b.onclick = function() { asChipGo(c[1]); }; bar.appendChild(b); });
@@ -11329,7 +11409,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             if (ul) {
                 txt += 'UNIT LINK: Base the scope of this assessment on the following unit' + (un ? ' (' + un + ')' : '') + ': "' + ul + '". If this is a Google Docs link, use your @Google Docs extension to read the file.\n';
             }
-            txt += '\n' + asPlanText() + '### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\nNo meta-commentary. Use Markdown.\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n' + asVocabText(yr);
+            txt += '\n' + asPlanText() + '### Task\n' + (isJun ? (hasSurp ? 'Design TWO highly innovative assessment options and a grading matrix.' : 'Design a formative assessment (' + fStr + ') and grading matrix.') : isSen ? 'Design TWO NCEA-style options and a single shared grading matrix.' : 'Design a formative assessment task and rubric.') + '\n\n### Strict Rules\n' + (asHtmlOn() ? 'No meta-commentary. The deliverable is separate HTML files (see OUTPUT at the end), not Markdown.' : 'No meta-commentary. Use Markdown.') + '\nWrite Part 1 (The Assessment Task) in direct, student-facing language (e.g., "You will write a paragraph...", "Read the following source...").\n' + asVocabText(yr);
             txt += 'CRITICAL — ORIGINALITY: Do NOT reproduce, closely paraphrase, or imitate specific items from PAT, SMART (the national online Reading/Writing/Maths check for Years 3-10 that replaced e-asTTle in 2026), e-asTTle, STAR, PROBE, or any real NZQA examination paper, Assessment Resource, or other named, copyrighted or Ministry/NZQA assessment material. Everything you write — passages, questions, tasks and problems — must be wholly original. You may take inspiration from the general STYLE, FORMAT and DIFFICULTY of these tools, never their actual content.\n';
 
             var durText = assessmentState.duration === 'Other' ? cd : assessmentState.duration;
@@ -11381,16 +11461,19 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             }
             
             if (hasRes) txt += 'CRITICAL: Provide exact search queries for real-world resources; do NOT hallucinate URLs or invent source texts/authors — this applies at every year level.\n';
+            txt += asVisualsRule();
             if (isJun && jk) txt += 'Test this knowledge:' + (jk.indexOf('\n') > -1 ? '\n' : ' ') + jk + '.\n';
             if (isJun && jp) txt += 'Test these practices:' + (jp.indexOf('\n') > -1 ? '\n' : ' ') + jp + '.\n\n### Tone and Style\nProfessional, direct, academic tone. No AI filler.\n\n### Cognitive Scaffolding\nAssume blank schema for task instructions. Define complex task words.\n\n### Output Format\n';
             
-            var partNum = 1;
+            var partNum = 1, htmlMap = { task: [], sched: [], teach: [], parent: [], peer: [] };
             if (isJun) {
+                htmlMap.task.push(partNum);
                 if (hasSurp) txt += 'PART ' + partNum + ': TWO out-of-the-box assessment options.\n'; else txt += 'PART ' + partNum + ': Assessment Task (' + fStr + ').\n';
                 if (hasStory) txt += 'Note on storytelling formats: since this produces a written brief, not actual audio/video/images, the student-facing task should ask for the WRITTEN deliverable — a full script with speaker/scene notes for a podcast or video, or a written plan/copy for an infographic or photo essay (all text, data points, and captions specified, with a description of the intended visual layout).\n';
                 txt += asStageSpreadText();
                 if (asMarksOn()) txt += asMarksTaskText();
                 partNum++;
+                htmlMap.sched.push(partNum);
                 if (asOwnMatrixOn()) { txt += asOwnMatrixPartText(partNum, yr); } else {
                 txt += 'PART ' + partNum + ': Junior Grading Matrix. You MUST use exactly these 5 scale tiers: Emerging, Developing, Consolidating, Proficient, Exceeding. These are the Ministry of Education progress descriptors for Years 0-10, defined like this: ' + NZ_PROGRESS_DEFS + '. Each tier is judged against the curriculum expectations for ' + yr + ', so write every tier descriptor for this task at that year level and base it on these definitions. ' + (asStageMatrixOn() ? 'Map explicit cognitive verbs for ' + yr + ' to these specific tiers.' : '') + '\n' + asStageBlocks(assessmentState.dept, yearNumFromVal(yr), yr, 'English', asTaskKind());
                 if (hasStory) {
@@ -11398,29 +11481,33 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
                 }
                 }
                 partNum++;
-                if (asMarksOn()) { txt += asMarksPartText(partNum); partNum++; }
+                if (asMarksOn()) { txt += asMarksPartText(partNum); htmlMap.sched.push(partNum); partNum++; }
             } else if (isSen) {
+                htmlMap.task.push(partNum);
                 if (ns === '[Standard]' || !ns.trim()) {
                     txt += 'PART ' + partNum + ': CRITICAL — No specific Achievement Standard number was provided. Do NOT invent, guess, or substitute a plausible-sounding standard code or title under any circumstances. Instead, before writing anything else, ask me to confirm the exact Achievement Standard number and title, then wait for my reply before generating the assessment.\n';
                 } else {
                     txt += 'PART ' + partNum + ': TWO NCEA-style options based on standard ' + ns + '. CRITICAL: Use only this exact standard number/title as given — do not invent or substitute a different one.\n';
                 }
                 partNum++;
+                htmlMap.sched.push(partNum);
                 txt += 'PART ' + partNum + ': Shared NCEA Grading Matrix (Achieved/Merit/Excellence). Add disclaimer regarding NZQA validity.\n';
                 partNum++;
             } else {
+                htmlMap.task.push(partNum);
                 txt += 'PART ' + partNum + ': Assessment Task.\n';
                 partNum++;
+                htmlMap.sched.push(partNum);
                 txt += 'PART ' + partNum + ': Success Criteria / Rubric.\n';
                 partNum++;
             }
             var outs = assessmentState.outputs || [];
-            if (outs.includes('Student Exemplars')) { txt += 'PART ' + partNum + ': Student Exemplars (Top grade and Mid grade).\n'; partNum++; }
-            if (outs.includes('Marking Schedule')) { txt += 'PART ' + partNum + ': Strict Teacher Marking Schedule.\n'; partNum++; }
-            if (outs.includes('Answer Key')) { txt += 'PART ' + partNum + ': Answer Key — literal correct answers for all closed-response questions (multiple choice, calculations, short factual answers). This is distinct from the Marking Schedule and should list answers only, no judgement criteria.\n'; partNum++; }
-            if (outs.includes('Parent Summary')) { txt += 'PART ' + partNum + ': A short, plain-language summary of this assessment a teacher could send home to parents/whānau — what was assessed and why, in a warm, non-technical tone, no jargon, no scores or grades included.\n'; partNum++; }
-            if (outs.includes('Peer Check-bric')) { txt += 'PART ' + partNum + ': Student-friendly Peer Check-bric.\n'; partNum++; }
-            
+            if (outs.includes('Student Exemplars')) { htmlMap.teach.push(partNum); txt += 'PART ' + partNum + ': Student Exemplars (Top grade and Mid grade).\n'; partNum++; }
+            if (outs.includes('Marking Schedule')) { htmlMap.sched.push(partNum); txt += 'PART ' + partNum + ': Strict Teacher Marking Schedule.\n'; partNum++; }
+            if (outs.includes('Answer Key')) { htmlMap.teach.push(partNum); txt += 'PART ' + partNum + ': Answer Key — literal correct answers for all closed-response questions (multiple choice, calculations, short factual answers). This is distinct from the Marking Schedule and should list answers only, no judgement criteria.\n'; partNum++; }
+            if (outs.includes('Parent Summary')) { htmlMap.parent.push(partNum); txt += 'PART ' + partNum + ': A short, plain-language summary of this assessment a teacher could send home to parents/whānau — what was assessed and why, in a warm, non-technical tone, no jargon, no scores or grades included.\n'; partNum++; }
+            if (outs.includes('Peer Check-bric')) { htmlMap.peer.push(partNum); txt += 'PART ' + partNum + ': Student-friendly Peer Check-bric.\n'; partNum++; }
+            if (asHtmlOn()) txt += asHtmlOutputText(htmlMap);
             var box = document.getElementById('prompt-assessment-text');
             if (box) box.innerText = txt;
             updateRequiredChecklist('prompt-assessment-text', 'assess-required-checklist');
@@ -16492,7 +16579,7 @@ M20403 655 c-142 -130 -176 -283 -98 -453 26 -57 166 -204 173 -182 2 6 -26
             ['assess-junior-knowledge', 'assess-junior-practices', 'assess-ncea-standard', 'assess-source-material', 'assess-unit-link', 'assess-unit-number', 'assess-custom-dur', 'assess-custom-format', 'assess-custom-volume', 'assess-mcq-count', 'assess-short-count', 'assess-extended-count', 'assess-real-audience'].forEach(function(id) { var e = document.getElementById(id); if (e) e.value = ''; });
             var a = assessmentState;
             a.duration = '1 Period Test'; a.formats = []; a.presetMode = ''; a.context = 'none'; a.maori = 'none'; a.lit = 'none'; a.num = 'none'; a.ai = 'none'; a.devices = 'none'; a.extra = 'None';
-            a.accommodations = []; a.outputs = []; a.dualVersion = false; a.sourceMaterial = ''; a.unitLink = ''; a.unitNum = ''; a.mcqCount = ''; a.shortCount = ''; a.extendedCount = ''; a.realAudience = ''; a.marksOn = false; a.marksTotal = '30'; a.marksMethod = 'bestfit'; a.marksThreshold = '65'; a.marksPct = true;
+            a.accommodations = []; a.outputs = []; a.dualVersion = false; a.htmlOn = false; a.htmlSchedule = true; a.htmlTeacher = true; a.sourceMaterial = ''; a.unitLink = ''; a.unitNum = ''; a.mcqCount = ''; a.shortCount = ''; a.extendedCount = ''; a.realAudience = ''; a.marksOn = false; a.marksTotal = '30'; a.marksMethod = 'bestfit'; a.marksThreshold = '65'; a.marksPct = true;
             ['duration', 'context', 'maori', 'lit', 'num', 'ai', 'devices'].forEach(function(k) { setActiveBtn('assessment-state', a[k], k); });
             document.querySelectorAll('[data-action="assessment-format"]').forEach(function(b) { b.classList.remove('active'); });
             ['assess-custom-dur-container', 'assess-custom-format-container'].forEach(function(id) { var e = document.getElementById(id); if (e) e.classList.add('hidden'); });
